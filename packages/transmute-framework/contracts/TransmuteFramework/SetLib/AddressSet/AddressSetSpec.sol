@@ -8,7 +8,7 @@ contract AddressSetSpec is Killable {
 
   AddressSetLib.AddressSet testSet;
 
-  address public lastPop;
+  address public theElementThatWasPopped;
   bool public lastAdd;
   bool public lastRemove;
 
@@ -50,8 +50,8 @@ contract AddressSetSpec is Killable {
   function pop(uint index) public
     returns (address)
   {
-    lastPop = testSet.pop(index);
-    return lastPop;
+    theElementThatWasPopped = testSet.pop(index);
+    return theElementThatWasPopped;
   }
 
   function first() public constant
