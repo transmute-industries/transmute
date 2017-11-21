@@ -2,12 +2,11 @@
 
 module.exports = {
   networks: {
-    "development": {
-      host: "localhost",
+    development: {
+      host: 'localhost',
       port: 8545,
-      network_id: "*",
-      before_timeout: 300,             //  <=== NEW
-      test_timeout: 300                //  <=== NEW
+      network_id: '*',
+      gas: 4600000,
     },
     // "ropsten": {
     //   provider: new LightWalletProvider({
@@ -30,5 +29,5 @@ module.exports = {
     //   port: 80,
     //   network_id: "*" // Match any network id
     // }
-  }
-};
+  },
+}
