@@ -2,7 +2,6 @@
 
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
-# Migration Notes:
+### Project Structure
 
-```
-lerna import ../transmute-framework
+We use the [lerna mono repo pattern](https://github.com/lerna/lerna).

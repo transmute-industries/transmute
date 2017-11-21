@@ -1,0 +1,32 @@
+
+sudo: required
+dist: trusty
+language: node_js
+
+node_js:
+  - "8.4.0"
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install software-properties-common -y -qq
+  - wget "https://dist.ipfs.io/go-ipfs/v0.4.9/go-ipfs_v0.4.9_linux-amd64.tar.gz" -O /tmp/ipfs.tar.gz
+  - pushd . && cd $HOME/bin && tar -xzvf /tmp/ipfs.tar.gz && popd
+  - export PATH="$HOME/bin/go-ipfs:$PATH"
+  - ipfs init
+  - ipfs daemon &
+  - sleep 5
+  - npm install -g yarn --cache-min 999999999
+
+cache:
+  directories:
+  - $HOME/.yarn-cache
+
+install:
+  - yarn
+  - yarn testrpc:start
+  - sleep 3
+
+script:
+  - yarn truffle:migrate
+  - yarn test:coverage
+  - yarn test:coverage:report
