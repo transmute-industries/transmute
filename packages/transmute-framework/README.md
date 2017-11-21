@@ -4,6 +4,10 @@ TypeScript dApp Framework
 
 Very alpha, expect breaking changes...
 
+COPIED AT:
+
+d82e71c41f77b62a968dddf275765d7a1ca38a3b
+
 Requires node: v8.6.0
 
 
