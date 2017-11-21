@@ -30,15 +30,15 @@ contract RBAC is Killable {
   );
 
   // FALLBACK
-  function () payable { throw; }
-  
-  // CONSTRUCTOR  
+  function () payable { revert(); }
+
+  // CONSTRUCTOR
   function RBAC() payable {
     internalEventTypes.add(bytes32('AC_ROLE_ASSIGNED'));
     internalEventTypes.add(bytes32('AC_GRANT_WRITTEN'));
   }
 
-  function eventCount() 
+  function eventCount()
   returns (uint)
   {
     return store.events.length;
@@ -60,10 +60,10 @@ contract RBAC is Killable {
       if(granted){
         _;
       } else {
-        throw;
+        revert();
       }
     }
-    // throw;
+    // revert();
     // require(msg.sender == owner);
     // _;
   }
@@ -86,8 +86,8 @@ contract RBAC is Killable {
     require(msg.sender == owner || msg.sender == target);
     return addressRole[target];
   }
-  
-  function grantCount() 
+
+  function grantCount()
   returns (uint)
   {
     return grants.length;
@@ -116,7 +116,7 @@ contract RBAC is Killable {
     return (grant.role, grant.resource, grant.action, grant.attributes);
   }
 
-  // The client interprets attributes = granted ? ['*'] : [] 
+  // The client interprets attributes = granted ? ['*'] : []
   // so no need to return a bytes32 array here...
   function canRoleActionResource(bytes32 role, bytes32 action, bytes32 resource)
   returns (bool granted, bytes32 _role, bytes32 _resource)
@@ -127,18 +127,18 @@ contract RBAC is Killable {
   }
 
   function writeInternalEvent(
-    bytes32 _eventType, 
+    bytes32 _eventType,
     bytes1 _keyType,
     bytes1 _valueType,
     bytes32 _key,
     bytes32 _value
-  ) 
-    internal 
+  )
+    internal
     returns (uint)
   {
     return EventStoreLib.writeEvent(
-      store, 
-      _eventType, 
+      store,
+      _eventType,
       _keyType,
       _valueType,
       _key,
@@ -147,13 +147,13 @@ contract RBAC is Killable {
   }
 
   // READ EVENT
-  function readEvent(uint _eventId) 
-    public 
+  function readEvent(uint _eventId)
+    public
     returns (
-      uint, 
-      address, 
-      uint, 
-      bytes32, 
+      uint,
+      address,
+      uint,
+      bytes32,
       bytes1,
       bytes1,
       bytes32,
@@ -178,9 +178,9 @@ contract RBAC is Killable {
   );
 
   event GrantEvent (
-    bytes32 role, 
-    bytes32 resource, 
-    bytes32 action, 
+    bytes32 role,
+    bytes32 resource,
+    bytes32 action,
     bytes32[] attributes
   );
 

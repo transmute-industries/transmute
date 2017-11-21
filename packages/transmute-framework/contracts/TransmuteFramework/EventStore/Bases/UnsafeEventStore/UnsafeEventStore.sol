@@ -11,7 +11,7 @@ contract UnsafeEventStore is Killable {
   address public creator;
 
   // FALLBACK
-  function () payable { throw; }
+  function () payable { revert(); }
   
   // CONSTRUCTOR  
   function UnsafeEventStore() payable {

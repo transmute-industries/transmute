@@ -11,7 +11,7 @@ contract UnsafeEventStoreFactory is UnsafeEventStore {
   AddressSetLib.AddressSet EventStoreAddresses;
 
   // Fallback Function
-  function () payable { throw; }
+  function () payable { revert(); }
 
   // Constructor
   function UnsafeEventStoreFactory()

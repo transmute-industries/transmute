@@ -9,7 +9,7 @@ contract RBACEventStoreFactory is RBAC {
   AddressSetLib.AddressSet storeAddresses;
 
   // Fallback Function
-  function () payable { throw; }
+  function () payable { revert(); }
 
   // Constructor
   function RBACEventStoreFactory()
@@ -65,7 +65,7 @@ contract RBACEventStoreFactory is RBAC {
     var (granted,,) = canRoleActionResource(txOriginRole, bytes32("create:any"), bytes32("eventstore"));
 
     if (msg.sender != owner && !granted){
-      throw;
+      revert();
     }
     // Interact With Other Contracts
     RBACEventStore _newEventStore = new RBACEventStore();

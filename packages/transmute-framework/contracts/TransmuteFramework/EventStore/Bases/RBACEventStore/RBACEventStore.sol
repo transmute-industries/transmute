@@ -6,7 +6,7 @@ import '../../../Security/RBAC.sol';
 contract RBACEventStore is RBAC {
 
   // FALLBACK
-  function () payable { throw; }
+  function () payable { revert(); }
   
   // CONSTRUCTOR  
   function RBACEventStore() payable {
@@ -33,7 +33,7 @@ contract RBACEventStore is RBAC {
     bytes32 txOriginRole = getAddressRole(msg.sender);
     var (granted,,) = canRoleActionResource(txOriginRole, bytes32("create:any"), bytes32("event"));
     if (msg.sender != owner && !granted){
-      throw;
+      revert();
     }
     return EventStoreLib.writeEvent(
       store, 
