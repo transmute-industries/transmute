@@ -29,4 +29,3 @@ script:
   - lerna run truffle:test
   - lerna run truffle:migrate
   - lerna run test
-  - lerna run build
