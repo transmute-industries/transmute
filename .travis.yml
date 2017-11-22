@@ -23,8 +23,8 @@ cache:
 
 install:
   - lerna bootstrap
-  - lerna run testrpc:start
-  - sleep 3
 
 script:
+  - lerna run testrpc:start
+  - sleep 3
   - lerna run test
