@@ -15,14 +15,14 @@ before_install:
   - ipfs init
   - ipfs daemon &
   - sleep 5
-  - npm install -g yarn --cache-min 999999999
+  - npm install -g yarn --cache-min 999999999 lerna
 
 cache:
   directories:
   - $HOME/.yarn-cache
 
 install:
-  - yarn global add lerna
+  - lerna bootstrap
   - lerna run testrpc:start
   - sleep 3
 

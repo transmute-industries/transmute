@@ -23,6 +23,7 @@
 13 error npm ERR!
 13 error npm ERR! Failed at the transmute-framework@0.1.50 truffle:test script.
 13 error npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+13 error npm WARN Local package.json exists, but node_modules missing, did you mean to install?
 13 error npm ERR! code ELIFECYCLE
 13 error npm ERR! errno 1
 13 error npm ERR! transmute-framework@0.1.50 test: `npm run truffle:test`
@@ -30,6 +31,7 @@
 13 error npm ERR!
 13 error npm ERR! Failed at the transmute-framework@0.1.50 test script.
 13 error npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+13 error npm WARN Local package.json exists, but node_modules missing, did you mean to install?
 13 error
 13 error > transmute-framework@0.1.50 test /Users/orie/Code/lerna-transmute/packages/transmute-framework
 13 error > npm run truffle:test
@@ -54,26 +56,17 @@
 13 error Compiling ./contracts/TransmuteFramework/StringUtils.sol...
 13 error Compiling ./contracts/TransmuteFramework/UnsafeEventStore.sol...
 13 error Compiling ./contracts/TransmuteFramework/UnsafeEventStoreFactory.sol...
-13 error
-13 error /Users/orie/Code/lerna-transmute/packages/transmute-framework/contracts/TransmuteFramework/EventStoreLib.sol:61:75: ParserError: Expected token LBrace got 'View'
-13 error     function readEvent(EsEventStorage storage self, uint _eventId) public view
-13 error                                                                           ^
-13 error ,/Users/orie/Code/lerna-transmute/packages/transmute-framework/contracts/TransmuteFramework/RBAC.sol:41:32: ParserError: Expected token LBrace got 'View'
-13 error   function eventCount() public view
-13 error                                ^
-13 error ,/Users/orie/Code/lerna-transmute/packages/transmute-framework/contracts/TransmuteFramework/RBACEventStore.sol:16:32: ParserError: Expected token LBrace got 'View'
-13 error   function eventCount() public view
-13 error                                ^
-13 error ,/Users/orie/Code/lerna-transmute/packages/transmute-framework/contracts/TransmuteFramework/RBACEventStoreFactory.sol:18:10: ParserError: Expected token LBrace got 'View'
-13 error   public view
-13 error          ^
-13 error ,/Users/orie/Code/lerna-transmute/packages/transmute-framework/contracts/TransmuteFramework/StringUtils.sol:9:39: ParserError: Expected token LBrace got reserved keyword 'Pure'
-13 error   function uintToBytes(uint v) public pure
-13 error                                       ^
-13 error ,/Users/orie/Code/lerna-transmute/packages/transmute-framework/contracts/TransmuteFramework/UnsafeEventStore.sol:20:32: ParserError: Expected token LBrace got 'View'
-13 error   function eventCount() public view
-13 error                                ^
-13 error Compiliation failed. See above.
+13 error Error: Cannot find module 'bs58'
+13 error     at Function.Module._resolveFilename (module.js:527:15)
+13 error     at Function.Module._load (module.js:476:23)
+13 error     at Module.require (module.js:568:17)
+13 error     at require (internal/module.js:11:18)
+13 error     at Object.<anonymous> (/Users/orie/Code/lerna-transmute/packages/transmute-framework/test/Common.js:1:76)
+13 error     at Module._compile (module.js:624:30)
+13 error     at Object.Module._extensions..js (module.js:635:10)
+13 error     at Module.load (module.js:545:32)
+13 error     at tryModuleLoad (module.js:508:12)
+13 error     at Function.Module._load (module.js:500:3)
 13 error
 13 error     at Promise.all.then.arr (/Users/orie/.config/yarn/global/node_modules/lerna/node_modules/execa/index.js:236:11)
 13 error     at <anonymous>
