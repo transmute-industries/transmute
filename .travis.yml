@@ -22,11 +22,9 @@ cache:
   - $HOME/.yarn-cache
 
 install:
-  - yarn
-  - yarn testrpc:start
+  - yarn global add lerna
+  - lerna run testrpc:start
   - sleep 3
 
 script:
-  - yarn truffle:migrate
-  - yarn test:coverage
-  - yarn test:coverage:report
+  - lerna run test
