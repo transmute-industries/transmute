@@ -3,6 +3,10 @@ sudo: required
 dist: trusty
 language: node_js
 
+cache:
+  directories:
+  - $HOME/.yarn-cache
+
 node_js:
   - "8.4.0"
 
@@ -16,16 +20,13 @@ before_install:
   - ipfs daemon &
   - sleep 5
   - npm install -g yarn --cache-min 999999999 lerna ethereumjs-testrpc
-  - testrpc & 
-
-cache:
-  directories:
-  - $HOME/.yarn-cache
 
 install:
   - lerna bootstrap
   
 script:
+  - lerna run testrpc:start
   - lerna run truffle:test
   - lerna run truffle:migrate
-  - lerna run test
+  - lerna run test --stream
+  - lerna run build
