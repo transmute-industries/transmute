@@ -1,7 +1,7 @@
-var Ownable = artifacts.require('./TransmuteFramework/zeppelin/ownership/Ownable.sol')
-var Killable = artifacts.require('./TransmuteFramework/zeppelin/lifecycle/Killable.sol')
+var Ownable = artifacts.require('./TransmuteFramework/Ownable.sol')
+var Killable = artifacts.require('./TransmuteFramework/Killable.sol')
 
-var StringUtils = artifacts.require('./TransmuteFramework/Utils/StringUtils.sol')
+var StringUtils = artifacts.require('./TransmuteFramework/StringUtils.sol')
 
 var AddressSetLib = artifacts.require('./TransmuteFramework/SetLib/AddressSet/AddressSetLib.sol')
 var AddressSetSpec = artifacts.require('./TransmuteFramework/SetLib/AddressSet/AddressSetSpec.sol')
@@ -14,17 +14,13 @@ var UIntSetSpec = artifacts.require('./TransmuteFramework/SetLib/UIntSet/UIntSet
 
 var RBAC = artifacts.require('./TransmuteFramework/RBAC.sol')
 
-var EventStoreLib = artifacts.require('./TransmuteFramework/EventStore/EventStoreLib.sol')
+var EventStoreLib = artifacts.require('./TransmuteFramework/EventStoreLib.sol')
 
-var UnsafeEventStore = artifacts.require('./TransmuteFramework/EventStore/UnsafeEventStore/UnsafeEventStore.sol')
-var UnsafeEventStoreFactory = artifacts.require(
-  './TransmuteFramework/EventStore/UnsafeEventStore/UnsafeEventStoreFactory.sol'
-)
+var UnsafeEventStore = artifacts.require('./TransmuteFramework/UnsafeEventStore/UnsafeEventStore.sol')
+var UnsafeEventStoreFactory = artifacts.require('./TransmuteFramework/UnsafeEventStore/UnsafeEventStoreFactory.sol')
 
-var RBACEventStore = artifacts.require('./TransmuteFramework/EventStore/RBACEventStore/RBACEventStore.sol')
-var RBACEventStoreFactory = artifacts.require(
-  './TransmuteFramework/EventStore/RBACEventStore/RBACEventStoreFactory.sol'
-)
+var RBACEventStore = artifacts.require('./TransmuteFramework/RBACEventStore/RBACEventStore.sol')
+var RBACEventStoreFactory = artifacts.require('./TransmuteFramework/RBACEventStore/RBACEventStoreFactory.sol')
 
 module.exports = function(deployer) {
   deployer.deploy(StringUtils)

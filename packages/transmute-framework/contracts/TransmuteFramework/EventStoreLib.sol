@@ -10,9 +10,9 @@ library EventStoreLib{
 
         bytes1 KeyType; // A - Address, U - UInt, B - Bytes32, X - Bytes32 (ascii)
         bytes1 ValueType; // A - Address, U - UInt, B - Bytes32, X - Bytes32 (ascii)
-        
-        bytes32 Key; // Key 
-        bytes32 Value; // Value 
+
+        bytes32 Key; // Key
+        bytes32 Value; // Value
     }
 
     struct EsEventStorage {
@@ -21,13 +21,13 @@ library EventStoreLib{
 
     // WRITE EVENT
     function writeEvent(
-        EsEventStorage storage self, 
+        EsEventStorage storage self,
         bytes32 _eventType,
         bytes1 _keyType,
         bytes1 _valueType,
         bytes32 _key,
         bytes32 _value
-    ) returns (uint) {
+    ) public returns (uint) {
         uint _created = now;
         uint _eventId = self.events.length;
 
@@ -45,7 +45,7 @@ library EventStoreLib{
 
         EsEvent(
             _eventId,
-            esEvent.TxOrigin, 
+            esEvent.TxOrigin,
             esEvent.Created,
             esEvent.EventType,
             esEvent.KeyType,
@@ -58,12 +58,12 @@ library EventStoreLib{
     }
 
     // READ EVENT
-    function readEvent(EsEventStorage storage self, uint _eventId) 
+    function readEvent(EsEventStorage storage self, uint _eventId) public view
     returns (uint, address, uint, bytes32, bytes1, bytes1, bytes32, bytes32) {
         EsEventStruct memory esEvent = self.events[_eventId];
         return (
-            _eventId, 
-            esEvent.TxOrigin, 
+            _eventId,
+            esEvent.TxOrigin,
             esEvent.Created,
             esEvent.EventType,
 

@@ -1,8 +1,8 @@
 pragma solidity ^0.4.11;
 
-import "../EventStore/EventStoreLib.sol";
-import "../SetLib/Bytes32Set/Bytes32SetLib.sol";
-import '../zeppelin/lifecycle/Killable.sol';
+import "./EventStoreLib.sol";
+import "./SetLib/Bytes32Set/Bytes32SetLib.sol";
+import './Killable.sol';
 
 contract RBAC is Killable {
 
@@ -30,15 +30,15 @@ contract RBAC is Killable {
   );
 
   // FALLBACK
-  function () payable { revert(); }
+  function () public payable { revert(); }
 
   // CONSTRUCTOR
-  function RBAC() payable {
+  function RBAC() public payable {
     internalEventTypes.add(bytes32('AC_ROLE_ASSIGNED'));
     internalEventTypes.add(bytes32('AC_GRANT_WRITTEN'));
   }
 
-  function eventCount()
+  function eventCount() public view
   returns (uint)
   {
     return store.events.length;
@@ -77,7 +77,7 @@ contract RBAC is Killable {
   }
 
   function getAddressRole(address target)
-  public
+  public view
   returns (bytes32)
   {
     // if not the owner or the requesting address, do not return the role for the given address
@@ -87,7 +87,7 @@ contract RBAC is Killable {
     return addressRole[target];
   }
 
-  function grantCount()
+  function grantCount() public view
   returns (uint)
   {
     return grants.length;
@@ -109,7 +109,7 @@ contract RBAC is Killable {
     writeInternalEvent('AC_GRANT_WRITTEN', 'X', 'U', 'index', bytes32(grants.length-1));
   }
 
-  function getGrant(uint index)
+  function getGrant(uint index) public view
   returns (bytes32 role, bytes32 resource, bytes32 action, bytes32[] attributes)
   {
     Grant memory grant = grants[index];
@@ -118,7 +118,7 @@ contract RBAC is Killable {
 
   // The client interprets attributes = granted ? ['*'] : []
   // so no need to return a bytes32 array here...
-  function canRoleActionResource(bytes32 role, bytes32 action, bytes32 resource)
+  function canRoleActionResource(bytes32 role, bytes32 action, bytes32 resource) public view
   returns (bool granted, bytes32 _role, bytes32 _resource)
   {
     granted = isHashOfRoleActionResourceGranted[keccak256(role, action, resource)];
@@ -148,7 +148,7 @@ contract RBAC is Killable {
 
   // READ EVENT
   function readEvent(uint _eventId)
-    public
+    public view
     returns (
       uint,
       address,

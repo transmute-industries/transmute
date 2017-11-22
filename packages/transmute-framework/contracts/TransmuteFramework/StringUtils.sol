@@ -6,7 +6,7 @@ pragma solidity ^0.4.11;
 library StringUtils {
   /// @dev Converts an unsigned integer to its string representation.
   /// @param v The number to be converted.
-  function uintToBytes(uint v) constant
+  function uintToBytes(uint v) public pure
     returns (bytes32 ret) {
     if (v == 0) {
       ret = '0';
@@ -23,7 +23,7 @@ library StringUtils {
 
   /// @dev Converts a numeric string to its unsigned integer representation.
   /// @param v The string to be converted.
-  function bytesToUInt(bytes32 v) constant
+  function bytesToUInt(bytes32 v) public pure
     returns (uint ret) {
     require(v != 0x0);
 

@@ -1,7 +1,7 @@
 pragma solidity ^0.4.11;
 
 import './Bytes32SetLib.sol';
-import '../../zeppelin/lifecycle/Killable.sol';
+import '../../Killable.sol';
 
 contract Bytes32SetSpec is Killable {
   using Bytes32SetLib for Bytes32SetLib.Bytes32Set;
@@ -12,8 +12,8 @@ contract Bytes32SetSpec is Killable {
   bool public lastAdd;
   bool public lastRemove;
 
-  function () payable {}
-  function Bytes32SetSpec() payable {}
+  function () public payable {}
+  function Bytes32SetSpec() public payable {}
 
   function get(uint index) public constant
     returns (bytes32)

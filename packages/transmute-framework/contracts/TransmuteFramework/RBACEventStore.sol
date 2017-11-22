@@ -1,32 +1,32 @@
 pragma solidity ^0.4.11;
 
-import '../../../zeppelin/lifecycle/Killable.sol';
-import '../../../Security/RBAC.sol';
+import './Killable.sol';
+import './RBAC.sol';
 
 contract RBACEventStore is RBAC {
 
   // FALLBACK
-  function () payable { revert(); }
-  
-  // CONSTRUCTOR  
-  function RBACEventStore() payable {
+  function () public payable { revert(); }
+
+  // CONSTRUCTOR
+  function RBACEventStore() public payable {
     owner = tx.origin;
   }
 
-  function eventCount() 
+  function eventCount() public view
   returns (uint)
   {
     return store.events.length;
   }
 
   function writeEvent(
-    bytes32 _eventType, 
+    bytes32 _eventType,
     bytes1 _keyType,
     bytes1 _valueType,
     bytes32 _key,
     bytes32 _value
-  ) 
-    public 
+  )
+    public
     returns (uint)
   {
     // Check access control here before writing events...
@@ -36,8 +36,8 @@ contract RBACEventStore is RBAC {
       revert();
     }
     return EventStoreLib.writeEvent(
-      store, 
-      _eventType, 
+      store,
+      _eventType,
       _keyType,
       _valueType,
       _key,
@@ -46,13 +46,13 @@ contract RBACEventStore is RBAC {
   }
 
   // READ EVENT
-  function readEvent(uint _eventId) 
-    public 
+  function readEvent(uint _eventId)
+    public view
     returns (
-      uint, 
-      address, 
-      uint, 
-      bytes32, 
+      uint,
+      address,
+      uint,
+      bytes32,
       bytes1,
       bytes1,
       bytes32,

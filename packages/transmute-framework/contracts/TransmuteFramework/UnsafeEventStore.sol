@@ -1,8 +1,7 @@
 pragma solidity ^0.4.11;
 
-
-import "../../EventStoreLib.sol";
-import '../../../zeppelin/lifecycle/Killable.sol';
+import "./EventStoreLib.sol";
+import './Killable.sol';
 
 contract UnsafeEventStore is Killable {
   using EventStoreLib for EventStoreLib.EsEventStorage;
@@ -11,33 +10,33 @@ contract UnsafeEventStore is Killable {
   address public creator;
 
   // FALLBACK
-  function () payable { revert(); }
-  
-  // CONSTRUCTOR  
-  function UnsafeEventStore() payable {
+  function () public payable { revert(); }
+
+  // CONSTRUCTOR
+  function UnsafeEventStore() public payable {
     creator = tx.origin;
   }
 
-  function eventCount() 
+  function eventCount() public view
   returns (uint)
   {
     return store.events.length;
   }
 
   function writeEvent(
-    bytes32 _eventType, 
+    bytes32 _eventType,
     bytes1 _keyType,
     bytes1 _valueType,
     bytes32 _key,
     bytes32 _value
-  ) 
-    public 
+  )
+    public
     returns (uint)
   {
     // Check access control here before writing events...
     return EventStoreLib.writeEvent(
-      store, 
-      _eventType, 
+      store,
+      _eventType,
       _keyType,
       _valueType,
       _key,
@@ -46,13 +45,13 @@ contract UnsafeEventStore is Killable {
   }
 
   // READ EVENT
-  function readEvent(uint _eventId) 
-    public 
+  function readEvent(uint _eventId)
+    public view
     returns (
-      uint, 
-      address, 
-      uint, 
-      bytes32, 
+      uint,
+      address,
+      uint,
+      bytes32,
       bytes1,
       bytes1,
       bytes32,
