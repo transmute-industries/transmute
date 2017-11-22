@@ -11,6 +11,10 @@ We use the [lerna mono repo pattern](https://github.com/lerna/lerna).
 ```
 lerna bootstrap
 lerna run testrpc:start
+
+lerna run truffle:migrate
+lerna run build
+
 lerna run test
 
 ```
