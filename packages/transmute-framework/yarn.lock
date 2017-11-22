@@ -174,6 +174,10 @@
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
 
+"@types/flux-standard-action@0.5.31":
+  version "0.5.31"
+  resolved "https://registry.yarnpkg.com/@types/flux-standard-action/-/flux-standard-action-0.5.31.tgz#45b4a47a0275b8c46d184296e1f3e5ef53bf78ee"
+
 "@types/fs-extra@^3.0.0":
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-3.0.3.tgz#1d66eb670ebf657e57c0fda014df340c19d8aa0c"
@@ -3367,6 +3371,12 @@ firebase@4.5.0:
 flatmap@0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/flatmap/-/flatmap-0.0.3.tgz#1f18a4d938152d495965f9c958d923ab2dd669b4"
+
+flux-standard-action@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/flux-standard-action/-/flux-standard-action-2.0.0.tgz#f22deb61033eabe86ec27bf204d6d46e973c52c9"
+  dependencies:
+    lodash "^4.0.0"
 
 for-each@^0.3.2, for-each@~0.3.2:
   version "0.3.2"

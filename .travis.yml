@@ -28,5 +28,4 @@ install:
 script:
   - lerna run truffle:test
   - lerna run truffle:migrate
-  - lerna run test --stream
-  - lerna run build
+  - lerna run build --stream

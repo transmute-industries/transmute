@@ -109,6 +109,7 @@
     }
   },
   "dependencies": {
+    "@types/flux-standard-action": "0.5.31",
     "@types/lodash": "4.14.77",
     "accesscontrol": "2.0.0",
     "bip39": "2.4.0",
@@ -123,6 +124,7 @@
     "fallback-local-storage": "0.0.17",
     "firebase": "4.5.0",
     "firebase-admin": "5.4.1",
+    "flux-standard-action": "2.0.0",
     "ipfs-api": "14.3.5",
     "ipld-dag-cbor": "0.11.1",
     "isomorphic-fetch": "2.2.1",
