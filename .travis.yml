@@ -15,7 +15,7 @@ before_install:
   - ipfs init
   - ipfs daemon &
   - sleep 5
-  - npm install -g yarn --cache-min 999999999 lerna
+  - npm install -g yarn --cache-min 999999999 lerna ethereumjs-testrpc
 
 cache:
   directories:
@@ -23,8 +23,7 @@ cache:
 
 install:
   - lerna bootstrap
+  - testrpc & 
 
 script:
-  - lerna run testrpc:start
-  - sleep 3
   - lerna run test
