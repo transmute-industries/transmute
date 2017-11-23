@@ -1,43 +1,42 @@
 pragma solidity ^0.4.11;
 
-import '../../../zeppelin/lifecycle/Killable.sol';
-import '../../../Security/RBAC.sol';
+import "./EventStoreLib.sol";
+import './Killable.sol';
 
-contract RBACEventStore is RBAC {
+contract UnsafeEventStore is Killable {
+  using EventStoreLib for EventStoreLib.EsEventStorage;
+
+  EventStoreLib.EsEventStorage store;
+  address public creator;
 
   // FALLBACK
-  function () payable { throw; }
-  
-  // CONSTRUCTOR  
-  function RBACEventStore() payable {
-    owner = tx.origin;
+  function () public payable { revert(); }
+
+  // CONSTRUCTOR
+  function UnsafeEventStore() public payable {
+    creator = tx.origin;
   }
 
-  function eventCount() 
+  function eventCount() public view
   returns (uint)
   {
     return store.events.length;
   }
 
   function writeEvent(
-    bytes32 _eventType, 
+    bytes32 _eventType,
     bytes1 _keyType,
     bytes1 _valueType,
     bytes32 _key,
     bytes32 _value
-  ) 
-    public 
+  )
+    public
     returns (uint)
   {
     // Check access control here before writing events...
-    bytes32 txOriginRole = getAddressRole(msg.sender);
-    var (granted,,) = canRoleActionResource(txOriginRole, bytes32("create:any"), bytes32("event"));
-    if (msg.sender != owner && !granted){
-      throw;
-    }
     return EventStoreLib.writeEvent(
-      store, 
-      _eventType, 
+      store,
+      _eventType,
       _keyType,
       _valueType,
       _key,
@@ -46,13 +45,13 @@ contract RBACEventStore is RBAC {
   }
 
   // READ EVENT
-  function readEvent(uint _eventId) 
-    public 
+  function readEvent(uint _eventId)
+    public view
     returns (
-      uint, 
-      address, 
-      uint, 
-      bytes32, 
+      uint,
+      address,
+      uint,
+      bytes32,
       bytes1,
       bytes1,
       bytes32,

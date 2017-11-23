@@ -86,7 +86,7 @@ library AddressSetLib {
   {
     return remove(self, old) && add(self, nu);
   }
-  
+
   function first(AddressSet storage self) public constant
     notEmpty(self)
     returns (address)

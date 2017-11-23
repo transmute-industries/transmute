@@ -1,29 +1,30 @@
 pragma solidity ^0.4.11;
+import "./RBACEventStore.sol";
+import './RBAC.sol';
+import "./SetLib/AddressSet/AddressSetLib.sol";
 
-import "./UnsafeEventStore.sol";
-import "../../../SetLib/AddressSet/AddressSetLib.sol";
-
-contract UnsafeEventStoreFactory is UnsafeEventStore {
-
+contract RBACEventStoreFactory is RBAC {
   using AddressSetLib for AddressSetLib.AddressSet;
-
   mapping (address => AddressSetLib.AddressSet) creatorEventStoreMapping;
-  AddressSetLib.AddressSet EventStoreAddresses;
+  AddressSetLib.AddressSet storeAddresses;
 
   // Fallback Function
-  function () payable { throw; }
+  function () public payable { revert(); }
 
   // Constructor
-  function UnsafeEventStoreFactory()
-  payable
-  {
+  function RBACEventStoreFactory() public payable {}
 
+  function eventCount()
+  public view
+  returns (uint)
+  {
+    return store.events.length;
   }
 
   // Modifiers
   modifier checkExistence(address _EventStoreAddress)
   {
-    require(EventStoreAddresses.contains(_EventStoreAddress));
+    require(storeAddresses.contains(_EventStoreAddress));
     _;
   }
 
@@ -39,7 +40,7 @@ contract UnsafeEventStoreFactory is UnsafeEventStore {
     public constant
     returns (address[])
   {
-    return EventStoreAddresses.values;
+    return storeAddresses.values;
   }
 
   // Interface
@@ -47,17 +48,26 @@ contract UnsafeEventStoreFactory is UnsafeEventStore {
     public
     returns (address)
   {
+    bytes32 txOriginRole = getAddressRole(msg.sender);
+
+    var (granted,,) = canRoleActionResource(txOriginRole, bytes32("create:any"), bytes32("eventstore"));
+
+    if (msg.sender != owner && !granted){
+      revert();
+    }
     // Interact With Other Contracts
-		UnsafeEventStore _newEventStore = new UnsafeEventStore();
+    RBACEventStore _newEventStore = new RBACEventStore();
 
     // Update State Dependent On Other Contracts
-    EventStoreAddresses.add(address(_newEventStore));
+    storeAddresses.add(address(_newEventStore));
     creatorEventStoreMapping[msg.sender].add(address(_newEventStore));
 
-    writeEvent('ES_CREATED', 'X', 'A', 'address', bytes32(address(_newEventStore)));
+    writeInternalEvent('ES_CREATED', 'X', 'A', 'address', bytes32(address(_newEventStore)));
 
     return address(_newEventStore);
+
 	}
+
 
   function killEventStore(address _address)
     public
@@ -65,15 +75,14 @@ contract UnsafeEventStoreFactory is UnsafeEventStore {
   {
     // Validate Local State - Only the Factory owner can destroy stores with this method
     require(this.owner() == msg.sender);
-
-    UnsafeEventStore _eventStore = UnsafeEventStore(_address);
+    RBACEventStore _eventStore = RBACEventStore(_address);
 
     // Update Local State
     creatorEventStoreMapping[_eventStore.owner()].remove(_address);
-    EventStoreAddresses.remove(_address);
+    storeAddresses.remove(_address);
 
     _eventStore.kill();
 
-    writeEvent('ES_DESTROYED', 'X', 'A', 'address', bytes32(_address));
+    writeInternalEvent('ES_DESTROYED', 'X', 'A', 'address', bytes32(_address));
   }
 }

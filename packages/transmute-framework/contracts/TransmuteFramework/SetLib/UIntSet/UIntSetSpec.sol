@@ -1,7 +1,7 @@
 pragma solidity ^0.4.11;
 
 import './UIntSetLib.sol';
-import '../../zeppelin/lifecycle/Killable.sol';
+import '../../Killable.sol';
 
 contract UIntSetSpec is Killable {
   using UIntSetLib for UIntSetLib.UIntSet;
@@ -12,8 +12,8 @@ contract UIntSetSpec is Killable {
   bool public lastAdd;
   bool public lastRemove;
 
-  function () payable {}
-  function UIntSetSpec() payable {}
+  function () public payable {}
+  function UIntSetSpec() public payable {}
 
   function get(uint index) public constant
     returns (uint)

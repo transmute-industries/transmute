@@ -1,7 +1,7 @@
 pragma solidity ^0.4.11;
 
 import './AddressSetLib.sol';
-import '../../zeppelin/lifecycle/Killable.sol';
+import '../../Killable.sol';
 
 contract AddressSetSpec is Killable {
   using AddressSetLib for AddressSetLib.AddressSet;
@@ -12,8 +12,8 @@ contract AddressSetSpec is Killable {
   bool public lastAdd;
   bool public lastRemove;
 
-  function () payable {}
-  function AddressSetSpec() payable {}
+  function () public payable {}
+  function AddressSetSpec() public payable {}
 
   function get(uint index) public constant
     returns (address)

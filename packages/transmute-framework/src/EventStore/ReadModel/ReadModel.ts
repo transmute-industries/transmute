@@ -40,7 +40,7 @@ export class ReadModel {
     eventStore: any,
     fromAddress: string,
     readModel: Common.IReadModel,
-    reducer: any
+    reducer: any,
     eventResolverConfig?: Common.IEventResolverConfig
   ): Promise<Common.IReadModel> => {
     if (!readModel) {

@@ -1,29 +1,26 @@
-var Ownable = artifacts.require('./TransmuteFramework/zeppelin/ownership/Ownable.sol')
-var Killable = artifacts.require('./TransmuteFramework/zeppelin/lifecycle/Killable.sol')
+var Ownable = artifacts.require('./TransmuteFramework/Ownable.sol')
+var Killable = artifacts.require('./TransmuteFramework/Killable.sol')
 
-var StringUtils = artifacts.require("./TransmuteFramework/Utils/StringUtils.sol")
+var StringUtils = artifacts.require('./TransmuteFramework/StringUtils.sol')
 
-var AddressSetLib = artifacts.require("./TransmuteFramework/SetLib/AddressSet/AddressSetLib.sol")
-var AddressSetSpec = artifacts.require("./TransmuteFramework/SetLib/AddressSet/AddressSetSpec.sol")
+var AddressSetLib = artifacts.require('./TransmuteFramework/SetLib/AddressSet/AddressSetLib.sol')
+var AddressSetSpec = artifacts.require('./TransmuteFramework/SetLib/AddressSet/AddressSetSpec.sol')
 
-var Bytes32SetLib = artifacts.require("./TransmuteFramework/SetLib/Bytes32Set/Bytes32SetLib.sol")
-var Bytes32SetSpec = artifacts.require("./TransmuteFramework/SetLib/Bytes32Set/Bytes32SetSpec.sol")
+var Bytes32SetLib = artifacts.require('./TransmuteFramework/SetLib/Bytes32Set/Bytes32SetLib.sol')
+var Bytes32SetSpec = artifacts.require('./TransmuteFramework/SetLib/Bytes32Set/Bytes32SetSpec.sol')
 
-var UIntSetLib = artifacts.require("./TransmuteFramework/SetLib/UIntSet/UIntSetLib.sol")
-var UIntSetSpec = artifacts.require("./TransmuteFramework/SetLib/UIntSet/UIntSetSpec.sol")
-
+var UIntSetLib = artifacts.require('./TransmuteFramework/SetLib/UIntSet/UIntSetLib.sol')
+var UIntSetSpec = artifacts.require('./TransmuteFramework/SetLib/UIntSet/UIntSetSpec.sol')
 
 var RBAC = artifacts.require('./TransmuteFramework/RBAC.sol')
 
-var EventStoreLib = artifacts.require('./TransmuteFramework/EventStore/EventStoreLib.sol')
+var EventStoreLib = artifacts.require('./TransmuteFramework/EventStoreLib.sol')
 
-var UnsafeEventStore = artifacts.require('./TransmuteFramework/EventStore/UnsafeEventStore/UnsafeEventStore.sol')
-var UnsafeEventStoreFactory = artifacts.require('./TransmuteFramework/EventStore/UnsafeEventStore/UnsafeEventStoreFactory.sol')
+var UnsafeEventStore = artifacts.require('./TransmuteFramework/UnsafeEventStore/UnsafeEventStore.sol')
+var UnsafeEventStoreFactory = artifacts.require('./TransmuteFramework/UnsafeEventStore/UnsafeEventStoreFactory.sol')
 
-var RBACEventStore = artifacts.require('./TransmuteFramework/EventStore/RBACEventStore/RBACEventStore.sol')
-var RBACEventStoreFactory = artifacts.require('./TransmuteFramework/EventStore/RBACEventStore/RBACEventStoreFactory.sol')
-
-
+var RBACEventStore = artifacts.require('./TransmuteFramework/RBACEventStore/RBACEventStore.sol')
+var RBACEventStoreFactory = artifacts.require('./TransmuteFramework/RBACEventStore/RBACEventStoreFactory.sol')
 
 module.exports = function(deployer) {
   deployer.deploy(StringUtils)
@@ -48,7 +45,7 @@ module.exports = function(deployer) {
   deployer.deploy(UIntSetSpec)
 
   deployer.deploy(EventStoreLib)
-  
+
   deployer.link(EventStoreLib, UnsafeEventStore)
   deployer.link(AddressSetLib, UnsafeEventStore)
   deployer.link(Killable, UnsafeEventStore)
@@ -62,7 +59,6 @@ module.exports = function(deployer) {
   deployer.link(EventStoreLib, RBAC)
   deployer.link(Bytes32SetLib, RBAC)
   deployer.deploy(RBAC)
-
 
   deployer.link(EventStoreLib, RBACEventStore)
   deployer.link(Bytes32SetLib, RBACEventStore)
