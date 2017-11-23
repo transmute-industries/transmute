@@ -10,12 +10,10 @@
 We use the [lerna mono repo pattern](https://github.com/lerna/lerna).
 
 ```
+npm install -g lerna
 lerna bootstrap
-lerna run testrpc:start
-
+lerna run truffle:test
 lerna run truffle:migrate
-lerna run build
-
-lerna run test
-
+lerna run build --stream
+lerna run test --stream
 ```

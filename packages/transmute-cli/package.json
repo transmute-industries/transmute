@@ -1,14 +1,17 @@
 {
-  "name": "transmute-framework",
-  "version": "0.1.50",
-  "description": "typescript dapp framework",
-  "main": "lib/transmute-framework.js",
-  "module": "lib/transmute-framework.js",
-  "es2015": "lib-esm/transmute-framework.js",
-  "typings": "typings/transmute-framework.d.ts",
+  "name": "transmute-cli",
+  "version": "0.1.41",
+  "description": "transmute framework cli",
+  "main": "umd/index.js",
+  "module": "lib/index.js",
+  "es2015": "lib-esm/index.js",
+  "typings": "typings/index.d.ts",
+  "bin": {
+    "transmute": "cli.js"
+  },
   "repository": {
     "type": "git",
-    "url": "https://www.github.com/transmute-industries/transmute-framework"
+    "url": "https://www.github.com/transmute-industries/transmute-cli"
   },
   "keywords": [
     "solidity",
@@ -30,23 +33,21 @@
     "node": ">=6.9"
   },
   "scripts": {
+    "transmute": "node cli.js",
+    "fuck": "yarn cleanup && yarn build && git add -A && git commit -m ':rocket:' --no-verify && npm version patch && npm publish && yarn global add transmute-cli@latest",
+    "publish-install-latest": "npm version patch && npm publish && yarn global add transmute-cli@latest",
     "cleanup": "shx rm -rf umd lib lib-esm lib-fesm typings coverage docs",
     "prebuild": "npm run cleanup && npm run verify",
     "build": " tsc && tsc --target es2017 --outDir lib-esm && webpack && webpack --env.prod",
     "build:fesm:min": "uglifyjs lib-fesm/index.js --compress --mangle --source-map --output lib-fesm/index.min.js",
     "docs": "typedoc -p . --gaID UA-99768185-1  --theme minimal --target 'es6' --excludeNotExported --excludePrivate --ignoreCompilerErrors --exclude \"**/src/**/*.{spec,mock}.*\" --out docs src/ && /usr/bin/open -a '/Applications/Google Chrome.app' docs/index.html",
     "docs:deploy": "firebase deploy --only hosting",
-    "ipfs": "ipfs daemon",
-    "ipfs:allow": "ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '[\"http://127.0.0.1:1337\"]'",
-    "truffle:test": "truffle test",
-    "truffle:migrate": "truffle migrate",
-    "test": "npm run test:jest",
-    "test:jest": "jest --forceExit",
-    "test:watch": "jest --watch --forceExit",
-    "test:coverage": "jest --coverage --forceExit",
-    "test:coverage:report": "codecov -cF transmute-framework",
-    "testrpc:start": "pm2 start testrpc",
-    "testrpc:stop": "pm2 stop testrpc",
+    "docker:start": "docker-compose up",
+    "docker:build": "docker-compose up --build",
+    "test": "jest --forceExit",
+    "test:watch": "npm test -- --watch",
+    "test:coverage": "npm test -- --coverage",
+    "test:coverage:report": "codecov -cF transmute-cli",
     "verify": "npm run test:coverage",
     "cz": "git-cz",
     "prettier:ts": "prettier --single-quote --print-width 120 --trailing-comma es5 --no-semi --parser typescript",
@@ -57,9 +58,7 @@
     "release:preflight": "irish-pub",
     "release:preflight:package": "npm pack",
     "size": "shx echo \"Gzipped Size:\" && cross-var strip-json-comments --no-whitespace $npm_package_main | gzip-size",
-    "docker:build": "docker build -t transmute/transmute-framework .",
-    "smoke:node": "node ./smoke-test/node.js",
-    "rebuild-dapp": "./examples/rebuild.sh"
+    "smoke-rebuild": "yarn transmute setup --from ~/Code/secrets/.transmute/ && rm -rf ../smoke/dapp/ && yarn transmute init ../smoke/"
   },
   "config": {
     "commitizen": {
@@ -71,65 +70,66 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx}": ["npm run prettier:ts -- --write", "git add"]
+    "src/**/*.{ts,tsx}": [
+      "npm run prettier:ts -- --write",
+      "git add"
+    ]
   },
   "jest": {
-    "roots": ["<rootDir>/src"],
+    "roots": [
+      "<rootDir>/src"
+    ],
     "transform": {
       "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": ["ts", "tsx", "js", "json", "node"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json",
+      "node"
+    ],
     "mapCoverage": true,
     "coveragePathIgnorePatterns": [
       "<rootDir>/node_modules/",
       "<rootDir>/lib/",
+      "<rootDir>/src/migrate",
+      "<rootDir>/src/install",
+      "<rootDir>/src/firestore",
+      "<rootDir>/src/patch",
+      "<rootDir>/src/event-store",
+      "<rootDir>/src/ipfs",
       "<rootDir>/lib-esm/",
       "<rootDir>/umd/",
       "<rootDir>/src/.*(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$"
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 0,
-        "functions": 0,
-        "lines": 0,
-        "statements": 0
+        "branches": 70,
+        "functions": 70,
+        "lines": 70,
+        "statements": 70
       }
     }
   },
-  "resolutions": {
-    "tar": "^2.2.1"
-  },
   "dependencies": {
-    "@types/flux-standard-action": "0.5.31",
-    "@types/lodash": "4.14.77",
-    "accesscontrol": "2.0.0",
-    "bip39": "2.4.0",
-    "bs58": "4.0.1",
-    "chai": "4.1.2",
-    "codecov": "3.0.0",
-    "coveralls": "3.0.0",
-    "es6-promise": "4.1.1",
-    "ethereumjs-testrpc": "4.1.3",
-    "ethereumjs-tx": "1.3.3",
-    "ethereumjs-util": "5.1.2",
-    "ethereumjs-wallet": "0.6.0",
-    "fallback-local-storage": "0.0.17",
-    "firebase": "4.5.0",
-    "firebase-admin": "5.4.1",
-    "flux-standard-action": "2.0.0",
-    "ipfs-api": "14.3.5",
-    "ipld-dag-cbor": "0.11.1",
-    "isomorphic-fetch": "2.2.1",
-    "jiff": "0.7.3",
-    "json-logic-js": "1.2.0",
-    "local-storage-fallback": "4.0.0",
-    "moment": "2.18.1",
-    "truffle": "4.0.1",
-    "truffle-contract": "3.0.0",
-    "web3": "0.19.0",
-    "web3-provider-engine": "13.3.1",
-    "web3-utils": "1.0.0-beta.26"
+    "@google-cloud/firestore": "^0.8.1",
+    "bluebird": "^3.5.1",
+    "dotenv": "^4.0.0",
+    "firebase": "^4.6.0",
+    "firebase-admin": "^5.4.1",
+    "firebase-functions": "^0.7.0",
+    "lodash": "^4.17.4",
+    "mustache": "^2.3.0",
+    "ncp": "^2.0.0",
+    "replace-in-file": "^3.0.0-beta.2",
+    "request-promise": "^4.2.2",
+    "shelljs": "^0.7.8",
+    "transmute-framework": "0.1.49-firestore-test.7",
+    "vorpal": "^1.12.0",
+    "vorpal-log": "^1.1.0",
+    "vorpal-tour": "^0.0.5"
   },
   "devDependencies": {
     "@types/jest": "20.0.2",
@@ -138,8 +138,6 @@
     "commitizen": "2.9.6",
     "cross-var": "1.0.3",
     "cz-conventional-changelog": "2.0.0",
-    "dotenv": "4.0.0",
-    "firebase-functions": "0.7.0",
     "gzip-size-cli": "2.0.0",
     "husky": "0.14.1",
     "irish-pub": "0.2.0",
@@ -156,7 +154,7 @@
     "tslint-config-standard": "6.0.1",
     "tslint-react": "3.0.0",
     "typedoc": "0.7.1",
-    "typescript": "2.5.3",
+    "typescript": "2.4.1",
     "validate-commit-msg": "2.12.2",
     "webpack": "3.0.0",
     "webpack-config-utils": "2.3.0"
