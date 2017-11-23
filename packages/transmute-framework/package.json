@@ -71,26 +71,15 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx}": [
-      "npm run prettier:ts -- --write",
-      "git add"
-    ]
+    "src/**/*.{ts,tsx}": ["npm run prettier:ts -- --write", "git add"]
   },
   "jest": {
-    "roots": [
-      "<rootDir>/src"
-    ],
+    "roots": ["<rootDir>/src"],
     "transform": {
       "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "json",
-      "node"
-    ],
+    "moduleFileExtensions": ["ts", "tsx", "js", "json", "node"],
     "mapCoverage": true,
     "coveragePathIgnorePatterns": [
       "<rootDir>/node_modules/",
@@ -107,6 +96,9 @@
         "statements": 0
       }
     }
+  },
+  "resolutions": {
+    "tar": "^2.2.1"
   },
   "dependencies": {
     "@types/flux-standard-action": "0.5.31",
