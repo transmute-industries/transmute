@@ -1,0 +1,144 @@
+ // describe('Happy Path', async () => {
+
+        //     it('Admins can do anything users cannot', async () => {
+        //         var ac = new RBAC()
+
+        //         let grantList = [
+        //             { role: 'admin', resource: 'grant', action: 'create:any', attributes: ['*'] },
+        //             { role: 'admin', resource: 'grant', action: 'read:any', attributes: ['*'] },
+        //             { role: 'admin', resource: 'grant', action: 'update:any', attributes: ['*'] },
+        //             { role: 'admin', resource: 'grant', action: 'delete:any', attributes: ['*'] },
+
+        //             { role: 'user', resource: 'grant', action: 'create:own', attributes: ['*'] },
+        //             { role: 'user', resource: 'grant', action: 'read:any', attributes: ['*'] },
+        //             { role: 'user', resource: 'grant', action: 'update:own', attributes: ['*'] },
+        //             { role: 'user', resource: 'grant', action: 'delete:own', attributes: ['*'] }
+        //         ]
+
+        //         ac.setGrants(grantList)
+
+        //         let permission = ac.can('admin').createAny('grant')
+        //         assert(permission.granted, "expect admin can create any grant")
+
+        //         permission = ac.can('user').createOwn('grant')
+        //         assert(permission.granted, "expect user can create their own grant")
+
+        //         permission = ac.can('user').createAny('grant')
+        //         assert(!permission.granted, "expect user can not create any grant")
+
+        //         // console.log(await globalACL.creator())
+
+        //     })
+
+        // })
+
+        // describe('TDD', async () => {
+
+        //     it('can save grants to file', async () => {
+        //         var grantsObject = {
+        //             admin: {
+        //                 grant: {
+        //                     'create:any': ['*'],
+        //                     'read:any': ['*'],
+        //                     'update:any': ['*'],
+        //                     'delete:any': ['*']
+        //                 }
+        //             },
+        //             user: {
+        //                 grant: {
+        //                     'create:own': ['*'],
+        //                     'read:own': ['*'],
+        //                     'update:own': ['*'],
+        //                     'delete:own': ['*']
+        //                 }
+        //             }
+        //         };
+        //         var ac = new RBAC(grantsObject);
+        //         let grants = ac.getGrants()
+        //         fs.writeFileSync('./test/Security/grants.json', JSON.stringify(grants, null, 4) , 'utf-8'); 
+        //     })
+
+        //     it('can read grants to file', async () => {
+        //         var grantsObject = require('./grants.json')
+        //         var ac = new RBAC(grantsObject);
+        //         let grants = ac.getGrants()
+        //     })
+
+        //     it('can update grants and save them to file', async () => {
+        //         var grantsObject = require('./grants.json')
+        //         var ac = new RBAC(grantsObject);
+        //         ac
+        //         .grant('goblin')                    // switch to another role without breaking the chain 
+        //             .extend('user')                 // inherit role capabilities. also takes an array 
+
+        //         let grants = ac.getGrants()
+        //         fs.writeFileSync('./test/Security/grants.json', JSON.stringify(grants, null, 4) , 'utf-8'); 
+        //     })
+
+        //     it('can read updated grants from file', async () => {
+        //         var grantsObject = require('./grants.json')
+        //         var ac = new RBAC(grantsObject);
+        //         let permission = ac.can('goblin').createAny('grant')
+        //         // console.log(grants)
+        //         console.log(permission.granted)
+        //     })
+        // })
+
+        // describe('Middleware supports a grantsObject', async () => {
+
+        //     var grantsObject = {
+        //         admin: {
+        //             grant: {
+        //                 'create:any': ['*'],
+        //                 'read:any': ['*'],
+        //                 'update:any': ['*'],
+        //                 'delete:any': ['*']
+        //             }
+        //         },
+        //         user: {
+        //             grant: {
+        //                 'create:own': ['*'],
+        //                 'read:own': ['*'],
+        //                 'update:own': ['*'],
+        //                 'delete:own': ['*']
+        //             }
+        //         }
+        //     };
+
+        //     it('should initialize ac in node from object', async () => {
+        //         var ac = new RBAC(grantsObject);
+        //     })
+        // })
+
+        // it('', async () => {
+
+        //     var ac = new RBAC();
+
+        //     ac.grant('user')                    // define new or modify existing role. also takes an array. 
+        //         .createOwn('grant')             // equivalent to .createOwn('grant', ['*']) 
+        //         .deleteOwn('grant')
+        //         .readAny('grant')
+
+        //         .grant('admin')                   // switch to another role without breaking the chain 
+        //         .extend('user')                 // inherit role capabilities. also takes an array 
+        //         .updateAny('grant', ['title'])  // explicitly defined attributes 
+        //         .deleteAny('grant');
+
+        //     var permission = ac.can('user').createOwn('grant');
+        //     console.log(permission.granted);    // —> true 
+        //     console.log(permission.attributes); // —> ['*'] (all attributes) 
+
+        //     permission = ac.can('admin').updateAny('grant');
+        //     console.log(permission.granted);    // —> true 
+        //     console.log(permission.attributes); // —> ['title'] 
+
+        // })
+
+        // describe('Middleware confirms equivalence', async () => {
+
+        //     it('should set/get grants any time', async () => {
+        //         var ac = new RBAC();
+        //         ac.setGrants(grantsObject);
+        //         console.log(ac.getGrants());
+        //     })
+        // })
