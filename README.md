@@ -11,7 +11,16 @@ We use the [lerna mono repo pattern](https://github.com/lerna/lerna).
 
 ```
 npm install -g lerna
+```
+
+
+Bootstrap the packages in the current Lerna repo. Installs all of their dependencies and links any cross-dependencies.
+```
 lerna bootstrap
+```
+
+Other commands:
+```
 lerna run truffle:test
 lerna run truffle:migrate
 lerna run build --stream

@@ -112,6 +112,7 @@ export const convertValueToType = (_valueType, _value) => {
 };
 
 export const getValueFromType = (type, value) => {
+
   switch (type) {
     case "A":
       return "0x" + value.split("0x000000000000000000000000")[1];
@@ -119,7 +120,7 @@ export const getValueFromType = (type, value) => {
       return web3.toBigNumber(value).toNumber();
     case "B":
       return value;
-    case "X":
+    case "S":
       return toAscii(value);
     case "I":
       return hex2ipfshash(value);
@@ -127,6 +128,7 @@ export const getValueFromType = (type, value) => {
 };
 
 export const guessTypeFromValue = value => {
+
   if (typeof value === "number") {
     return "U";
   }
@@ -137,11 +139,10 @@ export const guessTypeFromValue = value => {
     if (util.isValidAddress(value)) {
       return "A";
     }
-    if (value.length > 1 && value.substr(0, 2) === "0x") {
-      return "X";
-    } else {
-      return "S";
+    if (isHex(value)) {
+      return "B";
     }
+    return "S";
   }
   throw Error("unable to guess type of value: " + value);
 };
@@ -170,6 +171,7 @@ export const getUnmarshalledObjectFromValues = (
   _valueType = toAscii(_valueType);
   _key = getValueFromType(_keyType, _key);
   _value = getValueFromType(_valueType, _value);
+
   return {
     id: _id.toNumber(),
     txOrigin: _txOrigin,
@@ -283,3 +285,9 @@ export interface IEventResolverConfig {
   filters: Array<() => any>;
   mappers: Array<() => any>;
 }
+
+export const isHex = h =>
+  h.replace(/^0x/i, "").match(/[0-9A-Fa-f]+$/)
+    ? h.replace(/^0x/i, "").match(/[0-9A-Fa-f]+$/)["index"] === 0
+    : false;
+export const formatHex = h => "0x" + h.replace(/^0x/i, ""); // assumes valid hex input .. 0x33/33 -> 0x33

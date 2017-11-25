@@ -73,7 +73,7 @@ contract RBAC is Killable {
   onlyOwner
   {
     addressRole[target] = role;
-    writeInternalEvent('AC_ROLE_ASSIGNED', 'A', 'X', bytes32(target), role);
+    writeInternalEvent('AC_ROLE_ASSIGNED', 'A', 'S', bytes32(target), role);
   }
 
   function getAddressRole(address target)
@@ -106,7 +106,7 @@ contract RBAC is Killable {
     grants.push(grant);
     GrantEvent(role, resource, action, attributes);
     isHashOfRoleActionResourceGranted[keccak256(role, action, resource)] = attributes.length != 0;
-    writeInternalEvent('AC_GRANT_WRITTEN', 'X', 'U', 'index', bytes32(grants.length-1));
+    writeInternalEvent('AC_GRANT_WRITTEN', 'S', 'U', 'index', bytes32(grants.length-1));
   }
 
   function getGrant(uint index) public view
