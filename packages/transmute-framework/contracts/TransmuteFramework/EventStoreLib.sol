@@ -2,14 +2,21 @@ pragma solidity ^0.4.11;
 
 library EventStoreLib{
 
+    // String Encodings
+    // A - Address,
+    // U - UInt,
+    // B - Hex (bytes32),
+    // X - Bytes32 (ascii)
+    // S - Bytes32 (ascii)
+
     struct EsEventStruct {
         address TxOrigin;
         uint Created;
 
         bytes32 EventType; // Event Type + Version
 
-        bytes1 KeyType; // A - Address, U - UInt, B - Bytes32, X - Bytes32 (ascii)
-        bytes1 ValueType; // A - Address, U - UInt, B - Bytes32, X - Bytes32 (ascii)
+        bytes1 KeyType; // String Encodings
+        bytes1 ValueType; // String Encodings
 
         bytes32 Key; // Key
         bytes32 Value; // Value

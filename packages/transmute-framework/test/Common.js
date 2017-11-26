@@ -74,7 +74,7 @@ const getValueFromType = (type, value) => {
       return web3Utils.hexToNumber(value)
     case 'B':
       return value
-    case 'X':
+    case 'S':
       return toAscii(value)
     case 'I':
       return hex2ipfshash(value)

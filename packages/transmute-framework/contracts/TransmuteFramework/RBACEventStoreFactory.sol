@@ -62,7 +62,7 @@ contract RBACEventStoreFactory is RBAC {
     storeAddresses.add(address(_newEventStore));
     creatorEventStoreMapping[msg.sender].add(address(_newEventStore));
 
-    writeInternalEvent('ES_CREATED', 'X', 'A', 'address', bytes32(address(_newEventStore)));
+    writeInternalEvent('ES_CREATED', 'S', 'A', 'address', bytes32(address(_newEventStore)));
 
     return address(_newEventStore);
 
@@ -83,6 +83,6 @@ contract RBACEventStoreFactory is RBAC {
 
     _eventStore.kill();
 
-    writeInternalEvent('ES_DESTROYED', 'X', 'A', 'address', bytes32(_address));
+    writeInternalEvent('ES_DESTROYED', 'S', 'A', 'address', bytes32(_address));
   }
 }

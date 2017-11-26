@@ -19,14 +19,14 @@ before_install:
   - ipfs init
   - ipfs daemon &
   - sleep 5
-  - npm install -g yarn --cache-min 999999999 lerna ethereumjs-testrpc
+  - npm install -g yarn --cache-min 999999999 lerna ethereumjs-testrpc truffle
   - testrpc >> /dev/null &
 
 install:
   - lerna bootstrap
   
 script:
-  - lerna run truffle:test
   - lerna run truffle:migrate
-  - lerna run build --stream
+  - lerna run build
+  # - lerna run truffle:test
   - lerna run test:coverage:report

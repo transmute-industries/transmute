@@ -54,7 +54,7 @@ contract UnsafeEventStoreFactory is UnsafeEventStore {
     EventStoreAddresses.add(address(_newEventStore));
     creatorEventStoreMapping[msg.sender].add(address(_newEventStore));
 
-    writeEvent('ES_CREATED', 'X', 'A', 'address', bytes32(address(_newEventStore)));
+    writeEvent('ES_CREATED', 'S', 'A', 'address', bytes32(address(_newEventStore)));
 
     return address(_newEventStore);
 	}
@@ -74,6 +74,6 @@ contract UnsafeEventStoreFactory is UnsafeEventStore {
 
     _eventStore.kill();
 
-    writeEvent('ES_DESTROYED', 'X', 'A', 'address', bytes32(_address));
+    writeEvent('ES_DESTROYED', 'S', 'A', 'address', bytes32(_address));
   }
 }
