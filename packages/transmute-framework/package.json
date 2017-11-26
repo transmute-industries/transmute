@@ -44,7 +44,7 @@
     "test:jest": "jest --forceExit",
     "test:watch": "jest --watch --forceExit",
     "test:coverage": "jest --coverage --forceExit",
-    "test:coverage:report": "codecov -cF transmute-framework",
+    "test:coverage:report": "codecov",
     "testrpc:start": "pm2 start testrpc",
     "testrpc:stop": "pm2 stop testrpc",
     "verify": "npm run test:coverage",
