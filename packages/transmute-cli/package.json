@@ -47,7 +47,7 @@
     "test": "jest --forceExit",
     "test:watch": "npm test -- --watch",
     "test:coverage": "npm test -- --coverage",
-    "test:coverage:report": "codecov -cF transmute-cli",
+    "test:coverage:report": "codecov",
     "verify": "npm run test:coverage",
     "cz": "git-cz",
     "prettier:ts": "prettier --single-quote --print-width 120 --trailing-comma es5 --no-semi --parser typescript",
