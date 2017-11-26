@@ -294,7 +294,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 1146,
+          "SourceUnit": 1468,
           "absolutePath": "/Users/orie/Code/lerna-transmute/packages/transmute-services/node_modules/transmute-framework/contracts/TransmuteFramework/UnsafeEventStoreFactory.sol",
           "file": "../node_modules/transmute-framework/contracts/TransmuteFramework/UnsafeEventStoreFactory.sol",
           "scope": 70,
@@ -310,20 +310,20 @@
       {
         "attributes": {
           "contractDependencies": [
-            448,
-            489,
-            982,
-            1145
+            770,
+            811,
+            1304,
+            1467
           ],
           "contractKind": "contract",
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
             69,
-            1145,
-            982,
-            448,
-            489
+            1467,
+            1304,
+            770,
+            811
           ],
           "name": "ArtifactDeployerFactory",
           "scope": 70
@@ -340,7 +340,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "UnsafeEventStoreFactory",
-                  "referencedDeclaration": 1145,
+                  "referencedDeclaration": 1467,
                   "type": "contract UnsafeEventStoreFactory"
                 },
                 "id": 38,
@@ -364,7 +364,7 @@
               "payable": true,
               "scope": 69,
               "stateMutability": "payable",
-              "superFunction": 1004,
+              "superFunction": 1326,
               "visibility": "public"
             },
             "children": [
@@ -420,7 +420,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1161,
+                              "referencedDeclaration": 1483,
                               "type": "function () pure",
                               "value": "revert"
                             },
@@ -751,7 +751,7 @@
     "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
   },
   "networks": {
-    "1511636678061": {
+    "1511719141796": {
       "events": {
         "0x34fda208d95da3b89ce2ca6e488201282198f339ef139dd80138a430c8d03a24": {
           "anonymous": false,
@@ -802,12 +802,124 @@
         }
       },
       "links": {
-        "AddressSetLib": "0xd4d90306f15db49e43676f568d12d149f6debaac",
-        "EventStoreLib": "0x68de97ea131c9bf08aca01e6bc2d65bfa8d01339"
+        "AddressSetLib": "0x09fe776bbd1c98b5a1da44b873d236a7cb448901",
+        "EventStoreLib": "0x289ef2c2a250e531469ad2cc72d51d03feb15b11"
       },
-      "address": "0x8900de22cea963d0ba84f756af7a15f519a81c88"
+      "address": "0x380833c739ef24701d70d1138acd08298b4e015c"
+    },
+    "1511727950714": {
+      "events": {
+        "0x34fda208d95da3b89ce2ca6e488201282198f339ef139dd80138a430c8d03a24": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "Id",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "TxOrigin",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "Created",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "EventType",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "KeyType",
+              "type": "bytes1"
+            },
+            {
+              "indexed": false,
+              "name": "ValueType",
+              "type": "bytes1"
+            },
+            {
+              "indexed": false,
+              "name": "Key",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "Value",
+              "type": "bytes32"
+            }
+          ],
+          "name": "EsEvent",
+          "type": "event"
+        }
+      },
+      "links": {
+        "AddressSetLib": "0xb833bade03f61ee7bf981d7700229d2660ae1c01",
+        "EventStoreLib": "0x50b0adb7cd15532c16d2a723b717e8b43e143061"
+      },
+      "address": "0x2ebd9672c7df89ed38cc17507fc2650c79c2f7ae"
+    },
+    "1511729111212": {
+      "events": {
+        "0x34fda208d95da3b89ce2ca6e488201282198f339ef139dd80138a430c8d03a24": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "Id",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "TxOrigin",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "Created",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "EventType",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "KeyType",
+              "type": "bytes1"
+            },
+            {
+              "indexed": false,
+              "name": "ValueType",
+              "type": "bytes1"
+            },
+            {
+              "indexed": false,
+              "name": "Key",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "Value",
+              "type": "bytes32"
+            }
+          ],
+          "name": "EsEvent",
+          "type": "event"
+        }
+      },
+      "links": {
+        "AddressSetLib": "0xe86505792636124fa41425d8ef08825b4f3718b4",
+        "EventStoreLib": "0x5c9aa2259dce9ab3433963169dbed6e3aa0c7e09"
+      },
+      "address": "0xc57ea3c36c684b8b3241bb0c71cd83de8e08071f"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-25T19:39:04.087Z"
+  "updatedAt": "2017-11-26T20:45:25.391Z"
 }

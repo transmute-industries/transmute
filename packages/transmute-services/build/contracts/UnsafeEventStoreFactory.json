@@ -274,7 +274,7 @@
       "absolutePath": "/Users/orie/Code/lerna-transmute/packages/transmute-services/node_modules/transmute-framework/contracts/TransmuteFramework/UnsafeEventStoreFactory.sol",
       "exportedSymbols": {
         "UnsafeEventStoreFactory": [
-          1145
+          1467
         ]
       }
     },
@@ -288,58 +288,58 @@
             ".11"
           ]
         },
-        "id": 984,
+        "id": 1306,
         "name": "PragmaDirective",
         "src": "0:24:11"
       },
       {
         "attributes": {
-          "SourceUnit": 983,
+          "SourceUnit": 1305,
           "absolutePath": "/Users/orie/Code/lerna-transmute/packages/transmute-services/node_modules/transmute-framework/contracts/TransmuteFramework/UnsafeEventStore.sol",
           "file": "./UnsafeEventStore.sol",
-          "scope": 1146,
+          "scope": 1468,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 985,
+        "id": 1307,
         "name": "ImportDirective",
         "src": "26:32:11"
       },
       {
         "attributes": {
-          "SourceUnit": 871,
+          "SourceUnit": 1193,
           "absolutePath": "/Users/orie/Code/lerna-transmute/packages/transmute-services/node_modules/transmute-framework/contracts/TransmuteFramework/SetLib/AddressSet/AddressSetLib.sol",
           "file": "./SetLib/AddressSet/AddressSetLib.sol",
-          "scope": 1146,
+          "scope": 1468,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 986,
+        "id": 1308,
         "name": "ImportDirective",
         "src": "59:47:11"
       },
       {
         "attributes": {
           "contractDependencies": [
-            448,
-            489,
-            982
+            770,
+            811,
+            1304
           ],
           "contractKind": "contract",
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            1145,
-            982,
-            448,
-            489
+            1467,
+            1304,
+            770,
+            811
           ],
           "name": "UnsafeEventStoreFactory",
-          "scope": 1146
+          "scope": 1468
         },
         "children": [
           {
@@ -353,15 +353,15 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "UnsafeEventStore",
-                  "referencedDeclaration": 982,
+                  "referencedDeclaration": 1304,
                   "type": "contract UnsafeEventStore"
                 },
-                "id": 987,
+                "id": 1309,
                 "name": "UserDefinedTypeName",
                 "src": "144:16:11"
               }
             ],
-            "id": 988,
+            "id": 1310,
             "name": "InheritanceSpecifier",
             "src": "144:16:11"
           },
@@ -371,10 +371,10 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "AddressSetLib",
-                  "referencedDeclaration": 870,
+                  "referencedDeclaration": 1192,
                   "type": "library AddressSetLib"
                 },
-                "id": 989,
+                "id": 1311,
                 "name": "UserDefinedTypeName",
                 "src": "172:13:11"
               },
@@ -382,15 +382,15 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "AddressSetLib.AddressSet",
-                  "referencedDeclaration": 503,
+                  "referencedDeclaration": 825,
                   "type": "struct AddressSetLib.AddressSet storage pointer"
                 },
-                "id": 990,
+                "id": 1312,
                 "name": "UserDefinedTypeName",
                 "src": "190:24:11"
               }
             ],
-            "id": 991,
+            "id": 1313,
             "name": "UsingForDirective",
             "src": "166:49:11"
           },
@@ -398,7 +398,7 @@
             "attributes": {
               "constant": false,
               "name": "creatorEventStoreMapping",
-              "scope": 1145,
+              "scope": 1467,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "mapping(address => struct AddressSetLib.AddressSet storage ref)",
@@ -416,7 +416,7 @@
                       "name": "address",
                       "type": "address"
                     },
-                    "id": 992,
+                    "id": 1314,
                     "name": "ElementaryTypeName",
                     "src": "228:7:11"
                   },
@@ -424,20 +424,20 @@
                     "attributes": {
                       "contractScope": null,
                       "name": "AddressSetLib.AddressSet",
-                      "referencedDeclaration": 503,
+                      "referencedDeclaration": 825,
                       "type": "struct AddressSetLib.AddressSet storage pointer"
                     },
-                    "id": 993,
+                    "id": 1315,
                     "name": "UserDefinedTypeName",
                     "src": "239:24:11"
                   }
                 ],
-                "id": 994,
+                "id": 1316,
                 "name": "Mapping",
                 "src": "219:45:11"
               }
             ],
-            "id": 995,
+            "id": 1317,
             "name": "VariableDeclaration",
             "src": "219:70:11"
           },
@@ -445,7 +445,7 @@
             "attributes": {
               "constant": false,
               "name": "EventStoreAddresses",
-              "scope": 1145,
+              "scope": 1467,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "struct AddressSetLib.AddressSet storage ref",
@@ -457,15 +457,15 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "AddressSetLib.AddressSet",
-                  "referencedDeclaration": 503,
+                  "referencedDeclaration": 825,
                   "type": "struct AddressSetLib.AddressSet storage pointer"
                 },
-                "id": 996,
+                "id": 1318,
                 "name": "UserDefinedTypeName",
                 "src": "293:24:11"
               }
             ],
-            "id": 997,
+            "id": 1319,
             "name": "VariableDeclaration",
             "src": "293:44:11"
           },
@@ -479,9 +479,9 @@
               ],
               "name": "",
               "payable": true,
-              "scope": 1145,
+              "scope": 1467,
               "stateMutability": "payable",
-              "superFunction": 890,
+              "superFunction": 1212,
               "visibility": "public"
             },
             "children": [
@@ -492,7 +492,7 @@
                   ]
                 },
                 "children": [],
-                "id": 998,
+                "id": 1320,
                 "name": "ParameterList",
                 "src": "374:2:11"
               },
@@ -503,7 +503,7 @@
                   ]
                 },
                 "children": [],
-                "id": 999,
+                "id": 1321,
                 "name": "ParameterList",
                 "src": "392:0:11"
               },
@@ -537,31 +537,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1161,
+                              "referencedDeclaration": 1483,
                               "type": "function () pure",
                               "value": "revert"
                             },
-                            "id": 1000,
+                            "id": 1322,
                             "name": "Identifier",
                             "src": "394:6:11"
                           }
                         ],
-                        "id": 1001,
+                        "id": 1323,
                         "name": "FunctionCall",
                         "src": "394:8:11"
                       }
                     ],
-                    "id": 1002,
+                    "id": 1324,
                     "name": "ExpressionStatement",
                     "src": "394:8:11"
                   }
                 ],
-                "id": 1003,
+                "id": 1325,
                 "name": "Block",
                 "src": "392:13:11"
               }
             ],
-            "id": 1004,
+            "id": 1326,
             "name": "FunctionDefinition",
             "src": "365:40:11"
           },
@@ -575,7 +575,7 @@
               ],
               "name": "UnsafeEventStoreFactory",
               "payable": true,
-              "scope": 1145,
+              "scope": 1467,
               "stateMutability": "payable",
               "superFunction": null,
               "visibility": "public"
@@ -588,7 +588,7 @@
                   ]
                 },
                 "children": [],
-                "id": 1005,
+                "id": 1327,
                 "name": "ParameterList",
                 "src": "458:2:11"
               },
@@ -599,7 +599,7 @@
                   ]
                 },
                 "children": [],
-                "id": 1006,
+                "id": 1328,
                 "name": "ParameterList",
                 "src": "480:0:11"
               },
@@ -610,12 +610,12 @@
                   ]
                 },
                 "children": [],
-                "id": 1007,
+                "id": 1329,
                 "name": "Block",
                 "src": "480:6:11"
               }
             ],
-            "id": 1008,
+            "id": 1330,
             "name": "FunctionDefinition",
             "src": "426:60:11"
           },
@@ -631,7 +631,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_EventStoreAddress",
-                      "scope": 1021,
+                      "scope": 1343,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -644,17 +644,17 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1009,
+                        "id": 1331,
                         "name": "ElementaryTypeName",
                         "src": "529:7:11"
                       }
                     ],
-                    "id": 1010,
+                    "id": 1332,
                     "name": "VariableDeclaration",
                     "src": "529:26:11"
                   }
                 ],
-                "id": 1011,
+                "id": 1333,
                 "name": "ParameterList",
                 "src": "528:28:11"
               },
@@ -688,11 +688,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1160,
+                              "referencedDeclaration": 1482,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
-                            "id": 1012,
+                            "id": 1334,
                             "name": "Identifier",
                             "src": "565:7:11"
                           },
@@ -724,7 +724,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "contains",
-                                  "referencedDeclaration": 857,
+                                  "referencedDeclaration": 1179,
                                   "type": "function (struct AddressSetLib.AddressSet storage pointer,address) view returns (bool)"
                                 },
                                 "children": [
@@ -734,16 +734,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 997,
+                                      "referencedDeclaration": 1319,
                                       "type": "struct AddressSetLib.AddressSet storage ref",
                                       "value": "EventStoreAddresses"
                                     },
-                                    "id": 1013,
+                                    "id": 1335,
                                     "name": "Identifier",
                                     "src": "573:19:11"
                                   }
                                 ],
-                                "id": 1014,
+                                "id": 1336,
                                 "name": "MemberAccess",
                                 "src": "573:28:11"
                               },
@@ -753,41 +753,41 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1010,
+                                  "referencedDeclaration": 1332,
                                   "type": "address",
                                   "value": "_EventStoreAddress"
                                 },
-                                "id": 1015,
+                                "id": 1337,
                                 "name": "Identifier",
                                 "src": "602:18:11"
                               }
                             ],
-                            "id": 1016,
+                            "id": 1338,
                             "name": "FunctionCall",
                             "src": "573:48:11"
                           }
                         ],
-                        "id": 1017,
+                        "id": 1339,
                         "name": "FunctionCall",
                         "src": "565:57:11"
                       }
                     ],
-                    "id": 1018,
+                    "id": 1340,
                     "name": "ExpressionStatement",
                     "src": "565:57:11"
                   },
                   {
-                    "id": 1019,
+                    "id": 1341,
                     "name": "PlaceholderStatement",
                     "src": "628:1:11"
                   }
                 ],
-                "id": 1020,
+                "id": 1342,
                 "name": "Block",
                 "src": "559:75:11"
               }
             ],
-            "id": 1021,
+            "id": 1343,
             "name": "ModifierDefinition",
             "src": "505:129:11"
           },
@@ -801,7 +801,7 @@
               ],
               "name": "getEventStoresByCreator",
               "payable": false,
-              "scope": 1145,
+              "scope": 1467,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -814,7 +814,7 @@
                   ]
                 },
                 "children": [],
-                "id": 1022,
+                "id": 1344,
                 "name": "ParameterList",
                 "src": "692:2:11"
               },
@@ -824,7 +824,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 1034,
+                      "scope": 1356,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address[] memory",
@@ -843,22 +843,22 @@
                               "name": "address",
                               "type": "address"
                             },
-                            "id": 1023,
+                            "id": 1345,
                             "name": "ElementaryTypeName",
                             "src": "728:7:11"
                           }
                         ],
-                        "id": 1024,
+                        "id": 1346,
                         "name": "ArrayTypeName",
                         "src": "728:9:11"
                       }
                     ],
-                    "id": 1025,
+                    "id": 1347,
                     "name": "VariableDeclaration",
                     "src": "728:9:11"
                   }
                 ],
-                "id": 1026,
+                "id": 1348,
                 "name": "ParameterList",
                 "src": "727:11:11"
               },
@@ -866,7 +866,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 1026
+                      "functionReturnParameters": 1348
                     },
                     "children": [
                       {
@@ -877,7 +877,7 @@
                           "isPure": false,
                           "lValueRequested": false,
                           "member_name": "values",
-                          "referencedDeclaration": 494,
+                          "referencedDeclaration": 816,
                           "type": "address[] storage ref"
                         },
                         "children": [
@@ -897,11 +897,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 995,
+                                  "referencedDeclaration": 1317,
                                   "type": "mapping(address => struct AddressSetLib.AddressSet storage ref)",
                                   "value": "creatorEventStoreMapping"
                                 },
-                                "id": 1027,
+                                "id": 1349,
                                 "name": "Identifier",
                                 "src": "754:24:11"
                               },
@@ -923,41 +923,41 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1157,
+                                      "referencedDeclaration": 1479,
                                       "type": "msg",
                                       "value": "msg"
                                     },
-                                    "id": 1028,
+                                    "id": 1350,
                                     "name": "Identifier",
                                     "src": "779:3:11"
                                   }
                                 ],
-                                "id": 1029,
+                                "id": 1351,
                                 "name": "MemberAccess",
                                 "src": "779:10:11"
                               }
                             ],
-                            "id": 1030,
+                            "id": 1352,
                             "name": "IndexAccess",
                             "src": "754:36:11"
                           }
                         ],
-                        "id": 1031,
+                        "id": 1353,
                         "name": "MemberAccess",
                         "src": "754:43:11"
                       }
                     ],
-                    "id": 1032,
+                    "id": 1354,
                     "name": "Return",
                     "src": "747:50:11"
                   }
                 ],
-                "id": 1033,
+                "id": 1355,
                 "name": "Block",
                 "src": "741:61:11"
               }
             ],
-            "id": 1034,
+            "id": 1356,
             "name": "FunctionDefinition",
             "src": "660:142:11"
           },
@@ -971,7 +971,7 @@
               ],
               "name": "getEventStores",
               "payable": false,
-              "scope": 1145,
+              "scope": 1467,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -984,7 +984,7 @@
                   ]
                 },
                 "children": [],
-                "id": 1035,
+                "id": 1357,
                 "name": "ParameterList",
                 "src": "829:2:11"
               },
@@ -994,7 +994,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 1044,
+                      "scope": 1366,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address[] memory",
@@ -1013,22 +1013,22 @@
                               "name": "address",
                               "type": "address"
                             },
-                            "id": 1036,
+                            "id": 1358,
                             "name": "ElementaryTypeName",
                             "src": "865:7:11"
                           }
                         ],
-                        "id": 1037,
+                        "id": 1359,
                         "name": "ArrayTypeName",
                         "src": "865:9:11"
                       }
                     ],
-                    "id": 1038,
+                    "id": 1360,
                     "name": "VariableDeclaration",
                     "src": "865:9:11"
                   }
                 ],
-                "id": 1039,
+                "id": 1361,
                 "name": "ParameterList",
                 "src": "864:11:11"
               },
@@ -1036,7 +1036,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 1039
+                      "functionReturnParameters": 1361
                     },
                     "children": [
                       {
@@ -1047,7 +1047,7 @@
                           "isPure": false,
                           "lValueRequested": false,
                           "member_name": "values",
-                          "referencedDeclaration": 494,
+                          "referencedDeclaration": 816,
                           "type": "address[] storage ref"
                         },
                         "children": [
@@ -1057,31 +1057,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 997,
+                              "referencedDeclaration": 1319,
                               "type": "struct AddressSetLib.AddressSet storage ref",
                               "value": "EventStoreAddresses"
                             },
-                            "id": 1040,
+                            "id": 1362,
                             "name": "Identifier",
                             "src": "891:19:11"
                           }
                         ],
-                        "id": 1041,
+                        "id": 1363,
                         "name": "MemberAccess",
                         "src": "891:26:11"
                       }
                     ],
-                    "id": 1042,
+                    "id": 1364,
                     "name": "Return",
                     "src": "884:33:11"
                   }
                 ],
-                "id": 1043,
+                "id": 1365,
                 "name": "Block",
                 "src": "878:44:11"
               }
             ],
-            "id": 1044,
+            "id": 1366,
             "name": "FunctionDefinition",
             "src": "806:116:11"
           },
@@ -1095,7 +1095,7 @@
               ],
               "name": "createEventStore",
               "payable": false,
-              "scope": 1145,
+              "scope": 1467,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -1108,7 +1108,7 @@
                   ]
                 },
                 "children": [],
-                "id": 1045,
+                "id": 1367,
                 "name": "ParameterList",
                 "src": "965:2:11"
               },
@@ -1118,7 +1118,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 1090,
+                      "scope": 1412,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -1131,17 +1131,17 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1046,
+                        "id": 1368,
                         "name": "ElementaryTypeName",
                         "src": "992:7:11"
                       }
                     ],
-                    "id": 1047,
+                    "id": 1369,
                     "name": "VariableDeclaration",
                     "src": "992:7:11"
                   }
                 ],
-                "id": 1048,
+                "id": 1370,
                 "name": "ParameterList",
                 "src": "991:9:11"
               },
@@ -1150,7 +1150,7 @@
                   {
                     "attributes": {
                       "assignments": [
-                        1050
+                        1372
                       ]
                     },
                     "children": [
@@ -1158,7 +1158,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "_newEventStore",
-                          "scope": 1090,
+                          "scope": 1412,
                           "stateVariable": false,
                           "storageLocation": "default",
                           "type": "contract UnsafeEventStore",
@@ -1170,15 +1170,15 @@
                             "attributes": {
                               "contractScope": null,
                               "name": "UnsafeEventStore",
-                              "referencedDeclaration": 982,
+                              "referencedDeclaration": 1304,
                               "type": "contract UnsafeEventStore"
                             },
-                            "id": 1049,
+                            "id": 1371,
                             "name": "UserDefinedTypeName",
                             "src": "1044:16:11"
                           }
                         ],
-                        "id": 1050,
+                        "id": 1372,
                         "name": "VariableDeclaration",
                         "src": "1044:31:11"
                       },
@@ -1216,25 +1216,25 @@
                                 "attributes": {
                                   "contractScope": null,
                                   "name": "UnsafeEventStore",
-                                  "referencedDeclaration": 982,
+                                  "referencedDeclaration": 1304,
                                   "type": "contract UnsafeEventStore"
                                 },
-                                "id": 1051,
+                                "id": 1373,
                                 "name": "UserDefinedTypeName",
                                 "src": "1082:16:11"
                               }
                             ],
-                            "id": 1052,
+                            "id": 1374,
                             "name": "NewExpression",
                             "src": "1078:20:11"
                           }
                         ],
-                        "id": 1053,
+                        "id": 1375,
                         "name": "FunctionCall",
                         "src": "1078:22:11"
                       }
                     ],
-                    "id": 1054,
+                    "id": 1376,
                     "name": "VariableDeclarationStatement",
                     "src": "1044:56:11"
                   },
@@ -1268,7 +1268,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "add",
-                              "referencedDeclaration": 646,
+                              "referencedDeclaration": 968,
                               "type": "function (struct AddressSetLib.AddressSet storage pointer,address) returns (bool)"
                             },
                             "children": [
@@ -1278,16 +1278,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 997,
+                                  "referencedDeclaration": 1319,
                                   "type": "struct AddressSetLib.AddressSet storage ref",
                                   "value": "EventStoreAddresses"
                                 },
-                                "id": 1055,
+                                "id": 1377,
                                 "name": "Identifier",
                                 "src": "1156:19:11"
                               }
                             ],
-                            "id": 1057,
+                            "id": 1379,
                             "name": "MemberAccess",
                             "src": "1156:23:11"
                           },
@@ -1310,7 +1310,7 @@
                                 "attributes": {
                                   "argumentTypes": [
                                     {
-                                      "typeIdentifier": "t_contract$_UnsafeEventStore_$982",
+                                      "typeIdentifier": "t_contract$_UnsafeEventStore_$1304",
                                       "typeString": "contract UnsafeEventStore"
                                     }
                                   ],
@@ -1321,7 +1321,7 @@
                                   "type": "type(address)",
                                   "value": "address"
                                 },
-                                "id": 1058,
+                                "id": 1380,
                                 "name": "ElementaryTypeNameExpression",
                                 "src": "1180:7:11"
                               },
@@ -1331,26 +1331,26 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1050,
+                                  "referencedDeclaration": 1372,
                                   "type": "contract UnsafeEventStore",
                                   "value": "_newEventStore"
                                 },
-                                "id": 1059,
+                                "id": 1381,
                                 "name": "Identifier",
                                 "src": "1188:14:11"
                               }
                             ],
-                            "id": 1060,
+                            "id": 1382,
                             "name": "FunctionCall",
                             "src": "1180:23:11"
                           }
                         ],
-                        "id": 1061,
+                        "id": 1383,
                         "name": "FunctionCall",
                         "src": "1156:48:11"
                       }
                     ],
-                    "id": 1062,
+                    "id": 1384,
                     "name": "ExpressionStatement",
                     "src": "1156:48:11"
                   },
@@ -1384,7 +1384,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "add",
-                              "referencedDeclaration": 646,
+                              "referencedDeclaration": 968,
                               "type": "function (struct AddressSetLib.AddressSet storage pointer,address) returns (bool)"
                             },
                             "children": [
@@ -1404,11 +1404,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 995,
+                                      "referencedDeclaration": 1317,
                                       "type": "mapping(address => struct AddressSetLib.AddressSet storage ref)",
                                       "value": "creatorEventStoreMapping"
                                     },
-                                    "id": 1063,
+                                    "id": 1385,
                                     "name": "Identifier",
                                     "src": "1210:24:11"
                                   },
@@ -1430,26 +1430,26 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 1157,
+                                          "referencedDeclaration": 1479,
                                           "type": "msg",
                                           "value": "msg"
                                         },
-                                        "id": 1064,
+                                        "id": 1386,
                                         "name": "Identifier",
                                         "src": "1235:3:11"
                                       }
                                     ],
-                                    "id": 1065,
+                                    "id": 1387,
                                     "name": "MemberAccess",
                                     "src": "1235:10:11"
                                   }
                                 ],
-                                "id": 1066,
+                                "id": 1388,
                                 "name": "IndexAccess",
                                 "src": "1210:36:11"
                               }
                             ],
-                            "id": 1067,
+                            "id": 1389,
                             "name": "MemberAccess",
                             "src": "1210:40:11"
                           },
@@ -1472,7 +1472,7 @@
                                 "attributes": {
                                   "argumentTypes": [
                                     {
-                                      "typeIdentifier": "t_contract$_UnsafeEventStore_$982",
+                                      "typeIdentifier": "t_contract$_UnsafeEventStore_$1304",
                                       "typeString": "contract UnsafeEventStore"
                                     }
                                   ],
@@ -1483,7 +1483,7 @@
                                   "type": "type(address)",
                                   "value": "address"
                                 },
-                                "id": 1068,
+                                "id": 1390,
                                 "name": "ElementaryTypeNameExpression",
                                 "src": "1251:7:11"
                               },
@@ -1493,26 +1493,26 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1050,
+                                  "referencedDeclaration": 1372,
                                   "type": "contract UnsafeEventStore",
                                   "value": "_newEventStore"
                                 },
-                                "id": 1069,
+                                "id": 1391,
                                 "name": "Identifier",
                                 "src": "1259:14:11"
                               }
                             ],
-                            "id": 1070,
+                            "id": 1392,
                             "name": "FunctionCall",
                             "src": "1251:23:11"
                           }
                         ],
-                        "id": 1071,
+                        "id": 1393,
                         "name": "FunctionCall",
                         "src": "1210:65:11"
                       }
                     ],
-                    "id": 1072,
+                    "id": 1394,
                     "name": "ExpressionStatement",
                     "src": "1210:65:11"
                   },
@@ -1560,11 +1560,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 935,
+                              "referencedDeclaration": 1257,
                               "type": "function (bytes32,bytes1,bytes1,bytes32,bytes32) returns (uint256)",
                               "value": "writeEvent"
                             },
-                            "id": 1073,
+                            "id": 1395,
                             "name": "Identifier",
                             "src": "1282:10:11"
                           },
@@ -1581,7 +1581,7 @@
                               "type": "literal_string \"ES_CREATED\"",
                               "value": "ES_CREATED"
                             },
-                            "id": 1074,
+                            "id": 1396,
                             "name": "Literal",
                             "src": "1293:12:11"
                           },
@@ -1598,7 +1598,7 @@
                               "type": "literal_string \"S\"",
                               "value": "S"
                             },
-                            "id": 1075,
+                            "id": 1397,
                             "name": "Literal",
                             "src": "1307:3:11"
                           },
@@ -1615,7 +1615,7 @@
                               "type": "literal_string \"A\"",
                               "value": "A"
                             },
-                            "id": 1076,
+                            "id": 1398,
                             "name": "Literal",
                             "src": "1312:3:11"
                           },
@@ -1632,7 +1632,7 @@
                               "type": "literal_string \"address\"",
                               "value": "address"
                             },
-                            "id": 1077,
+                            "id": 1399,
                             "name": "Literal",
                             "src": "1317:9:11"
                           },
@@ -1666,7 +1666,7 @@
                                   "type": "type(bytes32)",
                                   "value": "bytes32"
                                 },
-                                "id": 1078,
+                                "id": 1400,
                                 "name": "ElementaryTypeNameExpression",
                                 "src": "1328:7:11"
                               },
@@ -1689,7 +1689,7 @@
                                     "attributes": {
                                       "argumentTypes": [
                                         {
-                                          "typeIdentifier": "t_contract$_UnsafeEventStore_$982",
+                                          "typeIdentifier": "t_contract$_UnsafeEventStore_$1304",
                                           "typeString": "contract UnsafeEventStore"
                                         }
                                       ],
@@ -1700,7 +1700,7 @@
                                       "type": "type(address)",
                                       "value": "address"
                                     },
-                                    "id": 1079,
+                                    "id": 1401,
                                     "name": "ElementaryTypeNameExpression",
                                     "src": "1336:7:11"
                                   },
@@ -1710,37 +1710,37 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1050,
+                                      "referencedDeclaration": 1372,
                                       "type": "contract UnsafeEventStore",
                                       "value": "_newEventStore"
                                     },
-                                    "id": 1080,
+                                    "id": 1402,
                                     "name": "Identifier",
                                     "src": "1344:14:11"
                                   }
                                 ],
-                                "id": 1081,
+                                "id": 1403,
                                 "name": "FunctionCall",
                                 "src": "1336:23:11"
                               }
                             ],
-                            "id": 1082,
+                            "id": 1404,
                             "name": "FunctionCall",
                             "src": "1328:32:11"
                           }
                         ],
-                        "id": 1083,
+                        "id": 1405,
                         "name": "FunctionCall",
                         "src": "1282:79:11"
                       }
                     ],
-                    "id": 1084,
+                    "id": 1406,
                     "name": "ExpressionStatement",
                     "src": "1282:79:11"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 1048
+                      "functionReturnParameters": 1370
                     },
                     "children": [
                       {
@@ -1762,7 +1762,7 @@
                             "attributes": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_contract$_UnsafeEventStore_$982",
+                                  "typeIdentifier": "t_contract$_UnsafeEventStore_$1304",
                                   "typeString": "contract UnsafeEventStore"
                                 }
                               ],
@@ -1773,7 +1773,7 @@
                               "type": "type(address)",
                               "value": "address"
                             },
-                            "id": 1085,
+                            "id": 1407,
                             "name": "ElementaryTypeNameExpression",
                             "src": "1375:7:11"
                           },
@@ -1783,31 +1783,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1050,
+                              "referencedDeclaration": 1372,
                               "type": "contract UnsafeEventStore",
                               "value": "_newEventStore"
                             },
-                            "id": 1086,
+                            "id": 1408,
                             "name": "Identifier",
                             "src": "1383:14:11"
                           }
                         ],
-                        "id": 1087,
+                        "id": 1409,
                         "name": "FunctionCall",
                         "src": "1375:23:11"
                       }
                     ],
-                    "id": 1088,
+                    "id": 1410,
                     "name": "Return",
                     "src": "1368:30:11"
                   }
                 ],
-                "id": 1089,
+                "id": 1411,
                 "name": "Block",
                 "src": "1003:399:11"
               }
             ],
-            "id": 1090,
+            "id": 1412,
             "name": "FunctionDefinition",
             "src": "940:462:11"
           },
@@ -1818,7 +1818,7 @@
               "isConstructor": false,
               "name": "killEventStore",
               "payable": false,
-              "scope": 1145,
+              "scope": 1467,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -1830,7 +1830,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_address",
-                      "scope": 1144,
+                      "scope": 1466,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -1843,17 +1843,17 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1091,
+                        "id": 1413,
                         "name": "ElementaryTypeName",
                         "src": "1430:7:11"
                       }
                     ],
-                    "id": 1092,
+                    "id": 1414,
                     "name": "VariableDeclaration",
                     "src": "1430:16:11"
                   }
                 ],
-                "id": 1093,
+                "id": 1415,
                 "name": "ParameterList",
                 "src": "1429:18:11"
               },
@@ -1864,7 +1864,7 @@
                   ]
                 },
                 "children": [],
-                "id": 1097,
+                "id": 1419,
                 "name": "ParameterList",
                 "src": "1490:0:11"
               },
@@ -1876,11 +1876,11 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 1021,
+                      "referencedDeclaration": 1343,
                       "type": "modifier (address)",
                       "value": "checkExistence"
                     },
-                    "id": 1094,
+                    "id": 1416,
                     "name": "Identifier",
                     "src": "1463:14:11"
                   },
@@ -1890,16 +1890,16 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 1092,
+                      "referencedDeclaration": 1414,
                       "type": "address",
                       "value": "_address"
                     },
-                    "id": 1095,
+                    "id": 1417,
                     "name": "Identifier",
                     "src": "1478:8:11"
                   }
                 ],
-                "id": 1096,
+                "id": 1418,
                 "name": "ModifierInvocation",
                 "src": "1463:24:11"
               },
@@ -1933,11 +1933,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1160,
+                              "referencedDeclaration": 1482,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
-                            "id": 1098,
+                            "id": 1420,
                             "name": "Identifier",
                             "src": "1585:7:11"
                           },
@@ -1984,7 +1984,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "owner",
-                                      "referencedDeclaration": 452,
+                                      "referencedDeclaration": 774,
                                       "type": "function () view external returns (address)"
                                     },
                                     "children": [
@@ -1994,21 +1994,21 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 1180,
+                                          "referencedDeclaration": 1502,
                                           "type": "contract UnsafeEventStoreFactory",
                                           "value": "this"
                                         },
-                                        "id": 1099,
+                                        "id": 1421,
                                         "name": "Identifier",
                                         "src": "1593:4:11"
                                       }
                                     ],
-                                    "id": 1100,
+                                    "id": 1422,
                                     "name": "MemberAccess",
                                     "src": "1593:10:11"
                                   }
                                 ],
-                                "id": 1101,
+                                "id": 1423,
                                 "name": "FunctionCall",
                                 "src": "1593:12:11"
                               },
@@ -2030,38 +2030,38 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1157,
+                                      "referencedDeclaration": 1479,
                                       "type": "msg",
                                       "value": "msg"
                                     },
-                                    "id": 1102,
+                                    "id": 1424,
                                     "name": "Identifier",
                                     "src": "1609:3:11"
                                   }
                                 ],
-                                "id": 1103,
+                                "id": 1425,
                                 "name": "MemberAccess",
                                 "src": "1609:10:11"
                               }
                             ],
-                            "id": 1104,
+                            "id": 1426,
                             "name": "BinaryOperation",
                             "src": "1593:26:11"
                           }
                         ],
-                        "id": 1105,
+                        "id": 1427,
                         "name": "FunctionCall",
                         "src": "1585:35:11"
                       }
                     ],
-                    "id": 1106,
+                    "id": 1428,
                     "name": "ExpressionStatement",
                     "src": "1585:35:11"
                   },
                   {
                     "attributes": {
                       "assignments": [
-                        1108
+                        1430
                       ]
                     },
                     "children": [
@@ -2069,7 +2069,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "_eventStore",
-                          "scope": 1144,
+                          "scope": 1466,
                           "stateVariable": false,
                           "storageLocation": "default",
                           "type": "contract UnsafeEventStore",
@@ -2081,15 +2081,15 @@
                             "attributes": {
                               "contractScope": null,
                               "name": "UnsafeEventStore",
-                              "referencedDeclaration": 982,
+                              "referencedDeclaration": 1304,
                               "type": "contract UnsafeEventStore"
                             },
-                            "id": 1107,
+                            "id": 1429,
                             "name": "UserDefinedTypeName",
                             "src": "1627:16:11"
                           }
                         ],
-                        "id": 1108,
+                        "id": 1430,
                         "name": "VariableDeclaration",
                         "src": "1627:28:11"
                       },
@@ -2119,11 +2119,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 982,
+                              "referencedDeclaration": 1304,
                               "type": "type(contract UnsafeEventStore)",
                               "value": "UnsafeEventStore"
                             },
-                            "id": 1109,
+                            "id": 1431,
                             "name": "Identifier",
                             "src": "1658:16:11"
                           },
@@ -2133,21 +2133,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1092,
+                              "referencedDeclaration": 1414,
                               "type": "address",
                               "value": "_address"
                             },
-                            "id": 1110,
+                            "id": 1432,
                             "name": "Identifier",
                             "src": "1675:8:11"
                           }
                         ],
-                        "id": 1111,
+                        "id": 1433,
                         "name": "FunctionCall",
                         "src": "1658:26:11"
                       }
                     ],
-                    "id": 1112,
+                    "id": 1434,
                     "name": "VariableDeclarationStatement",
                     "src": "1627:57:11"
                   },
@@ -2181,7 +2181,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "remove",
-                              "referencedDeclaration": 678,
+                              "referencedDeclaration": 1000,
                               "type": "function (struct AddressSetLib.AddressSet storage pointer,address) returns (bool)"
                             },
                             "children": [
@@ -2201,11 +2201,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 995,
+                                      "referencedDeclaration": 1317,
                                       "type": "mapping(address => struct AddressSetLib.AddressSet storage ref)",
                                       "value": "creatorEventStoreMapping"
                                     },
-                                    "id": 1113,
+                                    "id": 1435,
                                     "name": "Identifier",
                                     "src": "1717:24:11"
                                   },
@@ -2237,7 +2237,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "owner",
-                                          "referencedDeclaration": 452,
+                                          "referencedDeclaration": 774,
                                           "type": "function () view external returns (address)"
                                         },
                                         "children": [
@@ -2247,31 +2247,31 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 1108,
+                                              "referencedDeclaration": 1430,
                                               "type": "contract UnsafeEventStore",
                                               "value": "_eventStore"
                                             },
-                                            "id": 1114,
+                                            "id": 1436,
                                             "name": "Identifier",
                                             "src": "1742:11:11"
                                           }
                                         ],
-                                        "id": 1115,
+                                        "id": 1437,
                                         "name": "MemberAccess",
                                         "src": "1742:17:11"
                                       }
                                     ],
-                                    "id": 1116,
+                                    "id": 1438,
                                     "name": "FunctionCall",
                                     "src": "1742:19:11"
                                   }
                                 ],
-                                "id": 1117,
+                                "id": 1439,
                                 "name": "IndexAccess",
                                 "src": "1717:45:11"
                               }
                             ],
-                            "id": 1118,
+                            "id": 1440,
                             "name": "MemberAccess",
                             "src": "1717:52:11"
                           },
@@ -2281,21 +2281,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1092,
+                              "referencedDeclaration": 1414,
                               "type": "address",
                               "value": "_address"
                             },
-                            "id": 1119,
+                            "id": 1441,
                             "name": "Identifier",
                             "src": "1770:8:11"
                           }
                         ],
-                        "id": 1120,
+                        "id": 1442,
                         "name": "FunctionCall",
                         "src": "1717:62:11"
                       }
                     ],
-                    "id": 1121,
+                    "id": 1443,
                     "name": "ExpressionStatement",
                     "src": "1717:62:11"
                   },
@@ -2329,7 +2329,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "remove",
-                              "referencedDeclaration": 678,
+                              "referencedDeclaration": 1000,
                               "type": "function (struct AddressSetLib.AddressSet storage pointer,address) returns (bool)"
                             },
                             "children": [
@@ -2339,16 +2339,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 997,
+                                  "referencedDeclaration": 1319,
                                   "type": "struct AddressSetLib.AddressSet storage ref",
                                   "value": "EventStoreAddresses"
                                 },
-                                "id": 1122,
+                                "id": 1444,
                                 "name": "Identifier",
                                 "src": "1785:19:11"
                               }
                             ],
-                            "id": 1124,
+                            "id": 1446,
                             "name": "MemberAccess",
                             "src": "1785:26:11"
                           },
@@ -2358,21 +2358,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1092,
+                              "referencedDeclaration": 1414,
                               "type": "address",
                               "value": "_address"
                             },
-                            "id": 1125,
+                            "id": 1447,
                             "name": "Identifier",
                             "src": "1812:8:11"
                           }
                         ],
-                        "id": 1126,
+                        "id": 1448,
                         "name": "FunctionCall",
                         "src": "1785:36:11"
                       }
                     ],
-                    "id": 1127,
+                    "id": 1449,
                     "name": "ExpressionStatement",
                     "src": "1785:36:11"
                   },
@@ -2406,7 +2406,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "kill",
-                              "referencedDeclaration": 447,
+                              "referencedDeclaration": 769,
                               "type": "function () external"
                             },
                             "children": [
@@ -2416,26 +2416,26 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1108,
+                                  "referencedDeclaration": 1430,
                                   "type": "contract UnsafeEventStore",
                                   "value": "_eventStore"
                                 },
-                                "id": 1128,
+                                "id": 1450,
                                 "name": "Identifier",
                                 "src": "1828:11:11"
                               }
                             ],
-                            "id": 1130,
+                            "id": 1452,
                             "name": "MemberAccess",
                             "src": "1828:16:11"
                           }
                         ],
-                        "id": 1131,
+                        "id": 1453,
                         "name": "FunctionCall",
                         "src": "1828:18:11"
                       }
                     ],
-                    "id": 1132,
+                    "id": 1454,
                     "name": "ExpressionStatement",
                     "src": "1828:18:11"
                   },
@@ -2483,11 +2483,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 935,
+                              "referencedDeclaration": 1257,
                               "type": "function (bytes32,bytes1,bytes1,bytes32,bytes32) returns (uint256)",
                               "value": "writeEvent"
                             },
-                            "id": 1133,
+                            "id": 1455,
                             "name": "Identifier",
                             "src": "1853:10:11"
                           },
@@ -2504,7 +2504,7 @@
                               "type": "literal_string \"ES_DESTROYED\"",
                               "value": "ES_DESTROYED"
                             },
-                            "id": 1134,
+                            "id": 1456,
                             "name": "Literal",
                             "src": "1864:14:11"
                           },
@@ -2521,7 +2521,7 @@
                               "type": "literal_string \"S\"",
                               "value": "S"
                             },
-                            "id": 1135,
+                            "id": 1457,
                             "name": "Literal",
                             "src": "1880:3:11"
                           },
@@ -2538,7 +2538,7 @@
                               "type": "literal_string \"A\"",
                               "value": "A"
                             },
-                            "id": 1136,
+                            "id": 1458,
                             "name": "Literal",
                             "src": "1885:3:11"
                           },
@@ -2555,7 +2555,7 @@
                               "type": "literal_string \"address\"",
                               "value": "address"
                             },
-                            "id": 1137,
+                            "id": 1459,
                             "name": "Literal",
                             "src": "1890:9:11"
                           },
@@ -2589,7 +2589,7 @@
                                   "type": "type(bytes32)",
                                   "value": "bytes32"
                                 },
-                                "id": 1138,
+                                "id": 1460,
                                 "name": "ElementaryTypeNameExpression",
                                 "src": "1901:7:11"
                               },
@@ -2599,46 +2599,46 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1092,
+                                  "referencedDeclaration": 1414,
                                   "type": "address",
                                   "value": "_address"
                                 },
-                                "id": 1139,
+                                "id": 1461,
                                 "name": "Identifier",
                                 "src": "1909:8:11"
                               }
                             ],
-                            "id": 1140,
+                            "id": 1462,
                             "name": "FunctionCall",
                             "src": "1901:17:11"
                           }
                         ],
-                        "id": 1141,
+                        "id": 1463,
                         "name": "FunctionCall",
                         "src": "1853:66:11"
                       }
                     ],
-                    "id": 1142,
+                    "id": 1464,
                     "name": "ExpressionStatement",
                     "src": "1853:66:11"
                   }
                 ],
-                "id": 1143,
+                "id": 1465,
                 "name": "Block",
                 "src": "1490:434:11"
               }
             ],
-            "id": 1144,
+            "id": 1466,
             "name": "FunctionDefinition",
             "src": "1406:518:11"
           }
         ],
-        "id": 1145,
+        "id": 1467,
         "name": "ContractDefinition",
         "src": "108:1818:11"
       }
     ],
-    "id": 1146,
+    "id": 1468,
     "name": "SourceUnit",
     "src": "0:1927:11"
   },
@@ -2647,7 +2647,7 @@
     "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
   },
   "networks": {
-    "1511636678061": {
+    "1511719141796": {
       "events": {
         "0x34fda208d95da3b89ce2ca6e488201282198f339ef139dd80138a430c8d03a24": {
           "anonymous": false,
@@ -2698,12 +2698,124 @@
         }
       },
       "links": {
-        "EventStoreLib": "0x68de97ea131c9bf08aca01e6bc2d65bfa8d01339",
-        "AddressSetLib": "0xd4d90306f15db49e43676f568d12d149f6debaac"
+        "EventStoreLib": "0x289ef2c2a250e531469ad2cc72d51d03feb15b11",
+        "AddressSetLib": "0x09fe776bbd1c98b5a1da44b873d236a7cb448901"
       },
-      "address": "0x56376b87cb02e7bb83ec47d1a5384e844fb2dbdc"
+      "address": "0xd09668984bd12eff0654e12b368cc66b9b298956"
+    },
+    "1511727950714": {
+      "events": {
+        "0x34fda208d95da3b89ce2ca6e488201282198f339ef139dd80138a430c8d03a24": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "Id",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "TxOrigin",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "Created",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "EventType",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "KeyType",
+              "type": "bytes1"
+            },
+            {
+              "indexed": false,
+              "name": "ValueType",
+              "type": "bytes1"
+            },
+            {
+              "indexed": false,
+              "name": "Key",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "Value",
+              "type": "bytes32"
+            }
+          ],
+          "name": "EsEvent",
+          "type": "event"
+        }
+      },
+      "links": {
+        "EventStoreLib": "0x50b0adb7cd15532c16d2a723b717e8b43e143061",
+        "AddressSetLib": "0xb833bade03f61ee7bf981d7700229d2660ae1c01"
+      },
+      "address": "0x5168b72c98ad1b07e07ba4d85f93e868f6902b83"
+    },
+    "1511729111212": {
+      "events": {
+        "0x34fda208d95da3b89ce2ca6e488201282198f339ef139dd80138a430c8d03a24": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "Id",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "TxOrigin",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "Created",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "EventType",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "KeyType",
+              "type": "bytes1"
+            },
+            {
+              "indexed": false,
+              "name": "ValueType",
+              "type": "bytes1"
+            },
+            {
+              "indexed": false,
+              "name": "Key",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "Value",
+              "type": "bytes32"
+            }
+          ],
+          "name": "EsEvent",
+          "type": "event"
+        }
+      },
+      "links": {
+        "EventStoreLib": "0x5c9aa2259dce9ab3433963169dbed6e3aa0c7e09",
+        "AddressSetLib": "0xe86505792636124fa41425d8ef08825b4f3718b4"
+      },
+      "address": "0x9526b7dc0dc786039dc45e649fa4d4f8084e9feb"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-25T19:39:04.060Z"
+  "updatedAt": "2017-11-26T20:45:25.389Z"
 }

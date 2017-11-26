@@ -9,7 +9,7 @@ const TransmuteFramework = require("transmute-framework").default;
 
 contract("works with framework", accounts => {
   let factory;
-  let eventStore;
+  let oracle;
   before(async () => {
     T = TransmuteFramework.init({
       providerUrl: "http://localhost:8545",
@@ -40,16 +40,16 @@ contract("works with framework", accounts => {
     expect(event.meta.txOrigin).to.equal(accounts[0]);
   });
 
-  it("Oracle can use transmute framework to get events from the eventStore...", async () => {
+  it("Oracle can use transmute framework to get events from the oracle...", async () => {
     let factoryESCreatedEvent = await T.EventStore.readFSA(
       factory,
       accounts[0],
       0
     );
-    eventStore = await Oracle.at(
+    oracle = await Oracle.at(
       factoryESCreatedEvent.payload.address
     );
-    let savedEvent = await T.EventStore.writeFSA(eventStore, accounts[0], {
+    let savedEvent = await T.EventStore.writeFSA(oracle, accounts[0], {
       type: "MY_DOMAIN_EVENT_HAPPENED",
       payload: {
         immutable: "story bro...",
@@ -57,12 +57,12 @@ contract("works with framework", accounts => {
       }
     });
     let lastEvent =
-      (await eventStore.eventCount.call({
+      (await oracle.eventCount.call({
         from: accounts[0]
       })).toNumber() - 1;
 
     let retrievedEvent = await T.EventStore.readFSA(
-      eventStore,
+      oracle,
       accounts[0],
       lastEvent
     );

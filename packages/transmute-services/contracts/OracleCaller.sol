@@ -4,7 +4,8 @@ import "./Oracle.sol";
 
 contract OracleCaller {
 
-
+  bytes32 public state;
+  // bytes32 requestIndex = ;
   // FALLBACK
   function () public { revert(); }
   
@@ -12,23 +13,38 @@ contract OracleCaller {
   function OracleCaller() public {
   }
 
-  event OracleRequest(
+  event CallerState(
     bytes32 data
   );
 
-  function callOracle(address oracleAddress) public {
-      // Oracle orc = Oracle(oracleAddress);
-      // bytes32 requestIndex = keccak256(0x616263);
-      // 0x4e03657aea45a94fc7d47ba826c8d667c0d1e6e33a64a036ec44f58fa12d6c45
-
-      // bytes32 data = orc.testData();
-
-      // 
-
-      OracleRequest(
-        bytes32("bob")
-      );
-  
+  function trigger(address oracleAddress) public {
+      Oracle orc = Oracle(oracleAddress);
+      bytes32 guid = keccak256(block.number);
+      bytes32 request = bytes32("Math.random()");
+      bytes32 callback = bytes32("receive(bytes32)");
+      orc.requestBytes32(guid, request, callback);
   }
+
+  function receive(bytes32 data) public {
+      state = data;
+  }
+
+  function check() public {
+      CallerState(state);
+  }
+
+  event EsEvent(
+    uint Id,
+    address TxOrigin,
+    uint Created,
+
+    bytes32 EventType,
+
+    bytes1 KeyType,
+    bytes1 ValueType,
+
+    bytes32 Key,
+    bytes32 Value
+  );
 
 }

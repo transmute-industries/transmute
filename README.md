@@ -21,8 +21,9 @@ lerna bootstrap
 
 Other commands:
 ```
-lerna run truffle:test
+
 lerna run truffle:migrate
+lerna run truffle:test
 lerna run build --stream
 lerna run test --stream
 ```

@@ -238,7 +238,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 983,
+          "SourceUnit": 1305,
           "absolutePath": "/Users/orie/Code/lerna-transmute/packages/transmute-services/node_modules/transmute-framework/contracts/TransmuteFramework/UnsafeEventStore.sol",
           "file": "../node_modules/transmute-framework/contracts/TransmuteFramework/UnsafeEventStore.sol",
           "scope": 35,
@@ -254,18 +254,18 @@
       {
         "attributes": {
           "contractDependencies": [
-            448,
-            489,
-            982
+            770,
+            811,
+            1304
           ],
           "contractKind": "contract",
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
             34,
-            982,
-            448,
-            489
+            1304,
+            770,
+            811
           ],
           "name": "ArtifactDeployer",
           "scope": 35
@@ -282,7 +282,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "UnsafeEventStore",
-                  "referencedDeclaration": 982,
+                  "referencedDeclaration": 1304,
                   "type": "contract UnsafeEventStore"
                 },
                 "id": 3,
@@ -306,7 +306,7 @@
               "payable": true,
               "scope": 34,
               "stateMutability": "payable",
-              "superFunction": 890,
+              "superFunction": 1212,
               "visibility": "public"
             },
             "children": [
@@ -362,7 +362,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1161,
+                              "referencedDeclaration": 1483,
                               "type": "function () pure",
                               "value": "revert"
                             },
@@ -693,7 +693,7 @@
     "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
   },
   "networks": {
-    "1511636678061": {
+    "1511719141796": {
       "events": {
         "0x34fda208d95da3b89ce2ca6e488201282198f339ef139dd80138a430c8d03a24": {
           "anonymous": false,
@@ -744,11 +744,121 @@
         }
       },
       "links": {
-        "EventStoreLib": "0x68de97ea131c9bf08aca01e6bc2d65bfa8d01339"
+        "EventStoreLib": "0x289ef2c2a250e531469ad2cc72d51d03feb15b11"
       },
-      "address": "0x9ea3a6c06ab222e695090daac8c90335f98912a0"
+      "address": "0x8e28ae60c2a3d2d4e020b5b094ea760504b2d1ae"
+    },
+    "1511727950714": {
+      "events": {
+        "0x34fda208d95da3b89ce2ca6e488201282198f339ef139dd80138a430c8d03a24": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "Id",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "TxOrigin",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "Created",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "EventType",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "KeyType",
+              "type": "bytes1"
+            },
+            {
+              "indexed": false,
+              "name": "ValueType",
+              "type": "bytes1"
+            },
+            {
+              "indexed": false,
+              "name": "Key",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "Value",
+              "type": "bytes32"
+            }
+          ],
+          "name": "EsEvent",
+          "type": "event"
+        }
+      },
+      "links": {
+        "EventStoreLib": "0x50b0adb7cd15532c16d2a723b717e8b43e143061"
+      },
+      "address": "0xc5c10f913daff915be79e9e35f5cc4116e81e401"
+    },
+    "1511729111212": {
+      "events": {
+        "0x34fda208d95da3b89ce2ca6e488201282198f339ef139dd80138a430c8d03a24": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "Id",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "TxOrigin",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "Created",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "EventType",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "KeyType",
+              "type": "bytes1"
+            },
+            {
+              "indexed": false,
+              "name": "ValueType",
+              "type": "bytes1"
+            },
+            {
+              "indexed": false,
+              "name": "Key",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "Value",
+              "type": "bytes32"
+            }
+          ],
+          "name": "EsEvent",
+          "type": "event"
+        }
+      },
+      "links": {
+        "EventStoreLib": "0x5c9aa2259dce9ab3433963169dbed6e3aa0c7e09"
+      },
+      "address": "0x00c40c263ca0040d8332ae3a0774b50fecc886e1"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-25T19:39:04.056Z"
+  "updatedAt": "2017-11-26T20:45:25.387Z"
 }
