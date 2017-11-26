@@ -1,0 +1,565 @@
+{
+  "contractName": "OracleCaller",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "oracleAddress",
+          "type": "address"
+        }
+      ],
+      "name": "callOracle",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "fallback"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "data",
+          "type": "bytes32"
+        }
+      ],
+      "name": "OracleRequest",
+      "type": "event"
+    }
+  ],
+  "bytecode": "0x6060604052341561000f57600080fd5b6101128061001e6000396000f300606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680630d7efd5314604e575b3415604957600080fd5b600080fd5b3415605857600080fd5b6082600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506084565b005b7f2d53a31b8b7fba2f7879e4b1b37cbeaf0902a9eb387c6b83aee6c1271041b43f7f626f62000000000000000000000000000000000000000000000000000000000060405180826000191660001916815260200191505060405180910390a1505600a165627a7a72305820ff3742d18f46bf45c78ce788cba4ce9b281dccecf15633423e15cafbf50c84150029",
+  "deployedBytecode": "0x606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680630d7efd5314604e575b3415604957600080fd5b600080fd5b3415605857600080fd5b6082600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506084565b005b7f2d53a31b8b7fba2f7879e4b1b37cbeaf0902a9eb387c6b83aee6c1271041b43f7f626f62000000000000000000000000000000000000000000000000000000000060405180826000191660001916815260200191505060405180910390a1505600a165627a7a72305820ff3742d18f46bf45c78ce788cba4ce9b281dccecf15633423e15cafbf50c84150029",
+  "sourceMap": "50:526:1:-;;;149:36;;;;;;;;50:526;;;;;;",
+  "deployedSourceMap": "50:526:1:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;113:8;;;235:338;;;;;;;;;;;;;;;;;;;;;;;;;;;;;520:45;543:14;520:45;;;;;;;;;;;;;;;;;;;;;;;;235:338;:::o",
+  "source": "pragma solidity ^0.4.11;\n\nimport \"./Oracle.sol\";\n\ncontract OracleCaller {\n\n\n  // FALLBACK\n  function () public { revert(); }\n  \n  // CONSTRUCTOR  \n  function OracleCaller() public {\n  }\n\n  event OracleRequest(\n    bytes32 data\n  );\n\n  function callOracle(address oracleAddress) public {\n      // Oracle orc = Oracle(oracleAddress);\n      // bytes32 requestIndex = keccak256(0x616263);\n      // 0x4e03657aea45a94fc7d47ba826c8d667c0d1e6e33a64a036ec44f58fa12d6c45\n\n      // bytes32 data = orc.testData();\n\n      // \n\n      OracleRequest(\n        bytes32(\"bob\")\n      );\n  \n  }\n\n}",
+  "sourcePath": "/Users/orie/Code/lerna-transmute/packages/transmute-services/contracts/OracleCaller.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/Users/orie/Code/lerna-transmute/packages/transmute-services/contracts/OracleCaller.sol",
+      "exportedSymbols": {
+        "OracleCaller": [
+          68
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".11"
+          ]
+        },
+        "id": 39,
+        "name": "PragmaDirective",
+        "src": "0:24:1"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 38,
+          "absolutePath": "/Users/orie/Code/lerna-transmute/packages/transmute-services/contracts/Oracle.sol",
+          "file": "./Oracle.sol",
+          "scope": 69,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 40,
+        "name": "ImportDirective",
+        "src": "26:22:1"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            68
+          ],
+          "name": "OracleCaller",
+          "scope": 69
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "",
+              "payable": false,
+              "scope": 68,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 41,
+                "name": "ParameterList",
+                "src": "101:2:1"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 42,
+                "name": "ParameterList",
+                "src": "111:0:1"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            null
+                          ],
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                null
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 441,
+                              "type": "function () pure",
+                              "value": "revert"
+                            },
+                            "id": 43,
+                            "name": "Identifier",
+                            "src": "113:6:1"
+                          }
+                        ],
+                        "id": 44,
+                        "name": "FunctionCall",
+                        "src": "113:8:1"
+                      }
+                    ],
+                    "id": 45,
+                    "name": "ExpressionStatement",
+                    "src": "113:8:1"
+                  }
+                ],
+                "id": 46,
+                "name": "Block",
+                "src": "111:13:1"
+              }
+            ],
+            "id": 47,
+            "name": "FunctionDefinition",
+            "src": "92:32:1"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": true,
+              "modifiers": [
+                null
+              ],
+              "name": "OracleCaller",
+              "payable": false,
+              "scope": 68,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 48,
+                "name": "ParameterList",
+                "src": "170:2:1"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 49,
+                "name": "ParameterList",
+                "src": "180:0:1"
+              },
+              {
+                "attributes": {
+                  "statements": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 50,
+                "name": "Block",
+                "src": "180:5:1"
+              }
+            ],
+            "id": 51,
+            "name": "FunctionDefinition",
+            "src": "149:36:1"
+          },
+          {
+            "attributes": {
+              "anonymous": false,
+              "name": "OracleRequest"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "data",
+                      "scope": 55,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bytes32",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bytes32",
+                          "type": "bytes32"
+                        },
+                        "id": 52,
+                        "name": "ElementaryTypeName",
+                        "src": "214:7:1"
+                      }
+                    ],
+                    "id": 53,
+                    "name": "VariableDeclaration",
+                    "src": "214:12:1"
+                  }
+                ],
+                "id": 54,
+                "name": "ParameterList",
+                "src": "208:22:1"
+              }
+            ],
+            "id": 55,
+            "name": "EventDefinition",
+            "src": "189:42:1"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "callOracle",
+              "payable": false,
+              "scope": 68,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "oracleAddress",
+                      "scope": 67,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 56,
+                        "name": "ElementaryTypeName",
+                        "src": "255:7:1"
+                      }
+                    ],
+                    "id": 57,
+                    "name": "VariableDeclaration",
+                    "src": "255:21:1"
+                  }
+                ],
+                "id": 58,
+                "name": "ParameterList",
+                "src": "254:23:1"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 59,
+                "name": "ParameterList",
+                "src": "285:0:1"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bytes32",
+                                  "typeString": "bytes32"
+                                }
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "call",
+                              "referencedDeclaration": 55,
+                              "type": "function (bytes32)",
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "value": "OracleRequest"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 194,
+                                  "type": "address",
+                                  "value": "oracleAddress"
+                                },
+                                "id": 197,
+                                "name": "Identifier",
+                                "src": "521:13:4"
+                              }
+                            ],
+                            "id": 60,
+                            "name": "Identifier",
+                            "src": "520:13:1"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "type": "bytes32",
+                              "type_conversion": true
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_stringliteral_38e47a7b719dce63662aeaf43440326f551b8a7ee198cee35cb5d517f2d296a2",
+                                      "typeString": "literal_string \"bob\""
+                                    }
+                                  ],
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "type": "type(bytes32)",
+                                  "value": "bytes32"
+                                },
+                                "id": 61,
+                                "name": "ElementaryTypeNameExpression",
+                                "src": "543:7:1"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "isStructConstructorCall": false,
+                                  "lValueRequested": false,
+                                  "names": [
+                                    null
+                                  ],
+                                  "type": "literal_string \"bob\"",
+                                  "type_conversion": false,
+                                  "hexvalue": "626f62",
+                                  "subdenomination": null,
+                                  "token": "string",
+                                  "value": "bob"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": [
+                                        {
+                                          "typeIdentifier": "t_stringliteral_338cdca1fb71434d124a930bca947e808f279d19a6d62272efafc970ba734c02",
+                                          "typeString": "literal_string \"request()\""
+                                        }
+                                      ],
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1165,
+                                      "type": "function () pure returns (bytes32)",
+                                      "value": "sha3"
+                                    },
+                                    "id": 201,
+                                    "name": "Identifier",
+                                    "src": "547:4:4"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "hexvalue": "726571756573742829",
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": true,
+                                      "lValueRequested": false,
+                                      "subdenomination": null,
+                                      "token": "string",
+                                      "type": "literal_string \"request()\"",
+                                      "value": "request()"
+                                    },
+                                    "id": 202,
+                                    "name": "Literal",
+                                    "src": "552:11:4"
+                                  }
+                                ],
+                                "id": 62,
+                                "name": "Literal",
+                                "src": "551:5:1"
+                              }
+                            ],
+                            "id": 63,
+                            "name": "FunctionCall",
+                            "src": "543:14:1"
+                          }
+                        ],
+                        "id": 64,
+                        "name": "FunctionCall",
+                        "src": "520:45:1"
+                      }
+                    ],
+                    "id": 65,
+                    "name": "ExpressionStatement",
+                    "src": "520:45:1"
+                  }
+                ],
+                "id": 66,
+                "name": "Block",
+                "src": "285:288:1",
+                "attributes": {
+                  "statements": [
+                    null
+                  ]
+                }
+              }
+            ],
+            "id": 67,
+            "name": "FunctionDefinition",
+            "src": "235:338:1"
+          }
+        ],
+        "id": 68,
+        "name": "ContractDefinition",
+        "src": "50:526:1"
+      }
+    ],
+    "id": 69,
+    "name": "SourceUnit",
+    "src": "0:576:1"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
+  },
+  "networks": {
+    "1511636678061": {
+      "events": {},
+      "links": {},
+      "address": "0x903103aeec717a41073cc12374a178bae18b3cc7"
+    }
+  },
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2017-11-25T19:39:04.086Z"
+}
