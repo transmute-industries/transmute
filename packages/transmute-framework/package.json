@@ -71,15 +71,26 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx}": ["npm run prettier:ts -- --write", "git add"]
+    "src/**/*.{ts,tsx}": [
+      "npm run prettier:ts -- --write",
+      "git add"
+    ]
   },
   "jest": {
-    "roots": ["<rootDir>/src"],
+    "roots": [
+      "<rootDir>/src"
+    ],
     "transform": {
       "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": ["ts", "tsx", "js", "json", "node"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json",
+      "node"
+    ],
     "mapCoverage": true,
     "coveragePathIgnorePatterns": [
       "<rootDir>/node_modules/",
@@ -128,7 +139,8 @@
     "truffle-contract": "3.0.0",
     "web3": "0.19.0",
     "web3-provider-engine": "13.3.1",
-    "web3-utils": "1.0.0-beta.26"
+    "web3-utils": "1.0.0-beta.26",
+    "webcrypto-shim": "0.1.2"
   },
   "devDependencies": {
     "@types/jest": "20.0.2",
