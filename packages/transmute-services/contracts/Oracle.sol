@@ -4,12 +4,6 @@ import "../node_modules/transmute-framework/contracts/TransmuteFramework/UnsafeE
 
 contract Oracle is UnsafeEventStore {
 
-  // FALLBACK
-  function () public payable { revert(); }
-  
-  // CONSTRUCTOR  
-  function Oracle() public payable {}
-
   // Think about standards...
   // http://www.jsonrpc.org/specification
   // struct RequestObject {
@@ -26,27 +20,29 @@ contract Oracle is UnsafeEventStore {
   //   bytes32 id;
   // }
 
+  // Fallback Function
+  function () public payable { revert(); }
+  
+  // Constructor
+  function Oracle() public payable {}
+
   struct OracleTransaction {
     bytes32 guid;
     address callerAddress;
     bytes32 callerRequest;
-    bytes32 callerCallback;
+    function(bytes32) external callerCallback;
 
     bytes32 oracleResponse; 
   }
 
   mapping (bytes32 => OracleTransaction) transactions;
 
-  // function register(address _address, string _text) public returns (bool) {
-  //     return _address.call(bytes4(keccak256("register(string)")), _text);
-  // }
-
-  function getTransactionByGuid(bytes32 _guid) public view returns (bytes32, address, bytes32, bytes32, bytes32) {
+  function getTransactionByGuid(bytes32 _guid) external view returns (bytes32, address, bytes32, function(bytes32) external, bytes32) {
     OracleTransaction storage ot = transactions[_guid];
     return (ot.guid, ot.callerAddress, ot.callerRequest, ot.callerCallback, ot.oracleResponse);
   }
 
-  function requestBytes32(bytes32 _guid, bytes32 _request, bytes32 _callback) public {
+  function requestBytes32(bytes32 _guid, bytes32 _request, function(bytes32) external _callback) external {
     OracleTransaction memory ot;
     ot.guid = _guid;
     ot.callerAddress = msg.sender;
@@ -56,13 +52,12 @@ contract Oracle is UnsafeEventStore {
     writeEvent("REQUEST", "S", "B", "guid", _guid);
   }
 
-  function respondBytes32(bytes32 _guid, bytes32 _data) public {
+  function respondBytes32(bytes32 _guid, bytes32 _data) external {
     OracleTransaction storage ot = transactions[_guid];
     ot.oracleResponse = _data;
 
-    if (! ot.callerAddress.call(bytes4(keccak256("receive(bytes32)")), _data)) {
-      revert();
-    }
+    ot.callerCallback(_data);
+
     writeEvent("RESPONSE", "S", "B", "guid", _guid);
   }
 

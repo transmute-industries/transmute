@@ -4,23 +4,21 @@ import "../node_modules/transmute-framework/contracts/TransmuteFramework/UnsafeE
 
 contract ArtifactDeployerFactory is UnsafeEventStoreFactory {
 
-    function () public payable { revert(); }
+  function () public payable { revert(); }
 
-    function ArtifactDeployerFactory() public payable {}
+  function ArtifactDeployerFactory() public payable {}
 
-    event EsEvent(
-        uint Id,
-        address TxOrigin,
-        uint Created,
+  event EsEvent(
+    uint Id,
+    address TxOrigin,
+    uint Created,
 
-        bytes32 EventType,
+    bytes32 EventType,
 
-        bytes1 KeyType,
-        bytes1 ValueType,
+    bytes1 KeyType,
+    bytes1 ValueType,
 
-        bytes32 Key,
-        bytes32 Value
-    );
-
-  
+    bytes32 Key,
+    bytes32 Value
+  );
 }
