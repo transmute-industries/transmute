@@ -46,9 +46,10 @@ module.exports = function(deployer) {
   deployer.link(ArtifactDeployer, OracleFactory);
   deployer.deploy(OracleFactory);
 
-  deployer.link(Oracle, OracleCaller);
-  deployer.deploy(OracleCaller);
-
+  deployer.link(AddressSetLib, OracleCaller);
+  deployer.link(Oracle, OracleCaller).then(() => {
+    return deployer.deploy(OracleCaller, Oracle.address);
+  });
 };
 
 

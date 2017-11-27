@@ -7,8 +7,8 @@ contract OracleCaller {
   
   using AddressSetLib for AddressSetLib.AddressSet;
 
-  Oracle oracle;
-  AddressSetLib.AddressSet whitelist;
+  Oracle private oracle;
+  AddressSetLib.AddressSet private whitelist;
   bytes32 public state;
 
   // Modifiers
@@ -21,13 +21,12 @@ contract OracleCaller {
   function () public { revert(); }
   
   // Constructor
-  function OracleCaller(address _oracleAddress, address[] _whitelist) public {
+  function OracleCaller(address _oracleAddress) public {
     oracle = Oracle(_oracleAddress);
-    for (uint index = 0; index < _whitelist.length; index++) {
-      whitelist.add(_whitelist[index]);
-    }
+    whitelist.add(msg.sender);
   }
 
+  // Interface
   function trigger() external onlyWhitelist(msg.sender) {
     bytes32 guid = keccak256(block.number);
     bytes32 request = bytes32("Math.random()");
@@ -39,6 +38,17 @@ contract OracleCaller {
     state = _data;
   }
 
+  // Helper Functions
+  // FIX - no clue why this is not working... "invalid number of arguments"
+  // function getState() external view onlyWhitelist(msg.sender) returns (bytes32) {
+  //   return state;
+  // }
+
+  function getWhitelist() external view onlyWhitelist(msg.sender) returns (address[]) {
+    return whitelist.values;
+  }
+
+  // Events
   event EsEvent(
     uint Id,
     address TxOrigin,

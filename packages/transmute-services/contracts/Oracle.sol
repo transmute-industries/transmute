@@ -20,6 +20,13 @@ contract Oracle is UnsafeEventStore {
   //   bytes32 id;
   // }
 
+  // Modifiers
+  modifier transactionDoesNotExist(bytes32 _guid) {
+    OracleTransaction storage ot = transactions[_guid];
+    require(ot.callerAddress == address(0));
+    _;
+  }
+
   // Fallback Function
   function () public payable { revert(); }
   
@@ -37,12 +44,13 @@ contract Oracle is UnsafeEventStore {
 
   mapping (bytes32 => OracleTransaction) transactions;
 
-  function getTransactionByGuid(bytes32 _guid) external view returns (bytes32, address, bytes32, function(bytes32) external, bytes32) {
+  function getTransactionByGuid(bytes32 _guid) external view returns (bytes32, address, bytes32, bytes32) {
     OracleTransaction storage ot = transactions[_guid];
-    return (ot.guid, ot.callerAddress, ot.callerRequest, ot.callerCallback, ot.oracleResponse);
+    require(ot.callerAddress != address(0));
+    return (ot.guid, ot.callerAddress, ot.callerRequest, ot.oracleResponse);
   }
 
-  function requestBytes32(bytes32 _guid, bytes32 _request, function(bytes32) external _callback) external {
+  function requestBytes32(bytes32 _guid, bytes32 _request, function(bytes32) external _callback) external transactionDoesNotExist(_guid) {
     OracleTransaction memory ot;
     ot.guid = _guid;
     ot.callerAddress = msg.sender;
