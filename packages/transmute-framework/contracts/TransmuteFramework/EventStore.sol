@@ -18,15 +18,17 @@ contract EventStore is Killable {
     _;
   }
 
+  modifier onlyCreatorOrOwner(address _caller) {
+    require(_caller == this.owner() || _caller == creator);
+    _;
+  }
+
   // Fallback Function
   function () public payable { revert(); }
 
   // Constuctor
-  function EventStore(address[] _whitelist) public payable {
+  function EventStore() public payable {
     creator = tx.origin;
-    for (uint index = 0; index < _whitelist.length; index++) {
-      whitelist.add(_whitelist[index]);
-    }
   }
 
   // Interface
@@ -64,6 +66,13 @@ contract EventStore is Killable {
   // Helper Functions
   function eventCount() public view returns (uint) {
     return store.events.length;
+  }
+
+  function setWhitelist(address[] _whitelist) public onlyCreatorOrOwner(msg.sender) {
+    require(whitelist.size() == 0);
+    for (uint index = 0; index < _whitelist.length; index++) {
+      whitelist.add(_whitelist[index]);
+    }
   }
 
   // Events

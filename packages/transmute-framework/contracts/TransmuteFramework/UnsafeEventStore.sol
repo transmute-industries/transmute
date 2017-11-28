@@ -9,30 +9,22 @@ contract UnsafeEventStore is Killable {
   EventStoreLib.EsEventStorage store;
   address public creator;
 
-  // FALLBACK
+  // Fallback Function
   function () public payable { revert(); }
 
-  // CONSTRUCTOR
+  // Constructor
   function UnsafeEventStore() public payable {
     creator = tx.origin;
   }
 
-  function eventCount() public view
-  returns (uint)
-  {
-    return store.events.length;
-  }
-
+  // Interface
   function writeEvent(
     bytes32 _eventType,
     bytes1 _keyType,
     bytes1 _valueType,
     bytes32 _key,
     bytes32 _value
-  )
-    public
-    returns (uint)
-  {
+  ) public returns (uint) {
     // Check access control here before writing events...
     return EventStoreLib.writeEvent(
       store,
@@ -44,9 +36,7 @@ contract UnsafeEventStore is Killable {
     );
   }
 
-  // READ EVENT
-  function readEvent(uint _eventId)
-    public view
+  function readEvent(uint _eventId) public view
     returns (
       uint,
       address,
@@ -56,11 +46,16 @@ contract UnsafeEventStore is Killable {
       bytes1,
       bytes32,
       bytes32
-    )
-  {
+    ) {
     return EventStoreLib.readEvent(store, _eventId);
   }
 
+  // Helper Functions
+  function eventCount() public view returns (uint) {
+    return store.events.length;
+  }
+
+  // Events
   event EsEvent(
     uint Id,
     address TxOrigin,

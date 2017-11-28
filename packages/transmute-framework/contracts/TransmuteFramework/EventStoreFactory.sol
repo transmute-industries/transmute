@@ -20,17 +20,19 @@ contract EventStoreFactory is EventStore {
   function () public payable { revert(); }
 
   // Constructor
-  function EventStoreFactory() public payable {}
+  function EventStoreFactory() public payable { }
 
   // Interface
-	function createEventStore(address[] _whitelist) public returns (address) {
-		EventStore newEventStore = new EventStore(_whitelist);
+  function createEventStore(address[] _whitelist) public returns (address) {
+    EventStore newEventStore = new EventStore();
+
+    newEventStore.setWhitelist(_whitelist);
     EventStoreAddresses.add(address(newEventStore));
     creatorEventStoreMapping[msg.sender].add(address(newEventStore));
 
     writeEvent("ES_CREATED", "S", "A", "address", bytes32(address(newEventStore)));
     return address(newEventStore);
-	}
+  }
 
   function killEventStore(address _address) public eventStoreExists(_address) {
     EventStore eventStore = EventStore(_address);
