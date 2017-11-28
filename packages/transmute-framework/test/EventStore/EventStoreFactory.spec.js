@@ -1,12 +1,12 @@
-var Web3 = require("web3");
+const Web3 = require("web3");
+const _ = require("lodash");
+
 var EventStoreFactory = artifacts.require(
   "./TransmuteFramework/EventStore/Bases/EventStore/EventStoreFactory.sol"
 );
 var EventStore = artifacts.require(
   "./TransmuteFramework/EventStore/Bases/EventStore/EventStore.sol"
 );
-
-var _ = require("lodash");
 
 const { getFSAFromEventArgs, getFSAFromEventValues } = require("../Common");
 
@@ -23,7 +23,7 @@ contract("EventStoreFactory", function(accounts) {
   });
 
   it("setWhitelist", async () => {
-    let _tx = await factory.setWhitelist(_.concat(accounts), {
+    let _tx = await factory.setWhitelist(accounts, {
       from: accounts[0],
       gas: 2000000
     });

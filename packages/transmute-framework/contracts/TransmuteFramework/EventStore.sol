@@ -64,15 +64,19 @@ contract EventStore is Killable {
   }
 
   // Helper Functions
-  function eventCount() public view returns (uint) {
-    return store.events.length;
-  }
-
   function setWhitelist(address[] _whitelist) public onlyCreatorOrOwner(msg.sender) {
     require(whitelist.size() == 0);
     for (uint index = 0; index < _whitelist.length; index++) {
       whitelist.add(_whitelist[index]);
     }
+  }
+
+  function getWhitelist() public view onlyCreatorOrOwner(msg.sender) returns(address[]) {
+    return whitelist.values;
+  }
+
+  function eventCount() public view returns (uint) {
+    return store.events.length;
   }
 
   // Events
