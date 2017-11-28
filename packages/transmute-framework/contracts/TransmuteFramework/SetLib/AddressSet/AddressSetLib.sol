@@ -81,8 +81,7 @@ library AddressSetLib {
   }
 
   function indexOf(AddressSet storage self, address value) public view returns (uint) {
-    if (!self.exists[value])
-      return uint(-1);
+    require(self.exists[value]);
     return self.indices[value];
   }
 

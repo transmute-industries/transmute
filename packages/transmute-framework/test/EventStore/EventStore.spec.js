@@ -2,10 +2,10 @@ const Web3 = require("web3");
 const _ = require("lodash");
 
 const EventStoreFactory = artifacts.require(
-  "./TransmuteFramework/EventStore/EventStore/EventStoreFactory.sol"
+  "./TransmuteFramework/EventStoreFactory.sol"
 );
 const EventStore = artifacts.require(
-  "./TransmuteFramework/EventStore/EventStore/EventStore.sol"
+  "./TransmuteFramework/EventStore.sol"
 );
 
 const { unMarshalledExpectedEvents } = require("../MockEvents");
@@ -26,7 +26,7 @@ const writeEventFromAccount = async (eventStore, originalEvent, account) => {
     originalEvent.value
   );
 
-  let _tx = await eventStore.writeEvent(
+  let tx = await eventStore.writeEvent(
     marshalledEvent.eventType,
     marshalledEvent.keyType,
     marshalledEvent.valueType,
@@ -35,7 +35,7 @@ const writeEventFromAccount = async (eventStore, originalEvent, account) => {
     { from: account, gas: 2000000 }
   );
 
-  let event = _tx.logs[0].args;
+  let event = tx.logs[0].args;
   let eventId = event.Id.toNumber();
 
   let fsa = getFSAFromEventArgs(event);
@@ -127,11 +127,11 @@ describe("", () => {
     });
 
     it("the factory caller is the event store contract creator", async () => {
-      let _tx = await factory.createEventStore(_.slice(accounts, 0, 2), {
+      let tx = await factory.createEventStore(_.slice(accounts, 0, 2), {
         from: accounts[0],
         gas: 2000000
       });
-      let fsa = getFSAFromEventArgs(_tx.logs[0].args);
+      let fsa = getFSAFromEventArgs(tx.logs[0].args);
       eventStore = EventStore.at(fsa.payload.address);
       let creator = await eventStore.creator();
       assert(creator === accounts[0]);
@@ -231,6 +231,36 @@ describe("", () => {
             });
         }
       );
+    });
+
+    it("non-owner cannot destroy eventStore", async () => {
+      return eventStore
+        .destroy({ from: accounts[1] })
+        .then(_tx => {
+          assert.fail("non-owner can destroy eventStore");
+        })
+        .catch(e => {
+          if (e.name == "Error") {
+            assert.ok(true);
+          } else {
+            assert.fail("non-owner can destroy eventStore");
+          }
+        });
+    });
+
+    it("owner can destroy eventStore", async () => {
+      return eventStore
+        .destroy({ from: accounts[1] })
+        .then(_tx => {
+          assert.fail("owner cannot destroy eventStore");
+        })
+        .catch(e => {
+          if (e.name == "Error") {
+            assert.ok(true);
+          } else {
+            assert.fail("owner cannot destroy eventStore");
+          }
+        });
     });
   });
 });

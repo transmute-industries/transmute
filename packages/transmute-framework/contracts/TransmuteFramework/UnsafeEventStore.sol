@@ -1,9 +1,10 @@
 pragma solidity ^0.4.11;
 
 import "./EventStoreLib.sol";
-import './Killable.sol';
+import './Destructible.sol';
 
-contract UnsafeEventStore is Killable {
+contract UnsafeEventStore is Destructible {
+
   using EventStoreLib for EventStoreLib.EsEventStorage;
 
   EventStoreLib.EsEventStorage store;

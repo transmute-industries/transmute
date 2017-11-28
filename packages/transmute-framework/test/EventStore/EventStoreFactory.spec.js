@@ -1,20 +1,20 @@
 const Web3 = require("web3");
 const _ = require("lodash");
 
-var EventStoreFactory = artifacts.require(
-  "./TransmuteFramework/EventStore/Bases/EventStore/EventStoreFactory.sol"
+const EventStoreFactory = artifacts.require(
+  "./TransmuteFramework/EventStoreFactory.sol"
 );
-var EventStore = artifacts.require(
-  "./TransmuteFramework/EventStore/Bases/EventStore/EventStore.sol"
+const EventStore = artifacts.require(
+  "./TransmuteFramework/EventStore.sol"
 );
 
 const { getFSAFromEventArgs, getFSAFromEventValues } = require("../Common");
 
 contract("EventStoreFactory", function(accounts) {
-  var factory = null;
-  var account1EventStoreAddresses = [];
-  var account2EventStoreAddresses = [];
-  var eventStoreAddresses = [];
+  let factory = null;
+  let account1EventStoreAddresses = [];
+  let account2EventStoreAddresses = [];
+  let eventStoreAddresses = [];
 
   it("deployed", async () => {
     factory = await EventStoreFactory.deployed();

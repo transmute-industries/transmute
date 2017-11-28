@@ -1,5 +1,5 @@
 var Ownable = artifacts.require('./TransmuteFramework/Ownable.sol')
-var Killable = artifacts.require('./TransmuteFramework/Killable.sol')
+var Destructible = artifacts.require('./TransmuteFramework/Destructible.sol')
 
 var StringUtils = artifacts.require('./TransmuteFramework/StringUtils.sol')
 
@@ -29,21 +29,21 @@ module.exports = function(deployer, network, accounts) {
   deployer.deploy(StringUtils);
 
   deployer.deploy(Ownable);
-  deployer.link(Ownable, Killable);
-  deployer.deploy(Killable);
+  deployer.link(Ownable, Destructible);
+  deployer.deploy(Destructible);
 
   deployer.deploy(AddressSetLib);
-  deployer.link(Killable, AddressSetSpec);
+  deployer.link(Destructible, AddressSetSpec);
   deployer.link(AddressSetLib, AddressSetSpec);
   deployer.deploy(AddressSetSpec);
 
   deployer.deploy(Bytes32SetLib);
-  deployer.link(Killable, Bytes32SetSpec);
+  deployer.link(Destructible, Bytes32SetSpec);
   deployer.link(Bytes32SetLib, Bytes32SetSpec);
   deployer.deploy(Bytes32SetSpec);
 
   deployer.deploy(UIntSetLib);
-  deployer.link(Killable, UIntSetLib);
+  deployer.link(Destructible, UIntSetLib);
   deployer.link(UIntSetLib, UIntSetSpec);
   deployer.deploy(UIntSetSpec);
 
@@ -51,7 +51,7 @@ module.exports = function(deployer, network, accounts) {
 
   deployer.link(EventStoreLib, EventStore);
   deployer.link(AddressSetLib, EventStore);
-  deployer.link(Killable, EventStore);
+  deployer.link(Destructible, EventStore);
   deployer.deploy(EventStore, [accounts[0]]);
 
   deployer.link(EventStoreLib, EventStoreFactory);
@@ -61,7 +61,7 @@ module.exports = function(deployer, network, accounts) {
 
   deployer.link(EventStoreLib, UnsafeEventStore);
   deployer.link(AddressSetLib, UnsafeEventStore);
-  deployer.link(Killable, UnsafeEventStore);
+  deployer.link(Destructible, UnsafeEventStore);
   deployer.deploy(UnsafeEventStore);
 
   deployer.link(EventStoreLib, UnsafeEventStoreFactory);

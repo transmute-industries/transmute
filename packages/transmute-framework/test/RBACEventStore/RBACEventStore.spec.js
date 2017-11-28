@@ -1,9 +1,7 @@
 const Web3 = require('web3')
 
-const RBACEventStoreFactory = artifacts.require(
-  './TransmuteFramework/EventStore/RBACEventStore/RBACEventStoreFactory.sol'
-)
-const RBACEventStore = artifacts.require('./TransmuteFramework/EventStore/RBACEventStore/RBACEventStore.sol')
+const RBACEventStoreFactory = artifacts.require('./TransmuteFramework/RBACEventStoreFactory.sol')
+const RBACEventStore = artifacts.require('./TransmuteFramework/RBACEventStore.sol')
 
 const {
   getFSAFromEventArgs,
@@ -14,25 +12,26 @@ const {
   grantItemFromEvent,
 } = require('../Common')
 
-// TODO: Write tests for common....
-
 const { unMarshalledExpectedEvents } = require('../MockEvents')
 
 describe('', () => {
-  let factory, eventStore, tx, fsa, owner
+  let factory, eventStore, tx, fsa, owner;
 
   before(async () => {
     factory = await RBACEventStoreFactory.deployed()
   })
 
   contract('RBACEventStore', accounts => {
-    it('the factory caller is the event store contract owner', async () => {
-      tx = await factory.createEventStore({ from: accounts[0], gas: 2000000 })
-      fsa = getFSAFromEventArgs(tx.logs[0].args)
-      eventStore = RBACEventStore.at(fsa.payload.address)
-      owner = await eventStore.owner()
-      assert(owner === accounts[0])
-    })
+    it("the factory caller is the event store contract owner", async () => {
+      tx = await factory.createEventStore({
+        from: accounts[0],
+        gas: 2000000
+      });
+      fsa = getFSAFromEventArgs(tx.logs[0].args);
+      eventStore = RBACEventStore.at(fsa.payload.address);
+      owner = await eventStore.owner();
+      assert.equal(owner, accounts[0]);
+    });
 
     unMarshalledExpectedEvents.forEach(unMarshalledExpectedEvent => {
       it('can write & read events of type ' + unMarshalledExpectedEvent.valueType, async () => {
@@ -78,6 +77,7 @@ describe('', () => {
         assert.equal(originalEvent.value, fsa.payload[Object.keys(fsa.payload)[0]])
       })
     })
+
     describe('DAC', async () => {
       it('only event store contract owner can write events', async () => {
         let originalEvent = unMarshalledExpectedEvents[0]

@@ -1,9 +1,9 @@
 pragma solidity ^0.4.11;
 
 import './UIntSetLib.sol';
-import '../../Killable.sol';
+import '../../Destructible.sol';
 
-contract UIntSetSpec is Killable {
+contract UIntSetSpec is Destructible {
   using UIntSetLib for UIntSetLib.UIntSet;
 
   UIntSetLib.UIntSet testSet;

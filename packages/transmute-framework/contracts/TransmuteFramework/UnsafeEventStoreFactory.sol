@@ -39,7 +39,7 @@ contract UnsafeEventStoreFactory is UnsafeEventStore {
     creatorEventStoreMapping[eventStore.owner()].remove(_address);
     EventStoreAddresses.remove(_address);
 
-    eventStore.kill();
+    eventStore.destroy();
     writeEvent("ES_DESTROYED", "S", "A", "address", bytes32(_address));
   }
 

@@ -1,9 +1,9 @@
 pragma solidity ^0.4.11;
 
 import './AddressSetLib.sol';
-import '../../Killable.sol';
+import '../../Destructible.sol';
 
-contract AddressSetSpec is Killable {
+contract AddressSetSpec is Destructible {
   using AddressSetLib for AddressSetLib.AddressSet;
 
   AddressSetLib.AddressSet testSet;

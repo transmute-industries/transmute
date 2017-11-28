@@ -1,10 +1,11 @@
 pragma solidity ^0.4.11;
 
 import "./EventStoreLib.sol";
-import './Killable.sol';
+import './Destructible.sol';
 import "./SetLib/AddressSet/AddressSetLib.sol";
 
-contract EventStore is Killable {
+contract EventStore is Destructible {
+
   using EventStoreLib for EventStoreLib.EsEventStorage;
   using AddressSetLib for AddressSetLib.AddressSet;
 

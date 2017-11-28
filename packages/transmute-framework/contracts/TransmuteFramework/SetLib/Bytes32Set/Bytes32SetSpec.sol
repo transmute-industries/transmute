@@ -1,9 +1,9 @@
 pragma solidity ^0.4.11;
 
 import './Bytes32SetLib.sol';
-import '../../Killable.sol';
+import '../../Destructible.sol';
 
-contract Bytes32SetSpec is Killable {
+contract Bytes32SetSpec is Destructible {
   using Bytes32SetLib for Bytes32SetLib.Bytes32Set;
 
   Bytes32SetLib.Bytes32Set testSet;
