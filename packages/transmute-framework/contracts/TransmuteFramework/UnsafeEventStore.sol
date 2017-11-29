@@ -17,7 +17,7 @@ contract UnsafeEventStore is Killable {
     creator = tx.origin;
   }
 
-  function eventCount() public view
+  function eventCount() public constant
   returns (uint)
   {
     return store.events.length;
@@ -46,7 +46,7 @@ contract UnsafeEventStore is Killable {
 
   // READ EVENT
   function readEvent(uint _eventId)
-    public view
+    public constant
     returns (
       uint,
       address,
