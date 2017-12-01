@@ -2,9 +2,9 @@ pragma solidity ^0.4.11;
 
 import "./Oracle.sol";
 import "../node_modules/transmute-framework/contracts/TransmuteFramework/SetLib/AddressSet/AddressSetLib.sol";
-import "../node_modules/transmute-framework/contracts/TransmuteFramework/UnsafeEventStore.sol";
+import "../node_modules/transmute-framework/contracts/TransmuteFramework/EventStore.sol";
 
-contract OracleFactory is UnsafeEventStore {
+contract OracleFactory is EventStore {
 
   using AddressSetLib for AddressSetLib.AddressSet;
 
@@ -47,11 +47,11 @@ contract OracleFactory is UnsafeEventStore {
 
   function killOracle(address _address) external checkExistence(_address) {
     require(this.owner() == msg.sender);
-    Oracle _oracle = Oracle(_address);
+    Oracle oracle = Oracle(_address);
 
-    creatorOracleMapping[_oracle.owner()].remove(_address);
+    creatorOracleMapping[oracle.owner()].remove(_address);
     childAddresses.remove(_address);
-    _oracle.kill();
+    oracle.destroy();
 
     writeEvent("ES_DESTROYED", "S", "A", "address", bytes32(_address));
   }

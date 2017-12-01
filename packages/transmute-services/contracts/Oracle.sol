@@ -1,8 +1,8 @@
 pragma solidity ^0.4.11;
 
-import "../node_modules/transmute-framework/contracts/TransmuteFramework/UnsafeEventStore.sol";
+import "../node_modules/transmute-framework/contracts/TransmuteFramework/EventStore.sol";
 
-contract Oracle is UnsafeEventStore {
+contract Oracle is EventStore {
 
   // Think about standards...
   // http://www.jsonrpc.org/specification

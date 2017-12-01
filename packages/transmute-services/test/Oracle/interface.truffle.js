@@ -74,33 +74,21 @@ contract("works with framework", accounts => {
     listenForRequest(T, accounts, oracle, oracleCaller);
   });
 
+
+  it("oracle whitelist", async () => {
+    await oracle.setWhitelist([oracleCaller.address, accounts[0]], {
+      from: accounts[0],
+      gas: 2000000
+    });
+    let whitelist = await oracle.getWhitelist({
+      from: accounts[0],
+      gas: 2000000
+    });
+    assert.deepEqual([oracleCaller.address, accounts[0]], whitelist)
+  });
+
   it("protocol", async () => {
     // trigger caller, caller will make a request
     await oracleCaller.trigger({ from: accounts[0] });
   });
-
-  // it("OracleFactory can create an oracle", async () => {
-  //   let { events, tx } = await T.Factory.createEventStore(factory, accounts[0]);
-  //   oracleAddress = events[0].payload.address;
-  //   oracle = await Oracle.at(oracleAddress);
-  // });
-
-  // it("oracle has requestBytes32 method", async () => {
-  //   let guid = '0'
-  //   let request = 'Math.random()'
-  //   let callback = 'receive(bytes32)'
-  //   let receipt = await oracle.requestBytes32(guid, request, callback, {
-  //     from: accounts[0]
-  //   });
-  //   expect(receipt.logs[0].event).to.equal("EsEvent");
-  // });
-
-  // it("oracle has respondBytes32 method", async () => {
-  //   let guid = '0'
-  //   let result = "T:"+ Math.random().toFixed(4).toString()
-  //   let receipt = await oracle.respondBytes32(guid, result, {
-  //     from: accounts[0]
-  //   });
-  //   expect(receipt.logs[0].event).to.equal("EsEvent");
-  // });
 });
