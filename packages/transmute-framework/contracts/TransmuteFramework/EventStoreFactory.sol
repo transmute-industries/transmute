@@ -23,10 +23,9 @@ contract EventStoreFactory is EventStore {
   function EventStoreFactory() public payable { }
 
   // Interface
-  function createEventStore(address[] _whitelist) public returns (address) {
+  function createEventStore() public returns (address) {
     EventStore newEventStore = new EventStore();
 
-    newEventStore.setWhitelist(_whitelist);
     EventStoreAddresses.add(address(newEventStore));
     creatorEventStoreMapping[msg.sender].add(address(newEventStore));
 
@@ -34,14 +33,23 @@ contract EventStoreFactory is EventStore {
     return address(newEventStore);
   }
 
-  function killEventStore(address _address) public eventStoreExists(_address) {
-    EventStore eventStore = EventStore(_address);
-    require(this.owner() == msg.sender || eventStore.owner() == msg.sender);
-    creatorEventStoreMapping[eventStore.owner()].remove(_address);
-    EventStoreAddresses.remove(_address);
+  function setEventStoreWhitelist(address _eventStoreAddress, address[] _whitelist) public eventStoreExists(_eventStoreAddress) {
+    EventStore eventStore = EventStore(_eventStoreAddress);
+    require(eventStore.creator() == msg.sender);
+
+    eventStore.setWhitelist(_whitelist);
+
+    writeEvent("ES_WL_SET", "S", "A", "address", bytes32(address(_eventStoreAddress)));
+  }
+
+  function killEventStore(address _eventStoreAddress) public eventStoreExists(_eventStoreAddress) {
+    EventStore eventStore = EventStore(_eventStoreAddress);
+    require(eventStore.creator() == msg.sender);
+    creatorEventStoreMapping[eventStore.owner()].remove(_eventStoreAddress);
+    EventStoreAddresses.remove(_eventStoreAddress);
 
     eventStore.destroy();
-    writeEvent("ES_DESTROYED", "S", "A", "address", bytes32(_address));
+    writeEvent("ES_DESTROYED", "S", "A", "address", bytes32(_eventStoreAddress));
   }
 
   // Helper Functions

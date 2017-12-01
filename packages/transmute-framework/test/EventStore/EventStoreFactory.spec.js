@@ -31,12 +31,11 @@ contract("EventStoreFactory", function(accounts) {
 
   it("createEventStore.call", async () => {
     let firstEventStoreAddress = await factory.createEventStore.call(
-      _.slice(accounts, 0, 2),
       {
         from: accounts[0]
       }
     );
-    let _tx = await factory.createEventStore(_.slice(accounts, 0, 2), {
+    let _tx = await factory.createEventStore({
       from: accounts[0],
       gas: 2000000
     });
@@ -66,7 +65,7 @@ contract("EventStoreFactory", function(accounts) {
   });
 
   it("createEventStore", async () => {
-    _tx = await factory.createEventStore(_.slice(accounts, 1, 3), {
+    _tx = await factory.createEventStore({
       from: accounts[2],
       gas: 2000000
     });

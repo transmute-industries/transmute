@@ -52,7 +52,7 @@ module.exports = function(deployer, network, accounts) {
   deployer.link(EventStoreLib, EventStore);
   deployer.link(AddressSetLib, EventStore);
   deployer.link(Destructible, EventStore);
-  deployer.deploy(EventStore, [accounts[0]]);
+  deployer.deploy(EventStore);
 
   deployer.link(EventStoreLib, EventStoreFactory);
   deployer.link(AddressSetLib, EventStoreFactory);

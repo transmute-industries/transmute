@@ -61,7 +61,6 @@ const readEventFromAccount = async (
   assert.equal(esEventValues[1], account);
 
   fsa = getFSAFromEventValues(...esEventValues);
-  // console.log(fsa)
   assert.equal(originalEvent.eventType, fsa.type);
   assert.equal(originalEvent.key, Object.keys(fsa.payload)[0]);
   assert.equal(originalEvent.value, fsa.payload[Object.keys(fsa.payload)[0]]);
@@ -74,7 +73,7 @@ describe("", () => {
     factory = await EventStoreFactory.deployed();
   });
 
-  contract("UnsafeEventStore", accounts => {
+  contract("EventStore", accounts => {
     let eventStore;
 
     it("the factory whitelist cannot be set by eventstore owner or creator", async () => {
@@ -127,7 +126,7 @@ describe("", () => {
     });
 
     it("the factory caller is the event store contract creator", async () => {
-      let tx = await factory.createEventStore(_.slice(accounts, 0, 2), {
+      let tx = await factory.createEventStore({
         from: accounts[0],
         gas: 2000000
       });
@@ -135,6 +134,66 @@ describe("", () => {
       eventStore = EventStore.at(fsa.payload.address);
       let creator = await eventStore.creator();
       assert(creator === accounts[0]);
+    });
+
+    it("event store non-creator cannot set whitelist", async () => {
+      factory
+        .setEventStoreWhitelist(
+          eventStore.address,
+          _.slice(accounts, 0, 2),
+          {
+            from: accounts[1],
+            gas: 2000000
+          }
+        )
+        .then(_tx => {
+          assert.fail("event store non-creator can set whitelist");
+        })
+        .catch(e => {
+          if (e.name == "Error") {
+            assert.ok(true);
+          } else {
+            assert.fail("event store non-creator can set whitelist");
+          }
+        });
+    });
+
+    it("event store creator can set whitelist", async () => {
+      await factory.setEventStoreWhitelist(
+        eventStore.address,
+        _.slice(accounts, 0, 2),
+        {
+          from: accounts[0],
+          gas: 2000000
+        }
+      );
+      let whitelist = await eventStore.getWhitelist({
+        from: accounts[0],
+        gas: 2000000
+      });
+      assert.deepEqual(whitelist, _.slice(accounts, 0, 2));
+    });
+
+    it("event store whitelist cannot be overwritten", async () => {
+      factory
+        .setEventStoreWhitelist(
+          eventStore.address,
+          _.slice(accounts, 0, 2),
+          {
+            from: accounts[0],
+            gas: 2000000
+          }
+        )
+        .then(_tx => {
+          assert.fail("event store whitelist can be overwritten");
+        })
+        .catch(e => {
+          if (e.name == "Error") {
+            assert.ok(true);
+          } else {
+            assert.fail("event store whitelist can be overwritten");
+          }
+        });
     });
 
     it("the factory is the event store owner", async () => {
