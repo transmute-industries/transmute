@@ -21,17 +21,11 @@ library Bytes32SetLib {
     _;
   }
 
-  function get(Bytes32Set storage self, uint index) public constant
-    inBounds(self, index)
-    returns (bytes32)
-  {
+  function get(Bytes32Set storage self, uint index) public view inBounds(self, index) returns (bytes32) {
     return self.values[index];
   }
 
-  function set(Bytes32Set storage self, uint index, bytes32 value) public
-    inBounds(self, index)
-    returns (bool)
-  {
+  function set(Bytes32Set storage self, uint index, bytes32 value) public inBounds(self, index) returns (bool) {
     if (self.exists[value])
       return false;
     self.values[index] = value;
@@ -40,9 +34,7 @@ library Bytes32SetLib {
     return true;
   }
 
-  function add(Bytes32Set storage self, bytes32 value) public
-    returns (bool)
-  {
+  function add(Bytes32Set storage self, bytes32 value) public returns (bool) {
     if (self.exists[value])
       return false;
     self.indices[value] = self.values.length;
@@ -51,9 +43,7 @@ library Bytes32SetLib {
     return true;
   }
 
-  function remove(Bytes32Set storage self, bytes32 value) public
-    returns (bool)
-  {
+  function remove(Bytes32Set storage self, bytes32 value) public returns (bool) {
     if (!self.exists[value])
       return false;
     uint index = indexOf(self, value);
@@ -61,10 +51,7 @@ library Bytes32SetLib {
     return true;
   }
 
-  function pop(Bytes32Set storage self, uint index) public
-    inBounds(self, index)
-    returns (bytes32)
-	{
+  function pop(Bytes32Set storage self, uint index) public inBounds(self, index) returns (bytes32) {
     bytes32 value = get(self, index);
 
     if (index != self.values.length - 1) {
@@ -81,43 +68,28 @@ library Bytes32SetLib {
     return value;
   }
 
-  function replace(Bytes32Set storage self, bytes32 old, bytes32 nu) public
-    returns (bool)
-  {
+  function replace(Bytes32Set storage self, bytes32 old, bytes32 nu) public returns (bool) {
     return remove(self, old) && add(self, nu);
   }
 
-  function first(Bytes32Set storage self) public constant
-    notEmpty(self)
-    returns (bytes32)
-  {
+  function first(Bytes32Set storage self) public view notEmpty(self) returns (bytes32) {
     return get(self, 0);
   }
 
-  function last(Bytes32Set storage self) public constant
-    notEmpty(self)
-    returns (bytes32)
-  {
+  function last(Bytes32Set storage self) public view notEmpty(self) returns (bytes32) {
     return get(self, self.values.length - 1);
   }
 
-  function indexOf(Bytes32Set storage self, bytes32 value) public constant
-    returns (uint)
-  {
-    if (!self.exists[value])
-      return uint(-1);
+  function indexOf(Bytes32Set storage self, bytes32 value) public view returns (uint) {
+    require(self.exists[value]);
     return self.indices[value];
   }
 
-  function contains(Bytes32Set storage self, bytes32 value) public constant
-    returns (bool)
-  {
+  function contains(Bytes32Set storage self, bytes32 value) public view returns (bool) {
     return self.exists[value];
   }
 
-  function size(Bytes32Set storage self) public constant
-    returns (uint)
-  {
+  function size(Bytes32Set storage self) public view returns (uint) {
     return self.values.length;
   }
 }

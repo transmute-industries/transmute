@@ -1,9 +1,9 @@
 pragma solidity ^0.4.11;
 
 import './AddressSetLib.sol';
-import '../../Killable.sol';
+import '../../Destructible.sol';
 
-contract AddressSetSpec is Killable {
+contract AddressSetSpec is Destructible {
   using AddressSetLib for AddressSetLib.AddressSet;
 
   AddressSetLib.AddressSet testSet;
@@ -15,72 +15,50 @@ contract AddressSetSpec is Killable {
   function () public payable {}
   function AddressSetSpec() public payable {}
 
-  function get(uint index) public constant
-    returns (address)
-  {
+  function get(uint index) public view returns (address) {
     return testSet.get(index);
   }
 
-  function getValues() public constant
-    returns (address[])
-  {
+  function getValues() public view returns (address[]) {
     return testSet.values;
   }
 
-  function set(uint index, address value) public
-    returns (bool)
-  {
+  function set(uint index, address value) public returns (bool) {
     return testSet.set(index, value);
   }
 
-  function add(address value) public
-    returns (bool)
-  {
+  function add(address value) public returns (bool) {
     lastAdd = testSet.add(value);
     return lastAdd;
   }
 
-  function remove(address value) public
-    returns (bool)
-  {
+  function remove(address value) public returns (bool) {
     lastRemove = testSet.remove(value);
     return lastRemove;
   }
 
-  function pop(uint index) public
-    returns (address)
-  {
+  function pop(uint index) public returns (address) {
     lastPop = testSet.pop(index);
     return lastPop;
   }
 
-  function first() public constant
-    returns (address)
-  {
+  function first() public view returns (address) {
     return testSet.first();
   }
 
-  function last() public constant
-    returns (address)
-  {
+  function last() public view returns (address) {
     return testSet.last();
   }
 
-  function indexOf(address value) public constant
-    returns (uint)
-  {
+  function indexOf(address value) public view returns (uint) {
     return testSet.indexOf(value);
   }
 
-  function contains(address value) public constant
-    returns (bool)
-  {
+  function contains(address value) public view returns (bool) {
     return testSet.contains(value);
   }
 
-  function size() public constant
-    returns (uint)
-  {
+  function size() public view returns (uint) {
     return testSet.size();
   }
 }

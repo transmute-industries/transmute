@@ -1,40 +1,33 @@
 pragma solidity ^0.4.11;
 
-import './Killable.sol';
+import './Destructible.sol';
 import './RBAC.sol';
 
 contract RBACEventStore is RBAC {
 
-  // FALLBACK
+  // Fallback Function
   function () public payable { revert(); }
 
-  // CONSTRUCTOR
+  // Constructor
   function RBACEventStore() public payable {
     owner = tx.origin;
   }
 
-  function eventCount() public view
-  returns (uint)
-  {
-    return store.events.length;
-  }
-
+  // Interface
   function writeEvent(
     bytes32 _eventType,
     bytes1 _keyType,
     bytes1 _valueType,
     bytes32 _key,
     bytes32 _value
-  )
-    public
-    returns (uint)
-  {
-    // Check access control here before writing events...
+  ) public returns (uint) {
     bytes32 txOriginRole = getAddressRole(msg.sender);
     var (granted,,) = canRoleActionResource(txOriginRole, bytes32("create:any"), bytes32("event"));
-    if (msg.sender != owner && !granted){
+
+    if (msg.sender != owner && !granted) {
       revert();
     }
+
     return EventStoreLib.writeEvent(
       store,
       _eventType,
@@ -45,9 +38,7 @@ contract RBACEventStore is RBAC {
     );
   }
 
-  // READ EVENT
-  function readEvent(uint _eventId)
-    public view
+  function readEvent(uint _eventId) public view
     returns (
       uint,
       address,
@@ -57,11 +48,16 @@ contract RBACEventStore is RBAC {
       bytes1,
       bytes32,
       bytes32
-    )
-  {
+    ) {
     return EventStoreLib.readEvent(store, _eventId);
   }
 
+  // Helper Functions
+  function eventCount() public view returns (uint) {
+    return store.events.length;
+  }
+
+  // Events
   event EsEvent(
     uint Id,
     address TxOrigin,

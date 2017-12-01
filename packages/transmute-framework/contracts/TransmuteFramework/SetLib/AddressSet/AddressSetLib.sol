@@ -21,17 +21,11 @@ library AddressSetLib {
     _;
   }
 
-  function get(AddressSet storage self, uint index) public constant
-    inBounds(self, index)
-    returns (address)
-  {
+  function get(AddressSet storage self, uint index) public view inBounds(self, index) returns (address) {
     return self.values[index];
   }
 
-  function set(AddressSet storage self, uint index, address value) public
-    inBounds(self, index)
-    returns (bool)
-  {
+  function set(AddressSet storage self, uint index, address value) public inBounds(self, index) returns (bool) {
     if (self.exists[value])
       return false;
     self.values[index] = value;
@@ -40,9 +34,7 @@ library AddressSetLib {
     return true;
   }
 
-  function add(AddressSet storage self, address value) public
-    returns (bool)
-  {
+  function add(AddressSet storage self, address value) public returns (bool) {
     if (self.exists[value])
       return false;
     self.indices[value] = self.values.length;
@@ -51,9 +43,7 @@ library AddressSetLib {
     return true;
   }
 
-  function remove(AddressSet storage self, address value) public
-    returns (bool)
-  {
+  function remove(AddressSet storage self, address value) public returns (bool) {
     if (!self.exists[value])
       return false;
     uint index = indexOf(self, value);
@@ -61,10 +51,7 @@ library AddressSetLib {
     return true;
   }
 
-  function pop(AddressSet storage self, uint index) public
-    inBounds(self, index)
-    returns (address)
-	{
+  function pop(AddressSet storage self, uint index) public inBounds(self, index) returns (address) {
     address value = get(self, index);
 
     if (index != self.values.length - 1) {
@@ -81,43 +68,28 @@ library AddressSetLib {
     return value;
   }
 
-  function replace(AddressSet storage self, address old, address nu) public
-    returns (bool)
-  {
+  function replace(AddressSet storage self, address old, address nu) public returns (bool) {
     return remove(self, old) && add(self, nu);
   }
 
-  function first(AddressSet storage self) public constant
-    notEmpty(self)
-    returns (address)
-  {
+  function first(AddressSet storage self) public view notEmpty(self) returns (address) {
     return get(self, 0);
   }
 
-  function last(AddressSet storage self) public constant
-    notEmpty(self)
-    returns (address)
-  {
+  function last(AddressSet storage self) public view notEmpty(self) returns (address) {
     return get(self, self.values.length - 1);
   }
 
-  function indexOf(AddressSet storage self, address value) public constant
-    returns (uint)
-  {
-    if (!self.exists[value])
-      return uint(-1);
+  function indexOf(AddressSet storage self, address value) public view returns (uint) {
+    require(self.exists[value]);
     return self.indices[value];
   }
 
-  function contains(AddressSet storage self, address value) public constant
-    returns (bool)
-  {
+  function contains(AddressSet storage self, address value) public view returns (bool) {
     return self.exists[value];
   }
 
-  function size(AddressSet storage self) public constant
-    returns (uint)
-  {
+  function size(AddressSet storage self) public view returns (uint) {
     return self.values.length;
   }
 }

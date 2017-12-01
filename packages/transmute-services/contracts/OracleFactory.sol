@@ -2,25 +2,14 @@ pragma solidity ^0.4.11;
 
 import "./Oracle.sol";
 import "../node_modules/transmute-framework/contracts/TransmuteFramework/SetLib/AddressSet/AddressSetLib.sol";
-import "../node_modules/transmute-framework/contracts/TransmuteFramework/UnsafeEventStore.sol";
+import "../node_modules/transmute-framework/contracts/TransmuteFramework/EventStore.sol";
 
-contract OracleFactory is UnsafeEventStore {
+contract OracleFactory is EventStore {
 
   using AddressSetLib for AddressSetLib.AddressSet;
 
-  mapping (address => AddressSetLib.AddressSet) creatorEventStoreMapping;
+  mapping (address => AddressSetLib.AddressSet) creatorOracleMapping;
   AddressSetLib.AddressSet childAddresses;
-
-  // Fallback Function
-  function () public payable { revert(); }
-
-  // Constructor
-  function OracleFactory() public
-  payable
-  {
-
-  }
-
 
   // Modifiers
   modifier checkExistence(address _address)
@@ -29,53 +18,55 @@ contract OracleFactory is UnsafeEventStore {
     _;
   }
 
+  // Fallback Function
+  function () public payable { revert(); }
+
+  // Constructor
+  function OracleFactory() public payable {}
+
   // Helper Functions
-  function getEventStoresByCreator()
-    public constant
-    returns (address[])
-  {
-    return creatorEventStoreMapping[msg.sender].values;
+  function getOraclesByCreator() external view returns (address[]) {
+    return creatorOracleMapping[msg.sender].values;
   }
 
-  function getEventStores()
-    public constant
-    returns (address[])
-  {
+  function getOracles() external view returns (address[]) {
     return childAddresses.values;
   }
 
   // Interface
-	function createEventStore()
-    public
-    returns (address)
-  {
-    // Interact With Other Contracts
-	Oracle _newEventStore = new Oracle();
+	function createOracle() external returns (address) {
+	  Oracle _newOracle = new Oracle();
 
-    // Update State Dependent On Other Contracts
-    childAddresses.add(address(_newEventStore));
-    creatorEventStoreMapping[msg.sender].add(address(_newEventStore));
+    childAddresses.add(address(_newOracle));
+    creatorOracleMapping[msg.sender].add(address(_newOracle));
 
-    writeEvent("ES_CREATED", "S", "A", "address", bytes32(address(_newEventStore)));
+    writeEvent("ES_CREATED", "S", "A", "address", bytes32(address(_newOracle)));
 
-    return address(_newEventStore);
+    return address(_newOracle);
 	}
 
-  function killEventStore(address _address)
-    public
-    checkExistence(_address)
-  {
-    // Validate Local State - Only the Factory owner can destroy stores with this method
+  function killOracle(address _address) external checkExistence(_address) {
     require(this.owner() == msg.sender);
+    Oracle oracle = Oracle(_address);
 
-    UnsafeEventStore _eventStore = UnsafeEventStore(_address);
-
-    // Update Local State
-    creatorEventStoreMapping[_eventStore.owner()].remove(_address);
+    creatorOracleMapping[oracle.owner()].remove(_address);
     childAddresses.remove(_address);
-
-    _eventStore.kill();
+    oracle.destroy();
 
     writeEvent("ES_DESTROYED", "S", "A", "address", bytes32(_address));
   }
+
+  event EsEvent(
+    uint Id,
+    address TxOrigin,
+    uint Created,
+
+    bytes32 EventType,
+
+    bytes1 KeyType,
+    bytes1 ValueType,
+
+    bytes32 Key,
+    bytes32 Value
+  );
 }

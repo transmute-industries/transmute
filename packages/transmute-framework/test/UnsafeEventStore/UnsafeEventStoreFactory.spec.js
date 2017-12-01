@@ -30,38 +30,28 @@ contract('UnsafeEventStoreFactory', function(accounts) {
     assert.equal(fsa.type, 'ES_CREATED', 'expect first event to be Type ES_CREATED')
     assert.equal(fsa.payload.address, firstEventStoreAddress, 'expected es contract address to match call')
 
-    eventStoreAddresses.push(fsa.payload.address)
-    account1EventStoreAddresses.push(fsa.payload.address)
+    let esAddress = fsa.payload.address
+    let es = await UnsafeEventStore.at(esAddress)
+    let esOwner = await es.creator()
+    assert.equal(esOwner, accounts[0], "expect factory caller to be es contract creator.");
+
+    eventStoreAddresses.push(esAddress)
+    account1EventStoreAddresses.push(esAddress)
   })
 
   it('createEventStore', async () => {
-    // Create firstEventStore
-    let _tx = await factory.createEventStore({ from: accounts[0], gas: 2000000 })
-    let event = _tx.logs[0].args
-    let fsa = getFSAFromEventArgs(event)
-    assert.equal(fsa.type, 'ES_CREATED', 'expect first event to be Type ES_CREATED')
-    // assert.equal(data, firstEventStoreAddress, 'expected es contract address to match call')
-    let escAddresss = fsa.payload.address
-    let esc = await UnsafeEventStore.at(escAddresss)
-    let escOwner = await esc.creator()
-    assert.equal(escOwner, accounts[0], 'expect factory caller to be es contract owner.')
-
-    eventStoreAddresses.push(escAddresss)
-    account1EventStoreAddresses.push(escAddresss)
-
-    // Create secondEventStore
     _tx = await factory.createEventStore({ from: accounts[2], gas: 2000000 })
     event = _tx.logs[0].args
     fsa = getFSAFromEventArgs(event)
     assert.equal(fsa.type, 'ES_CREATED', 'expect first event to be Type ES_CREATED')
 
-    escAddresss = fsa.payload.address
-    esc = await UnsafeEventStore.at(escAddresss)
-    escOwner = await esc.creator()
-    assert.equal(escOwner, accounts[2], 'expect factory caller to be es contract owner.')
+    esAddress = fsa.payload.address
+    es = await UnsafeEventStore.at(esAddress)
+    esOwner = await es.creator()
+    assert.equal(esOwner, accounts[2], "expect factory caller to be es contract creator.");
 
-    eventStoreAddresses.push(escAddresss)
-    account2EventStoreAddresses.push(escAddresss)
+    eventStoreAddresses.push(esAddress)
+    account2EventStoreAddresses.push(esAddress)
   })
 
   it('getEventStores', async () => {
@@ -98,6 +88,6 @@ contract('UnsafeEventStoreFactory', function(accounts) {
   it('getEventStores', async () => {
     let _addresses = await factory.getEventStores()
     assert(!_.includes(_addresses, account1EventStoreAddresses[0]), 'Expect killed store to not be in factory list')
-    assert(_.includes(_addresses, account1EventStoreAddresses[1]), 'Expect non killed store to be in list')
+    assert(_.includes(_addresses, account2EventStoreAddresses[0]), 'Expect non killed store to be in list')
   })
 })

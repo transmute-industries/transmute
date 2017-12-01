@@ -1,9 +1,9 @@
 const Web3 = require('web3')
 
 const UnsafeEventStoreFactory = artifacts.require(
-  './TransmuteFramework/EventStore/UnsafeEventStore/UnsafeEventStoreFactory.sol'
+  './TransmuteFramework/UnsafeEventStoreFactory.sol'
 )
-const UnsafeEventStore = artifacts.require('./TransmuteFramework/EventStore/UnsafeEventStore/UnsafeEventStore.sol')
+const UnsafeEventStore = artifacts.require('./TransmuteFramework/UnsafeEventStore.sol')
 
 const { getFSAFromEventArgs, getFSAFromEventValues, marshal, unmarshal } = require('../Common')
 

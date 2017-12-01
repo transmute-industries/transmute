@@ -1,9 +1,9 @@
 pragma solidity ^0.4.11;
 
 import './UIntSetLib.sol';
-import '../../Killable.sol';
+import '../../Destructible.sol';
 
-contract UIntSetSpec is Killable {
+contract UIntSetSpec is Destructible {
   using UIntSetLib for UIntSetLib.UIntSet;
 
   UIntSetLib.UIntSet testSet;
@@ -15,72 +15,50 @@ contract UIntSetSpec is Killable {
   function () public payable {}
   function UIntSetSpec() public payable {}
 
-  function get(uint index) public constant
-    returns (uint)
-  {
+  function get(uint index) public view returns (uint) {
     return testSet.get(index);
   }
 
-  function getValues() public constant
-    returns (uint[])
-  {
+  function getValues() public view returns (uint[]) {
     return testSet.values;
   }
 
-  function set(uint index, uint value) public
-    returns (bool)
-  {
+  function set(uint index, uint value) public returns (bool) {
     return testSet.set(index, value);
   }
 
-  function add(uint value) public
-    returns (bool)
-  {
+  function add(uint value) public returns (bool) {
     lastAdd = testSet.add(value);
     return lastAdd;
   }
 
-  function remove(uint value) public
-    returns (bool)
-  {
+  function remove(uint value) public returns (bool) {
     lastRemove = testSet.remove(value);
     return lastRemove;
   }
 
-  function pop(uint index) public
-    returns (uint)
-  {
+  function pop(uint index) public returns (uint) {
     lastPop = testSet.pop(index);
     return lastPop;
   }
 
-  function first() public constant
-    returns (uint)
-  {
+  function first() public view returns (uint) {
     return testSet.first();
   }
 
-  function last() public constant
-    returns (uint)
-  {
+  function last() public view returns (uint) {
     return testSet.last();
   }
 
-  function indexOf(uint value) public constant
-    returns (uint)
-  {
+  function indexOf(uint value) public view returns (uint) {
     return testSet.indexOf(value);
   }
 
-  function contains(uint value) public constant
-    returns (bool)
-  {
+  function contains(uint value) public view returns (bool) {
     return testSet.contains(value);
   }
 
-  function size() public constant
-    returns (uint)
-  {
+  function size() public view returns (uint) {
     return testSet.size();
   }
 }

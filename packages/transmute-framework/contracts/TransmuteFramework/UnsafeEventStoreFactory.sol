@@ -10,70 +10,45 @@ contract UnsafeEventStoreFactory is UnsafeEventStore {
   mapping (address => AddressSetLib.AddressSet) creatorEventStoreMapping;
   AddressSetLib.AddressSet EventStoreAddresses;
 
-  // Fallback Function
-  function () public payable { revert(); }
-
-  // Constructor
-  function UnsafeEventStoreFactory() public
-  payable
-  {
-
-  }
-
   // Modifiers
-  modifier checkExistence(address _EventStoreAddress)
-  {
+  modifier checkExistence(address _EventStoreAddress) {
     require(EventStoreAddresses.contains(_EventStoreAddress));
     _;
   }
 
+  // Fallback Function
+  function () public payable { revert(); }
+
+  // Constructor
+  function UnsafeEventStoreFactory() public payable {}
+
+  // Interface
+	function createEventStore() public returns (address) {
+		UnsafeEventStore newEventStore = new UnsafeEventStore();
+    EventStoreAddresses.add(address(newEventStore));
+    creatorEventStoreMapping[msg.sender].add(address(newEventStore));
+
+    writeEvent("ES_CREATED", "S", "A", "address", bytes32(address(newEventStore)));
+    return address(newEventStore);
+	}
+
+  function killEventStore(address _address) public checkExistence(_address) {
+    require(this.owner() == msg.sender);
+
+    UnsafeEventStore eventStore = UnsafeEventStore(_address);
+    creatorEventStoreMapping[eventStore.owner()].remove(_address);
+    EventStoreAddresses.remove(_address);
+
+    eventStore.destroy();
+    writeEvent("ES_DESTROYED", "S", "A", "address", bytes32(_address));
+  }
+
   // Helper Functions
-  function getEventStoresByCreator()
-    public constant
-    returns (address[])
-  {
+  function getEventStoresByCreator() public view returns (address[]) {
     return creatorEventStoreMapping[msg.sender].values;
   }
 
-  function getEventStores()
-    public constant
-    returns (address[])
-  {
+  function getEventStores() public constant returns (address[]) {
     return EventStoreAddresses.values;
-  }
-
-  // Interface
-	function createEventStore()
-    public
-    returns (address)
-  {
-    // Interact With Other Contracts
-		UnsafeEventStore _newEventStore = new UnsafeEventStore();
-
-    // Update State Dependent On Other Contracts
-    EventStoreAddresses.add(address(_newEventStore));
-    creatorEventStoreMapping[msg.sender].add(address(_newEventStore));
-
-    writeEvent('ES_CREATED', 'S', 'A', 'address', bytes32(address(_newEventStore)));
-
-    return address(_newEventStore);
-	}
-
-  function killEventStore(address _address)
-    public
-    checkExistence(_address)
-  {
-    // Validate Local State - Only the Factory owner can destroy stores with this method
-    require(this.owner() == msg.sender);
-
-    UnsafeEventStore _eventStore = UnsafeEventStore(_address);
-
-    // Update Local State
-    creatorEventStoreMapping[_eventStore.owner()].remove(_address);
-    EventStoreAddresses.remove(_address);
-
-    _eventStore.kill();
-
-    writeEvent('ES_DESTROYED', 'S', 'A', 'address', bytes32(_address));
   }
 }
