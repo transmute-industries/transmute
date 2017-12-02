@@ -65,7 +65,7 @@ library EventStoreLib{
     }
 
     // READ EVENT
-    function readEvent(EsEventStorage storage self, uint _eventId) public view
+    function readEvent(EsEventStorage storage self, uint _eventId) public constant
     returns (uint, address, uint, bytes32, bytes1, bytes1, bytes32, bytes32) {
         EsEventStruct memory esEvent = self.events[_eventId];
         return (

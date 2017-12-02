@@ -83,6 +83,10 @@ export class ReadModel {
             throw Error('failed to get a read model from the generator!')
           }
         }
+        if (_readModel.contractAddress === '0x0000000000000000000000000000000000000000'){
+          _readModel.contractAddress = eventStore.address;
+          _readModel.readModelStoreKey = `${_readModel.readModelType}:${_readModel.contractAddress}`
+        }
         return this.framework.Persistence.store.setItem(_readModel.readModelStoreKey, _readModel) as Common.IReadModel
       })
   }

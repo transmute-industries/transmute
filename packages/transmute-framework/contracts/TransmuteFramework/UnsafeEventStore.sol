@@ -25,7 +25,8 @@ contract UnsafeEventStore is Destructible {
     bytes1 _valueType,
     bytes32 _key,
     bytes32 _value
-  ) public returns (uint) {
+  ) public returns (uint)
+    {
     // Check access control here before writing events...
     return EventStoreLib.writeEvent(
       store,
@@ -36,6 +37,7 @@ contract UnsafeEventStore is Destructible {
       _value
     );
   }
+
 
   function readEvent(uint _eventId) public view
     returns (
