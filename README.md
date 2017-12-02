@@ -14,16 +14,28 @@ npm install -g lerna
 ```
 
 
-Bootstrap the packages in the current Lerna repo. Installs all of their dependencies and links any cross-dependencies.
+Clean the packages in the current Lerna repo. Removes the node_modules directory from all packages.
+
 ```
-lerna bootstrap
+$ lerna clean
+```
+
+Bootstrap the packages in the current Lerna repo. Installs all of their dependencies and links any cross-dependencies.
+
+```
+$ lerna bootstrap
 ```
 
 Other commands:
+
+```
+$ lerna run truffle:migrate
+$ lerna run truffle:test
+$ lerna run build
+$ lerna run test
 ```
 
-lerna run truffle:migrate
-lerna run truffle:test
-lerna run build --stream
-lerna run test --stream
+For testing a specific package (Ex: transmute-services):
+```
+$ lerna run truffle:test --scope transmute-services
 ```

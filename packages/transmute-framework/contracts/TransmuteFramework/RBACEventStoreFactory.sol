@@ -1,6 +1,6 @@
 pragma solidity ^0.4.11;
 import "./RBACEventStore.sol";
-import './RBAC.sol';
+import "./RBAC.sol";
 import "./SetLib/AddressSet/AddressSetLib.sol";
 
 contract RBACEventStoreFactory is RBAC {
@@ -8,81 +8,51 @@ contract RBACEventStoreFactory is RBAC {
   mapping (address => AddressSetLib.AddressSet) creatorEventStoreMapping;
   AddressSetLib.AddressSet storeAddresses;
 
+  // Modifiers
+  modifier checkExistence(address _EventStoreAddress) {
+    require(storeAddresses.contains(_EventStoreAddress));
+    _;
+  }
+
   // Fallback Function
   function () public payable { revert(); }
 
   // Constructor
   function RBACEventStoreFactory() public payable {}
 
-  function eventCount()
-  public view
-  returns (uint)
-  {
-    return store.events.length;
-  }
+  // Interface
+	function createEventStore() public returns (address) {
+    bytes32 txOriginRole = getAddressRole(msg.sender);
+    var (granted,,) = canRoleActionResource(txOriginRole, bytes32("create:any"), bytes32("eventstore"));
 
-  // Modifiers
-  modifier checkExistence(address _EventStoreAddress)
-  {
-    require(storeAddresses.contains(_EventStoreAddress));
-    _;
+    if (msg.sender != owner && !granted)
+      revert();
+
+    RBACEventStore newEventStore = new RBACEventStore();
+    storeAddresses.add(address(newEventStore));
+    creatorEventStoreMapping[msg.sender].add(address(newEventStore));
+
+    writeInternalEvent("ES_CREATED", "S", "A", "address", bytes32(address(newEventStore)));
+    return address(newEventStore);
+	}
+
+  function killEventStore(address _address) public checkExistence(_address) {
+    require(this.owner() == msg.sender);
+    RBACEventStore eventStore = RBACEventStore(_address);
+
+    creatorEventStoreMapping[eventStore.owner()].remove(_address);
+    storeAddresses.remove(_address);
+    eventStore.destroy();
+
+    writeInternalEvent("ES_DESTROYED", "S", "A", "address", bytes32(_address));
   }
 
   // Helper Functions
-  function getEventStoresByCreator()
-    public constant
-    returns (address[])
-  {
+  function getEventStoresByCreator() public view returns (address[]) {
     return creatorEventStoreMapping[msg.sender].values;
   }
 
-  function getEventStores()
-    public constant
-    returns (address[])
-  {
+  function getEventStores() public view returns (address[]) {
     return storeAddresses.values;
-  }
-
-  // Interface
-	function createEventStore()
-    public
-    returns (address)
-  {
-    bytes32 txOriginRole = getAddressRole(msg.sender);
-
-    var (granted,,) = canRoleActionResource(txOriginRole, bytes32("create:any"), bytes32("eventstore"));
-
-    if (msg.sender != owner && !granted){
-      revert();
-    }
-    // Interact With Other Contracts
-    RBACEventStore _newEventStore = new RBACEventStore();
-
-    // Update State Dependent On Other Contracts
-    storeAddresses.add(address(_newEventStore));
-    creatorEventStoreMapping[msg.sender].add(address(_newEventStore));
-
-    writeInternalEvent('ES_CREATED', 'S', 'A', 'address', bytes32(address(_newEventStore)));
-
-    return address(_newEventStore);
-
-	}
-
-
-  function killEventStore(address _address)
-    public
-    checkExistence(_address)
-  {
-    // Validate Local State - Only the Factory owner can destroy stores with this method
-    require(this.owner() == msg.sender);
-    RBACEventStore _eventStore = RBACEventStore(_address);
-
-    // Update Local State
-    creatorEventStoreMapping[_eventStore.owner()].remove(_address);
-    storeAddresses.remove(_address);
-
-    _eventStore.kill();
-
-    writeInternalEvent('ES_DESTROYED', 'S', 'A', 'address', bytes32(_address));
   }
 }

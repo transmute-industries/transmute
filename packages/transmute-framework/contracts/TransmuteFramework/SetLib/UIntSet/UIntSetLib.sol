@@ -21,17 +21,11 @@ library UIntSetLib {
     _;
   }
 
-  function get(UIntSet storage self, uint index) public constant
-    inBounds(self, index)
-    returns (uint)
-  {
+  function get(UIntSet storage self, uint index) public view inBounds(self, index) returns (uint) {
     return self.values[index];
   }
 
-  function set(UIntSet storage self, uint index, uint value) public
-    inBounds(self, index)
-    returns (bool)
-  {
+  function set(UIntSet storage self, uint index, uint value) public inBounds(self, index) returns (bool) {
     if (self.exists[value])
       return false;
     self.values[index] = value;
@@ -40,9 +34,7 @@ library UIntSetLib {
     return true;
   }
 
-  function add(UIntSet storage self, uint value) public
-    returns (bool)
-  {
+  function add(UIntSet storage self, uint value) public returns (bool) {
     if (self.exists[value])
       return false;
     self.indices[value] = self.values.length;
@@ -51,9 +43,7 @@ library UIntSetLib {
     return true;
   }
 
-  function remove(UIntSet storage self, uint value) public
-    returns (bool)
-  {
+  function remove(UIntSet storage self, uint value) public returns (bool) {
     if (!self.exists[value])
       return false;
     uint index = indexOf(self, value);
@@ -61,10 +51,7 @@ library UIntSetLib {
     return true;
   }
 
-  function pop(UIntSet storage self, uint index) public
-    inBounds(self, index)
-    returns (uint)
-	{
+  function pop(UIntSet storage self, uint index) public inBounds(self, index) returns (uint) {
     uint value = get(self, index);
 
     if (index != self.values.length - 1) {
@@ -81,43 +68,28 @@ library UIntSetLib {
     return value;
   }
 
-  function replace(UIntSet storage self, uint old, uint nu) public
-    returns (bool)
-  {
+  function replace(UIntSet storage self, uint old, uint nu) public returns (bool) {
     return remove(self, old) && add(self, nu);
   }
 
-  function first(UIntSet storage self) public constant
-    notEmpty(self)
-    returns (uint)
-  {
+  function first(UIntSet storage self) public view notEmpty(self) returns (uint) {
     return get(self, 0);
   }
 
-  function last(UIntSet storage self) public constant
-    notEmpty(self)
-    returns (uint)
-  {
+  function last(UIntSet storage self) public view notEmpty(self) returns (uint) {
     return get(self, self.values.length - 1);
   }
 
-  function indexOf(UIntSet storage self, uint value) public constant
-    returns (uint)
-  {
-    if (!self.exists[value])
-      return uint(-1);
+  function indexOf(UIntSet storage self, uint value) public view returns (uint) {
+    require(self.exists[value]);
     return self.indices[value];
   }
 
-  function contains(UIntSet storage self, uint value) public constant
-    returns (bool)
-  {
+  function contains(UIntSet storage self, uint value) public view returns (bool) {
     return self.exists[value];
   }
 
-  function size(UIntSet storage self) public constant
-    returns (uint)
-  {
+  function size(UIntSet storage self) public view returns (uint) {
     return self.values.length;
   }
 }

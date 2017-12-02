@@ -1,5 +1,5 @@
 var Ownable = artifacts.require('./TransmuteFramework/Ownable.sol')
-var Killable = artifacts.require('./TransmuteFramework/Killable.sol')
+var Destructible = artifacts.require('./TransmuteFramework/Destructible.sol')
 
 var StringUtils = artifacts.require('./TransmuteFramework/StringUtils.sol')
 
@@ -16,45 +16,58 @@ var RBAC = artifacts.require('./TransmuteFramework/RBAC.sol')
 
 var EventStoreLib = artifacts.require('./TransmuteFramework/EventStoreLib.sol')
 
-var UnsafeEventStore = artifacts.require('./TransmuteFramework/UnsafeEventStore/UnsafeEventStore.sol')
-var UnsafeEventStoreFactory = artifacts.require('./TransmuteFramework/UnsafeEventStore/UnsafeEventStoreFactory.sol')
+var UnsafeEventStore = artifacts.require('./TransmuteFramework/UnsafeEventStore.sol')
+var UnsafeEventStoreFactory = artifacts.require('./TransmuteFramework/UnsafeEventStoreFactory.sol')
 
-var RBACEventStore = artifacts.require('./TransmuteFramework/RBACEventStore/RBACEventStore.sol')
-var RBACEventStoreFactory = artifacts.require('./TransmuteFramework/RBACEventStore/RBACEventStoreFactory.sol')
+var EventStore = artifacts.require("./TransmuteFramework/EventStore.sol");
+var EventStoreFactory = artifacts.require("./TransmuteFramework/EventStoreFactory.sol");
 
-module.exports = function(deployer) {
-  deployer.deploy(StringUtils)
+var RBACEventStore = artifacts.require('./TransmuteFramework/RBACEventStore.sol')
+var RBACEventStoreFactory = artifacts.require('./TransmuteFramework/RBACEventStoreFactory.sol')
 
-  deployer.deploy(Ownable)
-  deployer.link(Ownable, Killable)
-  deployer.deploy(Killable)
+module.exports = function(deployer, network, accounts) {
+  deployer.deploy(StringUtils);
 
-  deployer.deploy(AddressSetLib)
-  deployer.link(Killable, AddressSetSpec)
-  deployer.link(AddressSetLib, AddressSetSpec)
-  deployer.deploy(AddressSetSpec)
+  deployer.deploy(Ownable);
+  deployer.link(Ownable, Destructible);
+  deployer.deploy(Destructible);
 
-  deployer.deploy(Bytes32SetLib)
-  deployer.link(Killable, Bytes32SetSpec)
-  deployer.link(Bytes32SetLib, Bytes32SetSpec)
-  deployer.deploy(Bytes32SetSpec)
+  deployer.deploy(AddressSetLib);
+  deployer.link(Destructible, AddressSetSpec);
+  deployer.link(AddressSetLib, AddressSetSpec);
+  deployer.deploy(AddressSetSpec);
 
-  deployer.deploy(UIntSetLib)
-  deployer.link(Killable, UIntSetLib)
-  deployer.link(UIntSetLib, UIntSetSpec)
-  deployer.deploy(UIntSetSpec)
+  deployer.deploy(Bytes32SetLib);
+  deployer.link(Destructible, Bytes32SetSpec);
+  deployer.link(Bytes32SetLib, Bytes32SetSpec);
+  deployer.deploy(Bytes32SetSpec);
 
-  deployer.deploy(EventStoreLib)
+  deployer.deploy(UIntSetLib);
+  deployer.link(Destructible, UIntSetLib);
+  deployer.link(UIntSetLib, UIntSetSpec);
+  deployer.deploy(UIntSetSpec);
 
-  deployer.link(EventStoreLib, UnsafeEventStore)
-  deployer.link(AddressSetLib, UnsafeEventStore)
-  deployer.link(Killable, UnsafeEventStore)
-  deployer.deploy(UnsafeEventStore)
+  deployer.deploy(EventStoreLib);
 
-  deployer.link(EventStoreLib, UnsafeEventStoreFactory)
-  deployer.link(AddressSetLib, UnsafeEventStoreFactory)
-  deployer.link(UnsafeEventStore, UnsafeEventStoreFactory)
-  deployer.deploy(UnsafeEventStoreFactory)
+  deployer.link(EventStoreLib, EventStore);
+  deployer.link(AddressSetLib, EventStore);
+  deployer.link(Destructible, EventStore);
+  deployer.deploy(EventStore);
+
+  deployer.link(EventStoreLib, EventStoreFactory);
+  deployer.link(AddressSetLib, EventStoreFactory);
+  deployer.link(EventStore, EventStoreFactory);
+  deployer.deploy(EventStoreFactory);
+
+  deployer.link(EventStoreLib, UnsafeEventStore);
+  deployer.link(AddressSetLib, UnsafeEventStore);
+  deployer.link(Destructible, UnsafeEventStore);
+  deployer.deploy(UnsafeEventStore);
+
+  deployer.link(EventStoreLib, UnsafeEventStoreFactory);
+  deployer.link(AddressSetLib, UnsafeEventStoreFactory);
+  deployer.link(UnsafeEventStore, UnsafeEventStoreFactory);
+  deployer.deploy(UnsafeEventStoreFactory);
 
   deployer.link(EventStoreLib, RBAC)
   deployer.link(Bytes32SetLib, RBAC)
@@ -71,4 +84,4 @@ module.exports = function(deployer) {
   deployer.link(AddressSetLib, RBACEventStoreFactory)
   deployer.link(RBACEventStore, RBACEventStoreFactory)
   deployer.deploy(RBACEventStoreFactory)
-}
+};

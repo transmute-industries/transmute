@@ -2,19 +2,33 @@ pragma solidity ^0.4.11;
 
 import "./EventStoreLib.sol";
 import './Destructible.sol';
+import "./SetLib/AddressSet/AddressSetLib.sol";
 
-contract UnsafeEventStore is Destructible {
+contract EventStore is Destructible {
 
   using EventStoreLib for EventStoreLib.EsEventStorage;
+  using AddressSetLib for AddressSetLib.AddressSet;
 
   EventStoreLib.EsEventStorage store;
+  AddressSetLib.AddressSet whitelist;
   address public creator;
+
+  // Modifiers
+  modifier onlyWhitelist(address _caller) {
+    require(whitelist.contains(_caller));
+    _;
+  }
+
+  modifier onlyCreatorOrOwner(address _caller) {
+    require(_caller == this.owner() || _caller == creator);
+    _;
+  }
 
   // Fallback Function
   function () public payable { revert(); }
 
-  // Constructor
-  function UnsafeEventStore() public payable {
+  // Constuctor
+  function EventStore() public payable {
     creator = tx.origin;
   }
 
@@ -25,9 +39,7 @@ contract UnsafeEventStore is Destructible {
     bytes1 _valueType,
     bytes32 _key,
     bytes32 _value
-  ) public returns (uint)
-    {
-    // Check access control here before writing events...
+  ) public onlyWhitelist(msg.sender) returns (uint) {
     return EventStoreLib.writeEvent(
       store,
       _eventType,
@@ -38,8 +50,7 @@ contract UnsafeEventStore is Destructible {
     );
   }
 
-
-  function readEvent(uint _eventId) public view
+  function readEvent(uint _eventId) public view onlyWhitelist(msg.sender)
     returns (
       uint,
       address,
@@ -54,6 +65,17 @@ contract UnsafeEventStore is Destructible {
   }
 
   // Helper Functions
+  function setWhitelist(address[] _whitelist) public onlyCreatorOrOwner(msg.sender) {
+    require(whitelist.size() == 0);
+    for (uint index = 0; index < _whitelist.length; index++) {
+      whitelist.add(_whitelist[index]);
+    }
+  }
+
+  function getWhitelist() public view onlyCreatorOrOwner(msg.sender) returns(address[]) {
+    return whitelist.values;
+  }
+
   function eventCount() public view returns (uint) {
     return store.events.length;
   }
