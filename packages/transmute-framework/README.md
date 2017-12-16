@@ -4,12 +4,7 @@ TypeScript dApp Framework
 
 Very alpha, expect breaking changes...
 
-COPIED AT:
-
-d82e71c41f77b62a968dddf275765d7a1ca38a3b
-
 Requires node: v8.6.0
-
 
 ```
 $ npm install transmute-cli@latest --save
@@ -20,8 +15,7 @@ $ yarn add transmute-framework@latest
 ```
 
 [![NPM version](https://img.shields.io/npm/v/transmute-framework.svg)](https://www.npmjs.com/package/transmute-framework)
-[![Build Status](https://travis-ci.org/transmute-industries/transmute-framework.svg?branch=master)](https://travis-ci.org/transmute-industries/transmute-framework)
-[![Coverage Status](https://coveralls.io/repos/github/transmute-industries/transmute-framework/badge.svg?branch=master)](https://coveralls.io/github/transmute-industries/transmute-framework?branch=master)
+
 [![Standard Version](https://img.shields.io/badge/release-standard%20version-brightgreen.svg)](https://github.com/conventional-changelog/standard-version)
 
 You will need to sign up for firebase to see the full value of the framework (deploy your dapp, and functions).
