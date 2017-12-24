@@ -1,17 +1,17 @@
 {
   "name": "transmute-contracts",
-  "version": "1.0.0",
+  "version": "0.1.3",
   "description": "",
   "main": "truffle.js",
   "scripts": {
+    "cleanup": "rm -rf ./build",
     "build": "npm run test:coverage && npm run migrate",
     "test": "truffle test",
     "test:coverage": "./node_modules/.bin/solidity-coverage",
     "test:coverage:report": "codecov",
     "migrate": "truffle migrate"
   },
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "accesscontrol": "^2.2.0",
     "bs58": "^4.0.1",
