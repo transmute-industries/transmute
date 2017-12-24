@@ -1,6 +1,6 @@
 # Transmute Contracts
 
-Solidity and Truffle Tests for Transmute Smart Contracts
+Transmute Smart Contracts with Truffle Tests and Solidity Coverage
 
 ```
 npm install

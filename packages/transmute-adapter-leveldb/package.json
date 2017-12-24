@@ -1,0 +1,16 @@
+{
+  "name": "transmute-adapter-leveldb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "js-sha1": "^0.6.0",
+    "leveldown": "^2.1.1",
+    "levelup": "^2.0.1"
+  }
+}
