@@ -1,34 +1,17 @@
-import Relic from '../../transmute-relic'
-import { Factory } from '../Factory'
+import { getSetupAsync } from "../../Store/__mocks___/store";
+import { Factory } from "../Factory";
 
 /**
  * Factory test
  */
-describe('Factory', () => {
-  const cfg = {
-    providerUrl: 'http://localhost:8545'
-  }
+describe("Factory", () => {
+  const factoryTypes: any = { UnsafeEventStoreFactory: Factory.Types.UnsafeEventStoreFactory };
 
-  it('Factory is defined', () => {
-    expect(Factory).toBeDefined()
-  })
-
-  const factoryTypes: any = { UnsafeEventStoreFactory: Factory.Types.UnsafeEventStoreFactory }
-
-  let relic: Relic
-  let accounts: string[]
-
-  beforeAll(async () => {
-    relic = new Relic(cfg)
-    accounts = await relic.getAccounts()
-  })
-
-  describe('create returns an instance for all factory types', () => {
-    Object.keys(factoryTypes).map(typeString => {
-      it('create returns an instance ' + typeString, async () => {
-        const inst = await Factory.create(factoryTypes[typeString], relic.web3, accounts[0])
-        expect(await inst.creator()).toBe(accounts[0])
-      })
-    })
-  })
-})
+  Object.keys(factoryTypes).map(typeString => {
+    it("Factory.create " + typeString, async () => {
+      let { relic, accounts } = await getSetupAsync();
+      const inst = await Factory.create(factoryTypes[typeString], relic.web3, accounts[0]);
+      expect(await inst.creator()).toBe(accounts[0]);
+    });
+  });
+});

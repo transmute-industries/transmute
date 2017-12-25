@@ -2,7 +2,7 @@ import { UnsafeEventStoreFactory } from '../types/UnsafeEventStoreFactory'
 import { EventStoreFactory } from '../types/EventStoreFactory'
 import { W3 } from 'soltsice'
 
-import { Utils } from '../Utils'
+import { Adapter } from '../Store/Adapter'
 
 export namespace Factory {
   export type GenericFactory = UnsafeEventStoreFactory | EventStoreFactory
@@ -39,11 +39,11 @@ export namespace Factory {
   /**
    * Factory createStore
    */
-  export const createStore = async (factory: GenericFactory, web3: any, fromAddress: string) => {
+  export const createStore = async (factory: GenericFactory, adapter: Adapter, web3: any, fromAddress: string) => {
     W3.Default = web3
     let receipt = await factory.createEventStore(W3.TC.txParamsDefaultDeploy(fromAddress))
-    return receipt.logs.map(event => {
-      return Utils.getFSAFromEventArgs(event.args)
-    })
+
+    return adapter.extractEventsFromLogs(receipt.logs)
+
   }
 }

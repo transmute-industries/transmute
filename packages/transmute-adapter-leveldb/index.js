@@ -3,8 +3,10 @@ var leveldown = require("leveldown");
 
 var sha1 = require("js-sha1");
 
+let db = levelup(leveldown("./level_db"));
+
 const getStorage = () => {
-  return levelup(leveldown(process.env.LEVEL_DB || "./level_db"));
+  return db;
 };
 
 const getItem = (db, key) => {
