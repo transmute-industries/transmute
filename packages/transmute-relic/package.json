@@ -26,7 +26,7 @@
     "prebuild": "rimraf dist",
     "build": "tsc && tsc --module commonjs --outDir dist/lib && rollup -c rollup.config.ts && typedoc --out dist/docs --target es6 --theme minimal --mode file src",
     "start": "tsc -w & rollup -c rollup.config.ts -w",
-    "test": "jest",
+    "test": "jest --runInBand",
     "test:watch": "jest --watch",
     "test:prod": "npm run lint && npm run test -- --coverage --no-cache",
     "deploy-docs": "ts-node tools/gh-pages-publish",
@@ -53,6 +53,7 @@
     }
   },
   "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/src/setupTestsFramework.ts",
     "transform": {
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },

@@ -3,6 +3,8 @@ const web3Utils = require("web3-utils");
 
 import { Utils } from '../../Utils'
 
+import { IFSA, IWritableEventParams } from './AdapterTypes'
+
 export const TransmuteSolidityEncodingTypes = ["S", "B", "U"];
 export type TransmuteSolidityEncodingType = "S" | "B" | "U";
 
@@ -106,14 +108,19 @@ export class Adapter {
         ValueType: util.toAscii(args.ValueType).replace(/\u0000/g, "")
       };
 
+
       let adapterPayload = await this.convertFromBytes32(
         mutatingEvent.Value,
         mutatingEvent.ValueType
       );
 
+      // console.log(mutatingEvent)
+
+      // console.log(adapterPayload, args.Key)
+
       return {
         type: mutatingEvent.EventType,
-        payload: adapterPayload.value,
+        payload: { [adapterPayload.key]: adapterPayload.value },
         meta: {
           id: mutatingEvent.Id,
           created: mutatingEvent.Created,
@@ -168,8 +175,8 @@ export class Adapter {
   };
 
  prepareFSAForStorage = async (
-    fsa: Utils.IFSA
-  ): Promise<Utils.IWritableEventParams> => {
+    fsa: IFSA
+  ): Promise<IWritableEventParams> => {
     let adapterMap = this.mapper
 
     if (fsa.type.length > 32) {
@@ -192,7 +199,7 @@ export class Adapter {
 
     let payloadKeys = Object.keys(fsa.payload);
     let payloadKey = payloadKeys[0];
-    let payloadKeyType: Utils.TransmuteEncodingType = "S";
+    let payloadKeyType = "S";
     let payloadValue = fsa.payload[payloadKeys[0]];
     let payloadValueType = fsa.meta.adapter;
 
@@ -242,21 +249,25 @@ export class Adapter {
 
 
   convertFromBytes32 = async (bytes32: string, encoding: string) => {
+    // console.log('bytes32', encoding)
     if (encoding === "A") {
       return {
+        key: 'address',
         value: "0x" + bytes32.split("0x000000000000000000000000")[1]
       };
     }
 
     if (encoding === "B") {
       return {
+        key: 'bytes32',
         value: bytes32
       };
     }
 
     if (encoding === "U") {
       return {
-        value: web3Utils.hexToNumber(bytes32);
+        key: 'uint',
+        value: web3Utils.hexToNumber(bytes32)
       };
     }
 

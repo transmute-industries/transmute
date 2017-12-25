@@ -53,9 +53,9 @@ let allEvents = [
 ]
 
 /**
- * Store adapter tests
+ * Store can write good events
  */
-describe('Store adapter tests', () => {
+describe('Store can write good events', () => {
   let setup: any
 
   beforeAll(async () => {
@@ -63,7 +63,7 @@ describe('Store adapter tests', () => {
   })
 
   allEvents.forEach(event => {
-    it('can read and write event: \n' + JSON.stringify(event, null, 2) + '\n', async () => {
+    it('' + JSON.stringify(event) , async () => {
       let { store, adapter, relic, accounts } = setup
       let writtenEvents = await Store.writeFSA(store, adapter, relic.web3, accounts[0], event)
       let readEvents = await Store.readFSA(
@@ -76,4 +76,9 @@ describe('Store adapter tests', () => {
       expect(writtenEvents[0]).toEqual(readEvents)
     })
   })
+
+  afterAll(async () => {
+    setup.adapter.mapper['L'].db.close()
+  })
+
 })

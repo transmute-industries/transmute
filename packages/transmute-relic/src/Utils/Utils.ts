@@ -11,11 +11,7 @@ export namespace Utils {
     return e.toString().indexOf('TypeError') !== -1
   }
 
-  export interface IFSA {
-    type: string
-    payload: any
-    meta: any
-  }
+
 
   export interface IRawEsCommand {
     EventType: string
@@ -112,160 +108,6 @@ export namespace Utils {
     return '0x' + new Buffer(bs58.decode(ipfshash).slice(2)).toString('hex')
   }
 
-  export const convertValueToType = (_valueType: any, _value: any) => {
-    // 'I' Encodes that this is IPLD, so we know to remove Qm (and add it back)
-    if (_valueType === 'I') {
-      _value = ipfs2hex(_value)
-    }
-    // Left padd ints and addresses for bytes32 equivalence of Solidity casting
-    if (_valueType === 'U' || _valueType === 'A') {
-      _value = util.bufferToHex(util.setLengthLeft(_value, 32))
-    }
-
-    return _value
-  }
-
-  export const getValueFromType = (type: TransmuteEncodingType, value: any) => {
-    switch (type) {
-      case 'A':
-        return '0x' + value.split('0x000000000000000000000000')[1]
-      case 'U':
-        return web3Utils.hexToNumber(value)
-      case 'B':
-        return value
-      case 'S':
-        return toAscii(value)
-      case 'L':
-        return toAscii(value)
-      case 'I':
-        return hex2ipfshash(value)
-    }
-  }
-
-  export const guessTypeFromValue = (value: any): TransmuteEncodingType => {
-    if (typeof value === 'number') {
-      return 'U'
-    }
-    if (typeof value === 'object') {
-      return 'I'
-    }
-    if (typeof value === 'string') {
-      if (util.isValidAddress(value)) {
-        return 'A'
-      }
-      if (isHex(value) && formatHex(value) === value) {
-        return 'B'
-      }
-      return 'S'
-    }
-    throw Error('unable to guess type of value: ' + value)
-  }
-
-  export const marshal = (
-    _eventType: any,
-    _keyType: any,
-    _valueType: any,
-    _key: any,
-    _value: any
-  ) => {
-    return {
-      eventType: _eventType,
-      keyType: _keyType,
-      valueType: _valueType,
-      key: convertValueToType(_keyType, _key),
-      value: convertValueToType(_valueType, _value)
-    }
-  }
-
-  export const getUnmarshalledObjectFromValues = (
-    _id: any,
-    _txOrigin: any,
-    _created: any,
-    _eventType: any,
-    _keyType: any,
-    _valueType: any,
-    _key: any,
-    _value: any
-  ) => {
-    _keyType = toAscii(_keyType)
-    _valueType = toAscii(_valueType)
-    _key = getValueFromType(_keyType, _key)
-    _value = getValueFromType(_valueType, _value)
-
-    return {
-      id: _id.toNumber(),
-      txOrigin: _txOrigin,
-      created: _created.toNumber(),
-      eventType: toAscii(_eventType),
-      keyType: _keyType,
-      valueType: _valueType,
-      key: _key,
-      value: _value
-    }
-  }
-
-  export const unmarshal = (eventArgs: any) => {
-    return getUnmarshalledObjectFromValues(
-      eventArgs.Id,
-      eventArgs.TxOrigin,
-      eventArgs.Created,
-      eventArgs.EventType,
-      eventArgs.KeyType,
-      eventArgs.ValueType,
-      eventArgs.Key,
-      eventArgs.Value
-    )
-  }
-
-  export const getFSAFromFlat = (flat: any) => {
-    let event: IFSA = {
-      type: flat.eventType,
-      payload: {
-        [flat.key]: flat.value
-      },
-      meta: {
-        id: flat.id,
-        created: flat.created,
-        txOrigin: flat.txOrigin,
-        keyType: flat.keyType,
-        valueType: flat.valueType
-      }
-    }
-
-    if (['L', 'I'].indexOf(event.meta.valueType) !== -1) {
-      event.meta.adapter = flat.valueType
-      event.meta.key = flat.value
-    }
-    return event
-  }
-
-  export const getFSAFromEventValues = (
-    _id: any,
-    _txOrigin: any,
-    _created: any,
-    _eventType: any,
-    _keyType: any,
-    _valueType: any,
-    _key: any,
-    _value: any
-  ): IFSAEvent => {
-    let flat = getUnmarshalledObjectFromValues(
-      _id,
-      _txOrigin,
-      _created,
-      _eventType,
-      _keyType,
-      _valueType,
-      _key,
-      _value
-    )
-    return getFSAFromFlat(flat)
-  }
-
-  export const getFSAFromEventArgs = (eventArgs: any): IFSAEvent => {
-    let flat = unmarshal(eventArgs)
-    return getFSAFromFlat(flat)
-  }
 
   export interface IEventResolverConfig {
     filters: Array<() => any>
@@ -331,14 +173,6 @@ export namespace Utils {
     }
   }
 
-  export type AdapterEncodingType = 'I' | 'L'
 
-  export type TransmuteEncodingType = 'U' | 'S' | 'B' | 'A' | AdapterEncodingType
 
-  export interface IWritableEventParams {
-    keyType: TransmuteEncodingType
-    keyValue: string
-    valueType: TransmuteEncodingType
-    valueValue: string
-  }
 }

@@ -1,12 +1,12 @@
-import { UnsafeEventStore } from '../types/UnsafeEventStore'
-import { EventStore } from '../types/EventStore'
-import { W3 } from 'soltsice'
+import { UnsafeEventStore } from "../types/UnsafeEventStore";
+import { EventStore } from "../types/EventStore";
+import { W3 } from "soltsice";
 
-import { Utils } from '../Utils'
-import * as Adapter from './Adapter'
+import { Utils } from "../Utils";
+import * as Adapter from "./Adapter";
 
 export namespace Store {
-  export type GenericEventStore = UnsafeEventStore | EventStore
+  export type GenericEventStore = UnsafeEventStore | EventStore;
 
   export enum Types {
     UnsafeEventStore,
@@ -19,20 +19,19 @@ export namespace Store {
   export const typeClassMapper = (name: Types) => {
     switch (name) {
       case Types.UnsafeEventStore:
-        return UnsafeEventStore
+        return UnsafeEventStore;
       default:
-        return EventStore
+        return EventStore;
     }
-  }
+  };
 
   /**
    * Store eventCount
    */
   export const eventCount = async (store: GenericEventStore, web3: any, fromAddress: string) => {
-    W3.Default = web3
-    let countBigNumber = await store.eventCount(W3.TC.txParamsDefaultDeploy(fromAddress))
-    return countBigNumber.toNumber()
-  }
+    let countBigNumber = await store.eventCount(W3.TC.txParamsDefaultDeploy(fromAddress));
+    return countBigNumber.toNumber();
+  };
 
   /**
    * Store readFSA
@@ -44,12 +43,10 @@ export namespace Store {
     fromAddress: string,
     eventId: number
   ) => {
-    W3.Default = web3
-
     let solidityValues: any = await store.readEvent(
       eventId,
       W3.TC.txParamsDefaultDeploy(fromAddress)
-    )
+    );
 
     let esEvent = await adapter.valuesToEsEvent(
       solidityValues[0],
@@ -60,10 +57,10 @@ export namespace Store {
       solidityValues[5],
       solidityValues[6],
       solidityValues[7]
-    )
+    );
 
-    return adapter.eventMap.EsEvent(esEvent)
-  }
+    return adapter.eventMap.EsEvent(esEvent);
+  };
 
   /**
    * Store writeFSA
@@ -73,20 +70,19 @@ export namespace Store {
     adapter: Adapter.Adapter,
     web3: any,
     fromAddress: string,
-    event: Utils.IFSA
-  ): Promise<Utils.IFSA[]> => {
-    W3.Default = web3
+    event: IFSA
+  ): Promise<IFSA[]> => {
     // console.log("write here...");
 
-    if (typeof event.payload === 'string') {
-      throw new Error('event.payload must be an object, not a string.')
+    if (typeof event.payload === "string") {
+      throw new Error("event.payload must be an object, not a string.");
     }
 
     if (Array.isArray(event.payload)) {
-      throw new Error('event.payload must be an object, not an array.')
+      throw new Error("event.payload must be an object, not an array.");
     }
 
-    let params = await adapter.prepareFSAForStorage(event)
+    let params = await adapter.prepareFSAForStorage(event);
 
     let marshalledEvent = await adapter.marshal(
       event.type,
@@ -94,7 +90,7 @@ export namespace Store {
       params.valueType,
       params.keyValue,
       params.valueValue
-    )
+    );
 
     // console.log('is event marshalled correctly: ', marshalledEvent)
 
@@ -107,8 +103,8 @@ export namespace Store {
       marshalledEvent.key,
       marshalledEvent.value,
       W3.TC.txParamsDefaultDeploy(fromAddress, Utils.GAS_COSTS.WRITE_EVENT)
-    )
+    );
 
-    return adapter.extractEventsFromLogs(receipt.logs)
-  }
+    return adapter.extractEventsFromLogs(receipt.logs);
+  };
 }
