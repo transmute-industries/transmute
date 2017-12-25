@@ -1,11 +1,11 @@
-import { UnsafeEventStoreFactory } from "../types/UnsafeEventStoreFactory";
-import { EventStoreFactory } from "../types/EventStoreFactory";
-import { W3 } from "soltsice";
+import { UnsafeEventStoreFactory } from '../types/UnsafeEventStoreFactory'
+import { EventStoreFactory } from '../types/EventStoreFactory'
+import { W3 } from 'soltsice'
 
-import { Utils } from "../Utils";
+import { Utils } from '../Utils'
 
 export namespace Factory {
-  export type GenericFactory = UnsafeEventStoreFactory | EventStoreFactory;
+  export type GenericFactory = UnsafeEventStoreFactory | EventStoreFactory
 
   export enum Types {
     UnsafeEventStoreFactory,
@@ -18,32 +18,32 @@ export namespace Factory {
   export const typeClassMapper = (name: Types) => {
     switch (name) {
       case Types.UnsafeEventStoreFactory:
-        return UnsafeEventStoreFactory;
+        return UnsafeEventStoreFactory
       default:
-        return EventStoreFactory;
+        return EventStoreFactory
     }
-  };
+  }
 
   /**
    * Factory create
    */
   export const create = async (type: Types, web3: any, fromAddress: string) => {
-    W3.Default = web3;
-    const factoryClass = typeClassMapper(type);
+    W3.Default = web3
+    const factoryClass = typeClassMapper(type)
     const instance = await factoryClass.New(W3.TC.txParamsDefaultDeploy(fromAddress), {
       _multisig: fromAddress
-    });
-    return instance;
-  };
+    })
+    return instance
+  }
 
   /**
    * Factory createStore
    */
   export const createStore = async (factory: GenericFactory, web3: any, fromAddress: string) => {
-    W3.Default = web3;
-    let receipt = await factory.createEventStore(W3.TC.txParamsDefaultDeploy(fromAddress));
+    W3.Default = web3
+    let receipt = await factory.createEventStore(W3.TC.txParamsDefaultDeploy(fromAddress))
     return receipt.logs.map(event => {
-      return Utils.getFSAFromEventArgs(event.args);
-    });
-  };
+      return Utils.getFSAFromEventArgs(event.args)
+    })
+  }
 }
