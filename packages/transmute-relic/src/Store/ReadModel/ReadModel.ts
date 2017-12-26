@@ -64,8 +64,21 @@ export class ReadModel implements IReadModel {
     web3: W3,
     fromAddress: string
   ) => {
-    let events = await Store.readFSAs(store, adapter, web3, fromAddress, this.state.lastEvent || 0);
-    this.applyEvents(events);
-    return this.state;
+    let changes = false;
+    try {
+      this.state = await this.adapter.getItem(this.state.readModelStoreKey);
+    } catch (e) {
+      // this case when we have not persisted a read model before OR
+      // there is a bug is getItem/setItem....
+      changes = true;
+    }
+    let startIndex = this.state.lastEvent !== null ? this.state.lastEvent + 1 : 0;
+    let events = await Store.readFSAs(store, adapter, web3, fromAddress, startIndex);
+    changes = changes || events.length > 0;
+    if (changes) {
+      this.applyEvents(events);
+      this.adapter.setItem(this.state.readModelStoreKey, this.state);
+    }
+    return changes;
   };
 }
