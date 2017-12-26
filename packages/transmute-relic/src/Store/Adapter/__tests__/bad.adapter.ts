@@ -39,7 +39,7 @@ describe("Bad adapter tests", () => {
           P: undefined as any
         },
         {
-          L: undefined as any
+          N: undefined as any
         }
       );
     } catch (e) {
@@ -52,7 +52,7 @@ describe("Bad adapter tests", () => {
       let storeTypeAdapter = new Adapter(
         {},
         {
-          L: {
+          N: {
             fromBytes32ToIdentifier: (bytes32: string) => {
               console.log("some bytes32 ", bytes32);
             }

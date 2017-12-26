@@ -187,7 +187,5 @@ describe("Store throws on bad events", () => {
     }
   });
 
-  afterAll(async () => {
-    setup.adapter.mapper["L"].db.close();
-  });
+
 });

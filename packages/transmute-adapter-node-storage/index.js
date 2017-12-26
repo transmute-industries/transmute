@@ -1,19 +1,14 @@
-var levelup = require("levelup");
-var leveldown = require("leveldown");
-
 var sha1 = require("js-sha1");
-let db = levelup(leveldown("./level_db"));
+var Storage = require("node-storage");
+var store = new Storage("./node_storage");
 
 const getStorage = () => {
-  return db;
+  return store;
 };
 
 const getItem = (db, key) => {
   return new Promise((resolve, reject) => {
-    db.get(key, (err, value) => {
-      if (err) return reject(err);
-      resolve(JSON.parse(value));
-    });
+    resolve(JSON.parse(db.get(key)));
   });
 };
 
@@ -22,10 +17,8 @@ const setItem = (db, value) => {
   const key = sha1(valueAsJsonString).substring(0, 32); // not safe... consider guids here...
 
   return new Promise((resolve, reject) => {
-    db.put(key, valueAsJsonString, function(err) {
-      if (err) return reject(err);
-      resolve(key);
-    });
+    store.put(key, valueAsJsonString);
+    resolve(key);
   });
 };
 
