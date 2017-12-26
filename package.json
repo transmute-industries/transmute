@@ -2,5 +2,12 @@
   "license": "MIT",
   "devDependencies": {
     "lerna": "^2.5.1"
+  },
+  "scripts": {
+    "cleanup": "lerna run cleanup --scope transmute-contracts --scope transmute-relic",
+    "migrate": "lerna run migrate --scope transmute-contracts",
+    "soltsice": "lerna run soltsice --scope transmute-relic",
+    "rebuild": "npm run cleanup && npm run migrate && npm run soltsice"
+    
   }
 }

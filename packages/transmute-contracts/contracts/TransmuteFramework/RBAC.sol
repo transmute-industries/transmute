@@ -177,7 +177,4 @@ contract RBAC is Destructible {
     bytes32[] attributes
   );
 
-  event DEBUG (
-    bool test
-  );
 }

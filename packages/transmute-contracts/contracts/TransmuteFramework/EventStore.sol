@@ -11,7 +11,6 @@ contract EventStore is Destructible {
 
   EventStoreLib.EsEventStorage store;
   AddressSetLib.AddressSet whitelist;
-  address public creator;
 
   // Modifiers
   modifier onlyWhitelist(address _caller) {
@@ -20,7 +19,7 @@ contract EventStore is Destructible {
   }
 
   modifier onlyCreatorOrOwner(address _caller) {
-    require(_caller == this.owner() || _caller == creator);
+    require(_caller == this.owner() || _caller == owner);
     _;
   }
 
@@ -29,7 +28,7 @@ contract EventStore is Destructible {
 
   // Constuctor
   function EventStore() public payable {
-    creator = tx.origin;
+ 
   }
 
   // Interface

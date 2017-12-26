@@ -8,14 +8,12 @@ contract UnsafeEventStore is Destructible {
   using EventStoreLib for EventStoreLib.EsEventStorage;
 
   EventStoreLib.EsEventStorage store;
-  address public creator;
 
   // Fallback Function
   function () public payable { }
 
   // Constructor
   function UnsafeEventStore() public payable {
-    creator = tx.origin;
   }
 
   // Interface
