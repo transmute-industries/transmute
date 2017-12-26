@@ -1,0 +1,3 @@
+export const ACCOUNT_CREATED = 'ACCOUNT_CREATED'
+export const ACCOUNT_NAMED = 'ACCOUNT_NAMED'
+
