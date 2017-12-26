@@ -1,0 +1,44 @@
+Arguments: 
+  /usr/local/bin/node /Users/orie/.yarn/bin/yarn.js rebuild
+
+PATH: 
+  /Users/orie/.cargo/bin:/Users/orie/.yarn/bin:/usr/local/bin:/Users/orie/.nix-profile/bin:/Users/orie/.nix-profile/sbin:/Users/orie/anaconda/bin:/Users/orie/google-cloud-sdk/bin:/Users/orie/.cabal/bin:/Users/orie/Library/Haskell/bin:/usr/local/opt/coreutils/libexec/gnubin:/Users/orie/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/share/dotnet:/usr/local/go/bin:/opt/ImageMagick/bin:/usr/local/MacGPG2/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/usr/local/bin/:/usr/local/go/bin:~/ethrun:/Users/orie/.npm-packages/bin:/Users/orie/Library/Android/sdk/tools
+
+Yarn version: 
+  1.2.1
+
+Node version: 
+  8.6.0
+
+Platform: 
+  darwin x64
+
+npm manifest: 
+  {
+    "license": "MIT",
+    "devDependencies": {
+      "lerna": "^2.5.1"
+    },
+    "scripts": {
+      "cleanup": "lerna run cleanup --scope transmute-contracts --scope transmute-relic",
+      "migrate": "lerna run migrate --scope transmute-contracts",
+      "soltsice": "lerna run soltsice --scope transmute-relic",
+      "rebuild": "npm run migrate && npm run soltsice",
+      
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  SyntaxError: /Users/orie/OR13/transmute/package.json: Unexpected token } in JSON at position 362
+      at JSON.parse (<anonymous>)
+      at /Users/orie/.yarn/lib/cli.js:770:59
+      at Generator.next (<anonymous>)
+      at step (/Users/orie/.yarn/lib/cli.js:92:30)
+      at /Users/orie/.yarn/lib/cli.js:103:13
+      at <anonymous>

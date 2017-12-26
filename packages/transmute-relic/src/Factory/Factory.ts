@@ -1,15 +1,17 @@
 import { UnsafeEventStoreFactory } from "../types/UnsafeEventStoreFactory";
 import { EventStoreFactory } from "../types/EventStoreFactory";
+import { RBACEventStoreFactory } from "../types/RBACEventStoreFactory";
 import { W3 } from "soltsice";
 
 import { Adapter } from "../Store/Adapter";
 
 export namespace Factory {
-  export type GenericFactory = UnsafeEventStoreFactory | EventStoreFactory;
+  export type GenericFactory = UnsafeEventStoreFactory | EventStoreFactory | RBACEventStoreFactory;
 
   export enum Types {
     UnsafeEventStoreFactory,
-    EventStoreFactory
+    EventStoreFactory,
+    RBACEventStoreFactory
   }
 
   /**
@@ -19,6 +21,8 @@ export namespace Factory {
     switch (name) {
       case Types.UnsafeEventStoreFactory:
         return UnsafeEventStoreFactory;
+      case Types.RBACEventStoreFactory:
+        return RBACEventStoreFactory;
       default:
         return EventStoreFactory;
     }
@@ -27,7 +31,7 @@ export namespace Factory {
   /**
    * Factory create
    */
-  export const create = async (type: Types, web3: any, fromAddress: string) => {
+  export const create = async (type: Types, web3: any, fromAddress: string): Promise<GenericFactory> => {
     W3.Default = web3;
     const factoryClass = typeClassMapper(type);
     const instance = await factoryClass.New(W3.TC.txParamsDefaultDeploy(fromAddress), {

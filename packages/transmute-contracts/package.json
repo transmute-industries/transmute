@@ -9,8 +9,7 @@
     "test": "truffle test",
     "test:coverage": "./node_modules/.bin/solidity-coverage",
     "test:coverage:report": "codecov",
-    "migrate": "truffle migrate",
-    "transmute-contracts:migrate" : "npm run migrate"
+    "migrate": "truffle migrate"
   },
   "license": "MIT",
   "devDependencies": {

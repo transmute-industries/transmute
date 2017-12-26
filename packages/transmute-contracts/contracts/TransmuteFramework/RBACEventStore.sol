@@ -10,7 +10,6 @@ contract RBACEventStore is RBAC {
 
   // Constructor
   function RBACEventStore() public payable {
-    owner = tx.origin;
   }
 
   // Interface

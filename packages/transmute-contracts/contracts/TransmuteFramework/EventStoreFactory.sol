@@ -35,7 +35,7 @@ contract EventStoreFactory is EventStore {
 
   function setEventStoreWhitelist(address _eventStoreAddress, address[] _whitelist) public eventStoreExists(_eventStoreAddress) {
     EventStore eventStore = EventStore(_eventStoreAddress);
-    require(eventStore.creator() == msg.sender);
+    require(eventStore.owner() == msg.sender);
 
     eventStore.setWhitelist(_whitelist);
 
@@ -44,7 +44,7 @@ contract EventStoreFactory is EventStore {
 
   function killEventStore(address _eventStoreAddress) public eventStoreExists(_eventStoreAddress) {
     EventStore eventStore = EventStore(_eventStoreAddress);
-    require(eventStore.creator() == msg.sender);
+    require(eventStore.owner() == msg.sender);
     creatorEventStoreMapping[eventStore.owner()].remove(_eventStoreAddress);
     EventStoreAddresses.remove(_eventStoreAddress);
 
