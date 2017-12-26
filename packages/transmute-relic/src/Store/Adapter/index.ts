@@ -1,9 +1,9 @@
 const util = require("ethereumjs-util");
 const web3Utils = require("web3-utils");
 
-import { Utils } from '../../Utils'
+import { Utils } from "../../Utils";
 
-import { IFSA, IWritableEventParams } from './AdapterTypes'
+import { IFSA, IWritableEventParams } from "./AdapterTypes";
 
 export const TransmuteSolidityEncodingTypes = ["S", "B", "U"];
 export type TransmuteSolidityEncodingType = "S" | "B" | "U";
@@ -14,22 +14,17 @@ export interface ITransmuteStoreAdapter {
   setItem: (db: any, value: any) => Promise<string>;
 }
 
+export interface IAdapterMapper {
+  keyName: string;
+  adapter: ITransmuteStoreAdapter;
+  db: any;
+  readIDFromBytes32: (bytes32: string) => string;
+  writeIDToBytes32: (id: string) => string;
+}
+
 export interface ITransmuteStoreAdapterMap {
-  [key: string]: {
-    keyName: string;
-    adapter: ITransmuteStoreAdapter;
-    db: any;
-  };
+  [key: string]: IAdapterMapper;
 }
-
-export interface ITransmuteAdapterTypeConverter {
-  getTransmuteEventPayloadIdentifierFromBytes32: (bytes32: string) => string;
-}
-
-export interface ITransmuteAdapterTypeConverterMap {
-  [key: string]: ITransmuteAdapterTypeConverter;
-}
-
 
 export interface IStoreAdapter {
   getStorage: () => any;
@@ -40,7 +35,6 @@ export interface IStoreAdapter {
 export interface IStoreAdapterMap {
   [key: string]: any;
 }
-
 
 export const getItem = async (adapter: IStoreAdapter, db: any, key: string): Promise<any> => {
   return adapter.getItem(db, key);
@@ -96,7 +90,6 @@ export const readEvents = async (mapper: IStoreAdapterMap, events: any[]) => {
 
 export class Adapter {
   mapperKeys: string[];
-
   eventMap: any = {
     EsEvent: async (args: any) => {
       let mutatingEvent = {
@@ -108,8 +101,7 @@ export class Adapter {
         ValueType: util.toAscii(args.ValueType).replace(/\u0000/g, "")
       };
 
-
-      let adapterPayload = await this.convertFromBytes32(
+      let adapterPayload: any = await this.convertFromBytes32(
         mutatingEvent.Value,
         mutatingEvent.ValueType
       );
@@ -140,7 +132,7 @@ export class Adapter {
     }
   };
 
-  constructor(public mapper: ITransmuteStoreAdapterMap, public converter: any) {
+  constructor(public mapper: ITransmuteStoreAdapterMap) {
     this.mapperKeys = Object.keys(mapper);
 
     this.throwOnAdapterTypeCollision();
@@ -158,26 +150,20 @@ export class Adapter {
   };
 
   throwOnAdapterTypeConversionUndefined = () => {
-    if (this.converter === undefined) {
-      throw new Error("Adapter requires converter");
-    }
     this.mapperKeys.forEach((mapperKey: string) => {
-      if (this.converter[mapperKey] === undefined) {
-        throw new Error("Converter not populated for adapter type: " + mapperKey);
-      }
-
-      if (this.converter[mapperKey].readIDFromBytes32 === undefined) {
+      if (
+        this.mapper[mapperKey] === undefined ||
+        this.mapper[mapperKey].readIDFromBytes32 === undefined
+      ) {
         throw new Error(
-          "Converter : " + mapperKey + " does not implement ITransmuteAdapterTypeConverter"
+          "Mapper : " + mapperKey + " does not implement IAdapterMapper"
         );
       }
     });
   };
 
- prepareFSAForStorage = async (
-    fsa: IFSA
-  ): Promise<IWritableEventParams> => {
-    let adapterMap = this.mapper
+  prepareFSAForStorage = async (fsa: IFSA): Promise<IWritableEventParams> => {
+    let adapterMap = this.mapper;
 
     if (fsa.type.length > 32) {
       throw new Error(
@@ -217,8 +203,8 @@ export class Adapter {
         payloadValueType = "U";
       }
       // always guess S
-      if (payloadValueType === undefined){
-        payloadValueType = 'S'
+      if (payloadValueType === undefined) {
+        payloadValueType = "S";
       }
     }
 
@@ -247,26 +233,25 @@ export class Adapter {
     };
   };
 
-
   convertFromBytes32 = async (bytes32: string, encoding: string) => {
     // console.log('bytes32', encoding)
     if (encoding === "A") {
       return {
-        key: 'address',
+        key: "address",
         value: "0x" + bytes32.split("0x000000000000000000000000")[1]
       };
     }
 
     if (encoding === "B") {
       return {
-        key: 'bytes32',
+        key: "bytes32",
         value: bytes32
       };
     }
 
     if (encoding === "U") {
       return {
-        key: 'uint',
+        key: "uint",
         value: web3Utils.hexToNumber(bytes32)
       };
     }
@@ -277,7 +262,7 @@ export class Adapter {
       };
     }
 
-    let identifier = this.converter[encoding].readIDFromBytes32(bytes32);
+    let identifier = this.mapper[encoding].readIDFromBytes32(bytes32);
 
     return {
       key: identifier,
@@ -290,8 +275,8 @@ export class Adapter {
       return _value;
     }
 
-    if (this.converter[_valueType]) {
-      _value = await this.converter[_valueType].writeIDToBytes32(_value);
+    if (this.mapper[_valueType]) {
+      _value = await this.mapper[_valueType].writeIDToBytes32(_value);
     }
 
     // // Left padd ints and addresses for bytes32 equivalence of Solidity casting
@@ -341,6 +326,4 @@ export class Adapter {
       })
     );
   };
-
-
 }

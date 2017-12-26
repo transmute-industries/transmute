@@ -15,11 +15,7 @@ describe("Good adapter tests", () => {
         I: {
           keyName: "multihash",
           adapter: ipfsAdapter,
-          db: ipfs
-        }
-      },
-      {
-        I: {
+          db: ipfs,
           readIDFromBytes32: (bytes32: string) => {
             return bs58.encode(new Buffer("1220" + bytes32.slice(2), "hex"));
           },
@@ -32,8 +28,8 @@ describe("Good adapter tests", () => {
     let payload = {
       multihash: "QmcEMXuJYiyDQpbU1BaFQngaBajPEs9UUHuQnPUYSLWa1B"
     };
-    let encodedId = storeTypeAdapter.converter["I"].writeIDToBytes32(payload.multihash);
-    let decodedId = storeTypeAdapter.converter["I"].readIDFromBytes32(encodedId);
+    let encodedId = storeTypeAdapter.mapper["I"].writeIDToBytes32(payload.multihash);
+    let decodedId = storeTypeAdapter.mapper["I"].readIDFromBytes32(encodedId);
     expect(payload.multihash).toBe(decodedId);
   });
 });
