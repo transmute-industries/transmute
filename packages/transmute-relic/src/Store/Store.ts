@@ -3,7 +3,13 @@ import { EventStore } from "../types/EventStore";
 import { W3 } from "soltsice";
 
 import { Utils } from "../Utils";
-import * as Adapter from "./Adapter";
+import { Adapter } from "./Adapter";
+
+import { IFSA } from "./EventTypes";
+
+export const GAS_COSTS = {
+  WRITE_EVENT: 4000000
+};
 
 export namespace Store {
   export type GenericEventStore = UnsafeEventStore | EventStore;
@@ -38,7 +44,7 @@ export namespace Store {
    */
   export const readFSA = async (
     store: GenericEventStore,
-    adapter: Adapter.Adapter,
+    adapter: Adapter,
     web3: any,
     fromAddress: string,
     eventId: number
@@ -47,7 +53,6 @@ export namespace Store {
       eventId,
       W3.TC.txParamsDefaultDeploy(fromAddress)
     );
-
     let esEvent = await adapter.valuesToEsEvent(
       solidityValues[0],
       solidityValues[1],
@@ -58,7 +63,6 @@ export namespace Store {
       solidityValues[6],
       solidityValues[7]
     );
-
     return adapter.eventMap.EsEvent(esEvent);
   };
 
@@ -67,13 +71,11 @@ export namespace Store {
    */
   export const writeFSA = async (
     store: GenericEventStore,
-    adapter: Adapter.Adapter,
+    adapter: Adapter,
     web3: any,
     fromAddress: string,
     event: IFSA
   ): Promise<IFSA[]> => {
-    // console.log("write here...");
-
     if (typeof event.payload === "string") {
       throw new Error("event.payload must be an object, not a string.");
     }
@@ -82,19 +84,17 @@ export namespace Store {
       throw new Error("event.payload must be an object, not an array.");
     }
 
-    let params = await adapter.prepareFSAForStorage(event);
-
+    // these 2 should be consolidated into a single adapter method
+    let { keyType, keyValue, valueType, valueValue } = await adapter.prepareFSAForStorage(event);
     let marshalledEvent = await adapter.marshal(
       event.type,
-      params.keyType,
-      params.valueType,
-      params.keyValue,
-      params.valueValue
+      keyType,
+      valueType,
+      keyValue,
+      valueValue
     );
 
-    // console.log('is event marshalled correctly: ', marshalledEvent)
-
-    // console.log(marshalledEvent)
+    console.log(keyValue)
 
     let receipt = await store.writeEvent(
       marshalledEvent.eventType,
@@ -102,7 +102,7 @@ export namespace Store {
       marshalledEvent.valueType,
       marshalledEvent.key,
       marshalledEvent.value,
-      W3.TC.txParamsDefaultDeploy(fromAddress, Utils.GAS_COSTS.WRITE_EVENT)
+      W3.TC.txParamsDefaultDeploy(fromAddress, GAS_COSTS.WRITE_EVENT)
     );
 
     return adapter.extractEventsFromLogs(receipt.logs);
