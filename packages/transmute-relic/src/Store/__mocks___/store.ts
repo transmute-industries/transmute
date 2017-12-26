@@ -9,9 +9,9 @@ import { UnsafeEventStoreFactory } from "../../types/UnsafeEventStoreFactory";
 import { UnsafeEventStore } from "../../types/UnsafeEventStore";
 
 let ipfsAdapter = require("../../../../transmute-adapter-ipfs");
-let leveldbAdapter = require("../../../../transmute-adapter-leveldb");
+let nodeStorageAdapter = require("../../../../transmute-adapter-node-storage");
 
-let leveldb = leveldbAdapter.getStorage();
+let leveldb = nodeStorageAdapter.getStorage();
 let ipfs = ipfsAdapter.getStorage();
 
 import { Adapter } from "../Adapter";
@@ -22,9 +22,9 @@ const adapter = new Adapter(
       adapter: ipfsAdapter,
       db: ipfs
     },
-    L: {
+    N: {
       keyName: "sha1",
-      adapter: leveldbAdapter,
+      adapter: nodeStorageAdapter,
       db: leveldb
     }
   },
@@ -37,7 +37,7 @@ const adapter = new Adapter(
         return "0x" + new Buffer(bs58.decode(id).slice(2)).toString("hex");
       }
     },
-    L: {
+    N: {
       readIDFromBytes32: (bytes32: string) => {
         return util.toAscii(bytes32).replace(/\u0000/g, "");
       },
@@ -49,9 +49,11 @@ const adapter = new Adapter(
 );
 
 export const getSetupAsync = async () => {
+
   const relic = new Relic({
     providerUrl: "http://localhost:8545"
   });
+
   const accounts = await relic.getAccounts();
   const factory = await Factory.create(
     Factory.Types.UnsafeEventStoreFactory,

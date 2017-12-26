@@ -38,7 +38,7 @@ describe('Interceptor test', () => {
           }
         },
         meta: {
-          adapter: 'L'
+          adapter: 'N'
         }
       }
     ]
@@ -50,7 +50,7 @@ describe('Interceptor test', () => {
           event.payload[payloadKey] = 'QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen'
         })
       }
-      if (event.meta.adapter === 'L') {
+      if (event.meta.adapter === 'N') {
         Object.keys(event.payload).forEach(payloadKey => {
           event.payload[payloadKey] = '2248ee2fa0aaaad99178531f924bf00b4b0a8f4e'
         })
@@ -78,7 +78,7 @@ describe('Interceptor test', () => {
           heavy3: '2248ee2fa0aaaad99178531f924bf00b4b0a8f4e'
         },
         meta: {
-          adapter: 'L'
+          adapter: 'N'
         }
       }
     ]
@@ -119,7 +119,7 @@ describe('Interceptor test', () => {
           }
         },
         meta: {
-          adapter: 'L'
+          adapter: 'N'
         }
       }
     ]

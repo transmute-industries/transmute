@@ -26,7 +26,7 @@ let allEvents = [
       key2: 'value2'
     },
     meta: {
-      adapter: 'L'
+      adapter: 'N'
     }
   },
   {
@@ -77,8 +77,6 @@ describe('Store can write good events', () => {
     })
   })
 
-  afterAll(async () => {
-    setup.adapter.mapper['L'].db.close()
-  })
+
 
 })

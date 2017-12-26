@@ -2,14 +2,13 @@
 // import "core-js/fn/array.find"
 // ...
 
+import { W3 } from 'soltsice'
 import { transmuteWeb3, ITransmuteWeb3Config } from './web3'
-// import { EventStore } from "./EventStore";
-
 export { Factory } from './Factory'
 export { Store } from './Store'
 
 export default class Relic {
-  web3: any
+  web3: W3
 
   constructor(config: ITransmuteWeb3Config) {
     this.web3 = transmuteWeb3(config, false)
