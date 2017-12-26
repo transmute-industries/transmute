@@ -94,7 +94,7 @@ export namespace Store {
       valueValue
     );
 
-    console.log(keyValue)
+    // console.log(keyValue)
 
     let receipt = await store.writeEvent(
       marshalledEvent.eventType,
@@ -104,7 +104,6 @@ export namespace Store {
       marshalledEvent.value,
       W3.TC.txParamsDefaultDeploy(fromAddress, GAS_COSTS.WRITE_EVENT)
     );
-
     return adapter.extractEventsFromLogs(receipt.logs);
   };
 }
