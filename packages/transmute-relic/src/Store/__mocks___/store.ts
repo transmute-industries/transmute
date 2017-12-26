@@ -20,16 +20,7 @@ const adapter = new Adapter(
     I: {
       keyName: "multihash",
       adapter: ipfsAdapter,
-      db: ipfs
-    },
-    N: {
-      keyName: "sha1",
-      adapter: nodeStorageAdapter,
-      db: leveldb
-    }
-  },
-  {
-    I: {
+      db: ipfs,
       readIDFromBytes32: (bytes32: string) => {
         return bs58.encode(new Buffer("1220" + bytes32.slice(2), "hex"));
       },
@@ -38,6 +29,9 @@ const adapter = new Adapter(
       }
     },
     N: {
+      keyName: "sha1",
+      adapter: nodeStorageAdapter,
+      db: leveldb,
       readIDFromBytes32: (bytes32: string) => {
         return util.toAscii(bytes32).replace(/\u0000/g, "");
       },
