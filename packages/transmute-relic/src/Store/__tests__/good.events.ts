@@ -53,37 +53,24 @@ let allEvents = [
 ];
 
 /**
- * Store can write good events
+ * Store good events
  */
-describe("Store can write good events", () => {
+describe("Store can read and write events", () => {
   let setup: any;
 
   beforeAll(async () => {
     setup = await getSetupAsync();
   });
 
-  // allEvents.forEach(event => {
-  //   it("" + JSON.stringify(event), async () => {
-  //     let { store, adapter, relic, accounts } = setup;
-  //     let writtenEvents = await Store.writeFSA(store, adapter, relic.web3, accounts[0], event);
-  //     let readEvents = await Store.readFSA(
-  //       store,
-  //       adapter,
-  //       relic.web3,
-  //       accounts[0],
-  //       writtenEvents[0].meta.id
-  //     );
-  //     expect(writtenEvents[0]).toEqual(readEvents);
-  //   });
-  // });
+  it("writeFSAs", async () => {
+    let { store, adapter, relic, accounts } = setup;
+    let writtenEvents = await Store.writeFSAs(store, adapter, relic.web3, accounts[0], allEvents);
+    expect(writtenEvents.length).toBe(6);
+  });
 
   it("readFSAs", async () => {
     let { store, adapter, relic, accounts } = setup;
-    allEvents.splice(0 ,2).forEach(async (event) => {
-      let writtenFSA = await Store.writeFSA(store, adapter, relic.web3, accounts[0], event);
-      console.log(writtenFSA)
-    })
-
-    expect(false);
+    let readAllEvents = await Store.readFSAs(store, adapter, relic.web3, accounts[0]);
+    expect(readAllEvents.length).toBe(6);
   });
 });

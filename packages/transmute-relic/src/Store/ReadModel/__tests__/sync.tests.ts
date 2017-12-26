@@ -1,8 +1,10 @@
 import { ReadModel } from "../ReadModel";
 
-import { reducer, initialState } from "../__mocks__/reducer";
+import { Store } from '../../'
+import { getSetupAsync } from "../../__mocks___/store";
 
 import events from "../__mocks__/events";
+import { reducer, initialState } from "../__mocks__/reducer";
 
 let state = initialState;
 state.contractAddress = "0x1a63f28550ae27e0a192d91d073ea4e97dd089b";
@@ -23,22 +25,18 @@ describe("ReadModel event tests", () => {
     }
   };
 
-  it("initializes successfully", async () => {
-    let rm = new ReadModel(adapter, reducer, state);
-    expect(rm).toBeDefined();
-  });
+  let setup: any;
 
-  it("can applyEvents", async () => {
-    let rm = new ReadModel(adapter, reducer, state);
-    rm.applyEvents(events);
-    expect(rm.state.model.name).toBe("dave");
+  beforeAll(async () => {
+    setup = await getSetupAsync();
   });
 
   it("can sync", async () => {
+    let { store, adapter, relic, accounts } = setup;
+    let writtenEvents = await Store.writeFSAs(store, adapter, relic.web3, accounts[0], events)
+    expect(writtenEvents.length).toBe(2)
     let rm = new ReadModel(adapter, reducer, state);
-    // rm.applyEvents(events);
-    rm.sync()
-    expect(rm.state).toBeDefined()
-
+    let newState = await rm.sync(store, adapter, relic.web3, accounts[0])
+    expect(rm.state.lastEvent).toBe(1)
   });
 });
