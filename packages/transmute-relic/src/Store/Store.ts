@@ -75,7 +75,7 @@ export namespace Store {
     web3: any,
     fromAddress: string,
     event: IFSA
-  ): Promise<IFSA[]> => {
+  ): Promise<IFSA> => {
     if (typeof event.payload === "string") {
       throw new Error("event.payload must be an object, not a string.");
     }
@@ -104,6 +104,41 @@ export namespace Store {
       marshalledEvent.value,
       W3.TC.txParamsDefaultDeploy(fromAddress, GAS_COSTS.WRITE_EVENT)
     );
-    return adapter.extractEventsFromLogs(receipt.logs);
+
+    let eventsFromLogs: IFSA[] = await adapter.extractEventsFromLogs(receipt.logs);
+
+    if (eventsFromLogs.length > 1) {
+      throw new Error("somehow we are writing more than 1 event....");
+    }
+    return eventsFromLogs[0];
+  };
+
+  export const writeFSAs = async (
+    store: GenericEventStore,
+    adapter: Adapter,
+    web3: any,
+    fromAddress: string,
+    events: IFSA[]
+  ): Promise<IFSA[]> => {
+    return Promise.all(
+      events.map(event => {
+        return writeFSA(store, adapter, web3, fromAddress, event);
+      })
+    );
+  };
+
+  export const readFSAs = async (
+    store: GenericEventStore,
+    adapter: Adapter,
+    web3: any,
+    fromAddress: string,
+    eventIndex: number = 0
+  ): Promise<IFSA[]> => {
+    let endIndex: number = await eventCount(store, web3, fromAddress);
+    let events = [];
+    for (let i: number = eventIndex; i < endIndex; i++) {
+      events.push(await readFSA(store, adapter, web3, fromAddress, i));
+    }
+    return Promise.all(events);
   };
 }

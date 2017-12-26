@@ -1,13 +1,15 @@
+import { W3 } from "soltsice";
 import { IFSA } from "../EventTypes";
 
-import { Store } from '../Store'
+import { Store } from "../Store";
 
 import { IReadModel, IReadModelAdapter, IReadModelState } from "./ReadModelTypes";
 
 const STATE_REQUIRED_PROPS = ["contractAddress", "readModelType", "readModelStoreKey"];
 
-export class ReadModel implements IReadModel {
+import { Adapter } from "../Adapter";
 
+export class ReadModel implements IReadModel {
   constructor(
     public adapter: IReadModelAdapter,
     public reducer: any,
@@ -26,7 +28,6 @@ export class ReadModel implements IReadModel {
     }
 
     this.requireStateToHaveDefaultProperties(state);
-
   }
 
   requireStateToHaveDefaultProperties = (state: IReadModelState | any) => {
@@ -57,7 +58,14 @@ export class ReadModel implements IReadModel {
     });
   };
 
-  sync = () =>{
-    this.state = undefined as any;
-  }
+  sync = async (
+    store: Store.GenericEventStore,
+    adapter: Adapter,
+    web3: W3,
+    fromAddress: string
+  ) => {
+    let events = await Store.readFSAs(store, adapter, web3, fromAddress, this.state.lastEvent || 0);
+    this.applyEvents(events);
+    return this.state;
+  };
 }
