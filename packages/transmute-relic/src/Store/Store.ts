@@ -3,7 +3,7 @@ import { EventStore } from "../types/EventStore";
 import { W3 } from "soltsice";
 
 import { Utils } from "../Utils";
-import { Adapter } from "./Adapter";
+import { StoreAdapter } from "./StoreAdapter";
 
 import { IFSA } from "./EventTypes";
 
@@ -44,7 +44,7 @@ export namespace Store {
    */
   export const readFSA = async (
     store: GenericEventStore,
-    adapter: Adapter,
+    adapter: StoreAdapter,
     web3: any,
     fromAddress: string,
     eventId: number
@@ -71,7 +71,7 @@ export namespace Store {
    */
   export const writeFSA = async (
     store: GenericEventStore,
-    adapter: Adapter,
+    adapter: StoreAdapter,
     web3: any,
     fromAddress: string,
     event: IFSA
@@ -115,7 +115,7 @@ export namespace Store {
 
   export const writeFSAs = async (
     store: GenericEventStore,
-    adapter: Adapter,
+    adapter: StoreAdapter,
     web3: any,
     fromAddress: string,
     events: IFSA[]
@@ -129,7 +129,7 @@ export namespace Store {
 
   export const readFSAs = async (
     store: GenericEventStore,
-    adapter: Adapter,
+    adapter: StoreAdapter,
     web3: any,
     fromAddress: string,
     eventIndex: number = 0

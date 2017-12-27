@@ -1,4 +1,4 @@
-import { getSetupAsync } from "../../Store/__mocks___/store";
+import { getSetupAsync } from "../../__mocks__/setup";
 import { Factory } from "../Factory";
 
 import { W3 } from "soltsice";

@@ -1,7 +1,7 @@
 import { ReadModel } from "../ReadModel";
 
 import { Store } from "../../";
-import { getSetupAsync } from "../../__mocks___/store";
+import { getSetupAsync } from "../../../__mocks__/setup";
 
 import events from "../__mocks__/events";
 import { reducer, initialState } from "../__mocks__/reducer";

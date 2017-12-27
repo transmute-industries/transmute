@@ -1,4 +1,4 @@
-import { getSetupAsync } from "../Store/__mocks___/store";
+import { getSetupAsync } from "../__mocks__/setup";
 
 /**
  * web3 tests
