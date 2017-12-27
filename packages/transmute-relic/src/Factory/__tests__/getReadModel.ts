@@ -6,10 +6,10 @@ import { W3 } from "soltsice";
 /**
  * Factory test
  */
-describe("Factory", () => {
+describe("Factory.getReadModel", () => {
   const factoryTypes: any = {
     // UnsafeEventStoreFactory: Factory.Types.UnsafeEventStoreFactory,
-    RBACEventStoreFactory: Factory.Types.RBACEventStoreFactory
+    RBACEventStoreFactory: Factory.FactoryTypes.RBACEventStoreFactory
   };
 
   const Storage = require("node-storage");
@@ -24,10 +24,14 @@ describe("Factory", () => {
   };
 
   Object.keys(factoryTypes).map(typeString => {
-    it("Factory.getReadModel " + typeString, async () => {
-      let { relic, accounts, factory, adapter } = await getSetupAsync();
-      let rm = await Factory.getReadModel(factory, adapter, relic.web3, accounts[0]);
-      console.log("get the read model!!!!", rm);
+    it(typeString, async () => {
+      let { relic, storeInstances, accounts, adapter } = await getSetupAsync();
+
+      // console.log(storeInstances)
+
+      // console.log(factoryInstances);
+      // let rm = await Factory.getReadModel(factory, adapter, relic.web3, accounts[0]);
+      // console.log("get the read model!!!!", rm);
       // expect(await inst.owner()).toBe(accounts[0]);
     });
   });

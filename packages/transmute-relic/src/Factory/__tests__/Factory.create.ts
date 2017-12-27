@@ -1,22 +1,16 @@
 import { getSetupAsync } from "../../__mocks__/setup";
 import { Factory } from "../Factory";
 
-import { W3} from 'soltsice'
+import { W3 } from "soltsice";
 
 /**
  * Factory test
  */
 describe("Factory", () => {
-  const factoryTypes: any = {
-    UnsafeEventStoreFactory: Factory.Types.UnsafeEventStoreFactory,
-    RBACEventStoreFactory: Factory.Types.RBACEventStoreFactory
-  };
-
-  Object.keys(factoryTypes).map(typeString => {
-    it("Factory.create " + typeString, async () => {
-      let { relic, accounts } = await getSetupAsync();
-      const inst = await Factory.create(factoryTypes[typeString], relic.web3, accounts[0]);
-      expect(await inst.owner()).toBe(accounts[0]);
-    });
+  it("Factory.create ", async () => {
+    let { factoryInstances } = await getSetupAsync();
+    expect(factoryInstances.unsafe).toBeDefined();
+    expect(factoryInstances.rbac).toBeDefined();
+    expect(factoryInstances.default).toBeDefined();
   });
 });
