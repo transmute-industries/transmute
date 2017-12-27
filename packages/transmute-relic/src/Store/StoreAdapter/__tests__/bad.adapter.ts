@@ -1,5 +1,5 @@
 const bs58 = require("bs58");
-import { Adapter } from "../index";
+import { StoreAdapter } from "../index";
 
 /**
  * Bad adapter tests
@@ -7,7 +7,7 @@ import { Adapter } from "../index";
 describe("Bad adapter tests", () => {
   it("throws errors when passed TransmuteNativeEncondingType ", async () => {
     try {
-      let storeTypeAdapter = new Adapter({
+      let storeTypeAdapter = new StoreAdapter({
         S: undefined as any
       });
     } catch (e) {
@@ -17,7 +17,7 @@ describe("Bad adapter tests", () => {
 
   it("throws when converter does not cover all adapter keys ", async () => {
     try {
-      let storeTypeAdapter = new Adapter({
+      let storeTypeAdapter = new StoreAdapter({
         P: undefined as any
       });
     } catch (e) {
@@ -29,7 +29,7 @@ describe("Bad adapter tests", () => {
     let ipfsAdapter = require("../../../../../transmute-adapter-ipfs");
     let ipfs = ipfsAdapter.getStorage();
 
-    let storeTypeAdapter = new Adapter({
+    let storeTypeAdapter = new StoreAdapter({
       I: {
         keyName: "multihash",
         adapter: ipfsAdapter,

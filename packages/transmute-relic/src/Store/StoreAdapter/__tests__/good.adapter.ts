@@ -1,16 +1,16 @@
 
 const bs58 = require("bs58");
-import { Adapter } from "../index";
+import { StoreAdapter } from "../index";
 
 /**
- * Good Adapter tests
+ * Good StoreAdapter tests
  */
 describe("Good adapter tests", () => {
   it("supports ipfs ", async () => {
     let ipfsAdapter = require("../../../../../transmute-adapter-ipfs");
     let ipfs = ipfsAdapter.getStorage();
 
-    let storeTypeAdapter = new Adapter(
+    let storeTypeAdapter = new StoreAdapter(
       {
         I: {
           keyName: "multihash",

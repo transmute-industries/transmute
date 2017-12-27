@@ -7,7 +7,7 @@ import { IReadModel, IReadModelAdapter, IReadModelState } from "./ReadModelTypes
 
 const STATE_REQUIRED_PROPS = ["contractAddress", "readModelType", "readModelStoreKey"];
 
-import { Adapter } from "../Adapter";
+import { StoreAdapter } from "../StoreAdapter";
 
 export class ReadModel implements IReadModel {
   constructor(
@@ -60,7 +60,7 @@ export class ReadModel implements IReadModel {
 
   sync = async (
     store: Store.GenericEventStore,
-    adapter: Adapter,
+    adapter: StoreAdapter,
     web3: W3,
     fromAddress: string
   ) => {

@@ -3,7 +3,7 @@ import { EventStoreFactory } from "../types/EventStoreFactory";
 import { RBACEventStoreFactory } from "../types/RBACEventStoreFactory";
 import { W3 } from "soltsice";
 
-import { Adapter } from "../Store/Adapter";
+import { StoreAdapter } from "../Store/StoreAdapter";
 
 import { ReadModel} from '../Store/ReadModel'
 
@@ -53,7 +53,7 @@ export namespace Factory {
    */
   export const createStore = async (
     factory: GenericFactory,
-    adapter: Adapter,
+    adapter: StoreAdapter,
     web3: any,
     fromAddress: string
   ) => {
@@ -67,7 +67,7 @@ export namespace Factory {
    */
   export const getReadModel = async (
     factory: GenericFactory,
-    adapter: Adapter,
+    adapter: StoreAdapter,
     web3: any,
     fromAddress: string
   ) => {

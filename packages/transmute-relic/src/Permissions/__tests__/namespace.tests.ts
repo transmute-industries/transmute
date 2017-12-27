@@ -1,5 +1,5 @@
 // import { Store } from "../../Store";
-import { getSetupRBAC } from "../__mocks__/setup";
+import { getSetupAsync } from "../../__mocks__/setup";
 
 /**
  * Permissions throws on bad events
@@ -8,7 +8,7 @@ describe("Permissions throws on bad events", () => {
   let setup: any;
 
   beforeAll(async () => {
-    setup = await getSetupRBAC();
+    setup = await getSetupAsync();
   });
 
   it("permissions are cool", async () => {

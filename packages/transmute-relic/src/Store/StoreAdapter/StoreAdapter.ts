@@ -11,9 +11,9 @@ import {
   TransmuteSolidityEncodingTypes,
   IWritableEventParams,
   IDirtyPayload
-} from "./AdapterTypes";
+} from "./StoreAdapterTypes";
 
-export class Adapter {
+export class StoreAdapter {
   mapperKeys: string[];
   eventMap: any = {
     EsEvent: async (args: any) => {
@@ -99,7 +99,7 @@ export class Adapter {
     return adapter.setItem(db, value);
   };
 
-  writeEvents = async (adapter: Adapter, events: any[]) => {
+  writeEvents = async (adapter: StoreAdapter, events: any[]) => {
     let mapper = adapter.mapper;
     return Promise.all(
       events.map(async event => {

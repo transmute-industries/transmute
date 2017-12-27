@@ -1,5 +1,5 @@
 import { Interceptor } from '../Interceptor'
-import { Adapter } from '../../Adapter'
+import { StoreAdapter } from '../../StoreAdapter'
 
 /**
  * Interceptor test

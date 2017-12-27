@@ -1,5 +1,5 @@
 import { Store } from "../Store";
-import { getSetupAsync } from "../__mocks___/store";
+import { getSetupAsync } from "../../__mocks__/setup";
 
 let allEvents = [
   {

@@ -1,1 +1,0 @@
-export { Adapter } from "./Adapter";
