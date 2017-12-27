@@ -1,18 +1,26 @@
 import { UnsafeEventStoreFactory } from "../types/UnsafeEventStoreFactory";
+import { UnsafeEventStore } from "../types/UnsafeEventStore";
+
 import { EventStoreFactory } from "../types/EventStoreFactory";
+import { EventStore } from "../types/EventStore";
+
 import { RBACEventStoreFactory } from "../types/RBACEventStoreFactory";
+import { RBACEventStore } from "../types/RBACEventStore";
+
 import { W3 } from "soltsice";
 
 import { StoreAdapter } from "../Store/StoreAdapter";
 
-import { ReadModel} from '../Store/ReadModel'
+import { ReadModel } from "../Store/ReadModel";
 
-import FactoryReadModel from './ReadModel'
+import FactoryReadModel from "./ReadModel";
+
+import { Store } from "../Store";
 
 export namespace Factory {
   export type GenericFactory = UnsafeEventStoreFactory | EventStoreFactory | RBACEventStoreFactory;
 
-  export enum Types {
+  export enum FactoryTypes {
     UnsafeEventStoreFactory,
     EventStoreFactory,
     RBACEventStoreFactory
@@ -21,22 +29,46 @@ export namespace Factory {
   /**
    * Factory typeClassMapper
    */
-  export const typeClassMapper = (name: Types) => {
+  export const typeClassMapper = (name: FactoryTypes) => {
     switch (name) {
-      case Types.UnsafeEventStoreFactory:
+      case FactoryTypes.UnsafeEventStoreFactory:
         return UnsafeEventStoreFactory;
-      case Types.RBACEventStoreFactory:
+      case FactoryTypes.RBACEventStoreFactory:
         return RBACEventStoreFactory;
       default:
         return EventStoreFactory;
     }
   };
 
+  export const factoryTypeToStoreTypeMapper = (name: FactoryTypes) => {
+    switch (name) {
+      case FactoryTypes.UnsafeEventStoreFactory:
+        return Store.StoreTypes.UnsafeEventStore;
+      case FactoryTypes.RBACEventStoreFactory:
+        return Store.StoreTypes.RBACEventStore;
+      default:
+        return Store.StoreTypes.EventStore;
+    }
+  };
+
+  export const getStoreClassFromFactoryInstance = (factory: GenericFactory): any => {
+    if (factory instanceof EventStoreFactory) {
+      return EventStore;
+    }
+    if (factory instanceof UnsafeEventStoreFactory) {
+      return UnsafeEventStore;
+    }
+    if (factory instanceof RBACEventStoreFactory) {
+      return RBACEventStore;
+    }
+    throw new Error("factory is not of known type. unsafe... ");
+  };
+
   /**
    * Factory create
    */
   export const create = async (
-    type: Types,
+    type: FactoryTypes,
     web3: any,
     fromAddress: string
   ): Promise<GenericFactory> => {
@@ -58,8 +90,11 @@ export namespace Factory {
     fromAddress: string
   ) => {
     W3.Default = web3;
-    let receipt = await factory.createEventStore(W3.TC.txParamsDefaultDeploy(fromAddress));
-    return adapter.extractEventsFromLogs(receipt.logs);
+    const receipt = await factory.createEventStore(W3.TC.txParamsDefaultDeploy(fromAddress));
+    const events = await adapter.extractEventsFromLogs(receipt.logs);
+    const storeClass = getStoreClassFromFactoryInstance(factory);
+    const store = await storeClass.At(events[0].payload.address);
+    return store;
   };
 
   /**
@@ -71,7 +106,6 @@ export namespace Factory {
     web3: any,
     fromAddress: string
   ) => {
-
     // let factoryReadModel = new ReadModel(adapter, reducer, state);
     return { yolo: 1 };
   };

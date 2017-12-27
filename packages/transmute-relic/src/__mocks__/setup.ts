@@ -1,3 +1,4 @@
+import { W3 } from "soltsice";
 import Relic from "../transmute-relic";
 import { Factory } from "../Factory";
 import { Store } from "../Store";
@@ -43,6 +44,14 @@ const adapter = new StoreAdapter({
   }
 });
 
+export const createStoreInstances = async (
+  web3: W3,
+  fromAddress: string,
+  factoryInstances: any
+) => {
+  return;
+};
+
 export const getSetupAsync = async () => {
   const relic = new Relic({
     providerUrl: "http://localhost:8545"
@@ -50,20 +59,31 @@ export const getSetupAsync = async () => {
 
   const accounts = await relic.getAccounts();
 
-  const factory = await Factory.create(
-    Factory.Types.UnsafeEventStoreFactory,
-    relic.web3,
-    accounts[0]
-  );
+  let factoryInstances = {
+    unsafe: await Factory.create(
+      Factory.FactoryTypes.UnsafeEventStoreFactory,
+      relic.web3,
+      accounts[0]
+    ),
+    rbac: await Factory.create(Factory.FactoryTypes.RBACEventStoreFactory, relic.web3, accounts[0]),
+    default: await Factory.create(Factory.FactoryTypes.EventStoreFactory, relic.web3, accounts[0])
+  };
 
-  let events = await Factory.createStore(factory, adapter, relic.web3, accounts[0]);
-  const store = await UnsafeEventStore.At(events[0].payload.address);
+  let storeInstances = {
+    unsafe: await Factory.createStore(factoryInstances.unsafe, adapter, relic.web3, accounts[0]),
+    rbac: await Factory.createStore(factoryInstances.rbac, adapter, relic.web3, accounts[0]),
+    // default: await Factory.createStore(factoryInstances.default, adapter, relic.web3, accounts[0])
+  };
 
   return {
     relic,
-    factory,
-    store,
+
+    factoryInstances,
+    storeInstances,
     adapter,
-    accounts
+    accounts,
+
+    store: storeInstances.unsafe,
+    factory: factoryInstances.unsafe,
   };
 };

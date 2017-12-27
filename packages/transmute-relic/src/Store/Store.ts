@@ -1,5 +1,7 @@
 import { UnsafeEventStore } from "../types/UnsafeEventStore";
+import { RBACEventStore } from "../types/RBACEventStore";
 import { EventStore } from "../types/EventStore";
+
 import { W3 } from "soltsice";
 
 import { Utils } from "../Utils";
@@ -12,19 +14,22 @@ export const GAS_COSTS = {
 };
 
 export namespace Store {
-  export type GenericEventStore = UnsafeEventStore | EventStore;
+  export type GenericEventStore = UnsafeEventStore | EventStore | RBACEventStore;
 
-  export enum Types {
+  export enum StoreTypes {
     UnsafeEventStore,
-    EventStore
+    EventStore,
+    RBACEventStore
   }
 
   /**
    * Store typeClassMapper
    */
-  export const typeClassMapper = (name: Types) => {
+  export const typeClassMapper = (name: StoreTypes) => {
     switch (name) {
-      case Types.UnsafeEventStore:
+      case StoreTypes.RBACEventStore:
+        return RBACEventStore;
+      case StoreTypes.UnsafeEventStore:
         return UnsafeEventStore;
       default:
         return EventStore;
