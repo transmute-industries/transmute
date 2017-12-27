@@ -15,7 +15,4 @@ describe("web3 tests", () => {
     expect(accounts.length).toBe(10);
   });
 
-  afterAll(async () => {
-    setup.adapter.mapper["L"].db.close();
-  });
 });

@@ -1,5 +1,5 @@
 // import { Store } from "../../Store";
-import { getSetupAsync } from "../../Store/__mocks___/store";
+import { getSetupRBAC } from "../__mocks__/setup";
 
 /**
  * Permissions throws on bad events
@@ -8,10 +8,11 @@ describe("Permissions throws on bad events", () => {
   let setup: any;
 
   beforeAll(async () => {
-    setup = await getSetupAsync();
+    setup = await getSetupRBAC();
   });
 
   it("permissions are cool", async () => {
+    console.log(setup.accounts);
     expect(true);
   });
 });
