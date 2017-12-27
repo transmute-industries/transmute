@@ -13,6 +13,8 @@ import { StoreAdapter } from "../Store/StoreAdapter";
 
 import { ReadModel } from "../Store/ReadModel";
 
+import { IReadModelState, IReadModelAdapter, IReadModel } from "../Store/ReadModel/ReadModelTypes";
+
 import FactoryReadModel from "./ReadModel";
 
 import { Store } from "../Store";
@@ -103,10 +105,24 @@ export namespace Factory {
   export const getReadModel = async (
     factory: GenericFactory,
     adapter: StoreAdapter,
+    readModelAdapter: IReadModelAdapter,
     web3: any,
     fromAddress: string
   ) => {
-    // let factoryReadModel = new ReadModel(adapter, reducer, state);
-    return { yolo: 1 };
+
+    let state: IReadModelState = JSON.parse(JSON.stringify(FactoryReadModel.initialState));
+
+    state.contractAddress = factory.address
+    state.readModelStoreKey = `${state.readModelType}:${state.contractAddress}`
+
+    let factoryReadModel = new ReadModel(
+      readModelAdapter,
+      FactoryReadModel.reducer,
+      state
+    );
+
+    let changes = await factoryReadModel.sync(factory as any, adapter, web3, fromAddress);
+
+    return factoryReadModel;
   };
 }

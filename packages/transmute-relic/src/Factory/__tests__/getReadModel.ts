@@ -25,14 +25,16 @@ describe("Factory.getReadModel", () => {
 
   Object.keys(factoryTypes).map(typeString => {
     it(typeString, async () => {
-      let { relic, storeInstances, accounts, adapter } = await getSetupAsync();
-
-      // console.log(storeInstances)
-
-      // console.log(factoryInstances);
-      // let rm = await Factory.getReadModel(factory, adapter, relic.web3, accounts[0]);
-      // console.log("get the read model!!!!", rm);
-      // expect(await inst.owner()).toBe(accounts[0]);
+      let { relic, factoryInstances, accounts, adapter } = await getSetupAsync();
+      let rm = await Factory.getReadModel(
+        factoryInstances.unsafe,
+        adapter,
+        factoryReadModelAdapter,
+        relic.web3,
+        accounts[0]
+      );
+      let eventStoreContractAddresses = Object.keys(rm.state.model);
+      expect(eventStoreContractAddresses.length).toBe(1);
     });
   });
 });
