@@ -12,7 +12,10 @@ describe("Permissions throws on bad events", () => {
   });
 
   it("permissions are cool", async () => {
-    console.log(setup.accounts);
+    let { factory } = setup;
+
+    // console.log(factory)
+
     expect(true);
   });
 });

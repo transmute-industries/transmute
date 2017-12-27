@@ -5,6 +5,10 @@ import { W3 } from "soltsice";
 
 import { Adapter } from "../Store/Adapter";
 
+import { ReadModel} from '../Store/ReadModel'
+
+import FactoryReadModel from './ReadModel'
+
 export namespace Factory {
   export type GenericFactory = UnsafeEventStoreFactory | EventStoreFactory | RBACEventStoreFactory;
 
@@ -31,7 +35,11 @@ export namespace Factory {
   /**
    * Factory create
    */
-  export const create = async (type: Types, web3: any, fromAddress: string): Promise<GenericFactory> => {
+  export const create = async (
+    type: Types,
+    web3: any,
+    fromAddress: string
+  ): Promise<GenericFactory> => {
     W3.Default = web3;
     const factoryClass = typeClassMapper(type);
     const instance = await factoryClass.New(W3.TC.txParamsDefaultDeploy(fromAddress), {
@@ -52,5 +60,19 @@ export namespace Factory {
     W3.Default = web3;
     let receipt = await factory.createEventStore(W3.TC.txParamsDefaultDeploy(fromAddress));
     return adapter.extractEventsFromLogs(receipt.logs);
+  };
+
+  /**
+   * Factory getReadModel
+   */
+  export const getReadModel = async (
+    factory: GenericFactory,
+    adapter: Adapter,
+    web3: any,
+    fromAddress: string
+  ) => {
+
+    // let factoryReadModel = new ReadModel(adapter, reducer, state);
+    return { yolo: 1 };
   };
 }
