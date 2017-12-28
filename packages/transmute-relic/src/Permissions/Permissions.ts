@@ -1,9 +1,13 @@
-import { IReadModelState } from "../Store/ReadModel/ReadModelTypes";
 
 import { RBAC } from "../types/RBAC";
 
-export namespace Permissions {
+import { IReadModelState, IReadModelAdapter} from "../Store/ReadModel/ReadModelTypes";
+import { StoreAdapter } from "../Store/StoreAdapter";
 
+import PermissionsReadModel from './ReadModel'
+import { ReadModel }  from '../Store/ReadModel'
+
+export namespace Permissions {
   export interface IPermissions {
     setAddressRole: (
       acc: any,
@@ -34,4 +38,23 @@ export namespace Permissions {
     getPermissionsReadModel: (acc: any, fromAddress: string) => Promise<IReadModelState>;
   }
 
+  export const getReadModel = async (
+    permContract: any,
+    adapter: StoreAdapter,
+    readModelAdapter: IReadModelAdapter,
+    web3: any,
+    fromAddress: string
+  ) => {
+    let state: IReadModelState = JSON.parse(JSON.stringify(PermissionsReadModel.initialState));
+
+    // console.log('permContract: ', permContract)
+    state.contractAddress = permContract.address;
+    state.readModelStoreKey = `${state.readModelType}:${state.contractAddress}`;
+
+    let permReadModel = new ReadModel(readModelAdapter, PermissionsReadModel.reducer, state);
+
+    let changes = await permReadModel.sync(permContract, adapter, web3, fromAddress);
+
+    return permReadModel;
+  };
 }

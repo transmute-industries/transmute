@@ -19,6 +19,19 @@ let nodeStorageAdapter = require("../../../transmute-adapter-node-storage");
 let leveldb = nodeStorageAdapter.getStorage();
 let ipfs = ipfsAdapter.getStorage();
 
+const Storage = require("node-storage");
+const db = new Storage("./read_model_storage");
+const nodeStorageReadModelAdapter: any = {
+  getItem: (id: string) => {
+    return JSON.parse(db.get(id));
+  },
+  setItem: (id: string, value: any) => {
+    return db.put(id, JSON.stringify(value));
+  }
+};
+
+
+
 const adapter = new StoreAdapter({
   I: {
     keyName: "multihash",
@@ -85,5 +98,7 @@ export const getSetupAsync = async () => {
 
     store: storeInstances.unsafe,
     factory: factoryInstances.unsafe,
+
+    nodeStorageReadModelAdapter
   };
 };
