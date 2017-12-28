@@ -1,3 +1,5 @@
+import { W3 } from "soltsice";
+
 import { UnsafeEventStoreFactory } from "../types/UnsafeEventStoreFactory";
 import { UnsafeEventStore } from "../types/UnsafeEventStore";
 
@@ -6,8 +8,6 @@ import { EventStore } from "../types/EventStore";
 
 import { RBACEventStoreFactory } from "../types/RBACEventStoreFactory";
 import { RBACEventStore } from "../types/RBACEventStore";
-
-import { W3 } from "soltsice";
 
 import { StoreAdapter } from "../Store/StoreAdapter";
 
@@ -99,6 +99,14 @@ export namespace Factory {
     return store;
   };
 
+  export const getAllEventStoreContractAddresses = async (
+    factory: GenericFactory,
+    fromAddress: string
+  ) => {
+    let addresses = await factory.getEventStores(W3.TC.txParamsDefaultDeploy(fromAddress));
+    return addresses;
+  };
+
   /**
    * Factory getReadModel
    */
@@ -109,17 +117,12 @@ export namespace Factory {
     web3: any,
     fromAddress: string
   ) => {
-
     let state: IReadModelState = JSON.parse(JSON.stringify(FactoryReadModel.initialState));
 
-    state.contractAddress = factory.address
-    state.readModelStoreKey = `${state.readModelType}:${state.contractAddress}`
+    state.contractAddress = factory.address;
+    state.readModelStoreKey = `${state.readModelType}:${state.contractAddress}`;
 
-    let factoryReadModel = new ReadModel(
-      readModelAdapter,
-      FactoryReadModel.reducer,
-      state
-    );
+    let factoryReadModel = new ReadModel(readModelAdapter, FactoryReadModel.reducer, state);
 
     let changes = await factoryReadModel.sync(factory as any, adapter, web3, fromAddress);
 
