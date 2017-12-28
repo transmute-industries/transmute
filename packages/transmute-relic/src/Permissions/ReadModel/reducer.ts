@@ -71,6 +71,8 @@ export const handlers: any = {
 export const reducer = (state: any, action: any) => {
   if (handlers[action.type]) {
     return handlers[action.type](state, action);
+  } else {
+    console.log('unhandled action: ', action)
   }
   return state;
 };
