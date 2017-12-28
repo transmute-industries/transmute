@@ -1,11 +1,12 @@
+import { W3 } from "soltsice";
 
 import { RBAC } from "../types/RBAC";
 
-import { IReadModelState, IReadModelAdapter} from "../Store/ReadModel/ReadModelTypes";
+import { IReadModelState, IReadModelAdapter } from "../Store/ReadModel/ReadModelTypes";
 import { StoreAdapter } from "../Store/StoreAdapter";
 
-import PermissionsReadModel from './ReadModel'
-import { ReadModel }  from '../Store/ReadModel'
+import PermissionsReadModel from "./ReadModel";
+import { ReadModel } from "../Store/ReadModel";
 
 export namespace Permissions {
   export interface IPermissions {
@@ -37,6 +38,27 @@ export namespace Permissions {
 
     getPermissionsReadModel: (acc: any, fromAddress: string) => Promise<IReadModelState>;
   }
+
+  export const setAddressRole = async (
+    permContract: any,
+    fromAddress: string,
+    targetAddress: string,
+    targetRole: string
+  ) => {
+    let receipt = await permContract.setAddressRole(
+      targetAddress,
+      targetRole,
+      W3.TC.txParamsDefaultDeploy(fromAddress)
+    );
+
+    console.log("receipt: ", receipt);
+    return receipt;
+    // let fsa = Common.getFSAFromEventArgs(tx.logs[0].args)
+    // return {
+    //   events: [fsa],
+    //   tx: tx,
+    // }
+  };
 
   export const getReadModel = async (
     permContract: any,
