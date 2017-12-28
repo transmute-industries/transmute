@@ -6,9 +6,7 @@
   "main": "dist/transmute-relic.umd.js",
   "module": "dist/transmute-relic.es5.js",
   "typings": "dist/types/transmute-relic.d.ts",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "contributors": [
     "Eric Olszewski <eric@transmute.industries>",
     "Orie Steele <orie@transmute.industries>"
@@ -25,7 +23,8 @@
     "cleanup": "rm -rf ./src/types dist",
     "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist",
-    "build": "tsc && tsc --module commonjs --outDir dist/lib && rollup -c rollup.config.ts && typedoc --out dist/docs --target es6 --theme minimal --mode file src",
+    "build":
+      "tsc && tsc --module commonjs --outDir dist/lib && rollup -c rollup.config.ts && typedoc --out dist/docs --target es6 --theme minimal --mode file src",
     "start": "tsc -w & rollup -c rollup.config.ts -w",
     "test": "jest --runInBand",
     "test:watch": "jest --watch",
@@ -36,13 +35,14 @@
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
     "precommit": "lint-staged",
-    "soltsice": "node ./node_modules/soltsice/dist/src/soltsice.js ./node_modules/transmute-contracts/build/contracts/ ./src/types"
+    "contracts:migrate": "lerna run migrate --scope transmute-contracts",
+    "contracts:generate": "lerna bootstrap && lerna run soltsice --scope transmute-relic",
+    "contracts:replace": "npm run contracts:migrate && npm run contracts:generate",
+    "soltsice":
+      "node ./node_modules/soltsice/dist/src/soltsice.js ./node_modules/transmute-contracts/build/contracts/ ./src/SolidityTypes"
   },
   "lint-staged": {
-    "{src,test}/**/*.ts": [
-      "prettier --write --no-semi --single-quote",
-      "git add"
-    ]
+    "{src,test}/**/*.ts": ["prettier --write --no-semi --single-quote", "git add"]
   },
   "config": {
     "commitizen": {
@@ -50,7 +50,8 @@
     },
     "validate-commit-msg": {
       "types": "conventional-commit-types",
-      "helpMessage": "Use \"npm run commit\" instead, we use conventional-changelog format :) (https://github.com/commitizen/cz-cli)"
+      "helpMessage":
+        "Use \"npm run commit\" instead, we use conventional-changelog format :) (https://github.com/commitizen/cz-cli)"
     }
   },
   "jest": {
@@ -59,17 +60,8 @@
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "node",
-      "json"
-    ],
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/test/"
-    ],
+    "moduleFileExtensions": ["ts", "tsx", "js", "node", "json"],
+    "coveragePathIgnorePatterns": ["/node_modules/", "/test/"],
     "coverageThreshold": {
       "global": {
         "branches": 90,

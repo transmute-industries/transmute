@@ -7,9 +7,6 @@ import { Permissions } from "../Permissions";
  * Permissions
  */
 describe("Permissions ", () => {
-
-
-
   it("permissions are cool", async () => {
     let {
       relic,
@@ -26,12 +23,11 @@ describe("Permissions ", () => {
       storeInstances.rbac,
       accounts[0],
       accounts[1],
-      'demon'
+      "demon"
     );
-    console.log('yolo: ', receipt);
+    // console.log('yolo: ', receipt);
     expect(true);
   });
-
 
   // it("permissions are cool", async () => {
   //   let {

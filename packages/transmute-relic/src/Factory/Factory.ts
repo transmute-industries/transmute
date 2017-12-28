@@ -1,13 +1,13 @@
 import { W3 } from "soltsice";
 
-import { UnsafeEventStoreFactory } from "../types/UnsafeEventStoreFactory";
-import { UnsafeEventStore } from "../types/UnsafeEventStore";
+import { UnsafeEventStoreFactory } from "../SolidityTypes/UnsafeEventStoreFactory";
+import { UnsafeEventStore } from "../SolidityTypes/UnsafeEventStore";
 
-import { EventStoreFactory } from "../types/EventStoreFactory";
-import { EventStore } from "../types/EventStore";
+import { EventStoreFactory } from "../SolidityTypes/EventStoreFactory";
+import { EventStore } from "../SolidityTypes/EventStore";
 
-import { RBACEventStoreFactory } from "../types/RBACEventStoreFactory";
-import { RBACEventStore } from "../types/RBACEventStore";
+import { RBACEventStoreFactory } from "../SolidityTypes/RBACEventStoreFactory";
+import { RBACEventStore } from "../SolidityTypes/RBACEventStore";
 
 import { StoreAdapter } from "../Store/StoreAdapter";
 

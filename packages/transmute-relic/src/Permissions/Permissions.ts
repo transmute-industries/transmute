@@ -1,6 +1,6 @@
 import { W3 } from "soltsice";
 
-import { RBAC } from "../types/RBAC";
+import { RBAC } from "../SolidityTypes/RBAC";
 
 import { IReadModelState, IReadModelAdapter } from "../Store/ReadModel/ReadModelTypes";
 import { StoreAdapter } from "../Store/StoreAdapter";
@@ -51,7 +51,7 @@ export namespace Permissions {
       W3.TC.txParamsDefaultDeploy(fromAddress)
     );
 
-    console.log("receipt: ", receipt);
+    // console.log("receipt: ", receipt);
     return receipt;
     // let fsa = Common.getFSAFromEventArgs(tx.logs[0].args)
     // return {

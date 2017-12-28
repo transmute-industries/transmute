@@ -33,18 +33,21 @@ contract UnsafeEventStoreFactory is UnsafeEventStore {
 	}
 
   function killEventStore(address _address) public checkExistence(_address) {
-    require(this.owner() == msg.sender);
-
+    
     UnsafeEventStore eventStore = UnsafeEventStore(_address);
+
+    require(eventStore.owner() == msg.sender);
+
     creatorEventStoreMapping[eventStore.owner()].remove(_address);
     EventStoreAddresses.remove(_address);
 
     eventStore.destroy();
     writeEvent("ES_DESTROYED", "S", "A", "address", bytes32(_address));
+  
   }
 
   // Helper Functions
-  function getEventStoresByCreator() public view returns (address[]) {
+  function getEventStoresByOwner() public view returns (address[]) {
     return creatorEventStoreMapping[msg.sender].values;
   }
 
