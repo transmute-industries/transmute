@@ -91,6 +91,17 @@ export class UnsafeEventStoreFactory extends SoltsiceContract {
             }
         });
     
+    // tslint:disable-next-line:max-line-length
+    // tslint:disable-next-line:variable-name
+    public getEventStoresByOwner( txParams?: W3.TC.TxParams): Promise<string[]> {
+        return new Promise((resolve, reject) => {
+            this._instance.getEventStoresByOwner
+                .call( txParams || this._sendParams)
+                .then((res) => resolve(res))
+                .catch((err) => reject(err));
+        });
+    }
+    
     // tslint:disable-next-line:member-ordering
     public createEventStore = Object.assign(
         // tslint:disable-next-line:max-line-length
@@ -246,17 +257,6 @@ export class UnsafeEventStoreFactory extends SoltsiceContract {
                 });
             }
         });
-    
-    // tslint:disable-next-line:max-line-length
-    // tslint:disable-next-line:variable-name
-    public getEventStoresByCreator( txParams?: W3.TC.TxParams): Promise<string[]> {
-        return new Promise((resolve, reject) => {
-            this._instance.getEventStoresByCreator
-                .call( txParams || this._sendParams)
-                .then((res) => resolve(res))
-                .catch((err) => reject(err));
-        });
-    }
     
     // tslint:disable-next-line:max-line-length
     // tslint:disable-next-line:variable-name

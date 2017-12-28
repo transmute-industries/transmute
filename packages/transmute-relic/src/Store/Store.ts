@@ -1,6 +1,6 @@
-import { UnsafeEventStore } from "../types/UnsafeEventStore";
-import { RBACEventStore } from "../types/RBACEventStore";
-import { EventStore } from "../types/EventStore";
+import { UnsafeEventStore } from "../SolidityTypes/UnsafeEventStore";
+import { RBACEventStore } from "../SolidityTypes/RBACEventStore";
+import { EventStore } from "../SolidityTypes/EventStore";
 
 import { W3 } from "soltsice";
 

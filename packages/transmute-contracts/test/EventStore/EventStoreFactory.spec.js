@@ -47,7 +47,7 @@ contract("EventStoreFactory", function(accounts) {
 
     let esAddress = fsa.payload.address;
     let es = await EventStore.at(esAddress);
-    let esOwner = await es.creator();
+    let esOwner = await es.owner();
     assert.equal(
       esOwner,
       accounts[0],
@@ -71,7 +71,7 @@ contract("EventStoreFactory", function(accounts) {
 
     esAddress = fsa.payload.address;
     es = await EventStore.at(esAddress);
-    esOwner = await es.creator();
+    esOwner = await es.owner();
     assert.equal(
       esOwner,
       accounts[2],
@@ -90,8 +90,8 @@ contract("EventStoreFactory", function(accounts) {
     );
   });
 
-  it("getEventStoresByCreator", async () => {
-    let _account1EventStoreAddresses = await factory.getEventStoresByCreator.call(
+  it("getEventStoresByOwner", async () => {
+    let _account1EventStoreAddresses = await factory.getEventStoresByOwner.call(
       { from: accounts[1] }
     );
     assert(
@@ -100,7 +100,7 @@ contract("EventStoreFactory", function(accounts) {
       "Expect _account1EventStoreAddresses to equal account1EventStoreAddresses"
     );
 
-    let _account2EventStoreAddresses = await factory.getEventStoresByCreator.call(
+    let _account2EventStoreAddresses = await factory.getEventStoresByOwner.call(
       { from: accounts[2] }
     );
     assert(

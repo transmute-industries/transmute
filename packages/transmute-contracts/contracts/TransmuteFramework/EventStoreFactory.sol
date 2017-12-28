@@ -53,7 +53,7 @@ contract EventStoreFactory is EventStore {
   }
 
   // Helper Functions
-  function getEventStoresByCreator() public view returns (address[]) {
+  function getEventStoresByOwner() public view returns (address[]) {
     return creatorEventStoreMapping[msg.sender].values;
   }
 

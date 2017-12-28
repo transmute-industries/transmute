@@ -28,7 +28,7 @@ contract EventStore is Destructible {
 
   // Constuctor
   function EventStore() public payable {
- 
+    owner = tx.origin;
   }
 
   // Interface

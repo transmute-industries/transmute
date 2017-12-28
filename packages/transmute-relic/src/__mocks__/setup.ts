@@ -7,11 +7,11 @@ import { StoreAdapter } from "../Store/StoreAdapter";
 const bs58 = require("bs58");
 const util = require("ethereumjs-util");
 
-import { UnsafeEventStoreFactory } from "../types/UnsafeEventStoreFactory";
-import { UnsafeEventStore } from "../types/UnsafeEventStore";
+import { UnsafeEventStoreFactory } from "../SolidityTypes/UnsafeEventStoreFactory";
+import { UnsafeEventStore } from "../SolidityTypes/UnsafeEventStore";
 
-import { RBACEventStoreFactory } from "../types/RBACEventStoreFactory";
-import { RBACEventStore } from "../types/RBACEventStore";
+import { RBACEventStoreFactory } from "../SolidityTypes/RBACEventStoreFactory";
+import { RBACEventStore } from "../SolidityTypes/RBACEventStore";
 
 let ipfsAdapter = require("../../../transmute-adapter-ipfs");
 let nodeStorageAdapter = require("../../../transmute-adapter-node-storage");
@@ -56,14 +56,6 @@ const adapter = new StoreAdapter({
     }
   }
 });
-
-export const createStoreInstances = async (
-  web3: W3,
-  fromAddress: string,
-  factoryInstances: any
-) => {
-  return;
-};
 
 export const getSetupAsync = async () => {
   const relic = new Relic({

@@ -26,7 +26,7 @@
         //         permission = ac.can('user').createAny('grant')
         //         assert(!permission.granted, "expect user can not create any grant")
 
-        //         // console.log(await globalACL.creator())
+        //         // console.log(await globalACL.owner())
 
         //     })
 

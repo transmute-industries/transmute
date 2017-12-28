@@ -73,12 +73,12 @@ describe("", () => {
   contract("EventStore", accounts => {
     let eventStore;
 
-    it("the factory whitelist cannot be set by eventstore owner or creator", async () => {
+    it("the factory whitelist cannot be set by eventstore owner or owner", async () => {
       factory
         .setWhitelist(accounts, { from: accounts[3] })
         .then(_tx => {
           assert.fail(
-            "the factory whitelist can be set by eventstore owner or creator"
+            "the factory whitelist can be set by eventstore owner or owner"
           );
         })
         .catch(e => {
@@ -86,7 +86,7 @@ describe("", () => {
             assert.ok(true);
           } else {
             assert.fail(
-              "the factory whitelist can be set by eventstore owner or creator"
+              "the factory whitelist can be set by eventstore owner or owner"
             );
           }
         });
@@ -119,34 +119,34 @@ describe("", () => {
         });
     });
 
-    it("the factory caller is the event store contract creator", async () => {
+    it("the factory caller is the event store contract owner", async () => {
       let tx = await factory.createEventStore({
         from: accounts[0]
       });
       let fsa = getFSAFromEventArgs(tx.logs[0].args);
       eventStore = EventStore.at(fsa.payload.address);
-      let creator = await eventStore.creator();
-      assert(creator === accounts[0]);
+      let owner = await eventStore.owner();
+      assert(owner === accounts[0]);
     });
 
-    it("event store non-creator cannot set whitelist", async () => {
+    it("event store non-owner cannot set whitelist", async () => {
       factory
         .setEventStoreWhitelist(eventStore.address, _.slice(accounts, 0, 2), {
           from: accounts[1]
         })
         .then(_tx => {
-          assert.fail("event store non-creator can set whitelist");
+          assert.fail("event store non-owner can set whitelist");
         })
         .catch(e => {
           if (e.name == "Error") {
             assert.ok(true);
           } else {
-            assert.fail("event store non-creator can set whitelist");
+            assert.fail("event store non-owner can set whitelist");
           }
         });
     });
 
-    it("event store creator can set whitelist", async () => {
+    it("event store owner can set whitelist", async () => {
       await factory.setEventStoreWhitelist(
         eventStore.address,
         _.slice(accounts, 0, 2),

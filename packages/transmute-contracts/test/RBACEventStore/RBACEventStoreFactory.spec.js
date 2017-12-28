@@ -85,7 +85,7 @@ describe("", () => {
       assert.equal(
         esOwner,
         accounts[0],
-        "expect factory caller to be es contract creator."
+        "expect factory caller to be es contract owner."
       );
 
       eventStoreAddresses.push(esAddress);
@@ -100,8 +100,8 @@ describe("", () => {
       );
     });
 
-    it("getEventStoresByCreator", async () => {
-      let _account1EventStoreAddresses = await factory.getEventStoresByCreator.call(
+    it("getEventStoresByOwner", async () => {
+      let _account1EventStoreAddresses = await factory.getEventStoresByOwner.call(
         { from: accounts[1] }
       );
       assert(
@@ -225,7 +225,7 @@ describe("", () => {
               from: accounts[2]
             });
           } catch (e) {
-            assert(isVmException(e), "expected vm exception when not creator");
+            assert(isVmException(e), "expected vm exception when not owner");
           }
         });
       });
