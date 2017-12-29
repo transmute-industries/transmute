@@ -101,6 +101,8 @@ export namespace Store {
 
     // console.log(keyValue)
 
+    console.log(JSON.stringify(marshalledEvent) )
+
     let receipt = await store.writeEvent(
       marshalledEvent.eventType,
       marshalledEvent.keyType,

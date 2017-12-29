@@ -30,8 +30,6 @@ const nodeStorageReadModelAdapter: any = {
   }
 };
 
-
-
 const adapter = new StoreAdapter({
   I: {
     keyName: "multihash",
@@ -57,6 +55,15 @@ const adapter = new StoreAdapter({
   }
 });
 
+export const getAccounts = async () => {
+  const relic = new Relic({
+    providerUrl: "http://localhost:8545"
+  });
+  const accounts = await relic.getAccounts();
+  W3.Default = relic.web3;
+  return accounts;
+};
+
 export const getSetupAsync = async () => {
   const relic = new Relic({
     providerUrl: "http://localhost:8545"
@@ -76,7 +83,7 @@ export const getSetupAsync = async () => {
 
   let storeInstances = {
     unsafe: await Factory.createStore(factoryInstances.unsafe, adapter, relic.web3, accounts[0]),
-    rbac: await Factory.createStore(factoryInstances.rbac, adapter, relic.web3, accounts[0]),
+    rbac: await Factory.createStore(factoryInstances.rbac, adapter, relic.web3, accounts[0])
     // default: await Factory.createStore(factoryInstances.default, adapter, relic.web3, accounts[0])
   };
 
