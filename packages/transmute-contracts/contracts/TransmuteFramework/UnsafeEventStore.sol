@@ -14,7 +14,6 @@ contract UnsafeEventStore is Destructible {
 
   // Constructor
   function UnsafeEventStore() public payable {
-    owner = tx.origin;
   }
 
   // Interface

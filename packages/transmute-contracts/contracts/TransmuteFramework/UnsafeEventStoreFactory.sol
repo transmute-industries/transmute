@@ -11,8 +11,8 @@ contract UnsafeEventStoreFactory is UnsafeEventStore {
   AddressSetLib.AddressSet EventStoreAddresses;
 
   // Modifiers
-  modifier checkExistence(address _EventStoreAddress) {
-    require(EventStoreAddresses.contains(_EventStoreAddress));
+  modifier checkExistence(address _address) {
+    require(EventStoreAddresses.contains(_address));
     _;
   }
 
@@ -33,11 +33,8 @@ contract UnsafeEventStoreFactory is UnsafeEventStore {
 	}
 
   function killEventStore(address _address) public checkExistence(_address) {
-    
+    require(this.owner() == msg.sender);
     UnsafeEventStore eventStore = UnsafeEventStore(_address);
-
-    require(eventStore.owner() == msg.sender);
-
     creatorEventStoreMapping[eventStore.owner()].remove(_address);
     EventStoreAddresses.remove(_address);
 
