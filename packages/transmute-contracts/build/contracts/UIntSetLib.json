@@ -262,7 +262,7 @@
       "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-contracts/contracts/TransmuteFramework/SetLib/UIntSet/UIntSetLib.sol",
       "exportedSymbols": {
         "UIntSetLib": [
-          2530
+          2455
         ]
       }
     },
@@ -276,7 +276,7 @@
             ".17"
           ]
         },
-        "id": 2155,
+        "id": 2080,
         "name": "PragmaDirective",
         "src": "0:24:10"
       },
@@ -292,17 +292,17 @@
           "documentation": "@title Library implementing an array type which allows O(1) lookups on values.\n @author Piper Merriam <pipermerriam@gmail.com>, Eric Olszewski <eolszewski@gmail.com>\n Adapted from https://github.com/ethpm/ethereum-indexed-enumerable-set-lib/blob/master/contracts/IndexedEnumerableSetLib.sol",
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            2530
+            2455
           ],
           "name": "UIntSetLib",
-          "scope": 2531
+          "scope": 2456
         },
         "children": [
           {
             "attributes": {
               "canonicalName": "UIntSetLib.UIntSet",
               "name": "UIntSet",
-              "scope": 2530,
+              "scope": 2455,
               "visibility": "public"
             },
             "children": [
@@ -310,7 +310,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "values",
-                  "scope": 2167,
+                  "scope": 2092,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "uint256[] storage pointer",
@@ -329,17 +329,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2156,
+                        "id": 2081,
                         "name": "ElementaryTypeName",
                         "src": "372:4:10"
                       }
                     ],
-                    "id": 2157,
+                    "id": 2082,
                     "name": "ArrayTypeName",
                     "src": "372:6:10"
                   }
                 ],
-                "id": 2158,
+                "id": 2083,
                 "name": "VariableDeclaration",
                 "src": "372:13:10"
               },
@@ -347,7 +347,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "exists",
-                  "scope": 2167,
+                  "scope": 2092,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "mapping(uint256 => bool)",
@@ -365,7 +365,7 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2159,
+                        "id": 2084,
                         "name": "ElementaryTypeName",
                         "src": "399:4:10"
                       },
@@ -374,17 +374,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 2160,
+                        "id": 2085,
                         "name": "ElementaryTypeName",
                         "src": "407:4:10"
                       }
                     ],
-                    "id": 2161,
+                    "id": 2086,
                     "name": "Mapping",
                     "src": "391:21:10"
                   }
                 ],
-                "id": 2162,
+                "id": 2087,
                 "name": "VariableDeclaration",
                 "src": "391:28:10"
               },
@@ -392,7 +392,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "indices",
-                  "scope": 2167,
+                  "scope": 2092,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "mapping(uint256 => uint256)",
@@ -410,7 +410,7 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2163,
+                        "id": 2088,
                         "name": "ElementaryTypeName",
                         "src": "433:4:10"
                       },
@@ -419,22 +419,22 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2164,
+                        "id": 2089,
                         "name": "ElementaryTypeName",
                         "src": "441:4:10"
                       }
                     ],
-                    "id": 2165,
+                    "id": 2090,
                     "name": "Mapping",
                     "src": "425:21:10"
                   }
                 ],
-                "id": 2166,
+                "id": 2091,
                 "name": "VariableDeclaration",
                 "src": "425:29:10"
               }
             ],
-            "id": 2167,
+            "id": 2092,
             "name": "StructDefinition",
             "src": "351:108:10"
           },
@@ -450,7 +450,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2183,
+                      "scope": 2108,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct UIntSetLib.UIntSet storage pointer",
@@ -462,15 +462,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "UIntSet",
-                          "referencedDeclaration": 2167,
+                          "referencedDeclaration": 2092,
                           "type": "struct UIntSetLib.UIntSet storage pointer"
                         },
-                        "id": 2168,
+                        "id": 2093,
                         "name": "UserDefinedTypeName",
                         "src": "481:7:10"
                       }
                     ],
-                    "id": 2169,
+                    "id": 2094,
                     "name": "VariableDeclaration",
                     "src": "481:20:10"
                   },
@@ -478,7 +478,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "index",
-                      "scope": 2183,
+                      "scope": 2108,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -491,17 +491,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2170,
+                        "id": 2095,
                         "name": "ElementaryTypeName",
                         "src": "503:4:10"
                       }
                     ],
-                    "id": 2171,
+                    "id": 2096,
                     "name": "VariableDeclaration",
                     "src": "503:10:10"
                   }
                 ],
-                "id": 2172,
+                "id": 2097,
                 "name": "ParameterList",
                 "src": "480:34:10"
               },
@@ -535,11 +535,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2861,
+                              "referencedDeclaration": 2786,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
-                            "id": 2173,
+                            "id": 2098,
                             "name": "Identifier",
                             "src": "521:7:10"
                           },
@@ -564,11 +564,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2171,
+                                  "referencedDeclaration": 2096,
                                   "type": "uint256",
                                   "value": "index"
                                 },
-                                "id": 2174,
+                                "id": 2099,
                                 "name": "Identifier",
                                 "src": "529:5:10"
                               },
@@ -592,7 +592,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "values",
-                                      "referencedDeclaration": 2158,
+                                      "referencedDeclaration": 2083,
                                       "type": "uint256[] storage ref"
                                     },
                                     "children": [
@@ -602,51 +602,51 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 2169,
+                                          "referencedDeclaration": 2094,
                                           "type": "struct UIntSetLib.UIntSet storage pointer",
                                           "value": "self"
                                         },
-                                        "id": 2175,
+                                        "id": 2100,
                                         "name": "Identifier",
                                         "src": "537:4:10"
                                       }
                                     ],
-                                    "id": 2176,
+                                    "id": 2101,
                                     "name": "MemberAccess",
                                     "src": "537:11:10"
                                   }
                                 ],
-                                "id": 2177,
+                                "id": 2102,
                                 "name": "MemberAccess",
                                 "src": "537:18:10"
                               }
                             ],
-                            "id": 2178,
+                            "id": 2103,
                             "name": "BinaryOperation",
                             "src": "529:26:10"
                           }
                         ],
-                        "id": 2179,
+                        "id": 2104,
                         "name": "FunctionCall",
                         "src": "521:35:10"
                       }
                     ],
-                    "id": 2180,
+                    "id": 2105,
                     "name": "ExpressionStatement",
                     "src": "521:35:10"
                   },
                   {
-                    "id": 2181,
+                    "id": 2106,
                     "name": "PlaceholderStatement",
                     "src": "562:1:10"
                   }
                 ],
-                "id": 2182,
+                "id": 2107,
                 "name": "Block",
                 "src": "515:53:10"
               }
             ],
-            "id": 2183,
+            "id": 2108,
             "name": "ModifierDefinition",
             "src": "463:105:10"
           },
@@ -662,7 +662,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2197,
+                      "scope": 2122,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct UIntSetLib.UIntSet storage pointer",
@@ -674,20 +674,20 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "UIntSet",
-                          "referencedDeclaration": 2167,
+                          "referencedDeclaration": 2092,
                           "type": "struct UIntSetLib.UIntSet storage pointer"
                         },
-                        "id": 2184,
+                        "id": 2109,
                         "name": "UserDefinedTypeName",
                         "src": "590:7:10"
                       }
                     ],
-                    "id": 2185,
+                    "id": 2110,
                     "name": "VariableDeclaration",
                     "src": "590:20:10"
                   }
                 ],
-                "id": 2186,
+                "id": 2111,
                 "name": "ParameterList",
                 "src": "589:22:10"
               },
@@ -721,11 +721,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2861,
+                              "referencedDeclaration": 2786,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
-                            "id": 2187,
+                            "id": 2112,
                             "name": "Identifier",
                             "src": "618:7:10"
                           },
@@ -764,7 +764,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "values",
-                                      "referencedDeclaration": 2158,
+                                      "referencedDeclaration": 2083,
                                       "type": "uint256[] storage ref"
                                     },
                                     "children": [
@@ -774,21 +774,21 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 2185,
+                                          "referencedDeclaration": 2110,
                                           "type": "struct UIntSetLib.UIntSet storage pointer",
                                           "value": "self"
                                         },
-                                        "id": 2188,
+                                        "id": 2113,
                                         "name": "Identifier",
                                         "src": "626:4:10"
                                       }
                                     ],
-                                    "id": 2189,
+                                    "id": 2114,
                                     "name": "MemberAccess",
                                     "src": "626:11:10"
                                   }
                                 ],
-                                "id": 2190,
+                                "id": 2115,
                                 "name": "MemberAccess",
                                 "src": "626:18:10"
                               },
@@ -805,37 +805,37 @@
                                   "type": "int_const 0",
                                   "value": "0"
                                 },
-                                "id": 2191,
+                                "id": 2116,
                                 "name": "Literal",
                                 "src": "648:1:10"
                               }
                             ],
-                            "id": 2192,
+                            "id": 2117,
                             "name": "BinaryOperation",
                             "src": "626:23:10"
                           }
                         ],
-                        "id": 2193,
+                        "id": 2118,
                         "name": "FunctionCall",
                         "src": "618:32:10"
                       }
                     ],
-                    "id": 2194,
+                    "id": 2119,
                     "name": "ExpressionStatement",
                     "src": "618:32:10"
                   },
                   {
-                    "id": 2195,
+                    "id": 2120,
                     "name": "PlaceholderStatement",
                     "src": "656:1:10"
                   }
                 ],
-                "id": 2196,
+                "id": 2121,
                 "name": "Block",
                 "src": "612:50:10"
               }
             ],
-            "id": 2197,
+            "id": 2122,
             "name": "ModifierDefinition",
             "src": "572:90:10"
           },
@@ -846,7 +846,7 @@
               "isConstructor": false,
               "name": "get",
               "payable": false,
-              "scope": 2530,
+              "scope": 2455,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -858,7 +858,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2216,
+                      "scope": 2141,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct UIntSetLib.UIntSet storage pointer",
@@ -870,15 +870,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "UIntSet",
-                          "referencedDeclaration": 2167,
+                          "referencedDeclaration": 2092,
                           "type": "struct UIntSetLib.UIntSet storage pointer"
                         },
-                        "id": 2198,
+                        "id": 2123,
                         "name": "UserDefinedTypeName",
                         "src": "679:7:10"
                       }
                     ],
-                    "id": 2199,
+                    "id": 2124,
                     "name": "VariableDeclaration",
                     "src": "679:20:10"
                   },
@@ -886,7 +886,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "index",
-                      "scope": 2216,
+                      "scope": 2141,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -899,17 +899,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2200,
+                        "id": 2125,
                         "name": "ElementaryTypeName",
                         "src": "701:4:10"
                       }
                     ],
-                    "id": 2201,
+                    "id": 2126,
                     "name": "VariableDeclaration",
                     "src": "701:10:10"
                   }
                 ],
-                "id": 2202,
+                "id": 2127,
                 "name": "ParameterList",
                 "src": "678:34:10"
               },
@@ -919,7 +919,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2216,
+                      "scope": 2141,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -932,17 +932,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2207,
+                        "id": 2132,
                         "name": "ElementaryTypeName",
                         "src": "756:4:10"
                       }
                     ],
-                    "id": 2208,
+                    "id": 2133,
                     "name": "VariableDeclaration",
                     "src": "756:4:10"
                   }
                 ],
-                "id": 2209,
+                "id": 2134,
                 "name": "ParameterList",
                 "src": "755:6:10"
               },
@@ -954,11 +954,11 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2183,
+                      "referencedDeclaration": 2108,
                       "type": "modifier (struct UIntSetLib.UIntSet storage pointer,uint256)",
                       "value": "inBounds"
                     },
-                    "id": 2203,
+                    "id": 2128,
                     "name": "Identifier",
                     "src": "725:8:10"
                   },
@@ -968,11 +968,11 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2199,
+                      "referencedDeclaration": 2124,
                       "type": "struct UIntSetLib.UIntSet storage pointer",
                       "value": "self"
                     },
-                    "id": 2204,
+                    "id": 2129,
                     "name": "Identifier",
                     "src": "734:4:10"
                   },
@@ -982,16 +982,16 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2201,
+                      "referencedDeclaration": 2126,
                       "type": "uint256",
                       "value": "index"
                     },
-                    "id": 2205,
+                    "id": 2130,
                     "name": "Identifier",
                     "src": "740:5:10"
                   }
                 ],
-                "id": 2206,
+                "id": 2131,
                 "name": "ModifierInvocation",
                 "src": "725:21:10"
               },
@@ -999,7 +999,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2209
+                      "functionReturnParameters": 2134
                     },
                     "children": [
                       {
@@ -1020,7 +1020,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "values",
-                              "referencedDeclaration": 2158,
+                              "referencedDeclaration": 2083,
                               "type": "uint256[] storage ref"
                             },
                             "children": [
@@ -1030,16 +1030,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2199,
+                                  "referencedDeclaration": 2124,
                                   "type": "struct UIntSetLib.UIntSet storage pointer",
                                   "value": "self"
                                 },
-                                "id": 2210,
+                                "id": 2135,
                                 "name": "Identifier",
                                 "src": "775:4:10"
                               }
                             ],
-                            "id": 2211,
+                            "id": 2136,
                             "name": "MemberAccess",
                             "src": "775:11:10"
                           },
@@ -1049,31 +1049,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2201,
+                              "referencedDeclaration": 2126,
                               "type": "uint256",
                               "value": "index"
                             },
-                            "id": 2212,
+                            "id": 2137,
                             "name": "Identifier",
                             "src": "787:5:10"
                           }
                         ],
-                        "id": 2213,
+                        "id": 2138,
                         "name": "IndexAccess",
                         "src": "775:18:10"
                       }
                     ],
-                    "id": 2214,
+                    "id": 2139,
                     "name": "Return",
                     "src": "768:25:10"
                   }
                 ],
-                "id": 2215,
+                "id": 2140,
                 "name": "Block",
                 "src": "762:36:10"
               }
             ],
-            "id": 2216,
+            "id": 2141,
             "name": "FunctionDefinition",
             "src": "666:132:10"
           },
@@ -1084,7 +1084,7 @@
               "isConstructor": false,
               "name": "set",
               "payable": false,
-              "scope": 2530,
+              "scope": 2455,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -1096,7 +1096,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2265,
+                      "scope": 2190,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct UIntSetLib.UIntSet storage pointer",
@@ -1108,15 +1108,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "UIntSet",
-                          "referencedDeclaration": 2167,
+                          "referencedDeclaration": 2092,
                           "type": "struct UIntSetLib.UIntSet storage pointer"
                         },
-                        "id": 2217,
+                        "id": 2142,
                         "name": "UserDefinedTypeName",
                         "src": "815:7:10"
                       }
                     ],
-                    "id": 2218,
+                    "id": 2143,
                     "name": "VariableDeclaration",
                     "src": "815:20:10"
                   },
@@ -1124,7 +1124,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "index",
-                      "scope": 2265,
+                      "scope": 2190,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1137,12 +1137,12 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2219,
+                        "id": 2144,
                         "name": "ElementaryTypeName",
                         "src": "837:4:10"
                       }
                     ],
-                    "id": 2220,
+                    "id": 2145,
                     "name": "VariableDeclaration",
                     "src": "837:10:10"
                   },
@@ -1150,7 +1150,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "value",
-                      "scope": 2265,
+                      "scope": 2190,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1163,17 +1163,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2221,
+                        "id": 2146,
                         "name": "ElementaryTypeName",
                         "src": "849:4:10"
                       }
                     ],
-                    "id": 2222,
+                    "id": 2147,
                     "name": "VariableDeclaration",
                     "src": "849:10:10"
                   }
                 ],
-                "id": 2223,
+                "id": 2148,
                 "name": "ParameterList",
                 "src": "814:46:10"
               },
@@ -1183,7 +1183,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2265,
+                      "scope": 2190,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -1196,17 +1196,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 2228,
+                        "id": 2153,
                         "name": "ElementaryTypeName",
                         "src": "899:4:10"
                       }
                     ],
-                    "id": 2229,
+                    "id": 2154,
                     "name": "VariableDeclaration",
                     "src": "899:4:10"
                   }
                 ],
-                "id": 2230,
+                "id": 2155,
                 "name": "ParameterList",
                 "src": "898:6:10"
               },
@@ -1218,11 +1218,11 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2183,
+                      "referencedDeclaration": 2108,
                       "type": "modifier (struct UIntSetLib.UIntSet storage pointer,uint256)",
                       "value": "inBounds"
                     },
-                    "id": 2224,
+                    "id": 2149,
                     "name": "Identifier",
                     "src": "868:8:10"
                   },
@@ -1232,11 +1232,11 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2218,
+                      "referencedDeclaration": 2143,
                       "type": "struct UIntSetLib.UIntSet storage pointer",
                       "value": "self"
                     },
-                    "id": 2225,
+                    "id": 2150,
                     "name": "Identifier",
                     "src": "877:4:10"
                   },
@@ -1246,16 +1246,16 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2220,
+                      "referencedDeclaration": 2145,
                       "type": "uint256",
                       "value": "index"
                     },
-                    "id": 2226,
+                    "id": 2151,
                     "name": "Identifier",
                     "src": "883:5:10"
                   }
                 ],
-                "id": 2227,
+                "id": 2152,
                 "name": "ModifierInvocation",
                 "src": "868:21:10"
               },
@@ -1284,7 +1284,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "exists",
-                              "referencedDeclaration": 2162,
+                              "referencedDeclaration": 2087,
                               "type": "mapping(uint256 => bool)"
                             },
                             "children": [
@@ -1294,16 +1294,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2218,
+                                  "referencedDeclaration": 2143,
                                   "type": "struct UIntSetLib.UIntSet storage pointer",
                                   "value": "self"
                                 },
-                                "id": 2231,
+                                "id": 2156,
                                 "name": "Identifier",
                                 "src": "915:4:10"
                               }
                             ],
-                            "id": 2232,
+                            "id": 2157,
                             "name": "MemberAccess",
                             "src": "915:11:10"
                           },
@@ -1313,22 +1313,22 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2222,
+                              "referencedDeclaration": 2147,
                               "type": "uint256",
                               "value": "value"
                             },
-                            "id": 2233,
+                            "id": 2158,
                             "name": "Identifier",
                             "src": "927:5:10"
                           }
                         ],
-                        "id": 2234,
+                        "id": 2159,
                         "name": "IndexAccess",
                         "src": "915:18:10"
                       },
                       {
                         "attributes": {
-                          "functionReturnParameters": 2230
+                          "functionReturnParameters": 2155
                         },
                         "children": [
                           {
@@ -1344,17 +1344,17 @@
                               "type": "bool",
                               "value": "false"
                             },
-                            "id": 2235,
+                            "id": 2160,
                             "name": "Literal",
                             "src": "948:5:10"
                           }
                         ],
-                        "id": 2236,
+                        "id": 2161,
                         "name": "Return",
                         "src": "941:12:10"
                       }
                     ],
-                    "id": 2237,
+                    "id": 2162,
                     "name": "IfStatement",
                     "src": "911:42:10"
                   },
@@ -1389,7 +1389,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "values",
-                                  "referencedDeclaration": 2158,
+                                  "referencedDeclaration": 2083,
                                   "type": "uint256[] storage ref"
                                 },
                                 "children": [
@@ -1399,16 +1399,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2218,
+                                      "referencedDeclaration": 2143,
                                       "type": "struct UIntSetLib.UIntSet storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2238,
+                                    "id": 2163,
                                     "name": "Identifier",
                                     "src": "959:4:10"
                                   }
                                 ],
-                                "id": 2241,
+                                "id": 2166,
                                 "name": "MemberAccess",
                                 "src": "959:11:10"
                               },
@@ -1418,16 +1418,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2220,
+                                  "referencedDeclaration": 2145,
                                   "type": "uint256",
                                   "value": "index"
                                 },
-                                "id": 2240,
+                                "id": 2165,
                                 "name": "Identifier",
                                 "src": "971:5:10"
                               }
                             ],
-                            "id": 2242,
+                            "id": 2167,
                             "name": "IndexAccess",
                             "src": "959:18:10"
                           },
@@ -1437,21 +1437,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2222,
+                              "referencedDeclaration": 2147,
                               "type": "uint256",
                               "value": "value"
                             },
-                            "id": 2243,
+                            "id": 2168,
                             "name": "Identifier",
                             "src": "980:5:10"
                           }
                         ],
-                        "id": 2244,
+                        "id": 2169,
                         "name": "Assignment",
                         "src": "959:26:10"
                       }
                     ],
-                    "id": 2245,
+                    "id": 2170,
                     "name": "ExpressionStatement",
                     "src": "959:26:10"
                   },
@@ -1486,7 +1486,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "exists",
-                                  "referencedDeclaration": 2162,
+                                  "referencedDeclaration": 2087,
                                   "type": "mapping(uint256 => bool)"
                                 },
                                 "children": [
@@ -1496,16 +1496,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2218,
+                                      "referencedDeclaration": 2143,
                                       "type": "struct UIntSetLib.UIntSet storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2246,
+                                    "id": 2171,
                                     "name": "Identifier",
                                     "src": "991:4:10"
                                   }
                                 ],
-                                "id": 2249,
+                                "id": 2174,
                                 "name": "MemberAccess",
                                 "src": "991:11:10"
                               },
@@ -1515,16 +1515,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2222,
+                                  "referencedDeclaration": 2147,
                                   "type": "uint256",
                                   "value": "value"
                                 },
-                                "id": 2248,
+                                "id": 2173,
                                 "name": "Identifier",
                                 "src": "1003:5:10"
                               }
                             ],
-                            "id": 2250,
+                            "id": 2175,
                             "name": "IndexAccess",
                             "src": "991:18:10"
                           },
@@ -1541,17 +1541,17 @@
                               "type": "bool",
                               "value": "true"
                             },
-                            "id": 2251,
+                            "id": 2176,
                             "name": "Literal",
                             "src": "1012:4:10"
                           }
                         ],
-                        "id": 2252,
+                        "id": 2177,
                         "name": "Assignment",
                         "src": "991:25:10"
                       }
                     ],
-                    "id": 2253,
+                    "id": 2178,
                     "name": "ExpressionStatement",
                     "src": "991:25:10"
                   },
@@ -1586,7 +1586,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "indices",
-                                  "referencedDeclaration": 2166,
+                                  "referencedDeclaration": 2091,
                                   "type": "mapping(uint256 => uint256)"
                                 },
                                 "children": [
@@ -1596,16 +1596,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2218,
+                                      "referencedDeclaration": 2143,
                                       "type": "struct UIntSetLib.UIntSet storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2254,
+                                    "id": 2179,
                                     "name": "Identifier",
                                     "src": "1022:4:10"
                                   }
                                 ],
-                                "id": 2257,
+                                "id": 2182,
                                 "name": "MemberAccess",
                                 "src": "1022:12:10"
                               },
@@ -1615,16 +1615,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2222,
+                                  "referencedDeclaration": 2147,
                                   "type": "uint256",
                                   "value": "value"
                                 },
-                                "id": 2256,
+                                "id": 2181,
                                 "name": "Identifier",
                                 "src": "1035:5:10"
                               }
                             ],
-                            "id": 2258,
+                            "id": 2183,
                             "name": "IndexAccess",
                             "src": "1022:19:10"
                           },
@@ -1634,27 +1634,27 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2220,
+                              "referencedDeclaration": 2145,
                               "type": "uint256",
                               "value": "index"
                             },
-                            "id": 2259,
+                            "id": 2184,
                             "name": "Identifier",
                             "src": "1044:5:10"
                           }
                         ],
-                        "id": 2260,
+                        "id": 2185,
                         "name": "Assignment",
                         "src": "1022:27:10"
                       }
                     ],
-                    "id": 2261,
+                    "id": 2186,
                     "name": "ExpressionStatement",
                     "src": "1022:27:10"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 2230
+                      "functionReturnParameters": 2155
                     },
                     "children": [
                       {
@@ -1670,22 +1670,22 @@
                           "type": "bool",
                           "value": "true"
                         },
-                        "id": 2262,
+                        "id": 2187,
                         "name": "Literal",
                         "src": "1062:4:10"
                       }
                     ],
-                    "id": 2263,
+                    "id": 2188,
                     "name": "Return",
                     "src": "1055:11:10"
                   }
                 ],
-                "id": 2264,
+                "id": 2189,
                 "name": "Block",
                 "src": "905:166:10"
               }
             ],
-            "id": 2265,
+            "id": 2190,
             "name": "FunctionDefinition",
             "src": "802:269:10"
           },
@@ -1699,7 +1699,7 @@
               ],
               "name": "add",
               "payable": false,
-              "scope": 2530,
+              "scope": 2455,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -1711,7 +1711,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2310,
+                      "scope": 2235,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct UIntSetLib.UIntSet storage pointer",
@@ -1723,15 +1723,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "UIntSet",
-                          "referencedDeclaration": 2167,
+                          "referencedDeclaration": 2092,
                           "type": "struct UIntSetLib.UIntSet storage pointer"
                         },
-                        "id": 2266,
+                        "id": 2191,
                         "name": "UserDefinedTypeName",
                         "src": "1088:7:10"
                       }
                     ],
-                    "id": 2267,
+                    "id": 2192,
                     "name": "VariableDeclaration",
                     "src": "1088:20:10"
                   },
@@ -1739,7 +1739,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "value",
-                      "scope": 2310,
+                      "scope": 2235,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1752,17 +1752,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2268,
+                        "id": 2193,
                         "name": "ElementaryTypeName",
                         "src": "1110:4:10"
                       }
                     ],
-                    "id": 2269,
+                    "id": 2194,
                     "name": "VariableDeclaration",
                     "src": "1110:10:10"
                   }
                 ],
-                "id": 2270,
+                "id": 2195,
                 "name": "ParameterList",
                 "src": "1087:34:10"
               },
@@ -1772,7 +1772,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2310,
+                      "scope": 2235,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -1785,17 +1785,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 2271,
+                        "id": 2196,
                         "name": "ElementaryTypeName",
                         "src": "1138:4:10"
                       }
                     ],
-                    "id": 2272,
+                    "id": 2197,
                     "name": "VariableDeclaration",
                     "src": "1138:4:10"
                   }
                 ],
-                "id": 2273,
+                "id": 2198,
                 "name": "ParameterList",
                 "src": "1137:6:10"
               },
@@ -1824,7 +1824,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "exists",
-                              "referencedDeclaration": 2162,
+                              "referencedDeclaration": 2087,
                               "type": "mapping(uint256 => bool)"
                             },
                             "children": [
@@ -1834,16 +1834,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2267,
+                                  "referencedDeclaration": 2192,
                                   "type": "struct UIntSetLib.UIntSet storage pointer",
                                   "value": "self"
                                 },
-                                "id": 2274,
+                                "id": 2199,
                                 "name": "Identifier",
                                 "src": "1154:4:10"
                               }
                             ],
-                            "id": 2275,
+                            "id": 2200,
                             "name": "MemberAccess",
                             "src": "1154:11:10"
                           },
@@ -1853,22 +1853,22 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2269,
+                              "referencedDeclaration": 2194,
                               "type": "uint256",
                               "value": "value"
                             },
-                            "id": 2276,
+                            "id": 2201,
                             "name": "Identifier",
                             "src": "1166:5:10"
                           }
                         ],
-                        "id": 2277,
+                        "id": 2202,
                         "name": "IndexAccess",
                         "src": "1154:18:10"
                       },
                       {
                         "attributes": {
-                          "functionReturnParameters": 2273
+                          "functionReturnParameters": 2198
                         },
                         "children": [
                           {
@@ -1884,17 +1884,17 @@
                               "type": "bool",
                               "value": "false"
                             },
-                            "id": 2278,
+                            "id": 2203,
                             "name": "Literal",
                             "src": "1187:5:10"
                           }
                         ],
-                        "id": 2279,
+                        "id": 2204,
                         "name": "Return",
                         "src": "1180:12:10"
                       }
                     ],
-                    "id": 2280,
+                    "id": 2205,
                     "name": "IfStatement",
                     "src": "1150:42:10"
                   },
@@ -1929,7 +1929,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "indices",
-                                  "referencedDeclaration": 2166,
+                                  "referencedDeclaration": 2091,
                                   "type": "mapping(uint256 => uint256)"
                                 },
                                 "children": [
@@ -1939,16 +1939,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2267,
+                                      "referencedDeclaration": 2192,
                                       "type": "struct UIntSetLib.UIntSet storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2281,
+                                    "id": 2206,
                                     "name": "Identifier",
                                     "src": "1198:4:10"
                                   }
                                 ],
-                                "id": 2284,
+                                "id": 2209,
                                 "name": "MemberAccess",
                                 "src": "1198:12:10"
                               },
@@ -1958,16 +1958,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2269,
+                                  "referencedDeclaration": 2194,
                                   "type": "uint256",
                                   "value": "value"
                                 },
-                                "id": 2283,
+                                "id": 2208,
                                 "name": "Identifier",
                                 "src": "1211:5:10"
                               }
                             ],
-                            "id": 2285,
+                            "id": 2210,
                             "name": "IndexAccess",
                             "src": "1198:19:10"
                           },
@@ -1991,7 +1991,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "values",
-                                  "referencedDeclaration": 2158,
+                                  "referencedDeclaration": 2083,
                                   "type": "uint256[] storage ref"
                                 },
                                 "children": [
@@ -2001,31 +2001,31 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2267,
+                                      "referencedDeclaration": 2192,
                                       "type": "struct UIntSetLib.UIntSet storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2286,
+                                    "id": 2211,
                                     "name": "Identifier",
                                     "src": "1220:4:10"
                                   }
                                 ],
-                                "id": 2287,
+                                "id": 2212,
                                 "name": "MemberAccess",
                                 "src": "1220:11:10"
                               }
                             ],
-                            "id": 2288,
+                            "id": 2213,
                             "name": "MemberAccess",
                             "src": "1220:18:10"
                           }
                         ],
-                        "id": 2289,
+                        "id": 2214,
                         "name": "Assignment",
                         "src": "1198:40:10"
                       }
                     ],
-                    "id": 2290,
+                    "id": 2215,
                     "name": "ExpressionStatement",
                     "src": "1198:40:10"
                   },
@@ -2071,7 +2071,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "values",
-                                  "referencedDeclaration": 2158,
+                                  "referencedDeclaration": 2083,
                                   "type": "uint256[] storage ref"
                                 },
                                 "children": [
@@ -2081,21 +2081,21 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2267,
+                                      "referencedDeclaration": 2192,
                                       "type": "struct UIntSetLib.UIntSet storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2291,
+                                    "id": 2216,
                                     "name": "Identifier",
                                     "src": "1244:4:10"
                                   }
                                 ],
-                                "id": 2294,
+                                "id": 2219,
                                 "name": "MemberAccess",
                                 "src": "1244:11:10"
                               }
                             ],
-                            "id": 2295,
+                            "id": 2220,
                             "name": "MemberAccess",
                             "src": "1244:16:10"
                           },
@@ -2105,21 +2105,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2269,
+                              "referencedDeclaration": 2194,
                               "type": "uint256",
                               "value": "value"
                             },
-                            "id": 2296,
+                            "id": 2221,
                             "name": "Identifier",
                             "src": "1261:5:10"
                           }
                         ],
-                        "id": 2297,
+                        "id": 2222,
                         "name": "FunctionCall",
                         "src": "1244:23:10"
                       }
                     ],
-                    "id": 2298,
+                    "id": 2223,
                     "name": "ExpressionStatement",
                     "src": "1244:23:10"
                   },
@@ -2154,7 +2154,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "exists",
-                                  "referencedDeclaration": 2162,
+                                  "referencedDeclaration": 2087,
                                   "type": "mapping(uint256 => bool)"
                                 },
                                 "children": [
@@ -2164,16 +2164,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2267,
+                                      "referencedDeclaration": 2192,
                                       "type": "struct UIntSetLib.UIntSet storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2299,
+                                    "id": 2224,
                                     "name": "Identifier",
                                     "src": "1273:4:10"
                                   }
                                 ],
-                                "id": 2302,
+                                "id": 2227,
                                 "name": "MemberAccess",
                                 "src": "1273:11:10"
                               },
@@ -2183,16 +2183,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2269,
+                                  "referencedDeclaration": 2194,
                                   "type": "uint256",
                                   "value": "value"
                                 },
-                                "id": 2301,
+                                "id": 2226,
                                 "name": "Identifier",
                                 "src": "1285:5:10"
                               }
                             ],
-                            "id": 2303,
+                            "id": 2228,
                             "name": "IndexAccess",
                             "src": "1273:18:10"
                           },
@@ -2209,23 +2209,23 @@
                               "type": "bool",
                               "value": "true"
                             },
-                            "id": 2304,
+                            "id": 2229,
                             "name": "Literal",
                             "src": "1294:4:10"
                           }
                         ],
-                        "id": 2305,
+                        "id": 2230,
                         "name": "Assignment",
                         "src": "1273:25:10"
                       }
                     ],
-                    "id": 2306,
+                    "id": 2231,
                     "name": "ExpressionStatement",
                     "src": "1273:25:10"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 2273
+                      "functionReturnParameters": 2198
                     },
                     "children": [
                       {
@@ -2241,22 +2241,22 @@
                           "type": "bool",
                           "value": "true"
                         },
-                        "id": 2307,
+                        "id": 2232,
                         "name": "Literal",
                         "src": "1311:4:10"
                       }
                     ],
-                    "id": 2308,
+                    "id": 2233,
                     "name": "Return",
                     "src": "1304:11:10"
                   }
                 ],
-                "id": 2309,
+                "id": 2234,
                 "name": "Block",
                 "src": "1144:176:10"
               }
             ],
-            "id": 2310,
+            "id": 2235,
             "name": "FunctionDefinition",
             "src": "1075:245:10"
           },
@@ -2270,7 +2270,7 @@
               ],
               "name": "remove",
               "payable": false,
-              "scope": 2530,
+              "scope": 2455,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -2282,7 +2282,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2342,
+                      "scope": 2267,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct UIntSetLib.UIntSet storage pointer",
@@ -2294,15 +2294,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "UIntSet",
-                          "referencedDeclaration": 2167,
+                          "referencedDeclaration": 2092,
                           "type": "struct UIntSetLib.UIntSet storage pointer"
                         },
-                        "id": 2311,
+                        "id": 2236,
                         "name": "UserDefinedTypeName",
                         "src": "1340:7:10"
                       }
                     ],
-                    "id": 2312,
+                    "id": 2237,
                     "name": "VariableDeclaration",
                     "src": "1340:20:10"
                   },
@@ -2310,7 +2310,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "value",
-                      "scope": 2342,
+                      "scope": 2267,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2323,17 +2323,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2313,
+                        "id": 2238,
                         "name": "ElementaryTypeName",
                         "src": "1362:4:10"
                       }
                     ],
-                    "id": 2314,
+                    "id": 2239,
                     "name": "VariableDeclaration",
                     "src": "1362:10:10"
                   }
                 ],
-                "id": 2315,
+                "id": 2240,
                 "name": "ParameterList",
                 "src": "1339:34:10"
               },
@@ -2343,7 +2343,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2342,
+                      "scope": 2267,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -2356,17 +2356,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 2316,
+                        "id": 2241,
                         "name": "ElementaryTypeName",
                         "src": "1390:4:10"
                       }
                     ],
-                    "id": 2317,
+                    "id": 2242,
                     "name": "VariableDeclaration",
                     "src": "1390:4:10"
                   }
                 ],
-                "id": 2318,
+                "id": 2243,
                 "name": "ParameterList",
                 "src": "1389:6:10"
               },
@@ -2407,7 +2407,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "exists",
-                                  "referencedDeclaration": 2162,
+                                  "referencedDeclaration": 2087,
                                   "type": "mapping(uint256 => bool)"
                                 },
                                 "children": [
@@ -2417,16 +2417,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2312,
+                                      "referencedDeclaration": 2237,
                                       "type": "struct UIntSetLib.UIntSet storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2319,
+                                    "id": 2244,
                                     "name": "Identifier",
                                     "src": "1407:4:10"
                                   }
                                 ],
-                                "id": 2320,
+                                "id": 2245,
                                 "name": "MemberAccess",
                                 "src": "1407:11:10"
                               },
@@ -2436,27 +2436,27 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2314,
+                                  "referencedDeclaration": 2239,
                                   "type": "uint256",
                                   "value": "value"
                                 },
-                                "id": 2321,
+                                "id": 2246,
                                 "name": "Identifier",
                                 "src": "1419:5:10"
                               }
                             ],
-                            "id": 2322,
+                            "id": 2247,
                             "name": "IndexAccess",
                             "src": "1407:18:10"
                           }
                         ],
-                        "id": 2323,
+                        "id": 2248,
                         "name": "UnaryOperation",
                         "src": "1406:19:10"
                       },
                       {
                         "attributes": {
-                          "functionReturnParameters": 2318
+                          "functionReturnParameters": 2243
                         },
                         "children": [
                           {
@@ -2472,24 +2472,24 @@
                               "type": "bool",
                               "value": "false"
                             },
-                            "id": 2324,
+                            "id": 2249,
                             "name": "Literal",
                             "src": "1440:5:10"
                           }
                         ],
-                        "id": 2325,
+                        "id": 2250,
                         "name": "Return",
                         "src": "1433:12:10"
                       }
                     ],
-                    "id": 2326,
+                    "id": 2251,
                     "name": "IfStatement",
                     "src": "1402:43:10"
                   },
                   {
                     "attributes": {
                       "assignments": [
-                        2328
+                        2253
                       ]
                     },
                     "children": [
@@ -2497,7 +2497,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "index",
-                          "scope": 2342,
+                          "scope": 2267,
                           "stateVariable": false,
                           "storageLocation": "default",
                           "type": "uint256",
@@ -2510,12 +2510,12 @@
                               "name": "uint",
                               "type": "uint256"
                             },
-                            "id": 2327,
+                            "id": 2252,
                             "name": "ElementaryTypeName",
                             "src": "1451:4:10"
                           }
                         ],
-                        "id": 2328,
+                        "id": 2253,
                         "name": "VariableDeclaration",
                         "src": "1451:10:10"
                       },
@@ -2538,7 +2538,7 @@
                             "attributes": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_struct$_UIntSet_$2167_storage_ptr",
+                                  "typeIdentifier": "t_struct$_UIntSet_$2092_storage_ptr",
                                   "typeString": "struct UIntSetLib.UIntSet storage pointer"
                                 },
                                 {
@@ -2549,11 +2549,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2502,
+                              "referencedDeclaration": 2427,
                               "type": "function (struct UIntSetLib.UIntSet storage pointer,uint256) view returns (uint256)",
                               "value": "indexOf"
                             },
-                            "id": 2329,
+                            "id": 2254,
                             "name": "Identifier",
                             "src": "1464:7:10"
                           },
@@ -2563,11 +2563,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2312,
+                              "referencedDeclaration": 2237,
                               "type": "struct UIntSetLib.UIntSet storage pointer",
                               "value": "self"
                             },
-                            "id": 2330,
+                            "id": 2255,
                             "name": "Identifier",
                             "src": "1472:4:10"
                           },
@@ -2577,21 +2577,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2314,
+                              "referencedDeclaration": 2239,
                               "type": "uint256",
                               "value": "value"
                             },
-                            "id": 2331,
+                            "id": 2256,
                             "name": "Identifier",
                             "src": "1478:5:10"
                           }
                         ],
-                        "id": 2332,
+                        "id": 2257,
                         "name": "FunctionCall",
                         "src": "1464:20:10"
                       }
                     ],
-                    "id": 2333,
+                    "id": 2258,
                     "name": "VariableDeclarationStatement",
                     "src": "1451:33:10"
                   },
@@ -2616,7 +2616,7 @@
                             "attributes": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_struct$_UIntSet_$2167_storage_ptr",
+                                  "typeIdentifier": "t_struct$_UIntSet_$2092_storage_ptr",
                                   "typeString": "struct UIntSetLib.UIntSet storage pointer"
                                 },
                                 {
@@ -2627,11 +2627,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2422,
+                              "referencedDeclaration": 2347,
                               "type": "function (struct UIntSetLib.UIntSet storage pointer,uint256) returns (uint256)",
                               "value": "pop"
                             },
-                            "id": 2334,
+                            "id": 2259,
                             "name": "Identifier",
                             "src": "1490:3:10"
                           },
@@ -2641,11 +2641,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2312,
+                              "referencedDeclaration": 2237,
                               "type": "struct UIntSetLib.UIntSet storage pointer",
                               "value": "self"
                             },
-                            "id": 2335,
+                            "id": 2260,
                             "name": "Identifier",
                             "src": "1494:4:10"
                           },
@@ -2655,27 +2655,27 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2328,
+                              "referencedDeclaration": 2253,
                               "type": "uint256",
                               "value": "index"
                             },
-                            "id": 2336,
+                            "id": 2261,
                             "name": "Identifier",
                             "src": "1500:5:10"
                           }
                         ],
-                        "id": 2337,
+                        "id": 2262,
                         "name": "FunctionCall",
                         "src": "1490:16:10"
                       }
                     ],
-                    "id": 2338,
+                    "id": 2263,
                     "name": "ExpressionStatement",
                     "src": "1490:16:10"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 2318
+                      "functionReturnParameters": 2243
                     },
                     "children": [
                       {
@@ -2691,22 +2691,22 @@
                           "type": "bool",
                           "value": "true"
                         },
-                        "id": 2339,
+                        "id": 2264,
                         "name": "Literal",
                         "src": "1519:4:10"
                       }
                     ],
-                    "id": 2340,
+                    "id": 2265,
                     "name": "Return",
                     "src": "1512:11:10"
                   }
                 ],
-                "id": 2341,
+                "id": 2266,
                 "name": "Block",
                 "src": "1396:132:10"
               }
             ],
-            "id": 2342,
+            "id": 2267,
             "name": "FunctionDefinition",
             "src": "1324:204:10"
           },
@@ -2717,7 +2717,7 @@
               "isConstructor": false,
               "name": "pop",
               "payable": false,
-              "scope": 2530,
+              "scope": 2455,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -2729,7 +2729,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2422,
+                      "scope": 2347,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct UIntSetLib.UIntSet storage pointer",
@@ -2741,15 +2741,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "UIntSet",
-                          "referencedDeclaration": 2167,
+                          "referencedDeclaration": 2092,
                           "type": "struct UIntSetLib.UIntSet storage pointer"
                         },
-                        "id": 2343,
+                        "id": 2268,
                         "name": "UserDefinedTypeName",
                         "src": "1545:7:10"
                       }
                     ],
-                    "id": 2344,
+                    "id": 2269,
                     "name": "VariableDeclaration",
                     "src": "1545:20:10"
                   },
@@ -2757,7 +2757,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "index",
-                      "scope": 2422,
+                      "scope": 2347,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2770,17 +2770,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2345,
+                        "id": 2270,
                         "name": "ElementaryTypeName",
                         "src": "1567:4:10"
                       }
                     ],
-                    "id": 2346,
+                    "id": 2271,
                     "name": "VariableDeclaration",
                     "src": "1567:10:10"
                   }
                 ],
-                "id": 2347,
+                "id": 2272,
                 "name": "ParameterList",
                 "src": "1544:34:10"
               },
@@ -2790,7 +2790,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2422,
+                      "scope": 2347,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2803,17 +2803,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2352,
+                        "id": 2277,
                         "name": "ElementaryTypeName",
                         "src": "1617:4:10"
                       }
                     ],
-                    "id": 2353,
+                    "id": 2278,
                     "name": "VariableDeclaration",
                     "src": "1617:4:10"
                   }
                 ],
-                "id": 2354,
+                "id": 2279,
                 "name": "ParameterList",
                 "src": "1616:6:10"
               },
@@ -2825,11 +2825,11 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2183,
+                      "referencedDeclaration": 2108,
                       "type": "modifier (struct UIntSetLib.UIntSet storage pointer,uint256)",
                       "value": "inBounds"
                     },
-                    "id": 2348,
+                    "id": 2273,
                     "name": "Identifier",
                     "src": "1586:8:10"
                   },
@@ -2839,11 +2839,11 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2344,
+                      "referencedDeclaration": 2269,
                       "type": "struct UIntSetLib.UIntSet storage pointer",
                       "value": "self"
                     },
-                    "id": 2349,
+                    "id": 2274,
                     "name": "Identifier",
                     "src": "1595:4:10"
                   },
@@ -2853,16 +2853,16 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2346,
+                      "referencedDeclaration": 2271,
                       "type": "uint256",
                       "value": "index"
                     },
-                    "id": 2350,
+                    "id": 2275,
                     "name": "Identifier",
                     "src": "1601:5:10"
                   }
                 ],
-                "id": 2351,
+                "id": 2276,
                 "name": "ModifierInvocation",
                 "src": "1586:21:10"
               },
@@ -2871,7 +2871,7 @@
                   {
                     "attributes": {
                       "assignments": [
-                        2356
+                        2281
                       ]
                     },
                     "children": [
@@ -2879,7 +2879,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "value",
-                          "scope": 2422,
+                          "scope": 2347,
                           "stateVariable": false,
                           "storageLocation": "default",
                           "type": "uint256",
@@ -2892,12 +2892,12 @@
                               "name": "uint",
                               "type": "uint256"
                             },
-                            "id": 2355,
+                            "id": 2280,
                             "name": "ElementaryTypeName",
                             "src": "1629:4:10"
                           }
                         ],
-                        "id": 2356,
+                        "id": 2281,
                         "name": "VariableDeclaration",
                         "src": "1629:10:10"
                       },
@@ -2920,7 +2920,7 @@
                             "attributes": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_struct$_UIntSet_$2167_storage_ptr",
+                                  "typeIdentifier": "t_struct$_UIntSet_$2092_storage_ptr",
                                   "typeString": "struct UIntSetLib.UIntSet storage pointer"
                                 },
                                 {
@@ -2931,11 +2931,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2216,
+                              "referencedDeclaration": 2141,
                               "type": "function (struct UIntSetLib.UIntSet storage pointer,uint256) view returns (uint256)",
                               "value": "get"
                             },
-                            "id": 2357,
+                            "id": 2282,
                             "name": "Identifier",
                             "src": "1642:3:10"
                           },
@@ -2945,11 +2945,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2344,
+                              "referencedDeclaration": 2269,
                               "type": "struct UIntSetLib.UIntSet storage pointer",
                               "value": "self"
                             },
-                            "id": 2358,
+                            "id": 2283,
                             "name": "Identifier",
                             "src": "1646:4:10"
                           },
@@ -2959,21 +2959,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2346,
+                              "referencedDeclaration": 2271,
                               "type": "uint256",
                               "value": "index"
                             },
-                            "id": 2359,
+                            "id": 2284,
                             "name": "Identifier",
                             "src": "1652:5:10"
                           }
                         ],
-                        "id": 2360,
+                        "id": 2285,
                         "name": "FunctionCall",
                         "src": "1642:16:10"
                       }
                     ],
-                    "id": 2361,
+                    "id": 2286,
                     "name": "VariableDeclarationStatement",
                     "src": "1629:29:10"
                   },
@@ -3003,11 +3003,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2346,
+                              "referencedDeclaration": 2271,
                               "type": "uint256",
                               "value": "index"
                             },
-                            "id": 2362,
+                            "id": 2287,
                             "name": "Identifier",
                             "src": "1669:5:10"
                           },
@@ -3046,7 +3046,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "values",
-                                      "referencedDeclaration": 2158,
+                                      "referencedDeclaration": 2083,
                                       "type": "uint256[] storage ref"
                                     },
                                     "children": [
@@ -3056,21 +3056,21 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 2344,
+                                          "referencedDeclaration": 2269,
                                           "type": "struct UIntSetLib.UIntSet storage pointer",
                                           "value": "self"
                                         },
-                                        "id": 2363,
+                                        "id": 2288,
                                         "name": "Identifier",
                                         "src": "1678:4:10"
                                       }
                                     ],
-                                    "id": 2364,
+                                    "id": 2289,
                                     "name": "MemberAccess",
                                     "src": "1678:11:10"
                                   }
                                 ],
-                                "id": 2365,
+                                "id": 2290,
                                 "name": "MemberAccess",
                                 "src": "1678:18:10"
                               },
@@ -3087,17 +3087,17 @@
                                   "type": "int_const 1",
                                   "value": "1"
                                 },
-                                "id": 2366,
+                                "id": 2291,
                                 "name": "Literal",
                                 "src": "1699:1:10"
                               }
                             ],
-                            "id": 2367,
+                            "id": 2292,
                             "name": "BinaryOperation",
                             "src": "1678:22:10"
                           }
                         ],
-                        "id": 2368,
+                        "id": 2293,
                         "name": "BinaryOperation",
                         "src": "1669:31:10"
                       },
@@ -3106,7 +3106,7 @@
                           {
                             "attributes": {
                               "assignments": [
-                                2370
+                                2295
                               ]
                             },
                             "children": [
@@ -3114,7 +3114,7 @@
                                 "attributes": {
                                   "constant": false,
                                   "name": "lastValue",
-                                  "scope": 2422,
+                                  "scope": 2347,
                                   "stateVariable": false,
                                   "storageLocation": "default",
                                   "type": "uint256",
@@ -3127,12 +3127,12 @@
                                       "name": "uint",
                                       "type": "uint256"
                                     },
-                                    "id": 2369,
+                                    "id": 2294,
                                     "name": "ElementaryTypeName",
                                     "src": "1710:4:10"
                                   }
                                 ],
-                                "id": 2370,
+                                "id": 2295,
                                 "name": "VariableDeclaration",
                                 "src": "1710:14:10"
                               },
@@ -3155,18 +3155,18 @@
                                     "attributes": {
                                       "argumentTypes": [
                                         {
-                                          "typeIdentifier": "t_struct$_UIntSet_$2167_storage_ptr",
+                                          "typeIdentifier": "t_struct$_UIntSet_$2092_storage_ptr",
                                           "typeString": "struct UIntSetLib.UIntSet storage pointer"
                                         }
                                       ],
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2480,
+                                      "referencedDeclaration": 2405,
                                       "type": "function (struct UIntSetLib.UIntSet storage pointer) view returns (uint256)",
                                       "value": "last"
                                     },
-                                    "id": 2371,
+                                    "id": 2296,
                                     "name": "Identifier",
                                     "src": "1727:4:10"
                                   },
@@ -3176,21 +3176,21 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2344,
+                                      "referencedDeclaration": 2269,
                                       "type": "struct UIntSetLib.UIntSet storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2372,
+                                    "id": 2297,
                                     "name": "Identifier",
                                     "src": "1732:4:10"
                                   }
                                 ],
-                                "id": 2373,
+                                "id": 2298,
                                 "name": "FunctionCall",
                                 "src": "1727:10:10"
                               }
                             ],
-                            "id": 2374,
+                            "id": 2299,
                             "name": "VariableDeclarationStatement",
                             "src": "1710:27:10"
                           },
@@ -3225,7 +3225,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "exists",
-                                          "referencedDeclaration": 2162,
+                                          "referencedDeclaration": 2087,
                                           "type": "mapping(uint256 => bool)"
                                         },
                                         "children": [
@@ -3235,16 +3235,16 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 2344,
+                                              "referencedDeclaration": 2269,
                                               "type": "struct UIntSetLib.UIntSet storage pointer",
                                               "value": "self"
                                             },
-                                            "id": 2375,
+                                            "id": 2300,
                                             "name": "Identifier",
                                             "src": "1745:4:10"
                                           }
                                         ],
-                                        "id": 2378,
+                                        "id": 2303,
                                         "name": "MemberAccess",
                                         "src": "1745:11:10"
                                       },
@@ -3254,16 +3254,16 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 2370,
+                                          "referencedDeclaration": 2295,
                                           "type": "uint256",
                                           "value": "lastValue"
                                         },
-                                        "id": 2377,
+                                        "id": 2302,
                                         "name": "Identifier",
                                         "src": "1757:9:10"
                                       }
                                     ],
-                                    "id": 2379,
+                                    "id": 2304,
                                     "name": "IndexAccess",
                                     "src": "1745:22:10"
                                   },
@@ -3280,17 +3280,17 @@
                                       "type": "bool",
                                       "value": "false"
                                     },
-                                    "id": 2380,
+                                    "id": 2305,
                                     "name": "Literal",
                                     "src": "1770:5:10"
                                   }
                                 ],
-                                "id": 2381,
+                                "id": 2306,
                                 "name": "Assignment",
                                 "src": "1745:30:10"
                               }
                             ],
-                            "id": 2382,
+                            "id": 2307,
                             "name": "ExpressionStatement",
                             "src": "1745:30:10"
                           },
@@ -3315,7 +3315,7 @@
                                     "attributes": {
                                       "argumentTypes": [
                                         {
-                                          "typeIdentifier": "t_struct$_UIntSet_$2167_storage_ptr",
+                                          "typeIdentifier": "t_struct$_UIntSet_$2092_storage_ptr",
                                           "typeString": "struct UIntSetLib.UIntSet storage pointer"
                                         },
                                         {
@@ -3330,11 +3330,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2265,
+                                      "referencedDeclaration": 2190,
                                       "type": "function (struct UIntSetLib.UIntSet storage pointer,uint256,uint256) returns (bool)",
                                       "value": "set"
                                     },
-                                    "id": 2383,
+                                    "id": 2308,
                                     "name": "Identifier",
                                     "src": "1783:3:10"
                                   },
@@ -3344,11 +3344,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2344,
+                                      "referencedDeclaration": 2269,
                                       "type": "struct UIntSetLib.UIntSet storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2384,
+                                    "id": 2309,
                                     "name": "Identifier",
                                     "src": "1787:4:10"
                                   },
@@ -3358,11 +3358,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2346,
+                                      "referencedDeclaration": 2271,
                                       "type": "uint256",
                                       "value": "index"
                                     },
-                                    "id": 2385,
+                                    "id": 2310,
                                     "name": "Identifier",
                                     "src": "1793:5:10"
                                   },
@@ -3372,21 +3372,21 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2370,
+                                      "referencedDeclaration": 2295,
                                       "type": "uint256",
                                       "value": "lastValue"
                                     },
-                                    "id": 2386,
+                                    "id": 2311,
                                     "name": "Identifier",
                                     "src": "1800:9:10"
                                   }
                                 ],
-                                "id": 2387,
+                                "id": 2312,
                                 "name": "FunctionCall",
                                 "src": "1783:27:10"
                               }
                             ],
-                            "id": 2388,
+                            "id": 2313,
                             "name": "ExpressionStatement",
                             "src": "1783:27:10"
                           },
@@ -3421,7 +3421,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "indices",
-                                          "referencedDeclaration": 2166,
+                                          "referencedDeclaration": 2091,
                                           "type": "mapping(uint256 => uint256)"
                                         },
                                         "children": [
@@ -3431,16 +3431,16 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 2344,
+                                              "referencedDeclaration": 2269,
                                               "type": "struct UIntSetLib.UIntSet storage pointer",
                                               "value": "self"
                                             },
-                                            "id": 2389,
+                                            "id": 2314,
                                             "name": "Identifier",
                                             "src": "1818:4:10"
                                           }
                                         ],
-                                        "id": 2392,
+                                        "id": 2317,
                                         "name": "MemberAccess",
                                         "src": "1818:12:10"
                                       },
@@ -3450,16 +3450,16 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 2370,
+                                          "referencedDeclaration": 2295,
                                           "type": "uint256",
                                           "value": "lastValue"
                                         },
-                                        "id": 2391,
+                                        "id": 2316,
                                         "name": "Identifier",
                                         "src": "1831:9:10"
                                       }
                                     ],
-                                    "id": 2393,
+                                    "id": 2318,
                                     "name": "IndexAccess",
                                     "src": "1818:23:10"
                                   },
@@ -3469,31 +3469,31 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2346,
+                                      "referencedDeclaration": 2271,
                                       "type": "uint256",
                                       "value": "index"
                                     },
-                                    "id": 2394,
+                                    "id": 2319,
                                     "name": "Identifier",
                                     "src": "1844:5:10"
                                   }
                                 ],
-                                "id": 2395,
+                                "id": 2320,
                                 "name": "Assignment",
                                 "src": "1818:31:10"
                               }
                             ],
-                            "id": 2396,
+                            "id": 2321,
                             "name": "ExpressionStatement",
                             "src": "1818:31:10"
                           }
                         ],
-                        "id": 2397,
+                        "id": 2322,
                         "name": "Block",
                         "src": "1702:154:10"
                       }
                     ],
-                    "id": 2398,
+                    "id": 2323,
                     "name": "IfStatement",
                     "src": "1665:191:10"
                   },
@@ -3530,7 +3530,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "values",
-                                  "referencedDeclaration": 2158,
+                                  "referencedDeclaration": 2083,
                                   "type": "uint256[] storage ref"
                                 },
                                 "children": [
@@ -3540,21 +3540,21 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2344,
+                                      "referencedDeclaration": 2269,
                                       "type": "struct UIntSetLib.UIntSet storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2399,
+                                    "id": 2324,
                                     "name": "Identifier",
                                     "src": "1861:4:10"
                                   }
                                 ],
-                                "id": 2402,
+                                "id": 2327,
                                 "name": "MemberAccess",
                                 "src": "1861:11:10"
                               }
                             ],
-                            "id": 2403,
+                            "id": 2328,
                             "name": "MemberAccess",
                             "src": "1861:18:10"
                           },
@@ -3571,17 +3571,17 @@
                               "type": "int_const 1",
                               "value": "1"
                             },
-                            "id": 2404,
+                            "id": 2329,
                             "name": "Literal",
                             "src": "1883:1:10"
                           }
                         ],
-                        "id": 2405,
+                        "id": 2330,
                         "name": "Assignment",
                         "src": "1861:23:10"
                       }
                     ],
-                    "id": 2406,
+                    "id": 2331,
                     "name": "ExpressionStatement",
                     "src": "1861:23:10"
                   },
@@ -3617,7 +3617,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "indices",
-                                  "referencedDeclaration": 2166,
+                                  "referencedDeclaration": 2091,
                                   "type": "mapping(uint256 => uint256)"
                                 },
                                 "children": [
@@ -3627,16 +3627,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2344,
+                                      "referencedDeclaration": 2269,
                                       "type": "struct UIntSetLib.UIntSet storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2407,
+                                    "id": 2332,
                                     "name": "Identifier",
                                     "src": "1898:4:10"
                                   }
                                 ],
-                                "id": 2408,
+                                "id": 2333,
                                 "name": "MemberAccess",
                                 "src": "1898:12:10"
                               },
@@ -3646,26 +3646,26 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2356,
+                                  "referencedDeclaration": 2281,
                                   "type": "uint256",
                                   "value": "value"
                                 },
-                                "id": 2409,
+                                "id": 2334,
                                 "name": "Identifier",
                                 "src": "1911:5:10"
                               }
                             ],
-                            "id": 2410,
+                            "id": 2335,
                             "name": "IndexAccess",
                             "src": "1898:19:10"
                           }
                         ],
-                        "id": 2411,
+                        "id": 2336,
                         "name": "UnaryOperation",
                         "src": "1891:26:10"
                       }
                     ],
-                    "id": 2412,
+                    "id": 2337,
                     "name": "ExpressionStatement",
                     "src": "1891:26:10"
                   },
@@ -3701,7 +3701,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "exists",
-                                  "referencedDeclaration": 2162,
+                                  "referencedDeclaration": 2087,
                                   "type": "mapping(uint256 => bool)"
                                 },
                                 "children": [
@@ -3711,16 +3711,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2344,
+                                      "referencedDeclaration": 2269,
                                       "type": "struct UIntSetLib.UIntSet storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2413,
+                                    "id": 2338,
                                     "name": "Identifier",
                                     "src": "1930:4:10"
                                   }
                                 ],
-                                "id": 2414,
+                                "id": 2339,
                                 "name": "MemberAccess",
                                 "src": "1930:11:10"
                               },
@@ -3730,32 +3730,32 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2356,
+                                  "referencedDeclaration": 2281,
                                   "type": "uint256",
                                   "value": "value"
                                 },
-                                "id": 2415,
+                                "id": 2340,
                                 "name": "Identifier",
                                 "src": "1942:5:10"
                               }
                             ],
-                            "id": 2416,
+                            "id": 2341,
                             "name": "IndexAccess",
                             "src": "1930:18:10"
                           }
                         ],
-                        "id": 2417,
+                        "id": 2342,
                         "name": "UnaryOperation",
                         "src": "1923:25:10"
                       }
                     ],
-                    "id": 2418,
+                    "id": 2343,
                     "name": "ExpressionStatement",
                     "src": "1923:25:10"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 2354
+                      "functionReturnParameters": 2279
                     },
                     "children": [
                       {
@@ -3764,26 +3764,26 @@
                           "overloadedDeclarations": [
                             null
                           ],
-                          "referencedDeclaration": 2356,
+                          "referencedDeclaration": 2281,
                           "type": "uint256",
                           "value": "value"
                         },
-                        "id": 2419,
+                        "id": 2344,
                         "name": "Identifier",
                         "src": "1962:5:10"
                       }
                     ],
-                    "id": 2420,
+                    "id": 2345,
                     "name": "Return",
                     "src": "1955:12:10"
                   }
                 ],
-                "id": 2421,
+                "id": 2346,
                 "name": "Block",
                 "src": "1623:349:10"
               }
             ],
-            "id": 2422,
+            "id": 2347,
             "name": "FunctionDefinition",
             "src": "1532:440:10"
           },
@@ -3797,7 +3797,7 @@
               ],
               "name": "replace",
               "payable": false,
-              "scope": 2530,
+              "scope": 2455,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -3809,7 +3809,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2444,
+                      "scope": 2369,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct UIntSetLib.UIntSet storage pointer",
@@ -3821,15 +3821,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "UIntSet",
-                          "referencedDeclaration": 2167,
+                          "referencedDeclaration": 2092,
                           "type": "struct UIntSetLib.UIntSet storage pointer"
                         },
-                        "id": 2423,
+                        "id": 2348,
                         "name": "UserDefinedTypeName",
                         "src": "1993:7:10"
                       }
                     ],
-                    "id": 2424,
+                    "id": 2349,
                     "name": "VariableDeclaration",
                     "src": "1993:20:10"
                   },
@@ -3837,7 +3837,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "old",
-                      "scope": 2444,
+                      "scope": 2369,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -3850,12 +3850,12 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2425,
+                        "id": 2350,
                         "name": "ElementaryTypeName",
                         "src": "2015:4:10"
                       }
                     ],
-                    "id": 2426,
+                    "id": 2351,
                     "name": "VariableDeclaration",
                     "src": "2015:8:10"
                   },
@@ -3863,7 +3863,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "nu",
-                      "scope": 2444,
+                      "scope": 2369,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -3876,17 +3876,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2427,
+                        "id": 2352,
                         "name": "ElementaryTypeName",
                         "src": "2025:4:10"
                       }
                     ],
-                    "id": 2428,
+                    "id": 2353,
                     "name": "VariableDeclaration",
                     "src": "2025:7:10"
                   }
                 ],
-                "id": 2429,
+                "id": 2354,
                 "name": "ParameterList",
                 "src": "1992:41:10"
               },
@@ -3896,7 +3896,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2444,
+                      "scope": 2369,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -3909,17 +3909,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 2430,
+                        "id": 2355,
                         "name": "ElementaryTypeName",
                         "src": "2050:4:10"
                       }
                     ],
-                    "id": 2431,
+                    "id": 2356,
                     "name": "VariableDeclaration",
                     "src": "2050:4:10"
                   }
                 ],
-                "id": 2432,
+                "id": 2357,
                 "name": "ParameterList",
                 "src": "2049:6:10"
               },
@@ -3927,7 +3927,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2432
+                      "functionReturnParameters": 2357
                     },
                     "children": [
                       {
@@ -3964,7 +3964,7 @@
                                 "attributes": {
                                   "argumentTypes": [
                                     {
-                                      "typeIdentifier": "t_struct$_UIntSet_$2167_storage_ptr",
+                                      "typeIdentifier": "t_struct$_UIntSet_$2092_storage_ptr",
                                       "typeString": "struct UIntSetLib.UIntSet storage pointer"
                                     },
                                     {
@@ -3975,11 +3975,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2342,
+                                  "referencedDeclaration": 2267,
                                   "type": "function (struct UIntSetLib.UIntSet storage pointer,uint256) returns (bool)",
                                   "value": "remove"
                                 },
-                                "id": 2433,
+                                "id": 2358,
                                 "name": "Identifier",
                                 "src": "2069:6:10"
                               },
@@ -3989,11 +3989,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2424,
+                                  "referencedDeclaration": 2349,
                                   "type": "struct UIntSetLib.UIntSet storage pointer",
                                   "value": "self"
                                 },
-                                "id": 2434,
+                                "id": 2359,
                                 "name": "Identifier",
                                 "src": "2076:4:10"
                               },
@@ -4003,16 +4003,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2426,
+                                  "referencedDeclaration": 2351,
                                   "type": "uint256",
                                   "value": "old"
                                 },
-                                "id": 2435,
+                                "id": 2360,
                                 "name": "Identifier",
                                 "src": "2082:3:10"
                               }
                             ],
-                            "id": 2436,
+                            "id": 2361,
                             "name": "FunctionCall",
                             "src": "2069:17:10"
                           },
@@ -4035,7 +4035,7 @@
                                 "attributes": {
                                   "argumentTypes": [
                                     {
-                                      "typeIdentifier": "t_struct$_UIntSet_$2167_storage_ptr",
+                                      "typeIdentifier": "t_struct$_UIntSet_$2092_storage_ptr",
                                       "typeString": "struct UIntSetLib.UIntSet storage pointer"
                                     },
                                     {
@@ -4046,11 +4046,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2310,
+                                  "referencedDeclaration": 2235,
                                   "type": "function (struct UIntSetLib.UIntSet storage pointer,uint256) returns (bool)",
                                   "value": "add"
                                 },
-                                "id": 2437,
+                                "id": 2362,
                                 "name": "Identifier",
                                 "src": "2090:3:10"
                               },
@@ -4060,11 +4060,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2424,
+                                  "referencedDeclaration": 2349,
                                   "type": "struct UIntSetLib.UIntSet storage pointer",
                                   "value": "self"
                                 },
-                                "id": 2438,
+                                "id": 2363,
                                 "name": "Identifier",
                                 "src": "2094:4:10"
                               },
@@ -4074,36 +4074,36 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2428,
+                                  "referencedDeclaration": 2353,
                                   "type": "uint256",
                                   "value": "nu"
                                 },
-                                "id": 2439,
+                                "id": 2364,
                                 "name": "Identifier",
                                 "src": "2100:2:10"
                               }
                             ],
-                            "id": 2440,
+                            "id": 2365,
                             "name": "FunctionCall",
                             "src": "2090:13:10"
                           }
                         ],
-                        "id": 2441,
+                        "id": 2366,
                         "name": "BinaryOperation",
                         "src": "2069:34:10"
                       }
                     ],
-                    "id": 2442,
+                    "id": 2367,
                     "name": "Return",
                     "src": "2062:41:10"
                   }
                 ],
-                "id": 2443,
+                "id": 2368,
                 "name": "Block",
                 "src": "2056:52:10"
               }
             ],
-            "id": 2444,
+            "id": 2369,
             "name": "FunctionDefinition",
             "src": "1976:132:10"
           },
@@ -4114,7 +4114,7 @@
               "isConstructor": false,
               "name": "first",
               "payable": false,
-              "scope": 2530,
+              "scope": 2455,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -4126,7 +4126,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2460,
+                      "scope": 2385,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct UIntSetLib.UIntSet storage pointer",
@@ -4138,20 +4138,20 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "UIntSet",
-                          "referencedDeclaration": 2167,
+                          "referencedDeclaration": 2092,
                           "type": "struct UIntSetLib.UIntSet storage pointer"
                         },
-                        "id": 2445,
+                        "id": 2370,
                         "name": "UserDefinedTypeName",
                         "src": "2127:7:10"
                       }
                     ],
-                    "id": 2446,
+                    "id": 2371,
                     "name": "VariableDeclaration",
                     "src": "2127:20:10"
                   }
                 ],
-                "id": 2447,
+                "id": 2372,
                 "name": "ParameterList",
                 "src": "2126:22:10"
               },
@@ -4161,7 +4161,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2460,
+                      "scope": 2385,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -4174,17 +4174,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2451,
+                        "id": 2376,
                         "name": "ElementaryTypeName",
                         "src": "2185:4:10"
                       }
                     ],
-                    "id": 2452,
+                    "id": 2377,
                     "name": "VariableDeclaration",
                     "src": "2185:4:10"
                   }
                 ],
-                "id": 2453,
+                "id": 2378,
                 "name": "ParameterList",
                 "src": "2184:6:10"
               },
@@ -4196,11 +4196,11 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2197,
+                      "referencedDeclaration": 2122,
                       "type": "modifier (struct UIntSetLib.UIntSet storage pointer)",
                       "value": "notEmpty"
                     },
-                    "id": 2448,
+                    "id": 2373,
                     "name": "Identifier",
                     "src": "2161:8:10"
                   },
@@ -4210,16 +4210,16 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2446,
+                      "referencedDeclaration": 2371,
                       "type": "struct UIntSetLib.UIntSet storage pointer",
                       "value": "self"
                     },
-                    "id": 2449,
+                    "id": 2374,
                     "name": "Identifier",
                     "src": "2170:4:10"
                   }
                 ],
-                "id": 2450,
+                "id": 2375,
                 "name": "ModifierInvocation",
                 "src": "2161:14:10"
               },
@@ -4227,7 +4227,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2453
+                      "functionReturnParameters": 2378
                     },
                     "children": [
                       {
@@ -4249,7 +4249,7 @@
                             "attributes": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_struct$_UIntSet_$2167_storage_ptr",
+                                  "typeIdentifier": "t_struct$_UIntSet_$2092_storage_ptr",
                                   "typeString": "struct UIntSetLib.UIntSet storage pointer"
                                 },
                                 {
@@ -4260,11 +4260,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2216,
+                              "referencedDeclaration": 2141,
                               "type": "function (struct UIntSetLib.UIntSet storage pointer,uint256) view returns (uint256)",
                               "value": "get"
                             },
-                            "id": 2454,
+                            "id": 2379,
                             "name": "Identifier",
                             "src": "2204:3:10"
                           },
@@ -4274,11 +4274,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2446,
+                              "referencedDeclaration": 2371,
                               "type": "struct UIntSetLib.UIntSet storage pointer",
                               "value": "self"
                             },
-                            "id": 2455,
+                            "id": 2380,
                             "name": "Identifier",
                             "src": "2208:4:10"
                           },
@@ -4295,27 +4295,27 @@
                               "type": "int_const 0",
                               "value": "0"
                             },
-                            "id": 2456,
+                            "id": 2381,
                             "name": "Literal",
                             "src": "2214:1:10"
                           }
                         ],
-                        "id": 2457,
+                        "id": 2382,
                         "name": "FunctionCall",
                         "src": "2204:12:10"
                       }
                     ],
-                    "id": 2458,
+                    "id": 2383,
                     "name": "Return",
                     "src": "2197:19:10"
                   }
                 ],
-                "id": 2459,
+                "id": 2384,
                 "name": "Block",
                 "src": "2191:30:10"
               }
             ],
-            "id": 2460,
+            "id": 2385,
             "name": "FunctionDefinition",
             "src": "2112:109:10"
           },
@@ -4326,7 +4326,7 @@
               "isConstructor": false,
               "name": "last",
               "payable": false,
-              "scope": 2530,
+              "scope": 2455,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -4338,7 +4338,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2480,
+                      "scope": 2405,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct UIntSetLib.UIntSet storage pointer",
@@ -4350,20 +4350,20 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "UIntSet",
-                          "referencedDeclaration": 2167,
+                          "referencedDeclaration": 2092,
                           "type": "struct UIntSetLib.UIntSet storage pointer"
                         },
-                        "id": 2461,
+                        "id": 2386,
                         "name": "UserDefinedTypeName",
                         "src": "2239:7:10"
                       }
                     ],
-                    "id": 2462,
+                    "id": 2387,
                     "name": "VariableDeclaration",
                     "src": "2239:20:10"
                   }
                 ],
-                "id": 2463,
+                "id": 2388,
                 "name": "ParameterList",
                 "src": "2238:22:10"
               },
@@ -4373,7 +4373,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2480,
+                      "scope": 2405,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -4386,17 +4386,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2467,
+                        "id": 2392,
                         "name": "ElementaryTypeName",
                         "src": "2297:4:10"
                       }
                     ],
-                    "id": 2468,
+                    "id": 2393,
                     "name": "VariableDeclaration",
                     "src": "2297:4:10"
                   }
                 ],
-                "id": 2469,
+                "id": 2394,
                 "name": "ParameterList",
                 "src": "2296:6:10"
               },
@@ -4408,11 +4408,11 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2197,
+                      "referencedDeclaration": 2122,
                       "type": "modifier (struct UIntSetLib.UIntSet storage pointer)",
                       "value": "notEmpty"
                     },
-                    "id": 2464,
+                    "id": 2389,
                     "name": "Identifier",
                     "src": "2273:8:10"
                   },
@@ -4422,16 +4422,16 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2462,
+                      "referencedDeclaration": 2387,
                       "type": "struct UIntSetLib.UIntSet storage pointer",
                       "value": "self"
                     },
-                    "id": 2465,
+                    "id": 2390,
                     "name": "Identifier",
                     "src": "2282:4:10"
                   }
                 ],
-                "id": 2466,
+                "id": 2391,
                 "name": "ModifierInvocation",
                 "src": "2273:14:10"
               },
@@ -4439,7 +4439,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2469
+                      "functionReturnParameters": 2394
                     },
                     "children": [
                       {
@@ -4461,7 +4461,7 @@
                             "attributes": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_struct$_UIntSet_$2167_storage_ptr",
+                                  "typeIdentifier": "t_struct$_UIntSet_$2092_storage_ptr",
                                   "typeString": "struct UIntSetLib.UIntSet storage pointer"
                                 },
                                 {
@@ -4472,11 +4472,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2216,
+                              "referencedDeclaration": 2141,
                               "type": "function (struct UIntSetLib.UIntSet storage pointer,uint256) view returns (uint256)",
                               "value": "get"
                             },
-                            "id": 2470,
+                            "id": 2395,
                             "name": "Identifier",
                             "src": "2316:3:10"
                           },
@@ -4486,11 +4486,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2462,
+                              "referencedDeclaration": 2387,
                               "type": "struct UIntSetLib.UIntSet storage pointer",
                               "value": "self"
                             },
-                            "id": 2471,
+                            "id": 2396,
                             "name": "Identifier",
                             "src": "2320:4:10"
                           },
@@ -4529,7 +4529,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "values",
-                                      "referencedDeclaration": 2158,
+                                      "referencedDeclaration": 2083,
                                       "type": "uint256[] storage ref"
                                     },
                                     "children": [
@@ -4539,21 +4539,21 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 2462,
+                                          "referencedDeclaration": 2387,
                                           "type": "struct UIntSetLib.UIntSet storage pointer",
                                           "value": "self"
                                         },
-                                        "id": 2472,
+                                        "id": 2397,
                                         "name": "Identifier",
                                         "src": "2326:4:10"
                                       }
                                     ],
-                                    "id": 2473,
+                                    "id": 2398,
                                     "name": "MemberAccess",
                                     "src": "2326:11:10"
                                   }
                                 ],
-                                "id": 2474,
+                                "id": 2399,
                                 "name": "MemberAccess",
                                 "src": "2326:18:10"
                               },
@@ -4570,32 +4570,32 @@
                                   "type": "int_const 1",
                                   "value": "1"
                                 },
-                                "id": 2475,
+                                "id": 2400,
                                 "name": "Literal",
                                 "src": "2347:1:10"
                               }
                             ],
-                            "id": 2476,
+                            "id": 2401,
                             "name": "BinaryOperation",
                             "src": "2326:22:10"
                           }
                         ],
-                        "id": 2477,
+                        "id": 2402,
                         "name": "FunctionCall",
                         "src": "2316:33:10"
                       }
                     ],
-                    "id": 2478,
+                    "id": 2403,
                     "name": "Return",
                     "src": "2309:40:10"
                   }
                 ],
-                "id": 2479,
+                "id": 2404,
                 "name": "Block",
                 "src": "2303:51:10"
               }
             ],
-            "id": 2480,
+            "id": 2405,
             "name": "FunctionDefinition",
             "src": "2225:129:10"
           },
@@ -4609,7 +4609,7 @@
               ],
               "name": "indexOf",
               "payable": false,
-              "scope": 2530,
+              "scope": 2455,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -4621,7 +4621,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2502,
+                      "scope": 2427,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct UIntSetLib.UIntSet storage pointer",
@@ -4633,15 +4633,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "UIntSet",
-                          "referencedDeclaration": 2167,
+                          "referencedDeclaration": 2092,
                           "type": "struct UIntSetLib.UIntSet storage pointer"
                         },
-                        "id": 2481,
+                        "id": 2406,
                         "name": "UserDefinedTypeName",
                         "src": "2375:7:10"
                       }
                     ],
-                    "id": 2482,
+                    "id": 2407,
                     "name": "VariableDeclaration",
                     "src": "2375:20:10"
                   },
@@ -4649,7 +4649,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "value",
-                      "scope": 2502,
+                      "scope": 2427,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -4662,17 +4662,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2483,
+                        "id": 2408,
                         "name": "ElementaryTypeName",
                         "src": "2397:4:10"
                       }
                     ],
-                    "id": 2484,
+                    "id": 2409,
                     "name": "VariableDeclaration",
                     "src": "2397:10:10"
                   }
                 ],
-                "id": 2485,
+                "id": 2410,
                 "name": "ParameterList",
                 "src": "2374:34:10"
               },
@@ -4682,7 +4682,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2502,
+                      "scope": 2427,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -4695,17 +4695,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2486,
+                        "id": 2411,
                         "name": "ElementaryTypeName",
                         "src": "2430:4:10"
                       }
                     ],
-                    "id": 2487,
+                    "id": 2412,
                     "name": "VariableDeclaration",
                     "src": "2430:4:10"
                   }
                 ],
-                "id": 2488,
+                "id": 2413,
                 "name": "ParameterList",
                 "src": "2429:6:10"
               },
@@ -4739,11 +4739,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2861,
+                              "referencedDeclaration": 2786,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
-                            "id": 2489,
+                            "id": 2414,
                             "name": "Identifier",
                             "src": "2442:7:10"
                           },
@@ -4765,7 +4765,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "exists",
-                                  "referencedDeclaration": 2162,
+                                  "referencedDeclaration": 2087,
                                   "type": "mapping(uint256 => bool)"
                                 },
                                 "children": [
@@ -4775,16 +4775,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2482,
+                                      "referencedDeclaration": 2407,
                                       "type": "struct UIntSetLib.UIntSet storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2490,
+                                    "id": 2415,
                                     "name": "Identifier",
                                     "src": "2450:4:10"
                                   }
                                 ],
-                                "id": 2491,
+                                "id": 2416,
                                 "name": "MemberAccess",
                                 "src": "2450:11:10"
                               },
@@ -4794,32 +4794,32 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2484,
+                                  "referencedDeclaration": 2409,
                                   "type": "uint256",
                                   "value": "value"
                                 },
-                                "id": 2492,
+                                "id": 2417,
                                 "name": "Identifier",
                                 "src": "2462:5:10"
                               }
                             ],
-                            "id": 2493,
+                            "id": 2418,
                             "name": "IndexAccess",
                             "src": "2450:18:10"
                           }
                         ],
-                        "id": 2494,
+                        "id": 2419,
                         "name": "FunctionCall",
                         "src": "2442:27:10"
                       }
                     ],
-                    "id": 2495,
+                    "id": 2420,
                     "name": "ExpressionStatement",
                     "src": "2442:27:10"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 2488
+                      "functionReturnParameters": 2413
                     },
                     "children": [
                       {
@@ -4840,7 +4840,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "indices",
-                              "referencedDeclaration": 2166,
+                              "referencedDeclaration": 2091,
                               "type": "mapping(uint256 => uint256)"
                             },
                             "children": [
@@ -4850,16 +4850,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2482,
+                                  "referencedDeclaration": 2407,
                                   "type": "struct UIntSetLib.UIntSet storage pointer",
                                   "value": "self"
                                 },
-                                "id": 2496,
+                                "id": 2421,
                                 "name": "Identifier",
                                 "src": "2482:4:10"
                               }
                             ],
-                            "id": 2497,
+                            "id": 2422,
                             "name": "MemberAccess",
                             "src": "2482:12:10"
                           },
@@ -4869,31 +4869,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2484,
+                              "referencedDeclaration": 2409,
                               "type": "uint256",
                               "value": "value"
                             },
-                            "id": 2498,
+                            "id": 2423,
                             "name": "Identifier",
                             "src": "2495:5:10"
                           }
                         ],
-                        "id": 2499,
+                        "id": 2424,
                         "name": "IndexAccess",
                         "src": "2482:19:10"
                       }
                     ],
-                    "id": 2500,
+                    "id": 2425,
                     "name": "Return",
                     "src": "2475:26:10"
                   }
                 ],
-                "id": 2501,
+                "id": 2426,
                 "name": "Block",
                 "src": "2436:70:10"
               }
             ],
-            "id": 2502,
+            "id": 2427,
             "name": "FunctionDefinition",
             "src": "2358:148:10"
           },
@@ -4907,7 +4907,7 @@
               ],
               "name": "contains",
               "payable": false,
-              "scope": 2530,
+              "scope": 2455,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -4919,7 +4919,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2517,
+                      "scope": 2442,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct UIntSetLib.UIntSet storage pointer",
@@ -4931,15 +4931,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "UIntSet",
-                          "referencedDeclaration": 2167,
+                          "referencedDeclaration": 2092,
                           "type": "struct UIntSetLib.UIntSet storage pointer"
                         },
-                        "id": 2503,
+                        "id": 2428,
                         "name": "UserDefinedTypeName",
                         "src": "2528:7:10"
                       }
                     ],
-                    "id": 2504,
+                    "id": 2429,
                     "name": "VariableDeclaration",
                     "src": "2528:20:10"
                   },
@@ -4947,7 +4947,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "value",
-                      "scope": 2517,
+                      "scope": 2442,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -4960,17 +4960,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2505,
+                        "id": 2430,
                         "name": "ElementaryTypeName",
                         "src": "2550:4:10"
                       }
                     ],
-                    "id": 2506,
+                    "id": 2431,
                     "name": "VariableDeclaration",
                     "src": "2550:10:10"
                   }
                 ],
-                "id": 2507,
+                "id": 2432,
                 "name": "ParameterList",
                 "src": "2527:34:10"
               },
@@ -4980,7 +4980,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2517,
+                      "scope": 2442,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -4993,17 +4993,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 2508,
+                        "id": 2433,
                         "name": "ElementaryTypeName",
                         "src": "2583:4:10"
                       }
                     ],
-                    "id": 2509,
+                    "id": 2434,
                     "name": "VariableDeclaration",
                     "src": "2583:4:10"
                   }
                 ],
-                "id": 2510,
+                "id": 2435,
                 "name": "ParameterList",
                 "src": "2582:6:10"
               },
@@ -5011,7 +5011,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2510
+                      "functionReturnParameters": 2435
                     },
                     "children": [
                       {
@@ -5032,7 +5032,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "exists",
-                              "referencedDeclaration": 2162,
+                              "referencedDeclaration": 2087,
                               "type": "mapping(uint256 => bool)"
                             },
                             "children": [
@@ -5042,16 +5042,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2504,
+                                  "referencedDeclaration": 2429,
                                   "type": "struct UIntSetLib.UIntSet storage pointer",
                                   "value": "self"
                                 },
-                                "id": 2511,
+                                "id": 2436,
                                 "name": "Identifier",
                                 "src": "2602:4:10"
                               }
                             ],
-                            "id": 2512,
+                            "id": 2437,
                             "name": "MemberAccess",
                             "src": "2602:11:10"
                           },
@@ -5061,31 +5061,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2506,
+                              "referencedDeclaration": 2431,
                               "type": "uint256",
                               "value": "value"
                             },
-                            "id": 2513,
+                            "id": 2438,
                             "name": "Identifier",
                             "src": "2614:5:10"
                           }
                         ],
-                        "id": 2514,
+                        "id": 2439,
                         "name": "IndexAccess",
                         "src": "2602:18:10"
                       }
                     ],
-                    "id": 2515,
+                    "id": 2440,
                     "name": "Return",
                     "src": "2595:25:10"
                   }
                 ],
-                "id": 2516,
+                "id": 2441,
                 "name": "Block",
                 "src": "2589:36:10"
               }
             ],
-            "id": 2517,
+            "id": 2442,
             "name": "FunctionDefinition",
             "src": "2510:115:10"
           },
@@ -5099,7 +5099,7 @@
               ],
               "name": "size",
               "payable": false,
-              "scope": 2530,
+              "scope": 2455,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -5111,7 +5111,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2529,
+                      "scope": 2454,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct UIntSetLib.UIntSet storage pointer",
@@ -5123,20 +5123,20 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "UIntSet",
-                          "referencedDeclaration": 2167,
+                          "referencedDeclaration": 2092,
                           "type": "struct UIntSetLib.UIntSet storage pointer"
                         },
-                        "id": 2518,
+                        "id": 2443,
                         "name": "UserDefinedTypeName",
                         "src": "2643:7:10"
                       }
                     ],
-                    "id": 2519,
+                    "id": 2444,
                     "name": "VariableDeclaration",
                     "src": "2643:20:10"
                   }
                 ],
-                "id": 2520,
+                "id": 2445,
                 "name": "ParameterList",
                 "src": "2642:22:10"
               },
@@ -5146,7 +5146,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2529,
+                      "scope": 2454,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -5159,17 +5159,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2521,
+                        "id": 2446,
                         "name": "ElementaryTypeName",
                         "src": "2686:4:10"
                       }
                     ],
-                    "id": 2522,
+                    "id": 2447,
                     "name": "VariableDeclaration",
                     "src": "2686:4:10"
                   }
                 ],
-                "id": 2523,
+                "id": 2448,
                 "name": "ParameterList",
                 "src": "2685:6:10"
               },
@@ -5177,7 +5177,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2523
+                      "functionReturnParameters": 2448
                     },
                     "children": [
                       {
@@ -5200,7 +5200,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "values",
-                              "referencedDeclaration": 2158,
+                              "referencedDeclaration": 2083,
                               "type": "uint256[] storage ref"
                             },
                             "children": [
@@ -5210,46 +5210,46 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2519,
+                                  "referencedDeclaration": 2444,
                                   "type": "struct UIntSetLib.UIntSet storage pointer",
                                   "value": "self"
                                 },
-                                "id": 2524,
+                                "id": 2449,
                                 "name": "Identifier",
                                 "src": "2705:4:10"
                               }
                             ],
-                            "id": 2525,
+                            "id": 2450,
                             "name": "MemberAccess",
                             "src": "2705:11:10"
                           }
                         ],
-                        "id": 2526,
+                        "id": 2451,
                         "name": "MemberAccess",
                         "src": "2705:18:10"
                       }
                     ],
-                    "id": 2527,
+                    "id": 2452,
                     "name": "Return",
                     "src": "2698:25:10"
                   }
                 ],
-                "id": 2528,
+                "id": 2453,
                 "name": "Block",
                 "src": "2692:36:10"
               }
             ],
-            "id": 2529,
+            "id": 2454,
             "name": "FunctionDefinition",
             "src": "2629:99:10"
           }
         ],
-        "id": 2530,
+        "id": 2455,
         "name": "ContractDefinition",
         "src": "327:2403:10"
       }
     ],
-    "id": 2531,
+    "id": 2456,
     "name": "SourceUnit",
     "src": "0:2731:10"
   },
@@ -5261,9 +5261,9 @@
     "1514662639598": {
       "events": {},
       "links": {},
-      "address": "0x8442f8a3e26988b599c6bb1983d9be48b0b723b8"
+      "address": "0x7760d34ad522aedffa76e0c7588c096b4a4edc3a"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-12-30T20:22:01.174Z"
+  "updatedAt": "2017-12-30T20:52:23.197Z"
 }
