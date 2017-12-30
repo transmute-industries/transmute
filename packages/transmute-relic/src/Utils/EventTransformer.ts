@@ -26,6 +26,7 @@ export namespace EventTransformer {
   let valuesToEsEvent = (
     Id: any,
     TxOrigin: any,
+    MsgSender: any,
     Created: any,
     EventType: any,
     KeyType: any,
@@ -36,6 +37,7 @@ export namespace EventTransformer {
     return {
       Id,
       TxOrigin,
+      MsgSender,
       Created,
       EventType,
       KeyType,
@@ -88,7 +90,8 @@ export namespace EventTransformer {
         valueType: Utils.toAscii(esEvent.ValueType),
         id: esEvent.Id.toNumber(),
         created: esEvent.Created.toNumber(),
-        txOrigin: esEvent.TxOrigin
+        txOrigin: esEvent.TxOrigin,
+        msgSender: esEvent.MsgSender
       }
     }
     return getFSAFromEsEventWithPartial(esEvent, partialFSA)
@@ -103,7 +106,8 @@ export namespace EventTransformer {
       values[4],
       values[5],
       values[6],
-      values[7]
+      values[7],
+      values[8]
     )
     return esEventToFSA(esEvent)
   }

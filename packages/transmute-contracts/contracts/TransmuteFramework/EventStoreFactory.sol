@@ -117,6 +117,7 @@ contract EventStoreFactory {
     returns (
       uint,
       address,
+      address,
       uint,
       bytes32,
       bytes1,
@@ -147,6 +148,7 @@ contract EventStoreFactory {
   event EsEvent(
     uint Id,
     address TxOrigin,
+    address MsgSender,
     uint Created,
 
     bytes32 EventType,
