@@ -4,7 +4,10 @@ import "./EventStoreLib.sol";
 import "./EventStore.sol";
 import "./SetLib/AddressSet/AddressSetLib.sol";
 
-// never inherit or use modifiers!
+
+/**
+* @dev NEVER USE inheritance or modifiers
+*/
 contract EventStoreFactory {
 
   using EventStoreLib for EventStoreLib.EsEventStorage;
@@ -15,35 +18,45 @@ contract EventStoreFactory {
 
   address public owner;
 
-  // Fallback Function
-  function () public payable { revert(); }
+  /**
+   * @dev This contract can receive ether.
+   */
+  function () public payable {}
 
-  // Constuctor
-  function EventStoreFactory() public payable {
+  /**
+   * @dev This contract will be owned by the constructor caller.
+   */
+  function EventStoreFactory() public {
     owner = msg.sender;
   }
 
   /**
    * @dev Allows the current owner to transfer control of the contract to a newOwner.
-   * @param newOwner The address to transfer ownership to.
+   * @param _newOwner The address to transfer ownership to.
    */
-  function transferOwnership(address newOwner) public {
+  function transferOwnership(address _newOwner) public {
     require(msg.sender == owner);
-    require(newOwner != address(0));
-    owner = newOwner;
-    writeEvent("NEW_OWNER", "S", "A", "address", bytes32(address(newOwner)));
+    require(_newOwner != address(0));
+    owner = _newOwner;
+    writeEvent("NEW_OWNER", "S", "A", "address", bytes32(address(_newOwner)));
   }
 
    /**
    * @dev Transfers the current balance to the owner and terminates the contract.
    */
-  function destroy() public {
+  function recycle() public {
     require(msg.sender == owner);
+    writeEvent("RECYCLED_TO", "S", "A", "address", bytes32(address(owner)));
     selfdestruct(owner);
   }
 
-  function destroyAndSend(address _recipient) public {
+   /**
+   * @dev Transfers the current balance to the _recipient and terminates the contract.
+  * @param _recipient The address to transfer balance to.
+   */
+  function recycleAndSend(address _recipient) public {
     require(msg.sender == owner);
+    writeEvent("RECYCLED_TO", "S", "A", "address", bytes32(address(_recipient)));
     selfdestruct(_recipient);
   }
 
@@ -63,8 +76,6 @@ contract EventStoreFactory {
     return eventStores.values;
   }
   
-  
-
   // writeEvent is private in factory
   // only the factory contract can write events
   // the factory event log should only be used to model factory events
