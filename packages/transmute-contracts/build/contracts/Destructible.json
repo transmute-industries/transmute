@@ -107,7 +107,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 888,
+          "SourceUnit": 909,
           "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-contracts/contracts/TransmuteFramework/Ownable.sol",
           "file": "./Ownable.sol",
           "scope": 90,
@@ -123,14 +123,14 @@
       {
         "attributes": {
           "contractDependencies": [
-            887
+            908
           ],
           "contractKind": "contract",
           "documentation": "@title Destructible\n@dev Base contract that can be destroyed by owner. All funds in contract will be sent to the owner.",
           "fullyImplemented": true,
           "linearizedBaseContracts": [
             89,
-            887
+            908
           ],
           "name": "Destructible",
           "scope": 90
@@ -147,7 +147,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "Ownable",
-                  "referencedDeclaration": 887,
+                  "referencedDeclaration": 908,
                   "type": "contract Ownable"
                 },
                 "id": 61,
@@ -261,7 +261,7 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 861,
+                      "referencedDeclaration": 882,
                       "type": "modifier ()",
                       "value": "onlyOwner"
                     },
@@ -304,7 +304,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2696,
+                              "referencedDeclaration": 2717,
                               "type": "function (address)",
                               "value": "selfdestruct"
                             },
@@ -318,7 +318,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 835,
+                              "referencedDeclaration": 856,
                               "type": "address",
                               "value": "owner"
                             },
@@ -416,7 +416,7 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 861,
+                      "referencedDeclaration": 882,
                       "type": "modifier ()",
                       "value": "onlyOwner"
                     },
@@ -459,7 +459,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2696,
+                              "referencedDeclaration": 2717,
                               "type": "function (address)",
                               "value": "selfdestruct"
                             },
@@ -516,12 +516,12 @@
     "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
   },
   "networks": {
-    "1514662639598": {
+    "1514675185844": {
       "events": {},
       "links": {},
-      "address": "0xb8d870102e0cd45136eeecac9a9c5327e8b73d15"
+      "address": "0xa58559fe7563817362989cfd28b879154c71f5c5"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-12-30T21:22:25.824Z"
+  "updatedAt": "2017-12-30T23:13:55.468Z"
 }

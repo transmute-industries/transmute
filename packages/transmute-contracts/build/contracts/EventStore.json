@@ -289,7 +289,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 832,
+          "SourceUnit": 853,
           "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-contracts/contracts/TransmuteFramework/EventStoreLib.sol",
           "file": "./EventStoreLib.sol",
           "scope": 374,
@@ -304,7 +304,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 1265,
+          "SourceUnit": 1286,
           "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-contracts/contracts/TransmuteFramework/SetLib/AddressSet/AddressSetLib.sol",
           "file": "./SetLib/AddressSet/AddressSetLib.sol",
           "scope": 374,
@@ -341,7 +341,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "EventStoreLib",
-                  "referencedDeclaration": 831,
+                  "referencedDeclaration": 852,
                   "type": "library EventStoreLib"
                 },
                 "id": 94,
@@ -352,7 +352,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "EventStoreLib.EsEventStorage",
-                  "referencedDeclaration": 647,
+                  "referencedDeclaration": 668,
                   "type": "struct EventStoreLib.EsEventStorage storage pointer"
                 },
                 "id": 95,
@@ -370,7 +370,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "AddressSetLib",
-                  "referencedDeclaration": 1264,
+                  "referencedDeclaration": 1285,
                   "type": "library AddressSetLib"
                 },
                 "id": 97,
@@ -381,7 +381,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "AddressSetLib.AddressSet",
-                  "referencedDeclaration": 901,
+                  "referencedDeclaration": 922,
                   "type": "struct AddressSetLib.AddressSet storage pointer"
                 },
                 "id": 98,
@@ -409,7 +409,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "EventStoreLib.EsEventStorage",
-                  "referencedDeclaration": 647,
+                  "referencedDeclaration": 668,
                   "type": "struct EventStoreLib.EsEventStorage storage pointer"
                 },
                 "id": 100,
@@ -437,7 +437,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "AddressSetLib.AddressSet",
-                  "referencedDeclaration": 901,
+                  "referencedDeclaration": 922,
                   "type": "struct AddressSetLib.AddressSet storage pointer"
                 },
                 "id": 102,
@@ -569,7 +569,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2694,
+                              "referencedDeclaration": 2715,
                               "type": "function () pure",
                               "value": "revert"
                             },
@@ -682,7 +682,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2690,
+                                  "referencedDeclaration": 2711,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -750,7 +750,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2700,
+                                  "referencedDeclaration": 2721,
                                   "type": "tx",
                                   "value": "tx"
                                 },
@@ -1095,7 +1095,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2693,
+                              "referencedDeclaration": 2714,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -1554,7 +1554,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2693,
+                              "referencedDeclaration": 2714,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -1595,7 +1595,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2690,
+                                      "referencedDeclaration": 2711,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -1665,7 +1665,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2696,
+                              "referencedDeclaration": 2717,
                               "type": "function (address)",
                               "value": "selfdestruct"
                             },
@@ -1797,7 +1797,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2693,
+                              "referencedDeclaration": 2714,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -1838,7 +1838,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2690,
+                                      "referencedDeclaration": 2711,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -1908,7 +1908,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2696,
+                              "referencedDeclaration": 2717,
                               "type": "function (address)",
                               "value": "selfdestruct"
                             },
@@ -2166,7 +2166,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2693,
+                              "referencedDeclaration": 2714,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -2251,7 +2251,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 2700,
+                                              "referencedDeclaration": 2721,
                                               "type": "tx",
                                               "value": "tx"
                                             },
@@ -2316,7 +2316,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 2690,
+                                              "referencedDeclaration": 2711,
                                               "type": "msg",
                                               "value": "msg"
                                             },
@@ -2367,7 +2367,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "contains",
-                                      "referencedDeclaration": 1251,
+                                      "referencedDeclaration": 1272,
                                       "type": "function (struct AddressSetLib.AddressSet storage pointer,address) view returns (bool)"
                                     },
                                     "children": [
@@ -2408,7 +2408,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 2690,
+                                          "referencedDeclaration": 2711,
                                           "type": "msg",
                                           "value": "msg"
                                         },
@@ -2465,7 +2465,7 @@
                             "attributes": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_struct$_EsEventStorage_$647_storage",
+                                  "typeIdentifier": "t_struct$_EsEventStorage_$668_storage",
                                   "typeString": "struct EventStoreLib.EsEventStorage storage ref"
                                 },
                                 {
@@ -2494,7 +2494,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "writeEvent",
-                              "referencedDeclaration": 758,
+                              "referencedDeclaration": 779,
                               "type": "function (struct EventStoreLib.EsEventStorage storage pointer,bytes32,bytes1,bytes1,bytes32,bytes32) returns (uint256)"
                             },
                             "children": [
@@ -2504,7 +2504,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 831,
+                                  "referencedDeclaration": 852,
                                   "type": "type(library EventStoreLib)",
                                   "value": "EventStoreLib"
                                 },
@@ -2937,7 +2937,7 @@
                             "attributes": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_struct$_EsEventStorage_$647_storage",
+                                  "typeIdentifier": "t_struct$_EsEventStorage_$668_storage",
                                   "typeString": "struct EventStoreLib.EsEventStorage storage ref"
                                 },
                                 {
@@ -2950,7 +2950,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "readEvent",
-                              "referencedDeclaration": 810,
+                              "referencedDeclaration": 831,
                               "type": "function (struct EventStoreLib.EsEventStorage storage pointer,uint256) view returns (uint256,address,address,uint256,bytes32,bytes1,bytes1,bytes32,bytes32)"
                             },
                             "children": [
@@ -2960,7 +2960,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 831,
+                                  "referencedDeclaration": 852,
                                   "type": "type(library EventStoreLib)",
                                   "value": "EventStoreLib"
                                 },
@@ -3122,7 +3122,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2693,
+                              "referencedDeclaration": 2714,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -3163,7 +3163,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2690,
+                                      "referencedDeclaration": 2711,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -3233,7 +3233,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2693,
+                              "referencedDeclaration": 2714,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -3284,7 +3284,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "size",
-                                      "referencedDeclaration": 1263,
+                                      "referencedDeclaration": 1284,
                                       "type": "function (struct AddressSetLib.AddressSet storage pointer) view returns (uint256)"
                                     },
                                     "children": [
@@ -3536,7 +3536,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "add",
-                                      "referencedDeclaration": 1044,
+                                      "referencedDeclaration": 1065,
                                       "type": "function (struct AddressSetLib.AddressSet storage pointer,address) returns (bool)"
                                     },
                                     "children": [
@@ -3828,7 +3828,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 2690,
+                                          "referencedDeclaration": 2711,
                                           "type": "msg",
                                           "value": "msg"
                                         },
@@ -3957,7 +3957,7 @@
                           "isPure": false,
                           "lValueRequested": false,
                           "member_name": "values",
-                          "referencedDeclaration": 892,
+                          "referencedDeclaration": 913,
                           "type": "address[] storage ref"
                         },
                         "children": [
@@ -4082,7 +4082,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "events",
-                              "referencedDeclaration": 646,
+                              "referencedDeclaration": 667,
                               "type": "struct EventStoreLib.EsEventStruct storage ref[] storage ref"
                             },
                             "children": [
@@ -4401,7 +4401,7 @@
     "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
   },
   "networks": {
-    "1514662639598": {
+    "1514675185844": {
       "events": {
         "0x6b3c8873ff9b1c068470039341f6473e929874a38caab2cee207f5a533504169": {
           "anonymous": false,
@@ -4457,12 +4457,12 @@
         }
       },
       "links": {
-        "EventStoreLib": "0x4ea07d687fffeacf666a1c320de5c185f8f80bd3",
-        "AddressSetLib": "0x9f914fbc2454646b7a2c6e76bb33d04eab86b80e"
+        "EventStoreLib": "0x631c8371bddc3c129a5acddde77d47163f2f05ba",
+        "AddressSetLib": "0xe6cfd0918d4397931de9d9ebd738ee7686e71efd"
       },
-      "address": "0x0022c41579d68cd1a500f55001c601139f7f7e5a"
+      "address": "0xd41317dd9073c5e19a76d30691bac07e6de562b2"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-12-30T21:22:25.948Z"
+  "updatedAt": "2017-12-30T23:13:55.577Z"
 }

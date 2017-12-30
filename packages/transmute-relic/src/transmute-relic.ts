@@ -3,6 +3,7 @@
 // ...
 
 import { W3 } from 'soltsice'
+import { BigNumber } from 'bignumber.js'
 import { transmuteWeb3, ITransmuteWeb3Config } from './web3'
 export { Factory } from './Factory'
 export { Store } from './Store'
@@ -23,5 +24,10 @@ export default class Relic {
         resolve(accounts)
       })
     }) as Promise<string[]>
+  }
+
+  async getBalance(address: string): Promise<number> {
+    let balance: any = await this.web3.eth.getBalance(address)
+    return balance.toNumber()
   }
 }
