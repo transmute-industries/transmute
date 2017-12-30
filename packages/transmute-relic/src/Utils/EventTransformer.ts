@@ -1,8 +1,28 @@
-import { IFSA, IRawEsEvent } from "../Store/EventTypes";
+import { IFSA, IRawEsEvent } from '../Store/EventTypes'
 
-import { Utils } from "./Utils";
+import { Utils } from './Utils'
 
 export namespace EventTransformer {
+  export const getFSAsFromReceipt = (receipt: any) => {
+    let fsa: any[] = []
+    receipt.logs.forEach((event: any) => {
+      if (event.event === 'EsEvent') {
+        fsa.push(EventTransformer.esEventToFSA(event.args))
+      }
+    })
+    return fsa
+  }
+
+  export const filterEventsByMeta = (events: IFSA[], prop: any, propValue: any) => {
+    let fsa: any[] = []
+    events.forEach((event: any) => {
+      if (event.meta[prop] === propValue) {
+        fsa.push(event)
+      }
+    })
+    return fsa
+  }
+
   let valuesToEsEvent = (
     Id: any,
     TxOrigin: any,
@@ -22,42 +42,42 @@ export namespace EventTransformer {
       ValueType,
       Key,
       Value
-    };
-  };
+    }
+  }
 
   export const getFSAFromEsEventWithPartial = (esEvent: IRawEsEvent, partialFSA: IFSA) => {
-    let payload;
+    let payload
     switch (partialFSA.meta.valueType) {
-      case "A":
+      case 'A':
         payload = {
-          key: "address",
-          value: "0x" + esEvent.Value.split("0x000000000000000000000000")[1]
-        };
-        break;
-      case "B":
+          key: 'address',
+          value: '0x' + esEvent.Value.split('0x000000000000000000000000')[1]
+        }
+        break
+      case 'B':
         payload = {
-          key: "bytes32",
+          key: 'bytes32',
           value: esEvent.Value
-        };
-        break;
-      case "U":
+        }
+        break
+      case 'U':
         payload = {
-          key: "uint",
+          key: 'uint',
           value: Utils.hexToNumber(esEvent.Value)
-        };
-        break;
-      case "S":
+        }
+        break
+      case 'S':
         payload = {
           key: Utils.toAscii(esEvent.Key),
           value: Utils.toAscii(esEvent.Value)
-        };
-        break;
+        }
+        break
     }
     return {
       ...partialFSA,
       payload
-    };
-  };
+    }
+  }
 
   export const esEventToFSA = (esEvent: IRawEsEvent) => {
     let partialFSA: IFSA = {
@@ -67,11 +87,12 @@ export namespace EventTransformer {
         keyType: Utils.toAscii(esEvent.KeyType),
         valueType: Utils.toAscii(esEvent.ValueType),
         id: esEvent.Id.toNumber(),
-        created: esEvent.Created.toNumber()
+        created: esEvent.Created.toNumber(),
+        txOrigin: esEvent.TxOrigin
       }
-    };
-    return getFSAFromEsEventWithPartial(esEvent, partialFSA);
-  };
+    }
+    return getFSAFromEsEventWithPartial(esEvent, partialFSA)
+  }
 
   export const arrayToFSA = (values: any) => {
     let esEvent = valuesToEsEvent(
@@ -83,7 +104,7 @@ export namespace EventTransformer {
       values[5],
       values[6],
       values[7]
-    );
-    return esEventToFSA(esEvent);
-  };
+    )
+    return esEventToFSA(esEvent)
+  }
 }

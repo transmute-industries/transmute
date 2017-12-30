@@ -12,15 +12,6 @@ export const GAS_COSTS = {
 }
 
 // logEvents(getFSAsFromReceipt(receipt));
-const getFSAsFromReceipt = (receipt: any) => {
-  let fsa: any[] = []
-  receipt.logs.forEach((event: any) => {
-    if (event.event === 'EsEvent') {
-      fsa.push(EventTransformer.esEventToFSA(event.args))
-    }
-  })
-  return fsa
-}
 
 const logEvents = (events: any) => {
   console.log(JSON.stringify(events, null, 2))
@@ -31,7 +22,7 @@ const logEvents = (events: any) => {
  */
 describe('EventStoreFactory', () => {
   let accounts: string[]
-  let instance: EventStoreFactory
+  let factory: EventStoreFactory
   let receipt: any
   let events: IFSA[]
 
@@ -41,86 +32,98 @@ describe('EventStoreFactory', () => {
 
   // it("getWhitelist", async () => {
   //   // a new factory has an empty whitelist
-  //   instance = await EventStoreFactory.New(W3.TC.txParamsDefaultDeploy(accounts[0]), {
+  //   factory = await EventStoreFactory.New(W3.TC.txParamsDefaultDeploy(accounts[0]), {
   //     _multisig: accounts[0]
   //   });
 
-  //   let whitelist = await instance.getWhitelist(W3.TC.txParamsDefaultDeploy(accounts[0]));
+  //   let whitelist = await factory.getWhitelist(W3.TC.txParamsDefaultDeploy(accounts[0]));
   //   expect(whitelist).toEqual([]);
   //   // console.log("whitelist: ", whitelist);
 
   //   // the factory contract deployer can set the factory whitelist
-  //   let receipt = await instance.setWhitelist(accounts, W3.TC.txParamsDefaultDeploy(accounts[0]));
+  //   let receipt = await factory.setWhitelist(accounts, W3.TC.txParamsDefaultDeploy(accounts[0]));
   //   // logEvents(getFSAsFromReceipt(receipt));
 
   //   // whitelist is updated.
-  //   whitelist = await instance.getWhitelist(W3.TC.txParamsDefaultDeploy(accounts[0]));
+  //   whitelist = await factory.getWhitelist(W3.TC.txParamsDefaultDeploy(accounts[0]));
   //   expect(whitelist).toEqual(accounts);
   // });
 
-  it('killEventStore', async () => {
-    // console.log(accounts)
-    // expect(true)
+  it('factories can create event stores, and ownership of stores can be transfered', async () => {
     // a new factory has an empty whitelist
-    instance = await EventStoreFactory.New(W3.TC.txParamsDefaultDeploy(accounts[0]), {
+    factory = await EventStoreFactory.New(W3.TC.txParamsDefaultDeploy(accounts[0]), {
       _multisig: accounts[0]
     })
 
-    let factoryOwner = await instance.owner()
+    // the factory owner is the factory contract deployer
+    let factoryOwner = await factory.owner()
     expect(factoryOwner).toBe(accounts[0])
 
-    // let factoryCreator = await instance.originalCreator();
+    // the factory creator is the factory contract deployer
+    let factoryCreator = await factory.creatorTxOrigin()
+    expect(factoryCreator).toBe(factoryOwner)
 
-    // console.log(instance)
-
-    let whitelist = await instance.getWhitelist(W3.TC.txParamsDefaultDeploy(accounts[0]))
+    // the factory whitelist is empty initially
+    let whitelist = await factory.getWhitelist(W3.TC.txParamsDefaultDeploy(accounts[0]))
     expect(whitelist).toEqual([])
 
-    // // the factory contract deployer can set the factory whitelist
-    // receipt = await instance.setWhitelist(accounts, W3.TC.txParamsDefaultDeploy(accounts[0]));
+    // the factory owner can set the factory whitelist
+    receipt = await factory.setWhitelist(accounts, W3.TC.txParamsDefaultDeploy(accounts[0]))
 
-    // // whitelist is updated.
-    // whitelist = await instance.getWhitelist(accounts[0]);
-    // expect(whitelist).toEqual(accounts);
+    // the factory whitelist is updated, and included the factory address
+    whitelist = await factory.getWhitelist()
+    expect(whitelist).toEqual([...accounts])
 
-    // // whitelisted accounts can createEventStore s
-    // receipt = await instance.createEventStore(W3.TC.txParamsDefaultDeploy(accounts[1]));
+    // anyone can use the factory to create an eventStore
+    receipt = await factory.createEventStore(accounts, W3.TC.txParamsDefaultDeploy(accounts[1]))
+    events = EventTransformer.getFSAsFromReceipt(receipt)
+    // let eventStore = await EventStore.At(events[1].payload.value);
+
+    let factoryEvents = EventTransformer.filterEventsByMeta(events, 'txOrigin', factory.address)
+    console.log('factoryEvents: ', factoryEvents)
+
+    let otherEvents = EventTransformer.filterEventsByMeta(events, 'txOrigin', accounts[1])
+    console.log('otherEvents: ', otherEvents)
+    expect(otherEvents[0].meta.txOrigin).toBe(accounts[1])
+
+    // the eventStore owner is the factory caller
+    // let eventStoreOwner = await eventStore.owner();
+    // expect(eventStoreOwner).toBe(accounts[1]);
+
+    // the eventStore creator is the factory caller
+    // let eventStoreCreator = await eventStore.creatorTxOrigin();
+    // expect(eventStoreCreator).toBe(accounts[1]);
+
+    // the factory owner can transferOwnership
+    // receipt = await factory.transferOwnership(accounts[2], W3.TC.txParamsDefaultDeploy(factoryOwner));
     // events = getFSAsFromReceipt(receipt);
+    // console.log(events)
 
-    // // the factory caller is the eventstore owner
-    // let myStore = await EventStore.At(events[0].payload.value);
-    // let myStoreOwner = await myStore.owner();
-    // expect(myStoreOwner).toBe(accounts[1]);
-
-    // the eventstore owner can use the factory to kill the eventstore
-    // receipt = await instance.killEventStore(
-    //   events[0].payload.value,
-    //   W3.TC.txParamsDefaultDeploy(accounts[0])
-    // );
-
-    // logEvents(getFSAsFromReceipt(receipt));
+    // events = getFSAsFromReceipt(receipt);
+    console.log(events)
+    // console.log(receipt)
   })
 
   // it("New", async () => {
-  //   expect(instance).toBeDefined();
+  //   expect(factory).toBeDefined();
   // });
 
   // it("At", async () => {
-  //   const instance = await EventStoreFactory.New(W3.TC.txParamsDefaultDeploy(accounts[0]), {
+  //   const factory = await EventStoreFactory.New(W3.TC.txParamsDefaultDeploy(accounts[0]), {
   //     _multisig: accounts[0]
   //   });
-  //   expect(instance).toBeDefined();
-  //   const instanceFromAddress = await EventStoreFactory.At(instance.address);
-  //   expect(instanceFromAddress.address).toBe(instance.address);
+  //   expect(factory).toBeDefined();
+  //   const factoryFromAddress = await EventStoreFactory.At(factory.address);
+  //   expect(factoryFromAddress.address).toBe(factory.address);
   // });
 
   // it("owner", async () => {
-  //   let owner = await instance.owner();
+  //   let owner = await factory.owner();
   //   expect(owner).toBe(accounts[0]);
   // });
 
   // it("transferOwnership", async () => {
-  //   let receipt = await instance.transferOwnership(
+  //   let receipt = await factory.transferOwnership(
   //     accounts[1],
   //     W3.TC.txParamsDefaultDeploy(accounts[0])
   //   );
@@ -128,45 +131,45 @@ describe('EventStoreFactory', () => {
   // });
 
   // it("getEventStoresByOwner", async () => {
-  //   let addresses = await instance.getEventStoresByOwner(W3.TC.txParamsDefaultDeploy(accounts[0]));
+  //   let addresses = await factory.getEventStoresByOwner(W3.TC.txParamsDefaultDeploy(accounts[0]));
   //   expect(addresses.length).toBe(0);
   // });
 
   // it("getEventStores", async () => {
-  //   let addresses = await instance.getEventStores();
+  //   let addresses = await factory.getEventStores();
   //   expect(addresses.length).toBe(0);
   // });
 
   // it("eventCount", async () => {
-  //   let countAsBigNumber = await instance.eventCount();
+  //   let countAsBigNumber = await factory.eventCount();
   //   expect(countAsBigNumber.toNumber()).toBe(0);
   // });
 
   // it("setWhitelist", async () => {
-  //   const receipt = await instance.setWhitelist(accounts, W3.TC.txParamsDefaultDeploy(accounts[1]));
+  //   const receipt = await factory.setWhitelist(accounts, W3.TC.txParamsDefaultDeploy(accounts[1]));
   //   expect(receipt.logs.length).toBe(1);
   //   let fsa = EventTransformer.esEventToFSA(receipt.logs[0].args as any);
   //   expect(fsa.type).toBe("ES_WL_SET");
   // });
 
   // it("createEventStore", async () => {
-  //   const receipt = await instance.createEventStore(W3.TC.txParamsDefaultDeploy(accounts[0]));
+  //   const receipt = await factory.createEventStore(W3.TC.txParamsDefaultDeploy(accounts[0]));
 
   //   expect(receipt.logs.length).toBe(1);
   //   let fsa = EventTransformer.esEventToFSA(receipt.logs[0].args as any);
   //   expect(fsa.type).toBe("ES_CREATED");
 
-  //   let myStores = await instance.getEventStoresByOwner(W3.TC.txParamsDefaultDeploy(accounts[0]));
-  //   let allStores = await instance.getEventStores(W3.TC.txParamsDefaultDeploy(accounts[0]));
+  //   let eventStores = await factory.getEventStoresByOwner(W3.TC.txParamsDefaultDeploy(accounts[0]));
+  //   let allStores = await factory.getEventStores(W3.TC.txParamsDefaultDeploy(accounts[0]));
 
-  //   expect(myStores.length).toBe(1);
+  //   expect(eventStores.length).toBe(1);
   //   expect(allStores.length).toBe(1);
   // });
 
   // describe("writeEvent + readEvent ", () => {
   //   MarshalledEvents.map(event => {
   //     it(JSON.stringify(event), async () => {
-  //       let receipt = await instance.writeEvent(
+  //       let receipt = await factory.writeEvent(
   //         event.eventType,
   //         event.keyType,
   //         event.valueType,
@@ -181,7 +184,7 @@ describe('EventStoreFactory', () => {
   //       expect(writtenFSA.meta.keyType).toBe(event.keyType);
   //       expect(writtenFSA.meta.valueType).toBe(event.valueType);
 
-  //       let eventValues = await instance.readEvent(0, W3.TC.txParamsDefaultDeploy(accounts[0]));
+  //       let eventValues = await factory.readEvent(0, W3.TC.txParamsDefaultDeploy(accounts[0]));
   //       let readFSA = EventTransformer.arrayToFSA(eventValues);
 
   //       expect(writtenFSA.meta.keyType).toBe(event.keyType);
@@ -192,9 +195,9 @@ describe('EventStoreFactory', () => {
 
   // it("killEventStore", async () => {
 
-  //   let receipt = await instance.setWhitelist(accounts, W3.TC.txParamsDefaultDeploy(accounts[0]));
+  //   let receipt = await factory.setWhitelist(accounts, W3.TC.txParamsDefaultDeploy(accounts[0]));
 
-  //   receipt = await instance.createEventStore(W3.TC.txParamsDefaultDeploy(accounts[1]));
+  //   receipt = await factory.createEventStore(W3.TC.txParamsDefaultDeploy(accounts[1]));
 
   //   expect(receipt.logs.length).toBe(1);
   //   let fsa: any = EventTransformer.esEventToFSA(receipt.logs[0].args as any);
@@ -203,19 +206,19 @@ describe('EventStoreFactory', () => {
 
   //   console.log(fsa);
 
-  //   let myStores = await instance.getEventStoresByOwner(W3.TC.txParamsDefaultDeploy(accounts[1]));
+  //   let eventStores = await factory.getEventStoresByOwner(W3.TC.txParamsDefaultDeploy(accounts[1]));
 
-  //   let myStore = await EventStore.At(fsa.payload.value);
+  //   let eventStore = await EventStore.At(fsa.payload.value);
 
-  //   let myStoreOwner = await myStore.owner()
-  //   // console.log('myStoreOwner: ',myStoreOwner )
+  //   let eventStoreOwner = await eventStore.owner()
+  //   // console.log('eventStoreOwner: ',eventStoreOwner )
 
-  //   expect(myStores[0]).toBe(fsa.payload.value);
+  //   expect(eventStores[0]).toBe(fsa.payload.value);
 
-  //   // console.log('factory instance address: ', instance.address)
+  //   // console.log('factory factory address: ', factory.address)
   //   // console.log('es creator: ', accounts[1])
 
-  //   receipt = await instance.killEventStore(
+  //   receipt = await factory.killEventStore(
   //     fsa.payload.value,
   //     W3.TC.txParamsDefaultDeploy(accounts[0])
   //   );

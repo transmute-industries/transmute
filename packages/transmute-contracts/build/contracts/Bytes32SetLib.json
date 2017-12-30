@@ -262,7 +262,7 @@
       "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-contracts/contracts/TransmuteFramework/SetLib/Bytes32Set/Bytes32SetLib.sol",
       "exportedSymbols": {
         "Bytes32SetLib": [
-          2423
+          2701
         ]
       }
     },
@@ -276,7 +276,7 @@
             ".17"
           ]
         },
-        "id": 2048,
+        "id": 2326,
         "name": "PragmaDirective",
         "src": "0:24:11"
       },
@@ -292,17 +292,17 @@
           "documentation": "@title Library implementing an array type which allows O(1) lookups on values.\n @author Piper Merriam <pipermerriam@gmail.com>, Eric Olszewski <eolszewski@gmail.com>\n Adapted from https://github.com/ethpm/ethereum-indexed-enumerable-set-lib/blob/master/contracts/IndexedEnumerableSetLib.sol",
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            2423
+            2701
           ],
           "name": "Bytes32SetLib",
-          "scope": 2424
+          "scope": 2702
         },
         "children": [
           {
             "attributes": {
               "canonicalName": "Bytes32SetLib.Bytes32Set",
               "name": "Bytes32Set",
-              "scope": 2423,
+              "scope": 2701,
               "visibility": "public"
             },
             "children": [
@@ -310,7 +310,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "values",
-                  "scope": 2060,
+                  "scope": 2338,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "bytes32[] storage pointer",
@@ -329,17 +329,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2049,
+                        "id": 2327,
                         "name": "ElementaryTypeName",
                         "src": "378:7:11"
                       }
                     ],
-                    "id": 2050,
+                    "id": 2328,
                     "name": "ArrayTypeName",
                     "src": "378:9:11"
                   }
                 ],
-                "id": 2051,
+                "id": 2329,
                 "name": "VariableDeclaration",
                 "src": "378:16:11"
               },
@@ -347,7 +347,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "exists",
-                  "scope": 2060,
+                  "scope": 2338,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "mapping(bytes32 => bool)",
@@ -365,7 +365,7 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2052,
+                        "id": 2330,
                         "name": "ElementaryTypeName",
                         "src": "408:7:11"
                       },
@@ -374,17 +374,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 2053,
+                        "id": 2331,
                         "name": "ElementaryTypeName",
                         "src": "419:4:11"
                       }
                     ],
-                    "id": 2054,
+                    "id": 2332,
                     "name": "Mapping",
                     "src": "400:24:11"
                   }
                 ],
-                "id": 2055,
+                "id": 2333,
                 "name": "VariableDeclaration",
                 "src": "400:31:11"
               },
@@ -392,7 +392,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "indices",
-                  "scope": 2060,
+                  "scope": 2338,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "mapping(bytes32 => uint256)",
@@ -410,7 +410,7 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2056,
+                        "id": 2334,
                         "name": "ElementaryTypeName",
                         "src": "445:7:11"
                       },
@@ -419,22 +419,22 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2057,
+                        "id": 2335,
                         "name": "ElementaryTypeName",
                         "src": "456:4:11"
                       }
                     ],
-                    "id": 2058,
+                    "id": 2336,
                     "name": "Mapping",
                     "src": "437:24:11"
                   }
                 ],
-                "id": 2059,
+                "id": 2337,
                 "name": "VariableDeclaration",
                 "src": "437:32:11"
               }
             ],
-            "id": 2060,
+            "id": 2338,
             "name": "StructDefinition",
             "src": "354:120:11"
           },
@@ -450,7 +450,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2076,
+                      "scope": 2354,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
@@ -462,15 +462,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "Bytes32Set",
-                          "referencedDeclaration": 2060,
+                          "referencedDeclaration": 2338,
                           "type": "struct Bytes32SetLib.Bytes32Set storage pointer"
                         },
-                        "id": 2061,
+                        "id": 2339,
                         "name": "UserDefinedTypeName",
                         "src": "496:10:11"
                       }
                     ],
-                    "id": 2062,
+                    "id": 2340,
                     "name": "VariableDeclaration",
                     "src": "496:23:11"
                   },
@@ -478,7 +478,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "index",
-                      "scope": 2076,
+                      "scope": 2354,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -491,17 +491,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2063,
+                        "id": 2341,
                         "name": "ElementaryTypeName",
                         "src": "521:4:11"
                       }
                     ],
-                    "id": 2064,
+                    "id": 2342,
                     "name": "VariableDeclaration",
                     "src": "521:10:11"
                   }
                 ],
-                "id": 2065,
+                "id": 2343,
                 "name": "ParameterList",
                 "src": "495:37:11"
               },
@@ -535,11 +535,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 3565,
+                              "referencedDeclaration": 3843,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
-                            "id": 2066,
+                            "id": 2344,
                             "name": "Identifier",
                             "src": "539:7:11"
                           },
@@ -564,11 +564,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2064,
+                                  "referencedDeclaration": 2342,
                                   "type": "uint256",
                                   "value": "index"
                                 },
-                                "id": 2067,
+                                "id": 2345,
                                 "name": "Identifier",
                                 "src": "547:5:11"
                               },
@@ -592,7 +592,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "values",
-                                      "referencedDeclaration": 2051,
+                                      "referencedDeclaration": 2329,
                                       "type": "bytes32[] storage ref"
                                     },
                                     "children": [
@@ -602,51 +602,51 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 2062,
+                                          "referencedDeclaration": 2340,
                                           "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                           "value": "self"
                                         },
-                                        "id": 2068,
+                                        "id": 2346,
                                         "name": "Identifier",
                                         "src": "555:4:11"
                                       }
                                     ],
-                                    "id": 2069,
+                                    "id": 2347,
                                     "name": "MemberAccess",
                                     "src": "555:11:11"
                                   }
                                 ],
-                                "id": 2070,
+                                "id": 2348,
                                 "name": "MemberAccess",
                                 "src": "555:18:11"
                               }
                             ],
-                            "id": 2071,
+                            "id": 2349,
                             "name": "BinaryOperation",
                             "src": "547:26:11"
                           }
                         ],
-                        "id": 2072,
+                        "id": 2350,
                         "name": "FunctionCall",
                         "src": "539:35:11"
                       }
                     ],
-                    "id": 2073,
+                    "id": 2351,
                     "name": "ExpressionStatement",
                     "src": "539:35:11"
                   },
                   {
-                    "id": 2074,
+                    "id": 2352,
                     "name": "PlaceholderStatement",
                     "src": "580:1:11"
                   }
                 ],
-                "id": 2075,
+                "id": 2353,
                 "name": "Block",
                 "src": "533:53:11"
               }
             ],
-            "id": 2076,
+            "id": 2354,
             "name": "ModifierDefinition",
             "src": "478:108:11"
           },
@@ -662,7 +662,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2090,
+                      "scope": 2368,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
@@ -674,20 +674,20 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "Bytes32Set",
-                          "referencedDeclaration": 2060,
+                          "referencedDeclaration": 2338,
                           "type": "struct Bytes32SetLib.Bytes32Set storage pointer"
                         },
-                        "id": 2077,
+                        "id": 2355,
                         "name": "UserDefinedTypeName",
                         "src": "608:10:11"
                       }
                     ],
-                    "id": 2078,
+                    "id": 2356,
                     "name": "VariableDeclaration",
                     "src": "608:23:11"
                   }
                 ],
-                "id": 2079,
+                "id": 2357,
                 "name": "ParameterList",
                 "src": "607:25:11"
               },
@@ -721,11 +721,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 3565,
+                              "referencedDeclaration": 3843,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
-                            "id": 2080,
+                            "id": 2358,
                             "name": "Identifier",
                             "src": "639:7:11"
                           },
@@ -764,7 +764,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "values",
-                                      "referencedDeclaration": 2051,
+                                      "referencedDeclaration": 2329,
                                       "type": "bytes32[] storage ref"
                                     },
                                     "children": [
@@ -774,21 +774,21 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 2078,
+                                          "referencedDeclaration": 2356,
                                           "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                           "value": "self"
                                         },
-                                        "id": 2081,
+                                        "id": 2359,
                                         "name": "Identifier",
                                         "src": "647:4:11"
                                       }
                                     ],
-                                    "id": 2082,
+                                    "id": 2360,
                                     "name": "MemberAccess",
                                     "src": "647:11:11"
                                   }
                                 ],
-                                "id": 2083,
+                                "id": 2361,
                                 "name": "MemberAccess",
                                 "src": "647:18:11"
                               },
@@ -805,37 +805,37 @@
                                   "type": "int_const 0",
                                   "value": "0"
                                 },
-                                "id": 2084,
+                                "id": 2362,
                                 "name": "Literal",
                                 "src": "669:1:11"
                               }
                             ],
-                            "id": 2085,
+                            "id": 2363,
                             "name": "BinaryOperation",
                             "src": "647:23:11"
                           }
                         ],
-                        "id": 2086,
+                        "id": 2364,
                         "name": "FunctionCall",
                         "src": "639:32:11"
                       }
                     ],
-                    "id": 2087,
+                    "id": 2365,
                     "name": "ExpressionStatement",
                     "src": "639:32:11"
                   },
                   {
-                    "id": 2088,
+                    "id": 2366,
                     "name": "PlaceholderStatement",
                     "src": "677:1:11"
                   }
                 ],
-                "id": 2089,
+                "id": 2367,
                 "name": "Block",
                 "src": "633:50:11"
               }
             ],
-            "id": 2090,
+            "id": 2368,
             "name": "ModifierDefinition",
             "src": "590:93:11"
           },
@@ -846,7 +846,7 @@
               "isConstructor": false,
               "name": "get",
               "payable": false,
-              "scope": 2423,
+              "scope": 2701,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -858,7 +858,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2109,
+                      "scope": 2387,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
@@ -870,15 +870,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "Bytes32Set",
-                          "referencedDeclaration": 2060,
+                          "referencedDeclaration": 2338,
                           "type": "struct Bytes32SetLib.Bytes32Set storage pointer"
                         },
-                        "id": 2091,
+                        "id": 2369,
                         "name": "UserDefinedTypeName",
                         "src": "700:10:11"
                       }
                     ],
-                    "id": 2092,
+                    "id": 2370,
                     "name": "VariableDeclaration",
                     "src": "700:23:11"
                   },
@@ -886,7 +886,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "index",
-                      "scope": 2109,
+                      "scope": 2387,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -899,17 +899,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2093,
+                        "id": 2371,
                         "name": "ElementaryTypeName",
                         "src": "725:4:11"
                       }
                     ],
-                    "id": 2094,
+                    "id": 2372,
                     "name": "VariableDeclaration",
                     "src": "725:10:11"
                   }
                 ],
-                "id": 2095,
+                "id": 2373,
                 "name": "ParameterList",
                 "src": "699:37:11"
               },
@@ -919,7 +919,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2109,
+                      "scope": 2387,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -932,17 +932,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2100,
+                        "id": 2378,
                         "name": "ElementaryTypeName",
                         "src": "780:7:11"
                       }
                     ],
-                    "id": 2101,
+                    "id": 2379,
                     "name": "VariableDeclaration",
                     "src": "780:7:11"
                   }
                 ],
-                "id": 2102,
+                "id": 2380,
                 "name": "ParameterList",
                 "src": "779:9:11"
               },
@@ -954,11 +954,11 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2076,
+                      "referencedDeclaration": 2354,
                       "type": "modifier (struct Bytes32SetLib.Bytes32Set storage pointer,uint256)",
                       "value": "inBounds"
                     },
-                    "id": 2096,
+                    "id": 2374,
                     "name": "Identifier",
                     "src": "749:8:11"
                   },
@@ -968,11 +968,11 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2092,
+                      "referencedDeclaration": 2370,
                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                       "value": "self"
                     },
-                    "id": 2097,
+                    "id": 2375,
                     "name": "Identifier",
                     "src": "758:4:11"
                   },
@@ -982,16 +982,16 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2094,
+                      "referencedDeclaration": 2372,
                       "type": "uint256",
                       "value": "index"
                     },
-                    "id": 2098,
+                    "id": 2376,
                     "name": "Identifier",
                     "src": "764:5:11"
                   }
                 ],
-                "id": 2099,
+                "id": 2377,
                 "name": "ModifierInvocation",
                 "src": "749:21:11"
               },
@@ -999,7 +999,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2102
+                      "functionReturnParameters": 2380
                     },
                     "children": [
                       {
@@ -1020,7 +1020,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "values",
-                              "referencedDeclaration": 2051,
+                              "referencedDeclaration": 2329,
                               "type": "bytes32[] storage ref"
                             },
                             "children": [
@@ -1030,16 +1030,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2092,
+                                  "referencedDeclaration": 2370,
                                   "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                   "value": "self"
                                 },
-                                "id": 2103,
+                                "id": 2381,
                                 "name": "Identifier",
                                 "src": "802:4:11"
                               }
                             ],
-                            "id": 2104,
+                            "id": 2382,
                             "name": "MemberAccess",
                             "src": "802:11:11"
                           },
@@ -1049,31 +1049,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2094,
+                              "referencedDeclaration": 2372,
                               "type": "uint256",
                               "value": "index"
                             },
-                            "id": 2105,
+                            "id": 2383,
                             "name": "Identifier",
                             "src": "814:5:11"
                           }
                         ],
-                        "id": 2106,
+                        "id": 2384,
                         "name": "IndexAccess",
                         "src": "802:18:11"
                       }
                     ],
-                    "id": 2107,
+                    "id": 2385,
                     "name": "Return",
                     "src": "795:25:11"
                   }
                 ],
-                "id": 2108,
+                "id": 2386,
                 "name": "Block",
                 "src": "789:36:11"
               }
             ],
-            "id": 2109,
+            "id": 2387,
             "name": "FunctionDefinition",
             "src": "687:138:11"
           },
@@ -1084,7 +1084,7 @@
               "isConstructor": false,
               "name": "set",
               "payable": false,
-              "scope": 2423,
+              "scope": 2701,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -1096,7 +1096,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2158,
+                      "scope": 2436,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
@@ -1108,15 +1108,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "Bytes32Set",
-                          "referencedDeclaration": 2060,
+                          "referencedDeclaration": 2338,
                           "type": "struct Bytes32SetLib.Bytes32Set storage pointer"
                         },
-                        "id": 2110,
+                        "id": 2388,
                         "name": "UserDefinedTypeName",
                         "src": "842:10:11"
                       }
                     ],
-                    "id": 2111,
+                    "id": 2389,
                     "name": "VariableDeclaration",
                     "src": "842:23:11"
                   },
@@ -1124,7 +1124,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "index",
-                      "scope": 2158,
+                      "scope": 2436,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1137,12 +1137,12 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2112,
+                        "id": 2390,
                         "name": "ElementaryTypeName",
                         "src": "867:4:11"
                       }
                     ],
-                    "id": 2113,
+                    "id": 2391,
                     "name": "VariableDeclaration",
                     "src": "867:10:11"
                   },
@@ -1150,7 +1150,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "value",
-                      "scope": 2158,
+                      "scope": 2436,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -1163,17 +1163,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2114,
+                        "id": 2392,
                         "name": "ElementaryTypeName",
                         "src": "879:7:11"
                       }
                     ],
-                    "id": 2115,
+                    "id": 2393,
                     "name": "VariableDeclaration",
                     "src": "879:13:11"
                   }
                 ],
-                "id": 2116,
+                "id": 2394,
                 "name": "ParameterList",
                 "src": "841:52:11"
               },
@@ -1183,7 +1183,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2158,
+                      "scope": 2436,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -1196,17 +1196,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 2121,
+                        "id": 2399,
                         "name": "ElementaryTypeName",
                         "src": "932:4:11"
                       }
                     ],
-                    "id": 2122,
+                    "id": 2400,
                     "name": "VariableDeclaration",
                     "src": "932:4:11"
                   }
                 ],
-                "id": 2123,
+                "id": 2401,
                 "name": "ParameterList",
                 "src": "931:6:11"
               },
@@ -1218,11 +1218,11 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2076,
+                      "referencedDeclaration": 2354,
                       "type": "modifier (struct Bytes32SetLib.Bytes32Set storage pointer,uint256)",
                       "value": "inBounds"
                     },
-                    "id": 2117,
+                    "id": 2395,
                     "name": "Identifier",
                     "src": "901:8:11"
                   },
@@ -1232,11 +1232,11 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2111,
+                      "referencedDeclaration": 2389,
                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                       "value": "self"
                     },
-                    "id": 2118,
+                    "id": 2396,
                     "name": "Identifier",
                     "src": "910:4:11"
                   },
@@ -1246,16 +1246,16 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2113,
+                      "referencedDeclaration": 2391,
                       "type": "uint256",
                       "value": "index"
                     },
-                    "id": 2119,
+                    "id": 2397,
                     "name": "Identifier",
                     "src": "916:5:11"
                   }
                 ],
-                "id": 2120,
+                "id": 2398,
                 "name": "ModifierInvocation",
                 "src": "901:21:11"
               },
@@ -1284,7 +1284,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "exists",
-                              "referencedDeclaration": 2055,
+                              "referencedDeclaration": 2333,
                               "type": "mapping(bytes32 => bool)"
                             },
                             "children": [
@@ -1294,16 +1294,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2111,
+                                  "referencedDeclaration": 2389,
                                   "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                   "value": "self"
                                 },
-                                "id": 2124,
+                                "id": 2402,
                                 "name": "Identifier",
                                 "src": "948:4:11"
                               }
                             ],
-                            "id": 2125,
+                            "id": 2403,
                             "name": "MemberAccess",
                             "src": "948:11:11"
                           },
@@ -1313,22 +1313,22 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2115,
+                              "referencedDeclaration": 2393,
                               "type": "bytes32",
                               "value": "value"
                             },
-                            "id": 2126,
+                            "id": 2404,
                             "name": "Identifier",
                             "src": "960:5:11"
                           }
                         ],
-                        "id": 2127,
+                        "id": 2405,
                         "name": "IndexAccess",
                         "src": "948:18:11"
                       },
                       {
                         "attributes": {
-                          "functionReturnParameters": 2123
+                          "functionReturnParameters": 2401
                         },
                         "children": [
                           {
@@ -1344,17 +1344,17 @@
                               "type": "bool",
                               "value": "false"
                             },
-                            "id": 2128,
+                            "id": 2406,
                             "name": "Literal",
                             "src": "981:5:11"
                           }
                         ],
-                        "id": 2129,
+                        "id": 2407,
                         "name": "Return",
                         "src": "974:12:11"
                       }
                     ],
-                    "id": 2130,
+                    "id": 2408,
                     "name": "IfStatement",
                     "src": "944:42:11"
                   },
@@ -1389,7 +1389,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "values",
-                                  "referencedDeclaration": 2051,
+                                  "referencedDeclaration": 2329,
                                   "type": "bytes32[] storage ref"
                                 },
                                 "children": [
@@ -1399,16 +1399,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2111,
+                                      "referencedDeclaration": 2389,
                                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2131,
+                                    "id": 2409,
                                     "name": "Identifier",
                                     "src": "992:4:11"
                                   }
                                 ],
-                                "id": 2134,
+                                "id": 2412,
                                 "name": "MemberAccess",
                                 "src": "992:11:11"
                               },
@@ -1418,16 +1418,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2113,
+                                  "referencedDeclaration": 2391,
                                   "type": "uint256",
                                   "value": "index"
                                 },
-                                "id": 2133,
+                                "id": 2411,
                                 "name": "Identifier",
                                 "src": "1004:5:11"
                               }
                             ],
-                            "id": 2135,
+                            "id": 2413,
                             "name": "IndexAccess",
                             "src": "992:18:11"
                           },
@@ -1437,21 +1437,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2115,
+                              "referencedDeclaration": 2393,
                               "type": "bytes32",
                               "value": "value"
                             },
-                            "id": 2136,
+                            "id": 2414,
                             "name": "Identifier",
                             "src": "1013:5:11"
                           }
                         ],
-                        "id": 2137,
+                        "id": 2415,
                         "name": "Assignment",
                         "src": "992:26:11"
                       }
                     ],
-                    "id": 2138,
+                    "id": 2416,
                     "name": "ExpressionStatement",
                     "src": "992:26:11"
                   },
@@ -1486,7 +1486,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "exists",
-                                  "referencedDeclaration": 2055,
+                                  "referencedDeclaration": 2333,
                                   "type": "mapping(bytes32 => bool)"
                                 },
                                 "children": [
@@ -1496,16 +1496,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2111,
+                                      "referencedDeclaration": 2389,
                                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2139,
+                                    "id": 2417,
                                     "name": "Identifier",
                                     "src": "1024:4:11"
                                   }
                                 ],
-                                "id": 2142,
+                                "id": 2420,
                                 "name": "MemberAccess",
                                 "src": "1024:11:11"
                               },
@@ -1515,16 +1515,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2115,
+                                  "referencedDeclaration": 2393,
                                   "type": "bytes32",
                                   "value": "value"
                                 },
-                                "id": 2141,
+                                "id": 2419,
                                 "name": "Identifier",
                                 "src": "1036:5:11"
                               }
                             ],
-                            "id": 2143,
+                            "id": 2421,
                             "name": "IndexAccess",
                             "src": "1024:18:11"
                           },
@@ -1541,17 +1541,17 @@
                               "type": "bool",
                               "value": "true"
                             },
-                            "id": 2144,
+                            "id": 2422,
                             "name": "Literal",
                             "src": "1045:4:11"
                           }
                         ],
-                        "id": 2145,
+                        "id": 2423,
                         "name": "Assignment",
                         "src": "1024:25:11"
                       }
                     ],
-                    "id": 2146,
+                    "id": 2424,
                     "name": "ExpressionStatement",
                     "src": "1024:25:11"
                   },
@@ -1586,7 +1586,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "indices",
-                                  "referencedDeclaration": 2059,
+                                  "referencedDeclaration": 2337,
                                   "type": "mapping(bytes32 => uint256)"
                                 },
                                 "children": [
@@ -1596,16 +1596,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2111,
+                                      "referencedDeclaration": 2389,
                                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2147,
+                                    "id": 2425,
                                     "name": "Identifier",
                                     "src": "1055:4:11"
                                   }
                                 ],
-                                "id": 2150,
+                                "id": 2428,
                                 "name": "MemberAccess",
                                 "src": "1055:12:11"
                               },
@@ -1615,16 +1615,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2115,
+                                  "referencedDeclaration": 2393,
                                   "type": "bytes32",
                                   "value": "value"
                                 },
-                                "id": 2149,
+                                "id": 2427,
                                 "name": "Identifier",
                                 "src": "1068:5:11"
                               }
                             ],
-                            "id": 2151,
+                            "id": 2429,
                             "name": "IndexAccess",
                             "src": "1055:19:11"
                           },
@@ -1634,27 +1634,27 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2113,
+                              "referencedDeclaration": 2391,
                               "type": "uint256",
                               "value": "index"
                             },
-                            "id": 2152,
+                            "id": 2430,
                             "name": "Identifier",
                             "src": "1077:5:11"
                           }
                         ],
-                        "id": 2153,
+                        "id": 2431,
                         "name": "Assignment",
                         "src": "1055:27:11"
                       }
                     ],
-                    "id": 2154,
+                    "id": 2432,
                     "name": "ExpressionStatement",
                     "src": "1055:27:11"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 2123
+                      "functionReturnParameters": 2401
                     },
                     "children": [
                       {
@@ -1670,22 +1670,22 @@
                           "type": "bool",
                           "value": "true"
                         },
-                        "id": 2155,
+                        "id": 2433,
                         "name": "Literal",
                         "src": "1095:4:11"
                       }
                     ],
-                    "id": 2156,
+                    "id": 2434,
                     "name": "Return",
                     "src": "1088:11:11"
                   }
                 ],
-                "id": 2157,
+                "id": 2435,
                 "name": "Block",
                 "src": "938:166:11"
               }
             ],
-            "id": 2158,
+            "id": 2436,
             "name": "FunctionDefinition",
             "src": "829:275:11"
           },
@@ -1699,7 +1699,7 @@
               ],
               "name": "add",
               "payable": false,
-              "scope": 2423,
+              "scope": 2701,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -1711,7 +1711,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2203,
+                      "scope": 2481,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
@@ -1723,15 +1723,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "Bytes32Set",
-                          "referencedDeclaration": 2060,
+                          "referencedDeclaration": 2338,
                           "type": "struct Bytes32SetLib.Bytes32Set storage pointer"
                         },
-                        "id": 2159,
+                        "id": 2437,
                         "name": "UserDefinedTypeName",
                         "src": "1121:10:11"
                       }
                     ],
-                    "id": 2160,
+                    "id": 2438,
                     "name": "VariableDeclaration",
                     "src": "1121:23:11"
                   },
@@ -1739,7 +1739,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "value",
-                      "scope": 2203,
+                      "scope": 2481,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -1752,17 +1752,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2161,
+                        "id": 2439,
                         "name": "ElementaryTypeName",
                         "src": "1146:7:11"
                       }
                     ],
-                    "id": 2162,
+                    "id": 2440,
                     "name": "VariableDeclaration",
                     "src": "1146:13:11"
                   }
                 ],
-                "id": 2163,
+                "id": 2441,
                 "name": "ParameterList",
                 "src": "1120:40:11"
               },
@@ -1772,7 +1772,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2203,
+                      "scope": 2481,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -1785,17 +1785,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 2164,
+                        "id": 2442,
                         "name": "ElementaryTypeName",
                         "src": "1177:4:11"
                       }
                     ],
-                    "id": 2165,
+                    "id": 2443,
                     "name": "VariableDeclaration",
                     "src": "1177:4:11"
                   }
                 ],
-                "id": 2166,
+                "id": 2444,
                 "name": "ParameterList",
                 "src": "1176:6:11"
               },
@@ -1824,7 +1824,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "exists",
-                              "referencedDeclaration": 2055,
+                              "referencedDeclaration": 2333,
                               "type": "mapping(bytes32 => bool)"
                             },
                             "children": [
@@ -1834,16 +1834,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2160,
+                                  "referencedDeclaration": 2438,
                                   "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                   "value": "self"
                                 },
-                                "id": 2167,
+                                "id": 2445,
                                 "name": "Identifier",
                                 "src": "1193:4:11"
                               }
                             ],
-                            "id": 2168,
+                            "id": 2446,
                             "name": "MemberAccess",
                             "src": "1193:11:11"
                           },
@@ -1853,22 +1853,22 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2162,
+                              "referencedDeclaration": 2440,
                               "type": "bytes32",
                               "value": "value"
                             },
-                            "id": 2169,
+                            "id": 2447,
                             "name": "Identifier",
                             "src": "1205:5:11"
                           }
                         ],
-                        "id": 2170,
+                        "id": 2448,
                         "name": "IndexAccess",
                         "src": "1193:18:11"
                       },
                       {
                         "attributes": {
-                          "functionReturnParameters": 2166
+                          "functionReturnParameters": 2444
                         },
                         "children": [
                           {
@@ -1884,17 +1884,17 @@
                               "type": "bool",
                               "value": "false"
                             },
-                            "id": 2171,
+                            "id": 2449,
                             "name": "Literal",
                             "src": "1226:5:11"
                           }
                         ],
-                        "id": 2172,
+                        "id": 2450,
                         "name": "Return",
                         "src": "1219:12:11"
                       }
                     ],
-                    "id": 2173,
+                    "id": 2451,
                     "name": "IfStatement",
                     "src": "1189:42:11"
                   },
@@ -1929,7 +1929,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "indices",
-                                  "referencedDeclaration": 2059,
+                                  "referencedDeclaration": 2337,
                                   "type": "mapping(bytes32 => uint256)"
                                 },
                                 "children": [
@@ -1939,16 +1939,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2160,
+                                      "referencedDeclaration": 2438,
                                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2174,
+                                    "id": 2452,
                                     "name": "Identifier",
                                     "src": "1237:4:11"
                                   }
                                 ],
-                                "id": 2177,
+                                "id": 2455,
                                 "name": "MemberAccess",
                                 "src": "1237:12:11"
                               },
@@ -1958,16 +1958,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2162,
+                                  "referencedDeclaration": 2440,
                                   "type": "bytes32",
                                   "value": "value"
                                 },
-                                "id": 2176,
+                                "id": 2454,
                                 "name": "Identifier",
                                 "src": "1250:5:11"
                               }
                             ],
-                            "id": 2178,
+                            "id": 2456,
                             "name": "IndexAccess",
                             "src": "1237:19:11"
                           },
@@ -1991,7 +1991,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "values",
-                                  "referencedDeclaration": 2051,
+                                  "referencedDeclaration": 2329,
                                   "type": "bytes32[] storage ref"
                                 },
                                 "children": [
@@ -2001,31 +2001,31 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2160,
+                                      "referencedDeclaration": 2438,
                                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2179,
+                                    "id": 2457,
                                     "name": "Identifier",
                                     "src": "1259:4:11"
                                   }
                                 ],
-                                "id": 2180,
+                                "id": 2458,
                                 "name": "MemberAccess",
                                 "src": "1259:11:11"
                               }
                             ],
-                            "id": 2181,
+                            "id": 2459,
                             "name": "MemberAccess",
                             "src": "1259:18:11"
                           }
                         ],
-                        "id": 2182,
+                        "id": 2460,
                         "name": "Assignment",
                         "src": "1237:40:11"
                       }
                     ],
-                    "id": 2183,
+                    "id": 2461,
                     "name": "ExpressionStatement",
                     "src": "1237:40:11"
                   },
@@ -2071,7 +2071,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "values",
-                                  "referencedDeclaration": 2051,
+                                  "referencedDeclaration": 2329,
                                   "type": "bytes32[] storage ref"
                                 },
                                 "children": [
@@ -2081,21 +2081,21 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2160,
+                                      "referencedDeclaration": 2438,
                                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2184,
+                                    "id": 2462,
                                     "name": "Identifier",
                                     "src": "1283:4:11"
                                   }
                                 ],
-                                "id": 2187,
+                                "id": 2465,
                                 "name": "MemberAccess",
                                 "src": "1283:11:11"
                               }
                             ],
-                            "id": 2188,
+                            "id": 2466,
                             "name": "MemberAccess",
                             "src": "1283:16:11"
                           },
@@ -2105,21 +2105,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2162,
+                              "referencedDeclaration": 2440,
                               "type": "bytes32",
                               "value": "value"
                             },
-                            "id": 2189,
+                            "id": 2467,
                             "name": "Identifier",
                             "src": "1300:5:11"
                           }
                         ],
-                        "id": 2190,
+                        "id": 2468,
                         "name": "FunctionCall",
                         "src": "1283:23:11"
                       }
                     ],
-                    "id": 2191,
+                    "id": 2469,
                     "name": "ExpressionStatement",
                     "src": "1283:23:11"
                   },
@@ -2154,7 +2154,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "exists",
-                                  "referencedDeclaration": 2055,
+                                  "referencedDeclaration": 2333,
                                   "type": "mapping(bytes32 => bool)"
                                 },
                                 "children": [
@@ -2164,16 +2164,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2160,
+                                      "referencedDeclaration": 2438,
                                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2192,
+                                    "id": 2470,
                                     "name": "Identifier",
                                     "src": "1312:4:11"
                                   }
                                 ],
-                                "id": 2195,
+                                "id": 2473,
                                 "name": "MemberAccess",
                                 "src": "1312:11:11"
                               },
@@ -2183,16 +2183,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2162,
+                                  "referencedDeclaration": 2440,
                                   "type": "bytes32",
                                   "value": "value"
                                 },
-                                "id": 2194,
+                                "id": 2472,
                                 "name": "Identifier",
                                 "src": "1324:5:11"
                               }
                             ],
-                            "id": 2196,
+                            "id": 2474,
                             "name": "IndexAccess",
                             "src": "1312:18:11"
                           },
@@ -2209,23 +2209,23 @@
                               "type": "bool",
                               "value": "true"
                             },
-                            "id": 2197,
+                            "id": 2475,
                             "name": "Literal",
                             "src": "1333:4:11"
                           }
                         ],
-                        "id": 2198,
+                        "id": 2476,
                         "name": "Assignment",
                         "src": "1312:25:11"
                       }
                     ],
-                    "id": 2199,
+                    "id": 2477,
                     "name": "ExpressionStatement",
                     "src": "1312:25:11"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 2166
+                      "functionReturnParameters": 2444
                     },
                     "children": [
                       {
@@ -2241,22 +2241,22 @@
                           "type": "bool",
                           "value": "true"
                         },
-                        "id": 2200,
+                        "id": 2478,
                         "name": "Literal",
                         "src": "1350:4:11"
                       }
                     ],
-                    "id": 2201,
+                    "id": 2479,
                     "name": "Return",
                     "src": "1343:11:11"
                   }
                 ],
-                "id": 2202,
+                "id": 2480,
                 "name": "Block",
                 "src": "1183:176:11"
               }
             ],
-            "id": 2203,
+            "id": 2481,
             "name": "FunctionDefinition",
             "src": "1108:251:11"
           },
@@ -2270,7 +2270,7 @@
               ],
               "name": "remove",
               "payable": false,
-              "scope": 2423,
+              "scope": 2701,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -2282,7 +2282,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2235,
+                      "scope": 2513,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
@@ -2294,15 +2294,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "Bytes32Set",
-                          "referencedDeclaration": 2060,
+                          "referencedDeclaration": 2338,
                           "type": "struct Bytes32SetLib.Bytes32Set storage pointer"
                         },
-                        "id": 2204,
+                        "id": 2482,
                         "name": "UserDefinedTypeName",
                         "src": "1379:10:11"
                       }
                     ],
-                    "id": 2205,
+                    "id": 2483,
                     "name": "VariableDeclaration",
                     "src": "1379:23:11"
                   },
@@ -2310,7 +2310,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "value",
-                      "scope": 2235,
+                      "scope": 2513,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -2323,17 +2323,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2206,
+                        "id": 2484,
                         "name": "ElementaryTypeName",
                         "src": "1404:7:11"
                       }
                     ],
-                    "id": 2207,
+                    "id": 2485,
                     "name": "VariableDeclaration",
                     "src": "1404:13:11"
                   }
                 ],
-                "id": 2208,
+                "id": 2486,
                 "name": "ParameterList",
                 "src": "1378:40:11"
               },
@@ -2343,7 +2343,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2235,
+                      "scope": 2513,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -2356,17 +2356,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 2209,
+                        "id": 2487,
                         "name": "ElementaryTypeName",
                         "src": "1435:4:11"
                       }
                     ],
-                    "id": 2210,
+                    "id": 2488,
                     "name": "VariableDeclaration",
                     "src": "1435:4:11"
                   }
                 ],
-                "id": 2211,
+                "id": 2489,
                 "name": "ParameterList",
                 "src": "1434:6:11"
               },
@@ -2407,7 +2407,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "exists",
-                                  "referencedDeclaration": 2055,
+                                  "referencedDeclaration": 2333,
                                   "type": "mapping(bytes32 => bool)"
                                 },
                                 "children": [
@@ -2417,16 +2417,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2205,
+                                      "referencedDeclaration": 2483,
                                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2212,
+                                    "id": 2490,
                                     "name": "Identifier",
                                     "src": "1452:4:11"
                                   }
                                 ],
-                                "id": 2213,
+                                "id": 2491,
                                 "name": "MemberAccess",
                                 "src": "1452:11:11"
                               },
@@ -2436,27 +2436,27 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2207,
+                                  "referencedDeclaration": 2485,
                                   "type": "bytes32",
                                   "value": "value"
                                 },
-                                "id": 2214,
+                                "id": 2492,
                                 "name": "Identifier",
                                 "src": "1464:5:11"
                               }
                             ],
-                            "id": 2215,
+                            "id": 2493,
                             "name": "IndexAccess",
                             "src": "1452:18:11"
                           }
                         ],
-                        "id": 2216,
+                        "id": 2494,
                         "name": "UnaryOperation",
                         "src": "1451:19:11"
                       },
                       {
                         "attributes": {
-                          "functionReturnParameters": 2211
+                          "functionReturnParameters": 2489
                         },
                         "children": [
                           {
@@ -2472,24 +2472,24 @@
                               "type": "bool",
                               "value": "false"
                             },
-                            "id": 2217,
+                            "id": 2495,
                             "name": "Literal",
                             "src": "1485:5:11"
                           }
                         ],
-                        "id": 2218,
+                        "id": 2496,
                         "name": "Return",
                         "src": "1478:12:11"
                       }
                     ],
-                    "id": 2219,
+                    "id": 2497,
                     "name": "IfStatement",
                     "src": "1447:43:11"
                   },
                   {
                     "attributes": {
                       "assignments": [
-                        2221
+                        2499
                       ]
                     },
                     "children": [
@@ -2497,7 +2497,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "index",
-                          "scope": 2235,
+                          "scope": 2513,
                           "stateVariable": false,
                           "storageLocation": "default",
                           "type": "uint256",
@@ -2510,12 +2510,12 @@
                               "name": "uint",
                               "type": "uint256"
                             },
-                            "id": 2220,
+                            "id": 2498,
                             "name": "ElementaryTypeName",
                             "src": "1496:4:11"
                           }
                         ],
-                        "id": 2221,
+                        "id": 2499,
                         "name": "VariableDeclaration",
                         "src": "1496:10:11"
                       },
@@ -2538,7 +2538,7 @@
                             "attributes": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_struct$_Bytes32Set_$2060_storage_ptr",
+                                  "typeIdentifier": "t_struct$_Bytes32Set_$2338_storage_ptr",
                                   "typeString": "struct Bytes32SetLib.Bytes32Set storage pointer"
                                 },
                                 {
@@ -2549,11 +2549,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2395,
+                              "referencedDeclaration": 2673,
                               "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer,bytes32) view returns (uint256)",
                               "value": "indexOf"
                             },
-                            "id": 2222,
+                            "id": 2500,
                             "name": "Identifier",
                             "src": "1509:7:11"
                           },
@@ -2563,11 +2563,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2205,
+                              "referencedDeclaration": 2483,
                               "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                               "value": "self"
                             },
-                            "id": 2223,
+                            "id": 2501,
                             "name": "Identifier",
                             "src": "1517:4:11"
                           },
@@ -2577,21 +2577,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2207,
+                              "referencedDeclaration": 2485,
                               "type": "bytes32",
                               "value": "value"
                             },
-                            "id": 2224,
+                            "id": 2502,
                             "name": "Identifier",
                             "src": "1523:5:11"
                           }
                         ],
-                        "id": 2225,
+                        "id": 2503,
                         "name": "FunctionCall",
                         "src": "1509:20:11"
                       }
                     ],
-                    "id": 2226,
+                    "id": 2504,
                     "name": "VariableDeclarationStatement",
                     "src": "1496:33:11"
                   },
@@ -2616,7 +2616,7 @@
                             "attributes": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_struct$_Bytes32Set_$2060_storage_ptr",
+                                  "typeIdentifier": "t_struct$_Bytes32Set_$2338_storage_ptr",
                                   "typeString": "struct Bytes32SetLib.Bytes32Set storage pointer"
                                 },
                                 {
@@ -2627,11 +2627,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2315,
+                              "referencedDeclaration": 2593,
                               "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer,uint256) returns (bytes32)",
                               "value": "pop"
                             },
-                            "id": 2227,
+                            "id": 2505,
                             "name": "Identifier",
                             "src": "1535:3:11"
                           },
@@ -2641,11 +2641,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2205,
+                              "referencedDeclaration": 2483,
                               "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                               "value": "self"
                             },
-                            "id": 2228,
+                            "id": 2506,
                             "name": "Identifier",
                             "src": "1539:4:11"
                           },
@@ -2655,27 +2655,27 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2221,
+                              "referencedDeclaration": 2499,
                               "type": "uint256",
                               "value": "index"
                             },
-                            "id": 2229,
+                            "id": 2507,
                             "name": "Identifier",
                             "src": "1545:5:11"
                           }
                         ],
-                        "id": 2230,
+                        "id": 2508,
                         "name": "FunctionCall",
                         "src": "1535:16:11"
                       }
                     ],
-                    "id": 2231,
+                    "id": 2509,
                     "name": "ExpressionStatement",
                     "src": "1535:16:11"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 2211
+                      "functionReturnParameters": 2489
                     },
                     "children": [
                       {
@@ -2691,22 +2691,22 @@
                           "type": "bool",
                           "value": "true"
                         },
-                        "id": 2232,
+                        "id": 2510,
                         "name": "Literal",
                         "src": "1564:4:11"
                       }
                     ],
-                    "id": 2233,
+                    "id": 2511,
                     "name": "Return",
                     "src": "1557:11:11"
                   }
                 ],
-                "id": 2234,
+                "id": 2512,
                 "name": "Block",
                 "src": "1441:132:11"
               }
             ],
-            "id": 2235,
+            "id": 2513,
             "name": "FunctionDefinition",
             "src": "1363:210:11"
           },
@@ -2717,7 +2717,7 @@
               "isConstructor": false,
               "name": "pop",
               "payable": false,
-              "scope": 2423,
+              "scope": 2701,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -2729,7 +2729,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2315,
+                      "scope": 2593,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
@@ -2741,15 +2741,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "Bytes32Set",
-                          "referencedDeclaration": 2060,
+                          "referencedDeclaration": 2338,
                           "type": "struct Bytes32SetLib.Bytes32Set storage pointer"
                         },
-                        "id": 2236,
+                        "id": 2514,
                         "name": "UserDefinedTypeName",
                         "src": "1590:10:11"
                       }
                     ],
-                    "id": 2237,
+                    "id": 2515,
                     "name": "VariableDeclaration",
                     "src": "1590:23:11"
                   },
@@ -2757,7 +2757,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "index",
-                      "scope": 2315,
+                      "scope": 2593,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2770,17 +2770,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2238,
+                        "id": 2516,
                         "name": "ElementaryTypeName",
                         "src": "1615:4:11"
                       }
                     ],
-                    "id": 2239,
+                    "id": 2517,
                     "name": "VariableDeclaration",
                     "src": "1615:10:11"
                   }
                 ],
-                "id": 2240,
+                "id": 2518,
                 "name": "ParameterList",
                 "src": "1589:37:11"
               },
@@ -2790,7 +2790,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2315,
+                      "scope": 2593,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -2803,17 +2803,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2245,
+                        "id": 2523,
                         "name": "ElementaryTypeName",
                         "src": "1665:7:11"
                       }
                     ],
-                    "id": 2246,
+                    "id": 2524,
                     "name": "VariableDeclaration",
                     "src": "1665:7:11"
                   }
                 ],
-                "id": 2247,
+                "id": 2525,
                 "name": "ParameterList",
                 "src": "1664:9:11"
               },
@@ -2825,11 +2825,11 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2076,
+                      "referencedDeclaration": 2354,
                       "type": "modifier (struct Bytes32SetLib.Bytes32Set storage pointer,uint256)",
                       "value": "inBounds"
                     },
-                    "id": 2241,
+                    "id": 2519,
                     "name": "Identifier",
                     "src": "1634:8:11"
                   },
@@ -2839,11 +2839,11 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2237,
+                      "referencedDeclaration": 2515,
                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                       "value": "self"
                     },
-                    "id": 2242,
+                    "id": 2520,
                     "name": "Identifier",
                     "src": "1643:4:11"
                   },
@@ -2853,16 +2853,16 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2239,
+                      "referencedDeclaration": 2517,
                       "type": "uint256",
                       "value": "index"
                     },
-                    "id": 2243,
+                    "id": 2521,
                     "name": "Identifier",
                     "src": "1649:5:11"
                   }
                 ],
-                "id": 2244,
+                "id": 2522,
                 "name": "ModifierInvocation",
                 "src": "1634:21:11"
               },
@@ -2871,7 +2871,7 @@
                   {
                     "attributes": {
                       "assignments": [
-                        2249
+                        2527
                       ]
                     },
                     "children": [
@@ -2879,7 +2879,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "value",
-                          "scope": 2315,
+                          "scope": 2593,
                           "stateVariable": false,
                           "storageLocation": "default",
                           "type": "bytes32",
@@ -2892,12 +2892,12 @@
                               "name": "bytes32",
                               "type": "bytes32"
                             },
-                            "id": 2248,
+                            "id": 2526,
                             "name": "ElementaryTypeName",
                             "src": "1680:7:11"
                           }
                         ],
-                        "id": 2249,
+                        "id": 2527,
                         "name": "VariableDeclaration",
                         "src": "1680:13:11"
                       },
@@ -2920,7 +2920,7 @@
                             "attributes": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_struct$_Bytes32Set_$2060_storage_ptr",
+                                  "typeIdentifier": "t_struct$_Bytes32Set_$2338_storage_ptr",
                                   "typeString": "struct Bytes32SetLib.Bytes32Set storage pointer"
                                 },
                                 {
@@ -2931,11 +2931,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2109,
+                              "referencedDeclaration": 2387,
                               "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer,uint256) view returns (bytes32)",
                               "value": "get"
                             },
-                            "id": 2250,
+                            "id": 2528,
                             "name": "Identifier",
                             "src": "1696:3:11"
                           },
@@ -2945,11 +2945,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2237,
+                              "referencedDeclaration": 2515,
                               "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                               "value": "self"
                             },
-                            "id": 2251,
+                            "id": 2529,
                             "name": "Identifier",
                             "src": "1700:4:11"
                           },
@@ -2959,21 +2959,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2239,
+                              "referencedDeclaration": 2517,
                               "type": "uint256",
                               "value": "index"
                             },
-                            "id": 2252,
+                            "id": 2530,
                             "name": "Identifier",
                             "src": "1706:5:11"
                           }
                         ],
-                        "id": 2253,
+                        "id": 2531,
                         "name": "FunctionCall",
                         "src": "1696:16:11"
                       }
                     ],
-                    "id": 2254,
+                    "id": 2532,
                     "name": "VariableDeclarationStatement",
                     "src": "1680:32:11"
                   },
@@ -3003,11 +3003,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2239,
+                              "referencedDeclaration": 2517,
                               "type": "uint256",
                               "value": "index"
                             },
-                            "id": 2255,
+                            "id": 2533,
                             "name": "Identifier",
                             "src": "1723:5:11"
                           },
@@ -3046,7 +3046,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "values",
-                                      "referencedDeclaration": 2051,
+                                      "referencedDeclaration": 2329,
                                       "type": "bytes32[] storage ref"
                                     },
                                     "children": [
@@ -3056,21 +3056,21 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 2237,
+                                          "referencedDeclaration": 2515,
                                           "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                           "value": "self"
                                         },
-                                        "id": 2256,
+                                        "id": 2534,
                                         "name": "Identifier",
                                         "src": "1732:4:11"
                                       }
                                     ],
-                                    "id": 2257,
+                                    "id": 2535,
                                     "name": "MemberAccess",
                                     "src": "1732:11:11"
                                   }
                                 ],
-                                "id": 2258,
+                                "id": 2536,
                                 "name": "MemberAccess",
                                 "src": "1732:18:11"
                               },
@@ -3087,17 +3087,17 @@
                                   "type": "int_const 1",
                                   "value": "1"
                                 },
-                                "id": 2259,
+                                "id": 2537,
                                 "name": "Literal",
                                 "src": "1753:1:11"
                               }
                             ],
-                            "id": 2260,
+                            "id": 2538,
                             "name": "BinaryOperation",
                             "src": "1732:22:11"
                           }
                         ],
-                        "id": 2261,
+                        "id": 2539,
                         "name": "BinaryOperation",
                         "src": "1723:31:11"
                       },
@@ -3106,7 +3106,7 @@
                           {
                             "attributes": {
                               "assignments": [
-                                2263
+                                2541
                               ]
                             },
                             "children": [
@@ -3114,7 +3114,7 @@
                                 "attributes": {
                                   "constant": false,
                                   "name": "lastValue",
-                                  "scope": 2315,
+                                  "scope": 2593,
                                   "stateVariable": false,
                                   "storageLocation": "default",
                                   "type": "bytes32",
@@ -3127,12 +3127,12 @@
                                       "name": "bytes32",
                                       "type": "bytes32"
                                     },
-                                    "id": 2262,
+                                    "id": 2540,
                                     "name": "ElementaryTypeName",
                                     "src": "1764:7:11"
                                   }
                                 ],
-                                "id": 2263,
+                                "id": 2541,
                                 "name": "VariableDeclaration",
                                 "src": "1764:17:11"
                               },
@@ -3155,18 +3155,18 @@
                                     "attributes": {
                                       "argumentTypes": [
                                         {
-                                          "typeIdentifier": "t_struct$_Bytes32Set_$2060_storage_ptr",
+                                          "typeIdentifier": "t_struct$_Bytes32Set_$2338_storage_ptr",
                                           "typeString": "struct Bytes32SetLib.Bytes32Set storage pointer"
                                         }
                                       ],
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2373,
+                                      "referencedDeclaration": 2651,
                                       "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer) view returns (bytes32)",
                                       "value": "last"
                                     },
-                                    "id": 2264,
+                                    "id": 2542,
                                     "name": "Identifier",
                                     "src": "1784:4:11"
                                   },
@@ -3176,21 +3176,21 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2237,
+                                      "referencedDeclaration": 2515,
                                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2265,
+                                    "id": 2543,
                                     "name": "Identifier",
                                     "src": "1789:4:11"
                                   }
                                 ],
-                                "id": 2266,
+                                "id": 2544,
                                 "name": "FunctionCall",
                                 "src": "1784:10:11"
                               }
                             ],
-                            "id": 2267,
+                            "id": 2545,
                             "name": "VariableDeclarationStatement",
                             "src": "1764:30:11"
                           },
@@ -3225,7 +3225,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "exists",
-                                          "referencedDeclaration": 2055,
+                                          "referencedDeclaration": 2333,
                                           "type": "mapping(bytes32 => bool)"
                                         },
                                         "children": [
@@ -3235,16 +3235,16 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 2237,
+                                              "referencedDeclaration": 2515,
                                               "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                               "value": "self"
                                             },
-                                            "id": 2268,
+                                            "id": 2546,
                                             "name": "Identifier",
                                             "src": "1802:4:11"
                                           }
                                         ],
-                                        "id": 2271,
+                                        "id": 2549,
                                         "name": "MemberAccess",
                                         "src": "1802:11:11"
                                       },
@@ -3254,16 +3254,16 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 2263,
+                                          "referencedDeclaration": 2541,
                                           "type": "bytes32",
                                           "value": "lastValue"
                                         },
-                                        "id": 2270,
+                                        "id": 2548,
                                         "name": "Identifier",
                                         "src": "1814:9:11"
                                       }
                                     ],
-                                    "id": 2272,
+                                    "id": 2550,
                                     "name": "IndexAccess",
                                     "src": "1802:22:11"
                                   },
@@ -3280,17 +3280,17 @@
                                       "type": "bool",
                                       "value": "false"
                                     },
-                                    "id": 2273,
+                                    "id": 2551,
                                     "name": "Literal",
                                     "src": "1827:5:11"
                                   }
                                 ],
-                                "id": 2274,
+                                "id": 2552,
                                 "name": "Assignment",
                                 "src": "1802:30:11"
                               }
                             ],
-                            "id": 2275,
+                            "id": 2553,
                             "name": "ExpressionStatement",
                             "src": "1802:30:11"
                           },
@@ -3315,7 +3315,7 @@
                                     "attributes": {
                                       "argumentTypes": [
                                         {
-                                          "typeIdentifier": "t_struct$_Bytes32Set_$2060_storage_ptr",
+                                          "typeIdentifier": "t_struct$_Bytes32Set_$2338_storage_ptr",
                                           "typeString": "struct Bytes32SetLib.Bytes32Set storage pointer"
                                         },
                                         {
@@ -3330,11 +3330,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2158,
+                                      "referencedDeclaration": 2436,
                                       "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer,uint256,bytes32) returns (bool)",
                                       "value": "set"
                                     },
-                                    "id": 2276,
+                                    "id": 2554,
                                     "name": "Identifier",
                                     "src": "1840:3:11"
                                   },
@@ -3344,11 +3344,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2237,
+                                      "referencedDeclaration": 2515,
                                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2277,
+                                    "id": 2555,
                                     "name": "Identifier",
                                     "src": "1844:4:11"
                                   },
@@ -3358,11 +3358,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2239,
+                                      "referencedDeclaration": 2517,
                                       "type": "uint256",
                                       "value": "index"
                                     },
-                                    "id": 2278,
+                                    "id": 2556,
                                     "name": "Identifier",
                                     "src": "1850:5:11"
                                   },
@@ -3372,21 +3372,21 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2263,
+                                      "referencedDeclaration": 2541,
                                       "type": "bytes32",
                                       "value": "lastValue"
                                     },
-                                    "id": 2279,
+                                    "id": 2557,
                                     "name": "Identifier",
                                     "src": "1857:9:11"
                                   }
                                 ],
-                                "id": 2280,
+                                "id": 2558,
                                 "name": "FunctionCall",
                                 "src": "1840:27:11"
                               }
                             ],
-                            "id": 2281,
+                            "id": 2559,
                             "name": "ExpressionStatement",
                             "src": "1840:27:11"
                           },
@@ -3421,7 +3421,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "indices",
-                                          "referencedDeclaration": 2059,
+                                          "referencedDeclaration": 2337,
                                           "type": "mapping(bytes32 => uint256)"
                                         },
                                         "children": [
@@ -3431,16 +3431,16 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 2237,
+                                              "referencedDeclaration": 2515,
                                               "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                               "value": "self"
                                             },
-                                            "id": 2282,
+                                            "id": 2560,
                                             "name": "Identifier",
                                             "src": "1875:4:11"
                                           }
                                         ],
-                                        "id": 2285,
+                                        "id": 2563,
                                         "name": "MemberAccess",
                                         "src": "1875:12:11"
                                       },
@@ -3450,16 +3450,16 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 2263,
+                                          "referencedDeclaration": 2541,
                                           "type": "bytes32",
                                           "value": "lastValue"
                                         },
-                                        "id": 2284,
+                                        "id": 2562,
                                         "name": "Identifier",
                                         "src": "1888:9:11"
                                       }
                                     ],
-                                    "id": 2286,
+                                    "id": 2564,
                                     "name": "IndexAccess",
                                     "src": "1875:23:11"
                                   },
@@ -3469,31 +3469,31 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2239,
+                                      "referencedDeclaration": 2517,
                                       "type": "uint256",
                                       "value": "index"
                                     },
-                                    "id": 2287,
+                                    "id": 2565,
                                     "name": "Identifier",
                                     "src": "1901:5:11"
                                   }
                                 ],
-                                "id": 2288,
+                                "id": 2566,
                                 "name": "Assignment",
                                 "src": "1875:31:11"
                               }
                             ],
-                            "id": 2289,
+                            "id": 2567,
                             "name": "ExpressionStatement",
                             "src": "1875:31:11"
                           }
                         ],
-                        "id": 2290,
+                        "id": 2568,
                         "name": "Block",
                         "src": "1756:157:11"
                       }
                     ],
-                    "id": 2291,
+                    "id": 2569,
                     "name": "IfStatement",
                     "src": "1719:194:11"
                   },
@@ -3530,7 +3530,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "values",
-                                  "referencedDeclaration": 2051,
+                                  "referencedDeclaration": 2329,
                                   "type": "bytes32[] storage ref"
                                 },
                                 "children": [
@@ -3540,21 +3540,21 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2237,
+                                      "referencedDeclaration": 2515,
                                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2292,
+                                    "id": 2570,
                                     "name": "Identifier",
                                     "src": "1918:4:11"
                                   }
                                 ],
-                                "id": 2295,
+                                "id": 2573,
                                 "name": "MemberAccess",
                                 "src": "1918:11:11"
                               }
                             ],
-                            "id": 2296,
+                            "id": 2574,
                             "name": "MemberAccess",
                             "src": "1918:18:11"
                           },
@@ -3571,17 +3571,17 @@
                               "type": "int_const 1",
                               "value": "1"
                             },
-                            "id": 2297,
+                            "id": 2575,
                             "name": "Literal",
                             "src": "1940:1:11"
                           }
                         ],
-                        "id": 2298,
+                        "id": 2576,
                         "name": "Assignment",
                         "src": "1918:23:11"
                       }
                     ],
-                    "id": 2299,
+                    "id": 2577,
                     "name": "ExpressionStatement",
                     "src": "1918:23:11"
                   },
@@ -3617,7 +3617,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "indices",
-                                  "referencedDeclaration": 2059,
+                                  "referencedDeclaration": 2337,
                                   "type": "mapping(bytes32 => uint256)"
                                 },
                                 "children": [
@@ -3627,16 +3627,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2237,
+                                      "referencedDeclaration": 2515,
                                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2300,
+                                    "id": 2578,
                                     "name": "Identifier",
                                     "src": "1955:4:11"
                                   }
                                 ],
-                                "id": 2301,
+                                "id": 2579,
                                 "name": "MemberAccess",
                                 "src": "1955:12:11"
                               },
@@ -3646,26 +3646,26 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2249,
+                                  "referencedDeclaration": 2527,
                                   "type": "bytes32",
                                   "value": "value"
                                 },
-                                "id": 2302,
+                                "id": 2580,
                                 "name": "Identifier",
                                 "src": "1968:5:11"
                               }
                             ],
-                            "id": 2303,
+                            "id": 2581,
                             "name": "IndexAccess",
                             "src": "1955:19:11"
                           }
                         ],
-                        "id": 2304,
+                        "id": 2582,
                         "name": "UnaryOperation",
                         "src": "1948:26:11"
                       }
                     ],
-                    "id": 2305,
+                    "id": 2583,
                     "name": "ExpressionStatement",
                     "src": "1948:26:11"
                   },
@@ -3701,7 +3701,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "exists",
-                                  "referencedDeclaration": 2055,
+                                  "referencedDeclaration": 2333,
                                   "type": "mapping(bytes32 => bool)"
                                 },
                                 "children": [
@@ -3711,16 +3711,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2237,
+                                      "referencedDeclaration": 2515,
                                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2306,
+                                    "id": 2584,
                                     "name": "Identifier",
                                     "src": "1987:4:11"
                                   }
                                 ],
-                                "id": 2307,
+                                "id": 2585,
                                 "name": "MemberAccess",
                                 "src": "1987:11:11"
                               },
@@ -3730,32 +3730,32 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2249,
+                                  "referencedDeclaration": 2527,
                                   "type": "bytes32",
                                   "value": "value"
                                 },
-                                "id": 2308,
+                                "id": 2586,
                                 "name": "Identifier",
                                 "src": "1999:5:11"
                               }
                             ],
-                            "id": 2309,
+                            "id": 2587,
                             "name": "IndexAccess",
                             "src": "1987:18:11"
                           }
                         ],
-                        "id": 2310,
+                        "id": 2588,
                         "name": "UnaryOperation",
                         "src": "1980:25:11"
                       }
                     ],
-                    "id": 2311,
+                    "id": 2589,
                     "name": "ExpressionStatement",
                     "src": "1980:25:11"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 2247
+                      "functionReturnParameters": 2525
                     },
                     "children": [
                       {
@@ -3764,26 +3764,26 @@
                           "overloadedDeclarations": [
                             null
                           ],
-                          "referencedDeclaration": 2249,
+                          "referencedDeclaration": 2527,
                           "type": "bytes32",
                           "value": "value"
                         },
-                        "id": 2312,
+                        "id": 2590,
                         "name": "Identifier",
                         "src": "2019:5:11"
                       }
                     ],
-                    "id": 2313,
+                    "id": 2591,
                     "name": "Return",
                     "src": "2012:12:11"
                   }
                 ],
-                "id": 2314,
+                "id": 2592,
                 "name": "Block",
                 "src": "1674:355:11"
               }
             ],
-            "id": 2315,
+            "id": 2593,
             "name": "FunctionDefinition",
             "src": "1577:452:11"
           },
@@ -3797,7 +3797,7 @@
               ],
               "name": "replace",
               "payable": false,
-              "scope": 2423,
+              "scope": 2701,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -3809,7 +3809,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2337,
+                      "scope": 2615,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
@@ -3821,15 +3821,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "Bytes32Set",
-                          "referencedDeclaration": 2060,
+                          "referencedDeclaration": 2338,
                           "type": "struct Bytes32SetLib.Bytes32Set storage pointer"
                         },
-                        "id": 2316,
+                        "id": 2594,
                         "name": "UserDefinedTypeName",
                         "src": "2050:10:11"
                       }
                     ],
-                    "id": 2317,
+                    "id": 2595,
                     "name": "VariableDeclaration",
                     "src": "2050:23:11"
                   },
@@ -3837,7 +3837,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "old",
-                      "scope": 2337,
+                      "scope": 2615,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -3850,12 +3850,12 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2318,
+                        "id": 2596,
                         "name": "ElementaryTypeName",
                         "src": "2075:7:11"
                       }
                     ],
-                    "id": 2319,
+                    "id": 2597,
                     "name": "VariableDeclaration",
                     "src": "2075:11:11"
                   },
@@ -3863,7 +3863,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "nu",
-                      "scope": 2337,
+                      "scope": 2615,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -3876,17 +3876,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2320,
+                        "id": 2598,
                         "name": "ElementaryTypeName",
                         "src": "2088:7:11"
                       }
                     ],
-                    "id": 2321,
+                    "id": 2599,
                     "name": "VariableDeclaration",
                     "src": "2088:10:11"
                   }
                 ],
-                "id": 2322,
+                "id": 2600,
                 "name": "ParameterList",
                 "src": "2049:50:11"
               },
@@ -3896,7 +3896,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2337,
+                      "scope": 2615,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -3909,17 +3909,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 2323,
+                        "id": 2601,
                         "name": "ElementaryTypeName",
                         "src": "2116:4:11"
                       }
                     ],
-                    "id": 2324,
+                    "id": 2602,
                     "name": "VariableDeclaration",
                     "src": "2116:4:11"
                   }
                 ],
-                "id": 2325,
+                "id": 2603,
                 "name": "ParameterList",
                 "src": "2115:6:11"
               },
@@ -3927,7 +3927,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2325
+                      "functionReturnParameters": 2603
                     },
                     "children": [
                       {
@@ -3964,7 +3964,7 @@
                                 "attributes": {
                                   "argumentTypes": [
                                     {
-                                      "typeIdentifier": "t_struct$_Bytes32Set_$2060_storage_ptr",
+                                      "typeIdentifier": "t_struct$_Bytes32Set_$2338_storage_ptr",
                                       "typeString": "struct Bytes32SetLib.Bytes32Set storage pointer"
                                     },
                                     {
@@ -3975,11 +3975,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2235,
+                                  "referencedDeclaration": 2513,
                                   "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer,bytes32) returns (bool)",
                                   "value": "remove"
                                 },
-                                "id": 2326,
+                                "id": 2604,
                                 "name": "Identifier",
                                 "src": "2135:6:11"
                               },
@@ -3989,11 +3989,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2317,
+                                  "referencedDeclaration": 2595,
                                   "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                   "value": "self"
                                 },
-                                "id": 2327,
+                                "id": 2605,
                                 "name": "Identifier",
                                 "src": "2142:4:11"
                               },
@@ -4003,16 +4003,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2319,
+                                  "referencedDeclaration": 2597,
                                   "type": "bytes32",
                                   "value": "old"
                                 },
-                                "id": 2328,
+                                "id": 2606,
                                 "name": "Identifier",
                                 "src": "2148:3:11"
                               }
                             ],
-                            "id": 2329,
+                            "id": 2607,
                             "name": "FunctionCall",
                             "src": "2135:17:11"
                           },
@@ -4035,7 +4035,7 @@
                                 "attributes": {
                                   "argumentTypes": [
                                     {
-                                      "typeIdentifier": "t_struct$_Bytes32Set_$2060_storage_ptr",
+                                      "typeIdentifier": "t_struct$_Bytes32Set_$2338_storage_ptr",
                                       "typeString": "struct Bytes32SetLib.Bytes32Set storage pointer"
                                     },
                                     {
@@ -4046,11 +4046,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2203,
+                                  "referencedDeclaration": 2481,
                                   "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer,bytes32) returns (bool)",
                                   "value": "add"
                                 },
-                                "id": 2330,
+                                "id": 2608,
                                 "name": "Identifier",
                                 "src": "2156:3:11"
                               },
@@ -4060,11 +4060,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2317,
+                                  "referencedDeclaration": 2595,
                                   "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                   "value": "self"
                                 },
-                                "id": 2331,
+                                "id": 2609,
                                 "name": "Identifier",
                                 "src": "2160:4:11"
                               },
@@ -4074,36 +4074,36 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2321,
+                                  "referencedDeclaration": 2599,
                                   "type": "bytes32",
                                   "value": "nu"
                                 },
-                                "id": 2332,
+                                "id": 2610,
                                 "name": "Identifier",
                                 "src": "2166:2:11"
                               }
                             ],
-                            "id": 2333,
+                            "id": 2611,
                             "name": "FunctionCall",
                             "src": "2156:13:11"
                           }
                         ],
-                        "id": 2334,
+                        "id": 2612,
                         "name": "BinaryOperation",
                         "src": "2135:34:11"
                       }
                     ],
-                    "id": 2335,
+                    "id": 2613,
                     "name": "Return",
                     "src": "2128:41:11"
                   }
                 ],
-                "id": 2336,
+                "id": 2614,
                 "name": "Block",
                 "src": "2122:52:11"
               }
             ],
-            "id": 2337,
+            "id": 2615,
             "name": "FunctionDefinition",
             "src": "2033:141:11"
           },
@@ -4114,7 +4114,7 @@
               "isConstructor": false,
               "name": "first",
               "payable": false,
-              "scope": 2423,
+              "scope": 2701,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -4126,7 +4126,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2353,
+                      "scope": 2631,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
@@ -4138,20 +4138,20 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "Bytes32Set",
-                          "referencedDeclaration": 2060,
+                          "referencedDeclaration": 2338,
                           "type": "struct Bytes32SetLib.Bytes32Set storage pointer"
                         },
-                        "id": 2338,
+                        "id": 2616,
                         "name": "UserDefinedTypeName",
                         "src": "2193:10:11"
                       }
                     ],
-                    "id": 2339,
+                    "id": 2617,
                     "name": "VariableDeclaration",
                     "src": "2193:23:11"
                   }
                 ],
-                "id": 2340,
+                "id": 2618,
                 "name": "ParameterList",
                 "src": "2192:25:11"
               },
@@ -4161,7 +4161,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2353,
+                      "scope": 2631,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -4174,17 +4174,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2344,
+                        "id": 2622,
                         "name": "ElementaryTypeName",
                         "src": "2254:7:11"
                       }
                     ],
-                    "id": 2345,
+                    "id": 2623,
                     "name": "VariableDeclaration",
                     "src": "2254:7:11"
                   }
                 ],
-                "id": 2346,
+                "id": 2624,
                 "name": "ParameterList",
                 "src": "2253:9:11"
               },
@@ -4196,11 +4196,11 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2090,
+                      "referencedDeclaration": 2368,
                       "type": "modifier (struct Bytes32SetLib.Bytes32Set storage pointer)",
                       "value": "notEmpty"
                     },
-                    "id": 2341,
+                    "id": 2619,
                     "name": "Identifier",
                     "src": "2230:8:11"
                   },
@@ -4210,16 +4210,16 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2339,
+                      "referencedDeclaration": 2617,
                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                       "value": "self"
                     },
-                    "id": 2342,
+                    "id": 2620,
                     "name": "Identifier",
                     "src": "2239:4:11"
                   }
                 ],
-                "id": 2343,
+                "id": 2621,
                 "name": "ModifierInvocation",
                 "src": "2230:14:11"
               },
@@ -4227,7 +4227,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2346
+                      "functionReturnParameters": 2624
                     },
                     "children": [
                       {
@@ -4249,7 +4249,7 @@
                             "attributes": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_struct$_Bytes32Set_$2060_storage_ptr",
+                                  "typeIdentifier": "t_struct$_Bytes32Set_$2338_storage_ptr",
                                   "typeString": "struct Bytes32SetLib.Bytes32Set storage pointer"
                                 },
                                 {
@@ -4260,11 +4260,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2109,
+                              "referencedDeclaration": 2387,
                               "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer,uint256) view returns (bytes32)",
                               "value": "get"
                             },
-                            "id": 2347,
+                            "id": 2625,
                             "name": "Identifier",
                             "src": "2276:3:11"
                           },
@@ -4274,11 +4274,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2339,
+                              "referencedDeclaration": 2617,
                               "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                               "value": "self"
                             },
-                            "id": 2348,
+                            "id": 2626,
                             "name": "Identifier",
                             "src": "2280:4:11"
                           },
@@ -4295,27 +4295,27 @@
                               "type": "int_const 0",
                               "value": "0"
                             },
-                            "id": 2349,
+                            "id": 2627,
                             "name": "Literal",
                             "src": "2286:1:11"
                           }
                         ],
-                        "id": 2350,
+                        "id": 2628,
                         "name": "FunctionCall",
                         "src": "2276:12:11"
                       }
                     ],
-                    "id": 2351,
+                    "id": 2629,
                     "name": "Return",
                     "src": "2269:19:11"
                   }
                 ],
-                "id": 2352,
+                "id": 2630,
                 "name": "Block",
                 "src": "2263:30:11"
               }
             ],
-            "id": 2353,
+            "id": 2631,
             "name": "FunctionDefinition",
             "src": "2178:115:11"
           },
@@ -4326,7 +4326,7 @@
               "isConstructor": false,
               "name": "last",
               "payable": false,
-              "scope": 2423,
+              "scope": 2701,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -4338,7 +4338,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2373,
+                      "scope": 2651,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
@@ -4350,20 +4350,20 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "Bytes32Set",
-                          "referencedDeclaration": 2060,
+                          "referencedDeclaration": 2338,
                           "type": "struct Bytes32SetLib.Bytes32Set storage pointer"
                         },
-                        "id": 2354,
+                        "id": 2632,
                         "name": "UserDefinedTypeName",
                         "src": "2311:10:11"
                       }
                     ],
-                    "id": 2355,
+                    "id": 2633,
                     "name": "VariableDeclaration",
                     "src": "2311:23:11"
                   }
                 ],
-                "id": 2356,
+                "id": 2634,
                 "name": "ParameterList",
                 "src": "2310:25:11"
               },
@@ -4373,7 +4373,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2373,
+                      "scope": 2651,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -4386,17 +4386,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2360,
+                        "id": 2638,
                         "name": "ElementaryTypeName",
                         "src": "2372:7:11"
                       }
                     ],
-                    "id": 2361,
+                    "id": 2639,
                     "name": "VariableDeclaration",
                     "src": "2372:7:11"
                   }
                 ],
-                "id": 2362,
+                "id": 2640,
                 "name": "ParameterList",
                 "src": "2371:9:11"
               },
@@ -4408,11 +4408,11 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2090,
+                      "referencedDeclaration": 2368,
                       "type": "modifier (struct Bytes32SetLib.Bytes32Set storage pointer)",
                       "value": "notEmpty"
                     },
-                    "id": 2357,
+                    "id": 2635,
                     "name": "Identifier",
                     "src": "2348:8:11"
                   },
@@ -4422,16 +4422,16 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2355,
+                      "referencedDeclaration": 2633,
                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                       "value": "self"
                     },
-                    "id": 2358,
+                    "id": 2636,
                     "name": "Identifier",
                     "src": "2357:4:11"
                   }
                 ],
-                "id": 2359,
+                "id": 2637,
                 "name": "ModifierInvocation",
                 "src": "2348:14:11"
               },
@@ -4439,7 +4439,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2362
+                      "functionReturnParameters": 2640
                     },
                     "children": [
                       {
@@ -4461,7 +4461,7 @@
                             "attributes": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_struct$_Bytes32Set_$2060_storage_ptr",
+                                  "typeIdentifier": "t_struct$_Bytes32Set_$2338_storage_ptr",
                                   "typeString": "struct Bytes32SetLib.Bytes32Set storage pointer"
                                 },
                                 {
@@ -4472,11 +4472,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2109,
+                              "referencedDeclaration": 2387,
                               "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer,uint256) view returns (bytes32)",
                               "value": "get"
                             },
-                            "id": 2363,
+                            "id": 2641,
                             "name": "Identifier",
                             "src": "2394:3:11"
                           },
@@ -4486,11 +4486,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2355,
+                              "referencedDeclaration": 2633,
                               "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                               "value": "self"
                             },
-                            "id": 2364,
+                            "id": 2642,
                             "name": "Identifier",
                             "src": "2398:4:11"
                           },
@@ -4529,7 +4529,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "values",
-                                      "referencedDeclaration": 2051,
+                                      "referencedDeclaration": 2329,
                                       "type": "bytes32[] storage ref"
                                     },
                                     "children": [
@@ -4539,21 +4539,21 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 2355,
+                                          "referencedDeclaration": 2633,
                                           "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                           "value": "self"
                                         },
-                                        "id": 2365,
+                                        "id": 2643,
                                         "name": "Identifier",
                                         "src": "2404:4:11"
                                       }
                                     ],
-                                    "id": 2366,
+                                    "id": 2644,
                                     "name": "MemberAccess",
                                     "src": "2404:11:11"
                                   }
                                 ],
-                                "id": 2367,
+                                "id": 2645,
                                 "name": "MemberAccess",
                                 "src": "2404:18:11"
                               },
@@ -4570,32 +4570,32 @@
                                   "type": "int_const 1",
                                   "value": "1"
                                 },
-                                "id": 2368,
+                                "id": 2646,
                                 "name": "Literal",
                                 "src": "2425:1:11"
                               }
                             ],
-                            "id": 2369,
+                            "id": 2647,
                             "name": "BinaryOperation",
                             "src": "2404:22:11"
                           }
                         ],
-                        "id": 2370,
+                        "id": 2648,
                         "name": "FunctionCall",
                         "src": "2394:33:11"
                       }
                     ],
-                    "id": 2371,
+                    "id": 2649,
                     "name": "Return",
                     "src": "2387:40:11"
                   }
                 ],
-                "id": 2372,
+                "id": 2650,
                 "name": "Block",
                 "src": "2381:51:11"
               }
             ],
-            "id": 2373,
+            "id": 2651,
             "name": "FunctionDefinition",
             "src": "2297:135:11"
           },
@@ -4609,7 +4609,7 @@
               ],
               "name": "indexOf",
               "payable": false,
-              "scope": 2423,
+              "scope": 2701,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -4621,7 +4621,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2395,
+                      "scope": 2673,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
@@ -4633,15 +4633,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "Bytes32Set",
-                          "referencedDeclaration": 2060,
+                          "referencedDeclaration": 2338,
                           "type": "struct Bytes32SetLib.Bytes32Set storage pointer"
                         },
-                        "id": 2374,
+                        "id": 2652,
                         "name": "UserDefinedTypeName",
                         "src": "2453:10:11"
                       }
                     ],
-                    "id": 2375,
+                    "id": 2653,
                     "name": "VariableDeclaration",
                     "src": "2453:23:11"
                   },
@@ -4649,7 +4649,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "value",
-                      "scope": 2395,
+                      "scope": 2673,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -4662,17 +4662,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2376,
+                        "id": 2654,
                         "name": "ElementaryTypeName",
                         "src": "2478:7:11"
                       }
                     ],
-                    "id": 2377,
+                    "id": 2655,
                     "name": "VariableDeclaration",
                     "src": "2478:13:11"
                   }
                 ],
-                "id": 2378,
+                "id": 2656,
                 "name": "ParameterList",
                 "src": "2452:40:11"
               },
@@ -4682,7 +4682,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2395,
+                      "scope": 2673,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -4695,17 +4695,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2379,
+                        "id": 2657,
                         "name": "ElementaryTypeName",
                         "src": "2514:4:11"
                       }
                     ],
-                    "id": 2380,
+                    "id": 2658,
                     "name": "VariableDeclaration",
                     "src": "2514:4:11"
                   }
                 ],
-                "id": 2381,
+                "id": 2659,
                 "name": "ParameterList",
                 "src": "2513:6:11"
               },
@@ -4739,11 +4739,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 3565,
+                              "referencedDeclaration": 3843,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
-                            "id": 2382,
+                            "id": 2660,
                             "name": "Identifier",
                             "src": "2526:7:11"
                           },
@@ -4765,7 +4765,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "exists",
-                                  "referencedDeclaration": 2055,
+                                  "referencedDeclaration": 2333,
                                   "type": "mapping(bytes32 => bool)"
                                 },
                                 "children": [
@@ -4775,16 +4775,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2375,
+                                      "referencedDeclaration": 2653,
                                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 2383,
+                                    "id": 2661,
                                     "name": "Identifier",
                                     "src": "2534:4:11"
                                   }
                                 ],
-                                "id": 2384,
+                                "id": 2662,
                                 "name": "MemberAccess",
                                 "src": "2534:11:11"
                               },
@@ -4794,32 +4794,32 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2377,
+                                  "referencedDeclaration": 2655,
                                   "type": "bytes32",
                                   "value": "value"
                                 },
-                                "id": 2385,
+                                "id": 2663,
                                 "name": "Identifier",
                                 "src": "2546:5:11"
                               }
                             ],
-                            "id": 2386,
+                            "id": 2664,
                             "name": "IndexAccess",
                             "src": "2534:18:11"
                           }
                         ],
-                        "id": 2387,
+                        "id": 2665,
                         "name": "FunctionCall",
                         "src": "2526:27:11"
                       }
                     ],
-                    "id": 2388,
+                    "id": 2666,
                     "name": "ExpressionStatement",
                     "src": "2526:27:11"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 2381
+                      "functionReturnParameters": 2659
                     },
                     "children": [
                       {
@@ -4840,7 +4840,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "indices",
-                              "referencedDeclaration": 2059,
+                              "referencedDeclaration": 2337,
                               "type": "mapping(bytes32 => uint256)"
                             },
                             "children": [
@@ -4850,16 +4850,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2375,
+                                  "referencedDeclaration": 2653,
                                   "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                   "value": "self"
                                 },
-                                "id": 2389,
+                                "id": 2667,
                                 "name": "Identifier",
                                 "src": "2566:4:11"
                               }
                             ],
-                            "id": 2390,
+                            "id": 2668,
                             "name": "MemberAccess",
                             "src": "2566:12:11"
                           },
@@ -4869,31 +4869,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2377,
+                              "referencedDeclaration": 2655,
                               "type": "bytes32",
                               "value": "value"
                             },
-                            "id": 2391,
+                            "id": 2669,
                             "name": "Identifier",
                             "src": "2579:5:11"
                           }
                         ],
-                        "id": 2392,
+                        "id": 2670,
                         "name": "IndexAccess",
                         "src": "2566:19:11"
                       }
                     ],
-                    "id": 2393,
+                    "id": 2671,
                     "name": "Return",
                     "src": "2559:26:11"
                   }
                 ],
-                "id": 2394,
+                "id": 2672,
                 "name": "Block",
                 "src": "2520:70:11"
               }
             ],
-            "id": 2395,
+            "id": 2673,
             "name": "FunctionDefinition",
             "src": "2436:154:11"
           },
@@ -4907,7 +4907,7 @@
               ],
               "name": "contains",
               "payable": false,
-              "scope": 2423,
+              "scope": 2701,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -4919,7 +4919,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2410,
+                      "scope": 2688,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
@@ -4931,15 +4931,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "Bytes32Set",
-                          "referencedDeclaration": 2060,
+                          "referencedDeclaration": 2338,
                           "type": "struct Bytes32SetLib.Bytes32Set storage pointer"
                         },
-                        "id": 2396,
+                        "id": 2674,
                         "name": "UserDefinedTypeName",
                         "src": "2612:10:11"
                       }
                     ],
-                    "id": 2397,
+                    "id": 2675,
                     "name": "VariableDeclaration",
                     "src": "2612:23:11"
                   },
@@ -4947,7 +4947,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "value",
-                      "scope": 2410,
+                      "scope": 2688,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -4960,17 +4960,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2398,
+                        "id": 2676,
                         "name": "ElementaryTypeName",
                         "src": "2637:7:11"
                       }
                     ],
-                    "id": 2399,
+                    "id": 2677,
                     "name": "VariableDeclaration",
                     "src": "2637:13:11"
                   }
                 ],
-                "id": 2400,
+                "id": 2678,
                 "name": "ParameterList",
                 "src": "2611:40:11"
               },
@@ -4980,7 +4980,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2410,
+                      "scope": 2688,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -4993,17 +4993,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 2401,
+                        "id": 2679,
                         "name": "ElementaryTypeName",
                         "src": "2673:4:11"
                       }
                     ],
-                    "id": 2402,
+                    "id": 2680,
                     "name": "VariableDeclaration",
                     "src": "2673:4:11"
                   }
                 ],
-                "id": 2403,
+                "id": 2681,
                 "name": "ParameterList",
                 "src": "2672:6:11"
               },
@@ -5011,7 +5011,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2403
+                      "functionReturnParameters": 2681
                     },
                     "children": [
                       {
@@ -5032,7 +5032,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "exists",
-                              "referencedDeclaration": 2055,
+                              "referencedDeclaration": 2333,
                               "type": "mapping(bytes32 => bool)"
                             },
                             "children": [
@@ -5042,16 +5042,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2397,
+                                  "referencedDeclaration": 2675,
                                   "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                   "value": "self"
                                 },
-                                "id": 2404,
+                                "id": 2682,
                                 "name": "Identifier",
                                 "src": "2692:4:11"
                               }
                             ],
-                            "id": 2405,
+                            "id": 2683,
                             "name": "MemberAccess",
                             "src": "2692:11:11"
                           },
@@ -5061,31 +5061,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2399,
+                              "referencedDeclaration": 2677,
                               "type": "bytes32",
                               "value": "value"
                             },
-                            "id": 2406,
+                            "id": 2684,
                             "name": "Identifier",
                             "src": "2704:5:11"
                           }
                         ],
-                        "id": 2407,
+                        "id": 2685,
                         "name": "IndexAccess",
                         "src": "2692:18:11"
                       }
                     ],
-                    "id": 2408,
+                    "id": 2686,
                     "name": "Return",
                     "src": "2685:25:11"
                   }
                 ],
-                "id": 2409,
+                "id": 2687,
                 "name": "Block",
                 "src": "2679:36:11"
               }
             ],
-            "id": 2410,
+            "id": 2688,
             "name": "FunctionDefinition",
             "src": "2594:121:11"
           },
@@ -5099,7 +5099,7 @@
               ],
               "name": "size",
               "payable": false,
-              "scope": 2423,
+              "scope": 2701,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -5111,7 +5111,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 2422,
+                      "scope": 2700,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
@@ -5123,20 +5123,20 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "Bytes32Set",
-                          "referencedDeclaration": 2060,
+                          "referencedDeclaration": 2338,
                           "type": "struct Bytes32SetLib.Bytes32Set storage pointer"
                         },
-                        "id": 2411,
+                        "id": 2689,
                         "name": "UserDefinedTypeName",
                         "src": "2733:10:11"
                       }
                     ],
-                    "id": 2412,
+                    "id": 2690,
                     "name": "VariableDeclaration",
                     "src": "2733:23:11"
                   }
                 ],
-                "id": 2413,
+                "id": 2691,
                 "name": "ParameterList",
                 "src": "2732:25:11"
               },
@@ -5146,7 +5146,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2422,
+                      "scope": 2700,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -5159,17 +5159,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2414,
+                        "id": 2692,
                         "name": "ElementaryTypeName",
                         "src": "2779:4:11"
                       }
                     ],
-                    "id": 2415,
+                    "id": 2693,
                     "name": "VariableDeclaration",
                     "src": "2779:4:11"
                   }
                 ],
-                "id": 2416,
+                "id": 2694,
                 "name": "ParameterList",
                 "src": "2778:6:11"
               },
@@ -5177,7 +5177,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2416
+                      "functionReturnParameters": 2694
                     },
                     "children": [
                       {
@@ -5200,7 +5200,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "values",
-                              "referencedDeclaration": 2051,
+                              "referencedDeclaration": 2329,
                               "type": "bytes32[] storage ref"
                             },
                             "children": [
@@ -5210,46 +5210,46 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2412,
+                                  "referencedDeclaration": 2690,
                                   "type": "struct Bytes32SetLib.Bytes32Set storage pointer",
                                   "value": "self"
                                 },
-                                "id": 2417,
+                                "id": 2695,
                                 "name": "Identifier",
                                 "src": "2798:4:11"
                               }
                             ],
-                            "id": 2418,
+                            "id": 2696,
                             "name": "MemberAccess",
                             "src": "2798:11:11"
                           }
                         ],
-                        "id": 2419,
+                        "id": 2697,
                         "name": "MemberAccess",
                         "src": "2798:18:11"
                       }
                     ],
-                    "id": 2420,
+                    "id": 2698,
                     "name": "Return",
                     "src": "2791:25:11"
                   }
                 ],
-                "id": 2421,
+                "id": 2699,
                 "name": "Block",
                 "src": "2785:36:11"
               }
             ],
-            "id": 2422,
+            "id": 2700,
             "name": "FunctionDefinition",
             "src": "2719:102:11"
           }
         ],
-        "id": 2423,
+        "id": 2701,
         "name": "ContractDefinition",
         "src": "327:2496:11"
       }
     ],
-    "id": 2424,
+    "id": 2702,
     "name": "SourceUnit",
     "src": "0:2824:11"
   },
@@ -5258,12 +5258,12 @@
     "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
   },
   "networks": {
-    "1514601275478": {
+    "1514662639598": {
       "events": {},
       "links": {},
-      "address": "0xb2ea12951c3299ab91371f065d2384d8bfe5281d"
+      "address": "0x3242348c90364b4e331cd66e98b105b6033ea519"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-12-30T03:08:20.130Z"
+  "updatedAt": "2017-12-30T20:06:56.651Z"
 }

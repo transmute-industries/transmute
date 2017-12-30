@@ -39,7 +39,7 @@
     "contracts:migrate": "lerna run migrate --scope transmute-contracts",
     "contracts:generate": "lerna bootstrap && lerna run soltsice --scope transmute-relic",
     "contracts:replace": "npm run contracts:migrate && npm run contracts:generate",
-    "soltsice": "node ./node_modules/soltsice/dist/src/soltsice.js ./node_modules/transmute-contracts/build/contracts/ ./src/SolidityTypes"
+    "soltsice": "rm -rf ./src/SolidityTypes && node ./node_modules/soltsice/dist/src/soltsice.js ./node_modules/transmute-contracts/build/contracts/ ./src/SolidityTypes"
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [
