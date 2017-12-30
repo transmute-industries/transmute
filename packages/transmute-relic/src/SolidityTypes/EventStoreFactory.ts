@@ -50,88 +50,6 @@ export class EventStoreFactory extends SoltsiceContract {
         Contract methods
     */
 
-  // tslint:disable-next-line:member-ordering
-  public writeEvent = Object.assign(
-    // tslint:disable-next-line:max-line-length
-    // tslint:disable-next-line:variable-name
-    (
-      _eventType: string,
-      _keyType: string,
-      _valueType: string,
-      _key: string,
-      _value: string,
-      txParams?: W3.TC.TxParams
-    ): Promise<W3.TC.TransactionResult> => {
-      return new Promise((resolve, reject) => {
-        this._instance
-          .writeEvent(_eventType, _keyType, _valueType, _key, _value, txParams || this._sendParams)
-          .then(res => resolve(res))
-          .catch(err => reject(err))
-      })
-    },
-    {
-      // tslint:disable-next-line:max-line-length
-      // tslint:disable-next-line:variable-name
-      sendTransaction: (
-        _eventType: string,
-        _keyType: string,
-        _valueType: string,
-        _key: string,
-        _value: string,
-        txParams?: W3.TC.TxParams
-      ): Promise<string> => {
-        return new Promise((resolve, reject) => {
-          this._instance.writeEvent
-            .sendTransaction(
-              _eventType,
-              _keyType,
-              _valueType,
-              _key,
-              _value,
-              txParams || this._sendParams
-            )
-            .then(res => resolve(res))
-            .catch(err => reject(err))
-        })
-      }
-    },
-    {
-      // tslint:disable-next-line:max-line-length
-      // tslint:disable-next-line:variable-name
-      data: (
-        _eventType: string,
-        _keyType: string,
-        _valueType: string,
-        _key: string,
-        _value: string
-      ): Promise<string> => {
-        return new Promise((resolve, reject) => {
-          resolve(
-            this._instance.writeEvent.request(_eventType, _keyType, _valueType, _key, _value)
-              .params[0].data
-          )
-        })
-      }
-    },
-    {
-      // tslint:disable-next-line:max-line-length
-      // tslint:disable-next-line:variable-name
-      estimateGas: (
-        _eventType: string,
-        _keyType: string,
-        _valueType: string,
-        _key: string,
-        _value: string
-      ): Promise<number> => {
-        return new Promise((resolve, reject) => {
-          this._instance.writeEvent
-            .estimateGas(_eventType, _keyType, _valueType, _key, _value)
-            .then(g => resolve(g))
-        })
-      }
-    }
-  )
-
   // tslint:disable-next-line:max-line-length
   // tslint:disable-next-line:variable-name
   public eventCount(txParams?: W3.TC.TxParams): Promise<BigNumber> {
@@ -211,28 +129,6 @@ export class EventStoreFactory extends SoltsiceContract {
 
   // tslint:disable-next-line:max-line-length
   // tslint:disable-next-line:variable-name
-  public creatorTxOrigin(txParams?: W3.TC.TxParams): Promise<string> {
-    return new Promise((resolve, reject) => {
-      this._instance.creatorTxOrigin
-        .call(txParams || this._sendParams)
-        .then(res => resolve(res))
-        .catch(err => reject(err))
-    })
-  }
-
-  // tslint:disable-next-line:max-line-length
-  // tslint:disable-next-line:variable-name
-  public getWhitelist(txParams?: W3.TC.TxParams): Promise<string[]> {
-    return new Promise((resolve, reject) => {
-      this._instance.getWhitelist
-        .call(txParams || this._sendParams)
-        .then(res => resolve(res))
-        .catch(err => reject(err))
-    })
-  }
-
-  // tslint:disable-next-line:max-line-length
-  // tslint:disable-next-line:variable-name
   public readEvent(_eventId: BigNumber | number, txParams?: W3.TC.TxParams): Promise<any> {
     return new Promise((resolve, reject) => {
       this._instance.readEvent
@@ -281,50 +177,6 @@ export class EventStoreFactory extends SoltsiceContract {
       estimateGas: (newOwner: string): Promise<number> => {
         return new Promise((resolve, reject) => {
           this._instance.transferOwnership.estimateGas(newOwner).then(g => resolve(g))
-        })
-      }
-    }
-  )
-
-  // tslint:disable-next-line:member-ordering
-  public setWhitelist = Object.assign(
-    // tslint:disable-next-line:max-line-length
-    // tslint:disable-next-line:variable-name
-    (_whitelist: string[], txParams?: W3.TC.TxParams): Promise<W3.TC.TransactionResult> => {
-      return new Promise((resolve, reject) => {
-        this._instance
-          .setWhitelist(_whitelist, txParams || this._sendParams)
-          .then(res => resolve(res))
-          .catch(err => reject(err))
-      })
-    },
-    {
-      // tslint:disable-next-line:max-line-length
-      // tslint:disable-next-line:variable-name
-      sendTransaction: (_whitelist: string[], txParams?: W3.TC.TxParams): Promise<string> => {
-        return new Promise((resolve, reject) => {
-          this._instance.setWhitelist
-            .sendTransaction(_whitelist, txParams || this._sendParams)
-            .then(res => resolve(res))
-            .catch(err => reject(err))
-        })
-      }
-    },
-    {
-      // tslint:disable-next-line:max-line-length
-      // tslint:disable-next-line:variable-name
-      data: (_whitelist: string[]): Promise<string> => {
-        return new Promise((resolve, reject) => {
-          resolve(this._instance.setWhitelist.request(_whitelist).params[0].data)
-        })
-      }
-    },
-    {
-      // tslint:disable-next-line:max-line-length
-      // tslint:disable-next-line:variable-name
-      estimateGas: (_whitelist: string[]): Promise<number> => {
-        return new Promise((resolve, reject) => {
-          this._instance.setWhitelist.estimateGas(_whitelist).then(g => resolve(g))
         })
       }
     }
