@@ -1,10 +1,10 @@
 pragma solidity ^0.4.17;
 
 import "./EventStoreLib.sol";
-import './Destructible.sol';
 import "./SetLib/AddressSet/AddressSetLib.sol";
 
-contract EventStore is Destructible {
+// never inhertitence
+contract EventStore {
 
   using EventStoreLib for EventStoreLib.EsEventStorage;
   using AddressSetLib for AddressSetLib.AddressSet;
@@ -12,23 +12,61 @@ contract EventStore is Destructible {
   EventStoreLib.EsEventStorage store;
   AddressSetLib.AddressSet whitelist;
 
-  // Modifiers
-  modifier onlyWhitelist(address _caller) {
-    require(whitelist.contains(_caller));
-    _;
-  }
-
-  modifier onlyCreatorOrOwner(address _caller) {
-    require(_caller == this.owner() || _caller == owner);
-    _;
-  }
+  address public creatorTxOrigin;
+  address public owner;
 
   // Fallback Function
   function () public payable { revert(); }
 
   // Constuctor
   function EventStore() public payable {
-    owner = tx.origin;
+    owner = msg.sender;
+    creatorTxOrigin = tx.origin;
+  }
+  
+  /**
+   * @dev Throws if called by any account other than the owner.
+   */
+  modifier onlyOwner() {
+    require(msg.sender == owner);
+    _;
+  }
+
+   // Modifiers
+  modifier onlyWhitelist(address _caller) {
+    require(whitelist.contains(_caller));
+    _;
+  }
+
+  modifier onlyCreatorOrOwner(address _caller) {
+    require(_caller == this.owner() || _caller == this.creatorTxOrigin());
+    _;
+  }
+
+  modifier onlyWhitelistOrOwner(address _caller) {
+    require(whitelist.contains(_caller) || _caller == this.owner() || _caller == this.creatorTxOrigin());
+    _;
+  }
+
+  /**
+   * @dev Allows the current owner to transfer control of the contract to a newOwner.
+   * @param newOwner The address to transfer ownership to.
+   */
+  function transferOwnership(address newOwner) public {
+    require(newOwner != address(0));
+    owner = newOwner;
+    writeEvent("ES_OWNER", "S", "A", "address", bytes32(address(newOwner)));
+  }
+
+   /**
+   * @dev Transfers the current balance to the owner and terminates the contract.
+   */
+  function destroy() onlyOwner public {
+    selfdestruct(owner);
+  }
+
+  function destroyAndSend(address _recipient) onlyOwner public {
+    selfdestruct(_recipient);
   }
 
   // Interface
@@ -38,7 +76,7 @@ contract EventStore is Destructible {
     bytes1 _valueType,
     bytes32 _key,
     bytes32 _value
-  ) public onlyWhitelist(msg.sender) returns (uint) {
+  ) public returns (uint) {
     return EventStoreLib.writeEvent(
       store,
       _eventType,
@@ -69,6 +107,7 @@ contract EventStore is Destructible {
     for (uint index = 0; index < _whitelist.length; index++) {
       whitelist.add(_whitelist[index]);
     }
+    writeEvent("ES_WL_SET", "S", "A", "address", bytes32(address(msg.sender)));
   }
 
   function getWhitelist() public view onlyCreatorOrOwner(msg.sender) returns(address[]) {
