@@ -327,7 +327,7 @@
       "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-contracts/contracts/TransmuteFramework/SetLib/Bytes32Set/Bytes32SetSpec.sol",
       "exportedSymbols": {
         "Bytes32SetSpec": [
-          2153
+          2078
         ]
       }
     },
@@ -341,22 +341,22 @@
             ".17"
           ]
         },
-        "id": 1983,
+        "id": 1908,
         "name": "PragmaDirective",
         "src": "0:24:9"
       },
       {
         "attributes": {
-          "SourceUnit": 1982,
+          "SourceUnit": 1907,
           "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-contracts/contracts/TransmuteFramework/SetLib/Bytes32Set/Bytes32SetLib.sol",
           "file": "./Bytes32SetLib.sol",
-          "scope": 2154,
+          "scope": 2079,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 1984,
+        "id": 1909,
         "name": "ImportDirective",
         "src": "26:29:9"
       },
@@ -365,13 +365,13 @@
           "SourceUnit": 90,
           "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-contracts/contracts/TransmuteFramework/Destructible.sol",
           "file": "../../Destructible.sol",
-          "scope": 2154,
+          "scope": 2079,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 1985,
+        "id": 1910,
         "name": "ImportDirective",
         "src": "56:32:9"
       },
@@ -379,18 +379,18 @@
         "attributes": {
           "contractDependencies": [
             89,
-            1055
+            980
           ],
           "contractKind": "contract",
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            2153,
+            2078,
             89,
-            1055
+            980
           ],
           "name": "Bytes32SetSpec",
-          "scope": 2154
+          "scope": 2079
         },
         "children": [
           {
@@ -407,12 +407,12 @@
                   "referencedDeclaration": 89,
                   "type": "contract Destructible"
                 },
-                "id": 1986,
+                "id": 1911,
                 "name": "UserDefinedTypeName",
                 "src": "117:12:9"
               }
             ],
-            "id": 1987,
+            "id": 1912,
             "name": "InheritanceSpecifier",
             "src": "117:12:9"
           },
@@ -422,10 +422,10 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "Bytes32SetLib",
-                  "referencedDeclaration": 1981,
+                  "referencedDeclaration": 1906,
                   "type": "library Bytes32SetLib"
                 },
-                "id": 1988,
+                "id": 1913,
                 "name": "UserDefinedTypeName",
                 "src": "140:13:9"
               },
@@ -433,15 +433,15 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "Bytes32SetLib.Bytes32Set",
-                  "referencedDeclaration": 1618,
+                  "referencedDeclaration": 1543,
                   "type": "struct Bytes32SetLib.Bytes32Set storage pointer"
                 },
-                "id": 1989,
+                "id": 1914,
                 "name": "UserDefinedTypeName",
                 "src": "158:24:9"
               }
             ],
-            "id": 1990,
+            "id": 1915,
             "name": "UsingForDirective",
             "src": "134:49:9"
           },
@@ -449,7 +449,7 @@
             "attributes": {
               "constant": false,
               "name": "testSet",
-              "scope": 2153,
+              "scope": 2078,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "struct Bytes32SetLib.Bytes32Set storage ref",
@@ -461,15 +461,15 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "Bytes32SetLib.Bytes32Set",
-                  "referencedDeclaration": 1618,
+                  "referencedDeclaration": 1543,
                   "type": "struct Bytes32SetLib.Bytes32Set storage pointer"
                 },
-                "id": 1991,
+                "id": 1916,
                 "name": "UserDefinedTypeName",
                 "src": "187:24:9"
               }
             ],
-            "id": 1992,
+            "id": 1917,
             "name": "VariableDeclaration",
             "src": "187:32:9"
           },
@@ -477,7 +477,7 @@
             "attributes": {
               "constant": false,
               "name": "lastPop",
-              "scope": 2153,
+              "scope": 2078,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "bytes32",
@@ -490,12 +490,12 @@
                   "name": "bytes32",
                   "type": "bytes32"
                 },
-                "id": 1993,
+                "id": 1918,
                 "name": "ElementaryTypeName",
                 "src": "224:7:9"
               }
             ],
-            "id": 1994,
+            "id": 1919,
             "name": "VariableDeclaration",
             "src": "224:22:9"
           },
@@ -503,7 +503,7 @@
             "attributes": {
               "constant": false,
               "name": "lastAdd",
-              "scope": 2153,
+              "scope": 2078,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "bool",
@@ -516,12 +516,12 @@
                   "name": "bool",
                   "type": "bool"
                 },
-                "id": 1995,
+                "id": 1920,
                 "name": "ElementaryTypeName",
                 "src": "250:4:9"
               }
             ],
-            "id": 1996,
+            "id": 1921,
             "name": "VariableDeclaration",
             "src": "250:19:9"
           },
@@ -529,7 +529,7 @@
             "attributes": {
               "constant": false,
               "name": "lastRemove",
-              "scope": 2153,
+              "scope": 2078,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "bool",
@@ -542,12 +542,12 @@
                   "name": "bool",
                   "type": "bool"
                 },
-                "id": 1997,
+                "id": 1922,
                 "name": "ElementaryTypeName",
                 "src": "273:4:9"
               }
             ],
-            "id": 1998,
+            "id": 1923,
             "name": "VariableDeclaration",
             "src": "273:22:9"
           },
@@ -561,7 +561,7 @@
               ],
               "name": "",
               "payable": true,
-              "scope": 2153,
+              "scope": 2078,
               "stateMutability": "payable",
               "superFunction": null,
               "visibility": "public"
@@ -574,7 +574,7 @@
                   ]
                 },
                 "children": [],
-                "id": 1999,
+                "id": 1924,
                 "name": "ParameterList",
                 "src": "309:2:9"
               },
@@ -585,7 +585,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2000,
+                "id": 1925,
                 "name": "ParameterList",
                 "src": "327:0:9"
               },
@@ -596,12 +596,12 @@
                   ]
                 },
                 "children": [],
-                "id": 2001,
+                "id": 1926,
                 "name": "Block",
                 "src": "327:2:9"
               }
             ],
-            "id": 2002,
+            "id": 1927,
             "name": "FunctionDefinition",
             "src": "300:29:9"
           },
@@ -615,7 +615,7 @@
               ],
               "name": "Bytes32SetSpec",
               "payable": true,
-              "scope": 2153,
+              "scope": 2078,
               "stateMutability": "payable",
               "superFunction": null,
               "visibility": "public"
@@ -628,7 +628,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2003,
+                "id": 1928,
                 "name": "ParameterList",
                 "src": "355:2:9"
               },
@@ -639,7 +639,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2004,
+                "id": 1929,
                 "name": "ParameterList",
                 "src": "373:0:9"
               },
@@ -650,12 +650,12 @@
                   ]
                 },
                 "children": [],
-                "id": 2005,
+                "id": 1930,
                 "name": "Block",
                 "src": "373:2:9"
               }
             ],
-            "id": 2006,
+            "id": 1931,
             "name": "FunctionDefinition",
             "src": "332:43:9"
           },
@@ -669,7 +669,7 @@
               ],
               "name": "get",
               "payable": false,
-              "scope": 2153,
+              "scope": 2078,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -681,7 +681,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "index",
-                      "scope": 2019,
+                      "scope": 1944,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -694,17 +694,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2007,
+                        "id": 1932,
                         "name": "ElementaryTypeName",
                         "src": "392:4:9"
                       }
                     ],
-                    "id": 2008,
+                    "id": 1933,
                     "name": "VariableDeclaration",
                     "src": "392:10:9"
                   }
                 ],
-                "id": 2009,
+                "id": 1934,
                 "name": "ParameterList",
                 "src": "391:12:9"
               },
@@ -714,7 +714,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2019,
+                      "scope": 1944,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -727,17 +727,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2010,
+                        "id": 1935,
                         "name": "ElementaryTypeName",
                         "src": "425:7:9"
                       }
                     ],
-                    "id": 2011,
+                    "id": 1936,
                     "name": "VariableDeclaration",
                     "src": "425:7:9"
                   }
                 ],
-                "id": 2012,
+                "id": 1937,
                 "name": "ParameterList",
                 "src": "424:9:9"
               },
@@ -745,7 +745,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2012
+                      "functionReturnParameters": 1937
                     },
                     "children": [
                       {
@@ -776,7 +776,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "get",
-                              "referencedDeclaration": 1667,
+                              "referencedDeclaration": 1592,
                               "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer,uint256) view returns (bytes32)"
                             },
                             "children": [
@@ -786,16 +786,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1992,
+                                  "referencedDeclaration": 1917,
                                   "type": "struct Bytes32SetLib.Bytes32Set storage ref",
                                   "value": "testSet"
                                 },
-                                "id": 2013,
+                                "id": 1938,
                                 "name": "Identifier",
                                 "src": "447:7:9"
                               }
                             ],
-                            "id": 2014,
+                            "id": 1939,
                             "name": "MemberAccess",
                             "src": "447:11:9"
                           },
@@ -805,31 +805,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2008,
+                              "referencedDeclaration": 1933,
                               "type": "uint256",
                               "value": "index"
                             },
-                            "id": 2015,
+                            "id": 1940,
                             "name": "Identifier",
                             "src": "459:5:9"
                           }
                         ],
-                        "id": 2016,
+                        "id": 1941,
                         "name": "FunctionCall",
                         "src": "447:18:9"
                       }
                     ],
-                    "id": 2017,
+                    "id": 1942,
                     "name": "Return",
                     "src": "440:25:9"
                   }
                 ],
-                "id": 2018,
+                "id": 1943,
                 "name": "Block",
                 "src": "434:36:9"
               }
             ],
-            "id": 2019,
+            "id": 1944,
             "name": "FunctionDefinition",
             "src": "379:91:9"
           },
@@ -843,7 +843,7 @@
               ],
               "name": "getValues",
               "payable": false,
-              "scope": 2153,
+              "scope": 2078,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -856,7 +856,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2020,
+                "id": 1945,
                 "name": "ParameterList",
                 "src": "492:2:9"
               },
@@ -866,7 +866,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2029,
+                      "scope": 1954,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32[] memory",
@@ -885,22 +885,22 @@
                               "name": "bytes32",
                               "type": "bytes32"
                             },
-                            "id": 2021,
+                            "id": 1946,
                             "name": "ElementaryTypeName",
                             "src": "516:7:9"
                           }
                         ],
-                        "id": 2022,
+                        "id": 1947,
                         "name": "ArrayTypeName",
                         "src": "516:9:9"
                       }
                     ],
-                    "id": 2023,
+                    "id": 1948,
                     "name": "VariableDeclaration",
                     "src": "516:9:9"
                   }
                 ],
-                "id": 2024,
+                "id": 1949,
                 "name": "ParameterList",
                 "src": "515:11:9"
               },
@@ -908,7 +908,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2024
+                      "functionReturnParameters": 1949
                     },
                     "children": [
                       {
@@ -919,7 +919,7 @@
                           "isPure": false,
                           "lValueRequested": false,
                           "member_name": "values",
-                          "referencedDeclaration": 1609,
+                          "referencedDeclaration": 1534,
                           "type": "bytes32[] storage ref"
                         },
                         "children": [
@@ -929,31 +929,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1992,
+                              "referencedDeclaration": 1917,
                               "type": "struct Bytes32SetLib.Bytes32Set storage ref",
                               "value": "testSet"
                             },
-                            "id": 2025,
+                            "id": 1950,
                             "name": "Identifier",
                             "src": "540:7:9"
                           }
                         ],
-                        "id": 2026,
+                        "id": 1951,
                         "name": "MemberAccess",
                         "src": "540:14:9"
                       }
                     ],
-                    "id": 2027,
+                    "id": 1952,
                     "name": "Return",
                     "src": "533:21:9"
                   }
                 ],
-                "id": 2028,
+                "id": 1953,
                 "name": "Block",
                 "src": "527:32:9"
               }
             ],
-            "id": 2029,
+            "id": 1954,
             "name": "FunctionDefinition",
             "src": "474:85:9"
           },
@@ -967,7 +967,7 @@
               ],
               "name": "set",
               "payable": false,
-              "scope": 2153,
+              "scope": 2078,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -979,7 +979,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "index",
-                      "scope": 2045,
+                      "scope": 1970,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -992,12 +992,12 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2030,
+                        "id": 1955,
                         "name": "ElementaryTypeName",
                         "src": "576:4:9"
                       }
                     ],
-                    "id": 2031,
+                    "id": 1956,
                     "name": "VariableDeclaration",
                     "src": "576:10:9"
                   },
@@ -1005,7 +1005,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "value",
-                      "scope": 2045,
+                      "scope": 1970,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -1018,17 +1018,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2032,
+                        "id": 1957,
                         "name": "ElementaryTypeName",
                         "src": "588:7:9"
                       }
                     ],
-                    "id": 2033,
+                    "id": 1958,
                     "name": "VariableDeclaration",
                     "src": "588:13:9"
                   }
                 ],
-                "id": 2034,
+                "id": 1959,
                 "name": "ParameterList",
                 "src": "575:27:9"
               },
@@ -1038,7 +1038,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2045,
+                      "scope": 1970,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -1051,17 +1051,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 2035,
+                        "id": 1960,
                         "name": "ElementaryTypeName",
                         "src": "619:4:9"
                       }
                     ],
-                    "id": 2036,
+                    "id": 1961,
                     "name": "VariableDeclaration",
                     "src": "619:4:9"
                   }
                 ],
-                "id": 2037,
+                "id": 1962,
                 "name": "ParameterList",
                 "src": "618:6:9"
               },
@@ -1069,7 +1069,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2037
+                      "functionReturnParameters": 1962
                     },
                     "children": [
                       {
@@ -1104,7 +1104,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "set",
-                              "referencedDeclaration": 1716,
+                              "referencedDeclaration": 1641,
                               "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer,uint256,bytes32) returns (bool)"
                             },
                             "children": [
@@ -1114,16 +1114,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1992,
+                                  "referencedDeclaration": 1917,
                                   "type": "struct Bytes32SetLib.Bytes32Set storage ref",
                                   "value": "testSet"
                                 },
-                                "id": 2038,
+                                "id": 1963,
                                 "name": "Identifier",
                                 "src": "638:7:9"
                               }
                             ],
-                            "id": 2039,
+                            "id": 1964,
                             "name": "MemberAccess",
                             "src": "638:11:9"
                           },
@@ -1133,11 +1133,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2031,
+                              "referencedDeclaration": 1956,
                               "type": "uint256",
                               "value": "index"
                             },
-                            "id": 2040,
+                            "id": 1965,
                             "name": "Identifier",
                             "src": "650:5:9"
                           },
@@ -1147,31 +1147,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2033,
+                              "referencedDeclaration": 1958,
                               "type": "bytes32",
                               "value": "value"
                             },
-                            "id": 2041,
+                            "id": 1966,
                             "name": "Identifier",
                             "src": "657:5:9"
                           }
                         ],
-                        "id": 2042,
+                        "id": 1967,
                         "name": "FunctionCall",
                         "src": "638:25:9"
                       }
                     ],
-                    "id": 2043,
+                    "id": 1968,
                     "name": "Return",
                     "src": "631:32:9"
                   }
                 ],
-                "id": 2044,
+                "id": 1969,
                 "name": "Block",
                 "src": "625:43:9"
               }
             ],
-            "id": 2045,
+            "id": 1970,
             "name": "FunctionDefinition",
             "src": "563:105:9"
           },
@@ -1185,7 +1185,7 @@
               ],
               "name": "add",
               "payable": false,
-              "scope": 2153,
+              "scope": 2078,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -1197,7 +1197,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "value",
-                      "scope": 2062,
+                      "scope": 1987,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -1210,17 +1210,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2046,
+                        "id": 1971,
                         "name": "ElementaryTypeName",
                         "src": "685:7:9"
                       }
                     ],
-                    "id": 2047,
+                    "id": 1972,
                     "name": "VariableDeclaration",
                     "src": "685:13:9"
                   }
                 ],
-                "id": 2048,
+                "id": 1973,
                 "name": "ParameterList",
                 "src": "684:15:9"
               },
@@ -1230,7 +1230,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2062,
+                      "scope": 1987,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -1243,17 +1243,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 2049,
+                        "id": 1974,
                         "name": "ElementaryTypeName",
                         "src": "716:4:9"
                       }
                     ],
-                    "id": 2050,
+                    "id": 1975,
                     "name": "VariableDeclaration",
                     "src": "716:4:9"
                   }
                 ],
-                "id": 2051,
+                "id": 1976,
                 "name": "ParameterList",
                 "src": "715:6:9"
               },
@@ -1278,11 +1278,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1996,
+                              "referencedDeclaration": 1921,
                               "type": "bool",
                               "value": "lastAdd"
                             },
-                            "id": 2052,
+                            "id": 1977,
                             "name": "Identifier",
                             "src": "728:7:9"
                           },
@@ -1314,7 +1314,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "add",
-                                  "referencedDeclaration": 1761,
+                                  "referencedDeclaration": 1686,
                                   "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer,bytes32) returns (bool)"
                                 },
                                 "children": [
@@ -1324,16 +1324,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1992,
+                                      "referencedDeclaration": 1917,
                                       "type": "struct Bytes32SetLib.Bytes32Set storage ref",
                                       "value": "testSet"
                                     },
-                                    "id": 2053,
+                                    "id": 1978,
                                     "name": "Identifier",
                                     "src": "738:7:9"
                                   }
                                 ],
-                                "id": 2054,
+                                "id": 1979,
                                 "name": "MemberAccess",
                                 "src": "738:11:9"
                               },
@@ -1343,32 +1343,32 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2047,
+                                  "referencedDeclaration": 1972,
                                   "type": "bytes32",
                                   "value": "value"
                                 },
-                                "id": 2055,
+                                "id": 1980,
                                 "name": "Identifier",
                                 "src": "750:5:9"
                               }
                             ],
-                            "id": 2056,
+                            "id": 1981,
                             "name": "FunctionCall",
                             "src": "738:18:9"
                           }
                         ],
-                        "id": 2057,
+                        "id": 1982,
                         "name": "Assignment",
                         "src": "728:28:9"
                       }
                     ],
-                    "id": 2058,
+                    "id": 1983,
                     "name": "ExpressionStatement",
                     "src": "728:28:9"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 2051
+                      "functionReturnParameters": 1976
                     },
                     "children": [
                       {
@@ -1377,26 +1377,26 @@
                           "overloadedDeclarations": [
                             null
                           ],
-                          "referencedDeclaration": 1996,
+                          "referencedDeclaration": 1921,
                           "type": "bool",
                           "value": "lastAdd"
                         },
-                        "id": 2059,
+                        "id": 1984,
                         "name": "Identifier",
                         "src": "769:7:9"
                       }
                     ],
-                    "id": 2060,
+                    "id": 1985,
                     "name": "Return",
                     "src": "762:14:9"
                   }
                 ],
-                "id": 2061,
+                "id": 1986,
                 "name": "Block",
                 "src": "722:59:9"
               }
             ],
-            "id": 2062,
+            "id": 1987,
             "name": "FunctionDefinition",
             "src": "672:109:9"
           },
@@ -1410,7 +1410,7 @@
               ],
               "name": "remove",
               "payable": false,
-              "scope": 2153,
+              "scope": 2078,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -1422,7 +1422,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "value",
-                      "scope": 2079,
+                      "scope": 2004,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -1435,17 +1435,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2063,
+                        "id": 1988,
                         "name": "ElementaryTypeName",
                         "src": "801:7:9"
                       }
                     ],
-                    "id": 2064,
+                    "id": 1989,
                     "name": "VariableDeclaration",
                     "src": "801:13:9"
                   }
                 ],
-                "id": 2065,
+                "id": 1990,
                 "name": "ParameterList",
                 "src": "800:15:9"
               },
@@ -1455,7 +1455,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2079,
+                      "scope": 2004,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -1468,17 +1468,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 2066,
+                        "id": 1991,
                         "name": "ElementaryTypeName",
                         "src": "832:4:9"
                       }
                     ],
-                    "id": 2067,
+                    "id": 1992,
                     "name": "VariableDeclaration",
                     "src": "832:4:9"
                   }
                 ],
-                "id": 2068,
+                "id": 1993,
                 "name": "ParameterList",
                 "src": "831:6:9"
               },
@@ -1503,11 +1503,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1998,
+                              "referencedDeclaration": 1923,
                               "type": "bool",
                               "value": "lastRemove"
                             },
-                            "id": 2069,
+                            "id": 1994,
                             "name": "Identifier",
                             "src": "844:10:9"
                           },
@@ -1539,7 +1539,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "remove",
-                                  "referencedDeclaration": 1793,
+                                  "referencedDeclaration": 1718,
                                   "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer,bytes32) returns (bool)"
                                 },
                                 "children": [
@@ -1549,16 +1549,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1992,
+                                      "referencedDeclaration": 1917,
                                       "type": "struct Bytes32SetLib.Bytes32Set storage ref",
                                       "value": "testSet"
                                     },
-                                    "id": 2070,
+                                    "id": 1995,
                                     "name": "Identifier",
                                     "src": "857:7:9"
                                   }
                                 ],
-                                "id": 2071,
+                                "id": 1996,
                                 "name": "MemberAccess",
                                 "src": "857:14:9"
                               },
@@ -1568,32 +1568,32 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2064,
+                                  "referencedDeclaration": 1989,
                                   "type": "bytes32",
                                   "value": "value"
                                 },
-                                "id": 2072,
+                                "id": 1997,
                                 "name": "Identifier",
                                 "src": "872:5:9"
                               }
                             ],
-                            "id": 2073,
+                            "id": 1998,
                             "name": "FunctionCall",
                             "src": "857:21:9"
                           }
                         ],
-                        "id": 2074,
+                        "id": 1999,
                         "name": "Assignment",
                         "src": "844:34:9"
                       }
                     ],
-                    "id": 2075,
+                    "id": 2000,
                     "name": "ExpressionStatement",
                     "src": "844:34:9"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 2068
+                      "functionReturnParameters": 1993
                     },
                     "children": [
                       {
@@ -1602,26 +1602,26 @@
                           "overloadedDeclarations": [
                             null
                           ],
-                          "referencedDeclaration": 1998,
+                          "referencedDeclaration": 1923,
                           "type": "bool",
                           "value": "lastRemove"
                         },
-                        "id": 2076,
+                        "id": 2001,
                         "name": "Identifier",
                         "src": "891:10:9"
                       }
                     ],
-                    "id": 2077,
+                    "id": 2002,
                     "name": "Return",
                     "src": "884:17:9"
                   }
                 ],
-                "id": 2078,
+                "id": 2003,
                 "name": "Block",
                 "src": "838:68:9"
               }
             ],
-            "id": 2079,
+            "id": 2004,
             "name": "FunctionDefinition",
             "src": "785:121:9"
           },
@@ -1635,7 +1635,7 @@
               ],
               "name": "pop",
               "payable": false,
-              "scope": 2153,
+              "scope": 2078,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -1647,7 +1647,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "index",
-                      "scope": 2096,
+                      "scope": 2021,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1660,17 +1660,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2080,
+                        "id": 2005,
                         "name": "ElementaryTypeName",
                         "src": "923:4:9"
                       }
                     ],
-                    "id": 2081,
+                    "id": 2006,
                     "name": "VariableDeclaration",
                     "src": "923:10:9"
                   }
                 ],
-                "id": 2082,
+                "id": 2007,
                 "name": "ParameterList",
                 "src": "922:12:9"
               },
@@ -1680,7 +1680,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2096,
+                      "scope": 2021,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -1693,17 +1693,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2083,
+                        "id": 2008,
                         "name": "ElementaryTypeName",
                         "src": "951:7:9"
                       }
                     ],
-                    "id": 2084,
+                    "id": 2009,
                     "name": "VariableDeclaration",
                     "src": "951:7:9"
                   }
                 ],
-                "id": 2085,
+                "id": 2010,
                 "name": "ParameterList",
                 "src": "950:9:9"
               },
@@ -1728,11 +1728,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1994,
+                              "referencedDeclaration": 1919,
                               "type": "bytes32",
                               "value": "lastPop"
                             },
-                            "id": 2086,
+                            "id": 2011,
                             "name": "Identifier",
                             "src": "966:7:9"
                           },
@@ -1764,7 +1764,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "pop",
-                                  "referencedDeclaration": 1873,
+                                  "referencedDeclaration": 1798,
                                   "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer,uint256) returns (bytes32)"
                                 },
                                 "children": [
@@ -1774,16 +1774,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1992,
+                                      "referencedDeclaration": 1917,
                                       "type": "struct Bytes32SetLib.Bytes32Set storage ref",
                                       "value": "testSet"
                                     },
-                                    "id": 2087,
+                                    "id": 2012,
                                     "name": "Identifier",
                                     "src": "976:7:9"
                                   }
                                 ],
-                                "id": 2088,
+                                "id": 2013,
                                 "name": "MemberAccess",
                                 "src": "976:11:9"
                               },
@@ -1793,32 +1793,32 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2081,
+                                  "referencedDeclaration": 2006,
                                   "type": "uint256",
                                   "value": "index"
                                 },
-                                "id": 2089,
+                                "id": 2014,
                                 "name": "Identifier",
                                 "src": "988:5:9"
                               }
                             ],
-                            "id": 2090,
+                            "id": 2015,
                             "name": "FunctionCall",
                             "src": "976:18:9"
                           }
                         ],
-                        "id": 2091,
+                        "id": 2016,
                         "name": "Assignment",
                         "src": "966:28:9"
                       }
                     ],
-                    "id": 2092,
+                    "id": 2017,
                     "name": "ExpressionStatement",
                     "src": "966:28:9"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 2085
+                      "functionReturnParameters": 2010
                     },
                     "children": [
                       {
@@ -1827,26 +1827,26 @@
                           "overloadedDeclarations": [
                             null
                           ],
-                          "referencedDeclaration": 1994,
+                          "referencedDeclaration": 1919,
                           "type": "bytes32",
                           "value": "lastPop"
                         },
-                        "id": 2093,
+                        "id": 2018,
                         "name": "Identifier",
                         "src": "1007:7:9"
                       }
                     ],
-                    "id": 2094,
+                    "id": 2019,
                     "name": "Return",
                     "src": "1000:14:9"
                   }
                 ],
-                "id": 2095,
+                "id": 2020,
                 "name": "Block",
                 "src": "960:59:9"
               }
             ],
-            "id": 2096,
+            "id": 2021,
             "name": "FunctionDefinition",
             "src": "910:109:9"
           },
@@ -1860,7 +1860,7 @@
               ],
               "name": "first",
               "payable": false,
-              "scope": 2153,
+              "scope": 2078,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -1873,7 +1873,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2097,
+                "id": 2022,
                 "name": "ParameterList",
                 "src": "1037:2:9"
               },
@@ -1883,7 +1883,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2106,
+                      "scope": 2031,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -1896,17 +1896,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2098,
+                        "id": 2023,
                         "name": "ElementaryTypeName",
                         "src": "1061:7:9"
                       }
                     ],
-                    "id": 2099,
+                    "id": 2024,
                     "name": "VariableDeclaration",
                     "src": "1061:7:9"
                   }
                 ],
-                "id": 2100,
+                "id": 2025,
                 "name": "ParameterList",
                 "src": "1060:9:9"
               },
@@ -1914,7 +1914,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2100
+                      "functionReturnParameters": 2025
                     },
                     "children": [
                       {
@@ -1945,7 +1945,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "first",
-                              "referencedDeclaration": 1911,
+                              "referencedDeclaration": 1836,
                               "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer) view returns (bytes32)"
                             },
                             "children": [
@@ -1955,36 +1955,36 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1992,
+                                  "referencedDeclaration": 1917,
                                   "type": "struct Bytes32SetLib.Bytes32Set storage ref",
                                   "value": "testSet"
                                 },
-                                "id": 2101,
+                                "id": 2026,
                                 "name": "Identifier",
                                 "src": "1083:7:9"
                               }
                             ],
-                            "id": 2102,
+                            "id": 2027,
                             "name": "MemberAccess",
                             "src": "1083:13:9"
                           }
                         ],
-                        "id": 2103,
+                        "id": 2028,
                         "name": "FunctionCall",
                         "src": "1083:15:9"
                       }
                     ],
-                    "id": 2104,
+                    "id": 2029,
                     "name": "Return",
                     "src": "1076:22:9"
                   }
                 ],
-                "id": 2105,
+                "id": 2030,
                 "name": "Block",
                 "src": "1070:33:9"
               }
             ],
-            "id": 2106,
+            "id": 2031,
             "name": "FunctionDefinition",
             "src": "1023:80:9"
           },
@@ -1998,7 +1998,7 @@
               ],
               "name": "last",
               "payable": false,
-              "scope": 2153,
+              "scope": 2078,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -2011,7 +2011,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2107,
+                "id": 2032,
                 "name": "ParameterList",
                 "src": "1120:2:9"
               },
@@ -2021,7 +2021,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2116,
+                      "scope": 2041,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -2034,17 +2034,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2108,
+                        "id": 2033,
                         "name": "ElementaryTypeName",
                         "src": "1144:7:9"
                       }
                     ],
-                    "id": 2109,
+                    "id": 2034,
                     "name": "VariableDeclaration",
                     "src": "1144:7:9"
                   }
                 ],
-                "id": 2110,
+                "id": 2035,
                 "name": "ParameterList",
                 "src": "1143:9:9"
               },
@@ -2052,7 +2052,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2110
+                      "functionReturnParameters": 2035
                     },
                     "children": [
                       {
@@ -2083,7 +2083,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "last",
-                              "referencedDeclaration": 1931,
+                              "referencedDeclaration": 1856,
                               "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer) view returns (bytes32)"
                             },
                             "children": [
@@ -2093,36 +2093,36 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1992,
+                                  "referencedDeclaration": 1917,
                                   "type": "struct Bytes32SetLib.Bytes32Set storage ref",
                                   "value": "testSet"
                                 },
-                                "id": 2111,
+                                "id": 2036,
                                 "name": "Identifier",
                                 "src": "1166:7:9"
                               }
                             ],
-                            "id": 2112,
+                            "id": 2037,
                             "name": "MemberAccess",
                             "src": "1166:12:9"
                           }
                         ],
-                        "id": 2113,
+                        "id": 2038,
                         "name": "FunctionCall",
                         "src": "1166:14:9"
                       }
                     ],
-                    "id": 2114,
+                    "id": 2039,
                     "name": "Return",
                     "src": "1159:21:9"
                   }
                 ],
-                "id": 2115,
+                "id": 2040,
                 "name": "Block",
                 "src": "1153:32:9"
               }
             ],
-            "id": 2116,
+            "id": 2041,
             "name": "FunctionDefinition",
             "src": "1107:78:9"
           },
@@ -2136,7 +2136,7 @@
               ],
               "name": "indexOf",
               "payable": false,
-              "scope": 2153,
+              "scope": 2078,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -2148,7 +2148,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "value",
-                      "scope": 2129,
+                      "scope": 2054,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -2161,17 +2161,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2117,
+                        "id": 2042,
                         "name": "ElementaryTypeName",
                         "src": "1206:7:9"
                       }
                     ],
-                    "id": 2118,
+                    "id": 2043,
                     "name": "VariableDeclaration",
                     "src": "1206:13:9"
                   }
                 ],
-                "id": 2119,
+                "id": 2044,
                 "name": "ParameterList",
                 "src": "1205:15:9"
               },
@@ -2181,7 +2181,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2129,
+                      "scope": 2054,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2194,17 +2194,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2120,
+                        "id": 2045,
                         "name": "ElementaryTypeName",
                         "src": "1242:4:9"
                       }
                     ],
-                    "id": 2121,
+                    "id": 2046,
                     "name": "VariableDeclaration",
                     "src": "1242:4:9"
                   }
                 ],
-                "id": 2122,
+                "id": 2047,
                 "name": "ParameterList",
                 "src": "1241:6:9"
               },
@@ -2212,7 +2212,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2122
+                      "functionReturnParameters": 2047
                     },
                     "children": [
                       {
@@ -2243,7 +2243,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "indexOf",
-                              "referencedDeclaration": 1953,
+                              "referencedDeclaration": 1878,
                               "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer,bytes32) view returns (uint256)"
                             },
                             "children": [
@@ -2253,16 +2253,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1992,
+                                  "referencedDeclaration": 1917,
                                   "type": "struct Bytes32SetLib.Bytes32Set storage ref",
                                   "value": "testSet"
                                 },
-                                "id": 2123,
+                                "id": 2048,
                                 "name": "Identifier",
                                 "src": "1261:7:9"
                               }
                             ],
-                            "id": 2124,
+                            "id": 2049,
                             "name": "MemberAccess",
                             "src": "1261:15:9"
                           },
@@ -2272,31 +2272,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2118,
+                              "referencedDeclaration": 2043,
                               "type": "bytes32",
                               "value": "value"
                             },
-                            "id": 2125,
+                            "id": 2050,
                             "name": "Identifier",
                             "src": "1277:5:9"
                           }
                         ],
-                        "id": 2126,
+                        "id": 2051,
                         "name": "FunctionCall",
                         "src": "1261:22:9"
                       }
                     ],
-                    "id": 2127,
+                    "id": 2052,
                     "name": "Return",
                     "src": "1254:29:9"
                   }
                 ],
-                "id": 2128,
+                "id": 2053,
                 "name": "Block",
                 "src": "1248:40:9"
               }
             ],
-            "id": 2129,
+            "id": 2054,
             "name": "FunctionDefinition",
             "src": "1189:99:9"
           },
@@ -2310,7 +2310,7 @@
               ],
               "name": "contains",
               "payable": false,
-              "scope": 2153,
+              "scope": 2078,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -2322,7 +2322,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "value",
-                      "scope": 2142,
+                      "scope": 2067,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -2335,17 +2335,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 2130,
+                        "id": 2055,
                         "name": "ElementaryTypeName",
                         "src": "1310:7:9"
                       }
                     ],
-                    "id": 2131,
+                    "id": 2056,
                     "name": "VariableDeclaration",
                     "src": "1310:13:9"
                   }
                 ],
-                "id": 2132,
+                "id": 2057,
                 "name": "ParameterList",
                 "src": "1309:15:9"
               },
@@ -2355,7 +2355,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2142,
+                      "scope": 2067,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -2368,17 +2368,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 2133,
+                        "id": 2058,
                         "name": "ElementaryTypeName",
                         "src": "1346:4:9"
                       }
                     ],
-                    "id": 2134,
+                    "id": 2059,
                     "name": "VariableDeclaration",
                     "src": "1346:4:9"
                   }
                 ],
-                "id": 2135,
+                "id": 2060,
                 "name": "ParameterList",
                 "src": "1345:6:9"
               },
@@ -2386,7 +2386,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2135
+                      "functionReturnParameters": 2060
                     },
                     "children": [
                       {
@@ -2417,7 +2417,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "contains",
-                              "referencedDeclaration": 1968,
+                              "referencedDeclaration": 1893,
                               "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer,bytes32) view returns (bool)"
                             },
                             "children": [
@@ -2427,16 +2427,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1992,
+                                  "referencedDeclaration": 1917,
                                   "type": "struct Bytes32SetLib.Bytes32Set storage ref",
                                   "value": "testSet"
                                 },
-                                "id": 2136,
+                                "id": 2061,
                                 "name": "Identifier",
                                 "src": "1365:7:9"
                               }
                             ],
-                            "id": 2137,
+                            "id": 2062,
                             "name": "MemberAccess",
                             "src": "1365:16:9"
                           },
@@ -2446,31 +2446,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2131,
+                              "referencedDeclaration": 2056,
                               "type": "bytes32",
                               "value": "value"
                             },
-                            "id": 2138,
+                            "id": 2063,
                             "name": "Identifier",
                             "src": "1382:5:9"
                           }
                         ],
-                        "id": 2139,
+                        "id": 2064,
                         "name": "FunctionCall",
                         "src": "1365:23:9"
                       }
                     ],
-                    "id": 2140,
+                    "id": 2065,
                     "name": "Return",
                     "src": "1358:30:9"
                   }
                 ],
-                "id": 2141,
+                "id": 2066,
                 "name": "Block",
                 "src": "1352:41:9"
               }
             ],
-            "id": 2142,
+            "id": 2067,
             "name": "FunctionDefinition",
             "src": "1292:101:9"
           },
@@ -2484,7 +2484,7 @@
               ],
               "name": "size",
               "payable": false,
-              "scope": 2153,
+              "scope": 2078,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -2497,7 +2497,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2143,
+                "id": 2068,
                 "name": "ParameterList",
                 "src": "1410:2:9"
               },
@@ -2507,7 +2507,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2152,
+                      "scope": 2077,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2520,17 +2520,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2144,
+                        "id": 2069,
                         "name": "ElementaryTypeName",
                         "src": "1434:4:9"
                       }
                     ],
-                    "id": 2145,
+                    "id": 2070,
                     "name": "VariableDeclaration",
                     "src": "1434:4:9"
                   }
                 ],
-                "id": 2146,
+                "id": 2071,
                 "name": "ParameterList",
                 "src": "1433:6:9"
               },
@@ -2538,7 +2538,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2146
+                      "functionReturnParameters": 2071
                     },
                     "children": [
                       {
@@ -2569,7 +2569,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "size",
-                              "referencedDeclaration": 1980,
+                              "referencedDeclaration": 1905,
                               "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer) view returns (uint256)"
                             },
                             "children": [
@@ -2579,46 +2579,46 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1992,
+                                  "referencedDeclaration": 1917,
                                   "type": "struct Bytes32SetLib.Bytes32Set storage ref",
                                   "value": "testSet"
                                 },
-                                "id": 2147,
+                                "id": 2072,
                                 "name": "Identifier",
                                 "src": "1453:7:9"
                               }
                             ],
-                            "id": 2148,
+                            "id": 2073,
                             "name": "MemberAccess",
                             "src": "1453:12:9"
                           }
                         ],
-                        "id": 2149,
+                        "id": 2074,
                         "name": "FunctionCall",
                         "src": "1453:14:9"
                       }
                     ],
-                    "id": 2150,
+                    "id": 2075,
                     "name": "Return",
                     "src": "1446:21:9"
                   }
                 ],
-                "id": 2151,
+                "id": 2076,
                 "name": "Block",
                 "src": "1440:32:9"
               }
             ],
-            "id": 2152,
+            "id": 2077,
             "name": "FunctionDefinition",
             "src": "1397:75:9"
           }
         ],
-        "id": 2153,
+        "id": 2078,
         "name": "ContractDefinition",
         "src": "90:1384:9"
       }
     ],
-    "id": 2154,
+    "id": 2079,
     "name": "SourceUnit",
     "src": "0:1475:9"
   },
@@ -2630,11 +2630,11 @@
     "1514662639598": {
       "events": {},
       "links": {
-        "Bytes32SetLib": "0xe63feb04600996f3e85014db97ecef661063bb5e"
+        "Bytes32SetLib": "0x8e0cc4ecc7b00f5e9ea516fc18ca5ebd4f0ebc8a"
       },
-      "address": "0xeab3a94265bf4b39f7298e350b79887fba6b8122"
+      "address": "0x5a010085f73490440ef8194358e7314d6e8a09b3"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-12-30T20:22:01.163Z"
+  "updatedAt": "2017-12-30T20:52:23.136Z"
 }

@@ -49,35 +49,11 @@ contract EventStoreFactory {
   }
   
   /**
-   * @dev Throws if called by any account other than the owner.
-   */
-  modifier onlyOwner() {
-    require(msg.sender == owner);
-    _;
-  }
-
-   // Modifiers
-  modifier onlyWhitelist(address _caller) {
-    require(whitelist.contains(_caller));
-    _;
-  }
-
-  modifier onlyCreatorOrOwner(address _caller) {
-    require(_caller == this.owner() || _caller == owner);
-    _;
-  }
-
-  modifier onlyWhitelistOrOwner(address _caller) {
-    require(whitelist.contains(_caller) || _caller == this.owner() || _caller == owner);
-    _;
-  }
-  
-
-  /**
    * @dev Allows the current owner to transfer control of the contract to a newOwner.
    * @param newOwner The address to transfer ownership to.
    */
-  function transferOwnership(address newOwner) public onlyOwner {
+  function transferOwnership(address newOwner) public {
+    require(msg.sender == owner);
     require(newOwner != address(0));
     owner = newOwner;
     writeEvent("OWNERSHIP_TRANSFERED", "S", "A", "address", bytes32(address(newOwner)));
@@ -86,14 +62,15 @@ contract EventStoreFactory {
    /**
    * @dev Transfers the current balance to the owner and terminates the contract.
    */
-  function destroy() onlyOwner public {
+  function destroy() public {
+    require(msg.sender == owner);
     selfdestruct(owner);
   }
 
-  function destroyAndSend(address _recipient) onlyOwner public {
+  function destroyAndSend(address _recipient) public {
+    require(msg.sender == owner);
     selfdestruct(_recipient);
   }
-
 
   // Interface
   function writeEvent(
@@ -102,7 +79,12 @@ contract EventStoreFactory {
     bytes1 _valueType,
     bytes32 _key,
     bytes32 _value
-  ) public onlyWhitelistOrOwner(msg.sender) returns (uint) {
+  ) 
+  public returns (uint) 
+  {
+    // only this contract owner, creator, or a member of the whitelist can write events
+    require(creatorTxOrigin == tx.origin || owner == msg.sender || whitelist.contains(msg.sender));
+
     return EventStoreLib.writeEvent(
       store,
       _eventType,
@@ -113,7 +95,8 @@ contract EventStoreFactory {
     );
   }
 
-  function readEvent(uint _eventId) public view onlyWhitelist(msg.sender)
+  function readEvent(uint _eventId) 
+  public view
     returns (
       uint,
       address,
@@ -129,14 +112,15 @@ contract EventStoreFactory {
   }
 
   // Helper Functions
-  function setWhitelist(address[] _whitelist) public onlyCreatorOrOwner(msg.sender) {
+  function setWhitelist(address[] _whitelist) public {
+    require(msg.sender == owner);
     require(whitelist.size() == 0);
     for (uint index = 0; index < _whitelist.length; index++) {
       whitelist.add(_whitelist[index]);
     }
   }
 
-  function getWhitelist() public view onlyCreatorOrOwner(msg.sender) returns(address[]) {
+  function getWhitelist() public view returns(address[]) {
     return whitelist.values;
   }
 

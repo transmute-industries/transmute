@@ -107,7 +107,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 1056,
+          "SourceUnit": 981,
           "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-contracts/contracts/TransmuteFramework/Ownable.sol",
           "file": "./Ownable.sol",
           "scope": 90,
@@ -123,14 +123,14 @@
       {
         "attributes": {
           "contractDependencies": [
-            1055
+            980
           ],
           "contractKind": "contract",
           "documentation": "@title Destructible\n@dev Base contract that can be destroyed by owner. All funds in contract will be sent to the owner.",
           "fullyImplemented": true,
           "linearizedBaseContracts": [
             89,
-            1055
+            980
           ],
           "name": "Destructible",
           "scope": 90
@@ -147,7 +147,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "Ownable",
-                  "referencedDeclaration": 1055,
+                  "referencedDeclaration": 980,
                   "type": "contract Ownable"
                 },
                 "id": 61,
@@ -261,7 +261,7 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 1029,
+                      "referencedDeclaration": 954,
                       "type": "modifier ()",
                       "value": "onlyOwner"
                     },
@@ -304,7 +304,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2864,
+                              "referencedDeclaration": 2789,
                               "type": "function (address)",
                               "value": "selfdestruct"
                             },
@@ -318,7 +318,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1003,
+                              "referencedDeclaration": 928,
                               "type": "address",
                               "value": "owner"
                             },
@@ -416,7 +416,7 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 1029,
+                      "referencedDeclaration": 954,
                       "type": "modifier ()",
                       "value": "onlyOwner"
                     },
@@ -459,7 +459,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2864,
+                              "referencedDeclaration": 2789,
                               "type": "function (address)",
                               "value": "selfdestruct"
                             },
@@ -519,9 +519,9 @@
     "1514662639598": {
       "events": {},
       "links": {},
-      "address": "0xbc9edeb00be4211cc8f0cc1cc4a5abe9671c432e"
+      "address": "0x9f9b6c7a90737e88bc91057371d2eec093f6bc0c"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-12-30T20:22:01.145Z"
+  "updatedAt": "2017-12-30T20:52:23.133Z"
 }

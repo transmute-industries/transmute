@@ -79,12 +79,16 @@ describe('EventStoreFactory', () => {
     events = EventTransformer.getFSAsFromReceipt(receipt)
     // let eventStore = await EventStore.At(events[1].payload.value);
 
-    let factoryEvents = EventTransformer.filterEventsByMeta(events, 'txOrigin', factory.address)
-    console.log('factoryEvents: ', factoryEvents)
+    let factoryDerivedStoreEvents = EventTransformer.filterEventsByMeta(
+      events,
+      'msgSender',
+      factory.address
+    )
+    console.log('factoryDerivedStoreEvents: ', factoryDerivedStoreEvents)
 
-    let otherEvents = EventTransformer.filterEventsByMeta(events, 'txOrigin', accounts[1])
-    console.log('otherEvents: ', otherEvents)
-    expect(otherEvents[0].meta.txOrigin).toBe(accounts[1])
+    let factoryEvents = EventTransformer.filterEventsByMeta(events, 'msgSender', accounts[1])
+    console.log('factoryEvents: ', factoryEvents)
+    expect(factoryEvents[0].meta.txOrigin).toBe(accounts[1])
 
     // the eventStore owner is the factory caller
     // let eventStoreOwner = await eventStore.owner();
