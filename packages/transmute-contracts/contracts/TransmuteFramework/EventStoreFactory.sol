@@ -4,7 +4,7 @@ import "./EventStoreLib.sol";
 import "./EventStore.sol";
 import "./SetLib/AddressSet/AddressSetLib.sol";
 
-// never inhertitence
+// never inherit or use modifiers!
 contract EventStoreFactory {
 
   using EventStoreLib for EventStoreLib.EsEventStorage;
@@ -12,9 +12,7 @@ contract EventStoreFactory {
 
   EventStoreLib.EsEventStorage store;
   AddressSetLib.AddressSet eventStores;
-  AddressSetLib.AddressSet whitelist;
 
-  address public creatorTxOrigin;
   address public owner;
 
   // Fallback Function
@@ -23,13 +21,30 @@ contract EventStoreFactory {
   // Constuctor
   function EventStoreFactory() public payable {
     owner = msg.sender;
-    creatorTxOrigin = tx.origin;
   }
 
-  // Modifiers
-  modifier eventStoreExists(address _eventStore) {
-    require(eventStores.contains(_eventStore));
-    _;
+  /**
+   * @dev Allows the current owner to transfer control of the contract to a newOwner.
+   * @param newOwner The address to transfer ownership to.
+   */
+  function transferOwnership(address newOwner) public {
+    require(msg.sender == owner);
+    require(newOwner != address(0));
+    owner = newOwner;
+    writeEvent("NEW_OWNER", "S", "A", "address", bytes32(address(newOwner)));
+  }
+
+   /**
+   * @dev Transfers the current balance to the owner and terminates the contract.
+   */
+  function destroy() public {
+    require(msg.sender == owner);
+    selfdestruct(owner);
+  }
+
+  function destroyAndSend(address _recipient) public {
+    require(msg.sender == owner);
+    selfdestruct(_recipient);
   }
 
   // Interface
@@ -48,31 +63,11 @@ contract EventStoreFactory {
     return eventStores.values;
   }
   
-  /**
-   * @dev Allows the current owner to transfer control of the contract to a newOwner.
-   * @param newOwner The address to transfer ownership to.
-   */
-  function transferOwnership(address newOwner) public {
-    require(msg.sender == owner);
-    require(newOwner != address(0));
-    owner = newOwner;
-    writeEvent("OWNERSHIP_TRANSFERED", "S", "A", "address", bytes32(address(newOwner)));
-  }
+  
 
-   /**
-   * @dev Transfers the current balance to the owner and terminates the contract.
-   */
-  function destroy() public {
-    require(msg.sender == owner);
-    selfdestruct(owner);
-  }
-
-  function destroyAndSend(address _recipient) public {
-    require(msg.sender == owner);
-    selfdestruct(_recipient);
-  }
-
-  // Interface
+  // writeEvent is private in factory
+  // only the factory contract can write events
+  // the factory event log should only be used to model factory events
   function writeEvent(
     bytes32 _eventType,
     bytes1 _keyType,
@@ -80,10 +75,8 @@ contract EventStoreFactory {
     bytes32 _key,
     bytes32 _value
   ) 
-  public returns (uint) 
+  private returns (uint) 
   {
-    // only this contract owner, creator, or a member of the whitelist can write events
-    require(creatorTxOrigin == tx.origin || owner == msg.sender || whitelist.contains(msg.sender));
 
     return EventStoreLib.writeEvent(
       store,
@@ -111,20 +104,9 @@ contract EventStoreFactory {
     return EventStoreLib.readEvent(store, _eventId);
   }
 
-  // Helper Functions
-  function setWhitelist(address[] _whitelist) public {
-    require(msg.sender == owner);
-    require(whitelist.size() == 0);
-    for (uint index = 0; index < _whitelist.length; index++) {
-      whitelist.add(_whitelist[index]);
-    }
-  }
-
-  function getWhitelist() public view returns(address[]) {
-    return whitelist.values;
-  }
-
-  function eventCount() public view returns (uint) {
+  function eventCount() 
+  public view returns (uint) 
+  {
     return store.events.length;
   }
 
