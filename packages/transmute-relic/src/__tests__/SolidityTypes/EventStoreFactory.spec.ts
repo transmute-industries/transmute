@@ -1,5 +1,5 @@
 import { W3 } from 'soltsice'
-// import { EventStoreFactory, EventStore } from "../../SolidityTypes";
+import { EventStoreFactory, EventStore } from '../../SolidityTypes'
 
 import { getAccounts } from '../../__mocks__/setup'
 import MarshalledEvents from '../../__mocks__/MarshalledEvents'
@@ -31,7 +31,7 @@ const logEvents = (events: any) => {
  */
 describe('EventStoreFactory', () => {
   let accounts: string[]
-  // let instance: EventStoreFactory;
+  let instance: EventStoreFactory
   let receipt: any
   let events: IFSA[]
 
@@ -59,22 +59,22 @@ describe('EventStoreFactory', () => {
   // });
 
   it('killEventStore', async () => {
-    console.log(accounts)
-    expect(true)
+    // console.log(accounts)
+    // expect(true)
     // a new factory has an empty whitelist
-    // instance = await EventStoreFactory.New(W3.TC.txParamsDefaultDeploy(accounts[0]), {
-    //   _recipient: accounts[0]
-    // });
+    instance = await EventStoreFactory.New(W3.TC.txParamsDefaultDeploy(accounts[0]), {
+      _multisig: accounts[0]
+    })
 
-    // let factoryOwner = await instance.owner();
-    // expect(factoryOwner).toBe(accounts[0]);
+    let factoryOwner = await instance.owner()
+    expect(factoryOwner).toBe(accounts[0])
 
     // let factoryCreator = await instance.originalCreator();
 
     // console.log(instance)
 
-    // let whitelist = await instance.getWhitelist(instance.address, W3.TC.txParamsDefaultDeploy(accounts[0]));
-    // expect(whitelist).toEqual([]);
+    let whitelist = await instance.getWhitelist(W3.TC.txParamsDefaultDeploy(accounts[0]))
+    expect(whitelist).toEqual([])
 
     // // the factory contract deployer can set the factory whitelist
     // receipt = await instance.setWhitelist(accounts, W3.TC.txParamsDefaultDeploy(accounts[0]));
