@@ -12,18 +12,18 @@ var Bytes32SetSpec = artifacts.require('./TransmuteFramework/SetLib/Bytes32Set/B
 var UIntSetLib = artifacts.require('./TransmuteFramework/SetLib/UIntSet/UIntSetLib.sol')
 var UIntSetSpec = artifacts.require('./TransmuteFramework/SetLib/UIntSet/UIntSetSpec.sol')
 
-var RBAC = artifacts.require('./TransmuteFramework/RBAC.sol')
+// var RBAC = artifacts.require('./TransmuteFramework/RBAC.sol')
 
 var EventStoreLib = artifacts.require('./TransmuteFramework/EventStoreLib.sol')
 
-var UnsafeEventStore = artifacts.require('./TransmuteFramework/UnsafeEventStore.sol')
-var UnsafeEventStoreFactory = artifacts.require('./TransmuteFramework/UnsafeEventStoreFactory.sol')
+// var UnsafeEventStore = artifacts.require('./TransmuteFramework/UnsafeEventStore.sol')
+// var UnsafeEventStoreFactory = artifacts.require('./TransmuteFramework/UnsafeEventStoreFactory.sol')
 
 var EventStore = artifacts.require("./TransmuteFramework/EventStore.sol");
 var EventStoreFactory = artifacts.require("./TransmuteFramework/EventStoreFactory.sol");
 
-var RBACEventStore = artifacts.require('./TransmuteFramework/RBACEventStore.sol')
-var RBACEventStoreFactory = artifacts.require('./TransmuteFramework/RBACEventStoreFactory.sol')
+// var RBACEventStore = artifacts.require('./TransmuteFramework/RBACEventStore.sol')
+// var RBACEventStoreFactory = artifacts.require('./TransmuteFramework/RBACEventStoreFactory.sol')
 
 module.exports = function(deployer, network, accounts) {
   deployer.deploy(StringUtils);
@@ -59,29 +59,29 @@ module.exports = function(deployer, network, accounts) {
   deployer.link(EventStore, EventStoreFactory);
   deployer.deploy(EventStoreFactory);
 
-  deployer.link(EventStoreLib, UnsafeEventStore);
-  deployer.link(AddressSetLib, UnsafeEventStore);
-  deployer.link(Destructible, UnsafeEventStore);
-  deployer.deploy(UnsafeEventStore);
+  // deployer.link(EventStoreLib, UnsafeEventStore);
+  // deployer.link(AddressSetLib, UnsafeEventStore);
+  // deployer.link(Destructible, UnsafeEventStore);
+  // deployer.deploy(UnsafeEventStore);
 
-  deployer.link(EventStoreLib, UnsafeEventStoreFactory);
-  deployer.link(AddressSetLib, UnsafeEventStoreFactory);
-  deployer.link(UnsafeEventStore, UnsafeEventStoreFactory);
-  deployer.deploy(UnsafeEventStoreFactory);
+  // deployer.link(EventStoreLib, UnsafeEventStoreFactory);
+  // deployer.link(AddressSetLib, UnsafeEventStoreFactory);
+  // deployer.link(UnsafeEventStore, UnsafeEventStoreFactory);
+  // deployer.deploy(UnsafeEventStoreFactory);
 
-  deployer.link(EventStoreLib, RBAC)
-  deployer.link(Bytes32SetLib, RBAC)
-  deployer.deploy(RBAC)
+  // deployer.link(EventStoreLib, RBAC)
+  // deployer.link(Bytes32SetLib, RBAC)
+  // deployer.deploy(RBAC)
 
-  deployer.link(EventStoreLib, RBACEventStore)
-  deployer.link(Bytes32SetLib, RBACEventStore)
-  deployer.link(RBAC, RBACEventStore)
-  deployer.deploy(RBACEventStore)
+  // deployer.link(EventStoreLib, RBACEventStore)
+  // deployer.link(Bytes32SetLib, RBACEventStore)
+  // deployer.link(RBAC, RBACEventStore)
+  // deployer.deploy(RBACEventStore)
 
-  deployer.link(EventStoreLib, RBACEventStoreFactory)
-  deployer.link(Bytes32SetLib, RBACEventStoreFactory)
-  deployer.link(RBAC, RBACEventStoreFactory)
-  deployer.link(AddressSetLib, RBACEventStoreFactory)
-  deployer.link(RBACEventStore, RBACEventStoreFactory)
-  deployer.deploy(RBACEventStoreFactory)
+  // deployer.link(EventStoreLib, RBACEventStoreFactory)
+  // deployer.link(Bytes32SetLib, RBACEventStoreFactory)
+  // deployer.link(RBAC, RBACEventStoreFactory)
+  // deployer.link(AddressSetLib, RBACEventStoreFactory)
+  // deployer.link(RBACEventStore, RBACEventStoreFactory)
+  // deployer.deploy(RBACEventStoreFactory)
 };

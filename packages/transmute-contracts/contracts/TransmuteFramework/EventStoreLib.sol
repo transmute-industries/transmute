@@ -1,6 +1,6 @@
 pragma solidity ^0.4.17;
 
-library EventStoreLib{
+library EventStoreLib {
 
     // String Encodings
     // A - Address,
@@ -11,15 +11,17 @@ library EventStoreLib{
 
     struct EsEventStruct {
         address TxOrigin;
+        address MsgSender;
+
         uint Created;
 
-        bytes32 EventType; // Event Type + Version
+        bytes32 EventType;  // Event Type +/ Version
 
-        bytes1 KeyType; // String Encodings
-        bytes1 ValueType; // String Encodings
+        bytes1 KeyType;     // String Encodings
+        bytes1 ValueType;   // String Encodings
 
-        bytes32 Key; // Key
-        bytes32 Value; // Value
+        bytes32 Key;        // Key
+        bytes32 Value;      // Value
     }
 
     struct EsEventStorage {
@@ -40,6 +42,7 @@ library EventStoreLib{
 
         EsEventStruct memory esEvent;
         esEvent.TxOrigin = tx.origin;
+        esEvent.MsgSender = msg.sender;
         esEvent.Created = _created;
 
         esEvent.EventType = _eventType;
@@ -53,6 +56,7 @@ library EventStoreLib{
         EsEvent(
             _eventId,
             esEvent.TxOrigin,
+            esEvent.MsgSender,
             esEvent.Created,
             esEvent.EventType,
             esEvent.KeyType,
@@ -66,11 +70,12 @@ library EventStoreLib{
 
     // READ EVENT
     function readEvent(EsEventStorage storage self, uint _eventId) public constant
-    returns (uint, address, uint, bytes32, bytes1, bytes1, bytes32, bytes32) {
+    returns (uint, address, address, uint, bytes32, bytes1, bytes1, bytes32, bytes32) {
         EsEventStruct memory esEvent = self.events[_eventId];
         return (
             _eventId,
             esEvent.TxOrigin,
+            esEvent.MsgSender,
             esEvent.Created,
             esEvent.EventType,
 
@@ -85,6 +90,7 @@ library EventStoreLib{
     event EsEvent(
         uint Id,
         address TxOrigin,
+        address MsgSender,
         uint Created,
 
         bytes32 EventType,
