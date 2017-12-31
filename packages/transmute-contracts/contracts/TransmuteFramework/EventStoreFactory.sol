@@ -14,7 +14,6 @@ contract EventStoreFactory {
   using AddressSetLib for AddressSetLib.AddressSet;
   using Bytes32SetLib for Bytes32SetLib.Bytes32Set;
 
-  // TODO: Add security CHECKS!!!!
   bytes32 private constant ES_CREATED = bytes32("ES_CREATED");
   bytes32 private constant NEW_OWNER = bytes32("NEW_OWNER");
   bytes32 private constant RECYCLED_TO = bytes32("RECYCLED_TO");

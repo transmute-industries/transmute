@@ -27,7 +27,6 @@ contract EventStore {
     bytes32 Value
   );
 
-  // TODO: Add security CHECKS!!!!
   bytes32 private constant NEW_OWNER = bytes32("NEW_OWNER");
   bytes32 private constant RECYCLED_TO = bytes32("RECYCLED_TO");
   bytes32 private constant WL_SET = bytes32("WL_SET");
