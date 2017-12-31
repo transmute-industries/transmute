@@ -24,33 +24,44 @@ export class EventStoreAdapter {
   eventMap: any = {
     EsEvent: async (args: any) => {
       let fsa = EventTransformer.esEventToFSA(args)
+      if (fsa.payload !== undefined) {
+        return fsa
+      }
       let mutatingEvent = {
-        ...args,
-        EventType: Utils.toAscii(args.EventType),
-        Id: args.Id.toNumber(),
-        Created: args.Created.toNumber(),
+        Value: args.Value,
+        Key: Utils.toAscii(args.Key),
         KeyType: Utils.toAscii(args.KeyType),
         ValueType: Utils.toAscii(args.ValueType)
       }
-      let keyMeta: any = await this.convertFromBytes32(mutatingEvent.Key, mutatingEvent.KeyType)
-      let valueMeta: any = await this.convertFromBytes32(
-        mutatingEvent.Value,
-        mutatingEvent.ValueType
+      // console.log(mutatingEvent.Value);
+      let key = this.mapper[mutatingEvent.ValueType].readIDFromBytes32(mutatingEvent.Value)
+      let value = await this.mapper[mutatingEvent.ValueType].adapter.getItem(
+        this.mapper[mutatingEvent.ValueType].db,
+        key
       )
-      // console.log(mutatingEvent)
-      // console.log(adapterPayload, args.Key)
-      return {
+      let adaptedEvent = {
         ...fsa,
+        payload: {
+          key,
+          value
+        },
         meta: {
           ...fsa.meta,
-          adapter: {
-            payload: {
-              [Utils.toAscii(args.Key)]: valueMeta.key
-            },
-            encoding: mutatingEvent.ValueType
+          adapter: mutatingEvent.ValueType
+        }
+      }
+      let transparentAdaptedEvent = {
+        ...adaptedEvent,
+        payload: adaptedEvent.payload.value,
+        meta: {
+          ...adaptedEvent.meta,
+          adapterPayload: {
+            key: this.mapper[mutatingEvent.ValueType].keyName,
+            value: adaptedEvent.payload.key
           }
         }
       }
+      return transparentAdaptedEvent
     }
   }
 
@@ -76,13 +87,45 @@ export class EventStoreAdapter {
   }
 
   writeFSA = async (store: EventStore, fromAddress: string, event: IFSA): Promise<IFSA> => {
-    let { keyType, keyValue, valueType, valueValue } = await this.getAdapterEsEventFromFSA(event)
-    let marshalledEvent = await this.marshal(event.type, keyType, valueType, keyValue, valueValue)
+    if (event.type.length > 32) {
+      throw new Error(
+        'fsa.type (S) is more than 32 bytes. value length = ' + event.type.length + ' chars'
+      )
+    }
+    let esEventParams: any
+    if (EventTransformer.isAdapterEvent(event)) {
+      if (event.meta.adapter === undefined) {
+        throw new Error(
+          'fsa.meta.adapter is not defined. be sure to set it when fsa.payload is an object (isAdapterEvent).'
+        )
+      }
+      // console.log("event: ", event);
+      let adaptedEvent = await this.convertFSAPayload(event)
+      // console.log("adaptedEvent: ", adaptedEvent);
+      esEventParams = {
+        keyType: 'S',
+        keyValue: this.mapper[adaptedEvent.meta.adapter].keyName,
+        valueType: adaptedEvent.meta.adapter,
+        valueValue: adaptedEvent.payload.value
+      }
+      // console.log("esEventParams: ", esEventParams);
+    } else {
+      esEventParams = {
+        keyType: 'S',
+        keyValue: event.payload.key,
+        valueType: EventTransformer.payloadKeyToKeyType[event.payload.key],
+        valueValue: event.payload.value
+      }
+    }
 
-    // console.log(keyValue)
-
-    console.log(JSON.stringify(marshalledEvent))
-
+    let marshalledEvent = await this.marshal(
+      event.type,
+      esEventParams.keyType,
+      esEventParams.valueType,
+      esEventParams.keyValue,
+      esEventParams.valueValue
+    )
+    // console.log(JSON.stringify(marshalledEvent));
     let receipt = await store.writeEvent(
       marshalledEvent.eventType,
       marshalledEvent.keyType,
@@ -92,8 +135,7 @@ export class EventStoreAdapter {
       W3.TC.txParamsDefaultDeploy(fromAddress, WRITE_EVENT_GAS_COST)
     )
 
-    console.log('receipt', receipt)
-
+    // console.log('receipt', receipt)
     let eventsFromLogs: IFSA[] = await this.extractEventsFromLogs(receipt.logs)
     if (receipt.logs.length > 1) {
       throw new Error('more than 1 event in write event log...')
@@ -128,50 +170,6 @@ export class EventStoreAdapter {
 
   setItem = async (adapter: ITransmuteStoreAdapter, db: any, value: any): Promise<string> => {
     return adapter.setItem(db, value)
-  }
-
-  writeEvents = async (adapter: EventStoreAdapter, events: any[]) => {
-    let mapper = adapter.mapper
-    return Promise.all(
-      events.map(async event => {
-        let partialEvent: any = {
-          ...event,
-          meta: {
-            ...event.meta,
-            key: await this.setItem(
-              mapper[event.meta.adapter].adapter,
-              mapper[event.meta.adapter].db,
-              event.payload
-            )
-          }
-        }
-
-        return {
-          ...partialEvent,
-          payload: {
-            [adapter.mapper[partialEvent.meta.adapter].keyName]: partialEvent.meta.key
-          }
-        }
-      })
-    )
-  }
-
-  readEvents = async (mapper: ITransmuteStoreAdapterMap, events: any[]) => {
-    return Promise.all(
-      events.map(async event => {
-        return {
-          ...event,
-          payload: await this.getItem(
-            mapper[event.meta.adapter].adapter,
-            mapper[event.meta.adapter].db,
-            event.meta.key
-          ),
-          meta: {
-            ...event.meta
-          }
-        }
-      })
-    )
   }
 
   isPayloadKeySizeSafe = (keyValue: string, keyType: string) => {
@@ -215,138 +213,17 @@ export class EventStoreAdapter {
     }
   }
 
-  getAdapterEsEventFromFSA = async (fsa: IFSA): Promise<IWritableEventParams> => {
-    let adapterMap = this.mapper
-
-    if (fsa.type.length > 32) {
-      throw new Error(
-        'fsa.type (S) is more than 32 bytes. value length = ' + fsa.type.length + ' chars'
-      )
-    }
-
-    if (EventTransformer.isAdapterEvent(fsa)) {
-      try {
-        if (adapterMap[fsa.meta.adapter] === undefined) {
-          throw new Error('adapterMap not provided for event.meta.adapter: ' + fsa.meta.adapter)
-        }
-        let events = await this.writeEvents(this, [fsa])
-        fsa = events[0]
-      } catch (e) {
-        throw new Error('Failed to save payload to adapter: ' + e.message)
-      }
-      return {} as any
-    } else {
-      return {
-        keyType: 'S',
-        keyValue: fsa.payload.key,
-        valueType: EventTransformer.payloadKeyToKeyType[fsa.payload.key],
-        valueValue: fsa.payload.value
-      }
-    }
-
-    // let payloadKeys = Object.keys(fsa.payload)
-    // let payloadKey = payloadKeys[0]
-    // let payloadKeyType = 'S'
-    // let payloadValue = fsa.payload[payloadKeys[0]]
-    // let payloadValueType = fsa.meta.adapter
-
-    // console.log('yo: use the EventTransformer here...')
-
-    // if (payloadValueType === undefined) {
-    //   if (payloadKey === 'address' && Utils.isValidAddress(payloadValue)) {
-    //     payloadValueType = 'A'
-    //   }
-    //   if (
-    //     payloadKey === 'bytes32' &&
-    //     (Utils.isHex(payloadValue) && Utils.formatHex(payloadValue) === payloadValue)
-    //   ) {
-    //     payloadValueType = 'B'
-    //   }
-    //   if (payloadKey === 'uint') {
-    //     payloadValueType = 'U'
-    //   }
-    //   // always guess S
-    //   if (payloadValueType === undefined) {
-    //     payloadValueType = 'S'
-    //   }
-    // }
-
-    // let dirtyPayload = {
-    //   payloadKeys,
-    //   payloadKey,
-    //   payloadValue,
-    //   payloadValueType,
-    //   payloadKeyType
-    // }
-
-    // if (!this.isPayloadKeySizeSafe(dirtyPayload.payloadKey, dirtyPayload.payloadKeyType)) {
-    //   throw Error('payload key to large. does not fit in bytes32 string (S).')
-    // }
-
-    // // console.log(dirtyPayload)
-
-    // // throws errors if payload is misleading
-    // this.isPayloadMisleading(dirtyPayload)
-
-    // return {
-    //   keyType: dirtyPayload.payloadKeyType,
-    //   keyValue: dirtyPayload.payloadKey,
-    //   valueType: dirtyPayload.payloadValueType,
-    //   valueValue: dirtyPayload.payloadValue
-    // }
-  }
-
-  convertFromBytes32 = async (bytes32: string, encoding: string) => {
-    // console.log('bytes32', encoding)
-    if (encoding === 'A') {
-      return {
-        key: 'address',
-        value: '0x' + bytes32.split('0x000000000000000000000000')[1]
-      }
-    }
-
-    if (encoding === 'B') {
-      return {
-        key: 'bytes32',
-        value: bytes32
-      }
-    }
-
-    if (encoding === 'U') {
-      return {
-        key: 'uint',
-        value: web3Utils.hexToNumber(bytes32)
-      }
-    }
-
-    if (encoding === 'S') {
-      return {
-        value: Utils.toAscii(bytes32)
-      }
-    }
-
-    let identifier = this.mapper[encoding].readIDFromBytes32(bytes32)
-
-    return {
-      key: identifier,
-      value: await this.mapper[encoding].adapter.getItem(this.mapper[encoding].db, identifier)
-    }
-  }
-
   convertValueToType = async (_valueType: any, _value: any) => {
     if (_valueType === 'B') {
       return _value
     }
-
     if (this.mapper[_valueType]) {
       _value = await this.mapper[_valueType].writeIDToBytes32(_value)
     }
-
     // // Left padd ints and addresses for bytes32 equivalence of Solidity casting
     if (_valueType === 'U' || _valueType === 'A') {
       _value = Utils.bufferToHex(Utils.setLengthLeft(_value, 32))
     }
-
     return _value
   }
 

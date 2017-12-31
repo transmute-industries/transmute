@@ -11,7 +11,7 @@ describe('Bad adapter tests', () => {
         S: undefined as any
       })
     } catch (e) {
-      expect(e.message).toBe('Mapper keys cannot container reserved encoding types: S,B,U')
+      expect(e.message).toBe('Mapper keys cannot container reserved encoding types: S,A,B,U')
     }
   })
 

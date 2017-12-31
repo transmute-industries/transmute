@@ -4,6 +4,7 @@ import { Store } from '../../'
 import { getSetupAsync } from '../../../__mocks__/setup'
 
 import events from '../__mocks__/events'
+
 import { reducer, initialState } from '../__mocks__/reducer'
 
 import Relic from '../../../transmute-relic'

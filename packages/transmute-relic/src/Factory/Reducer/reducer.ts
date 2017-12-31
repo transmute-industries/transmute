@@ -16,7 +16,7 @@ const updatesFromMeta = (meta: any) => {
 
 export const handlers: any = {
   [InternalEventTypes.ES_CREATED]: (state: any, action: any) => {
-    console.log(action)
+    // console.log(action)
     return {
       ...state,
       model: {
