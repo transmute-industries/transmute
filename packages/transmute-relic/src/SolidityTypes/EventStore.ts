@@ -51,6 +51,50 @@ export class EventStore extends SoltsiceContract {
     */
 
   // tslint:disable-next-line:member-ordering
+  public recycle = Object.assign(
+    // tslint:disable-next-line:max-line-length
+    // tslint:disable-next-line:variable-name
+    (txParams?: W3.TC.TxParams): Promise<W3.TC.TransactionResult> => {
+      return new Promise((resolve, reject) => {
+        this._instance
+          .recycle(txParams || this._sendParams)
+          .then(res => resolve(res))
+          .catch(err => reject(err))
+      })
+    },
+    {
+      // tslint:disable-next-line:max-line-length
+      // tslint:disable-next-line:variable-name
+      sendTransaction: (txParams?: W3.TC.TxParams): Promise<string> => {
+        return new Promise((resolve, reject) => {
+          this._instance.recycle
+            .sendTransaction(txParams || this._sendParams)
+            .then(res => resolve(res))
+            .catch(err => reject(err))
+        })
+      }
+    },
+    {
+      // tslint:disable-next-line:max-line-length
+      // tslint:disable-next-line:variable-name
+      data: (): Promise<string> => {
+        return new Promise((resolve, reject) => {
+          resolve(this._instance.recycle.request().params[0].data)
+        })
+      }
+    },
+    {
+      // tslint:disable-next-line:max-line-length
+      // tslint:disable-next-line:variable-name
+      estimateGas: (): Promise<number> => {
+        return new Promise((resolve, reject) => {
+          this._instance.recycle.estimateGas().then(g => resolve(g))
+        })
+      }
+    }
+  )
+
+  // tslint:disable-next-line:member-ordering
   public writeEvent = Object.assign(
     // tslint:disable-next-line:max-line-length
     // tslint:disable-next-line:variable-name
@@ -143,50 +187,6 @@ export class EventStore extends SoltsiceContract {
     })
   }
 
-  // tslint:disable-next-line:member-ordering
-  public destroy = Object.assign(
-    // tslint:disable-next-line:max-line-length
-    // tslint:disable-next-line:variable-name
-    (txParams?: W3.TC.TxParams): Promise<W3.TC.TransactionResult> => {
-      return new Promise((resolve, reject) => {
-        this._instance
-          .destroy(txParams || this._sendParams)
-          .then(res => resolve(res))
-          .catch(err => reject(err))
-      })
-    },
-    {
-      // tslint:disable-next-line:max-line-length
-      // tslint:disable-next-line:variable-name
-      sendTransaction: (txParams?: W3.TC.TxParams): Promise<string> => {
-        return new Promise((resolve, reject) => {
-          this._instance.destroy
-            .sendTransaction(txParams || this._sendParams)
-            .then(res => resolve(res))
-            .catch(err => reject(err))
-        })
-      }
-    },
-    {
-      // tslint:disable-next-line:max-line-length
-      // tslint:disable-next-line:variable-name
-      data: (): Promise<string> => {
-        return new Promise((resolve, reject) => {
-          resolve(this._instance.destroy.request().params[0].data)
-        })
-      }
-    },
-    {
-      // tslint:disable-next-line:max-line-length
-      // tslint:disable-next-line:variable-name
-      estimateGas: (): Promise<number> => {
-        return new Promise((resolve, reject) => {
-          this._instance.destroy.estimateGas().then(g => resolve(g))
-        })
-      }
-    }
-  )
-
   // tslint:disable-next-line:max-line-length
   // tslint:disable-next-line:variable-name
   public owner(txParams?: W3.TC.TxParams): Promise<string> {
@@ -197,6 +197,50 @@ export class EventStore extends SoltsiceContract {
         .catch(err => reject(err))
     })
   }
+
+  // tslint:disable-next-line:member-ordering
+  public recycleAndSend = Object.assign(
+    // tslint:disable-next-line:max-line-length
+    // tslint:disable-next-line:variable-name
+    (_recipient: string, txParams?: W3.TC.TxParams): Promise<W3.TC.TransactionResult> => {
+      return new Promise((resolve, reject) => {
+        this._instance
+          .recycleAndSend(_recipient, txParams || this._sendParams)
+          .then(res => resolve(res))
+          .catch(err => reject(err))
+      })
+    },
+    {
+      // tslint:disable-next-line:max-line-length
+      // tslint:disable-next-line:variable-name
+      sendTransaction: (_recipient: string, txParams?: W3.TC.TxParams): Promise<string> => {
+        return new Promise((resolve, reject) => {
+          this._instance.recycleAndSend
+            .sendTransaction(_recipient, txParams || this._sendParams)
+            .then(res => resolve(res))
+            .catch(err => reject(err))
+        })
+      }
+    },
+    {
+      // tslint:disable-next-line:max-line-length
+      // tslint:disable-next-line:variable-name
+      data: (_recipient: string): Promise<string> => {
+        return new Promise((resolve, reject) => {
+          resolve(this._instance.recycleAndSend.request(_recipient).params[0].data)
+        })
+      }
+    },
+    {
+      // tslint:disable-next-line:max-line-length
+      // tslint:disable-next-line:variable-name
+      estimateGas: (_recipient: string): Promise<number> => {
+        return new Promise((resolve, reject) => {
+          this._instance.recycleAndSend.estimateGas(_recipient).then(g => resolve(g))
+        })
+      }
+    }
+  )
 
   // tslint:disable-next-line:max-line-length
   // tslint:disable-next-line:variable-name
@@ -303,50 +347,6 @@ export class EventStore extends SoltsiceContract {
       estimateGas: (_whitelist: string[]): Promise<number> => {
         return new Promise((resolve, reject) => {
           this._instance.setWhitelist.estimateGas(_whitelist).then(g => resolve(g))
-        })
-      }
-    }
-  )
-
-  // tslint:disable-next-line:member-ordering
-  public destroyAndSend = Object.assign(
-    // tslint:disable-next-line:max-line-length
-    // tslint:disable-next-line:variable-name
-    (_recipient: string, txParams?: W3.TC.TxParams): Promise<W3.TC.TransactionResult> => {
-      return new Promise((resolve, reject) => {
-        this._instance
-          .destroyAndSend(_recipient, txParams || this._sendParams)
-          .then(res => resolve(res))
-          .catch(err => reject(err))
-      })
-    },
-    {
-      // tslint:disable-next-line:max-line-length
-      // tslint:disable-next-line:variable-name
-      sendTransaction: (_recipient: string, txParams?: W3.TC.TxParams): Promise<string> => {
-        return new Promise((resolve, reject) => {
-          this._instance.destroyAndSend
-            .sendTransaction(_recipient, txParams || this._sendParams)
-            .then(res => resolve(res))
-            .catch(err => reject(err))
-        })
-      }
-    },
-    {
-      // tslint:disable-next-line:max-line-length
-      // tslint:disable-next-line:variable-name
-      data: (_recipient: string): Promise<string> => {
-        return new Promise((resolve, reject) => {
-          resolve(this._instance.destroyAndSend.request(_recipient).params[0].data)
-        })
-      }
-    },
-    {
-      // tslint:disable-next-line:max-line-length
-      // tslint:disable-next-line:variable-name
-      estimateGas: (_recipient: string): Promise<number> => {
-        return new Promise((resolve, reject) => {
-          this._instance.destroyAndSend.estimateGas(_recipient).then(g => resolve(g))
         })
       }
     }

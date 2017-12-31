@@ -39,16 +39,17 @@ contract EventStore {
    /**
    * @dev Transfers the current balance to the owner and terminates the contract.
    */
-  function destroy() public {
+  function recycle() public {
     require(msg.sender == owner);
+    internalWriteEvent("RECYCLED_TO", "S", "A", "address", bytes32(address(owner)));
     selfdestruct(owner);
   }
 
-  function destroyAndSend(address _recipient) public {
+  function recycleAndSend(address _recipient) public {
     require(msg.sender == owner);
+    internalWriteEvent("RECYCLED_TO", "S", "A", "address", bytes32(address(_recipient)));
     selfdestruct(_recipient);
   }
-
 
   function internalWriteEvent(
     bytes32 _eventType,
