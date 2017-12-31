@@ -53,6 +53,7 @@ describe('Factory', () => {
       accounts[0]
     )
 
-    console.log('rm: ', readModel)
+    let eventStoreContractAddresses = Object.keys(readModel.state.model)
+    expect(eventStoreContractAddresses.length).toBe(1)
   })
 })

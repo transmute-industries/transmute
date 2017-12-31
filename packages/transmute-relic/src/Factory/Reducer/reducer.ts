@@ -1,21 +1,22 @@
-import * as Constants from "./constants";
+import * as InternalEventTypes from '../../Utils/InternalEventTypes'
 
 export const initialState = {
-  readModelStoreKey: "", // readModelType:contractAddress
-  readModelType: "RBACFactory",
-  contractAddress: "0x0000000000000000000000000000000000000000",
+  readModelStoreKey: '', // readModelType:contractAddress
+  readModelType: 'EventStoreFactory',
+  contractAddress: '0x0000000000000000000000000000000000000000',
   lastEvent: null, // Last Event Index Processed
   model: {} // where all the updates from events will be made
-};
+}
 
 const updatesFromMeta = (meta: any) => {
   return {
     lastEvent: meta.id
-  };
-};
+  }
+}
 
 export const handlers: any = {
-  [Constants.ES_CREATED]: (state: any, action: any) => {
+  [InternalEventTypes.ES_CREATED]: (state: any, action: any) => {
+    console.log(action)
     return {
       ...state,
       model: {
@@ -26,13 +27,13 @@ export const handlers: any = {
         }
       },
       ...updatesFromMeta(action.meta)
-    };
+    }
   }
-};
+}
 
 export const reducer = (state: any, action: any) => {
   if (handlers[action.type]) {
-    return handlers[action.type](state, action);
+    return handlers[action.type](state, action)
   }
-  return state;
-};
+  return state
+}
