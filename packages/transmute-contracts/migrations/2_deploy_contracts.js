@@ -51,12 +51,12 @@ module.exports = function(deployer, network, accounts) {
 
   deployer.link(EventStoreLib, EventStore);
   deployer.link(AddressSetLib, EventStore);
-  deployer.link(Destructible, EventStore);
+  deployer.link(Bytes32SetLib, EventStore);
   deployer.deploy(EventStore);
 
   deployer.link(EventStoreLib, EventStoreFactory);
   deployer.link(AddressSetLib, EventStoreFactory);
-  deployer.link(EventStore, EventStoreFactory);
+  deployer.link(Bytes32SetLib, EventStoreFactory);
   deployer.deploy(EventStoreFactory);
 
   // deployer.link(EventStoreLib, UnsafeEventStore);

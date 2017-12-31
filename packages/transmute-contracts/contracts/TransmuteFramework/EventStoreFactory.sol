@@ -3,6 +3,7 @@ pragma solidity ^0.4.17;
 import "./EventStoreLib.sol";
 import "./EventStore.sol";
 import "./SetLib/AddressSet/AddressSetLib.sol";
+import "./SetLib/Bytes32Set/Bytes32SetLib.sol";
 
 /**
 * @dev NEVER USE inheritance or modifiers
@@ -11,13 +12,16 @@ contract EventStoreFactory {
 
   using EventStoreLib for EventStoreLib.EsEventStorage;
   using AddressSetLib for AddressSetLib.AddressSet;
+  using Bytes32SetLib for Bytes32SetLib.Bytes32Set;
 
-  // TODO: Add security 
-  // Bytes32SetLib.Bytes32Set internalEventTypes;
-  // internalEventTypes.add(bytes32('AC_ROLE_ASSIGNED'));
+  // TODO: Add security CHECKS!!!!
+  bytes32 private constant ES_CREATED = bytes32("ES_CREATED");
+  bytes32 private constant NEW_OWNER = bytes32("NEW_OWNER");
+  bytes32 private constant RECYCLED_TO = bytes32("RECYCLED_TO");
+  Bytes32SetLib.Bytes32Set private INTERNAL_EVENT_TYPES;
 
-  EventStoreLib.EsEventStorage store;
-  AddressSetLib.AddressSet eventStores;
+  EventStoreLib.EsEventStorage private store;
+  AddressSetLib.AddressSet private eventStores;
 
   address public owner;
 
@@ -31,6 +35,9 @@ contract EventStoreFactory {
    */
   function EventStoreFactory() public {
     owner = msg.sender;
+    INTERNAL_EVENT_TYPES.add(ES_CREATED);
+    INTERNAL_EVENT_TYPES.add(NEW_OWNER);
+    INTERNAL_EVENT_TYPES.add(RECYCLED_TO);
   }
 
   /**
@@ -41,7 +48,7 @@ contract EventStoreFactory {
     require(msg.sender == owner);
     require(_newOwner != address(0));
     owner = _newOwner;
-    internalWriteEvent("NEW_OWNER", "S", "A", "address", bytes32(address(_newOwner)));
+    internalWriteEvent(NEW_OWNER, "S", "A", "address", bytes32(address(_newOwner)));
   }
 
    /**
@@ -49,7 +56,7 @@ contract EventStoreFactory {
    */
   function recycle() public {
     require(msg.sender == owner);
-    internalWriteEvent("RECYCLED_TO", "S", "A", "address", bytes32(address(owner)));
+    internalWriteEvent(RECYCLED_TO, "S", "A", "address", bytes32(address(owner)));
     selfdestruct(owner);
   }
 
@@ -59,7 +66,7 @@ contract EventStoreFactory {
   */
   function recycleAndSend(address _recipient) public {
     require(msg.sender == owner);
-    internalWriteEvent("RECYCLED_TO", "S", "A", "address", bytes32(address(_recipient)));
+    internalWriteEvent(RECYCLED_TO, "S", "A", "address", bytes32(address(_recipient)));
     selfdestruct(_recipient);
   }
 
@@ -69,7 +76,7 @@ contract EventStoreFactory {
   */
   function createEventStore(address[] _whitelist) public returns (address) {
     EventStore eventStore = new EventStore();
-    internalWriteEvent("ES_CREATED", "S", "A", "address", bytes32(address(eventStore)));
+    internalWriteEvent(ES_CREATED, "S", "A", "address", bytes32(address(eventStore)));
     eventStores.add(address(eventStore));
 
     eventStore.setWhitelist(_whitelist);
@@ -80,6 +87,10 @@ contract EventStoreFactory {
 
   function getEventStores() public view returns (address[]) {
     return eventStores.values;
+  }
+
+  function getInternalEventTypes() public view returns (bytes32[]) {
+    return INTERNAL_EVENT_TYPES.values;
   }
   
   /**
@@ -99,7 +110,7 @@ contract EventStoreFactory {
   ) 
   private returns (uint) 
   {
-
+    // require(this[_eventType]);
     return EventStoreLib.writeEvent(
       store,
       _eventType,

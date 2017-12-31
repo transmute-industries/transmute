@@ -2,21 +2,42 @@ pragma solidity ^0.4.17;
 
 import "./EventStoreLib.sol";
 import "./SetLib/AddressSet/AddressSetLib.sol";
+import "./SetLib/Bytes32Set/Bytes32SetLib.sol";
 
 // never inhertitence
 contract EventStore {
 
   using EventStoreLib for EventStoreLib.EsEventStorage;
   using AddressSetLib for AddressSetLib.AddressSet;
+  using Bytes32SetLib for Bytes32SetLib.Bytes32Set;
+
+  // Events
+  event EsEvent(
+    uint Id,
+    address TxOrigin,
+    address MsgSender,
+    uint Created,
+
+    bytes32 EventType,
+
+    bytes1 KeyType,
+    bytes1 ValueType,
+
+    bytes32 Key,
+    bytes32 Value
+  );
+
+  // TODO: Add security CHECKS!!!!
+  bytes32 private constant NEW_OWNER = bytes32("NEW_OWNER");
+  bytes32 private constant RECYCLED_TO = bytes32("RECYCLED_TO");
+  bytes32 private constant WL_SET = bytes32("WL_SET");
+
+  Bytes32SetLib.Bytes32Set private INTERNAL_EVENT_TYPES;
 
   EventStoreLib.EsEventStorage store;
   AddressSetLib.AddressSet whitelist;
 
   address public owner;
-
-  // TODO: Add security 
-  // Bytes32SetLib.Bytes32Set internalEventTypes;
-  // internalEventTypes.add(bytes32('AC_ROLE_ASSIGNED'));
 
   /**
    * @dev This contract can receive ether.
@@ -26,7 +47,12 @@ contract EventStore {
   // Constuctor
   function EventStore() public payable {
     owner = msg.sender;
-    internalWriteEvent("NEW_OWNER", "S", "A", "address", bytes32(address(owner)));
+
+    INTERNAL_EVENT_TYPES.add(NEW_OWNER);
+    INTERNAL_EVENT_TYPES.add(RECYCLED_TO);
+    INTERNAL_EVENT_TYPES.add(WL_SET);
+
+    internalWriteEvent(NEW_OWNER, "S", "A", "address", bytes32(address(owner)));
   }
   
   /**
@@ -37,7 +63,7 @@ contract EventStore {
     require(msg.sender == owner);
     require(newOwner != address(0));
     owner = newOwner;
-    internalWriteEvent("NEW_OWNER", "S", "A", "address", bytes32(address(newOwner)));
+    internalWriteEvent(NEW_OWNER, "S", "A", "address", bytes32(address(newOwner)));
   }
 
    /**
@@ -45,7 +71,7 @@ contract EventStore {
    */
   function recycle() public {
     require(msg.sender == owner);
-    internalWriteEvent("RECYCLED_TO", "S", "A", "address", bytes32(address(owner)));
+    internalWriteEvent(RECYCLED_TO, "S", "A", "address", bytes32(address(owner)));
     selfdestruct(owner);
   }
 
@@ -55,7 +81,7 @@ contract EventStore {
    */
   function recycleAndSend(address _recipient) public {
     require(msg.sender == owner);
-    internalWriteEvent("RECYCLED_TO", "S", "A", "address", bytes32(address(_recipient)));
+    internalWriteEvent(RECYCLED_TO, "S", "A", "address", bytes32(address(_recipient)));
     selfdestruct(_recipient);
   }
 
@@ -141,7 +167,7 @@ contract EventStore {
     for (uint index = 0; index < _whitelist.length; index++) {
       whitelist.add(_whitelist[index]);
     }
-    internalWriteEvent("WL_SET", "S", "A", "address", bytes32(address(msg.sender)));
+    internalWriteEvent(WL_SET, "S", "A", "address", bytes32(address(msg.sender)));
   }
 
   function getWhitelist() public view returns(address[]) {
@@ -152,19 +178,9 @@ contract EventStore {
     return store.events.length;
   }
 
-  // Events
-  event EsEvent(
-    uint Id,
-    address TxOrigin,
-    address MsgSender,
-    uint Created,
+  function getInternalEventTypes() public view returns (bytes32[]) {
+    return INTERNAL_EVENT_TYPES.values;
+  }
 
-    bytes32 EventType,
-
-    bytes1 KeyType,
-    bytes1 ValueType,
-
-    bytes32 Key,
-    bytes32 Value
-  );
+  
 }

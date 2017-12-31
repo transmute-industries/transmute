@@ -2,6 +2,7 @@ import { W3 } from 'soltsice'
 import { EventStoreFactory, EventStore } from '../../../SolidityTypes'
 import { getRelic } from '../../../__mocks__/setup'
 import { EventTransformer } from '../../../Utils/EventTransformer'
+import { Utils } from '../../../Utils'
 import { IFSA } from '../../../Store/EventTypes'
 import Relic from '../../../transmute-relic'
 
@@ -77,5 +78,20 @@ describe('EventStore', () => {
     eventStore = await EventStore.At(factoryEvents[0].payload.value)
     let eventCount = await eventStore.eventCount()
     expect(eventCount.toNumber()).toBe(3)
+  })
+
+  it('getInternalEventTypes', async () => {
+    // create a new factory
+    factory = await EventStoreFactory.New(W3.TC.txParamsDefaultDeploy(accounts[0]), {
+      _multisig: accounts[0]
+    })
+    // create a new eventStore
+    receipt = await factory.createEventStore(whitelist, W3.TC.txParamsDefaultDeploy(accounts[1]))
+    events = EventTransformer.getFSAsFromReceipt(receipt)
+    let factoryEvents = EventTransformer.filterEventsByMeta(events, 'msgSender', accounts[1])
+    eventStore = await EventStore.At(factoryEvents[0].payload.value)
+
+    let types = ((await eventStore.getInternalEventTypes()) as any).map(Utils.toAscii)
+    expect(types).toEqual(['NEW_OWNER', 'RECYCLED_TO', 'WL_SET'])
   })
 })
