@@ -3,7 +3,7 @@ import { EventStoreFactory, EventStore } from '../../../SolidityTypes'
 import { getRelic } from '../../../__mocks__/setup'
 import { Utils } from '../../../Utils'
 import * as InternalEventTypes from '../../../Utils/InternalEventTypes'
-import { EventTransformer } from '../../../Utils/EventTransformer'
+import * as EventTransformer from '../../../Utils/EventTransformer'
 import { IFSA } from '../../../Store/EventTypes'
 
 import Relic from '../../../transmute-relic'

@@ -1,3 +1,5 @@
+import { W3 } from 'soltsice'
+
 const web3Utils = require('web3-utils')
 
 import { Utils } from '../../Utils'
@@ -13,6 +15,9 @@ import {
 } from './EventStoreAdapterTypes'
 
 import * as EventTransformer from '../../Utils/EventTransformer'
+import { EventStore } from '../../SolidityTypes/index'
+
+const WRITE_EVENT_GAS_COST = 4000000
 
 export class EventStoreAdapter {
   mapperKeys: string[]
@@ -54,6 +59,46 @@ export class EventStoreAdapter {
 
     this.throwOnAdapterTypeCollision()
     this.throwOnAdapterTypeConversionUndefined()
+  }
+
+  convertFSAPayload = async (fsa: IFSA) => {
+    return {
+      ...fsa,
+      payload: {
+        key: this.mapper[fsa.meta.adapter].keyName,
+        value: await this.setItem(
+          this.mapper[fsa.meta.adapter].adapter,
+          this.mapper[fsa.meta.adapter].db,
+          fsa.payload
+        )
+      }
+    }
+  }
+
+  writeFSA = async (store: EventStore, fromAddress: string, event: IFSA): Promise<IFSA> => {
+    let { keyType, keyValue, valueType, valueValue } = await this.getAdapterEsEventFromFSA(event)
+    let marshalledEvent = await this.marshal(event.type, keyType, valueType, keyValue, valueValue)
+
+    // console.log(keyValue)
+
+    console.log(JSON.stringify(marshalledEvent))
+
+    let receipt = await store.writeEvent(
+      marshalledEvent.eventType,
+      marshalledEvent.keyType,
+      marshalledEvent.valueType,
+      marshalledEvent.key,
+      marshalledEvent.value,
+      W3.TC.txParamsDefaultDeploy(fromAddress, WRITE_EVENT_GAS_COST)
+    )
+
+    console.log('receipt', receipt)
+
+    let eventsFromLogs: IFSA[] = await this.extractEventsFromLogs(receipt.logs)
+    if (receipt.logs.length > 1) {
+      throw new Error('more than 1 event in write event log...')
+    }
+    return eventsFromLogs[0]
   }
 
   throwOnAdapterTypeCollision = () => {
@@ -170,7 +215,7 @@ export class EventStoreAdapter {
     }
   }
 
-  prepareFSAForStorage = async (fsa: IFSA): Promise<IWritableEventParams> => {
+  getAdapterEsEventFromFSA = async (fsa: IFSA): Promise<IWritableEventParams> => {
     let adapterMap = this.mapper
 
     if (fsa.type.length > 32) {
@@ -179,7 +224,7 @@ export class EventStoreAdapter {
       )
     }
 
-    if (typeof fsa.payload === 'object' && Object.keys(fsa.payload).length > 1) {
+    if (EventTransformer.isAdapterEvent(fsa)) {
       try {
         if (adapterMap[fsa.meta.adapter] === undefined) {
           throw new Error('adapterMap not provided for event.meta.adapter: ' + fsa.meta.adapter)
@@ -189,58 +234,66 @@ export class EventStoreAdapter {
       } catch (e) {
         throw new Error('Failed to save payload to adapter: ' + e.message)
       }
-    }
-
-    let payloadKeys = Object.keys(fsa.payload)
-    let payloadKey = payloadKeys[0]
-    let payloadKeyType = 'S'
-    let payloadValue = fsa.payload[payloadKeys[0]]
-    let payloadValueType = fsa.meta.adapter
-
-    console.log('yo: use the EventTransformer here...')
-
-    if (payloadValueType === undefined) {
-      if (payloadKey === 'address' && Utils.isValidAddress(payloadValue)) {
-        payloadValueType = 'A'
-      }
-      if (
-        payloadKey === 'bytes32' &&
-        (Utils.isHex(payloadValue) && Utils.formatHex(payloadValue) === payloadValue)
-      ) {
-        payloadValueType = 'B'
-      }
-      if (payloadKey === 'uint') {
-        payloadValueType = 'U'
-      }
-      // always guess S
-      if (payloadValueType === undefined) {
-        payloadValueType = 'S'
+      return {} as any
+    } else {
+      return {
+        keyType: 'S',
+        keyValue: fsa.payload.key,
+        valueType: EventTransformer.payloadKeyToKeyType[fsa.payload.key],
+        valueValue: fsa.payload.value
       }
     }
 
-    let dirtyPayload = {
-      payloadKeys,
-      payloadKey,
-      payloadValue,
-      payloadValueType,
-      payloadKeyType
-    }
+    // let payloadKeys = Object.keys(fsa.payload)
+    // let payloadKey = payloadKeys[0]
+    // let payloadKeyType = 'S'
+    // let payloadValue = fsa.payload[payloadKeys[0]]
+    // let payloadValueType = fsa.meta.adapter
 
-    if (!this.isPayloadKeySizeSafe(dirtyPayload.payloadKey, dirtyPayload.payloadKeyType)) {
-      throw Error('payload key to large. does not fit in bytes32 string (S).')
-    }
+    // console.log('yo: use the EventTransformer here...')
 
-    // console.log(dirtyPayload)
+    // if (payloadValueType === undefined) {
+    //   if (payloadKey === 'address' && Utils.isValidAddress(payloadValue)) {
+    //     payloadValueType = 'A'
+    //   }
+    //   if (
+    //     payloadKey === 'bytes32' &&
+    //     (Utils.isHex(payloadValue) && Utils.formatHex(payloadValue) === payloadValue)
+    //   ) {
+    //     payloadValueType = 'B'
+    //   }
+    //   if (payloadKey === 'uint') {
+    //     payloadValueType = 'U'
+    //   }
+    //   // always guess S
+    //   if (payloadValueType === undefined) {
+    //     payloadValueType = 'S'
+    //   }
+    // }
 
-    // throws errors if payload is misleading
-    this.isPayloadMisleading(dirtyPayload)
+    // let dirtyPayload = {
+    //   payloadKeys,
+    //   payloadKey,
+    //   payloadValue,
+    //   payloadValueType,
+    //   payloadKeyType
+    // }
 
-    return {
-      keyType: dirtyPayload.payloadKeyType,
-      keyValue: dirtyPayload.payloadKey,
-      valueType: dirtyPayload.payloadValueType,
-      valueValue: dirtyPayload.payloadValue
-    }
+    // if (!this.isPayloadKeySizeSafe(dirtyPayload.payloadKey, dirtyPayload.payloadKeyType)) {
+    //   throw Error('payload key to large. does not fit in bytes32 string (S).')
+    // }
+
+    // // console.log(dirtyPayload)
+
+    // // throws errors if payload is misleading
+    // this.isPayloadMisleading(dirtyPayload)
+
+    // return {
+    //   keyType: dirtyPayload.payloadKeyType,
+    //   keyValue: dirtyPayload.payloadKey,
+    //   valueType: dirtyPayload.payloadValueType,
+    //   valueValue: dirtyPayload.payloadValue
+    // }
   }
 
   convertFromBytes32 = async (bytes32: string, encoding: string) => {

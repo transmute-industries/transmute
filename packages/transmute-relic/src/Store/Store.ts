@@ -16,32 +16,10 @@ export const GAS_COSTS = {
 }
 
 export namespace Store {
-  export type GenericEventStore = EventStore //| RBACEventStore | UnsafeEventStore;
-
-  export enum StoreTypes {
-    UnsafeEventStore,
-    EventStore,
-    RBACEventStore
-  }
-
-  /**
-   * Store typeClassMapper
-   */
-  export const typeClassMapper = (name: StoreTypes) => {
-    switch (name) {
-      // case StoreTypes.RBACEventStore:
-      //   return RBACEventStore;
-      // case StoreTypes.UnsafeEventStore:
-      //   return UnsafeEventStore;
-      default:
-        return EventStore
-    }
-  }
-
   /**
    * Store eventCount
    */
-  export const eventCount = async (store: GenericEventStore, web3: any, fromAddress: string) => {
+  export const eventCount = async (store: EventStore, web3: any, fromAddress: string) => {
     let countBigNumber = await store.eventCount(W3.TC.txParamsDefaultDeploy(fromAddress))
     return countBigNumber.toNumber()
   }
@@ -50,12 +28,13 @@ export namespace Store {
    * Store readFSA
    */
   export const readFSA = async (
-    store: GenericEventStore,
+    store: EventStore,
     eventStoreAdapter: EventStoreAdapter,
     web3: any,
     fromAddress: string,
     eventId: number
   ) => {
+    // move this to eventStoreAdapter....
     let solidityValues: any = await store.readEvent(
       eventId,
       W3.TC.txParamsDefaultDeploy(fromAddress)
@@ -78,7 +57,7 @@ export namespace Store {
    * Store writeFSA
    */
   export const writeFSA = async (
-    store: GenericEventStore,
+    store: EventStore,
     eventStoreAdapter: EventStoreAdapter,
     web3: any,
     fromAddress: string,
@@ -92,41 +71,11 @@ export namespace Store {
       throw new Error('event.payload must be an object, not an array.')
     }
 
-    // these 2 should be consolidated into a single eventStoreAdapter method
-    let { keyType, keyValue, valueType, valueValue } = await eventStoreAdapter.prepareFSAForStorage(
-      event
-    )
-    let marshalledEvent = await eventStoreAdapter.marshal(
-      event.type,
-      keyType,
-      valueType,
-      keyValue,
-      valueValue
-    )
-
-    // console.log(keyValue)
-
-    console.log(JSON.stringify(marshalledEvent))
-
-    let receipt = await store.writeEvent(
-      marshalledEvent.eventType,
-      marshalledEvent.keyType,
-      marshalledEvent.valueType,
-      marshalledEvent.key,
-      marshalledEvent.value,
-      W3.TC.txParamsDefaultDeploy(fromAddress, GAS_COSTS.WRITE_EVENT)
-    )
-
-    let eventsFromLogs: IFSA[] = await eventStoreAdapter.extractEventsFromLogs(receipt.logs)
-
-    if (eventsFromLogs.length > 1) {
-      throw new Error('somehow we are writing more than 1 event....')
-    }
-    return eventsFromLogs[0]
+    return eventStoreAdapter.writeFSA(store, fromAddress, event)
   }
 
   export const writeFSAs = async (
-    store: GenericEventStore,
+    store: EventStore,
     eventStoreAdapter: EventStoreAdapter,
     web3: any,
     fromAddress: string,
@@ -140,7 +89,7 @@ export namespace Store {
   }
 
   export const readFSAs = async (
-    store: GenericEventStore,
+    store: EventStore,
     eventStoreAdapter: EventStoreAdapter,
     web3: any,
     fromAddress: string,

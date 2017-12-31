@@ -5,8 +5,8 @@ export interface IWritableEventParams {
   valueValue: string
 }
 
-export const TransmuteSolidityEncodingTypes = ['S', 'B', 'U']
-export type TransmuteSolidityEncodingType = 'S' | 'B' | 'U'
+export const TransmuteSolidityEncodingTypes = ['S', 'A', 'B', 'U']
+export type TransmuteSolidityEncodingType = 'S' | 'A' | 'B' | 'U'
 
 export interface ITransmuteStoreAdapter {
   getStorage: () => any

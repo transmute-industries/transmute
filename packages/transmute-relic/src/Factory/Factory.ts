@@ -10,6 +10,7 @@ import { IReadModelState, IReadModelAdapter, IReadModel } from '../Store/ReadMod
 
 import Reducer from './Reducer'
 
+import * as EventTransformer from '../Utils/EventTransformer'
 import { Store } from '../Store'
 
 export namespace Factory {
@@ -40,8 +41,13 @@ export namespace Factory {
       W3.TC.txParamsDefaultDeploy(fromAddress)
     )
     const events = await adapter.extractEventsFromLogs(receipt.logs)
-    const store = await EventStore.At(events[0].payload.value)
-    return store
+    let eventStoreEvents = EventTransformer.filterEventsByMeta(events, 'msgSender', factory.address)
+    let factoryEvents = EventTransformer.filterEventsByMeta(events, 'msgSender', fromAddress)
+    // console.log('creation events: ', {
+    //   eventStoreEvents,
+    //   factoryEvents
+    // })
+    return EventStore.At(factoryEvents[0].payload.value)
   }
 
   export const getEventStores = async (factory: EventStoreFactory, fromAddress: string) => {

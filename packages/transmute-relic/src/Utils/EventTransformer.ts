@@ -2,6 +2,18 @@ import { IFSA, IRawEsEvent } from '../Store/EventTypes'
 
 import { Utils } from './Utils'
 
+export const payloadKeyToKeyType: {
+  [key: string]: string
+} = {
+  address: 'A',
+  bytes32: 'B',
+  uint: 'U' // not good.
+}
+
+export const isAdapterEvent = (fsa: IFSA) => {
+  return payloadKeyToKeyType[fsa.payload.key] === undefined
+}
+
 export const getFSAsFromReceipt = (receipt: any) => {
   let fsa: any[] = []
   receipt.logs.forEach((event: any) => {
