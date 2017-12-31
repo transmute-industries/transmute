@@ -5,6 +5,8 @@ import { EventTransformer } from '../../../Utils/EventTransformer'
 import { IFSA } from '../../../Store/EventTypes'
 import Relic from '../../../transmute-relic'
 
+import * as InternalEventTypes from '../../../Utils/InternalEventTypes'
+
 /**
  * EventStore spec
  */
@@ -27,7 +29,7 @@ describe('EventStore', () => {
       W3.TC.txParamsDefaultDeploy(currentOwner)
     )
     events = EventTransformer.getFSAsFromReceipt(receipt)
-    expect(events[0].type).toEqual('NEW_OWNER')
+    expect(events[0].type).toEqual(InternalEventTypes.NEW_OWNER)
     expect(events[0].payload.value).toEqual(newOwner)
 
     currentOwner = await eventStore.owner()
@@ -61,7 +63,7 @@ describe('EventStore', () => {
       let event = EventTransformer.arrayToFSA(esEventValues)
 
       // we expect the factory caller to be the owner
-      expect(event.type).toBe('NEW_OWNER')
+      expect(event.type).toBe(InternalEventTypes.NEW_OWNER)
       expect(event.payload.value).toBe(accounts[0])
       let eventStoreOwner = await eventStore.owner()
       expect(eventStoreOwner).toBe(accounts[0])
@@ -83,7 +85,7 @@ describe('EventStore', () => {
       // expect the event to be NEW_OWNER
       let esEventValues = await eventStore.readEvent(0, W3.TC.txParamsDefaultSend(accounts[0]))
       let event = EventTransformer.arrayToFSA(esEventValues)
-      expect(event.type).toBe('NEW_OWNER')
+      expect(event.type).toBe(InternalEventTypes.NEW_OWNER)
       expect(event.payload.value).toBe(accounts[0])
 
       // expect the eventStore owner to be correct
@@ -101,7 +103,7 @@ describe('EventStore', () => {
         W3.TC.txParamsDefaultDeploy(eventStoreOwner)
       )
       events = EventTransformer.getFSAsFromReceipt(receipt)
-      expect(events[0].type).toBe('WL_SET')
+      expect(events[0].type).toBe(InternalEventTypes.WL_SET)
 
       // ownership can be transfered
       await transferOwnershipTest(eventStore, accounts[6])

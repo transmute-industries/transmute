@@ -2,6 +2,7 @@ import { W3 } from 'soltsice'
 import { EventStoreFactory, EventStore } from '../../../SolidityTypes'
 import { getRelic } from '../../../__mocks__/setup'
 import { Utils } from '../../../Utils'
+import * as InternalEventTypes from '../../../Utils/InternalEventTypes'
 import { EventTransformer } from '../../../Utils/EventTransformer'
 import { IFSA } from '../../../Store/EventTypes'
 
@@ -26,14 +27,14 @@ describe('EventStoreFactory', () => {
     // the factory records the store was created
     let factoryEvents = EventTransformer.filterEventsByMeta(events, 'msgSender', ownerAccount)
     expect(factoryEvents.length).toBe(1)
-    expect(factoryEvents[0].type).toEqual('ES_CREATED')
+    expect(factoryEvents[0].type).toEqual(InternalEventTypes.ES_CREATED)
 
     // the eventStore records ownership and setup performed by the factory
     let eventStoreEvents = EventTransformer.filterEventsByMeta(events, 'msgSender', factory.address)
     expect(eventStoreEvents.length).toBe(3)
-    expect(eventStoreEvents[0].type).toEqual('NEW_OWNER')
-    expect(eventStoreEvents[1].type).toEqual('WL_SET')
-    expect(eventStoreEvents[2].type).toEqual('NEW_OWNER')
+    expect(eventStoreEvents[0].type).toEqual(InternalEventTypes.NEW_OWNER)
+    expect(eventStoreEvents[1].type).toEqual(InternalEventTypes.WL_SET)
+    expect(eventStoreEvents[2].type).toEqual(InternalEventTypes.NEW_OWNER)
     expect(eventStoreEvents[2].payload.value).toEqual(ownerAccount)
 
     // the eventStore whitelist is setup correctly
@@ -51,7 +52,7 @@ describe('EventStoreFactory', () => {
     // factory has an ES_CREATE event
     let esEventValues = await factory.readEvent(0, W3.TC.txParamsDefaultSend(ownerAccount))
     let event = EventTransformer.arrayToFSA(esEventValues)
-    expect(event.type).toBe('ES_CREATED')
+    expect(event.type).toBe(InternalEventTypes.ES_CREATED)
   }
 
   describe('factory eventstore creation', async () => {
@@ -77,7 +78,7 @@ describe('EventStoreFactory', () => {
 
     it('getInternalEventTypes', async () => {
       let types = ((await factory.getInternalEventTypes()) as any).map(Utils.toAscii)
-      expect(types).toEqual(['ES_CREATED', 'NEW_OWNER', 'RECYCLED_TO'])
+      expect(types).toEqual(InternalEventTypes.FACTORY)
     })
   })
 })

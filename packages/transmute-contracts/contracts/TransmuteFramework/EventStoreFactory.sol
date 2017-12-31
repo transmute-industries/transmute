@@ -14,9 +14,9 @@ contract EventStoreFactory {
   using AddressSetLib for AddressSetLib.AddressSet;
   using Bytes32SetLib for Bytes32SetLib.Bytes32Set;
 
-  bytes32 private constant ES_CREATED = bytes32("ES_CREATED");
   bytes32 private constant NEW_OWNER = bytes32("NEW_OWNER");
   bytes32 private constant RECYCLED_TO = bytes32("RECYCLED_TO");
+  bytes32 private constant ES_CREATED = bytes32("ES_CREATED");
   Bytes32SetLib.Bytes32Set private INTERNAL_EVENT_TYPES;
 
   EventStoreLib.EsEventStorage private store;
@@ -34,9 +34,10 @@ contract EventStoreFactory {
    */
   function EventStoreFactory() public {
     owner = msg.sender;
-    INTERNAL_EVENT_TYPES.add(ES_CREATED);
+
     INTERNAL_EVENT_TYPES.add(NEW_OWNER);
     INTERNAL_EVENT_TYPES.add(RECYCLED_TO);
+    INTERNAL_EVENT_TYPES.add(ES_CREATED);
   }
 
   /**
