@@ -4,7 +4,6 @@ import "./EventStoreLib.sol";
 import "./EventStore.sol";
 import "./SetLib/AddressSet/AddressSetLib.sol";
 
-
 /**
 * @dev NEVER USE inheritance or modifiers
 */
@@ -12,6 +11,10 @@ contract EventStoreFactory {
 
   using EventStoreLib for EventStoreLib.EsEventStorage;
   using AddressSetLib for AddressSetLib.AddressSet;
+
+  // TODO: Add security 
+  // Bytes32SetLib.Bytes32Set internalEventTypes;
+  // internalEventTypes.add(bytes32('AC_ROLE_ASSIGNED'));
 
   EventStoreLib.EsEventStorage store;
   AddressSetLib.AddressSet eventStores;
@@ -79,9 +82,14 @@ contract EventStoreFactory {
     return eventStores.values;
   }
   
-  // internalWriteEvent is private 
-  // only the factory contract can write events
-  // the factory event log should only be used to model factory events
+  /**
+  * @dev internalWriteEvent is private, only the factory contract can write events, the factory event log should only be used to model factory events
+  * @param _eventType The type of this event
+  * @param _keyType The type of this event's key
+  * @param _valueType The type of this event's value
+  * @param _key This event's key
+  * @param _value This event's value
+  */
   function internalWriteEvent(
     bytes32 _eventType,
     bytes1 _keyType,
