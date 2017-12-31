@@ -50,17 +50,20 @@ contract EventStoreFactory {
     selfdestruct(owner);
   }
 
-   /**
-   * @dev Transfers the current balance to the _recipient and terminates the contract.
+  /**
+  * @dev Transfers the current balance to the _recipient and terminates the contract.
   * @param _recipient The address to transfer balance to.
-   */
+  */
   function recycleAndSend(address _recipient) public {
     require(msg.sender == owner);
     writeEvent("RECYCLED_TO", "S", "A", "address", bytes32(address(_recipient)));
     selfdestruct(_recipient);
   }
 
-  // Interface
+  /**
+  * @dev Creates and initializes an eventStore
+  * @param _whitelist The addresses to which can call writeEvent on the eventStore.
+  */
   function createEventStore(address[] _whitelist) public returns (address) {
     EventStore eventStore = new EventStore();
     writeEvent("ES_CREATED", "S", "A", "address", bytes32(address(eventStore)));

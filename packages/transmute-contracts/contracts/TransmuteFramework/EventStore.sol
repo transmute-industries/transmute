@@ -22,7 +22,7 @@ contract EventStore {
   function EventStore() public payable {
     owner = msg.sender;
     creatorTxOrigin = tx.origin;
-    writeEvent("OWNER_SET", "S", "A", "address", bytes32(address(owner)));
+    writeEvent("NEW_OWNER", "S", "A", "address", bytes32(address(owner)));
   }
   
   /**
@@ -32,7 +32,7 @@ contract EventStore {
   function transferOwnership(address newOwner) public {
     require(newOwner != address(0));
     owner = newOwner;
-    writeEvent("OWNER_SET", "S", "A", "address", bytes32(address(newOwner)));
+    writeEvent("NEW_OWNER", "S", "A", "address", bytes32(address(newOwner)));
   }
 
    /**
