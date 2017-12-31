@@ -1,11 +1,12 @@
-import { IFSA } from "../../EventTypes";
-import * as Constants from "./constants";
+import { IFSA } from '../../EventTypes'
+import * as Constants from './constants'
 
 export default [
   {
     type: Constants.ACCOUNT_CREATED,
     payload: {
-      timestamp: "1231231"
+      key: '1231231',
+      value: 'asdfasd'
     },
     meta: {
       id: 0
@@ -14,10 +15,11 @@ export default [
   {
     type: Constants.ACCOUNT_NAMED,
     payload: {
-      name: "dave"
+      key: 'dave',
+      value: 'fff'
     },
     meta: {
       id: 1
     }
   }
-] as IFSA[];
+] as IFSA[]

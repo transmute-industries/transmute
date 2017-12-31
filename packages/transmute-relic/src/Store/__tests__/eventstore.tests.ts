@@ -29,45 +29,29 @@ describe('Store', () => {
     eventStoreAdapter = setup.eventStoreAdapter
   })
 
-  // it('the store rejects FSAs that are not formatted correctly', async ()=>{
-  //   console.log('hahaah')
-  //   let badFSA =  {
-  //     type: "test",
-  //     payload: {
-  //       key: "value"
-  //     },
-  //     meta: {}
-  //   }
-  //   try{
-  //     let fsa = await Store.writeFSA(store, eventStoreAdapter, relic.web3, accounts[0], badFSA);
-  //   } catch (e) {
-  //     expect(e.message).toEqual('event.payload must be { key: ..., value: .. }.')
-  //   }
-  // })
+  it('the store rejects FSAs that are not formatted correctly', async () => {
+    let badFSA = {
+      type: 'test',
+      payload: {
+        key: 'value'
+      },
+      meta: {}
+    }
+    try {
+      let fsa = await Store.writeFSA(store, eventStoreAdapter, relic.web3, accounts[0], badFSA)
+    } catch (e) {
+      expect(e.message).toEqual(
+        'fsa.meta.adapter is not defined. be sure to set it when fsa.payload is an object (isAdapterEvent).'
+      )
+    }
+  })
 
-  // it('the store writes FSAs that are not isAdapterEvent ', async ()=>{
-  //   // add tests for all !isAdapterEvent types here....
-  //   console.log('hahaah')
-  //   let goodFSA =  {
-  //     type: "test",
-  //     payload: {
-  //       key: "address",
-  //       value: '0x01000c268181f5d90587392ff67ada1a16393fe4'
-  //     },
-  //     meta: {}
-  //   }
-  //   let fsa = await Store.writeFSA(store, eventStoreAdapter, relic.web3, accounts[0], goodFSA);
-  //   expect(fsa.payload.key).toEqual(goodFSA.payload.key)
-  //   expect(fsa.payload.value).toEqual(goodFSA.payload.value)
-  // })
-
-  it('the store writes FSAs that ARE isAdapterEvent  ', async () => {
+  it('the store writes FSAs that ARE NOT isAdapterEvent ', async () => {
     // add tests for all !isAdapterEvent types here....
-    console.log('hahaah')
     let goodFSA = {
       type: 'test',
       payload: {
-        key: 'multihash',
+        key: 'address',
         value: '0x01000c268181f5d90587392ff67ada1a16393fe4'
       },
       meta: {}
@@ -75,6 +59,28 @@ describe('Store', () => {
     let fsa = await Store.writeFSA(store, eventStoreAdapter, relic.web3, accounts[0], goodFSA)
     expect(fsa.payload.key).toEqual(goodFSA.payload.key)
     expect(fsa.payload.value).toEqual(goodFSA.payload.value)
+  })
+
+  it('the store writes FSAs that ARE isAdapterEvent ', async () => {
+    // add tests for all !isAdapterEvent types here....
+    let goodFSA = {
+      type: 'test',
+      payload: {
+        cool: 'story',
+        bro: 1
+      },
+      meta: {
+        adapter: 'I'
+      }
+    }
+    let writtenFSA = await Store.writeFSA(
+      store,
+      eventStoreAdapter,
+      relic.web3,
+      accounts[0],
+      goodFSA
+    )
+    expect(writtenFSA.payload).toEqual(goodFSA.payload)
   })
 })
 
