@@ -1,6 +1,7 @@
 import { W3 } from 'soltsice'
 import { EventStoreFactory, EventStore } from '../../../SolidityTypes'
 import { getRelic } from '../../../__mocks__/setup'
+import { Utils } from '../../../Utils'
 import { EventTransformer } from '../../../Utils/EventTransformer'
 import { IFSA } from '../../../Store/EventTypes'
 
@@ -72,6 +73,11 @@ describe('EventStoreFactory', () => {
       let ownerAccount = accounts[2]
       let whitelist = accounts.slice(3, 5)
       await createEventStoreTest(ownerAccount, whitelist)
+    })
+
+    it('getInternalEventTypes', async () => {
+      let types = ((await factory.getInternalEventTypes()) as any).map(Utils.toAscii)
+      expect(types).toEqual(['ES_CREATED', 'NEW_OWNER', 'RECYCLED_TO'])
     })
   })
 })
