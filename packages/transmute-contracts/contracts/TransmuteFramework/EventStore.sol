@@ -14,6 +14,10 @@ contract EventStore {
 
   address public owner;
 
+  // TODO: Add security 
+  // Bytes32SetLib.Bytes32Set internalEventTypes;
+  // internalEventTypes.add(bytes32('AC_ROLE_ASSIGNED'));
+
   /**
    * @dev This contract can receive ether.
    */
@@ -45,12 +49,24 @@ contract EventStore {
     selfdestruct(owner);
   }
 
+  /**
+   * @dev Allows the current owner to transfer balance to recipient and terminates the contract.
+   * @param _recipient The address to transfer balance to.
+   */
   function recycleAndSend(address _recipient) public {
     require(msg.sender == owner);
     internalWriteEvent("RECYCLED_TO", "S", "A", "address", bytes32(address(_recipient)));
     selfdestruct(_recipient);
   }
 
+  /**
+  * @dev internalWriteEvent is private, CAREFUL you need to make sure that whitelisted and owner accounts cannot use internalEventTypes!!!!!!
+  * @param _eventType The type of this event
+  * @param _keyType The type of this event's key
+  * @param _valueType The type of this event's value
+  * @param _key This event's key
+  * @param _value This event's value
+  */
   function internalWriteEvent(
     bytes32 _eventType,
     bytes1 _keyType,
@@ -70,6 +86,14 @@ contract EventStore {
     );
   }
 
+  /**
+  * @dev writeEvent CAREFUL you need to make sure that whitelisted and owner accounts cannot use internalEventTypes!!!!!!
+  * @param _eventType The type of this event
+  * @param _keyType The type of this event's key
+  * @param _valueType The type of this event's value
+  * @param _key This event's key
+  * @param _value This event's value
+  */
   function writeEvent(
     bytes32 _eventType,
     bytes1 _keyType,
@@ -79,8 +103,8 @@ contract EventStore {
   ) 
   public returns (uint)
   {
-    // only this contract owner, creator, or a member of the whitelist can write events
-    require(whitelist.size() == 0 || owner == msg.sender || whitelist.contains(msg.sender));
+    // only this contract owner or a member of the whitelist can write events
+    require(owner == msg.sender || whitelist.contains(msg.sender));
     return EventStoreLib.writeEvent(
       store,
       _eventType,
@@ -107,7 +131,10 @@ contract EventStore {
     return EventStoreLib.readEvent(store, _eventId);
   }
 
-  // Helper Functions
+  /**
+   * @dev Allows the current owner to set the whitelist EXACTLY ONCE
+   * @param _whitelist The addresses which can use the public writeEvent method of this contract.
+   */
   function setWhitelist(address[] _whitelist) public {
     require(msg.sender == owner);
     require(whitelist.size() == 0);
