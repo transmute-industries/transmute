@@ -2,22 +2,13 @@ import { W3 } from 'soltsice'
 import Relic from '../transmute-relic'
 import { Factory } from '../Factory'
 import { Store } from '../Store'
-import { StoreAdapter } from '../Store/StoreAdapter'
+import { EventStoreAdapter } from '../Store/EventStoreAdapter'
 
 const bs58 = require('bs58')
 const util = require('ethereumjs-util')
 
 import { EventStoreFactory } from '../SolidityTypes/EventStoreFactory'
 import { EventStore } from '../SolidityTypes/EventStore'
-
-// export { EventStoreFactory } from "../SolidityTypes/EventStoreFactory";
-// export { EventStore } from "../SolidityTypes/EventStore";
-
-// import { UnsafeEventStoreFactory } from "../SolidityTypes/UnsafeEventStoreFactory";
-// import { UnsafeEventStore } from "../SolidityTypes/UnsafeEventStore";
-
-// import { RBACEventStoreFactory } from "../SolidityTypes/RBACEventStoreFactory";
-// import { RBACEventStore } from "../SolidityTypes/RBACEventStore";
 
 let ipfsAdapter = require('../../../transmute-adapter-ipfs')
 let nodeStorageAdapter = require('../../../transmute-adapter-node-storage')
@@ -36,7 +27,7 @@ const nodeStorageReadModelAdapter: any = {
   }
 }
 
-const adapter = new StoreAdapter({
+const eventStoreAdapter = new EventStoreAdapter({
   I: {
     keyName: 'multihash',
     adapter: ipfsAdapter,
@@ -79,32 +70,24 @@ export const getSetupAsync = async () => {
   const accounts = await relic.getAccounts()
 
   let factoryInstances = {
-    // unsafe: await Factory.create(
-    //   Factory.FactoryTypes.UnsafeEventStoreFactory,
-    //   relic.web3,
-    //   accounts[0]
-    // ),
-    // rbac: await Factory.create(Factory.FactoryTypes.RBACEventStoreFactory, relic.web3, accounts[0]),
-    default: await Factory.create(Factory.FactoryTypes.EventStoreFactory, relic.web3, accounts[0])
+    default: await Factory.create(relic.web3, accounts[0])
   }
 
   let storeInstances = {
-    // unsafe: await Factory.createStore(factoryInstances.unsafe, adapter, relic.web3, accounts[0]),
-    // rbac: await Factory.createStore(factoryInstances.rbac, adapter, relic.web3, accounts[0])
-    default: await Factory.createStore(factoryInstances.default, adapter, relic.web3, accounts[0])
+    default: await Factory.createStore(
+      factoryInstances.default,
+      eventStoreAdapter,
+      relic.web3,
+      accounts[0]
+    )
   }
 
   return {
     relic,
-
-    factoryInstances,
-    storeInstances,
-    adapter,
+    eventStoreAdapter,
     accounts,
-
     store: storeInstances.default,
     factory: factoryInstances.default,
-
     nodeStorageReadModelAdapter
   }
 }

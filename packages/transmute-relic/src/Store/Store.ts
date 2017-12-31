@@ -5,7 +5,7 @@ import { EventStore } from '../SolidityTypes/EventStore'
 import { W3 } from 'soltsice'
 
 import { Utils } from '../Utils'
-import { StoreAdapter } from './StoreAdapter'
+import { EventStoreAdapter } from './EventStoreAdapter'
 
 import { IFSA } from './EventTypes'
 
@@ -49,7 +49,7 @@ export namespace Store {
    */
   export const readFSA = async (
     store: GenericEventStore,
-    adapter: StoreAdapter,
+    adapter: EventStoreAdapter,
     web3: any,
     fromAddress: string,
     eventId: number
@@ -66,7 +66,8 @@ export namespace Store {
       solidityValues[4],
       solidityValues[5],
       solidityValues[6],
-      solidityValues[7]
+      solidityValues[7],
+      solidityValues[8]
     )
     return adapter.eventMap.EsEvent(esEvent)
   }
@@ -76,7 +77,7 @@ export namespace Store {
    */
   export const writeFSA = async (
     store: GenericEventStore,
-    adapter: StoreAdapter,
+    adapter: EventStoreAdapter,
     web3: any,
     fromAddress: string,
     event: IFSA
@@ -122,7 +123,7 @@ export namespace Store {
 
   export const writeFSAs = async (
     store: GenericEventStore,
-    adapter: StoreAdapter,
+    adapter: EventStoreAdapter,
     web3: any,
     fromAddress: string,
     events: IFSA[]
@@ -136,7 +137,7 @@ export namespace Store {
 
   export const readFSAs = async (
     store: GenericEventStore,
-    adapter: StoreAdapter,
+    adapter: EventStoreAdapter,
     web3: any,
     fromAddress: string,
     eventIndex: number = 0
