@@ -12,17 +12,17 @@ contract EventStore {
   EventStoreLib.EsEventStorage store;
   AddressSetLib.AddressSet whitelist;
 
-  address public creatorTxOrigin;
   address public owner;
 
-  // Fallback Function
-  function () public payable { revert(); }
+  /**
+   * @dev This contract can receive ether.
+   */
+  function () public payable { }
 
   // Constuctor
   function EventStore() public payable {
     owner = msg.sender;
-    creatorTxOrigin = tx.origin;
-    writeEvent("NEW_OWNER", "S", "A", "address", bytes32(address(owner)));
+    internalWriteEvent("NEW_OWNER", "S", "A", "address", bytes32(address(owner)));
   }
   
   /**
@@ -30,9 +30,10 @@ contract EventStore {
    * @param newOwner The address to transfer ownership to.
    */
   function transferOwnership(address newOwner) public {
+    require(msg.sender == owner);
     require(newOwner != address(0));
     owner = newOwner;
-    writeEvent("NEW_OWNER", "S", "A", "address", bytes32(address(newOwner)));
+    internalWriteEvent("NEW_OWNER", "S", "A", "address", bytes32(address(newOwner)));
   }
 
    /**
@@ -48,7 +49,26 @@ contract EventStore {
     selfdestruct(_recipient);
   }
 
-  // Interface
+
+  function internalWriteEvent(
+    bytes32 _eventType,
+    bytes1 _keyType,
+    bytes1 _valueType,
+    bytes32 _key,
+    bytes32 _value
+  ) 
+  private returns (uint)
+  {
+    return EventStoreLib.writeEvent(
+      store,
+      _eventType,
+      _keyType,
+      _valueType,
+      _key,
+      _value
+    );
+  }
+
   function writeEvent(
     bytes32 _eventType,
     bytes1 _keyType,
@@ -59,7 +79,7 @@ contract EventStore {
   public returns (uint)
   {
     // only this contract owner, creator, or a member of the whitelist can write events
-    require(creatorTxOrigin == tx.origin || owner == msg.sender || whitelist.contains(msg.sender));
+    require(whitelist.size() == 0 || owner == msg.sender || whitelist.contains(msg.sender));
     return EventStoreLib.writeEvent(
       store,
       _eventType,
@@ -93,7 +113,7 @@ contract EventStore {
     for (uint index = 0; index < _whitelist.length; index++) {
       whitelist.add(_whitelist[index]);
     }
-    writeEvent("WL_SET", "S", "A", "address", bytes32(address(msg.sender)));
+    internalWriteEvent("WL_SET", "S", "A", "address", bytes32(address(msg.sender)));
   }
 
   function getWhitelist() public view returns(address[]) {

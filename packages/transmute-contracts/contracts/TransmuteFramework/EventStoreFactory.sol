@@ -38,7 +38,7 @@ contract EventStoreFactory {
     require(msg.sender == owner);
     require(_newOwner != address(0));
     owner = _newOwner;
-    writeEvent("NEW_OWNER", "S", "A", "address", bytes32(address(_newOwner)));
+    internalWriteEvent("NEW_OWNER", "S", "A", "address", bytes32(address(_newOwner)));
   }
 
    /**
@@ -46,7 +46,7 @@ contract EventStoreFactory {
    */
   function recycle() public {
     require(msg.sender == owner);
-    writeEvent("RECYCLED_TO", "S", "A", "address", bytes32(address(owner)));
+    internalWriteEvent("RECYCLED_TO", "S", "A", "address", bytes32(address(owner)));
     selfdestruct(owner);
   }
 
@@ -56,17 +56,17 @@ contract EventStoreFactory {
   */
   function recycleAndSend(address _recipient) public {
     require(msg.sender == owner);
-    writeEvent("RECYCLED_TO", "S", "A", "address", bytes32(address(_recipient)));
+    internalWriteEvent("RECYCLED_TO", "S", "A", "address", bytes32(address(_recipient)));
     selfdestruct(_recipient);
   }
 
   /**
   * @dev Creates and initializes an eventStore
-  * @param _whitelist The addresses to which can call writeEvent on the eventStore.
+  * @param _whitelist The addresses to which can call internalWriteEvent on the eventStore.
   */
   function createEventStore(address[] _whitelist) public returns (address) {
     EventStore eventStore = new EventStore();
-    writeEvent("ES_CREATED", "S", "A", "address", bytes32(address(eventStore)));
+    internalWriteEvent("ES_CREATED", "S", "A", "address", bytes32(address(eventStore)));
     eventStores.add(address(eventStore));
 
     eventStore.setWhitelist(_whitelist);
@@ -79,10 +79,10 @@ contract EventStoreFactory {
     return eventStores.values;
   }
   
-  // writeEvent is private in factory
+  // internalWriteEvent is private 
   // only the factory contract can write events
   // the factory event log should only be used to model factory events
-  function writeEvent(
+  function internalWriteEvent(
     bytes32 _eventType,
     bytes1 _keyType,
     bytes1 _valueType,

@@ -94,7 +94,7 @@ export namespace EventTransformer {
         msgSender: esEvent.MsgSender
       }
     }
-    return getFSAFromEsEventWithPartial(esEvent, partialFSA)
+    return getFSAFromEsEventWithPartial(esEvent, partialFSA) as IFSA
   }
 
   export const arrayToFSA = (values: any) => {

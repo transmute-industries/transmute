@@ -159,7 +159,7 @@
       "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-contracts/contracts/TransmuteFramework/EventStoreLib.sol",
       "exportedSymbols": {
         "EventStoreLib": [
-          852
+          876
         ]
       }
     },
@@ -173,7 +173,7 @@
             ".17"
           ]
         },
-        "id": 647,
+        "id": 671,
         "name": "PragmaDirective",
         "src": "0:24:4"
       },
@@ -189,17 +189,17 @@
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            852
+            876
           ],
           "name": "EventStoreLib",
-          "scope": 853
+          "scope": 877
         },
         "children": [
           {
             "attributes": {
               "canonicalName": "EventStoreLib.EsEventStruct",
               "name": "EsEventStruct",
-              "scope": 852,
+              "scope": 876,
               "visibility": "public"
             },
             "children": [
@@ -207,7 +207,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "TxOrigin",
-                  "scope": 664,
+                  "scope": 688,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "address",
@@ -220,12 +220,12 @@
                       "name": "address",
                       "type": "address"
                     },
-                    "id": 648,
+                    "id": 672,
                     "name": "ElementaryTypeName",
                     "src": "228:7:4"
                   }
                 ],
-                "id": 649,
+                "id": 673,
                 "name": "VariableDeclaration",
                 "src": "228:16:4"
               },
@@ -233,7 +233,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "MsgSender",
-                  "scope": 664,
+                  "scope": 688,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "address",
@@ -246,12 +246,12 @@
                       "name": "address",
                       "type": "address"
                     },
-                    "id": 650,
+                    "id": 674,
                     "name": "ElementaryTypeName",
                     "src": "254:7:4"
                   }
                 ],
-                "id": 651,
+                "id": 675,
                 "name": "VariableDeclaration",
                 "src": "254:17:4"
               },
@@ -259,7 +259,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "Created",
-                  "scope": 664,
+                  "scope": 688,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "uint256",
@@ -272,12 +272,12 @@
                       "name": "uint",
                       "type": "uint256"
                     },
-                    "id": 652,
+                    "id": 676,
                     "name": "ElementaryTypeName",
                     "src": "282:4:4"
                   }
                 ],
-                "id": 653,
+                "id": 677,
                 "name": "VariableDeclaration",
                 "src": "282:12:4"
               },
@@ -285,7 +285,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "EventType",
-                  "scope": 664,
+                  "scope": 688,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "bytes32",
@@ -298,12 +298,12 @@
                       "name": "bytes32",
                       "type": "bytes32"
                     },
-                    "id": 654,
+                    "id": 678,
                     "name": "ElementaryTypeName",
                     "src": "305:7:4"
                   }
                 ],
-                "id": 655,
+                "id": 679,
                 "name": "VariableDeclaration",
                 "src": "305:17:4"
               },
@@ -311,7 +311,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "KeyType",
-                  "scope": 664,
+                  "scope": 688,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "bytes1",
@@ -324,12 +324,12 @@
                       "name": "bytes1",
                       "type": "bytes1"
                     },
-                    "id": 656,
+                    "id": 680,
                     "name": "ElementaryTypeName",
                     "src": "359:6:4"
                   }
                 ],
-                "id": 657,
+                "id": 681,
                 "name": "VariableDeclaration",
                 "src": "359:14:4"
               },
@@ -337,7 +337,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "ValueType",
-                  "scope": 664,
+                  "scope": 688,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "bytes1",
@@ -350,12 +350,12 @@
                       "name": "bytes1",
                       "type": "bytes1"
                     },
-                    "id": 658,
+                    "id": 682,
                     "name": "ElementaryTypeName",
                     "src": "407:6:4"
                   }
                 ],
-                "id": 659,
+                "id": 683,
                 "name": "VariableDeclaration",
                 "src": "407:16:4"
               },
@@ -363,7 +363,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "Key",
-                  "scope": 664,
+                  "scope": 688,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "bytes32",
@@ -376,12 +376,12 @@
                       "name": "bytes32",
                       "type": "bytes32"
                     },
-                    "id": 660,
+                    "id": 684,
                     "name": "ElementaryTypeName",
                     "src": "456:7:4"
                   }
                 ],
-                "id": 661,
+                "id": 685,
                 "name": "VariableDeclaration",
                 "src": "456:11:4"
               },
@@ -389,7 +389,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "Value",
-                  "scope": 664,
+                  "scope": 688,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "bytes32",
@@ -402,17 +402,17 @@
                       "name": "bytes32",
                       "type": "bytes32"
                     },
-                    "id": 662,
+                    "id": 686,
                     "name": "ElementaryTypeName",
                     "src": "491:7:4"
                   }
                 ],
-                "id": 663,
+                "id": 687,
                 "name": "VariableDeclaration",
                 "src": "491:13:4"
               }
             ],
-            "id": 664,
+            "id": 688,
             "name": "StructDefinition",
             "src": "197:328:4"
           },
@@ -420,7 +420,7 @@
             "attributes": {
               "canonicalName": "EventStoreLib.EsEventStorage",
               "name": "EsEventStorage",
-              "scope": 852,
+              "scope": 876,
               "visibility": "public"
             },
             "children": [
@@ -428,7 +428,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "events",
-                  "scope": 668,
+                  "scope": 692,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "struct EventStoreLib.EsEventStruct storage ref[] storage pointer",
@@ -446,25 +446,25 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "EsEventStruct",
-                          "referencedDeclaration": 664,
+                          "referencedDeclaration": 688,
                           "type": "struct EventStoreLib.EsEventStruct storage pointer"
                         },
-                        "id": 665,
+                        "id": 689,
                         "name": "UserDefinedTypeName",
                         "src": "563:13:4"
                       }
                     ],
-                    "id": 666,
+                    "id": 690,
                     "name": "ArrayTypeName",
                     "src": "563:15:4"
                   }
                 ],
-                "id": 667,
+                "id": 691,
                 "name": "VariableDeclaration",
                 "src": "563:22:4"
               }
             ],
-            "id": 668,
+            "id": 692,
             "name": "StructDefinition",
             "src": "531:61:4"
           },
@@ -478,7 +478,7 @@
               ],
               "name": "writeEvent",
               "payable": false,
-              "scope": 852,
+              "scope": 876,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -490,7 +490,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 779,
+                      "scope": 803,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct EventStoreLib.EsEventStorage storage pointer",
@@ -502,15 +502,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "EsEventStorage",
-                          "referencedDeclaration": 668,
+                          "referencedDeclaration": 692,
                           "type": "struct EventStoreLib.EsEventStorage storage pointer"
                         },
-                        "id": 669,
+                        "id": 693,
                         "name": "UserDefinedTypeName",
                         "src": "646:14:4"
                       }
                     ],
-                    "id": 670,
+                    "id": 694,
                     "name": "VariableDeclaration",
                     "src": "646:27:4"
                   },
@@ -518,7 +518,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_eventType",
-                      "scope": 779,
+                      "scope": 803,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -531,12 +531,12 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 671,
+                        "id": 695,
                         "name": "ElementaryTypeName",
                         "src": "683:7:4"
                       }
                     ],
-                    "id": 672,
+                    "id": 696,
                     "name": "VariableDeclaration",
                     "src": "683:18:4"
                   },
@@ -544,7 +544,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_keyType",
-                      "scope": 779,
+                      "scope": 803,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes1",
@@ -557,12 +557,12 @@
                           "name": "bytes1",
                           "type": "bytes1"
                         },
-                        "id": 673,
+                        "id": 697,
                         "name": "ElementaryTypeName",
                         "src": "711:6:4"
                       }
                     ],
-                    "id": 674,
+                    "id": 698,
                     "name": "VariableDeclaration",
                     "src": "711:15:4"
                   },
@@ -570,7 +570,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_valueType",
-                      "scope": 779,
+                      "scope": 803,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes1",
@@ -583,12 +583,12 @@
                           "name": "bytes1",
                           "type": "bytes1"
                         },
-                        "id": 675,
+                        "id": 699,
                         "name": "ElementaryTypeName",
                         "src": "736:6:4"
                       }
                     ],
-                    "id": 676,
+                    "id": 700,
                     "name": "VariableDeclaration",
                     "src": "736:17:4"
                   },
@@ -596,7 +596,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_key",
-                      "scope": 779,
+                      "scope": 803,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -609,12 +609,12 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 677,
+                        "id": 701,
                         "name": "ElementaryTypeName",
                         "src": "763:7:4"
                       }
                     ],
-                    "id": 678,
+                    "id": 702,
                     "name": "VariableDeclaration",
                     "src": "763:12:4"
                   },
@@ -622,7 +622,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_value",
-                      "scope": 779,
+                      "scope": 803,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -635,17 +635,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 679,
+                        "id": 703,
                         "name": "ElementaryTypeName",
                         "src": "785:7:4"
                       }
                     ],
-                    "id": 680,
+                    "id": 704,
                     "name": "VariableDeclaration",
                     "src": "785:14:4"
                   }
                 ],
-                "id": 681,
+                "id": 705,
                 "name": "ParameterList",
                 "src": "636:169:4"
               },
@@ -655,7 +655,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 779,
+                      "scope": 803,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -668,17 +668,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 682,
+                        "id": 706,
                         "name": "ElementaryTypeName",
                         "src": "822:4:4"
                       }
                     ],
-                    "id": 683,
+                    "id": 707,
                     "name": "VariableDeclaration",
                     "src": "822:4:4"
                   }
                 ],
-                "id": 684,
+                "id": 708,
                 "name": "ParameterList",
                 "src": "821:6:4"
               },
@@ -687,7 +687,7 @@
                   {
                     "attributes": {
                       "assignments": [
-                        686
+                        710
                       ]
                     },
                     "children": [
@@ -695,7 +695,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "_created",
-                          "scope": 779,
+                          "scope": 803,
                           "stateVariable": false,
                           "storageLocation": "default",
                           "type": "uint256",
@@ -708,12 +708,12 @@
                               "name": "uint",
                               "type": "uint256"
                             },
-                            "id": 685,
+                            "id": 709,
                             "name": "ElementaryTypeName",
                             "src": "838:4:4"
                           }
                         ],
-                        "id": 686,
+                        "id": 710,
                         "name": "VariableDeclaration",
                         "src": "838:13:4"
                       },
@@ -723,23 +723,23 @@
                           "overloadedDeclarations": [
                             null
                           ],
-                          "referencedDeclaration": 2713,
+                          "referencedDeclaration": 2737,
                           "type": "uint256",
                           "value": "now"
                         },
-                        "id": 687,
+                        "id": 711,
                         "name": "Identifier",
                         "src": "854:3:4"
                       }
                     ],
-                    "id": 688,
+                    "id": 712,
                     "name": "VariableDeclarationStatement",
                     "src": "838:19:4"
                   },
                   {
                     "attributes": {
                       "assignments": [
-                        690
+                        714
                       ]
                     },
                     "children": [
@@ -747,7 +747,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "_eventId",
-                          "scope": 779,
+                          "scope": 803,
                           "stateVariable": false,
                           "storageLocation": "default",
                           "type": "uint256",
@@ -760,12 +760,12 @@
                               "name": "uint",
                               "type": "uint256"
                             },
-                            "id": 689,
+                            "id": 713,
                             "name": "ElementaryTypeName",
                             "src": "867:4:4"
                           }
                         ],
-                        "id": 690,
+                        "id": 714,
                         "name": "VariableDeclaration",
                         "src": "867:13:4"
                       },
@@ -789,7 +789,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "events",
-                              "referencedDeclaration": 667,
+                              "referencedDeclaration": 691,
                               "type": "struct EventStoreLib.EsEventStruct storage ref[] storage ref"
                             },
                             "children": [
@@ -799,26 +799,26 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 670,
+                                  "referencedDeclaration": 694,
                                   "type": "struct EventStoreLib.EsEventStorage storage pointer",
                                   "value": "self"
                                 },
-                                "id": 691,
+                                "id": 715,
                                 "name": "Identifier",
                                 "src": "883:4:4"
                               }
                             ],
-                            "id": 692,
+                            "id": 716,
                             "name": "MemberAccess",
                             "src": "883:11:4"
                           }
                         ],
-                        "id": 693,
+                        "id": 717,
                         "name": "MemberAccess",
                         "src": "883:18:4"
                       }
                     ],
-                    "id": 694,
+                    "id": 718,
                     "name": "VariableDeclarationStatement",
                     "src": "867:34:4"
                   },
@@ -834,7 +834,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "esEvent",
-                          "scope": 779,
+                          "scope": 803,
                           "stateVariable": false,
                           "storageLocation": "memory",
                           "type": "struct EventStoreLib.EsEventStruct memory",
@@ -846,20 +846,20 @@
                             "attributes": {
                               "contractScope": null,
                               "name": "EsEventStruct",
-                              "referencedDeclaration": 664,
+                              "referencedDeclaration": 688,
                               "type": "struct EventStoreLib.EsEventStruct storage pointer"
                             },
-                            "id": 695,
+                            "id": 719,
                             "name": "UserDefinedTypeName",
                             "src": "912:13:4"
                           }
                         ],
-                        "id": 696,
+                        "id": 720,
                         "name": "VariableDeclaration",
                         "src": "912:28:4"
                       }
                     ],
-                    "id": 697,
+                    "id": 721,
                     "name": "VariableDeclarationStatement",
                     "src": "912:28:4"
                   },
@@ -884,7 +884,7 @@
                               "isPure": false,
                               "lValueRequested": true,
                               "member_name": "TxOrigin",
-                              "referencedDeclaration": 649,
+                              "referencedDeclaration": 673,
                               "type": "address"
                             },
                             "children": [
@@ -894,16 +894,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 696,
+                                  "referencedDeclaration": 720,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 698,
+                                "id": 722,
                                 "name": "Identifier",
                                 "src": "950:7:4"
                               }
                             ],
-                            "id": 700,
+                            "id": 724,
                             "name": "MemberAccess",
                             "src": "950:16:4"
                           },
@@ -925,26 +925,26 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2721,
+                                  "referencedDeclaration": 2745,
                                   "type": "tx",
                                   "value": "tx"
                                 },
-                                "id": 701,
+                                "id": 725,
                                 "name": "Identifier",
                                 "src": "969:2:4"
                               }
                             ],
-                            "id": 702,
+                            "id": 726,
                             "name": "MemberAccess",
                             "src": "969:9:4"
                           }
                         ],
-                        "id": 703,
+                        "id": 727,
                         "name": "Assignment",
                         "src": "950:28:4"
                       }
                     ],
-                    "id": 704,
+                    "id": 728,
                     "name": "ExpressionStatement",
                     "src": "950:28:4"
                   },
@@ -969,7 +969,7 @@
                               "isPure": false,
                               "lValueRequested": true,
                               "member_name": "MsgSender",
-                              "referencedDeclaration": 651,
+                              "referencedDeclaration": 675,
                               "type": "address"
                             },
                             "children": [
@@ -979,16 +979,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 696,
+                                  "referencedDeclaration": 720,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 705,
+                                "id": 729,
                                 "name": "Identifier",
                                 "src": "988:7:4"
                               }
                             ],
-                            "id": 707,
+                            "id": 731,
                             "name": "MemberAccess",
                             "src": "988:17:4"
                           },
@@ -1010,26 +1010,26 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2711,
+                                  "referencedDeclaration": 2735,
                                   "type": "msg",
                                   "value": "msg"
                                 },
-                                "id": 708,
+                                "id": 732,
                                 "name": "Identifier",
                                 "src": "1008:3:4"
                               }
                             ],
-                            "id": 709,
+                            "id": 733,
                             "name": "MemberAccess",
                             "src": "1008:10:4"
                           }
                         ],
-                        "id": 710,
+                        "id": 734,
                         "name": "Assignment",
                         "src": "988:30:4"
                       }
                     ],
-                    "id": 711,
+                    "id": 735,
                     "name": "ExpressionStatement",
                     "src": "988:30:4"
                   },
@@ -1054,7 +1054,7 @@
                               "isPure": false,
                               "lValueRequested": true,
                               "member_name": "Created",
-                              "referencedDeclaration": 653,
+                              "referencedDeclaration": 677,
                               "type": "uint256"
                             },
                             "children": [
@@ -1064,16 +1064,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 696,
+                                  "referencedDeclaration": 720,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 712,
+                                "id": 736,
                                 "name": "Identifier",
                                 "src": "1028:7:4"
                               }
                             ],
-                            "id": 714,
+                            "id": 738,
                             "name": "MemberAccess",
                             "src": "1028:15:4"
                           },
@@ -1083,21 +1083,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 686,
+                              "referencedDeclaration": 710,
                               "type": "uint256",
                               "value": "_created"
                             },
-                            "id": 715,
+                            "id": 739,
                             "name": "Identifier",
                             "src": "1046:8:4"
                           }
                         ],
-                        "id": 716,
+                        "id": 740,
                         "name": "Assignment",
                         "src": "1028:26:4"
                       }
                     ],
-                    "id": 717,
+                    "id": 741,
                     "name": "ExpressionStatement",
                     "src": "1028:26:4"
                   },
@@ -1122,7 +1122,7 @@
                               "isPure": false,
                               "lValueRequested": true,
                               "member_name": "EventType",
-                              "referencedDeclaration": 655,
+                              "referencedDeclaration": 679,
                               "type": "bytes32"
                             },
                             "children": [
@@ -1132,16 +1132,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 696,
+                                  "referencedDeclaration": 720,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 718,
+                                "id": 742,
                                 "name": "Identifier",
                                 "src": "1065:7:4"
                               }
                             ],
-                            "id": 720,
+                            "id": 744,
                             "name": "MemberAccess",
                             "src": "1065:17:4"
                           },
@@ -1151,21 +1151,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 672,
+                              "referencedDeclaration": 696,
                               "type": "bytes32",
                               "value": "_eventType"
                             },
-                            "id": 721,
+                            "id": 745,
                             "name": "Identifier",
                             "src": "1085:10:4"
                           }
                         ],
-                        "id": 722,
+                        "id": 746,
                         "name": "Assignment",
                         "src": "1065:30:4"
                       }
                     ],
-                    "id": 723,
+                    "id": 747,
                     "name": "ExpressionStatement",
                     "src": "1065:30:4"
                   },
@@ -1190,7 +1190,7 @@
                               "isPure": false,
                               "lValueRequested": true,
                               "member_name": "KeyType",
-                              "referencedDeclaration": 657,
+                              "referencedDeclaration": 681,
                               "type": "bytes1"
                             },
                             "children": [
@@ -1200,16 +1200,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 696,
+                                  "referencedDeclaration": 720,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 724,
+                                "id": 748,
                                 "name": "Identifier",
                                 "src": "1106:7:4"
                               }
                             ],
-                            "id": 726,
+                            "id": 750,
                             "name": "MemberAccess",
                             "src": "1106:15:4"
                           },
@@ -1219,21 +1219,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 674,
+                              "referencedDeclaration": 698,
                               "type": "bytes1",
                               "value": "_keyType"
                             },
-                            "id": 727,
+                            "id": 751,
                             "name": "Identifier",
                             "src": "1124:8:4"
                           }
                         ],
-                        "id": 728,
+                        "id": 752,
                         "name": "Assignment",
                         "src": "1106:26:4"
                       }
                     ],
-                    "id": 729,
+                    "id": 753,
                     "name": "ExpressionStatement",
                     "src": "1106:26:4"
                   },
@@ -1258,7 +1258,7 @@
                               "isPure": false,
                               "lValueRequested": true,
                               "member_name": "ValueType",
-                              "referencedDeclaration": 659,
+                              "referencedDeclaration": 683,
                               "type": "bytes1"
                             },
                             "children": [
@@ -1268,16 +1268,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 696,
+                                  "referencedDeclaration": 720,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 730,
+                                "id": 754,
                                 "name": "Identifier",
                                 "src": "1142:7:4"
                               }
                             ],
-                            "id": 732,
+                            "id": 756,
                             "name": "MemberAccess",
                             "src": "1142:17:4"
                           },
@@ -1287,21 +1287,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 676,
+                              "referencedDeclaration": 700,
                               "type": "bytes1",
                               "value": "_valueType"
                             },
-                            "id": 733,
+                            "id": 757,
                             "name": "Identifier",
                             "src": "1162:10:4"
                           }
                         ],
-                        "id": 734,
+                        "id": 758,
                         "name": "Assignment",
                         "src": "1142:30:4"
                       }
                     ],
-                    "id": 735,
+                    "id": 759,
                     "name": "ExpressionStatement",
                     "src": "1142:30:4"
                   },
@@ -1326,7 +1326,7 @@
                               "isPure": false,
                               "lValueRequested": true,
                               "member_name": "Key",
-                              "referencedDeclaration": 661,
+                              "referencedDeclaration": 685,
                               "type": "bytes32"
                             },
                             "children": [
@@ -1336,16 +1336,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 696,
+                                  "referencedDeclaration": 720,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 736,
+                                "id": 760,
                                 "name": "Identifier",
                                 "src": "1183:7:4"
                               }
                             ],
-                            "id": 738,
+                            "id": 762,
                             "name": "MemberAccess",
                             "src": "1183:11:4"
                           },
@@ -1355,21 +1355,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 678,
+                              "referencedDeclaration": 702,
                               "type": "bytes32",
                               "value": "_key"
                             },
-                            "id": 739,
+                            "id": 763,
                             "name": "Identifier",
                             "src": "1197:4:4"
                           }
                         ],
-                        "id": 740,
+                        "id": 764,
                         "name": "Assignment",
                         "src": "1183:18:4"
                       }
                     ],
-                    "id": 741,
+                    "id": 765,
                     "name": "ExpressionStatement",
                     "src": "1183:18:4"
                   },
@@ -1394,7 +1394,7 @@
                               "isPure": false,
                               "lValueRequested": true,
                               "member_name": "Value",
-                              "referencedDeclaration": 663,
+                              "referencedDeclaration": 687,
                               "type": "bytes32"
                             },
                             "children": [
@@ -1404,16 +1404,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 696,
+                                  "referencedDeclaration": 720,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 742,
+                                "id": 766,
                                 "name": "Identifier",
                                 "src": "1211:7:4"
                               }
                             ],
-                            "id": 744,
+                            "id": 768,
                             "name": "MemberAccess",
                             "src": "1211:13:4"
                           },
@@ -1423,21 +1423,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 680,
+                              "referencedDeclaration": 704,
                               "type": "bytes32",
                               "value": "_value"
                             },
-                            "id": 745,
+                            "id": 769,
                             "name": "Identifier",
                             "src": "1227:6:4"
                           }
                         ],
-                        "id": 746,
+                        "id": 770,
                         "name": "Assignment",
                         "src": "1211:22:4"
                       }
                     ],
-                    "id": 747,
+                    "id": 771,
                     "name": "ExpressionStatement",
                     "src": "1211:22:4"
                   },
@@ -1501,11 +1501,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 851,
+                              "referencedDeclaration": 875,
                               "type": "function (uint256,address,address,uint256,bytes32,bytes1,bytes1,bytes32,bytes32)",
                               "value": "EsEvent"
                             },
-                            "id": 748,
+                            "id": 772,
                             "name": "Identifier",
                             "src": "1244:7:4"
                           },
@@ -1515,11 +1515,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 690,
+                              "referencedDeclaration": 714,
                               "type": "uint256",
                               "value": "_eventId"
                             },
-                            "id": 749,
+                            "id": 773,
                             "name": "Identifier",
                             "src": "1265:8:4"
                           },
@@ -1531,7 +1531,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "TxOrigin",
-                              "referencedDeclaration": 649,
+                              "referencedDeclaration": 673,
                               "type": "address"
                             },
                             "children": [
@@ -1541,16 +1541,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 696,
+                                  "referencedDeclaration": 720,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 750,
+                                "id": 774,
                                 "name": "Identifier",
                                 "src": "1287:7:4"
                               }
                             ],
-                            "id": 751,
+                            "id": 775,
                             "name": "MemberAccess",
                             "src": "1287:16:4"
                           },
@@ -1562,7 +1562,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "MsgSender",
-                              "referencedDeclaration": 651,
+                              "referencedDeclaration": 675,
                               "type": "address"
                             },
                             "children": [
@@ -1572,16 +1572,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 696,
+                                  "referencedDeclaration": 720,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 752,
+                                "id": 776,
                                 "name": "Identifier",
                                 "src": "1317:7:4"
                               }
                             ],
-                            "id": 753,
+                            "id": 777,
                             "name": "MemberAccess",
                             "src": "1317:17:4"
                           },
@@ -1593,7 +1593,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "Created",
-                              "referencedDeclaration": 653,
+                              "referencedDeclaration": 677,
                               "type": "uint256"
                             },
                             "children": [
@@ -1603,16 +1603,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 696,
+                                  "referencedDeclaration": 720,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 754,
+                                "id": 778,
                                 "name": "Identifier",
                                 "src": "1348:7:4"
                               }
                             ],
-                            "id": 755,
+                            "id": 779,
                             "name": "MemberAccess",
                             "src": "1348:15:4"
                           },
@@ -1624,7 +1624,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "EventType",
-                              "referencedDeclaration": 655,
+                              "referencedDeclaration": 679,
                               "type": "bytes32"
                             },
                             "children": [
@@ -1634,16 +1634,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 696,
+                                  "referencedDeclaration": 720,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 756,
+                                "id": 780,
                                 "name": "Identifier",
                                 "src": "1377:7:4"
                               }
                             ],
-                            "id": 757,
+                            "id": 781,
                             "name": "MemberAccess",
                             "src": "1377:17:4"
                           },
@@ -1655,7 +1655,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "KeyType",
-                              "referencedDeclaration": 657,
+                              "referencedDeclaration": 681,
                               "type": "bytes1"
                             },
                             "children": [
@@ -1665,16 +1665,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 696,
+                                  "referencedDeclaration": 720,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 758,
+                                "id": 782,
                                 "name": "Identifier",
                                 "src": "1408:7:4"
                               }
                             ],
-                            "id": 759,
+                            "id": 783,
                             "name": "MemberAccess",
                             "src": "1408:15:4"
                           },
@@ -1686,7 +1686,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "ValueType",
-                              "referencedDeclaration": 659,
+                              "referencedDeclaration": 683,
                               "type": "bytes1"
                             },
                             "children": [
@@ -1696,16 +1696,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 696,
+                                  "referencedDeclaration": 720,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 760,
+                                "id": 784,
                                 "name": "Identifier",
                                 "src": "1437:7:4"
                               }
                             ],
-                            "id": 761,
+                            "id": 785,
                             "name": "MemberAccess",
                             "src": "1437:17:4"
                           },
@@ -1717,7 +1717,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "Key",
-                              "referencedDeclaration": 661,
+                              "referencedDeclaration": 685,
                               "type": "bytes32"
                             },
                             "children": [
@@ -1727,16 +1727,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 696,
+                                  "referencedDeclaration": 720,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 762,
+                                "id": 786,
                                 "name": "Identifier",
                                 "src": "1468:7:4"
                               }
                             ],
-                            "id": 763,
+                            "id": 787,
                             "name": "MemberAccess",
                             "src": "1468:11:4"
                           },
@@ -1748,7 +1748,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "Value",
-                              "referencedDeclaration": 663,
+                              "referencedDeclaration": 687,
                               "type": "bytes32"
                             },
                             "children": [
@@ -1758,26 +1758,26 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 696,
+                                  "referencedDeclaration": 720,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 764,
+                                "id": 788,
                                 "name": "Identifier",
                                 "src": "1493:7:4"
                               }
                             ],
-                            "id": 765,
+                            "id": 789,
                             "name": "MemberAccess",
                             "src": "1493:13:4"
                           }
                         ],
-                        "id": 766,
+                        "id": 790,
                         "name": "FunctionCall",
                         "src": "1244:272:4"
                       }
                     ],
-                    "id": 767,
+                    "id": 791,
                     "name": "ExpressionStatement",
                     "src": "1244:272:4"
                   },
@@ -1802,7 +1802,7 @@
                             "attributes": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_struct$_EsEventStruct_$664_memory_ptr",
+                                  "typeIdentifier": "t_struct$_EsEventStruct_$688_memory_ptr",
                                   "typeString": "struct EventStoreLib.EsEventStruct memory"
                                 }
                               ],
@@ -1823,7 +1823,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "events",
-                                  "referencedDeclaration": 667,
+                                  "referencedDeclaration": 691,
                                   "type": "struct EventStoreLib.EsEventStruct storage ref[] storage ref"
                                 },
                                 "children": [
@@ -1833,21 +1833,21 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 670,
+                                      "referencedDeclaration": 694,
                                       "type": "struct EventStoreLib.EsEventStorage storage pointer",
                                       "value": "self"
                                     },
-                                    "id": 768,
+                                    "id": 792,
                                     "name": "Identifier",
                                     "src": "1526:4:4"
                                   }
                                 ],
-                                "id": 771,
+                                "id": 795,
                                 "name": "MemberAccess",
                                 "src": "1526:11:4"
                               }
                             ],
-                            "id": 772,
+                            "id": 796,
                             "name": "MemberAccess",
                             "src": "1526:16:4"
                           },
@@ -1857,27 +1857,27 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 696,
+                              "referencedDeclaration": 720,
                               "type": "struct EventStoreLib.EsEventStruct memory",
                               "value": "esEvent"
                             },
-                            "id": 773,
+                            "id": 797,
                             "name": "Identifier",
                             "src": "1543:7:4"
                           }
                         ],
-                        "id": 774,
+                        "id": 798,
                         "name": "FunctionCall",
                         "src": "1526:25:4"
                       }
                     ],
-                    "id": 775,
+                    "id": 799,
                     "name": "ExpressionStatement",
                     "src": "1526:25:4"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 684
+                      "functionReturnParameters": 708
                     },
                     "children": [
                       {
@@ -1886,26 +1886,26 @@
                           "overloadedDeclarations": [
                             null
                           ],
-                          "referencedDeclaration": 690,
+                          "referencedDeclaration": 714,
                           "type": "uint256",
                           "value": "_eventId"
                         },
-                        "id": 776,
+                        "id": 800,
                         "name": "Identifier",
                         "src": "1568:8:4"
                       }
                     ],
-                    "id": 777,
+                    "id": 801,
                     "name": "Return",
                     "src": "1561:15:4"
                   }
                 ],
-                "id": 778,
+                "id": 802,
                 "name": "Block",
                 "src": "828:755:4"
               }
             ],
-            "id": 779,
+            "id": 803,
             "name": "FunctionDefinition",
             "src": "617:966:4"
           },
@@ -1919,7 +1919,7 @@
               ],
               "name": "readEvent",
               "payable": false,
-              "scope": 852,
+              "scope": 876,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -1931,7 +1931,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 831,
+                      "scope": 855,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct EventStoreLib.EsEventStorage storage pointer",
@@ -1943,15 +1943,15 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "EsEventStorage",
-                          "referencedDeclaration": 668,
+                          "referencedDeclaration": 692,
                           "type": "struct EventStoreLib.EsEventStorage storage pointer"
                         },
-                        "id": 780,
+                        "id": 804,
                         "name": "UserDefinedTypeName",
                         "src": "1626:14:4"
                       }
                     ],
-                    "id": 781,
+                    "id": 805,
                     "name": "VariableDeclaration",
                     "src": "1626:27:4"
                   },
@@ -1959,7 +1959,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_eventId",
-                      "scope": 831,
+                      "scope": 855,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1972,17 +1972,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 782,
+                        "id": 806,
                         "name": "ElementaryTypeName",
                         "src": "1655:4:4"
                       }
                     ],
-                    "id": 783,
+                    "id": 807,
                     "name": "VariableDeclaration",
                     "src": "1655:13:4"
                   }
                 ],
-                "id": 784,
+                "id": 808,
                 "name": "ParameterList",
                 "src": "1625:44:4"
               },
@@ -1992,7 +1992,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 831,
+                      "scope": 855,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2005,12 +2005,12 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 785,
+                        "id": 809,
                         "name": "ElementaryTypeName",
                         "src": "1699:4:4"
                       }
                     ],
-                    "id": 786,
+                    "id": 810,
                     "name": "VariableDeclaration",
                     "src": "1699:4:4"
                   },
@@ -2018,7 +2018,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 831,
+                      "scope": 855,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -2031,12 +2031,12 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 787,
+                        "id": 811,
                         "name": "ElementaryTypeName",
                         "src": "1705:7:4"
                       }
                     ],
-                    "id": 788,
+                    "id": 812,
                     "name": "VariableDeclaration",
                     "src": "1705:7:4"
                   },
@@ -2044,7 +2044,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 831,
+                      "scope": 855,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -2057,12 +2057,12 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 789,
+                        "id": 813,
                         "name": "ElementaryTypeName",
                         "src": "1714:7:4"
                       }
                     ],
-                    "id": 790,
+                    "id": 814,
                     "name": "VariableDeclaration",
                     "src": "1714:7:4"
                   },
@@ -2070,7 +2070,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 831,
+                      "scope": 855,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2083,12 +2083,12 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 791,
+                        "id": 815,
                         "name": "ElementaryTypeName",
                         "src": "1723:4:4"
                       }
                     ],
-                    "id": 792,
+                    "id": 816,
                     "name": "VariableDeclaration",
                     "src": "1723:4:4"
                   },
@@ -2096,7 +2096,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 831,
+                      "scope": 855,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -2109,12 +2109,12 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 793,
+                        "id": 817,
                         "name": "ElementaryTypeName",
                         "src": "1729:7:4"
                       }
                     ],
-                    "id": 794,
+                    "id": 818,
                     "name": "VariableDeclaration",
                     "src": "1729:7:4"
                   },
@@ -2122,7 +2122,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 831,
+                      "scope": 855,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes1",
@@ -2135,12 +2135,12 @@
                           "name": "bytes1",
                           "type": "bytes1"
                         },
-                        "id": 795,
+                        "id": 819,
                         "name": "ElementaryTypeName",
                         "src": "1738:6:4"
                       }
                     ],
-                    "id": 796,
+                    "id": 820,
                     "name": "VariableDeclaration",
                     "src": "1738:6:4"
                   },
@@ -2148,7 +2148,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 831,
+                      "scope": 855,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes1",
@@ -2161,12 +2161,12 @@
                           "name": "bytes1",
                           "type": "bytes1"
                         },
-                        "id": 797,
+                        "id": 821,
                         "name": "ElementaryTypeName",
                         "src": "1746:6:4"
                       }
                     ],
-                    "id": 798,
+                    "id": 822,
                     "name": "VariableDeclaration",
                     "src": "1746:6:4"
                   },
@@ -2174,7 +2174,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 831,
+                      "scope": 855,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -2187,12 +2187,12 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 799,
+                        "id": 823,
                         "name": "ElementaryTypeName",
                         "src": "1754:7:4"
                       }
                     ],
-                    "id": 800,
+                    "id": 824,
                     "name": "VariableDeclaration",
                     "src": "1754:7:4"
                   },
@@ -2200,7 +2200,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 831,
+                      "scope": 855,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -2213,17 +2213,17 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 801,
+                        "id": 825,
                         "name": "ElementaryTypeName",
                         "src": "1763:7:4"
                       }
                     ],
-                    "id": 802,
+                    "id": 826,
                     "name": "VariableDeclaration",
                     "src": "1763:7:4"
                   }
                 ],
-                "id": 803,
+                "id": 827,
                 "name": "ParameterList",
                 "src": "1698:73:4"
               },
@@ -2232,7 +2232,7 @@
                   {
                     "attributes": {
                       "assignments": [
-                        805
+                        829
                       ]
                     },
                     "children": [
@@ -2240,7 +2240,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "esEvent",
-                          "scope": 831,
+                          "scope": 855,
                           "stateVariable": false,
                           "storageLocation": "memory",
                           "type": "struct EventStoreLib.EsEventStruct memory",
@@ -2252,15 +2252,15 @@
                             "attributes": {
                               "contractScope": null,
                               "name": "EsEventStruct",
-                              "referencedDeclaration": 664,
+                              "referencedDeclaration": 688,
                               "type": "struct EventStoreLib.EsEventStruct storage pointer"
                             },
-                            "id": 804,
+                            "id": 828,
                             "name": "UserDefinedTypeName",
                             "src": "1782:13:4"
                           }
                         ],
-                        "id": 805,
+                        "id": 829,
                         "name": "VariableDeclaration",
                         "src": "1782:28:4"
                       },
@@ -2282,7 +2282,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "events",
-                              "referencedDeclaration": 667,
+                              "referencedDeclaration": 691,
                               "type": "struct EventStoreLib.EsEventStruct storage ref[] storage ref"
                             },
                             "children": [
@@ -2292,16 +2292,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 781,
+                                  "referencedDeclaration": 805,
                                   "type": "struct EventStoreLib.EsEventStorage storage pointer",
                                   "value": "self"
                                 },
-                                "id": 806,
+                                "id": 830,
                                 "name": "Identifier",
                                 "src": "1813:4:4"
                               }
                             ],
-                            "id": 807,
+                            "id": 831,
                             "name": "MemberAccess",
                             "src": "1813:11:4"
                           },
@@ -2311,27 +2311,27 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 783,
+                              "referencedDeclaration": 807,
                               "type": "uint256",
                               "value": "_eventId"
                             },
-                            "id": 808,
+                            "id": 832,
                             "name": "Identifier",
                             "src": "1825:8:4"
                           }
                         ],
-                        "id": 809,
+                        "id": 833,
                         "name": "IndexAccess",
                         "src": "1813:21:4"
                       }
                     ],
-                    "id": 810,
+                    "id": 834,
                     "name": "VariableDeclarationStatement",
                     "src": "1782:52:4"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 803
+                      "functionReturnParameters": 827
                     },
                     "children": [
                       {
@@ -2351,11 +2351,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 783,
+                              "referencedDeclaration": 807,
                               "type": "uint256",
                               "value": "_eventId"
                             },
-                            "id": 811,
+                            "id": 835,
                             "name": "Identifier",
                             "src": "1865:8:4"
                           },
@@ -2367,7 +2367,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "TxOrigin",
-                              "referencedDeclaration": 649,
+                              "referencedDeclaration": 673,
                               "type": "address"
                             },
                             "children": [
@@ -2377,16 +2377,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 805,
+                                  "referencedDeclaration": 829,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 812,
+                                "id": 836,
                                 "name": "Identifier",
                                 "src": "1887:7:4"
                               }
                             ],
-                            "id": 813,
+                            "id": 837,
                             "name": "MemberAccess",
                             "src": "1887:16:4"
                           },
@@ -2398,7 +2398,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "MsgSender",
-                              "referencedDeclaration": 651,
+                              "referencedDeclaration": 675,
                               "type": "address"
                             },
                             "children": [
@@ -2408,16 +2408,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 805,
+                                  "referencedDeclaration": 829,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 814,
+                                "id": 838,
                                 "name": "Identifier",
                                 "src": "1917:7:4"
                               }
                             ],
-                            "id": 815,
+                            "id": 839,
                             "name": "MemberAccess",
                             "src": "1917:17:4"
                           },
@@ -2429,7 +2429,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "Created",
-                              "referencedDeclaration": 653,
+                              "referencedDeclaration": 677,
                               "type": "uint256"
                             },
                             "children": [
@@ -2439,16 +2439,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 805,
+                                  "referencedDeclaration": 829,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 816,
+                                "id": 840,
                                 "name": "Identifier",
                                 "src": "1948:7:4"
                               }
                             ],
-                            "id": 817,
+                            "id": 841,
                             "name": "MemberAccess",
                             "src": "1948:15:4"
                           },
@@ -2460,7 +2460,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "EventType",
-                              "referencedDeclaration": 655,
+                              "referencedDeclaration": 679,
                               "type": "bytes32"
                             },
                             "children": [
@@ -2470,16 +2470,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 805,
+                                  "referencedDeclaration": 829,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 818,
+                                "id": 842,
                                 "name": "Identifier",
                                 "src": "1977:7:4"
                               }
                             ],
-                            "id": 819,
+                            "id": 843,
                             "name": "MemberAccess",
                             "src": "1977:17:4"
                           },
@@ -2491,7 +2491,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "KeyType",
-                              "referencedDeclaration": 657,
+                              "referencedDeclaration": 681,
                               "type": "bytes1"
                             },
                             "children": [
@@ -2501,16 +2501,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 805,
+                                  "referencedDeclaration": 829,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 820,
+                                "id": 844,
                                 "name": "Identifier",
                                 "src": "2009:7:4"
                               }
                             ],
-                            "id": 821,
+                            "id": 845,
                             "name": "MemberAccess",
                             "src": "2009:15:4"
                           },
@@ -2522,7 +2522,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "ValueType",
-                              "referencedDeclaration": 659,
+                              "referencedDeclaration": 683,
                               "type": "bytes1"
                             },
                             "children": [
@@ -2532,16 +2532,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 805,
+                                  "referencedDeclaration": 829,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 822,
+                                "id": 846,
                                 "name": "Identifier",
                                 "src": "2038:7:4"
                               }
                             ],
-                            "id": 823,
+                            "id": 847,
                             "name": "MemberAccess",
                             "src": "2038:17:4"
                           },
@@ -2553,7 +2553,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "Key",
-                              "referencedDeclaration": 661,
+                              "referencedDeclaration": 685,
                               "type": "bytes32"
                             },
                             "children": [
@@ -2563,16 +2563,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 805,
+                                  "referencedDeclaration": 829,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 824,
+                                "id": 848,
                                 "name": "Identifier",
                                 "src": "2070:7:4"
                               }
                             ],
-                            "id": 825,
+                            "id": 849,
                             "name": "MemberAccess",
                             "src": "2070:11:4"
                           },
@@ -2584,7 +2584,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "Value",
-                              "referencedDeclaration": 663,
+                              "referencedDeclaration": 687,
                               "type": "bytes32"
                             },
                             "children": [
@@ -2594,36 +2594,36 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 805,
+                                  "referencedDeclaration": 829,
                                   "type": "struct EventStoreLib.EsEventStruct memory",
                                   "value": "esEvent"
                                 },
-                                "id": 826,
+                                "id": 850,
                                 "name": "Identifier",
                                 "src": "2095:7:4"
                               }
                             ],
-                            "id": 827,
+                            "id": 851,
                             "name": "MemberAccess",
                             "src": "2095:13:4"
                           }
                         ],
-                        "id": 828,
+                        "id": 852,
                         "name": "TupleExpression",
                         "src": "1851:267:4"
                       }
                     ],
-                    "id": 829,
+                    "id": 853,
                     "name": "Return",
                     "src": "1844:274:4"
                   }
                 ],
-                "id": 830,
+                "id": 854,
                 "name": "Block",
                 "src": "1772:353:4"
               }
             ],
-            "id": 831,
+            "id": 855,
             "name": "FunctionDefinition",
             "src": "1607:518:4"
           },
@@ -2640,7 +2640,7 @@
                       "constant": false,
                       "indexed": false,
                       "name": "Id",
-                      "scope": 851,
+                      "scope": 875,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2653,12 +2653,12 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 832,
+                        "id": 856,
                         "name": "ElementaryTypeName",
                         "src": "2154:4:4"
                       }
                     ],
-                    "id": 833,
+                    "id": 857,
                     "name": "VariableDeclaration",
                     "src": "2154:7:4"
                   },
@@ -2667,7 +2667,7 @@
                       "constant": false,
                       "indexed": false,
                       "name": "TxOrigin",
-                      "scope": 851,
+                      "scope": 875,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -2680,12 +2680,12 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 834,
+                        "id": 858,
                         "name": "ElementaryTypeName",
                         "src": "2171:7:4"
                       }
                     ],
-                    "id": 835,
+                    "id": 859,
                     "name": "VariableDeclaration",
                     "src": "2171:16:4"
                   },
@@ -2694,7 +2694,7 @@
                       "constant": false,
                       "indexed": false,
                       "name": "MsgSender",
-                      "scope": 851,
+                      "scope": 875,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -2707,12 +2707,12 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 836,
+                        "id": 860,
                         "name": "ElementaryTypeName",
                         "src": "2197:7:4"
                       }
                     ],
-                    "id": 837,
+                    "id": 861,
                     "name": "VariableDeclaration",
                     "src": "2197:17:4"
                   },
@@ -2721,7 +2721,7 @@
                       "constant": false,
                       "indexed": false,
                       "name": "Created",
-                      "scope": 851,
+                      "scope": 875,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2734,12 +2734,12 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 838,
+                        "id": 862,
                         "name": "ElementaryTypeName",
                         "src": "2224:4:4"
                       }
                     ],
-                    "id": 839,
+                    "id": 863,
                     "name": "VariableDeclaration",
                     "src": "2224:12:4"
                   },
@@ -2748,7 +2748,7 @@
                       "constant": false,
                       "indexed": false,
                       "name": "EventType",
-                      "scope": 851,
+                      "scope": 875,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -2761,12 +2761,12 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 840,
+                        "id": 864,
                         "name": "ElementaryTypeName",
                         "src": "2247:7:4"
                       }
                     ],
-                    "id": 841,
+                    "id": 865,
                     "name": "VariableDeclaration",
                     "src": "2247:17:4"
                   },
@@ -2775,7 +2775,7 @@
                       "constant": false,
                       "indexed": false,
                       "name": "KeyType",
-                      "scope": 851,
+                      "scope": 875,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes1",
@@ -2788,12 +2788,12 @@
                           "name": "bytes1",
                           "type": "bytes1"
                         },
-                        "id": 842,
+                        "id": 866,
                         "name": "ElementaryTypeName",
                         "src": "2275:6:4"
                       }
                     ],
-                    "id": 843,
+                    "id": 867,
                     "name": "VariableDeclaration",
                     "src": "2275:14:4"
                   },
@@ -2802,7 +2802,7 @@
                       "constant": false,
                       "indexed": false,
                       "name": "ValueType",
-                      "scope": 851,
+                      "scope": 875,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes1",
@@ -2815,12 +2815,12 @@
                           "name": "bytes1",
                           "type": "bytes1"
                         },
-                        "id": 844,
+                        "id": 868,
                         "name": "ElementaryTypeName",
                         "src": "2299:6:4"
                       }
                     ],
-                    "id": 845,
+                    "id": 869,
                     "name": "VariableDeclaration",
                     "src": "2299:16:4"
                   },
@@ -2829,7 +2829,7 @@
                       "constant": false,
                       "indexed": false,
                       "name": "Key",
-                      "scope": 851,
+                      "scope": 875,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -2842,12 +2842,12 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 846,
+                        "id": 870,
                         "name": "ElementaryTypeName",
                         "src": "2326:7:4"
                       }
                     ],
-                    "id": 847,
+                    "id": 871,
                     "name": "VariableDeclaration",
                     "src": "2326:11:4"
                   },
@@ -2856,7 +2856,7 @@
                       "constant": false,
                       "indexed": false,
                       "name": "Value",
-                      "scope": 851,
+                      "scope": 875,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -2869,32 +2869,32 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 848,
+                        "id": 872,
                         "name": "ElementaryTypeName",
                         "src": "2347:7:4"
                       }
                     ],
-                    "id": 849,
+                    "id": 873,
                     "name": "VariableDeclaration",
                     "src": "2347:13:4"
                   }
                 ],
-                "id": 850,
+                "id": 874,
                 "name": "ParameterList",
                 "src": "2144:222:4"
               }
             ],
-            "id": 851,
+            "id": 875,
             "name": "EventDefinition",
             "src": "2131:236:4"
           }
         ],
-        "id": 852,
+        "id": 876,
         "name": "ContractDefinition",
         "src": "26:2344:4"
       }
     ],
-    "id": 853,
+    "id": 877,
     "name": "SourceUnit",
     "src": "0:2371:4"
   },
@@ -2903,7 +2903,7 @@
     "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
   },
   "networks": {
-    "1514675185844": {
+    "1514682866038": {
       "events": {
         "0x6b3c8873ff9b1c068470039341f6473e929874a38caab2cee207f5a533504169": {
           "anonymous": false,
@@ -2959,9 +2959,9 @@
         }
       },
       "links": {},
-      "address": "0xa260d5ea087a178c2d04da073f3d4709796a021e"
+      "address": "0x4c7325697e9bc7d9be6f92c5d1606be8f6f2dcb8"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-12-31T00:56:08.022Z"
+  "updatedAt": "2017-12-31T01:55:16.176Z"
 }

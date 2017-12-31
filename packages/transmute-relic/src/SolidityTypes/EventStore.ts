@@ -200,17 +200,6 @@ export class EventStore extends SoltsiceContract {
 
   // tslint:disable-next-line:max-line-length
   // tslint:disable-next-line:variable-name
-  public creatorTxOrigin(txParams?: W3.TC.TxParams): Promise<string> {
-    return new Promise((resolve, reject) => {
-      this._instance.creatorTxOrigin
-        .call(txParams || this._sendParams)
-        .then(res => resolve(res))
-        .catch(err => reject(err))
-    })
-  }
-
-  // tslint:disable-next-line:max-line-length
-  // tslint:disable-next-line:variable-name
   public getWhitelist(txParams?: W3.TC.TxParams): Promise<string[]> {
     return new Promise((resolve, reject) => {
       this._instance.getWhitelist
