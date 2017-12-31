@@ -5,6 +5,8 @@ import { EventTransformer } from '../../../Utils/EventTransformer'
 import { IFSA } from '../../../Store/EventTypes'
 import Relic from '../../../transmute-relic'
 
+import * as InternalEventTypes from '../../../Utils/InternalEventTypes'
+
 /**
  * EventStore spec
  */
@@ -49,7 +51,7 @@ describe('EventStore', () => {
       // transfers funds to owner via selfdestruct
       receipt = await eventStore.recycle(W3.TC.txParamsDefaultDeploy(accounts[1]))
       events = EventTransformer.getFSAsFromReceipt(receipt)
-      expect(events[0].type).toBe('RECYCLED_TO')
+      expect(events[0].type).toBe(InternalEventTypes.RECYCLED_TO)
       expect(events[0].payload.value).toBe(accounts[1])
 
       // ensure owner received funds
@@ -92,7 +94,7 @@ describe('EventStore', () => {
         W3.TC.txParamsDefaultDeploy(accounts[1])
       )
       events = EventTransformer.getFSAsFromReceipt(receipt)
-      expect(events[0].type).toBe('RECYCLED_TO')
+      expect(events[0].type).toBe(InternalEventTypes.RECYCLED_TO)
       expect(events[0].payload.value).toBe(accounts[2])
 
       // ensure owner received funds

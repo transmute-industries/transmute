@@ -5,6 +5,8 @@ import { EventTransformer } from '../../../Utils/EventTransformer'
 import { IFSA } from '../../../Store/EventTypes'
 import Relic from '../../../transmute-relic'
 
+import * as InternalEventTypes from '../../../Utils/InternalEventTypes'
+
 /**
  * EventStoreFactory spec
  */
@@ -44,7 +46,7 @@ describe('EventStoreFactory', () => {
         W3.TC.txParamsDefaultDeploy(accounts[0])
       )
       events = EventTransformer.getFSAsFromReceipt(receipt)
-      expect(events[0].type).toBe('NEW_OWNER')
+      expect(events[0].type).toBe(InternalEventTypes.NEW_OWNER)
       expect(events[0].payload.value).toBe(accounts[1])
 
       // the event was not a lie

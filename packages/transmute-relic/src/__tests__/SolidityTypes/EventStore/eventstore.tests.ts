@@ -3,6 +3,7 @@ import { EventStoreFactory, EventStore } from '../../../SolidityTypes'
 import { getRelic } from '../../../__mocks__/setup'
 import { EventTransformer } from '../../../Utils/EventTransformer'
 import { Utils } from '../../../Utils'
+import * as InternalEventTypes from '../../../Utils/InternalEventTypes'
 import { IFSA } from '../../../Store/EventTypes'
 import Relic from '../../../transmute-relic'
 
@@ -92,6 +93,6 @@ describe('EventStore', () => {
     eventStore = await EventStore.At(factoryEvents[0].payload.value)
 
     let types = ((await eventStore.getInternalEventTypes()) as any).map(Utils.toAscii)
-    expect(types).toEqual(['NEW_OWNER', 'RECYCLED_TO', 'WL_SET'])
+    expect(types).toEqual(InternalEventTypes.STORE)
   })
 })

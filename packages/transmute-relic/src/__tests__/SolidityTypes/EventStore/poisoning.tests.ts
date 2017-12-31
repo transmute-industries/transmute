@@ -1,12 +1,15 @@
 import { W3 } from 'soltsice'
 import { EventStoreFactory, EventStore } from '../../../SolidityTypes'
 import { getRelic } from '../../../__mocks__/setup'
+import { Utils } from '../../../Utils'
 import { EventTransformer } from '../../../Utils/EventTransformer'
 import { IFSA } from '../../../Store/EventTypes'
 import Relic from '../../../transmute-relic'
 import MarshalledEvents from '../../../__mocks__/MarshalledEvents'
 
 const WRITE_EVENT_GAS_COST = 4000000
+
+import * as InternalEventTypes from '../../../Utils/InternalEventTypes'
 
 /**
  * EventStore spec
@@ -38,7 +41,13 @@ describe('EventStore', () => {
   describe('eventStore poisoning is not possible', async () => {
     it('the eventStore owner cannot write INTERNAL_EVENT_TYPES via the external writeEvent method', async () => {
       let eventStore = await getEventStore()
-      let internalEventTypes: string[] = (await eventStore.getInternalEventTypes()) as any
+
+      let internalEventTypes: string[] = ((await eventStore.getInternalEventTypes()) as any).map(
+        Utils.toAscii
+      )
+
+      expect(internalEventTypes).toEqual(InternalEventTypes.STORE)
+
       internalEventTypes.forEach(async internalEventType => {
         try {
           let event = MarshalledEvents[0]
