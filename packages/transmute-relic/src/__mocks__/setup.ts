@@ -76,6 +76,7 @@ export const getSetupAsync = async () => {
   let storeInstances = {
     default: await Factory.createStore(
       factoryInstances.default,
+      accounts.slice(0, 5),
       eventStoreAdapter,
       relic.web3,
       accounts[0]

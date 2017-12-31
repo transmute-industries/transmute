@@ -8,7 +8,7 @@ import { EventStoreAdapter } from '../Store/EventStoreAdapter'
 import { ReadModel } from '../Store/ReadModel'
 import { IReadModelState, IReadModelAdapter, IReadModel } from '../Store/ReadModel/ReadModelTypes'
 
-import FactoryReadModel from './ReadModel'
+import Reducer from './Reducer'
 
 import { Store } from '../Store'
 
@@ -29,18 +29,18 @@ export namespace Factory {
    */
   export const createStore = async (
     factory: EventStoreFactory,
+    whitelist: string[],
     adapter: EventStoreAdapter,
     web3: any,
     fromAddress: string
   ) => {
     W3.Default = web3
-    console.log('add white list param')
     const receipt = await factory.createEventStore(
-      [fromAddress],
+      whitelist,
       W3.TC.txParamsDefaultDeploy(fromAddress)
     )
     const events = await adapter.extractEventsFromLogs(receipt.logs)
-    const store = await EventStore.At(events[0].payload.address)
+    const store = await EventStore.At(events[0].payload.value)
     return store
   }
 
@@ -59,12 +59,12 @@ export namespace Factory {
     web3: any,
     fromAddress: string
   ) => {
-    let state: IReadModelState = JSON.parse(JSON.stringify(FactoryReadModel.initialState))
+    let state: IReadModelState = JSON.parse(JSON.stringify(Reducer.initialState))
 
     state.contractAddress = factory.address
     state.readModelStoreKey = `${state.readModelType}:${state.contractAddress}`
 
-    let factoryReadModel = new ReadModel(readModelAdapter, FactoryReadModel.reducer, state)
+    let factoryReadModel = new ReadModel(readModelAdapter, Reducer.reducer, state)
 
     let changes = await factoryReadModel.sync(factory as any, adapter, web3, fromAddress)
 

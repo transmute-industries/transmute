@@ -9,6 +9,8 @@ import { EventStoreAdapter } from './EventStoreAdapter'
 
 import { IFSA } from './EventTypes'
 
+import * as EventTransformer from '../Utils/EventTransformer'
+
 export const GAS_COSTS = {
   WRITE_EVENT: 4000000
 }
@@ -58,7 +60,7 @@ export namespace Store {
       eventId,
       W3.TC.txParamsDefaultDeploy(fromAddress)
     )
-    let esEvent = await adapter.valuesToEsEvent(
+    let esEvent = await EventTransformer.valuesToEsEvent(
       solidityValues[0],
       solidityValues[1],
       solidityValues[2],

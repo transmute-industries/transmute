@@ -12,10 +12,13 @@ import {
   IDirtyPayload
 } from './EventStoreAdapterTypes'
 
+import * as EventTransformer from '../../Utils/EventTransformer'
+
 export class EventStoreAdapter {
   mapperKeys: string[]
   eventMap: any = {
     EsEvent: async (args: any) => {
+      let fsa = EventTransformer.esEventToFSA(args)
       let mutatingEvent = {
         ...args,
         EventType: Utils.toAscii(args.EventType),
@@ -24,30 +27,17 @@ export class EventStoreAdapter {
         KeyType: Utils.toAscii(args.KeyType),
         ValueType: Utils.toAscii(args.ValueType)
       }
-
-      // console.log( 'mmmmm ', mutatingEvent )
-
       let keyMeta: any = await this.convertFromBytes32(mutatingEvent.Key, mutatingEvent.KeyType)
-      // console.log( 'keyMeta ', keyMeta )
-
       let valueMeta: any = await this.convertFromBytes32(
         mutatingEvent.Value,
         mutatingEvent.ValueType
       )
-
       // console.log(mutatingEvent)
       // console.log(adapterPayload, args.Key)
-
       return {
-        type: mutatingEvent.EventType,
-        payload: { [keyMeta.value]: valueMeta.value },
+        ...fsa,
         meta: {
-          id: mutatingEvent.Id,
-          created: mutatingEvent.Created,
-          txOrigin: mutatingEvent.TxOrigin,
-          // keyType: mutatingEvent.KeyType,
-          // valueType: mutatingEvent.ValueType,
-          // adapter: mutatingEvent.ValueType,
+          ...fsa.meta,
           adapter: {
             payload: {
               [Utils.toAscii(args.Key)]: valueMeta.key
@@ -314,30 +304,6 @@ export class EventStoreAdapter {
       valueType: _valueType,
       key: await this.convertValueToType(_keyType, _key),
       value: await this.convertValueToType(_valueType, _value)
-    }
-  }
-
-  valuesToEsEvent = async (
-    Id: any,
-    TxOrigin: any,
-    MsgSender: any,
-    Created: any,
-    EventType: any,
-    KeyType: any,
-    ValueType: any,
-    Key: any,
-    Value: any
-  ) => {
-    return {
-      Id,
-      TxOrigin,
-      MsgSender,
-      Created,
-      EventType,
-      KeyType,
-      ValueType,
-      Key,
-      Value
     }
   }
 
