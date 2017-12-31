@@ -87,7 +87,7 @@ describe('EventStoreFactory', () => {
 
       // ensure recipient received funds
       let recipientBalanceAfterRecycle = await relic.getBalance(accounts[1])
-      expect(recipientBalanceAfterRecycle).toBeGreaterThan(initialRecipientBalance)
+      expect(recipientBalanceAfterRecycle).toBeGreaterThanOrEqual(initialRecipientBalance)
 
       // recycled factories are owned by 0x0
       let factoryOwner = await factory.owner()
