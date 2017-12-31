@@ -51,7 +51,7 @@ export namespace Store {
    */
   export const readFSA = async (
     store: GenericEventStore,
-    adapter: EventStoreAdapter,
+    eventStoreAdapter: EventStoreAdapter,
     web3: any,
     fromAddress: string,
     eventId: number
@@ -71,7 +71,7 @@ export namespace Store {
       solidityValues[7],
       solidityValues[8]
     )
-    return adapter.eventMap.EsEvent(esEvent)
+    return eventStoreAdapter.eventMap.EsEvent(esEvent)
   }
 
   /**
@@ -79,7 +79,7 @@ export namespace Store {
    */
   export const writeFSA = async (
     store: GenericEventStore,
-    adapter: EventStoreAdapter,
+    eventStoreAdapter: EventStoreAdapter,
     web3: any,
     fromAddress: string,
     event: IFSA
@@ -92,9 +92,11 @@ export namespace Store {
       throw new Error('event.payload must be an object, not an array.')
     }
 
-    // these 2 should be consolidated into a single adapter method
-    let { keyType, keyValue, valueType, valueValue } = await adapter.prepareFSAForStorage(event)
-    let marshalledEvent = await adapter.marshal(
+    // these 2 should be consolidated into a single eventStoreAdapter method
+    let { keyType, keyValue, valueType, valueValue } = await eventStoreAdapter.prepareFSAForStorage(
+      event
+    )
+    let marshalledEvent = await eventStoreAdapter.marshal(
       event.type,
       keyType,
       valueType,
@@ -115,7 +117,7 @@ export namespace Store {
       W3.TC.txParamsDefaultDeploy(fromAddress, GAS_COSTS.WRITE_EVENT)
     )
 
-    let eventsFromLogs: IFSA[] = await adapter.extractEventsFromLogs(receipt.logs)
+    let eventsFromLogs: IFSA[] = await eventStoreAdapter.extractEventsFromLogs(receipt.logs)
 
     if (eventsFromLogs.length > 1) {
       throw new Error('somehow we are writing more than 1 event....')
@@ -125,21 +127,21 @@ export namespace Store {
 
   export const writeFSAs = async (
     store: GenericEventStore,
-    adapter: EventStoreAdapter,
+    eventStoreAdapter: EventStoreAdapter,
     web3: any,
     fromAddress: string,
     events: IFSA[]
   ): Promise<IFSA[]> => {
     return Promise.all(
       events.map(event => {
-        return writeFSA(store, adapter, web3, fromAddress, event)
+        return writeFSA(store, eventStoreAdapter, web3, fromAddress, event)
       })
     )
   }
 
   export const readFSAs = async (
     store: GenericEventStore,
-    adapter: EventStoreAdapter,
+    eventStoreAdapter: EventStoreAdapter,
     web3: any,
     fromAddress: string,
     eventIndex: number = 0
@@ -147,7 +149,7 @@ export namespace Store {
     let endIndex: number = await eventCount(store, web3, fromAddress)
     let events = []
     for (let i: number = eventIndex; i < endIndex; i++) {
-      events.push(await readFSA(store, adapter, web3, fromAddress, i))
+      events.push(await readFSA(store, eventStoreAdapter, web3, fromAddress, i))
     }
     return Promise.all(events)
   }
