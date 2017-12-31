@@ -110,7 +110,8 @@ contract EventStoreFactory {
   ) 
   private returns (uint) 
   {
-    // require(this[_eventType]);
+    // only INTERNAL_EVENT_TYPES are allowed to be written by the contract.
+    require(INTERNAL_EVENT_TYPES.contains(_eventType));
     return EventStoreLib.writeEvent(
       store,
       _eventType,

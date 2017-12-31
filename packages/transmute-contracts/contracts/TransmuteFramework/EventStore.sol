@@ -102,6 +102,8 @@ contract EventStore {
   ) 
   private returns (uint)
   {
+    // only INTERNAL_EVENT_TYPES are allowed to be written by the contract.
+    require(INTERNAL_EVENT_TYPES.contains(_eventType));
     return EventStoreLib.writeEvent(
       store,
       _eventType,
@@ -127,8 +129,10 @@ contract EventStore {
     bytes32 _key,
     bytes32 _value
   ) 
-  public returns (uint)
+  external returns (uint)
   {
+    // INTERNAL_EVENT_TYPES are NEVER allowed to be written by externals
+    require(!INTERNAL_EVENT_TYPES.contains(_eventType));
     // only this contract owner or a member of the whitelist can write events
     require(owner == msg.sender || whitelist.contains(msg.sender));
     return EventStoreLib.writeEvent(

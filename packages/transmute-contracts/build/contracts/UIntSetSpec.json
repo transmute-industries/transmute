@@ -327,7 +327,7 @@
       "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-contracts/contracts/TransmuteFramework/SetLib/UIntSet/UIntSetSpec.sol",
       "exportedSymbols": {
         "UIntSetSpec": [
-          2695
+          2717
         ]
       }
     },
@@ -341,22 +341,22 @@
             ".17"
           ]
         },
-        "id": 2525,
+        "id": 2547,
         "name": "PragmaDirective",
         "src": "0:24:11"
       },
       {
         "attributes": {
-          "SourceUnit": 2524,
+          "SourceUnit": 2546,
           "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-contracts/contracts/TransmuteFramework/SetLib/UIntSet/UIntSetLib.sol",
           "file": "./UIntSetLib.sol",
-          "scope": 2696,
+          "scope": 2718,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 2526,
+        "id": 2548,
         "name": "ImportDirective",
         "src": "26:26:11"
       },
@@ -365,13 +365,13 @@
           "SourceUnit": 90,
           "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-contracts/contracts/TransmuteFramework/Destructible.sol",
           "file": "../../Destructible.sol",
-          "scope": 2696,
+          "scope": 2718,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 2527,
+        "id": 2549,
         "name": "ImportDirective",
         "src": "53:32:11"
       },
@@ -379,18 +379,18 @@
         "attributes": {
           "contractDependencies": [
             89,
-            1048
+            1070
           ],
           "contractKind": "contract",
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            2695,
+            2717,
             89,
-            1048
+            1070
           ],
           "name": "UIntSetSpec",
-          "scope": 2696
+          "scope": 2718
         },
         "children": [
           {
@@ -407,12 +407,12 @@
                   "referencedDeclaration": 89,
                   "type": "contract Destructible"
                 },
-                "id": 2528,
+                "id": 2550,
                 "name": "UserDefinedTypeName",
                 "src": "111:12:11"
               }
             ],
-            "id": 2529,
+            "id": 2551,
             "name": "InheritanceSpecifier",
             "src": "111:12:11"
           },
@@ -422,10 +422,10 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "UIntSetLib",
-                  "referencedDeclaration": 2523,
+                  "referencedDeclaration": 2545,
                   "type": "library UIntSetLib"
                 },
-                "id": 2530,
+                "id": 2552,
                 "name": "UserDefinedTypeName",
                 "src": "134:10:11"
               },
@@ -433,15 +433,15 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "UIntSetLib.UIntSet",
-                  "referencedDeclaration": 2160,
+                  "referencedDeclaration": 2182,
                   "type": "struct UIntSetLib.UIntSet storage pointer"
                 },
-                "id": 2531,
+                "id": 2553,
                 "name": "UserDefinedTypeName",
                 "src": "149:18:11"
               }
             ],
-            "id": 2532,
+            "id": 2554,
             "name": "UsingForDirective",
             "src": "128:40:11"
           },
@@ -449,7 +449,7 @@
             "attributes": {
               "constant": false,
               "name": "testSet",
-              "scope": 2695,
+              "scope": 2717,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "struct UIntSetLib.UIntSet storage ref",
@@ -461,15 +461,15 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "UIntSetLib.UIntSet",
-                  "referencedDeclaration": 2160,
+                  "referencedDeclaration": 2182,
                   "type": "struct UIntSetLib.UIntSet storage pointer"
                 },
-                "id": 2533,
+                "id": 2555,
                 "name": "UserDefinedTypeName",
                 "src": "172:18:11"
               }
             ],
-            "id": 2534,
+            "id": 2556,
             "name": "VariableDeclaration",
             "src": "172:26:11"
           },
@@ -477,7 +477,7 @@
             "attributes": {
               "constant": false,
               "name": "lastPop",
-              "scope": 2695,
+              "scope": 2717,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "uint256",
@@ -490,12 +490,12 @@
                   "name": "uint",
                   "type": "uint256"
                 },
-                "id": 2535,
+                "id": 2557,
                 "name": "ElementaryTypeName",
                 "src": "203:4:11"
               }
             ],
-            "id": 2536,
+            "id": 2558,
             "name": "VariableDeclaration",
             "src": "203:19:11"
           },
@@ -503,7 +503,7 @@
             "attributes": {
               "constant": false,
               "name": "lastAdd",
-              "scope": 2695,
+              "scope": 2717,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "bool",
@@ -516,12 +516,12 @@
                   "name": "bool",
                   "type": "bool"
                 },
-                "id": 2537,
+                "id": 2559,
                 "name": "ElementaryTypeName",
                 "src": "226:4:11"
               }
             ],
-            "id": 2538,
+            "id": 2560,
             "name": "VariableDeclaration",
             "src": "226:19:11"
           },
@@ -529,7 +529,7 @@
             "attributes": {
               "constant": false,
               "name": "lastRemove",
-              "scope": 2695,
+              "scope": 2717,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "bool",
@@ -542,12 +542,12 @@
                   "name": "bool",
                   "type": "bool"
                 },
-                "id": 2539,
+                "id": 2561,
                 "name": "ElementaryTypeName",
                 "src": "249:4:11"
               }
             ],
-            "id": 2540,
+            "id": 2562,
             "name": "VariableDeclaration",
             "src": "249:22:11"
           },
@@ -561,7 +561,7 @@
               ],
               "name": "",
               "payable": true,
-              "scope": 2695,
+              "scope": 2717,
               "stateMutability": "payable",
               "superFunction": null,
               "visibility": "public"
@@ -574,7 +574,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2541,
+                "id": 2563,
                 "name": "ParameterList",
                 "src": "285:2:11"
               },
@@ -585,7 +585,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2542,
+                "id": 2564,
                 "name": "ParameterList",
                 "src": "303:0:11"
               },
@@ -596,12 +596,12 @@
                   ]
                 },
                 "children": [],
-                "id": 2543,
+                "id": 2565,
                 "name": "Block",
                 "src": "303:2:11"
               }
             ],
-            "id": 2544,
+            "id": 2566,
             "name": "FunctionDefinition",
             "src": "276:29:11"
           },
@@ -615,7 +615,7 @@
               ],
               "name": "UIntSetSpec",
               "payable": true,
-              "scope": 2695,
+              "scope": 2717,
               "stateMutability": "payable",
               "superFunction": null,
               "visibility": "public"
@@ -628,7 +628,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2545,
+                "id": 2567,
                 "name": "ParameterList",
                 "src": "328:2:11"
               },
@@ -639,7 +639,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2546,
+                "id": 2568,
                 "name": "ParameterList",
                 "src": "346:0:11"
               },
@@ -650,12 +650,12 @@
                   ]
                 },
                 "children": [],
-                "id": 2547,
+                "id": 2569,
                 "name": "Block",
                 "src": "346:2:11"
               }
             ],
-            "id": 2548,
+            "id": 2570,
             "name": "FunctionDefinition",
             "src": "308:40:11"
           },
@@ -669,7 +669,7 @@
               ],
               "name": "get",
               "payable": false,
-              "scope": 2695,
+              "scope": 2717,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -681,7 +681,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "index",
-                      "scope": 2561,
+                      "scope": 2583,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -694,17 +694,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2549,
+                        "id": 2571,
                         "name": "ElementaryTypeName",
                         "src": "365:4:11"
                       }
                     ],
-                    "id": 2550,
+                    "id": 2572,
                     "name": "VariableDeclaration",
                     "src": "365:10:11"
                   }
                 ],
-                "id": 2551,
+                "id": 2573,
                 "name": "ParameterList",
                 "src": "364:12:11"
               },
@@ -714,7 +714,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2561,
+                      "scope": 2583,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -727,17 +727,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2552,
+                        "id": 2574,
                         "name": "ElementaryTypeName",
                         "src": "398:4:11"
                       }
                     ],
-                    "id": 2553,
+                    "id": 2575,
                     "name": "VariableDeclaration",
                     "src": "398:4:11"
                   }
                 ],
-                "id": 2554,
+                "id": 2576,
                 "name": "ParameterList",
                 "src": "397:6:11"
               },
@@ -745,7 +745,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2554
+                      "functionReturnParameters": 2576
                     },
                     "children": [
                       {
@@ -776,7 +776,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "get",
-                              "referencedDeclaration": 2209,
+                              "referencedDeclaration": 2231,
                               "type": "function (struct UIntSetLib.UIntSet storage pointer,uint256) view returns (uint256)"
                             },
                             "children": [
@@ -786,16 +786,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2534,
+                                  "referencedDeclaration": 2556,
                                   "type": "struct UIntSetLib.UIntSet storage ref",
                                   "value": "testSet"
                                 },
-                                "id": 2555,
+                                "id": 2577,
                                 "name": "Identifier",
                                 "src": "417:7:11"
                               }
                             ],
-                            "id": 2556,
+                            "id": 2578,
                             "name": "MemberAccess",
                             "src": "417:11:11"
                           },
@@ -805,31 +805,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2550,
+                              "referencedDeclaration": 2572,
                               "type": "uint256",
                               "value": "index"
                             },
-                            "id": 2557,
+                            "id": 2579,
                             "name": "Identifier",
                             "src": "429:5:11"
                           }
                         ],
-                        "id": 2558,
+                        "id": 2580,
                         "name": "FunctionCall",
                         "src": "417:18:11"
                       }
                     ],
-                    "id": 2559,
+                    "id": 2581,
                     "name": "Return",
                     "src": "410:25:11"
                   }
                 ],
-                "id": 2560,
+                "id": 2582,
                 "name": "Block",
                 "src": "404:36:11"
               }
             ],
-            "id": 2561,
+            "id": 2583,
             "name": "FunctionDefinition",
             "src": "352:88:11"
           },
@@ -843,7 +843,7 @@
               ],
               "name": "getValues",
               "payable": false,
-              "scope": 2695,
+              "scope": 2717,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -856,7 +856,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2562,
+                "id": 2584,
                 "name": "ParameterList",
                 "src": "462:2:11"
               },
@@ -866,7 +866,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2571,
+                      "scope": 2593,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256[] memory",
@@ -885,22 +885,22 @@
                               "name": "uint",
                               "type": "uint256"
                             },
-                            "id": 2563,
+                            "id": 2585,
                             "name": "ElementaryTypeName",
                             "src": "486:4:11"
                           }
                         ],
-                        "id": 2564,
+                        "id": 2586,
                         "name": "ArrayTypeName",
                         "src": "486:6:11"
                       }
                     ],
-                    "id": 2565,
+                    "id": 2587,
                     "name": "VariableDeclaration",
                     "src": "486:6:11"
                   }
                 ],
-                "id": 2566,
+                "id": 2588,
                 "name": "ParameterList",
                 "src": "485:8:11"
               },
@@ -908,7 +908,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2566
+                      "functionReturnParameters": 2588
                     },
                     "children": [
                       {
@@ -919,7 +919,7 @@
                           "isPure": false,
                           "lValueRequested": false,
                           "member_name": "values",
-                          "referencedDeclaration": 2151,
+                          "referencedDeclaration": 2173,
                           "type": "uint256[] storage ref"
                         },
                         "children": [
@@ -929,31 +929,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2534,
+                              "referencedDeclaration": 2556,
                               "type": "struct UIntSetLib.UIntSet storage ref",
                               "value": "testSet"
                             },
-                            "id": 2567,
+                            "id": 2589,
                             "name": "Identifier",
                             "src": "507:7:11"
                           }
                         ],
-                        "id": 2568,
+                        "id": 2590,
                         "name": "MemberAccess",
                         "src": "507:14:11"
                       }
                     ],
-                    "id": 2569,
+                    "id": 2591,
                     "name": "Return",
                     "src": "500:21:11"
                   }
                 ],
-                "id": 2570,
+                "id": 2592,
                 "name": "Block",
                 "src": "494:32:11"
               }
             ],
-            "id": 2571,
+            "id": 2593,
             "name": "FunctionDefinition",
             "src": "444:82:11"
           },
@@ -967,7 +967,7 @@
               ],
               "name": "set",
               "payable": false,
-              "scope": 2695,
+              "scope": 2717,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -979,7 +979,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "index",
-                      "scope": 2587,
+                      "scope": 2609,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -992,12 +992,12 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2572,
+                        "id": 2594,
                         "name": "ElementaryTypeName",
                         "src": "543:4:11"
                       }
                     ],
-                    "id": 2573,
+                    "id": 2595,
                     "name": "VariableDeclaration",
                     "src": "543:10:11"
                   },
@@ -1005,7 +1005,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "value",
-                      "scope": 2587,
+                      "scope": 2609,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1018,17 +1018,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2574,
+                        "id": 2596,
                         "name": "ElementaryTypeName",
                         "src": "555:4:11"
                       }
                     ],
-                    "id": 2575,
+                    "id": 2597,
                     "name": "VariableDeclaration",
                     "src": "555:10:11"
                   }
                 ],
-                "id": 2576,
+                "id": 2598,
                 "name": "ParameterList",
                 "src": "542:24:11"
               },
@@ -1038,7 +1038,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2587,
+                      "scope": 2609,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -1051,17 +1051,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 2577,
+                        "id": 2599,
                         "name": "ElementaryTypeName",
                         "src": "583:4:11"
                       }
                     ],
-                    "id": 2578,
+                    "id": 2600,
                     "name": "VariableDeclaration",
                     "src": "583:4:11"
                   }
                 ],
-                "id": 2579,
+                "id": 2601,
                 "name": "ParameterList",
                 "src": "582:6:11"
               },
@@ -1069,7 +1069,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2579
+                      "functionReturnParameters": 2601
                     },
                     "children": [
                       {
@@ -1104,7 +1104,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "set",
-                              "referencedDeclaration": 2258,
+                              "referencedDeclaration": 2280,
                               "type": "function (struct UIntSetLib.UIntSet storage pointer,uint256,uint256) returns (bool)"
                             },
                             "children": [
@@ -1114,16 +1114,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2534,
+                                  "referencedDeclaration": 2556,
                                   "type": "struct UIntSetLib.UIntSet storage ref",
                                   "value": "testSet"
                                 },
-                                "id": 2580,
+                                "id": 2602,
                                 "name": "Identifier",
                                 "src": "602:7:11"
                               }
                             ],
-                            "id": 2581,
+                            "id": 2603,
                             "name": "MemberAccess",
                             "src": "602:11:11"
                           },
@@ -1133,11 +1133,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2573,
+                              "referencedDeclaration": 2595,
                               "type": "uint256",
                               "value": "index"
                             },
-                            "id": 2582,
+                            "id": 2604,
                             "name": "Identifier",
                             "src": "614:5:11"
                           },
@@ -1147,31 +1147,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2575,
+                              "referencedDeclaration": 2597,
                               "type": "uint256",
                               "value": "value"
                             },
-                            "id": 2583,
+                            "id": 2605,
                             "name": "Identifier",
                             "src": "621:5:11"
                           }
                         ],
-                        "id": 2584,
+                        "id": 2606,
                         "name": "FunctionCall",
                         "src": "602:25:11"
                       }
                     ],
-                    "id": 2585,
+                    "id": 2607,
                     "name": "Return",
                     "src": "595:32:11"
                   }
                 ],
-                "id": 2586,
+                "id": 2608,
                 "name": "Block",
                 "src": "589:43:11"
               }
             ],
-            "id": 2587,
+            "id": 2609,
             "name": "FunctionDefinition",
             "src": "530:102:11"
           },
@@ -1185,7 +1185,7 @@
               ],
               "name": "add",
               "payable": false,
-              "scope": 2695,
+              "scope": 2717,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -1197,7 +1197,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "value",
-                      "scope": 2604,
+                      "scope": 2626,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1210,17 +1210,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2588,
+                        "id": 2610,
                         "name": "ElementaryTypeName",
                         "src": "649:4:11"
                       }
                     ],
-                    "id": 2589,
+                    "id": 2611,
                     "name": "VariableDeclaration",
                     "src": "649:10:11"
                   }
                 ],
-                "id": 2590,
+                "id": 2612,
                 "name": "ParameterList",
                 "src": "648:12:11"
               },
@@ -1230,7 +1230,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2604,
+                      "scope": 2626,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -1243,17 +1243,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 2591,
+                        "id": 2613,
                         "name": "ElementaryTypeName",
                         "src": "677:4:11"
                       }
                     ],
-                    "id": 2592,
+                    "id": 2614,
                     "name": "VariableDeclaration",
                     "src": "677:4:11"
                   }
                 ],
-                "id": 2593,
+                "id": 2615,
                 "name": "ParameterList",
                 "src": "676:6:11"
               },
@@ -1278,11 +1278,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2538,
+                              "referencedDeclaration": 2560,
                               "type": "bool",
                               "value": "lastAdd"
                             },
-                            "id": 2594,
+                            "id": 2616,
                             "name": "Identifier",
                             "src": "689:7:11"
                           },
@@ -1314,7 +1314,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "add",
-                                  "referencedDeclaration": 2303,
+                                  "referencedDeclaration": 2325,
                                   "type": "function (struct UIntSetLib.UIntSet storage pointer,uint256) returns (bool)"
                                 },
                                 "children": [
@@ -1324,16 +1324,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2534,
+                                      "referencedDeclaration": 2556,
                                       "type": "struct UIntSetLib.UIntSet storage ref",
                                       "value": "testSet"
                                     },
-                                    "id": 2595,
+                                    "id": 2617,
                                     "name": "Identifier",
                                     "src": "699:7:11"
                                   }
                                 ],
-                                "id": 2596,
+                                "id": 2618,
                                 "name": "MemberAccess",
                                 "src": "699:11:11"
                               },
@@ -1343,32 +1343,32 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2589,
+                                  "referencedDeclaration": 2611,
                                   "type": "uint256",
                                   "value": "value"
                                 },
-                                "id": 2597,
+                                "id": 2619,
                                 "name": "Identifier",
                                 "src": "711:5:11"
                               }
                             ],
-                            "id": 2598,
+                            "id": 2620,
                             "name": "FunctionCall",
                             "src": "699:18:11"
                           }
                         ],
-                        "id": 2599,
+                        "id": 2621,
                         "name": "Assignment",
                         "src": "689:28:11"
                       }
                     ],
-                    "id": 2600,
+                    "id": 2622,
                     "name": "ExpressionStatement",
                     "src": "689:28:11"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 2593
+                      "functionReturnParameters": 2615
                     },
                     "children": [
                       {
@@ -1377,26 +1377,26 @@
                           "overloadedDeclarations": [
                             null
                           ],
-                          "referencedDeclaration": 2538,
+                          "referencedDeclaration": 2560,
                           "type": "bool",
                           "value": "lastAdd"
                         },
-                        "id": 2601,
+                        "id": 2623,
                         "name": "Identifier",
                         "src": "730:7:11"
                       }
                     ],
-                    "id": 2602,
+                    "id": 2624,
                     "name": "Return",
                     "src": "723:14:11"
                   }
                 ],
-                "id": 2603,
+                "id": 2625,
                 "name": "Block",
                 "src": "683:59:11"
               }
             ],
-            "id": 2604,
+            "id": 2626,
             "name": "FunctionDefinition",
             "src": "636:106:11"
           },
@@ -1410,7 +1410,7 @@
               ],
               "name": "remove",
               "payable": false,
-              "scope": 2695,
+              "scope": 2717,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -1422,7 +1422,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "value",
-                      "scope": 2621,
+                      "scope": 2643,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1435,17 +1435,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2605,
+                        "id": 2627,
                         "name": "ElementaryTypeName",
                         "src": "762:4:11"
                       }
                     ],
-                    "id": 2606,
+                    "id": 2628,
                     "name": "VariableDeclaration",
                     "src": "762:10:11"
                   }
                 ],
-                "id": 2607,
+                "id": 2629,
                 "name": "ParameterList",
                 "src": "761:12:11"
               },
@@ -1455,7 +1455,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2621,
+                      "scope": 2643,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -1468,17 +1468,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 2608,
+                        "id": 2630,
                         "name": "ElementaryTypeName",
                         "src": "790:4:11"
                       }
                     ],
-                    "id": 2609,
+                    "id": 2631,
                     "name": "VariableDeclaration",
                     "src": "790:4:11"
                   }
                 ],
-                "id": 2610,
+                "id": 2632,
                 "name": "ParameterList",
                 "src": "789:6:11"
               },
@@ -1503,11 +1503,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2540,
+                              "referencedDeclaration": 2562,
                               "type": "bool",
                               "value": "lastRemove"
                             },
-                            "id": 2611,
+                            "id": 2633,
                             "name": "Identifier",
                             "src": "802:10:11"
                           },
@@ -1539,7 +1539,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "remove",
-                                  "referencedDeclaration": 2335,
+                                  "referencedDeclaration": 2357,
                                   "type": "function (struct UIntSetLib.UIntSet storage pointer,uint256) returns (bool)"
                                 },
                                 "children": [
@@ -1549,16 +1549,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2534,
+                                      "referencedDeclaration": 2556,
                                       "type": "struct UIntSetLib.UIntSet storage ref",
                                       "value": "testSet"
                                     },
-                                    "id": 2612,
+                                    "id": 2634,
                                     "name": "Identifier",
                                     "src": "815:7:11"
                                   }
                                 ],
-                                "id": 2613,
+                                "id": 2635,
                                 "name": "MemberAccess",
                                 "src": "815:14:11"
                               },
@@ -1568,32 +1568,32 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2606,
+                                  "referencedDeclaration": 2628,
                                   "type": "uint256",
                                   "value": "value"
                                 },
-                                "id": 2614,
+                                "id": 2636,
                                 "name": "Identifier",
                                 "src": "830:5:11"
                               }
                             ],
-                            "id": 2615,
+                            "id": 2637,
                             "name": "FunctionCall",
                             "src": "815:21:11"
                           }
                         ],
-                        "id": 2616,
+                        "id": 2638,
                         "name": "Assignment",
                         "src": "802:34:11"
                       }
                     ],
-                    "id": 2617,
+                    "id": 2639,
                     "name": "ExpressionStatement",
                     "src": "802:34:11"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 2610
+                      "functionReturnParameters": 2632
                     },
                     "children": [
                       {
@@ -1602,26 +1602,26 @@
                           "overloadedDeclarations": [
                             null
                           ],
-                          "referencedDeclaration": 2540,
+                          "referencedDeclaration": 2562,
                           "type": "bool",
                           "value": "lastRemove"
                         },
-                        "id": 2618,
+                        "id": 2640,
                         "name": "Identifier",
                         "src": "849:10:11"
                       }
                     ],
-                    "id": 2619,
+                    "id": 2641,
                     "name": "Return",
                     "src": "842:17:11"
                   }
                 ],
-                "id": 2620,
+                "id": 2642,
                 "name": "Block",
                 "src": "796:68:11"
               }
             ],
-            "id": 2621,
+            "id": 2643,
             "name": "FunctionDefinition",
             "src": "746:118:11"
           },
@@ -1635,7 +1635,7 @@
               ],
               "name": "pop",
               "payable": false,
-              "scope": 2695,
+              "scope": 2717,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -1647,7 +1647,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "index",
-                      "scope": 2638,
+                      "scope": 2660,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1660,17 +1660,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2622,
+                        "id": 2644,
                         "name": "ElementaryTypeName",
                         "src": "881:4:11"
                       }
                     ],
-                    "id": 2623,
+                    "id": 2645,
                     "name": "VariableDeclaration",
                     "src": "881:10:11"
                   }
                 ],
-                "id": 2624,
+                "id": 2646,
                 "name": "ParameterList",
                 "src": "880:12:11"
               },
@@ -1680,7 +1680,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2638,
+                      "scope": 2660,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1693,17 +1693,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2625,
+                        "id": 2647,
                         "name": "ElementaryTypeName",
                         "src": "909:4:11"
                       }
                     ],
-                    "id": 2626,
+                    "id": 2648,
                     "name": "VariableDeclaration",
                     "src": "909:4:11"
                   }
                 ],
-                "id": 2627,
+                "id": 2649,
                 "name": "ParameterList",
                 "src": "908:6:11"
               },
@@ -1728,11 +1728,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2536,
+                              "referencedDeclaration": 2558,
                               "type": "uint256",
                               "value": "lastPop"
                             },
-                            "id": 2628,
+                            "id": 2650,
                             "name": "Identifier",
                             "src": "921:7:11"
                           },
@@ -1764,7 +1764,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "pop",
-                                  "referencedDeclaration": 2415,
+                                  "referencedDeclaration": 2437,
                                   "type": "function (struct UIntSetLib.UIntSet storage pointer,uint256) returns (uint256)"
                                 },
                                 "children": [
@@ -1774,16 +1774,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2534,
+                                      "referencedDeclaration": 2556,
                                       "type": "struct UIntSetLib.UIntSet storage ref",
                                       "value": "testSet"
                                     },
-                                    "id": 2629,
+                                    "id": 2651,
                                     "name": "Identifier",
                                     "src": "931:7:11"
                                   }
                                 ],
-                                "id": 2630,
+                                "id": 2652,
                                 "name": "MemberAccess",
                                 "src": "931:11:11"
                               },
@@ -1793,32 +1793,32 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2623,
+                                  "referencedDeclaration": 2645,
                                   "type": "uint256",
                                   "value": "index"
                                 },
-                                "id": 2631,
+                                "id": 2653,
                                 "name": "Identifier",
                                 "src": "943:5:11"
                               }
                             ],
-                            "id": 2632,
+                            "id": 2654,
                             "name": "FunctionCall",
                             "src": "931:18:11"
                           }
                         ],
-                        "id": 2633,
+                        "id": 2655,
                         "name": "Assignment",
                         "src": "921:28:11"
                       }
                     ],
-                    "id": 2634,
+                    "id": 2656,
                     "name": "ExpressionStatement",
                     "src": "921:28:11"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 2627
+                      "functionReturnParameters": 2649
                     },
                     "children": [
                       {
@@ -1827,26 +1827,26 @@
                           "overloadedDeclarations": [
                             null
                           ],
-                          "referencedDeclaration": 2536,
+                          "referencedDeclaration": 2558,
                           "type": "uint256",
                           "value": "lastPop"
                         },
-                        "id": 2635,
+                        "id": 2657,
                         "name": "Identifier",
                         "src": "962:7:11"
                       }
                     ],
-                    "id": 2636,
+                    "id": 2658,
                     "name": "Return",
                     "src": "955:14:11"
                   }
                 ],
-                "id": 2637,
+                "id": 2659,
                 "name": "Block",
                 "src": "915:59:11"
               }
             ],
-            "id": 2638,
+            "id": 2660,
             "name": "FunctionDefinition",
             "src": "868:106:11"
           },
@@ -1860,7 +1860,7 @@
               ],
               "name": "first",
               "payable": false,
-              "scope": 2695,
+              "scope": 2717,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -1873,7 +1873,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2639,
+                "id": 2661,
                 "name": "ParameterList",
                 "src": "992:2:11"
               },
@@ -1883,7 +1883,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2648,
+                      "scope": 2670,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1896,17 +1896,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2640,
+                        "id": 2662,
                         "name": "ElementaryTypeName",
                         "src": "1016:4:11"
                       }
                     ],
-                    "id": 2641,
+                    "id": 2663,
                     "name": "VariableDeclaration",
                     "src": "1016:4:11"
                   }
                 ],
-                "id": 2642,
+                "id": 2664,
                 "name": "ParameterList",
                 "src": "1015:6:11"
               },
@@ -1914,7 +1914,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2642
+                      "functionReturnParameters": 2664
                     },
                     "children": [
                       {
@@ -1945,7 +1945,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "first",
-                              "referencedDeclaration": 2453,
+                              "referencedDeclaration": 2475,
                               "type": "function (struct UIntSetLib.UIntSet storage pointer) view returns (uint256)"
                             },
                             "children": [
@@ -1955,36 +1955,36 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2534,
+                                  "referencedDeclaration": 2556,
                                   "type": "struct UIntSetLib.UIntSet storage ref",
                                   "value": "testSet"
                                 },
-                                "id": 2643,
+                                "id": 2665,
                                 "name": "Identifier",
                                 "src": "1035:7:11"
                               }
                             ],
-                            "id": 2644,
+                            "id": 2666,
                             "name": "MemberAccess",
                             "src": "1035:13:11"
                           }
                         ],
-                        "id": 2645,
+                        "id": 2667,
                         "name": "FunctionCall",
                         "src": "1035:15:11"
                       }
                     ],
-                    "id": 2646,
+                    "id": 2668,
                     "name": "Return",
                     "src": "1028:22:11"
                   }
                 ],
-                "id": 2647,
+                "id": 2669,
                 "name": "Block",
                 "src": "1022:33:11"
               }
             ],
-            "id": 2648,
+            "id": 2670,
             "name": "FunctionDefinition",
             "src": "978:77:11"
           },
@@ -1998,7 +1998,7 @@
               ],
               "name": "last",
               "payable": false,
-              "scope": 2695,
+              "scope": 2717,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -2011,7 +2011,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2649,
+                "id": 2671,
                 "name": "ParameterList",
                 "src": "1072:2:11"
               },
@@ -2021,7 +2021,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2658,
+                      "scope": 2680,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2034,17 +2034,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2650,
+                        "id": 2672,
                         "name": "ElementaryTypeName",
                         "src": "1096:4:11"
                       }
                     ],
-                    "id": 2651,
+                    "id": 2673,
                     "name": "VariableDeclaration",
                     "src": "1096:4:11"
                   }
                 ],
-                "id": 2652,
+                "id": 2674,
                 "name": "ParameterList",
                 "src": "1095:6:11"
               },
@@ -2052,7 +2052,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2652
+                      "functionReturnParameters": 2674
                     },
                     "children": [
                       {
@@ -2083,7 +2083,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "last",
-                              "referencedDeclaration": 2473,
+                              "referencedDeclaration": 2495,
                               "type": "function (struct UIntSetLib.UIntSet storage pointer) view returns (uint256)"
                             },
                             "children": [
@@ -2093,36 +2093,36 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2534,
+                                  "referencedDeclaration": 2556,
                                   "type": "struct UIntSetLib.UIntSet storage ref",
                                   "value": "testSet"
                                 },
-                                "id": 2653,
+                                "id": 2675,
                                 "name": "Identifier",
                                 "src": "1115:7:11"
                               }
                             ],
-                            "id": 2654,
+                            "id": 2676,
                             "name": "MemberAccess",
                             "src": "1115:12:11"
                           }
                         ],
-                        "id": 2655,
+                        "id": 2677,
                         "name": "FunctionCall",
                         "src": "1115:14:11"
                       }
                     ],
-                    "id": 2656,
+                    "id": 2678,
                     "name": "Return",
                     "src": "1108:21:11"
                   }
                 ],
-                "id": 2657,
+                "id": 2679,
                 "name": "Block",
                 "src": "1102:32:11"
               }
             ],
-            "id": 2658,
+            "id": 2680,
             "name": "FunctionDefinition",
             "src": "1059:75:11"
           },
@@ -2136,7 +2136,7 @@
               ],
               "name": "indexOf",
               "payable": false,
-              "scope": 2695,
+              "scope": 2717,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -2148,7 +2148,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "value",
-                      "scope": 2671,
+                      "scope": 2693,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2161,17 +2161,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2659,
+                        "id": 2681,
                         "name": "ElementaryTypeName",
                         "src": "1155:4:11"
                       }
                     ],
-                    "id": 2660,
+                    "id": 2682,
                     "name": "VariableDeclaration",
                     "src": "1155:10:11"
                   }
                 ],
-                "id": 2661,
+                "id": 2683,
                 "name": "ParameterList",
                 "src": "1154:12:11"
               },
@@ -2181,7 +2181,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2671,
+                      "scope": 2693,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2194,17 +2194,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2662,
+                        "id": 2684,
                         "name": "ElementaryTypeName",
                         "src": "1188:4:11"
                       }
                     ],
-                    "id": 2663,
+                    "id": 2685,
                     "name": "VariableDeclaration",
                     "src": "1188:4:11"
                   }
                 ],
-                "id": 2664,
+                "id": 2686,
                 "name": "ParameterList",
                 "src": "1187:6:11"
               },
@@ -2212,7 +2212,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2664
+                      "functionReturnParameters": 2686
                     },
                     "children": [
                       {
@@ -2243,7 +2243,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "indexOf",
-                              "referencedDeclaration": 2495,
+                              "referencedDeclaration": 2517,
                               "type": "function (struct UIntSetLib.UIntSet storage pointer,uint256) view returns (uint256)"
                             },
                             "children": [
@@ -2253,16 +2253,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2534,
+                                  "referencedDeclaration": 2556,
                                   "type": "struct UIntSetLib.UIntSet storage ref",
                                   "value": "testSet"
                                 },
-                                "id": 2665,
+                                "id": 2687,
                                 "name": "Identifier",
                                 "src": "1207:7:11"
                               }
                             ],
-                            "id": 2666,
+                            "id": 2688,
                             "name": "MemberAccess",
                             "src": "1207:15:11"
                           },
@@ -2272,31 +2272,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2660,
+                              "referencedDeclaration": 2682,
                               "type": "uint256",
                               "value": "value"
                             },
-                            "id": 2667,
+                            "id": 2689,
                             "name": "Identifier",
                             "src": "1223:5:11"
                           }
                         ],
-                        "id": 2668,
+                        "id": 2690,
                         "name": "FunctionCall",
                         "src": "1207:22:11"
                       }
                     ],
-                    "id": 2669,
+                    "id": 2691,
                     "name": "Return",
                     "src": "1200:29:11"
                   }
                 ],
-                "id": 2670,
+                "id": 2692,
                 "name": "Block",
                 "src": "1194:40:11"
               }
             ],
-            "id": 2671,
+            "id": 2693,
             "name": "FunctionDefinition",
             "src": "1138:96:11"
           },
@@ -2310,7 +2310,7 @@
               ],
               "name": "contains",
               "payable": false,
-              "scope": 2695,
+              "scope": 2717,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -2322,7 +2322,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "value",
-                      "scope": 2684,
+                      "scope": 2706,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2335,17 +2335,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2672,
+                        "id": 2694,
                         "name": "ElementaryTypeName",
                         "src": "1256:4:11"
                       }
                     ],
-                    "id": 2673,
+                    "id": 2695,
                     "name": "VariableDeclaration",
                     "src": "1256:10:11"
                   }
                 ],
-                "id": 2674,
+                "id": 2696,
                 "name": "ParameterList",
                 "src": "1255:12:11"
               },
@@ -2355,7 +2355,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2684,
+                      "scope": 2706,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -2368,17 +2368,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 2675,
+                        "id": 2697,
                         "name": "ElementaryTypeName",
                         "src": "1289:4:11"
                       }
                     ],
-                    "id": 2676,
+                    "id": 2698,
                     "name": "VariableDeclaration",
                     "src": "1289:4:11"
                   }
                 ],
-                "id": 2677,
+                "id": 2699,
                 "name": "ParameterList",
                 "src": "1288:6:11"
               },
@@ -2386,7 +2386,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2677
+                      "functionReturnParameters": 2699
                     },
                     "children": [
                       {
@@ -2417,7 +2417,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "contains",
-                              "referencedDeclaration": 2510,
+                              "referencedDeclaration": 2532,
                               "type": "function (struct UIntSetLib.UIntSet storage pointer,uint256) view returns (bool)"
                             },
                             "children": [
@@ -2427,16 +2427,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2534,
+                                  "referencedDeclaration": 2556,
                                   "type": "struct UIntSetLib.UIntSet storage ref",
                                   "value": "testSet"
                                 },
-                                "id": 2678,
+                                "id": 2700,
                                 "name": "Identifier",
                                 "src": "1308:7:11"
                               }
                             ],
-                            "id": 2679,
+                            "id": 2701,
                             "name": "MemberAccess",
                             "src": "1308:16:11"
                           },
@@ -2446,31 +2446,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2673,
+                              "referencedDeclaration": 2695,
                               "type": "uint256",
                               "value": "value"
                             },
-                            "id": 2680,
+                            "id": 2702,
                             "name": "Identifier",
                             "src": "1325:5:11"
                           }
                         ],
-                        "id": 2681,
+                        "id": 2703,
                         "name": "FunctionCall",
                         "src": "1308:23:11"
                       }
                     ],
-                    "id": 2682,
+                    "id": 2704,
                     "name": "Return",
                     "src": "1301:30:11"
                   }
                 ],
-                "id": 2683,
+                "id": 2705,
                 "name": "Block",
                 "src": "1295:41:11"
               }
             ],
-            "id": 2684,
+            "id": 2706,
             "name": "FunctionDefinition",
             "src": "1238:98:11"
           },
@@ -2484,7 +2484,7 @@
               ],
               "name": "size",
               "payable": false,
-              "scope": 2695,
+              "scope": 2717,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -2497,7 +2497,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2685,
+                "id": 2707,
                 "name": "ParameterList",
                 "src": "1353:2:11"
               },
@@ -2507,7 +2507,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 2694,
+                      "scope": 2716,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2520,17 +2520,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 2686,
+                        "id": 2708,
                         "name": "ElementaryTypeName",
                         "src": "1377:4:11"
                       }
                     ],
-                    "id": 2687,
+                    "id": 2709,
                     "name": "VariableDeclaration",
                     "src": "1377:4:11"
                   }
                 ],
-                "id": 2688,
+                "id": 2710,
                 "name": "ParameterList",
                 "src": "1376:6:11"
               },
@@ -2538,7 +2538,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 2688
+                      "functionReturnParameters": 2710
                     },
                     "children": [
                       {
@@ -2569,7 +2569,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "size",
-                              "referencedDeclaration": 2522,
+                              "referencedDeclaration": 2544,
                               "type": "function (struct UIntSetLib.UIntSet storage pointer) view returns (uint256)"
                             },
                             "children": [
@@ -2579,46 +2579,46 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2534,
+                                  "referencedDeclaration": 2556,
                                   "type": "struct UIntSetLib.UIntSet storage ref",
                                   "value": "testSet"
                                 },
-                                "id": 2689,
+                                "id": 2711,
                                 "name": "Identifier",
                                 "src": "1396:7:11"
                               }
                             ],
-                            "id": 2690,
+                            "id": 2712,
                             "name": "MemberAccess",
                             "src": "1396:12:11"
                           }
                         ],
-                        "id": 2691,
+                        "id": 2713,
                         "name": "FunctionCall",
                         "src": "1396:14:11"
                       }
                     ],
-                    "id": 2692,
+                    "id": 2714,
                     "name": "Return",
                     "src": "1389:21:11"
                   }
                 ],
-                "id": 2693,
+                "id": 2715,
                 "name": "Block",
                 "src": "1383:32:11"
               }
             ],
-            "id": 2694,
+            "id": 2716,
             "name": "FunctionDefinition",
             "src": "1340:75:11"
           }
         ],
-        "id": 2695,
+        "id": 2717,
         "name": "ContractDefinition",
         "src": "87:1330:11"
       }
     ],
-    "id": 2696,
+    "id": 2718,
     "name": "SourceUnit",
     "src": "0:1418:11"
   },
@@ -2630,11 +2630,11 @@
     "1514690812323": {
       "events": {},
       "links": {
-        "UIntSetLib": "0x24f4d31ab79fb074af79cba87276412cb2ff16f3"
+        "UIntSetLib": "0x2d9ea8e0a651f6655d53b8d3bdad80a9a3d36ffa"
       },
-      "address": "0x6ab436206233fff99d064765a2275a2f49841e39"
+      "address": "0xb83aeeacc0b8c0d08f29e90adbb2d942319de41f"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-12-31T03:27:09.766Z"
+  "updatedAt": "2017-12-31T03:31:25.916Z"
 }
