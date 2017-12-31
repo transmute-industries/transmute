@@ -1,7 +1,7 @@
 import { W3 } from 'soltsice'
 import { EventStoreFactory, EventStore } from '../../../SolidityTypes'
 import { getRelic } from '../../../__mocks__/setup'
-import { EventTransformer } from '../../../Utils/EventTransformer'
+import * as EventTransformer from '../../../Utils/EventTransformer'
 import { Utils } from '../../../Utils'
 import * as InternalEventTypes from '../../../Utils/InternalEventTypes'
 import { IFSA } from '../../../Store/EventTypes'
