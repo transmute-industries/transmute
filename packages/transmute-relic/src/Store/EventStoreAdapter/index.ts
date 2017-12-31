@@ -1,0 +1,1 @@
+export { EventStoreAdapter } from './EventStoreAdapter'

@@ -1,5 +1,5 @@
 import { Interceptor } from '../Interceptor'
-import { StoreAdapter } from '../../StoreAdapter'
+import { EventStoreAdapter } from '../../EventStoreAdapter'
 
 /**
  * Interceptor test

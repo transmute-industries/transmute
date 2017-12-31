@@ -1,12 +1,12 @@
-import { W3 } from "soltsice";
+import { W3 } from 'soltsice'
 
-import { RBAC } from "../SolidityTypes/RBAC";
+import { RBAC } from '../SolidityTypes/RBAC'
 
-import { IReadModelState, IReadModelAdapter } from "../Store/ReadModel/ReadModelTypes";
-import { StoreAdapter } from "../Store/StoreAdapter";
+import { IReadModelState, IReadModelAdapter } from '../Store/ReadModel/ReadModelTypes'
+import { EventStoreAdapter } from '../Store/EventStoreAdapter'
 
-import PermissionsReadModel from "./ReadModel";
-import { ReadModel } from "../Store/ReadModel";
+import PermissionsReadModel from './ReadModel'
+import { ReadModel } from '../Store/ReadModel'
 
 export namespace Permissions {
   export interface IPermissions {
@@ -15,7 +15,7 @@ export namespace Permissions {
       fromAddress: string,
       targetAddress: string,
       targetRole: string
-    ) => Promise<any>;
+    ) => Promise<any>
 
     setGrant: (
       acc: any,
@@ -24,9 +24,9 @@ export namespace Permissions {
       resource: string,
       action: string,
       attributes: string[]
-    ) => Promise<any>;
+    ) => Promise<any>
 
-    getGrant: (acc: any, fromAddress: string, index: number) => Promise<any>;
+    getGrant: (acc: any, fromAddress: string, index: number) => Promise<any>
 
     canRoleActionResource: (
       acc: any,
@@ -34,9 +34,9 @@ export namespace Permissions {
       role: string,
       action: string,
       resource: string
-    ) => Promise<boolean>;
+    ) => Promise<boolean>
 
-    getPermissionsReadModel: (acc: any, fromAddress: string) => Promise<IReadModelState>;
+    getPermissionsReadModel: (acc: any, fromAddress: string) => Promise<IReadModelState>
   }
 
   export const setAddressRole = async (
@@ -49,34 +49,34 @@ export namespace Permissions {
       targetAddress,
       targetRole,
       W3.TC.txParamsDefaultDeploy(fromAddress)
-    );
+    )
 
     // console.log("receipt: ", receipt);
-    return receipt;
+    return receipt
     // let fsa = Common.getFSAFromEventArgs(tx.logs[0].args)
     // return {
     //   events: [fsa],
     //   tx: tx,
     // }
-  };
+  }
 
   export const getReadModel = async (
     permContract: any,
-    adapter: StoreAdapter,
+    adapter: EventStoreAdapter,
     readModelAdapter: IReadModelAdapter,
     web3: any,
     fromAddress: string
   ) => {
-    let state: IReadModelState = JSON.parse(JSON.stringify(PermissionsReadModel.initialState));
+    let state: IReadModelState = JSON.parse(JSON.stringify(PermissionsReadModel.initialState))
 
     // console.log('permContract: ', permContract)
-    state.contractAddress = permContract.address;
-    state.readModelStoreKey = `${state.readModelType}:${state.contractAddress}`;
+    state.contractAddress = permContract.address
+    state.readModelStoreKey = `${state.readModelType}:${state.contractAddress}`
 
-    let permReadModel = new ReadModel(readModelAdapter, PermissionsReadModel.reducer, state);
+    let permReadModel = new ReadModel(readModelAdapter, PermissionsReadModel.reducer, state)
 
-    let changes = await permReadModel.sync(permContract, adapter, web3, fromAddress);
+    let changes = await permReadModel.sync(permContract, adapter, web3, fromAddress)
 
-    return permReadModel;
-  };
+    return permReadModel
+  }
 }

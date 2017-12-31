@@ -1,1 +1,0 @@
-export { StoreAdapter } from "./StoreAdapter";
