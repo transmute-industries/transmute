@@ -26,5 +26,5 @@ install:
   - lerna bootstrap
   
 script:
-  - npm run travis
-
+  - pushd . && cd ./packages/transmute-framework && yarn install && popd
+  - lerna run replace_and_test

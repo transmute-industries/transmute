@@ -4,7 +4,7 @@
     "lerna": "^2.5.1"
   },
   "scripts": {
-    "coverage": "lerna run test:coverage:report --scope transmute-framework",
+    "migrate": "lerna run migrate --scope transmute-contracts",
     "travis": "lerna run replace_and_test --scope transmute-framework"
   }
 }
