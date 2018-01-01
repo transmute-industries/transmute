@@ -1,12 +1,15 @@
 import { getSetupAsync } from '../../__mocks__/setup'
-import { EventStore } from '../../TransmuteContracts/EventStore'
-import { Store } from '../Store'
 
-import { Relic } from '../../transmute-framework'
-import { W3 } from 'soltsice'
+import {
+  W3,
+  Relic,
+  EventStoreAdapter,
+  EventTransformer,
+  Store,
+  EventStore
+} from '../../transmute-framework'
+
 const Storage = require('node-storage')
-import { EventStoreAdapter } from '../../Store/EventStoreAdapter'
-import * as EventTransformer from '../../Store/Events/EventTransformer'
 
 const WRITE_EVENT_GAS_COST = 4000000
 

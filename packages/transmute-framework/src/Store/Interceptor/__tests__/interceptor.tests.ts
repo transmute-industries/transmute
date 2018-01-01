@@ -1,5 +1,4 @@
-import { Interceptor } from '../Interceptor'
-import { EventStoreAdapter } from '../../EventStoreAdapter'
+import { Interceptor, EventStoreAdapter } from '../../../transmute-framework'
 
 /**
  * Interceptor test

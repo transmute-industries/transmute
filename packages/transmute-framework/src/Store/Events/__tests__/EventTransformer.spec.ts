@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js'
-import * as EventTransformer from '../EventTransformer'
+
+import { EventTransformer } from '../../../transmute-framework'
 
 /**
  * EventTransformer tests

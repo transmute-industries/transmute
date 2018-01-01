@@ -1,4 +1,4 @@
-import { ReadModel } from '../ReadModel'
+import { ReadModel } from '../../../transmute-framework'
 
 /**
  * ReadModel readModelAdapter tests
