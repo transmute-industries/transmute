@@ -1,5 +1,3 @@
-// import { UnsafeEventStore } from "../TransmuteContracts/UnsafeEventStore";
-// import { RBACEventStore } from "../TransmuteContracts/RBACEventStore";
 import { EventStore } from '../TransmuteContracts/EventStore'
 
 import { W3 } from 'soltsice'
