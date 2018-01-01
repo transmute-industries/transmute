@@ -14,6 +14,6 @@ import * as Utils from './Utils'
 import * as TransmuteContracts from './TransmuteContracts'
 export * from './TransmuteContracts'
 
-export { Relic, Utils, TransmuteContracts }
+export { Relic, Utils, TransmuteContracts, W3 }
 
 export default Relic

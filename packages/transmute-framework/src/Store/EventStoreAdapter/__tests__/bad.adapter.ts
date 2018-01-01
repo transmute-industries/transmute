@@ -1,5 +1,5 @@
 const bs58 = require('bs58')
-import { EventStoreAdapter } from '../index'
+import { EventStoreAdapter } from '../../../transmute-framework'
 
 /**
  * Bad adapter tests

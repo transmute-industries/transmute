@@ -3,11 +3,7 @@ const Storage = require('node-storage')
 
 import { getSetupAsync } from '../../__mocks__/setup'
 
-import { Relic } from '../../transmute-framework'
-
-import { EventStoreFactory } from '../../TransmuteContracts/EventStoreFactory'
-import { Factory } from '../Factory'
-import { EventStoreAdapter } from '../../Store/EventStoreAdapter'
+import { Relic, EventStoreFactory, Factory, EventStoreAdapter } from '../../transmute-framework'
 
 /**
  * Factory test
