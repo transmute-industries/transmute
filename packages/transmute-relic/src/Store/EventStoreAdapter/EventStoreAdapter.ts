@@ -96,6 +96,10 @@ export class EventStoreAdapter {
             'fsa.meta.adapter is not defined. be sure to set it when fsa.payload is an object (isAdapterEvent).'
           )
         }
+
+        if (this.mapper[event.meta.adapter] === undefined) {
+          throw new Error('mapper not provided for event.meta.adapter: ' + event.meta.adapter)
+        }
         // console.log("event: ", event);
         let adaptedEvent = await this.convertFSAPayload(event)
         // console.log("adaptedEvent: ", adaptedEvent);
@@ -107,6 +111,7 @@ export class EventStoreAdapter {
         }
         break
       case EventTransformer.FSATypes.SimpleKeyValue:
+        this.isPayloadMisleading(event)
         esEventParams = {
           keyType: 'S',
           keyValue: event.payload.key,
@@ -115,6 +120,9 @@ export class EventStoreAdapter {
         }
         break
       case EventTransformer.FSATypes.Native:
+        // throw is format is misleading or wrong...
+        this.isPayloadMisleading(event)
+
         esEventParams = {
           keyType: 'S',
           keyValue: event.payload.key,
@@ -197,36 +205,34 @@ export class EventStoreAdapter {
     return keyValue.length <= 32
   }
 
-  isPayloadMisleading = (dirtyPayload: IDirtyPayload) => {
-    if (dirtyPayload.payloadKey === 'bytes32') {
-      if (dirtyPayload.payloadValueType === 'B') {
+  isPayloadMisleading = (event: IFSA) => {
+    if (event.payload.key === 'bytes32') {
+      if (event.meta.valueType === 'B') {
         // check length
-        if (dirtyPayload.payloadValue.length > 66) {
+        if (event.payload.value.length > 66) {
           // check hex chars only 0-f/F
-          if (!Utils.isHex(dirtyPayload.payloadValue)) {
-            throw new Error(
-              'solidity bytes32 received invalid hex string: ' + dirtyPayload.payloadValue
-            )
+          if (!Utils.isHex(event.payload.value)) {
+            throw new Error('solidity bytes32 received invalid hex string: ' + event.payload.value)
           }
         }
       }
 
-      if (dirtyPayload.payloadValueType === 'S') {
-        if (dirtyPayload.payloadValue.length > 32) {
+      if (event.meta.valueType === 'S') {
+        if (event.payload.value.length > 32) {
           throw new Error(
             'payload value of type (S) is more than 32 bytes. value length = ' +
-              dirtyPayload.payloadValue.length +
+              event.payload.value.length +
               ' chars'
           )
         }
       }
     }
 
-    if (dirtyPayload.payloadKey === 'address') {
-      if (dirtyPayload.payloadValueType !== 'A') {
+    if (event.payload.key === 'address') {
+      if (!Utils.isValidAddress(event.payload.value)) {
         throw new Error(
           'payload of address type has none address value. ' +
-            dirtyPayload.payloadValue +
+            event.payload.value +
             ' is not a valid address.'
         )
       }

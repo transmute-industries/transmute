@@ -5,8 +5,8 @@ export default [
   {
     type: Constants.ACCOUNT_CREATED,
     payload: {
-      key: '1231231',
-      value: 'asdfasd'
+      key: 'created',
+      value: '03002028'
     },
     meta: {
       id: 0
@@ -15,11 +15,11 @@ export default [
   {
     type: Constants.ACCOUNT_NAMED,
     payload: {
-      key: 'dave',
-      value: 'fff'
+      key: 'name',
+      value: 'dave'
     },
     meta: {
       id: 1
     }
   }
-] as IFSA[]
+]
