@@ -1,4 +1,4 @@
-import { IFSA, IRawEsEvent } from './EventTypes'
+import { IFSA, IEsEvent } from './EventTypes'
 
 import { Utils } from '../../Utils'
 
@@ -83,7 +83,7 @@ export const valuesToEsEvent = (
   ValueType: any,
   Key: any,
   Value: any
-): IRawEsEvent => {
+): IEsEvent => {
   return {
     Id,
     TxOrigin,
@@ -97,7 +97,7 @@ export const valuesToEsEvent = (
   }
 }
 
-export const getFSAFromEsEventWithPartial = (esEvent: IRawEsEvent, partialFSA: IFSA) => {
+export const getFSAFromEsEventWithPartial = (esEvent: IEsEvent, partialFSA: IFSA) => {
   let payload
   switch (partialFSA.meta.valueType) {
     case 'A':
@@ -131,7 +131,7 @@ export const getFSAFromEsEventWithPartial = (esEvent: IRawEsEvent, partialFSA: I
   }
 }
 
-export const esEventToFSA = (esEvent: IRawEsEvent) => {
+export const esEventToFSA = (esEvent: IEsEvent) => {
   let partialFSA: IFSA = {
     type: Utils.toAscii(esEvent.EventType),
     payload: {}, // this will be set by getFSAFromEsEventWithPartial

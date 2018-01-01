@@ -4,11 +4,10 @@ import { IFSA } from '../Events/EventTypes'
 import { Store } from '../Store'
 import { IReadModel, IReadModelAdapter, IReadModelState } from './ReadModelTypes'
 
-const STATE_REQUIRED_PROPS = ['contractAddress', 'readModelType', 'readModelStoreKey']
-
 import { EventStoreAdapter } from '../EventStoreAdapter'
-
 import { EventStore } from '../../TransmuteContracts/EventStore'
+
+const STATE_REQUIRED_PROPS = ['contractAddress', 'readModelType', 'readModelStoreKey']
 
 export class ReadModel implements IReadModel {
   constructor(

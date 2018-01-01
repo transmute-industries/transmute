@@ -4,7 +4,11 @@ export interface IFSA {
   meta: any
 }
 
-export interface IRawEsCommand {
+export interface IEsEvent {
+  Id: any
+  TxOrigin: string
+  MsgSender: string
+  Created: any
   EventType: string
   KeyType: string
   ValueType: string
@@ -12,28 +16,8 @@ export interface IRawEsCommand {
   Value: string
 }
 
-export interface IRawEsEvent extends IRawEsCommand {
-  Id: any
-  TxOrigin: string
-  MsgSender: string
-  Created: any
-}
-
-export interface IUnmarshalledEsCommand {
-  eventType: string
-  keyType: string
-  valueType: string
-  key: any
-  value: any
-}
-
-export interface ITransaction {
+export interface ITxReceipt {
   tx: string
   receipt: any
   logs: any[]
-}
-
-export interface ITransmuteCommandResponse {
-  events: Array<IFSA>
-  transactions: Array<ITransaction>
 }
