@@ -8,7 +8,7 @@ const STATE_REQUIRED_PROPS = ['contractAddress', 'readModelType', 'readModelStor
 
 import { EventStoreAdapter } from '../EventStoreAdapter'
 
-import { EventStore } from '../../SolidityTypes/EventStore'
+import { EventStore } from '../../TransmuteContracts/EventStore'
 
 export class ReadModel implements IReadModel {
   constructor(

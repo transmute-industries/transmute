@@ -1,5 +1,5 @@
 import { getSetupAsync } from '../../__mocks__/setup'
-import { EventStore } from '../../SolidityTypes/EventStore'
+import { EventStore } from '../../TransmuteContracts/EventStore'
 import { Store } from '../Store'
 
 import Relic from '../../transmute-relic'

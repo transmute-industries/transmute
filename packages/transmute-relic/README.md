@@ -12,7 +12,7 @@ implement fullstack demo... again.
 
 ### Commands:
 
-`yarn contracts:replace && yarn test ./src/__tests__/SolidityTypes/`
+`yarn contracts:replace && yarn test ./src/__tests__/TransmuteContracts/`
 
 Useful when testing contacts. This will delete and migrate contracts via truffle and save the ABIs. 
 The ABIs are then used to generate typescript classes, which are used in tests...

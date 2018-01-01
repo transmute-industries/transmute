@@ -1,7 +1,7 @@
 import { W3 } from 'soltsice'
 
-import { EventStoreFactory } from '../SolidityTypes/EventStoreFactory'
-import { EventStore } from '../SolidityTypes/EventStore'
+import { EventStoreFactory } from '../TransmuteContracts/EventStoreFactory'
+import { EventStore } from '../TransmuteContracts/EventStore'
 
 import { EventStoreAdapter } from '../Store/EventStoreAdapter'
 

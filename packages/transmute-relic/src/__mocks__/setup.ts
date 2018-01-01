@@ -7,8 +7,8 @@ import { EventStoreAdapter } from '../Store/EventStoreAdapter'
 const bs58 = require('bs58')
 const util = require('ethereumjs-util')
 
-import { EventStoreFactory } from '../SolidityTypes/EventStoreFactory'
-import { EventStore } from '../SolidityTypes/EventStore'
+import { EventStoreFactory } from '../TransmuteContracts/EventStoreFactory'
+import { EventStore } from '../TransmuteContracts/EventStore'
 
 let ipfsAdapter = require('../../../transmute-adapter-ipfs')
 let nodeStorageAdapter = require('../../../transmute-adapter-node-storage')

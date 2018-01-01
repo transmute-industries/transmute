@@ -1,5 +1,5 @@
 import { W3 } from 'soltsice'
-import { EventStoreFactory, EventStore } from '../../../SolidityTypes'
+import { EventStoreFactory, EventStore } from '../../../TransmuteContracts'
 import { getRelic } from '../../../__mocks__/setup'
 import { Utils } from '../../../Utils'
 import * as EventTransformer from '../../../Utils/EventTransformer'

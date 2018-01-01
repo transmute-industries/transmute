@@ -11,7 +11,7 @@ import Relic from '../../../transmute-relic'
 import { EventStoreAdapter } from '../../EventStoreAdapter'
 let state = initialState
 
-import { EventStore } from '../../../SolidityTypes'
+import { EventStore } from '../../../TransmuteContracts'
 
 /**
  * ReadModel event tests
