@@ -12,6 +12,7 @@ export * from './Store'
 
 import * as Utils from './Utils'
 import * as TransmuteContracts from './TransmuteContracts'
+export * from './TransmuteContracts'
 
 export { Relic, Utils, TransmuteContracts }
 

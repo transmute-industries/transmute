@@ -1,15 +1,15 @@
 import { getSetupAsync } from '../../__mocks__/setup'
 
-import { EventStoreFactory, EventStore } from '../../TransmuteContracts'
-
-import { Factory } from '../../Factory'
-import { Store } from '../../Store'
-import { Relic } from '../../transmute-framework'
-
-import * as InternalEventTypes from '../../Store/Events/InternalEventTypes'
-
-import { ReadModel } from '../../Store/ReadModel'
-import { IReadModelState } from '../../Store/ReadModel/ReadModelTypes'
+import {
+  Relic,
+  Store,
+  Factory,
+  EventStoreFactory,
+  EventStore,
+  InternalEventTypes,
+  ReadModel,
+  IReadModelState
+} from '../../transmute-framework'
 
 const Storage = require('node-storage')
 const db = new Storage('./read_model_storage')

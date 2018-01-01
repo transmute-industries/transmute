@@ -1,15 +1,16 @@
 import { W3 } from 'soltsice'
-import Relic from '../transmute-framework'
-
-import { Factory } from '../Factory'
-import { Store } from '../Store'
-import { EventStoreAdapter } from '../Store/EventStoreAdapter'
+import {
+  Relic,
+  TransmuteContracts,
+  EventStoreAdapter,
+  Factory,
+  Store,
+  EventStore,
+  EventStoreFactory
+} from '../transmute-framework'
 
 const bs58 = require('bs58')
 const util = require('ethereumjs-util')
-
-import { EventStoreFactory } from '../TransmuteContracts/EventStoreFactory'
-import { EventStore } from '../TransmuteContracts/EventStore'
 
 let ipfsAdapter = require('../../../transmute-adapter-ipfs')
 let nodeStorageAdapter = require('../../../transmute-adapter-node-storage')

@@ -5,4 +5,6 @@ export { Patch } from './Patch'
 
 export { ReadModel } from './ReadModel'
 
+export * from './ReadModelTypes'
+
 export { ReadModelTypes }
