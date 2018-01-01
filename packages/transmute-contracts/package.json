@@ -8,7 +8,7 @@
     "build": "npm run test:coverage && npm run migrate",
     "test:coverage": "./node_modules/.bin/solidity-coverage",
     "test:coverage:report": "codecov",
-    "contracts:migrate": "truffle migrate --reset"
+    "contracts:migrate": "npm run cleanup && truffle migrate --reset"
   },
   "license": "MIT",
   "devDependencies": {
