@@ -7,3 +7,6 @@ export const ES_CREATED = 'ES_CREATED'
 // STORE
 export const STORE = ['NEW_OWNER', 'RECYCLED_TO', 'WL_SET']
 export const WL_SET = 'WL_SET'
+
+// ALL
+export const ALL = [...STORE, ...FACTORY]
