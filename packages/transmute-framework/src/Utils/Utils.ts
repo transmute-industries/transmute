@@ -2,7 +2,7 @@ const bs58 = require('bs58')
 const web3Utils = require('web3-utils')
 const util = require('ethereumjs-util')
 
-import { IFSA, IRawEsEvent } from '../Store/EventTypes'
+import { IFSA, IRawEsEvent } from '../Store/Events/EventTypes'
 
 export namespace Utils {
   export const isVmException = (e: any) => {

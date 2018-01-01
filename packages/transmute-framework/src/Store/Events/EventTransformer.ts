@@ -1,6 +1,6 @@
-import { IFSA, IRawEsEvent } from '../Store/EventTypes'
+import { IFSA, IRawEsEvent } from './EventTypes'
 
-import { Utils } from './Utils'
+import { Utils } from '../../Utils'
 
 import * as InternalEventTypes from './InternalEventTypes'
 

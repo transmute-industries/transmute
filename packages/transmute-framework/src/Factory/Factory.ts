@@ -10,7 +10,7 @@ import { IReadModelState, IReadModelAdapter, IReadModel } from '../Store/ReadMod
 
 import Reducer from './Reducer'
 
-import * as EventTransformer from '../Utils/EventTransformer'
+import * as EventTransformer from '../Store/Events/EventTransformer'
 import { Store } from '../Store'
 
 export namespace Factory {

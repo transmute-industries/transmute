@@ -1,4 +1,4 @@
-import * as InternalEventTypes from '../../Utils/InternalEventTypes'
+import * as InternalEventTypes from '../../Store/Events/InternalEventTypes'
 
 export const initialState = {
   readModelStoreKey: '', // readModelType:contractAddress

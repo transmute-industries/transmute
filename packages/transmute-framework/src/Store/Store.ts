@@ -7,9 +7,9 @@ import { W3 } from 'soltsice'
 import { Utils } from '../Utils'
 import { EventStoreAdapter } from './EventStoreAdapter'
 
-import { IFSA } from './EventTypes'
+import { IFSA } from './Events/EventTypes'
 
-import * as EventTransformer from '../Utils/EventTransformer'
+import * as EventTransformer from '../Store/Events/EventTransformer'
 
 export const GAS_COSTS = {
   WRITE_EVENT: 4000000
