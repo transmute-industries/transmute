@@ -17,7 +17,9 @@ let leveldb = nodeStorageAdapter.getStorage()
 let ipfs = ipfsAdapter.getStorage()
 
 const Storage = require('node-storage')
+
 const db = new Storage('./read_model_storage')
+
 const nodeStorageReadModelAdapter: any = {
   getItem: (id: string) => {
     return JSON.parse(db.get(id))

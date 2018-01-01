@@ -39,6 +39,7 @@
     "contracts:migrate": "lerna run migrate --scope transmute-contracts",
     "contracts:generate": "lerna bootstrap && lerna run soltsice --scope transmute-framework",
     "contracts:replace": "npm run contracts:migrate && npm run contracts:generate",
+    "replace_and_test": "npm run contracts:replace && npm run test",
     "soltsice": "rm -rf ./src/TransmuteContracts && node ./node_modules/soltsice/dist/src/soltsice.js ./node_modules/transmute-contracts/build/contracts/ ./src/TransmuteContracts"
   },
   "lint-staged": {
@@ -71,14 +72,15 @@
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
-      "/test/"
+      "/test/",
+      "TransmuteContracts"
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 90,
-        "functions": 95,
-        "lines": 95,
-        "statements": 95
+        "statements": 90,
+        "branches": 80,
+        "lines": 90,
+        "functions": 85
       }
     },
     "collectCoverage": true,
