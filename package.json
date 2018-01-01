@@ -8,7 +8,7 @@
     "migrate": "lerna run migrate --scope transmute-contracts",
     "soltsice": "lerna run soltsice --scope transmute-framework",
     "rebuild": "npm run cleanup && npm run migrate && npm run soltsice",
-    "test": "lerna run test --stream --scope transmute-framework",
+    "test": "lerna run test --stream --scope transmute-contracts --scope transmute-framework",
     "travis": "npm run rebuild && npm run test"
   }
 }
