@@ -1,6 +1,6 @@
-// import { UnsafeEventStore } from "../SolidityTypes/UnsafeEventStore";
-// import { RBACEventStore } from "../SolidityTypes/RBACEventStore";
-import { EventStore } from '../SolidityTypes/EventStore'
+// import { UnsafeEventStore } from "../TransmuteContracts/UnsafeEventStore";
+// import { RBACEventStore } from "../TransmuteContracts/RBACEventStore";
+import { EventStore } from '../TransmuteContracts/EventStore'
 
 import { W3 } from 'soltsice'
 

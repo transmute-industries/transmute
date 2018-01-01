@@ -22,7 +22,7 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "cleanup": "rm -rf ./src/types dist",
+    "cleanup": "rm -rf ./src/TransmuteContracts dist",
     "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist",
     "build": "tsc && tsc --module commonjs --outDir dist/lib && rollup -c rollup.config.ts && typedoc --out dist/docs --target es6 --theme minimal --mode file src",
@@ -39,7 +39,7 @@
     "contracts:migrate": "lerna run migrate --scope transmute-contracts",
     "contracts:generate": "lerna bootstrap && lerna run soltsice --scope transmute-relic",
     "contracts:replace": "npm run contracts:migrate && npm run contracts:generate",
-    "soltsice": "rm -rf ./src/SolidityTypes && node ./node_modules/soltsice/dist/src/soltsice.js ./node_modules/transmute-contracts/build/contracts/ ./src/SolidityTypes"
+    "soltsice": "rm -rf ./src/TransmuteContracts && node ./node_modules/soltsice/dist/src/soltsice.js ./node_modules/transmute-contracts/build/contracts/ ./src/TransmuteContracts"
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [

@@ -15,7 +15,7 @@ import {
 } from './EventStoreAdapterTypes'
 
 import * as EventTransformer from '../../Utils/EventTransformer'
-import { EventStore } from '../../SolidityTypes/index'
+import { EventStore } from '../../TransmuteContracts/index'
 
 const WRITE_EVENT_GAS_COST = 4000000
 
