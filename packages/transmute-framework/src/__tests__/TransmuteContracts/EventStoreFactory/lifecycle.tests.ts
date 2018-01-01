@@ -4,7 +4,7 @@ import { getRelic } from '../../../__mocks__/setup'
 import * as EventTransformer from '../../../Store/Events/EventTransformer'
 import { IFSA } from '../../../Store/Events/EventTypes'
 
-import Relic from '../../../transmute-framework'
+import { Relic, Utils } from '../../../transmute-framework'
 
 import * as InternalEventTypes from '../../../Store/Events/InternalEventTypes'
 
