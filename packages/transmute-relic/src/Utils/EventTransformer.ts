@@ -2,6 +2,8 @@ import { IFSA, IRawEsEvent } from '../Store/EventTypes'
 
 import { Utils } from './Utils'
 
+import * as InternalEventTypes from './InternalEventTypes'
+
 export enum FSATypes {
   Native,
   SimpleKeyValue,
@@ -139,7 +141,8 @@ export const esEventToFSA = (esEvent: IRawEsEvent) => {
       id: esEvent.Id.toNumber(),
       created: esEvent.Created.toNumber(),
       txOrigin: esEvent.TxOrigin,
-      msgSender: esEvent.MsgSender
+      msgSender: esEvent.MsgSender,
+      isInternal: InternalEventTypes.ALL.indexOf(Utils.toAscii(esEvent.EventType)) !== -1
     }
   }
   return getFSAFromEsEventWithPartial(esEvent, partialFSA) as IFSA
