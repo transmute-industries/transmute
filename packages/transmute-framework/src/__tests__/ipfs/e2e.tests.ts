@@ -4,7 +4,7 @@ import { EventStoreFactory, EventStore } from '../../TransmuteContracts'
 
 import { Factory } from '../../Factory'
 import { Store } from '../../Store'
-import Relic from '../../transmute-framework'
+import { Relic } from '../../transmute-framework'
 
 import * as InternalEventTypes from '../../Store/Events/InternalEventTypes'
 
