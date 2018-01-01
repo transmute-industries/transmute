@@ -5,11 +5,14 @@
 import { W3 } from 'soltsice'
 import { BigNumber } from 'bignumber.js'
 
-export { Factory } from './Factory'
-export { Store } from './Store'
-
-import { transmuteWeb3, ITransmuteWeb3Config } from './web3'
-
 import Relic from './relic'
+
+export * from './Factory'
+export * from './Store'
+
+import * as Utils from './Utils'
+import * as TransmuteContracts from './TransmuteContracts'
+
+export { Relic, Utils, TransmuteContracts }
 
 export default Relic
