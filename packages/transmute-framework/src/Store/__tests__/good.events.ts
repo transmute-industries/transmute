@@ -6,7 +6,7 @@ import Relic from '../../transmute-framework'
 import { W3 } from 'soltsice'
 const Storage = require('node-storage')
 import { EventStoreAdapter } from '../../Store/EventStoreAdapter'
-import * as EventTransformer from '../../Utils/EventTransformer'
+import * as EventTransformer from '../../Store/Events/EventTransformer'
 
 const WRITE_EVENT_GAS_COST = 4000000
 

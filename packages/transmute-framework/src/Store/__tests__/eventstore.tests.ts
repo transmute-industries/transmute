@@ -11,7 +11,7 @@ import MarshalledEvents from '../../__mocks__/MarshalledEvents'
 
 import goodEvents from '../__mocks__/good.events'
 
-import * as EventTransformer from '../../Utils/EventTransformer'
+import * as EventTransformer from '../../Store/Events/EventTransformer'
 
 const WRITE_EVENT_GAS_COST = 4000000
 /**

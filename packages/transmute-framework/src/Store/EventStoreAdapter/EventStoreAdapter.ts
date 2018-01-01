@@ -4,7 +4,7 @@ const web3Utils = require('web3-utils')
 
 import { Utils } from '../../Utils'
 
-import { IFSA } from '../EventTypes'
+import { IFSA } from '../Events/EventTypes'
 
 import {
   ITransmuteStoreAdapter,
@@ -14,7 +14,7 @@ import {
   IDirtyPayload
 } from './EventStoreAdapterTypes'
 
-import * as EventTransformer from '../../Utils/EventTransformer'
+import * as EventTransformer from '../../Store/Events/EventTransformer'
 import { EventStore } from '../../TransmuteContracts/index'
 
 const WRITE_EVENT_GAS_COST = 4000000

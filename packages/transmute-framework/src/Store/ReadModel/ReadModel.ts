@@ -1,5 +1,5 @@
 import { W3 } from 'soltsice'
-import { IFSA } from '../EventTypes'
+import { IFSA } from '../Events/EventTypes'
 
 import { Store } from '../Store'
 import { IReadModel, IReadModelAdapter, IReadModelState } from './ReadModelTypes'

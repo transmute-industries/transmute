@@ -6,7 +6,7 @@ import { Factory } from '../../Factory'
 import { Store } from '../../Store'
 import Relic from '../../transmute-framework'
 
-import * as InternalEventTypes from '../../Utils/InternalEventTypes'
+import * as InternalEventTypes from '../../Store/Events/InternalEventTypes'
 
 import { ReadModel } from '../../Store/ReadModel'
 import { IReadModelState } from '../../Store/ReadModel/ReadModelTypes'
