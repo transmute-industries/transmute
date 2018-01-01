@@ -41,12 +41,7 @@ export namespace Factory {
       W3.TC.txParamsDefaultDeploy(fromAddress)
     )
     const events = await adapter.extractEventsFromLogs(receipt.logs)
-    let eventStoreEvents = EventTransformer.filterEventsByMeta(events, 'msgSender', factory.address)
     let factoryEvents = EventTransformer.filterEventsByMeta(events, 'msgSender', fromAddress)
-    // console.log('creation events: ', {
-    //   eventStoreEvents,
-    //   factoryEvents
-    // })
     return EventStore.At(factoryEvents[0].payload.value)
   }
 
