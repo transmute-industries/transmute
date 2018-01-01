@@ -2,7 +2,7 @@ import { getSetupAsync } from '../../__mocks__/setup'
 import { EventStore } from '../../TransmuteContracts/EventStore'
 import { Store } from '../Store'
 
-import Relic from '../../transmute-framework'
+import { Relic } from '../../transmute-framework'
 import { W3 } from 'soltsice'
 const Storage = require('node-storage')
 import { EventStoreAdapter } from '../../Store/EventStoreAdapter'
