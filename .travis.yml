@@ -26,7 +26,5 @@ install:
   - lerna bootstrap
   
 script:
-  - lerna run truffle:migrate
-  - lerna run build
-  # - lerna run truffle:test
-  - lerna run test:coverage:report
+  -
+

@@ -4,15 +4,9 @@ A TypeScript Library for Transmute Contracts
 
 #### TODO
 
-Implement convenience interfaces for Store + Factory.
-
-use InternalTypes in reducer.
-
 refactor modules / Utiles/ Types locations...
 
 add encryption support to adapters...
-
-fix or remove permissions stuff...
 
 implement fullstack demo... again.
 
