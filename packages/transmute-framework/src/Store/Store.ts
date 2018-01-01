@@ -1,13 +1,11 @@
-import { EventStore } from '../TransmuteContracts/EventStore'
-
-import { W3 } from 'soltsice'
-
-import { Utils } from '../Utils'
-import { EventStoreAdapter } from './EventStoreAdapter'
-
-import { IFSA } from './Events/EventTypes'
-
-import * as EventTransformer from '../Store/Events/EventTransformer'
+import {
+  W3,
+  EventStore,
+  Utils,
+  EventStoreAdapter,
+  IFSA,
+  EventTransformer
+} from '../transmute-framework'
 
 export const GAS_COSTS = {
   WRITE_EVENT: 4000000

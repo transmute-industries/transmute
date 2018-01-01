@@ -1,4 +1,4 @@
-import { W3 } from 'soltsice'
+import { W3 } from './transmute-framework'
 import { transmuteWeb3, ITransmuteWeb3Config } from './web3'
 
 export default class Relic {

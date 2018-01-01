@@ -1,7 +1,6 @@
-import { W3 } from 'soltsice'
-
 import { getRelic } from '../../../__mocks__/setup'
 import {
+  W3,
   Relic,
   Utils,
   IFSA,

@@ -1,5 +1,6 @@
-import { W3 } from 'soltsice'
+import {} from 'soltsice'
 import {
+  W3,
   Relic,
   TransmuteContracts,
   EventStoreAdapter,

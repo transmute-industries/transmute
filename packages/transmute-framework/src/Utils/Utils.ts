@@ -2,14 +2,6 @@ const bs58 = require('bs58')
 const web3Utils = require('web3-utils')
 const util = require('ethereumjs-util')
 
-export const isVmException = (e: any) => {
-  return e.toString().indexOf('VM Exception while') !== -1
-}
-
-export const isTypeError = (e: any) => {
-  return e.toString().indexOf('TypeError') !== -1
-}
-
 export const toAscii = (value: string) => {
   return util.toAscii(value).replace(/\u0000/g, '')
 }
