@@ -1,6 +1,6 @@
 import { IFSA, IEsEvent } from './EventTypes'
 
-import { Utils } from '../../Utils'
+import { Utils } from '../../transmute-framework'
 
 import * as InternalEventTypes from './InternalEventTypes'
 

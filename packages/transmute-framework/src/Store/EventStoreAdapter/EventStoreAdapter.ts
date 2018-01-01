@@ -2,7 +2,7 @@ import { W3 } from 'soltsice'
 
 const web3Utils = require('web3-utils')
 
-import { Utils } from '../../Utils'
+import { Utils } from '../../transmute-framework'
 
 import { IFSA } from '../Events/EventTypes'
 
