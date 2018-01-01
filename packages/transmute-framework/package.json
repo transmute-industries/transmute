@@ -36,11 +36,7 @@
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
     "precommit": "lint-staged",
-    "contracts:migrate": "lerna run migrate --scope transmute-contracts",
-    "contracts:generate": "lerna bootstrap && lerna run soltsice --scope transmute-framework",
-    "contracts:replace": "npm run contracts:migrate && npm run contracts:generate",
-    "replace_and_test": "npm run contracts:replace && npm run test",
-    "soltsice": "rm -rf ./src/TransmuteContracts && node ./node_modules/soltsice/dist/src/soltsice.js ./node_modules/transmute-contracts/build/contracts/ ./src/TransmuteContracts"
+    "contracts:generate": "rm -rf ./src/TransmuteContracts && node ./node_modules/soltsice/dist/src/soltsice.js ./node_modules/transmute-contracts/build/contracts/ ./src/TransmuteContracts"
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [

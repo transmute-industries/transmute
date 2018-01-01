@@ -6,9 +6,9 @@
   "scripts": {
     "cleanup": "rm -rf ./build",
     "build": "npm run test:coverage && npm run migrate",
-    "test": "./node_modules/.bin/solidity-coverage",
+    "test:coverage": "./node_modules/.bin/solidity-coverage",
     "test:coverage:report": "codecov",
-    "migrate": "rm -rf  ./build && truffle migrate --reset"
+    "contracts:migrate": "truffle migrate --reset"
   },
   "license": "MIT",
   "devDependencies": {
