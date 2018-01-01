@@ -41,8 +41,8 @@ describe('Store', () => {
     })
   })
 
-  it('look at all events...', async () => {
-    let events = await Store.readFSAs(store, eventStoreAdapter, relic.web3, accounts[0], 0)
-    console.log(JSON.stringify(events, null, 2))
-  })
+  // it('look at all events...', async () => {
+  //   let events = await Store.readFSAs(store, eventStoreAdapter, relic.web3, accounts[0], 0)
+  //   console.log(JSON.stringify(events, null, 2))
+  // })
 })
