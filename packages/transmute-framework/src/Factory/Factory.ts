@@ -1,17 +1,17 @@
-import { W3 } from 'soltsice'
-
-import { EventStoreFactory } from '../TransmuteContracts/EventStoreFactory'
-import { EventStore } from '../TransmuteContracts/EventStore'
-
-import { EventStoreAdapter } from '../Store/EventStoreAdapter'
-
-import { ReadModel } from '../Store/ReadModel'
-import { IReadModelState, IReadModelAdapter, IReadModel } from '../Store/ReadModel/ReadModelTypes'
+import {
+  W3,
+  EventTransformer,
+  Store,
+  EventStoreFactory,
+  EventStore,
+  EventStoreAdapter,
+  ReadModel,
+  IReadModelState,
+  IReadModelAdapter,
+  IReadModel
+} from '../transmute-framework'
 
 import Reducer from './Reducer'
-
-import * as EventTransformer from '../Store/Events/EventTransformer'
-import { Store } from '../Store'
 
 export namespace Factory {
   /**

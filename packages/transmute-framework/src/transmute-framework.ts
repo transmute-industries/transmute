@@ -3,6 +3,7 @@
 // ...
 
 import { W3 } from 'soltsice'
+
 import { BigNumber } from 'bignumber.js'
 
 import Relic from './relic'

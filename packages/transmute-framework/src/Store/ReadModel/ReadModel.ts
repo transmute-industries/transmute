@@ -1,11 +1,13 @@
-import { W3 } from 'soltsice'
-import { IFSA } from '../Events/EventTypes'
-
-import { Store } from '../Store'
-import { IReadModel, IReadModelAdapter, IReadModelState } from './ReadModelTypes'
-
-import { EventStoreAdapter } from '../EventStoreAdapter'
-import { EventStore } from '../../TransmuteContracts/EventStore'
+import {
+  W3,
+  IFSA,
+  Store,
+  IReadModel,
+  IReadModelAdapter,
+  IReadModelState,
+  EventStoreAdapter,
+  EventStore
+} from '../../transmute-framework'
 
 const STATE_REQUIRED_PROPS = ['contractAddress', 'readModelType', 'readModelStoreKey']
 

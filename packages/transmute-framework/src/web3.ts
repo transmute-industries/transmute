@@ -1,4 +1,5 @@
-import { W3 } from 'soltsice'
+import { W3 } from './transmute-framework'
+
 import Web3 from 'web3'
 
 declare var web3: any
@@ -16,7 +17,7 @@ export const getStable = (config: ITransmuteWeb3Config) => {
   // W3.Default = w3
   // return w3
 
-  return new W3();
+  return new W3()
 }
 
 // "web3": "^1.0.0-beta.27"

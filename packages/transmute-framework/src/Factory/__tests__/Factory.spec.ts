@@ -1,9 +1,8 @@
-import { W3 } from 'soltsice'
 const Storage = require('node-storage')
 
 import { getSetupAsync } from '../../__mocks__/setup'
 
-import { Relic, EventStoreFactory, Factory, EventStoreAdapter } from '../../transmute-framework'
+import { W3, Relic, EventStoreFactory, Factory, EventStoreAdapter } from '../../transmute-framework'
 
 /**
  * Factory test

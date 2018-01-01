@@ -1,8 +1,7 @@
-import { W3 } from 'soltsice'
-
 import { getRelic } from '../../../__mocks__/setup'
 
 import {
+  W3,
   Relic,
   Utils,
   EventTransformer,
@@ -30,7 +29,7 @@ describe('EventStore', () => {
   describe('eventStore lifecycle', async () => {
     it('the eventStore owner can recycle the balance to themself', async () => {
       // create a new factory
-      let fundingAmountWei = 13370000000000000000
+      let fundingAmountWei = 13370000000000000
       factory = await EventStoreFactory.New(W3.TC.txParamsDefaultDeploy(accounts[0]), {
         _multisig: accounts[0]
       })
@@ -70,7 +69,7 @@ describe('EventStore', () => {
 
     it('the eventStore owner can recycleAndSend the balance to a recipient', async () => {
       // create a new factory
-      let fundingAmountWei = 13370000000000000000
+      let fundingAmountWei = 13370000000000000
       factory = await EventStoreFactory.New(W3.TC.txParamsDefaultDeploy(accounts[0]), {
         _multisig: accounts[0]
       })

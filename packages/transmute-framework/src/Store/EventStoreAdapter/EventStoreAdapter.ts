@@ -1,21 +1,15 @@
-import { W3 } from 'soltsice'
-
-const web3Utils = require('web3-utils')
-
-import { Utils } from '../../transmute-framework'
-
-import { IFSA } from '../Events/EventTypes'
-
 import {
+  W3,
+  Utils,
+  IFSA,
   ITransmuteStoreAdapter,
   ITransmuteStoreAdapterMap,
   TransmuteSolidityEncodingTypes,
   IWritableEventParams,
-  IDirtyPayload
-} from './EventStoreAdapterTypes'
-
-import * as EventTransformer from '../../Store/Events/EventTransformer'
-import { EventStore } from '../../TransmuteContracts/index'
+  IDirtyPayload,
+  EventTransformer,
+  EventStore
+} from '../../transmute-framework'
 
 const WRITE_EVENT_GAS_COST = 4000000
 
