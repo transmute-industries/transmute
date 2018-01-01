@@ -2,6 +2,9 @@ const TestRPC = require("ethereumjs-testrpc");
 const Web3 = require("web3");
 const shell = require("shelljs");
 
+
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 10 * 1000;
+
 module.exports = async () => {
 
   // let cmd;
