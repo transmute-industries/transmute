@@ -9,6 +9,8 @@ import { EventStoreAdapter } from '../../Store/EventStoreAdapter'
 
 import MarshalledEvents from '../../__mocks__/MarshalledEvents'
 
+import goodEvents from '../__mocks__/good.events'
+
 import * as EventTransformer from '../../Utils/EventTransformer'
 
 const WRITE_EVENT_GAS_COST = 4000000
@@ -82,6 +84,26 @@ describe('Store', () => {
     )
     expect(writtenFSA.payload).toEqual(goodFSA.payload)
   })
+
+  it('read and write FSAs', async () => {
+    let setup = await getSetupAsync()
+    let writtenEvents = await Store.writeFSAs(
+      setup.store,
+      setup.eventStoreAdapter,
+      setup.relic.web3,
+      accounts[0],
+      goodEvents
+    )
+    expect(writtenEvents.length).toBe(6)
+    // 3 events created by the factory...
+    let readAllEvents = await Store.readFSAs(
+      setup.store,
+      setup.eventStoreAdapter,
+      setup.relic.web3,
+      accounts[0]
+    )
+    expect(readAllEvents.length).toBe(9)
+  })
 })
 
 // it("sanity", async () => {
@@ -102,45 +124,4 @@ describe('Store', () => {
 //     W3.TC.txParamsDefaultDeploy(accounts[0], WRITE_EVENT_GAS_COST)
 //   );
 //   console.log(receipt.logs)
-// });
-
-// import { Store } from "../Store";
-// import { getSetupAsync } from "../../__mocks__/setup";
-
-// /**
-//  * Store good events
-//  */
-// describe("Store can read and write events", () => {
-//   let setup: any;
-
-//   beforeAll(async () => {
-//     setup = await getSetupAsync();
-//   });
-
-//   it("writeFSAs", async () => {
-//     let { store, adapter, relic, accounts } = setup;
-//     let writtenEvents = await Store.writeFSAs(store, adapter, relic.web3, accounts[0], allEvents);
-//     expect(writtenEvents.length).toBe(6);
-//   });
-
-//   it("readFSAs", async () => {
-//     let { store, adapter, relic, accounts } = setup;
-//     let readAllEvents = await Store.readFSAs(store, adapter, relic.web3, accounts[0]);
-//     expect(readAllEvents.length).toBe(6);
-//   });
-// });
-
-// import { Store } from "../Store";
-// import { getSetupAsync } from "../../__mocks__/setup";
-
-// /**
-//  * Store throws on bad events
-//  */
-// describe("Store throws on bad events", () => {
-//   let setup: any;
-
-//   beforeAll(async () => {
-//     setup = await getSetupAsync();
-//   });
-
 // });
