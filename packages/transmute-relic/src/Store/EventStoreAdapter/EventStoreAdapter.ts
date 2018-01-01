@@ -27,10 +27,11 @@ export class EventStoreAdapter {
       if (fsa.payload !== undefined) {
         return fsa
       }
+
       let mutatingEvent = {
-        Value: args.Value,
         Key: Utils.toAscii(args.Key),
         KeyType: Utils.toAscii(args.KeyType),
+        Value: args.Value,
         ValueType: Utils.toAscii(args.ValueType)
       }
       // console.log(mutatingEvent.Value);
@@ -86,38 +87,55 @@ export class EventStoreAdapter {
     }
   }
 
+  getEsEventParamsFromFSA = async (event: IFSA) => {
+    let esEventParams: any
+    switch (EventTransformer.getFSAType(event)) {
+      case EventTransformer.FSATypes.Adapter:
+        if (event.meta.adapter === undefined) {
+          throw new Error(
+            'fsa.meta.adapter is not defined. be sure to set it when fsa.payload is an object (isAdapterEvent).'
+          )
+        }
+        // console.log("event: ", event);
+        let adaptedEvent = await this.convertFSAPayload(event)
+        // console.log("adaptedEvent: ", adaptedEvent);
+        esEventParams = {
+          keyType: 'S',
+          keyValue: this.mapper[adaptedEvent.meta.adapter].keyName,
+          valueType: adaptedEvent.meta.adapter,
+          valueValue: adaptedEvent.payload.value
+        }
+        break
+      case EventTransformer.FSATypes.SimpleKeyValue:
+        esEventParams = {
+          keyType: 'S',
+          keyValue: event.payload.key,
+          valueType: 'S',
+          valueValue: event.payload.value
+        }
+        break
+      case EventTransformer.FSATypes.Native:
+        esEventParams = {
+          keyType: 'S',
+          keyValue: event.payload.key,
+          valueType: EventTransformer.payloadKeyToKeyType[event.payload.key],
+          valueValue: event.payload.value
+        }
+        break
+    }
+    return esEventParams
+  }
+
   writeFSA = async (store: EventStore, fromAddress: string, event: IFSA): Promise<IFSA> => {
     if (event.type.length > 32) {
       throw new Error(
         'fsa.type (S) is more than 32 bytes. value length = ' + event.type.length + ' chars'
       )
     }
-    let esEventParams: any
-    if (EventTransformer.isAdapterEvent(event)) {
-      if (event.meta.adapter === undefined) {
-        throw new Error(
-          'fsa.meta.adapter is not defined. be sure to set it when fsa.payload is an object (isAdapterEvent).'
-        )
-      }
-      // console.log("event: ", event);
-      let adaptedEvent = await this.convertFSAPayload(event)
-      // console.log("adaptedEvent: ", adaptedEvent);
-      esEventParams = {
-        keyType: 'S',
-        keyValue: this.mapper[adaptedEvent.meta.adapter].keyName,
-        valueType: adaptedEvent.meta.adapter,
-        valueValue: adaptedEvent.payload.value
-      }
-      // console.log("esEventParams: ", esEventParams);
-    } else {
-      esEventParams = {
-        keyType: 'S',
-        keyValue: event.payload.key,
-        valueType: EventTransformer.payloadKeyToKeyType[event.payload.key],
-        valueValue: event.payload.value
-      }
-    }
 
+    let esEventParams = await this.getEsEventParamsFromFSA(event)
+
+    // console.log("hmm: ", esEventParams);
     let marshalledEvent = await this.marshal(
       event.type,
       esEventParams.keyType,
@@ -137,6 +155,8 @@ export class EventStoreAdapter {
 
     // console.log('receipt', receipt)
     let eventsFromLogs: IFSA[] = await this.extractEventsFromLogs(receipt.logs)
+
+    // console.log(eventsFromLogs)
     if (receipt.logs.length > 1) {
       throw new Error('more than 1 event in write event log...')
     }

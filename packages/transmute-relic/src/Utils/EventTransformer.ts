@@ -2,12 +2,49 @@ import { IFSA, IRawEsEvent } from '../Store/EventTypes'
 
 import { Utils } from './Utils'
 
+export enum FSATypes {
+  Native,
+  SimpleKeyValue,
+  Adapter
+}
+
+export const getFSAType = (fsa: IFSA) => {
+  if (isNativeEvent(fsa)) {
+    return FSATypes.Native
+  }
+
+  if (isSimpleStringKeyValue(fsa)) {
+    return FSATypes.SimpleKeyValue
+  }
+
+  if (isAdapterEvent(fsa)) {
+    return FSATypes.Adapter
+  }
+
+  throw new Error('Unknown FSAType.')
+}
+
 export const payloadKeyToKeyType: {
   [key: string]: string
 } = {
   address: 'A',
   bytes32: 'B',
   uint: 'U' // not good.
+}
+
+export const isNativeEvent = (fsa: IFSA) => {
+  return payloadKeyToKeyType[fsa.payload.key] !== undefined && fsa.payload.value !== undefined
+}
+
+export const isSimpleStringKeyValue = (fsa: IFSA) => {
+  let keys = Object.keys(fsa.payload)
+  return (
+    keys.length === 2 &&
+    fsa.payload.key !== undefined &&
+    fsa.payload.value !== undefined &&
+    fsa.payload.key.length < 32 &&
+    fsa.payload.value.length < 32
+  )
 }
 
 export const isAdapterEvent = (fsa: IFSA) => {
