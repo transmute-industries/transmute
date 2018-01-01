@@ -1,6 +1,5 @@
 import * as InternalEventTypes from './InternalEventTypes'
+import * as EventTransformer from './EventTransformer'
+import * as EventTypes from './EventTypes'
 
-export * from './EventTransformer'
-export * from './EventTypes'
-
-export { InternalEventTypes }
+export { InternalEventTypes, EventTransformer, EventTypes }
