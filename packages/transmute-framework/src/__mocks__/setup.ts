@@ -29,6 +29,9 @@ const nodeStorageReadModelAdapter: any = {
   }
 }
 
+declare var jasmine: any
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 10 * 1000
+
 const eventStoreAdapter = new EventStoreAdapter({
   I: {
     keyName: 'multihash',
