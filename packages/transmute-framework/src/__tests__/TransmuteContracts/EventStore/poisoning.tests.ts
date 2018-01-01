@@ -1,15 +1,19 @@
 import { W3 } from 'soltsice'
-import { EventStoreFactory, EventStore } from '../../../TransmuteContracts'
+
 import { getRelic } from '../../../__mocks__/setup'
-import { Relic, Utils } from '../../../transmute-framework'
-import * as EventTransformer from '../../../Store/Events/EventTransformer'
-import { IFSA } from '../../../Store/Events/EventTypes'
+import {
+  Relic,
+  Utils,
+  IFSA,
+  EventTransformer,
+  InternalEventTypes,
+  EventStoreFactory,
+  EventStore
+} from '../../../transmute-framework'
 
 import MarshalledEvents from '../../../__mocks__/MarshalledEvents'
 
 const WRITE_EVENT_GAS_COST = 4000000
-
-import * as InternalEventTypes from '../../../Store/Events/InternalEventTypes'
 
 /**
  * EventStore spec

@@ -1,11 +1,16 @@
 import { W3 } from 'soltsice'
-import { EventStoreFactory, EventStore } from '../../../TransmuteContracts'
-import { getRelic } from '../../../__mocks__/setup'
-import * as EventTransformer from '../../../Store/Events/EventTransformer'
-import { IFSA } from '../../../Store/Events/EventTypes'
-import { Relic, Utils } from '../../../transmute-framework'
 
-import * as InternalEventTypes from '../../../Store/Events/InternalEventTypes'
+import { getRelic } from '../../../__mocks__/setup'
+
+import {
+  Relic,
+  Utils,
+  EventStoreFactory,
+  EventStore,
+  InternalEventTypes,
+  EventTransformer,
+  IFSA
+} from '../../../transmute-framework'
 
 /**
  * EventStore spec
