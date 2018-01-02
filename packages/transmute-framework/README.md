@@ -1,10 +1,10 @@
-# Transmute Relic
+# Transmute Framework
 
-A TypeScript Library for Transmute Contracts
+For building event sourced ethereum apps and services.
+
+A Redux-like api for ethereum smart contracts.
 
 #### TODO
-
-refactor modules / Utiles/ Types locations...
 
 add encryption support to adapters...
 
@@ -12,12 +12,11 @@ implement fullstack demo... again.
 
 ### Commands:
 
-`yarn contracts:replace && yarn test ./src/__tests__/TransmuteContracts/`
+`yarn contracts:regenerate && yarn test`
 
-Useful when testing contacts. This will delete and migrate contracts via truffle and save the ABIs. 
-The ABIs are then used to generate typescript classes, which are used in tests...
+Useful when testing contacts. 
 
 
-### Built With 
-- https://github.com/transmute-industries/transmute-framework
-  
+### Special Thanks 
+- https://github.com/dbrainio/Soltsice
+- https://github.com/bitjson/typescript-starter
