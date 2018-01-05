@@ -1,4 +1,4 @@
-import { IFSA } from '../../EventTypes'
+
 import * as Constants from './constants'
 
 export default [
