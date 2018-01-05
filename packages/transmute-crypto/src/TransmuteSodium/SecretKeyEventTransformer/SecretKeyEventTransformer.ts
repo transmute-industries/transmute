@@ -45,10 +45,7 @@ export class SecretKeyEventTransformer {
         return encryptedEvent
       })
     )
-    return {
-      header: sodium.to_hex(header),
-      encryptedEvents
-    }
+    return encryptedEvents
   }
 
   decryptEvents = async (events: IFSA[]) => {
@@ -89,8 +86,6 @@ export class SecretKeyEventTransformer {
       })
     )
 
-    return {
-      decryptEvents: recoveredEvents
-    }
+    return recoveredEvents
   }
 }

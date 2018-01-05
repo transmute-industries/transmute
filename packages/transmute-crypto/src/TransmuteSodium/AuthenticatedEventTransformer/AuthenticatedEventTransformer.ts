@@ -2,9 +2,7 @@ const _sodium = require('libsodium-wrappers')
 
 import { getSodium, IFSA, IEncryptedFSA } from '../../transmute-crypto'
 
-import Web3 from 'web3'
-
-const web3: any = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
+import { hexToAscii } from '../utils'
 
 export class AuthenticatedEventTransformer {
   constructor(
@@ -48,7 +46,7 @@ export class AuthenticatedEventTransformer {
         this.senderPublicKey,
         this.recipientPrivateKey
       )
-      let data = web3.utils.toAscii('0x' + sodium.to_hex(decrypted))
+      let data = hexToAscii('0x' + sodium.to_hex(decrypted))
       return {
         ...event,
         payload: JSON.parse(data)

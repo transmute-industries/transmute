@@ -16,11 +16,11 @@ describe('SecretKeyEventTransformer', () => {
     let result1 = await esem.encryptEvents(plainTextEventStream0)
     let result2 = await esem.encryptEvents(plainTextEventStream1)
 
-    let allEncryptedEvents = [...result1.encryptedEvents, ...result2.encryptedEvents]
+    let allEncryptedEvents = [...result1, ...result2]
     let allPlainTextEvents = [...plainTextEventStream0, ...plainTextEventStream1]
 
     // console.log(JSON.stringify(allEncryptedEvents, null, 2));
-    let { decryptEvents } = await esem.decryptEvents(allEncryptedEvents)
+    let decryptEvents = await esem.decryptEvents(allEncryptedEvents)
     //  console.log(JSON.stringify(decryptEvents, null, 2));
     expect(decryptEvents).toEqual(allPlainTextEvents)
   })
