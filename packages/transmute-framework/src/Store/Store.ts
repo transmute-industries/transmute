@@ -92,7 +92,7 @@ export namespace Store {
     eventIndex: number = 0
   ): Promise<IFSA[]> => {
     let endIndex: number = await eventCount(store, web3, fromAddress)
-    let events = []
+    let events: IFSA[] = []
     for (let i: number = eventIndex; i < endIndex; i++) {
       events.push(await readFSA(store, eventStoreAdapter, web3, fromAddress, i))
     }
