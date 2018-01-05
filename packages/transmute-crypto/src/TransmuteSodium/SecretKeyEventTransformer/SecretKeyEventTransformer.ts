@@ -3,15 +3,15 @@ const _sodium = require('libsodium-wrappers')
 import { getSodium, IFSA, IEncryptedFSA } from '../../transmute-crypto'
 
 export class SecretKeyEventTransformer {
-  public secretKey: Uint8Array
-  public header: Uint8Array | undefined
+  private secretKey: Uint8Array
+  private header: Uint8Array | undefined
 
   constructor(secretKey: Uint8Array, header?: Uint8Array) {
     this.secretKey = secretKey
     this.header = header
   }
 
-  encryptEvents = async (events: IFSA[]) => {
+  encryptEvents = async (events: IFSA[]): Promise<IEncryptedFSA[]> => {
     const sodium = await getSodium()
 
     let res = sodium.crypto_secretstream_xchacha20poly1305_init_push(this.secretKey)

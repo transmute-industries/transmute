@@ -12,5 +12,6 @@ export const generateSecretKey = async () => {
 }
 
 export * from './SecretKeyEventTransformer'
-export * from './PublicKeyEventTransformer'
+export * from './AuthenticatedEventTransformer'
+export * from './UnauthenticatedEventTransformer'
 export * from './EventTypes'
