@@ -1,0 +1,42 @@
+{
+  "name": "transmute-cli",
+  "version": "0.1.41",
+  "description": "transmute framework cli",
+  "bin": {
+    "transmute": "cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://www.github.com/transmute-industries/transmute"
+  },
+  "keywords": [
+    "solidity",
+    "ethereum",
+    "smart",
+    "contracts",
+    "security",
+    "javascript",
+    "typescript",
+    "truffle",
+    "transmute"
+  ],
+  "contributors": [
+    "Eric Olszewski <eric@transmute.industries>",
+    "Orie Steele <orie@transmute.industries>"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=6.9"
+  },
+  "scripts": {
+    "transmute": "node cli.js"
+  },
+  "dependencies": {
+    "shelljs": "^0.7.8",
+    "transmute-framework": "^0.1.51",
+    "vorpal": "^1.12.0",
+    "vorpal-log": "^1.1.0",
+    "vorpal-tour": "^0.0.5"
+  },
+  "devDependencies": {}
+}
