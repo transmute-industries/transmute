@@ -2,16 +2,12 @@
   "name": "transmute-cli",
   "version": "0.1.41",
   "description": "transmute framework cli",
-  "main": "umd/index.js",
-  "module": "lib/index.js",
-  "es2015": "lib-esm/index.js",
-  "typings": "typings/index.d.ts",
   "bin": {
     "transmute": "cli.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://www.github.com/transmute-industries/transmute-cli"
+    "url": "https://www.github.com/transmute-industries/transmute"
   },
   "keywords": [
     "solidity",
@@ -33,131 +29,14 @@
     "node": ">=6.9"
   },
   "scripts": {
-    "transmute": "node cli.js",
-    "fuck": "yarn cleanup && yarn build && git add -A && git commit -m ':rocket:' --no-verify && npm version patch && npm publish && yarn global add transmute-cli@latest",
-    "publish-install-latest": "npm version patch && npm publish && yarn global add transmute-cli@latest",
-    "cleanup": "shx rm -rf umd lib lib-esm lib-fesm typings coverage docs",
-    "prebuild": "npm run cleanup && npm run verify",
-    "build": " tsc && tsc --target es2017 --outDir lib-esm && webpack && webpack --env.prod",
-    "build:fesm:min": "uglifyjs lib-fesm/index.js --compress --mangle --source-map --output lib-fesm/index.min.js",
-    "docs": "typedoc -p . --gaID UA-99768185-1  --theme minimal --target 'es6' --excludeNotExported --excludePrivate --ignoreCompilerErrors --exclude \"**/src/**/*.{spec,mock}.*\" --out docs src/ && /usr/bin/open -a '/Applications/Google Chrome.app' docs/index.html",
-    "docs:deploy": "firebase deploy --only hosting",
-    "docker:start": "docker-compose up",
-    "docker:build": "docker-compose up --build",
-    "test": "jest --forceExit",
-    "test:watch": "npm test -- --watch",
-    "test:coverage": "npm test -- --coverage",
-    "test:coverage:report": "codecov",
-    "verify": "npm run test:coverage",
-    "cz": "git-cz",
-    "prettier:ts": "prettier --single-quote --print-width 120 --trailing-comma es5 --no-semi --parser typescript",
-    "commitmsg": "validate-commit-msg",
-    "prerelease": "npm run build",
-    "release": "standard-version",
-    "release:npm": "npm publish",
-    "release:preflight": "irish-pub",
-    "release:preflight:package": "npm pack",
-    "size": "shx echo \"Gzipped Size:\" && cross-var strip-json-comments --no-whitespace $npm_package_main | gzip-size",
-    "smoke-rebuild": "yarn transmute setup --from ~/Code/secrets/.transmute/ && rm -rf ../smoke/dapp/ && yarn transmute init ../smoke/"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    },
-    "validate-commit-msg": {
-      "types": "conventional-commit-types",
-      "maxSubjectLength": 120
-    }
-  },
-  "lint-staged": {
-    "src/**/*.{ts,tsx}": [
-      "npm run prettier:ts -- --write",
-      "git add"
-    ]
-  },
-  "jest": {
-    "roots": [
-      "<rootDir>/src"
-    ],
-    "transform": {
-      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "json",
-      "node"
-    ],
-    "mapCoverage": true,
-    "coveragePathIgnorePatterns": [
-      "<rootDir>/node_modules/",
-      "<rootDir>/lib/",
-      "<rootDir>/src/migrate",
-      "<rootDir>/src/install",
-      "<rootDir>/src/firestore",
-      "<rootDir>/src/patch",
-      "<rootDir>/src/event-store",
-      "<rootDir>/src/ipfs",
-      "<rootDir>/lib-esm/",
-      "<rootDir>/umd/",
-      "<rootDir>/src/.*(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 70,
-        "functions": 70,
-        "lines": 70,
-        "statements": 70
-      }
-    }
+    "transmute": "node cli.js"
   },
   "dependencies": {
-    "@google-cloud/firestore": "^0.8.1",
-    "bluebird": "^3.5.1",
-    "codecov": "^3.0.0",
-    "dotenv": "^4.0.0",
-    "firebase": "^4.6.0",
-    "firebase-admin": "^5.4.1",
-    "firebase-functions": "^0.7.0",
-    "lodash": "^4.17.4",
-    "mustache": "^2.3.0",
-    "ncp": "^2.0.0",
-    "replace-in-file": "^3.0.0-beta.2",
-    "request-promise": "^4.2.2",
     "shelljs": "^0.7.8",
-    "transmute-framework": "0.1.49-firestore-test.7",
+    "transmute-framework": "^0.1.51",
     "vorpal": "^1.12.0",
     "vorpal-log": "^1.1.0",
     "vorpal-tour": "^0.0.5"
   },
-  "devDependencies": {
-    "@types/jest": "20.0.2",
-    "@types/node": "7.0.31",
-    "awesome-typescript-loader": "3.2.1",
-    "commitizen": "2.9.6",
-    "cross-var": "1.0.3",
-    "cz-conventional-changelog": "2.0.0",
-    "gzip-size-cli": "2.0.0",
-    "husky": "0.14.1",
-    "irish-pub": "0.2.0",
-    "jest": "^21.2.1",
-    "lint-staged": "4.0.0",
-    "pm2": "2.7.1",
-    "prettier": "1.5.2",
-    "shx": "0.2.2",
-    "standard-version": "4.2.0",
-    "strip-json-comments-cli": "1.0.1",
-    "ts-jest": "20.0.6",
-    "tslint": "5.4.3",
-    "tslint-config-prettier": "1.1.0",
-    "tslint-config-standard": "6.0.1",
-    "tslint-react": "3.0.0",
-    "typedoc": "0.7.1",
-    "typescript": "2.4.1",
-    "validate-commit-msg": "2.12.2",
-    "webpack": "3.0.0",
-    "webpack-config-utils": "2.3.0"
-  }
+  "devDependencies": {}
 }
