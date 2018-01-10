@@ -16,7 +16,7 @@ const target = document.querySelector('#root')
 render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <div className='xmas'>
+      <div className='transmute-create-react-app'>
         <App />
       </div>
     </ConnectedRouter>

@@ -5,8 +5,7 @@ import {
 } from '../../../transmute-crypto'
 
 import { plainTextEventStream0, plainTextEventStream1 } from '../../__mocks__/events'
-import Web3 from 'web3'
-const web3: any = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
+
 
 /**
  * UnauthenticatedEventTransformer

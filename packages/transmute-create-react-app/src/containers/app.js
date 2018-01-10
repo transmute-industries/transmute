@@ -8,6 +8,10 @@ import Search from "../components/search";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
+import * as T from 'transmute-framework'
+
+console.log('T: ', T)
+
 const Progress = ({ search }) => {
   return search.fetching ? (
     <div
@@ -24,7 +28,7 @@ const App = search => (
     <header className="mdl-layout__header">
       <div className="mdl-layout__header-row">
         <Link to={pages.home.path} className="xm1 mdl-layout-title">
-          XMAS
+          Transmute
         </Link>
 
         <div className="mdl-layout-spacer" />
