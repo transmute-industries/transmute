@@ -1,9 +1,8 @@
-
 import resolve from "rollup-plugin-node-resolve";
 import json from "rollup-plugin-json";
 import commonjs from "rollup-plugin-commonjs";
 import sourceMaps from "rollup-plugin-sourcemaps";
-import replace from 'rollup-plugin-replace';
+import replace from "rollup-plugin-re";
 import camelCase from "lodash.camelcase";
 
 const pkg = require("./package.json");
@@ -26,7 +25,7 @@ export default {
     // 'lodash',
     "lib/web3.min",
     // "bignumber.js"
-    'soltsice'
+    "soltsice"
   ],
   globals: {
     "lib/web3.min": "Web3",
@@ -56,14 +55,20 @@ export default {
         // left-hand side can be an absolute path, a path
         // relative to the current directory, or the name
         // of a module in node_modules
-        'node_modules/soltsice/dist/src/index.js': [ 'W3', 'SoltsiceContract']
+        "node_modules/soltsice/dist/src/index.js": ["W3", "SoltsiceContract"]
       }
     }),
 
-    // replace({
-    //   // 'yolo1212': 'var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;'
-    // }),
-
+    replace({
+      patterns: [
+        {
+          test: /'..\/contracts\/.*\.json'/g,
+          replace: somePath => {
+            return somePath.replace('..', '.')
+          }
+        }
+      ]
+    }),
 
     // Resolve source maps to the original source
     sourceMaps()
