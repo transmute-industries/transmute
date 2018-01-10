@@ -3,6 +3,7 @@ import resolve from "rollup-plugin-node-resolve";
 import json from "rollup-plugin-json";
 import commonjs from "rollup-plugin-commonjs";
 import sourceMaps from "rollup-plugin-sourcemaps";
+import replace from 'rollup-plugin-replace';
 import camelCase from "lodash.camelcase";
 
 const pkg = require("./package.json");
@@ -23,8 +24,9 @@ export default {
     "websocket",
     "scrypt",
     // 'lodash',
-    "lib/web3.min"
+    "lib/web3.min",
     // "bignumber.js"
+    'soltsice'
   ],
   globals: {
     "lib/web3.min": "Web3",
@@ -57,6 +59,10 @@ export default {
         'node_modules/soltsice/dist/src/index.js': [ 'W3', 'SoltsiceContract']
       }
     }),
+
+    // replace({
+    //   // 'yolo1212': 'var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;'
+    // }),
 
 
     // Resolve source maps to the original source

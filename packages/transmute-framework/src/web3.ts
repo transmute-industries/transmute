@@ -1,6 +1,6 @@
 import { W3 } from './transmute-framework'
 
-import Web3 from 'web3'
+let Web3 = require('web3')
 
 declare var web3: any
 
