@@ -1,41 +1,35 @@
-import { createStore, applyMiddleware, compose } from 'redux'
-import { routerMiddleware } from 'react-router-redux'
-import thunk from 'redux-thunk'
-import createHistory from 'history/createBrowserHistory'
-import rootReducer from './reducer'
-import { updateSearch } from './search/actionCreators'
+import { createStore, applyMiddleware, compose } from "redux";
+import { routerMiddleware } from "react-router-redux";
+import thunk from "redux-thunk";
+import createHistory from "history/createBrowserHistory";
+import rootReducer from "./reducer";
+import { updateSearch } from "./search/actionCreators";
 
-export const history = createHistory()
+import { init } from "./transmute/actionCreators";
 
+export const history = createHistory();
 
-const initialState = {}
-const enhancers = []
-const middleware = [
-  thunk,
-  routerMiddleware(history)
-]
+const initialState = {};
+const enhancers = [];
+const middleware = [thunk, routerMiddleware(history)];
 
-if (process.env.NODE_ENV === 'development') {
-  const devToolsExtension = window.devToolsExtension
+if (process.env.NODE_ENV === "development") {
+  const devToolsExtension = window.devToolsExtension;
 
-  if (typeof devToolsExtension === 'function') {
-    enhancers.push(devToolsExtension())
+  if (typeof devToolsExtension === "function") {
+    enhancers.push(devToolsExtension());
   }
 }
 
-const composedEnhancers = compose(
-  applyMiddleware(...middleware),
-  ...enhancers
-)
+const composedEnhancers = compose(applyMiddleware(...middleware), ...enhancers);
 
-const store = createStore(
-  rootReducer,
-  initialState,
-  composedEnhancers
-)
+const store = createStore(rootReducer, initialState, composedEnhancers);
 
-setTimeout(()=>{
-  store.dispatch(updateSearch(''))
-}, 1 * 1000)
+setTimeout(async () => {
+  store.dispatch(updateSearch(""));
+  store.dispatch(await init());
+}, 1 * 1000);
 
-export default store
+
+
+export default store;

@@ -12,7 +12,7 @@ const handlers = {
     };
   },
   [Constants.SEARCH_RESULTS]: (state, action) => {
-    console.log('results: ', action.payload)
+    // console.log('results: ', action.payload)
     return {
       ...action.payload,
       // text: ''

@@ -8,12 +8,9 @@ import Search from "../components/search";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import * as T from 'transmute-framework'
-
-console.log('T: ', T)
 
 const Progress = ({ search }) => {
-  return search.fetching ? (
+  return (search.fetching && search.text) ? (
     <div
       style={{ width: "100%" }}
       className="mdl-progress mdl-js-progress mdl-progress__indeterminate "
@@ -30,7 +27,6 @@ const App = search => (
         <Link to={pages.home.path} className="xm1 mdl-layout-title">
           Transmute
         </Link>
-
         <div className="mdl-layout-spacer" />
         <Search />
       </div>
@@ -48,7 +44,6 @@ const App = search => (
     </div>
     <main className="mdl-layout__content">
       <Progress {...search} />
-
       <Route exact path={pages.home.path} component={pages.home.container} />
       <Route
         exact
@@ -60,6 +55,7 @@ const App = search => (
 );
 
 const mapStateToProps = state => {
+
   return {
     search: state.search
   };
