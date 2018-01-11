@@ -42,6 +42,7 @@ describe('Factory', () => {
       }
     }
 
+    // default factory has an eventstore in its readmodel...
     let readModel = await Factory.getReadModel(
       factory,
       eventStoreAdapter,
@@ -49,8 +50,24 @@ describe('Factory', () => {
       relic.web3,
       accounts[0]
     )
-
     let eventStoreContractAddresses = Object.keys(readModel.state.model)
     expect(eventStoreContractAddresses.length).toBe(1)
+
+    // adding a new event store should update the read model
+    let eventStore = Factory.createStore(
+      factory,
+      accounts,
+      eventStoreAdapter,
+      relic.web3,
+      accounts[0]
+    )
+
+    // console.log(eventStoreAdapter.eventMap)
+    let changes = await readModel.sync(factory as any, eventStoreAdapter, relic.web3, accounts[0])
+    // console.log(changes)
+
+    expect(Object.keys(readModel.state.model).length).toBe(2)
+
+    // console.log(readModel.state)
   })
 })

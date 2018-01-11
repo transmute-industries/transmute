@@ -21,7 +21,7 @@ export const handlers: any = {
       ...state,
       model: {
         ...state.model,
-        [action.payload.address]: {
+        [action.payload.value]: {
           created: action.meta.created,
           owner: action.meta.txOrigin
         }
