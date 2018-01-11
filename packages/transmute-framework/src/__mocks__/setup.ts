@@ -16,7 +16,7 @@ const util = require('ethereumjs-util')
 let ipfsAdapter = require('../../../transmute-adapter-ipfs')
 let nodeStorageAdapter = require('../../../transmute-adapter-node-storage')
 
-let leveldb = nodeStorageAdapter.getStorage()
+let nodeStorageDB = nodeStorageAdapter.getStorage()
 let ipfs = ipfsAdapter.getStorage()
 
 const Storage = require('node-storage')
@@ -50,7 +50,7 @@ const eventStoreAdapter = new EventStoreAdapter({
   N: {
     keyName: 'sha1',
     adapter: nodeStorageAdapter,
-    db: leveldb,
+    db: nodeStorageDB,
     readIDFromBytes32: (bytes32: string) => {
       return util.toAscii(bytes32).replace(/\u0000/g, '')
     },
