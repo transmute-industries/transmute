@@ -1,0 +1,34 @@
+{
+  "name": "transmute-dapp-hosting",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "history": "^4.7.2",
+    "js-sha1": "^0.6.0",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.9",
+    "react-scripts": "1.0.17",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "transmute-framework": "0.1.51",
+    "transmute-contracts": "0.1.3",
+    "transmute-adapter-node-storage": "1.0.0",
+    "transmute-adapter-local-storage": "1.0.0",
+    "transmute-adapter-ipfs": "1.0.0"
+  },
+  "scripts": {
+    "vorpal": "node cli.js",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "node-storage": "^0.0.7",
+    "shelljs": "^0.7.8",
+    "vorpal": "^1.12.0"
+  }
+}
