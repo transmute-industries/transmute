@@ -3,9 +3,10 @@
 const path = require("path");
 const fse = require("fs-extra");
 const fs = require("fs");
-const Storage = require("node-storage");
 const shell = require("shelljs");
 const vorpal = require("vorpal")();
+const T = require("transmute-framework");
+const transmute = require("./transmute");
 
 const writeFile = (path, data) => {
   return new Promise((resolve, reject) => {
@@ -17,12 +18,6 @@ const writeFile = (path, data) => {
     });
   });
 };
-
-
-// migrate to usng transmute.js ...
-let nodeStorageAdapter = require("transmute-adapter-node-storage");
-const db = new Storage("./read_model_storage");
-let nodeStorageDB = nodeStorageAdapter.getStorage();
 
 vorpal
   .command("version", "display version information")
@@ -44,31 +39,15 @@ vorpal
     console.log("creating..");
 
     if (!fs.existsSync("./src/EventStoreFactory.ReadModel.json")) {
-      let T = require("transmute-framework");
-      let relic = new T.Relic();
-      let accounts = await relic.getAccounts();
+      let {
+        relic,
+        accounts,
+        eventStoreAdapter,
+        readModelAdapter
+      } = await transmute();
+
       let factory = await T.Factory.create(relic.web3, accounts[0]);
-      const readModelAdapter = {
-        getItem: id => {
-          return JSON.parse(db.get(id));
-        },
-        setItem: (id, value) => {
-          return db.put(id, JSON.stringify(value));
-        }
-      };
-      const eventStoreAdapter = new T.EventStoreAdapter({
-        N: {
-          keyName: "sha1",
-          adapter: nodeStorageAdapter,
-          db: nodeStorageDB,
-          readIDFromBytes32: bytes32 => {
-            return T.Utils.toAscii(bytes32).replace(/\u0000/g, "");
-          },
-          writeIDToBytes32: id => {
-            return id;
-          }
-        }
-      });
+     
       let factorReadModel = await T.Factory.getReadModel(
         factory,
         eventStoreAdapter,

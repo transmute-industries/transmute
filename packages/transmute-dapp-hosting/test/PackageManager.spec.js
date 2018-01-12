@@ -1,6 +1,5 @@
 const PackageManager = artifacts.require("./PackageManager.sol");
 const T = require("transmute-framework");
-
 const transmute = require("../transmute");
 
 contract("PackageManager", async accounts => {
