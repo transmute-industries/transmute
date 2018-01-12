@@ -1,11 +1,11 @@
 {
   "license": "MIT",
   "devDependencies": {
-    "core-js": "^2.5.3",
     "lerna": "^2.5.1"
   },
   "scripts": {
     "migrate": "lerna run migrate --scope transmute-contracts",
     "travis": "lerna run replace_and_test --scope transmute-framework"
-  }
+  },
+  "dependencies": {}
 }
