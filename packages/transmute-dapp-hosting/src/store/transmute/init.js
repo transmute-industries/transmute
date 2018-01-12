@@ -3,6 +3,7 @@ let T = require("transmute-framework");
 let relic = new T.Relic();
 
 let localStorageAdapter = require("transmute-adapter-local-storage");
+
 let localStorageDB = localStorageAdapter.getStorage();
 
 let factoryReadModelJSON = require("../../EventStoreFactory.ReadModel.json");
