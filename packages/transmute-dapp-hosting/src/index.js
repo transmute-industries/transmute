@@ -24,5 +24,4 @@ render(
   target
 )
 
-
 registerServiceWorker();

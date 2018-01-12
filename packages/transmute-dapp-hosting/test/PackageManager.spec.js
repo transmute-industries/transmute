@@ -31,14 +31,19 @@ contract("PackageManager", async accounts => {
   });
 
   it("can upload new package.", async () => {
-    // console.log(eventStore)
-    // T.Store.writeFSA(eventStore, TT.eventStoreAdapter, TT.relic.web3, accounts[0], {
+    // let event = await T.Store.writeFSA(eventStore, TT.eventStoreAdapter, TT.relic.web3, accounts[0], {
     //   type: 'PACKAGE_PUBLISHED',
     //   payload: {
     //     name: 'foo',
     //     version: '0.0.1',
     //     hash: ''
+    //   },
+    //   meta: {
+    //     adapter: 'I'
     //   }
     // })
+    // console.log(event)
   });
+
+  
 });
