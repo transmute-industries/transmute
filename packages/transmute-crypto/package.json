@@ -1,6 +1,6 @@
 {
   "name": "transmute-crypto",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "",
   "keywords": [],
   "main": "dist/transmute-crypto.umd.js",
@@ -112,7 +112,9 @@
     "validate-commit-msg": "^2.12.2"
   },
   "dependencies": {
+    "bip39": "^2.5.0",
     "ethereumjs-util": "^5.1.2",
+    "ethereumjs-wallet": "^0.6.0",
     "libsodium-wrappers": "^0.7.3",
     "web3": "^1.0.0-beta.27"
   }

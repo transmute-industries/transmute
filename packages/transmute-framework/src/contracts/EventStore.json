@@ -304,7 +304,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 1448,
+          "SourceUnit": 1485,
           "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-contracts/contracts/TransmuteFramework/SetLib/AddressSet/AddressSetLib.sol",
           "file": "./SetLib/AddressSet/AddressSetLib.sol",
           "scope": 480,
@@ -319,7 +319,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 1997,
+          "SourceUnit": 2034,
           "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-contracts/contracts/TransmuteFramework/SetLib/Bytes32Set/Bytes32SetLib.sol",
           "file": "./SetLib/Bytes32Set/Bytes32SetLib.sol",
           "scope": 480,
@@ -385,7 +385,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "AddressSetLib",
-                  "referencedDeclaration": 1447,
+                  "referencedDeclaration": 1484,
                   "type": "library AddressSetLib"
                 },
                 "id": 98,
@@ -396,7 +396,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "AddressSetLib.AddressSet",
-                  "referencedDeclaration": 1084,
+                  "referencedDeclaration": 1121,
                   "type": "struct AddressSetLib.AddressSet storage pointer"
                 },
                 "id": 99,
@@ -414,7 +414,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "Bytes32SetLib",
-                  "referencedDeclaration": 1996,
+                  "referencedDeclaration": 2033,
                   "type": "library Bytes32SetLib"
                 },
                 "id": 101,
@@ -425,7 +425,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "Bytes32SetLib.Bytes32Set",
-                  "referencedDeclaration": 1633,
+                  "referencedDeclaration": 1670,
                   "type": "struct Bytes32SetLib.Bytes32Set storage pointer"
                 },
                 "id": 102,
@@ -957,7 +957,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "Bytes32SetLib.Bytes32Set",
-                  "referencedDeclaration": 1633,
+                  "referencedDeclaration": 1670,
                   "type": "struct Bytes32SetLib.Bytes32Set storage pointer"
                 },
                 "id": 139,
@@ -1013,7 +1013,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "AddressSetLib.AddressSet",
-                  "referencedDeclaration": 1084,
+                  "referencedDeclaration": 1121,
                   "type": "struct AddressSetLib.AddressSet storage pointer"
                 },
                 "id": 143,
@@ -1190,7 +1190,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2873,
+                                  "referencedDeclaration": 2910,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -1243,7 +1243,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "add",
-                              "referencedDeclaration": 1776,
+                              "referencedDeclaration": 1813,
                               "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer,bytes32) returns (bool)"
                             },
                             "children": [
@@ -1320,7 +1320,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "add",
-                              "referencedDeclaration": 1776,
+                              "referencedDeclaration": 1813,
                               "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer,bytes32) returns (bool)"
                             },
                             "children": [
@@ -1397,7 +1397,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "add",
-                              "referencedDeclaration": 1776,
+                              "referencedDeclaration": 1813,
                               "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer,bytes32) returns (bool)"
                             },
                             "children": [
@@ -1763,7 +1763,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2876,
+                              "referencedDeclaration": 2913,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -1804,7 +1804,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2873,
+                                      "referencedDeclaration": 2910,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -1874,7 +1874,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2876,
+                              "referencedDeclaration": 2913,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -2330,7 +2330,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2876,
+                              "referencedDeclaration": 2913,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -2371,7 +2371,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2873,
+                                      "referencedDeclaration": 2910,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -2660,7 +2660,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2879,
+                              "referencedDeclaration": 2916,
                               "type": "function (address)",
                               "value": "selfdestruct"
                             },
@@ -2792,7 +2792,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2876,
+                              "referencedDeclaration": 2913,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -2833,7 +2833,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2873,
+                                      "referencedDeclaration": 2910,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -3122,7 +3122,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2879,
+                              "referencedDeclaration": 2916,
                               "type": "function (address)",
                               "value": "selfdestruct"
                             },
@@ -3380,7 +3380,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2876,
+                              "referencedDeclaration": 2913,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -3416,7 +3416,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "contains",
-                                  "referencedDeclaration": 1983,
+                                  "referencedDeclaration": 2020,
                                   "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer,bytes32) view returns (bool)"
                                 },
                                 "children": [
@@ -3864,7 +3864,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2876,
+                              "referencedDeclaration": 2913,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -3912,7 +3912,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "contains",
-                                      "referencedDeclaration": 1983,
+                                      "referencedDeclaration": 2020,
                                       "type": "function (struct Bytes32SetLib.Bytes32Set storage pointer,bytes32) view returns (bool)"
                                     },
                                     "children": [
@@ -3997,7 +3997,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2876,
+                              "referencedDeclaration": 2913,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -4067,7 +4067,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 2873,
+                                          "referencedDeclaration": 2910,
                                           "type": "msg",
                                           "value": "msg"
                                         },
@@ -4113,7 +4113,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "contains",
-                                      "referencedDeclaration": 1434,
+                                      "referencedDeclaration": 1471,
                                       "type": "function (struct AddressSetLib.AddressSet storage pointer,address) view returns (bool)"
                                     },
                                     "children": [
@@ -4154,7 +4154,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 2873,
+                                          "referencedDeclaration": 2910,
                                           "type": "msg",
                                           "value": "msg"
                                         },
@@ -4868,7 +4868,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2876,
+                              "referencedDeclaration": 2913,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -4909,7 +4909,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2873,
+                                      "referencedDeclaration": 2910,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -4979,7 +4979,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2876,
+                              "referencedDeclaration": 2913,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -5030,7 +5030,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "size",
-                                      "referencedDeclaration": 1446,
+                                      "referencedDeclaration": 1483,
                                       "type": "function (struct AddressSetLib.AddressSet storage pointer) view returns (uint256)"
                                     },
                                     "children": [
@@ -5282,7 +5282,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "add",
-                                      "referencedDeclaration": 1227,
+                                      "referencedDeclaration": 1264,
                                       "type": "function (struct AddressSetLib.AddressSet storage pointer,address) returns (bool)"
                                     },
                                     "children": [
@@ -5571,7 +5571,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 2873,
+                                          "referencedDeclaration": 2910,
                                           "type": "msg",
                                           "value": "msg"
                                         },
@@ -5700,7 +5700,7 @@
                           "isPure": false,
                           "lValueRequested": false,
                           "member_name": "values",
-                          "referencedDeclaration": 1075,
+                          "referencedDeclaration": 1112,
                           "type": "address[] storage ref"
                         },
                         "children": [
@@ -5954,7 +5954,7 @@
                           "isPure": false,
                           "lValueRequested": false,
                           "member_name": "values",
-                          "referencedDeclaration": 1624,
+                          "referencedDeclaration": 1661,
                           "type": "bytes32[] storage ref"
                         },
                         "children": [
@@ -6007,7 +6007,7 @@
     "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
   },
   "networks": {
-    "1515548127886": {
+    "1515867628244": {
       "events": {
         "0x6b3c8873ff9b1c068470039341f6473e929874a38caab2cee207f5a533504169": {
           "anonymous": false,
@@ -6063,13 +6063,13 @@
         }
       },
       "links": {
-        "EventStoreLib": "0x84fb94c8612cbeaeed653156d61616af9ddb8ee1",
-        "AddressSetLib": "0x824c189f3eca2f0869e6bf27bb6c276b50f6817a",
-        "Bytes32SetLib": "0x3446abc1a14dcd232cce253f16388fafbf777f1e"
+        "EventStoreLib": "0x05609795ac634461f9d55aa196a2f09fd7a19a0e",
+        "AddressSetLib": "0xa2eb4ec02b9870d2144d9e743cc00c9519a62402",
+        "Bytes32SetLib": "0x27978c5a17f3551fe57949fcbfcb47390935fc82"
       },
-      "address": "0x8d012c303ca944cb61d546d78922f8cabf762e18"
+      "address": "0x1573528bf53231aa5f6ac6c33842c3fdae054af4"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-01-10T02:28:11.155Z"
+  "updatedAt": "2018-01-13T18:23:39.454Z"
 }

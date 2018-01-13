@@ -15,5 +15,6 @@ export * from './TransmuteContracts'
 
 export * from './Factory'
 export * from './Store'
+export * from './PackageService'
 
 export { Relic, Utils, TransmuteContracts, W3 }
