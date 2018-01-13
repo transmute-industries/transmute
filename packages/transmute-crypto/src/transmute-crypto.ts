@@ -3,3 +3,4 @@
 // ...
 
 export * from './TransmuteSodium'
+export * from './TransmuteWallet'

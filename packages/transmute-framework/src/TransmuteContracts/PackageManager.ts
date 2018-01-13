@@ -3,14 +3,14 @@ import { BigNumber } from 'bignumber.js';
 import { W3, SoltsiceContract } from 'soltsice';
 
 /**
- * EventStore API
+ * PackageManager API
  */
-export class EventStore extends SoltsiceContract {
-    static get Artifacts() { return require('../contracts/EventStore.json'); }
+export class PackageManager extends SoltsiceContract {
+    static get Artifacts() { return require('../contracts/PackageManager.json'); }
 
     static get BytecodeHash() {
         // we need this before ctor, but artifacts are static and we cannot pass it to the base class, so need to generate
-        let artifacts = EventStore.Artifacts;
+        let artifacts = PackageManager.Artifacts;
         if (!artifacts || !artifacts.bytecode) {
             return undefined;
         }
@@ -19,14 +19,14 @@ export class EventStore extends SoltsiceContract {
     }
 
     // tslint:disable-next-line:max-line-length
-    static async New(deploymentParams: W3.TC.TxParams, ctorParams?: {}, w3?: W3, link?: SoltsiceContract[]): Promise<EventStore> {
-        let contract = new EventStore(deploymentParams, ctorParams, w3, link);
+    static async New(deploymentParams: W3.TC.TxParams, ctorParams?: {}, w3?: W3, link?: SoltsiceContract[]): Promise<PackageManager> {
+        let contract = new PackageManager(deploymentParams, ctorParams, w3, link);
         await contract._instancePromise;
         return contract;
     }
 
-    static async At(address: string | object, w3?: W3): Promise<EventStore> {
-        let contract = new EventStore(address, undefined, w3, undefined);
+    static async At(address: string | object, w3?: W3): Promise<PackageManager> {
+        let contract = new PackageManager(address, undefined, w3, undefined);
         await contract._instancePromise;
         return contract;
     }
@@ -40,7 +40,7 @@ export class EventStore extends SoltsiceContract {
         // tslint:disable-next-line:max-line-length
         super(
             w3,
-            EventStore.Artifacts,
+            PackageManager.Artifacts,
             ctorParams ? [] : [],
             deploymentParams,
             link

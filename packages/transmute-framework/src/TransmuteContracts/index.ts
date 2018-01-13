@@ -8,6 +8,7 @@ export * from './EventStoreFactory';
 export * from './EventStoreLib';
 export * from './Migrations';
 export * from './Ownable';
+export * from './PackageManager';
 export * from './StringUtils';
 export * from './UIntSetLib';
 export * from './UIntSetSpec';
