@@ -88,4 +88,36 @@ describe("web3 tests", () => {
     let accounts = await getAccounts(web3);
     expect(accounts[0]).toBe(address);
   });
+
+  it("sanity - works in jest, but not in node...", async () => {
+    const Web3 = require("web3");
+    const ProviderEngine = require("web3-provider-engine");
+    const RpcSubprovider = require("web3-provider-engine/subproviders/rpc");
+    const WalletSubprovider = require("web3-provider-engine/subproviders/wallet");
+
+    const RPC_HOST = "http://localhost:8545";
+    const engine = new ProviderEngine();
+
+    engine.addProvider(
+      new RpcSubprovider({
+        rpcUrl: RPC_HOST
+      })
+    );
+
+    let web3;
+    // web3 = new Web3(new Web3.providers.HttpProvider(RPC_HOST));
+    web3 = new Web3(engine);
+
+    engine.start();
+
+    return new Promise((resolve, reject) => {
+      web3.eth.getAccounts((err, accounts) => {
+        console.log(err, accounts);
+        if (err) {
+          reject(err);
+        }
+        resolve(accounts);
+      });
+    });
+  });
 });

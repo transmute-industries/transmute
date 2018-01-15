@@ -12,7 +12,9 @@ const db = new Storage("./read_model_storage");
 const nodeStorageDB = nodeStorageAdapter.getStorage();
 
 module.exports  = async () => {
-  let relic = new T.Relic();
+  let relic = new T.Relic({
+    providerUrl: 'http://localhost:8545'
+  });
   T.W3.Default = relic.web3;
   let accounts = await relic.getAccounts();
   const readModelAdapter = {

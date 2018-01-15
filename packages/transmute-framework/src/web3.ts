@@ -1,4 +1,3 @@
-import { W3 } from "./transmute-framework";
 import Web3 from "web3";
 
 const ProviderEngine = require("web3-provider-engine");
@@ -10,7 +9,12 @@ export interface ITransmuteWeb3Config {
   wallet?: any;
 }
 
-export const transmuteWeb3 = (config: ITransmuteWeb3Config, experimental = false) => {
+export const transmuteWeb3 = (config: ITransmuteWeb3Config) => {
+  if (!config) {
+    config = {
+      providerUrl: "http://localhost:8545"
+    };
+  }
   const engine = new ProviderEngine();
 
   if (config.wallet) {
@@ -27,4 +31,6 @@ export const transmuteWeb3 = (config: ITransmuteWeb3Config, experimental = false
   engine.start();
 
   return web3;
+
+  // return new Web3(new Web3.providers.HttpProvider(config.providerUrl));
 };

@@ -2,7 +2,7 @@ const path = require("path");
 const fse = require("fs-extra");
 const fs = require("fs");
 const shell = require("shelljs");
-const vorpal = require("vorpal")();
+
 const T = require("transmute-framework");
 const transmute = require("../transmute");
 

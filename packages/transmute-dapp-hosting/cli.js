@@ -2,6 +2,10 @@
 
 const vorpal = require("vorpal")();
 
+const vorpalLog = require('vorpal-log');
+ 
+vorpal.use(vorpalLog)
+
 vorpal
   .command("version", "display version information")
   .action((args, callback) => {
