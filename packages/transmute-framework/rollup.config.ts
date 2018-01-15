@@ -22,13 +22,14 @@ export default {
     "crypto",
     "websocket",
     "scrypt",
-    // 'lodash',
-    "lib/web3.min",
+    'lodash',
+    "web3",
+    "web3-provider-engine",
     // "bignumber.js"
     "soltsice"
   ],
   globals: {
-    "lib/web3.min": "Web3",
+    "web3": "Web3",
     crypto: "crypto"
     // "bignumber.js": "BigNumber"
   },
