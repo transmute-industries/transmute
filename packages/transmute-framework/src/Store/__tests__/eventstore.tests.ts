@@ -56,7 +56,7 @@ describe('Store', () => {
       type: 'test',
       payload: {
         key: 'address',
-        value: '0x01000c268181f5d90587392ff67ada1a16393fe4'
+        value: '0x01000c268181f5D90587392fF67ada1A16393FE4'
       },
       meta: {}
     }

@@ -103,7 +103,7 @@ export const getFSAFromEsEventWithPartial = (esEvent: IEsEvent, partialFSA: IFSA
     case 'A':
       payload = {
         key: 'address',
-        value: '0x' + esEvent.Value.split('0x000000000000000000000000')[1]
+        value: Utils.toChecksumAddress('0x' + esEvent.Value.split('0x000000000000000000000000')[1])
       }
       break
     case 'B':
@@ -140,8 +140,8 @@ export const esEventToFSA = (esEvent: IEsEvent) => {
       valueType: Utils.toAscii(esEvent.ValueType),
       id: esEvent.Id.toNumber(),
       created: esEvent.Created.toNumber(),
-      txOrigin: esEvent.TxOrigin,
-      msgSender: esEvent.MsgSender,
+      txOrigin: Utils.toChecksumAddress(esEvent.TxOrigin),
+      msgSender: Utils.toChecksumAddress(esEvent.MsgSender),
       isInternal: InternalEventTypes.ALL.indexOf(Utils.toAscii(esEvent.EventType)) !== -1
     }
   }

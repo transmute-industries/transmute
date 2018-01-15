@@ -1,38 +1,38 @@
-import { W3 } from "./transmute-framework";
-import { transmuteWeb3, ITransmuteWeb3Config } from "./web3";
+import { W3 } from './transmute-framework'
+import { transmuteWeb3, ITransmuteWeb3Config } from './web3'
 
 export default class Relic {
-  web3: W3;
+  web3: any
 
   constructor(config: ITransmuteWeb3Config) {
-    this.web3 = transmuteWeb3(config);
+    this.web3 = transmuteWeb3(config)
   }
 
   async getAccounts(): Promise<string[]> {
     return new Promise((resolve, reject) => {
-      (this.web3 as any).eth.getAccounts((err: any, accounts: string[]) => {
+      ;(this.web3 as any).eth.getAccounts((err: any, accounts: string[]) => {
         if (err) {
-          reject(err);
+          reject(err)
         }
-        resolve(accounts);
-      });
-    }) as Promise<string[]>;
+        resolve(accounts)
+      })
+    }) as Promise<string[]>
   }
 
   async getBalance(address: string): Promise<number> {
     return new Promise((resolve, reject) => {
-      (this.web3 as any).eth.getBalance(address, (err: any, balance: any) => {
+      ;(this.web3 as any).eth.getBalance(address, (err: any, balance: any) => {
         if (err) {
-          reject(err);
+          reject(err)
         }
-        resolve(balance.toNumber());
-      });
-    }) as Promise<number>;
+        resolve(parseInt(balance, 10))
+      })
+    }) as Promise<number>
   }
 
   async sendWei(fromAddress: string, toAddress, amountWei: number): Promise<string> {
     return new Promise((resolve, reject) => {
-      (this.web3 as any).eth.sendTransaction(
+      ;(this.web3 as any).eth.sendTransaction(
         {
           from: fromAddress,
           to: toAddress,
@@ -40,11 +40,11 @@ export default class Relic {
         },
         (err: any, txhash: string) => {
           if (err) {
-            reject(err);
+            reject(err)
           }
-          resolve(txhash);
+          resolve(txhash)
         }
-      );
-    }) as Promise<string>;
+      )
+    }) as Promise<string>
   }
 }

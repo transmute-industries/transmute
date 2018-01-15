@@ -37,7 +37,7 @@ describe('EventStore', () => {
     expect(events[0].payload.value).toEqual(newOwner)
 
     currentOwner = await eventStore.owner()
-    expect(currentOwner).toEqual(newOwner)
+    expect(Utils.toChecksumAddress(currentOwner)).toEqual(newOwner)
   }
 
   describe('eventStore creation', async () => {
@@ -57,7 +57,7 @@ describe('EventStore', () => {
 
       // the eventStore whitelist is setup correctly
       let eventStoreWhitelist = await eventStore.getWhitelist()
-      expect(eventStoreWhitelist).toEqual(whitelist)
+      expect(eventStoreWhitelist.map(Utils.toChecksumAddress)).toEqual(whitelist)
 
       // we expect 3 events in a newly created eventStore
       let eventCount = await eventStore.eventCount()
@@ -70,7 +70,7 @@ describe('EventStore', () => {
       expect(event.type).toBe(InternalEventTypes.NEW_OWNER)
       expect(event.payload.value).toBe(accounts[0])
       let eventStoreOwner = await eventStore.owner()
-      expect(eventStoreOwner).toBe(accounts[0])
+      expect(Utils.toChecksumAddress(eventStoreOwner)).toBe(accounts[0])
 
       // can transferOwnership
       await transferOwnershipTest(eventStore, accounts[7])
@@ -94,7 +94,7 @@ describe('EventStore', () => {
 
       // expect the eventStore owner to be correct
       let eventStoreOwner = await eventStore.owner()
-      expect(event.payload.value).toBe(eventStoreOwner)
+      expect(event.payload.value).toBe(Utils.toChecksumAddress(eventStoreOwner))
 
       // expect the eventStore whitelist to be empty
       let eventStoreWhitelist = await eventStore.getWhitelist()

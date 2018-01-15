@@ -38,7 +38,7 @@ describe('EventStoreFactory', () => {
 
       // the factory owner is the factory contract deployer
       let factoryOwner = await factory.owner()
-      expect(factoryOwner).toBe(accounts[0])
+      expect(relic.web3.utils.toChecksumAddress(factoryOwner)).toBe(accounts[0])
 
       // anyone can send the factory wei
       receipt = await factory.sendTransaction({
@@ -54,7 +54,7 @@ describe('EventStoreFactory', () => {
       receipt = await factory.recycle(W3.TC.txParamsDefaultDeploy(accounts[0]))
       events = EventTransformer.getFSAsFromReceipt(receipt)
       expect(events[0].type).toBe(InternalEventTypes.RECYCLED_TO)
-      expect(events[0].payload.value).toBe(factoryOwner)
+      expect(events[0].payload.value).toBe(Utils.toChecksumAddress(factoryOwner))
 
       // ensure owner received funds
       let ownerBalanceAfterRecycle = await relic.getBalance(factoryOwner)
@@ -88,7 +88,7 @@ describe('EventStoreFactory', () => {
       receipt = await factory.recycleAndSend(accounts[1], W3.TC.txParamsDefaultDeploy(accounts[0]))
       events = EventTransformer.getFSAsFromReceipt(receipt)
       expect(events[0].type).toBe(InternalEventTypes.RECYCLED_TO)
-      expect(events[0].payload.value).toBe(accounts[1])
+      expect(relic.web3.utils.toChecksumAddress(events[0].payload.value)).toBe(accounts[1])
 
       // ensure recipient received funds
       let recipientBalanceAfterRecycle = await relic.getBalance(accounts[1])
