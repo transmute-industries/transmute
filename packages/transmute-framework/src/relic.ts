@@ -5,12 +5,12 @@ export default class Relic {
   web3: W3;
 
   constructor(config: ITransmuteWeb3Config) {
-    this.web3 = transmuteWeb3(config, false);
+    this.web3 = transmuteWeb3(config);
   }
 
   async getAccounts(): Promise<string[]> {
     return new Promise((resolve, reject) => {
-      this.web3.eth.getAccounts((err: any, accounts: string[]) => {
+      (this.web3 as any).eth.getAccounts((err: any, accounts: string[]) => {
         if (err) {
           reject(err);
         }
