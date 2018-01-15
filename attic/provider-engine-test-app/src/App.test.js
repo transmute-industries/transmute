@@ -16,6 +16,7 @@ const testGetAccounts = someWeb3 => {
   });
 };
 
+
 it("supports vanilla web3", async () => {
   const web3 = new Web3(new Web3.providers.HttpProvider(RPC_HOST));
   const accounts = await testGetAccounts(web3);
