@@ -1,4 +1,5 @@
 import resolve from "rollup-plugin-node-resolve";
+import builtins from 'rollup-plugin-node-builtins';
 import json from "rollup-plugin-json";
 import commonjs from "rollup-plugin-commonjs";
 import sourceMaps from "rollup-plugin-sourcemaps";
@@ -23,20 +24,28 @@ export default {
     "websocket",
     "scrypt",
     'lodash',
+    "elliptic",
     "web3",
     "web3-provider-engine",
     // "bignumber.js"
     "soltsice"
   ],
   globals: {
+    "soltsice" : "soltsice",
     "web3": "Web3",
+    "web3-provider-engine": "ProviderEngine",
+    elliptic: 'elliptic',
     crypto: "crypto"
     // "bignumber.js": "BigNumber"
   },
   watch: {
     include: "dist/es/**"
   },
+  moduleContext: {
+    'dist/es/relic.js': 'this',
+  },
   plugins: [
+    builtins(),
     json({}),
 
     // Allow node_modules resolution, so you can use 'external' to control

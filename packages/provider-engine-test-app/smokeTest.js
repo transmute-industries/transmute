@@ -3,6 +3,8 @@ const ProviderEngine = require("web3-provider-engine");
 const RpcSubprovider = require("web3-provider-engine/subproviders/rpc");
 const WalletSubprovider = require("web3-provider-engine/subproviders/wallet");
 
+const T = require('transmute-framework');
+
 const RPC_HOST = "http://localhost:8545";
 const engine = new ProviderEngine();
 
@@ -35,6 +37,10 @@ const testGetAccounts = someWeb3 => {
   web3 = new Web3(engine);
   accounts = await testGetAccounts(web3);
   console.log(accounts.length === 10, "can use provider engine in node");
+
+  let relic = new T.Relic(web3);
+  accounts = await relic.getAccounts();
+  console.log(accounts.length === 10, "can use relic in node");
 
   console.log('Smoke tests complete...')
   process.exit(0);

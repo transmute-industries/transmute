@@ -1,23 +1,46 @@
 import { W3 } from './transmute-framework'
-import { transmuteWeb3, ITransmuteWeb3Config } from './web3'
+import Web3 from 'web3'
 
-export default class Relic {
+// import { transmuteWeb3, ITransmuteWeb3Config } from "./web3";
+
+import ProviderEngine from 'web3-provider-engine'
+import RpcSubprovider from 'web3-provider-engine/subproviders/rpc'
+import WalletSubprovider from 'web3-provider-engine/subproviders/wallet'
+
+export interface ITransmuteWeb3Config {
+  providerUrl: string
+  wallet?: any
+}
+
+class Relic {
+  config: ITransmuteWeb3Config
   web3: any
 
-  constructor(config: ITransmuteWeb3Config) {
-    this.web3 = transmuteWeb3(config)
+  constructor(web3: any) {
+    this.web3 = web3
   }
 
-  async getAccounts(): Promise<string[]> {
+  getAccounts = (): Promise<string[]> => {
     return new Promise((resolve, reject) => {
-      ;(this.web3 as any).eth.getAccounts((err: any, accounts: string[]) => {
+      this.web3.eth.getAccounts((err, accounts) => {
         if (err) {
           reject(err)
         }
         resolve(accounts)
       })
-    }) as Promise<string[]>
+    })
   }
+
+  // async getAccounts(): Promise<string[]> {
+  //   return new Promise((resolve, reject) => {
+  //     (this.web3 as any).eth.getAccounts((err: any, accounts: string[]) => {
+  //       if (err) {
+  //         reject(err);
+  //       }
+  //       resolve(accounts);
+  //     });
+  //   }) as Promise<string[]>;
+  // }
 
   async getBalance(address: string): Promise<number> {
     return new Promise((resolve, reject) => {
@@ -48,3 +71,5 @@ export default class Relic {
     }) as Promise<string>
   }
 }
+
+export default Relic
