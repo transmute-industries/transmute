@@ -62,6 +62,7 @@ export default {
     replace({
       patterns: [
         {
+          match: /TransmuteContracts(\/|\\)/,
           test: /'..\/contracts\/.*\.json'/g,
           replace: somePath => {
             return somePath.replace('..', '.')

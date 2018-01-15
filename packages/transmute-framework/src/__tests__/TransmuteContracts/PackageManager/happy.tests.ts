@@ -13,6 +13,12 @@ import {
 
 const RPC_HOST = "http://localhost:8545";
 
+// - User purchases a subscription with Stripe.
+// - User address is paired with subscription tier.
+// - System creates a package manager contract for user address.
+// - System monitors packages deployed and utilization.
+// - User can issue delete packages to clean up space.
+
 const generateTestWallets = async (num: number) => {
   const sodium = await TransmuteCrypto.getSodium();
   let testWallets: any = [];
@@ -122,6 +128,15 @@ describe("PackageManager", () => {
       return wallet.address;
     });
 
+    let event = await Store.writeFSA(newPM, eventStoreAdapter, relic.web3, pmOwner, {
+      type: "SUBSCRIPTION_CHANGE",
+      payload: {
+        key: "subscription",
+        value: "T1"
+      },
+      meta: {}
+    });
+
     // set the package manager whitelist
     let reciept = await newPM.setWhitelist(
       localWallets,
@@ -138,20 +153,32 @@ describe("PackageManager", () => {
     // console.log("newPM: ", newPM);
 
     // a white listed wallet can write a publish event
-    let event = await Store.writeFSA(newPM, eventStoreAdapter, relic.web3, pmOwner, {
+    event = await Store.writeFSA(newPM, eventStoreAdapter, relic.web3, pmOwner, {
       type: "PACKAGE_PUBLISHED",
       payload: {
-        name: "foo",
+        name: "helloWorld",
         version: "0.0.1",
-        hash: ""
+        multihash: "QmQh3iDyetVbjuyyXBNdrVo6ePtNGyjDU65QEXxSewfXaK"
       },
       meta: {
         adapter: "I"
       }
     });
     // console.log('what is event: ', event)
+    events = await Store.readFSAs(newPM, eventStoreAdapter, relic.web3, pmOwner)
+    console.log(events)
 
-
+    // ipfs.block.stat(cid, (err, stats) => {
+    //   if (err) {
+    //     throw err
+    //   }
+    //   console.log(stats)
+    //   // Logs:
+    //   // {
+    //   //   key: QmQULBtTjNcMwMr4VMNknnVv3RpytrLSdgpvMcTnfNhrBJ,
+    //   /    size: 3739
+    //   // }
+    // })
 
   });
 });
