@@ -14,11 +14,10 @@ import {
  * EventStoreFactory spec
  */
 describe('EventStoreFactory', () => {
-  let factory: EventStoreFactory
-  let receipt: any
-  let events: IFSA[]
-
   const createEventStoreTest = async (ownerAccount: string, whitelist: string[]) => {
+    let factory: EventStoreFactory
+    let receipt: any
+    let events: IFSA[]
     // create a new factory
     factory = await EventStoreFactory.New(W3.TC.txParamsDefaultDeploy(ownerAccount))
 
@@ -32,7 +31,11 @@ describe('EventStoreFactory', () => {
     expect(factoryEvents[0].type).toEqual(InternalEventTypes.ES_CREATED)
 
     // the eventStore records ownership and setup performed by the factory
-    let eventStoreEvents = EventTransformer.filterEventsByMeta(events, 'msgSender', factory.address)
+    let eventStoreEvents = EventTransformer.filterEventsByMeta(
+      events,
+      'msgSender',
+      Utils.toChecksumAddress(factory.address)
+    )
     expect(eventStoreEvents.length).toBe(3)
     expect(eventStoreEvents[0].type).toEqual(InternalEventTypes.NEW_OWNER)
     expect(eventStoreEvents[1].type).toEqual(InternalEventTypes.WL_SET)
@@ -42,11 +45,13 @@ describe('EventStoreFactory', () => {
     // the eventStore whitelist is setup correctly
     let eventStore = await EventStore.At(factoryEvents[0].payload.value)
     let eventStoreWhitelist = await eventStore.getWhitelist()
-    expect(eventStoreWhitelist).toEqual(whitelist)
+    expect(eventStoreWhitelist.map(Utils.toChecksumAddress)).toEqual(whitelist)
 
     // the factory eventStore list is correct
     let factoryEventStoreList = await factory.getEventStores()
-    expect(factoryEventStoreList).toEqual([factoryEvents[0].payload.value])
+    expect(factoryEventStoreList.map(Utils.toChecksumAddress)).toEqual([
+      factoryEvents[0].payload.value
+    ])
 
     let eventCount = await factory.eventCount()
     expect(eventCount.toNumber()).toBe(1)
@@ -79,6 +84,7 @@ describe('EventStoreFactory', () => {
     })
 
     it('getInternalEventTypes', async () => {
+      let factory = await EventStoreFactory.New(W3.TC.txParamsDefaultDeploy(accounts[0]))
       let types = ((await factory.getInternalEventTypes()) as any).map(Utils.toAscii)
       expect(types).toEqual(InternalEventTypes.FACTORY)
     })

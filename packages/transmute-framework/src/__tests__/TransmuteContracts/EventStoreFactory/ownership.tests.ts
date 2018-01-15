@@ -34,7 +34,7 @@ describe('EventStoreFactory', () => {
 
       // the factory owner is the factory contract deployer
       let factoryOwner = await factory.owner()
-      expect(factoryOwner).toBe(accounts[0])
+      expect(relic.web3.utils.toChecksumAddress(factoryOwner)).toBe(accounts[0])
     })
 
     it('the factory owner can transferOwnership', async () => {
@@ -50,11 +50,11 @@ describe('EventStoreFactory', () => {
       )
       events = EventTransformer.getFSAsFromReceipt(receipt)
       expect(events[0].type).toBe(InternalEventTypes.NEW_OWNER)
-      expect(events[0].payload.value).toBe(accounts[1])
+      expect(relic.web3.utils.toChecksumAddress(events[0].payload.value)).toBe(accounts[1])
 
       // the event was not a lie
       let factoryOwner = await factory.owner()
-      expect(factoryOwner).toBe(accounts[1])
+      expect(relic.web3.utils.toChecksumAddress(factoryOwner)).toBe(accounts[1])
     })
   })
 })
