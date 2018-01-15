@@ -8,7 +8,6 @@ const RPC_HOST = "http://localhost:8545";
 const testGetAccounts = someWeb3 => {
   return new Promise((resolve, reject) => {
     someWeb3.eth.getAccounts((err, accounts) => {
-      // console.log(err, accounts);
       if (err) {
         reject(err);
       }
@@ -25,6 +24,7 @@ it("supports vanilla web3", async () => {
 
 it("supports web3-provider-engine", async () => {
   const engine = new ProviderEngine();
+  // jasmine.DEFAULT_TIMEOUT_INTERVAL = 40 * 1000
   engine.addProvider(
     new RpcSubprovider({
       rpcUrl: RPC_HOST
