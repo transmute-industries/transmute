@@ -24,7 +24,6 @@ it("supports vanilla web3", async () => {
 
 it("supports web3-provider-engine", async () => {
   const engine = new ProviderEngine();
-  // jasmine.DEFAULT_TIMEOUT_INTERVAL = 40 * 1000
   engine.addProvider(
     new RpcSubprovider({
       rpcUrl: RPC_HOST
