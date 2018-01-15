@@ -1,36 +1,31 @@
-import Web3 from "web3";
+import Web3 from 'web3'
 
-const ProviderEngine = require("web3-provider-engine");
-const RpcSubprovider = require("web3-provider-engine/subproviders/rpc.js");
-const WalletSubprovider = require("web3-provider-engine/subproviders/wallet.js");
+import ProviderEngine from 'web3-provider-engine'
+import RpcSubprovider from 'web3-provider-engine/subproviders/rpc'
+import WalletSubprovider from 'web3-provider-engine/subproviders/wallet'
 
 export interface ITransmuteWeb3Config {
-  providerUrl: string;
-  wallet?: any;
+  providerUrl: string
+  wallet?: any
 }
 
 export const transmuteWeb3 = (config: ITransmuteWeb3Config) => {
-  if (!config) {
-    config = {
-      providerUrl: "http://localhost:8545"
-    };
-  }
-  const engine = new ProviderEngine();
+  const engine = new ProviderEngine()
 
   if (config.wallet) {
-    engine.addProvider(new WalletSubprovider(config.wallet, {}));
+    engine.addProvider(new WalletSubprovider(config.wallet, {}))
   }
 
   engine.addProvider(
     new RpcSubprovider({
       rpcUrl: config.providerUrl
     })
-  );
+  )
 
-  const web3 = new Web3(engine);
-  engine.start();
+  const web3 = new Web3(engine)
+  engine.start()
 
-  return web3;
+  return web3
 
   // return new Web3(new Web3.providers.HttpProvider(config.providerUrl));
-};
+}
