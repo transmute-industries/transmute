@@ -6,7 +6,8 @@ import {
   IReadModelAdapter,
   IReadModelState,
   EventStoreAdapter,
-  EventStore
+  EventStore,
+  Interceptor
 } from '../../transmute-framework'
 
 const STATE_REQUIRED_PROPS = ['contractAddress', 'readModelType', 'readModelStoreKey']
@@ -15,7 +16,8 @@ export class ReadModel implements IReadModel {
   constructor(
     public readModelAdapter: IReadModelAdapter,
     public reducer: any,
-    public state: IReadModelState
+    public state: IReadModelState,
+    public interceptors?: any
   ) {
     if (readModelAdapter.getItem === undefined) {
       throw new Error(
@@ -74,6 +76,12 @@ export class ReadModel implements IReadModel {
     }
     let startIndex = this.state.lastEvent !== null ? this.state.lastEvent + 1 : 0
     let events = await Store.readFSAs(store, readModelAdapter, web3, startIndex)
+    if (this.interceptors) {
+      for (let i = 0; i < this.interceptors.length; i++) {
+        events = await Interceptor.applyAll(this.interceptors, events)
+      }
+      console.log('interceptor transformed events: ', events)
+    }
     changes = changes || events.length > 0
     if (changes) {
       await this.applyEvents(events)

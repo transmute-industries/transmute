@@ -1,5 +1,7 @@
+import { IFSA } from '../../transmute-framework'
+
 export namespace Interceptor {
-  export const apply = async (transform: any, events: any) => {
+  export const apply = async (transform: (event: IFSA) => IFSA, events: IFSA[]) => {
     return Promise.all(
       events.map((event: any) => {
         return transform(event)
@@ -7,11 +9,11 @@ export namespace Interceptor {
     )
   }
 
-  export const applyAll = async (transforms: Array<(event: any) => any>, events: any) => {
+  export const applyAll = async (transforms: Array<(event: IFSA) => IFSA>, events: IFSA[]) => {
     let mutatedEvents = events
-    transforms.forEach(async transform => {
-      mutatedEvents = await apply(transform, mutatedEvents)
-    })
-    return Promise.all(mutatedEvents)
+    for (let i = 0; i < transforms.length; i++) {
+      mutatedEvents = await apply(transforms[i], mutatedEvents)
+    }
+    return await Promise.all(mutatedEvents)
   }
 }
