@@ -2,7 +2,6 @@ const Web3 = require("web3");
 const ProviderEngine = require("web3-provider-engine");
 const RpcSubprovider = require("web3-provider-engine/subproviders/rpc");
 const WalletSubprovider = require("web3-provider-engine/subproviders/wallet");
-const T = require("transmute-framework");
 
 const RPC_HOST = "http://localhost:8545";
 

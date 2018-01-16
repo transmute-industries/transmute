@@ -14,14 +14,15 @@ let { getContractUtilization, getStorageUtilization } = require("./analytics");
 
 (async () => {
   try {
-    console.log("\n");
+    // console.log("\n");
     const {
       T,
       relic,
       accounts,
       eventStoreAdapter,
       readModelAdapter,
-      generateTestWallets
+      generateTestWallets,
+      getRelicWalletWithPrivateKey
     } = await init();
 
     let wallets = await generateTestWallets(3);
@@ -47,47 +48,64 @@ let { getContractUtilization, getStorageUtilization } = require("./analytics");
 
     console.log("# System transfers ownership of store to customer:\n");
     let receipt = await store.transferOwnership(
-      wallets[0].address,
+      accounts[1],
       T.W3.TC.txParamsDefaultDeploy(accounts[0])
     );
     let events = T.EventTransformer.getFSAsFromReceipt(receipt);
     console.log(JSON.stringify(events, null, 2), "\n");
 
     console.log("# Customer contract & storage utilization is knowable:\n");
-    let contractUtilization = await getContractUtilization(relic,
+    let contractUtilization = await getContractUtilization(
+      relic,
       eventStoreAdapter,
-      readModelAdapter, factory);
+      readModelAdapter,
+      factory
+    );
     console.log("\n", JSON.stringify(contractUtilization, null, 2), "\n");
 
-    console.log("# Customer utilization increases as packages are published.\n");
+    console.log(
+      "# Customer utilization increases as packages are published.\n"
+    );
     let ps = new T.PackageService(relic, store, eventStoreAdapter);
-    await ps.publishEvent(
-      {
-        type: "PACKAGE_UPDATED",
-        payload: {
-          name: "bobo",
-          multihash: "QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen",
-          version: "0.0.1"
-        },
-        meta: {
-          adapter: "I"
-        }
-      },
+    await ps.publishPackage(
+      "QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen",
+      "bobo@0.0.1",
       accounts[0]
     );
     let readModel = await ps.getReadModel(readModelAdapter);
     console.log(JSON.stringify(readModel.state, null, 2), "\n");
 
-    console.log("# Customer can delete packages to reduce utilization.");
-    console.log("FALSE", "\n");
+    await ps.publishPackage(
+      "QmQh3iDyetVbjuyyXBNdrVo6ePtNGyjDU65QEXxSewfXaK",
+      "bobo@0.0.2",
+      accounts[0]
+    );
 
-    console.log("# Customer can transfer contract ownership.");
-    console.log("FALSE", "\n");
+    readModel = await ps.getReadModel(readModelAdapter);
+    console.log(JSON.stringify(readModel.state, null, 2), "\n");
 
-    console.log("# Customer is warned when publishing exceeds utilization.");
-    console.log("FALSE", "\n");
+    console.log("# Customer can delete packages to reduce utilization.\n");
+    await ps.deletePackage(
+      "QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen",
+      accounts[0]
+    );
+    readModel = await ps.getReadModel(readModelAdapter);
+    console.log(JSON.stringify(readModel.state, null, 2), "\n");
 
-    //
+    console.log("# Customer can transfer contract ownership.\n");
+    // let relic2 = await getRelicWalletWithPrivateKey(wallets[0].privateKey.replace('0x', ''))
+    // store.Default = relic2.web3;
+    // T.W3.Default = relic2.web3;
+    events = await T.Store.transferOwnership(
+      store,
+      accounts[1],
+      accounts[2]
+    );
+    readModel = await ps.getReadModel(readModelAdapter);
+    console.log(JSON.stringify(readModel.state, null, 2), "\n");
+
+    // console.log("# Customer is warned when publishing exceeds utilization.");
+    // console.log("FALSE", "\n");
   } catch (e) {
     console.log("Error: ", e);
   }

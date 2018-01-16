@@ -20,6 +20,12 @@ export namespace Store {
     return countBigNumber.toNumber()
   }
 
+  export const transferOwnership = async (store: EventStore, from: string, to: string) => {
+    let receipt = await store.transferOwnership(to, W3.TC.txParamsDefaultDeploy(from))
+    let events = EventTransformer.getFSAsFromReceipt(receipt)
+    return events
+  }
+
   /**
    * Store readFSA
    */
