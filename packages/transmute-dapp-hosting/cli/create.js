@@ -54,8 +54,7 @@ module.exports = vorpal => {
         let changes = await factorReadModel.sync(
           factory,
           eventStoreAdapter,
-          relic.web3,
-          accounts[0]
+          relic.web3
         );
         console.log("factory changes detected! ", changes);
 

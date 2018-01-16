@@ -13,6 +13,7 @@ import {
 
 const Storage = require('node-storage')
 const db = new Storage('./read_model_storage')
+
 const readModelAdapter: any = {
   getItem: (id: string) => {
     return JSON.parse(db.get(id))
@@ -66,6 +67,7 @@ const handlers: any = {
       model: {
         ...state.model,
         [action.payload.name]: {
+          ...state.model[action.payload.name],
           version: action.payload.version,
           multihash: action.payload.multihash
         }
@@ -92,54 +94,53 @@ describe('ipfs tests', () => {
   let factory: EventStoreFactory
 
   beforeAll(async () => {
-    // setup = await getSetupAsync()
-    // accounts = setup.accounts
-    // relic = setup.relic
-    // factory = setup.factory
+    setup = await getSetupAsync()
+    accounts = setup.accounts
+    relic = setup.relic
+    factory = setup.factory
   })
 
   it('read model can use internal and external events.', async () => {
-    console.log('borkn...')
-    // let store = await Factory.createStore(
-    //   factory,
-    //   accounts,
-    //   setup.eventStoreAdapter,
-    //   relic.web3,
-    //   accounts[0]
-    // )
+    let store = await Factory.createStore(
+      factory,
+      accounts,
+      setup.eventStoreAdapter,
+      relic.web3,
+      accounts[0]
+    )
 
-    // let events = await Store.writeFSAs(store, setup.eventStoreAdapter, relic.web3, accounts[0], [
-    //   {
-    //     type: 'PACKAGE_UPDATED',
-    //     payload: {
-    //       name: 'bobo',
-    //       multihash: 'QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen',
-    //       version: '0.0.1'
-    //     },
-    //     meta: {
-    //       adapter: 'I'
-    //     }
-    //   },
-    //   {
-    //     type: 'PACKAGE_UPDATED',
-    //     payload: {
-    //       name: 'bobo',
-    //       multihash: 'QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen',
-    //       version: '0.0.2'
-    //     },
-    //     meta: {
-    //       adapter: 'I'
-    //     }
-    //   }
-    // ])
+    let events = await Store.writeFSAs(store, setup.eventStoreAdapter, relic.web3, accounts[0], [
+      {
+        type: 'PACKAGE_UPDATED',
+        payload: {
+          name: 'bobo',
+          multihash: 'QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen',
+          version: '0.0.1'
+        },
+        meta: {
+          adapter: 'I'
+        }
+      },
+      {
+        type: 'PACKAGE_UPDATED',
+        payload: {
+          name: 'bobo',
+          multihash: 'QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen',
+          version: '0.0.2'
+        },
+        meta: {
+          adapter: 'I'
+        }
+      }
+    ])
 
-    // let state: IReadModelState = JSON.parse(JSON.stringify(initialState))
+    let state: IReadModelState = JSON.parse(JSON.stringify(initialState))
 
-    // state.contractAddress = factory.address
-    // state.readModelStoreKey = `${state.readModelType}:${state.contractAddress}`
+    state.contractAddress = factory.address
+    state.readModelStoreKey = `${state.readModelType}:${state.contractAddress}`
 
-    // let ipfsReadModel = new ReadModel(readModelAdapter, reducer, state)
-    // let changes = await ipfsReadModel.sync(store, setup.eventStoreAdapter, relic.web3, accounts[0])
-    // // console.log(JSON.stringify(ipfsReadModel, null, 2));
+    let ipfsReadModel = new ReadModel(readModelAdapter, reducer, state)
+    let changes = await ipfsReadModel.sync(store, setup.eventStoreAdapter, relic.web3)
+    console.log(JSON.stringify(ipfsReadModel, null, 2))
   })
 })

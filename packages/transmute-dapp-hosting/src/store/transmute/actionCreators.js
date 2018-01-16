@@ -38,8 +38,7 @@ export const init = async () => {
   let changes = await factoryReadModel.sync(
     factory,
     eventStoreAdapter,
-    relic.web3,
-    accounts[0]
+    relic.web3
   );
   console.log("factory changes detected! ", changes);
   return {
