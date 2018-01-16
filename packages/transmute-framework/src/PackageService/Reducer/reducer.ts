@@ -62,8 +62,8 @@ const handlers: any = {
       ...updatesFromMeta(action.meta)
     }
   },
-  PACKAGE_UPDATED: async (state: any, action: any) => {
-    console.log(action.meta.adapterMeta)
+  PACKAGE_UPDATED: (state: any, action: any) => {
+    // console.log(action.meta.adapterMeta)
     // make sure to settle object before returning it.
     let newState = {
       ...state,
@@ -74,7 +74,7 @@ const handlers: any = {
           version: action.payload.version,
           multihash: action.payload.multihash
         },
-        adapterMeta: await updatesFromAdapterMeta(state, action.meta)
+        adapterMeta: updatesFromAdapterMeta(state, action.meta)
       },
       ...updatesFromMeta(action.meta)
     }
@@ -82,9 +82,9 @@ const handlers: any = {
   }
 }
 
-export const reducer = async (state: any, action: any) => {
+export const reducer = (state: any, action: any) => {
   if (handlers[action.type]) {
-    state = await handlers[action.type](state, action)
+    state = handlers[action.type](state, action)
   }
   return state
 }
