@@ -14,17 +14,16 @@ const updatesFromMeta = (meta: any) => {
   }
 }
 
-const updatesFromAdapterMeta = (state, meta: any) => {
+const handlePackageUpdate = (state, meta: any) => {
   state.model.adapterMeta = state.model.adapterMeta || {}
   state.model.adapterMeta[meta.valueType] = state.model.adapterMeta[meta.valueType] || {
     cumulativeEventSize: 0,
     cumulativePackageSize: 0,
     allRefs: []
   }
-
   state.model.adapterMeta[meta.valueType].cumulativeEventSize += meta.adapterMeta.eventSize
   state.model.adapterMeta[meta.valueType].cumulativePackageSize += meta.adapterMeta.pacakgeSize
-
+  // console.log("+ " + meta.adapterMeta.pacakgeSize);
   // TERRIBLE TERRIBLE !!!!!! TERRIBLE
   // storing all event refs in the read model is totally unacceptable for anything,
   // except maybe a package manager...
@@ -36,6 +35,30 @@ const updatesFromAdapterMeta = (state, meta: any) => {
   ) {
     state.model.adapterMeta[meta.valueType].allRefs.push(meta.adapterMeta.packageHash)
   }
+  return state.model.adapterMeta
+}
+
+const handlePackageDelete = (state, meta: any) => {
+  state.model.adapterMeta = state.model.adapterMeta || {}
+  state.model.adapterMeta[meta.valueType] = state.model.adapterMeta[meta.valueType] || {
+    cumulativeEventSize: 0,
+    cumulativePackageSize: 0,
+    allRefs: []
+  }
+  state.model.adapterMeta[meta.valueType].cumulativeEventSize += meta.adapterMeta.eventSize
+  state.model.adapterMeta[meta.valueType].cumulativePackageSize -= meta.adapterMeta.pacakgeSize
+
+  // console.log("- " + meta.adapterMeta.pacakgeSize);
+  let refs = state.model.adapterMeta[meta.valueType].allRefs
+  // TERRIBLE TERRIBLE !!!!!! TERRIBLE
+  // storing all event refs in the read model is totally unacceptable for anything,
+  // except maybe a package manager...
+  if (refs.indexOf(meta.adapterMeta.eventHash) === -1) {
+    refs.push(meta.adapterMeta.eventHash)
+  }
+  // when deleting we remove the package reference from the readModel here...
+  let idx = refs.indexOf(meta.adapterMeta.packageHash)
+  if (idx !== -1) refs.splice(idx, 1)
   return state.model.adapterMeta
 }
 
@@ -69,12 +92,23 @@ const handlers: any = {
       ...state,
       model: {
         ...state.model,
-        [action.payload.name]: {
-          ...state.model[action.payload.name],
-          version: action.payload.version,
-          multihash: action.payload.multihash
-        },
-        adapterMeta: updatesFromAdapterMeta(state, action.meta)
+        [action.payload.multihash]: action.payload.name,
+        adapterMeta: handlePackageUpdate(state, action.meta)
+      },
+      ...updatesFromMeta(action.meta)
+    }
+    return newState
+  },
+  PACKAGE_DELETED: (state: any, action: any) => {
+    // make sure to settle object before returning it.
+    // console.log("package deleted events must be interceptor so that meta can be extracted...");
+    // console.log(action.meta);
+    let newState = {
+      ...state,
+      model: {
+        ...state.model,
+        [action.payload.multihash]: undefined,
+        adapterMeta: handlePackageDelete(state, action.meta)
       },
       ...updatesFromMeta(action.meta)
     }
