@@ -35,39 +35,24 @@ describe('PackageService tests', () => {
     let store = await Factory.createStore(factory, accounts, relic.web3, accounts[0])
     let ps = new PackageService(relic, store, setup.eventStoreAdapter)
 
-    let event = await ps.publishEvent(
-      {
-        type: 'PACKAGE_UPDATED',
-        payload: {
-          name: 'bobo',
-          multihash: 'QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen',
-          version: '0.0.1'
-        },
-        meta: {
-          adapter: 'I'
-        }
-      },
+    let event = await ps.publishPackage(
+      'QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen',
+      'bobo@0.0.1',
+      accounts[0]
+    )
+    event = await ps.publishPackage(
+      'QmQh3iDyetVbjuyyXBNdrVo6ePtNGyjDU65QEXxSewfXaK',
+      'bobo@0.0.2',
       accounts[0]
     )
 
-    event = await ps.publishEvent(
-      {
-        type: 'PACKAGE_UPDATED',
-        payload: {
-          name: 'bobo',
-          multihash: 'QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen',
-          version: '0.0.2'
-        },
-        meta: {
-          adapter: 'I'
-        }
-      },
-      accounts[0]
-    )
     // console.log("published event: ", event);
-
     let readModel = await ps.getReadModel(readModelAdapter)
+    // console.log(JSON.stringify(readModel.state, null, 2))
 
+    event = await ps.deletePackage('QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen', accounts[0])
+
+    readModel = await ps.getReadModel(readModelAdapter)
     console.log(JSON.stringify(readModel.state, null, 2))
   })
 })

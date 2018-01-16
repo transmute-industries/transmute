@@ -11,6 +11,8 @@ import {
 
 import R from './Reducer'
 
+const MAPPER_ENCODING = 'I'
+
 export default class PackageService {
   constructor(
     public relic: Relic,
@@ -20,13 +22,40 @@ export default class PackageService {
     // console.log("created...");
   }
 
-  publishEvent = async (event: IFSA, fromAddress: string) => {
+  publishPackage = async (multihash: string, name: string, fromAddress: string) => {
     return await Store.writeFSA(
       this.packageManager,
       this.eventStoreAdapter,
       this.relic.web3,
       fromAddress,
-      event
+      {
+        type: 'PACKAGE_UPDATED',
+        payload: {
+          name,
+          multihash
+        },
+        meta: {
+          adapter: MAPPER_ENCODING
+        }
+      }
+    )
+  }
+
+  deletePackage = async (multihash: string, fromAddress: string) => {
+    return await Store.writeFSA(
+      this.packageManager,
+      this.eventStoreAdapter,
+      this.relic.web3,
+      fromAddress,
+      {
+        type: 'PACKAGE_DELETED',
+        payload: {
+          multihash
+        },
+        meta: {
+          adapter: MAPPER_ENCODING
+        }
+      }
     )
   }
 
@@ -35,9 +64,11 @@ export default class PackageService {
     state.contractAddress = this.packageManager.address
     state.readModelStoreKey = `${state.readModelType}:${state.contractAddress}`
 
+    // this needs to be made a generic supported method
+    // for package manager to be extended beyond ipfs
     let getStat = mhash => {
       return new Promise((resolve, reject) => {
-        this.eventStoreAdapter.mapper.I.db.stat(mhash, (err, result) => {
+        this.eventStoreAdapter.mapper[MAPPER_ENCODING].db.stat(mhash, (err, result) => {
           if (err) {
             reject(err)
           } else {
@@ -63,6 +94,13 @@ export default class PackageService {
       async (event: IFSA) => {
         if (event.type === 'PACKAGE_UPDATED') {
           event.meta.adapterMeta = await getAdapterMetaFromEvent(event)
+        }
+        return event
+      },
+      async (event: IFSA) => {
+        if (event.type === 'PACKAGE_DELETED') {
+          event.meta.adapterMeta = await getAdapterMetaFromEvent(event)
+          event.meta.updateAdapterMeta = true
         }
         return event
       }
