@@ -42,12 +42,43 @@ const initialState = {
   readModelType: 'PackageManager',
   contractAddress: '0x0000000000000000000000000000000000000000',
   lastEvent: null, // Last Event Index Processed
-  model: {} // where all the updates from events will be made
+  model: {} // where all the updates from events will be made,
 }
 
 const updatesFromMeta = (meta: any) => {
   return {
     lastEvent: meta.id
+  }
+}
+
+const updateAdapterMeta = async (state, action: any) => {
+  state.model.adapterMeta = state.model.adapterMeta || {}
+  state.model.adapterMeta[action.meta.valueType] = state.model.adapterMeta[
+    action.meta.valueType
+  ] || {
+    cumulativeEventSize: 0,
+    cumulativePackageSize: 0
+  }
+
+  let eventMultihash = action.meta.adapterPayload.value
+  let eventStat: any = await getStat(eventMultihash)
+  let newCumulativeEventSize =
+    state.model.adapterMeta[action.meta.valueType].cumulativeEventSize + eventStat.CumulativeSize
+  // console.log("some adapter events have hashs inside.. count them too");
+  // console.log(action.payload.multihash);
+  let packageStat: any = await getStat(action.payload.multihash)
+  // console.log(packageStat)
+  let newCumulativePacakgeSize =
+    state.model.adapterMeta[action.meta.valueType].cumulativePackageSize +
+    packageStat.CumulativeSize
+
+  return {
+    ...state.model.adapterMeta,
+    [action.meta.valueType]: {
+      ...state.model.adapterMeta[action.meta.valueType],
+      cumulativeEventSize: newCumulativeEventSize,
+      cumulativePackageSize: newCumulativePacakgeSize
+    }
   }
 }
 
@@ -76,7 +107,7 @@ const handlers: any = {
   },
   PACKAGE_UPDATED: async (state: any, action: any) => {
     // console.log(action);
-
+    // make sure to settle object before returning it.
     let newState = {
       ...state,
       model: {
@@ -85,17 +116,11 @@ const handlers: any = {
           ...state.model[action.payload.name],
           version: action.payload.version,
           multihash: action.payload.multihash
-        }
+        },
+        adapterMeta: await updateAdapterMeta(state, action)
       },
       ...updatesFromMeta(action.meta)
     }
-
-    // console.log("in reducer... use stat...", globalIPFS);
-    let eventMultihash = action.meta.adapterPayload.value
-
-    console.log(eventMultihash)
-    let data = await getStat(eventMultihash)
-    console.log(data)
 
     return newState
   }
@@ -103,7 +128,7 @@ const handlers: any = {
 
 const reducer = async (state: any, action: any) => {
   if (handlers[action.type]) {
-    return await handlers[action.type](state, action)
+    state = await handlers[action.type](state, action)
   }
   return state
 }

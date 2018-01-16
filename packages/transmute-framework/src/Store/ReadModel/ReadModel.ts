@@ -57,11 +57,10 @@ export class ReadModel implements IReadModel {
   }
 
   applyEvents = async (events: IFSA[]) => {
-    return Promise.all(
-      events.map(async (event: IFSA) => {
-        this.state = await this.reducer(this.state, event)
-      })
-    )
+    for (let i = 0; i < events.length; i++) {
+      let event = events[i]
+      this.state = await this.reducer(this.state, event)
+    }
   }
 
   sync = async (store: EventStore, readModelAdapter: EventStoreAdapter, web3: W3) => {

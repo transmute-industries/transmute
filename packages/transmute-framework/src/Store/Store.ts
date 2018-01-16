@@ -73,11 +73,12 @@ export namespace Store {
     fromAddress: string,
     events: IFSA[]
   ): Promise<IFSA[]> => {
-    return Promise.all(
-      events.map(event => {
-        return writeFSA(store, eventStoreAdapter, web3, fromAddress, event)
-      })
-    )
+    let writtenEvents: IFSA[] = []
+    for (let i = 0; i < events.length; i++) {
+      let event = events[i]
+      writtenEvents.push(await writeFSA(store, eventStoreAdapter, web3, fromAddress, event))
+    }
+    return writtenEvents
   }
 
   export const readFSAs = async (
