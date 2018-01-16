@@ -4,6 +4,10 @@ For building event sourced ethereum apps and services.
 
 A Redux-like api for ethereum smart contracts.
 
+## Minimal Example?
+
+See `../provider-engine-test-app`. 
+
 #### TODO
 
 Move PackageManager Tests to package manager service...

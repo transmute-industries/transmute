@@ -1,4 +1,5 @@
-import {} from 'soltsice'
+import { getDefaultRelic } from './getRelic'
+
 import {
   W3,
   Relic,
@@ -32,9 +33,6 @@ const nodeStorageReadModelAdapter: any = {
   }
 }
 
-declare var jasmine: any
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 10 * 1000
-
 const eventStoreAdapter = new EventStoreAdapter({
   I: {
     keyName: 'multihash',
@@ -60,20 +58,8 @@ const eventStoreAdapter = new EventStoreAdapter({
   }
 })
 
-export const getRelic = async () => {
-  const relic = new Relic({
-    providerUrl: 'http://localhost:8545'
-  })
-  const accounts = await relic.getAccounts()
-  W3.Default = relic.web3
-  W3.Default.defaultAccount = accounts[0]
-  return relic
-}
-
 export const getSetupAsync = async () => {
-  const relic = new Relic({
-    providerUrl: 'http://localhost:8545'
-  })
+  const { relic } = getDefaultRelic()
 
   const accounts = await relic.getAccounts()
 

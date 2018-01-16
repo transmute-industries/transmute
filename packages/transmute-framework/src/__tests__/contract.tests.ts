@@ -1,3 +1,4 @@
+import { getDefaultRelic } from '../__mocks__/getRelic'
 import { W3, Relic, EventTransformer, PackageManager } from '../transmute-framework'
 
 /**
@@ -6,9 +7,7 @@ import { W3, Relic, EventTransformer, PackageManager } from '../transmute-framew
 describe('contract tests', () => {
   let accounts
   beforeAll(async () => {
-    let relic = new Relic({
-      providerUrl: 'http://localhost:8545'
-    })
+    let relic = getDefaultRelic()
     accounts = await relic.getAccounts()
     W3.Default = relic.web3
   })

@@ -1,4 +1,4 @@
-import { getRelic } from '../../../__mocks__/setup'
+import { getDefaultRelic } from '../../../__mocks__/getRelic'
 
 import {
   W3,
@@ -22,7 +22,7 @@ describe('EventStore', () => {
   let events: IFSA[]
 
   beforeAll(async () => {
-    relic = await getRelic()
+    relic = await getDefaultRelic()
     accounts = await relic.getAccounts()
   })
 

@@ -1,4 +1,4 @@
-import { getRelic } from '../../../__mocks__/setup'
+import { getDefaultRelic } from '../../../__mocks__/getRelic'
 
 import {
   W3,
@@ -28,7 +28,7 @@ describe('EventStore', () => {
   let whitelist: string[]
 
   beforeAll(async () => {
-    relic = await getRelic()
+    relic = await getDefaultRelic()
     accounts = await relic.getAccounts()
     whitelist = accounts.slice(0, 4)
     factory = await EventStoreFactory.New(W3.TC.txParamsDefaultDeploy(accounts[0]), {
