@@ -23,6 +23,20 @@ const readModelAdapter: any = {
   }
 }
 
+let globalIPFS
+
+let getStat = mhash => {
+  return new Promise((resolve, reject) => {
+    globalIPFS.stat(mhash, (err, result) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(result)
+      }
+    })
+  })
+}
+
 const initialState = {
   readModelStoreKey: '', // readModelType:contractAddress
   readModelType: 'PackageManager',
@@ -60,9 +74,10 @@ const handlers: any = {
       ...updatesFromMeta(action.meta)
     }
   },
-  PACKAGE_UPDATED: (state: any, action: any) => {
+  PACKAGE_UPDATED: async (state: any, action: any) => {
     // console.log(action);
-    return {
+
+    let newState = {
       ...state,
       model: {
         ...state.model,
@@ -74,12 +89,21 @@ const handlers: any = {
       },
       ...updatesFromMeta(action.meta)
     }
+
+    // console.log("in reducer... use stat...", globalIPFS);
+    let eventMultihash = action.meta.adapterPayload.value
+
+    console.log(eventMultihash)
+    let data = await getStat(eventMultihash)
+    console.log(data)
+
+    return newState
   }
 }
 
-const reducer = (state: any, action: any) => {
+const reducer = async (state: any, action: any) => {
   if (handlers[action.type]) {
-    return handlers[action.type](state, action)
+    return await handlers[action.type](state, action)
   }
   return state
 }
@@ -108,6 +132,8 @@ describe('ipfs tests', () => {
       relic.web3,
       accounts[0]
     )
+
+    globalIPFS = setup.eventStoreAdapter.mapper.I.db
 
     let events = await Store.writeFSAs(store, setup.eventStoreAdapter, relic.web3, accounts[0], [
       {
