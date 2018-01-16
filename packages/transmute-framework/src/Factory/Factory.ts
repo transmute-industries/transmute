@@ -67,7 +67,7 @@ export namespace Factory {
 
     let factoryReadModel = new ReadModel(readModelAdapter, Reducer.reducer, state)
 
-    let changes = await factoryReadModel.sync(factory as any, adapter, web3, fromAddress)
+    let changes = await factoryReadModel.sync(factory as any, adapter, web3)
 
     return factoryReadModel
   }

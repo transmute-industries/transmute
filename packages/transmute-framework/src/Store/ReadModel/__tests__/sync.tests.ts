@@ -56,15 +56,15 @@ describe('ReadModel event tests', () => {
     expect(writtenEvents.length).toBe(2)
     let rm = new ReadModel(rmAdapter, reducer, state)
 
-    let hadChanges = await rm.sync(store, eventStoreAdapter, relic.web3, accounts[0])
+    let hadChanges = await rm.sync(store, eventStoreAdapter, relic.web3)
     expect(hadChanges) // expect changes, we have not colled sync yet
 
-    hadChanges = await rm.sync(store, eventStoreAdapter, relic.web3, accounts[0])
+    hadChanges = await rm.sync(store, eventStoreAdapter, relic.web3)
     expect(!hadChanges) // expect no changes, we called sync, and have not written any events
 
     writtenEvents = await Store.writeFSAs(store, eventStoreAdapter, relic.web3, accounts[0], events)
 
-    hadChanges = await rm.sync(store, eventStoreAdapter, relic.web3, accounts[0])
+    hadChanges = await rm.sync(store, eventStoreAdapter, relic.web3)
     expect(hadChanges) // expect changes, wrote events written any events
   })
 })

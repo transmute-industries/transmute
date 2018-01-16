@@ -62,12 +62,7 @@ export class ReadModel implements IReadModel {
     })
   }
 
-  sync = async (
-    store: EventStore,
-    readModelAdapter: EventStoreAdapter,
-    web3: W3,
-    fromAddress: string
-  ) => {
+  sync = async (store: EventStore, readModelAdapter: EventStoreAdapter, web3: W3) => {
     let changes = false
     try {
       this.state = await this.readModelAdapter.getItem(this.state.readModelStoreKey)

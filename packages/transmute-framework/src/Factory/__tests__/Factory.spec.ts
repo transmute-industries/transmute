@@ -63,7 +63,7 @@ describe('Factory', () => {
     )
 
     // console.log(eventStoreAdapter.eventMap)
-    let changes = await readModel.sync(factory as any, eventStoreAdapter, relic.web3, accounts[0])
+    let changes = await readModel.sync(factory as any, eventStoreAdapter, relic.web3)
     // console.log(changes)
 
     expect(Object.keys(readModel.state.model).length).toBe(2)
