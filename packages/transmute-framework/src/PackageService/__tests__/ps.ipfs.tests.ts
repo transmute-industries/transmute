@@ -31,49 +31,40 @@ describe('PackageService tests', () => {
   })
 
   it('PackageService is special case of eventstore', async () => {
-    console.log('foo', relic)
-
     let store = await Factory.createStore(factory, accounts, relic.web3, accounts[0])
+    let ps = new PackageService(relic, store, setup.eventStoreAdapter)
 
-    // let ps = new PackageService(store, setup.eventStoreAdapter);
+    let event = await ps.publishEvent(
+      {
+        type: 'PACKAGE_UPDATED',
+        payload: {
+          name: 'bobo',
+          multihash: 'QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen',
+          version: '0.0.1'
+        },
+        meta: {
+          adapter: 'I'
+        }
+      },
+      accounts[0]
+    )
+
+    event = await ps.publishEvent(
+      {
+        type: 'PACKAGE_UPDATED',
+        payload: {
+          name: 'bobo',
+          multihash: 'QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen',
+          version: '0.0.2'
+        },
+        meta: {
+          adapter: 'I'
+        }
+      },
+      accounts[0]
+    )
+    // console.log("published event: ", event);
+
+    await ps.getReadModel(readModelAdapter)
   })
-
-  // it('read model can use internal and external events.', async () => {
-
-  //   globalIPFS = setup.eventStoreAdapter.mapper.I.db
-
-  //   let events = await Store.writeFSAs(store, setup.eventStoreAdapter, relic.web3, accounts[0], [
-  //     {
-  //       type: 'PACKAGE_UPDATED',
-  //       payload: {
-  //         name: 'bobo',
-  //         multihash: 'QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen',
-  //         version: '0.0.1'
-  //       },
-  //       meta: {
-  //         adapter: 'I'
-  //       }
-  //     },
-  //     {
-  //       type: 'PACKAGE_UPDATED',
-  //       payload: {
-  //         name: 'bobo',
-  //         multihash: 'QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen',
-  //         version: '0.0.2'
-  //       },
-  //       meta: {
-  //         adapter: 'I'
-  //       }
-  //     }
-  //   ])
-
-  //   let state: IReadModelState = JSON.parse(JSON.stringify(initialState))
-
-  //   state.contractAddress = factory.address
-  //   state.readModelStoreKey = `${state.readModelType}:${state.contractAddress}`
-
-  //   let ipfsReadModel = new ReadModel(readModelAdapter, reducer, state)
-  //   let changes = await ipfsReadModel.sync(store, setup.eventStoreAdapter, relic.web3)
-  //   console.log(JSON.stringify(ipfsReadModel, null, 2))
-  // })
 })
