@@ -22,8 +22,7 @@ contract("PackageManager", async accounts => {
     let events = await T.Store.readFSAs(
       eventStore,
       TT.eventStoreAdapter,
-      TT.relic.web3,
-      accounts[0]
+      TT.relic.web3
     );
     // console.log(events)
     assert(events[0].type === "NEW_OWNER");

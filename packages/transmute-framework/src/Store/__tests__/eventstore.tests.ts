@@ -98,32 +98,7 @@ describe('Store', () => {
     )
     expect(writtenEvents.length).toBe(6)
     // 3 events created by the factory...
-    let readAllEvents = await Store.readFSAs(
-      setup.store,
-      setup.eventStoreAdapter,
-      setup.relic.web3,
-      accounts[0]
-    )
+    let readAllEvents = await Store.readFSAs(setup.store, setup.eventStoreAdapter, setup.relic.web3)
     expect(readAllEvents.length).toBe(9)
   })
 })
-
-// it("sanity", async () => {
-//   let event = MarshalledEvents[0];
-//   let eventCount = await store.eventCount()
-//   expect(eventCount.toNumber()).toBe(3);
-
-//   let eventValues = await store.readEvent(0, W3.TC.txParamsDefaultDeploy(accounts[0]))
-//   let readFSA = EventTransformer.arrayToFSA(eventValues)
-//   console.log(readFSA)
-
-//   let receipt = await store.writeEvent(
-//     event.eventType,
-//     event.keyType,
-//     event.valueType,
-//     event.key,
-//     event.value,
-//     W3.TC.txParamsDefaultDeploy(accounts[0], WRITE_EVENT_GAS_COST)
-//   );
-//   console.log(receipt.logs)
-// });

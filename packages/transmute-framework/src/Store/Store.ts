@@ -27,14 +27,10 @@ export namespace Store {
     store: EventStore,
     eventStoreAdapter: EventStoreAdapter,
     web3: any,
-    fromAddress: string,
     eventId: number
   ) => {
     // move this to eventStoreAdapter....
-    let solidityValues: any = await store.readEvent(
-      eventId,
-      W3.TC.txParamsDefaultDeploy(fromAddress)
-    )
+    let solidityValues: any = await store.readEvent(eventId)
     let esEvent = await EventTransformer.valuesToEsEvent(
       solidityValues[0],
       solidityValues[1],
@@ -88,13 +84,12 @@ export namespace Store {
     store: EventStore,
     eventStoreAdapter: EventStoreAdapter,
     web3: any,
-    fromAddress: string,
     eventIndex: number = 0
   ): Promise<IFSA[]> => {
-    let endIndex: number = await eventCount(store, web3, fromAddress)
+    let endIndex: number = await eventCount(store)
     let events: IFSA[] = []
     for (let i: number = eventIndex; i < endIndex; i++) {
-      events.push(await readFSA(store, eventStoreAdapter, web3, fromAddress, i))
+      events.push(await readFSA(store, eventStoreAdapter, web3, i))
     }
     return Promise.all(events)
   }
