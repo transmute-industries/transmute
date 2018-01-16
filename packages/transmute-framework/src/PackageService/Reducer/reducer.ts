@@ -104,8 +104,8 @@ const handlers: any = {
           ...state.model[action.payload.name],
           version: action.payload.version,
           multihash: action.payload.multihash
-        },
-        adapterMeta: await updateAdapterMeta(state, action)
+        }
+        // adapterMeta: await updateAdapterMeta(state, action)
       },
       ...updatesFromMeta(action.meta)
     }
