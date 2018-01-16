@@ -1,6 +1,7 @@
 import { getSetupAsync } from '../../__mocks__/setup'
 
 import { Relic, Store, Factory, PackageService, EventStoreFactory } from '../../transmute-framework'
+import { read } from 'fs-extra'
 
 const Storage = require('node-storage')
 const db = new Storage('./read_model_storage')
@@ -65,6 +66,8 @@ describe('PackageService tests', () => {
     )
     // console.log("published event: ", event);
 
-    await ps.getReadModel(readModelAdapter)
+    let readModel = await ps.getReadModel(readModelAdapter)
+
+    console.log(JSON.stringify(readModel.state, null, 2))
   })
 })

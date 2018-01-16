@@ -76,11 +76,14 @@ export class ReadModel implements IReadModel {
     }
     let startIndex = this.state.lastEvent !== null ? this.state.lastEvent + 1 : 0
     let events = await Store.readFSAs(store, readModelAdapter, web3, startIndex)
+
+    // Interceptors are used to transform events that have been read from the chain.
+    // encryption, loading, size calcs, etc...
     if (this.interceptors) {
       for (let i = 0; i < this.interceptors.length; i++) {
         events = await Interceptor.applyAll(this.interceptors, events)
       }
-      console.log('interceptor transformed events: ', events)
+      // console.log('interceptor transformed events: ', events)
     }
     changes = changes || events.length > 0
     if (changes) {
