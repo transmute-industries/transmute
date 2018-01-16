@@ -20,13 +20,7 @@ export const getSetupAsync = async () => {
 
   const accounts = await relic.getAccounts()
   const factory = await Factory.create(relic.web3, accounts[0])
-  const store = await Factory.createStore(
-    factory,
-    accounts.slice(0, 5),
-    eventStoreAdapter,
-    relic.web3,
-    accounts[0]
-  )
+  const store = await Factory.createStore(factory, accounts.slice(0, 5), relic.web3, accounts[0])
 
   return {
     relic,

@@ -1,27 +1,4 @@
-import { getSetupAsync } from '../__mocks__/setup'
-
-import {
-  Relic,
-  Store,
-  Factory,
-  EventStoreFactory,
-  EventStore,
-  InternalEventTypes,
-  ReadModel,
-  IReadModelState
-} from '../transmute-framework'
-
-const Storage = require('node-storage')
-const db = new Storage('./read_model_storage')
-
-const readModelAdapter: any = {
-  getItem: (id: string) => {
-    return JSON.parse(db.get(id))
-  },
-  setItem: (id: string, value: any) => {
-    return db.put(id, JSON.stringify(value))
-  }
-}
+import { InternalEventTypes } from '../../transmute-framework'
 
 let globalIPFS
 
@@ -37,7 +14,7 @@ let getStat = mhash => {
   })
 }
 
-const initialState = {
+export const initialState = {
   readModelStoreKey: '', // readModelType:contractAddress
   readModelType: 'PackageManager',
   contractAddress: '0x0000000000000000000000000000000000000000',
@@ -132,71 +109,13 @@ const handlers: any = {
       },
       ...updatesFromMeta(action.meta)
     }
-
     return newState
   }
 }
 
-const reducer = async (state: any, action: any) => {
+export const reducer = async (state: any, action: any) => {
   if (handlers[action.type]) {
     state = await handlers[action.type](state, action)
   }
   return state
 }
-
-/**
- * ipfs tests
- */
-describe('ipfs tests', () => {
-  let setup: any
-  let accounts: string[]
-  let relic: Relic
-  let factory: EventStoreFactory
-
-  beforeAll(async () => {
-    setup = await getSetupAsync()
-    accounts = setup.accounts
-    relic = setup.relic
-    factory = setup.factory
-  })
-
-  it('read model can use internal and external events.', async () => {
-    let store = await Factory.createStore(factory, accounts, relic.web3, accounts[0])
-
-    globalIPFS = setup.eventStoreAdapter.mapper.I.db
-
-    let events = await Store.writeFSAs(store, setup.eventStoreAdapter, relic.web3, accounts[0], [
-      {
-        type: 'PACKAGE_UPDATED',
-        payload: {
-          name: 'bobo',
-          multihash: 'QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen',
-          version: '0.0.1'
-        },
-        meta: {
-          adapter: 'I'
-        }
-      },
-      {
-        type: 'PACKAGE_UPDATED',
-        payload: {
-          name: 'bobo',
-          multihash: 'QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen',
-          version: '0.0.2'
-        },
-        meta: {
-          adapter: 'I'
-        }
-      }
-    ])
-
-    let state: IReadModelState = JSON.parse(JSON.stringify(initialState))
-
-    state.contractAddress = factory.address
-    state.readModelStoreKey = `${state.readModelType}:${state.contractAddress}`
-
-    let ipfsReadModel = new ReadModel(readModelAdapter, reducer, state)
-    let changes = await ipfsReadModel.sync(store, setup.eventStoreAdapter, relic.web3)
-    console.log(JSON.stringify(ipfsReadModel, null, 2))
-  })
-})

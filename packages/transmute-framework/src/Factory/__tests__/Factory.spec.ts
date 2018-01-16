@@ -54,13 +54,7 @@ describe('Factory', () => {
     expect(eventStoreContractAddresses.length).toBe(1)
 
     // adding a new event store should update the read model
-    let eventStore = Factory.createStore(
-      factory,
-      accounts,
-      eventStoreAdapter,
-      relic.web3,
-      accounts[0]
-    )
+    let eventStore = await Factory.createStore(factory, accounts, relic.web3, accounts[0])
 
     // console.log(eventStoreAdapter.eventMap)
     let changes = await readModel.sync(factory as any, eventStoreAdapter, relic.web3)

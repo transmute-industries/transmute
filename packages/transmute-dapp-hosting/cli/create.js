@@ -44,7 +44,6 @@ module.exports = vorpal => {
         let eventStore = await T.Factory.createStore(
           factory,
           accounts,
-          eventStoreAdapter,
           relic.web3,
           accounts[0]
         );

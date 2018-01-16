@@ -30,7 +30,7 @@ describe('ReadModel event tests', () => {
 
   it('can applyEvents', async () => {
     let rm = new ReadModel(adapter, reducer, state)
-    rm.applyEvents(events)
+    await rm.applyEvents(events)
     expect(rm.state.model.name).toBe('dave')
   })
 })
