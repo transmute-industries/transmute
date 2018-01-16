@@ -43,9 +43,4 @@ describe('Store', () => {
       expect(writtenFSA.payload).toEqual(event.payload)
     })
   })
-
-  // it('look at all events...', async () => {
-  //   let events = await Store.readFSAs(store, eventStoreAdapter, relic.web3, accounts[0], 0)
-  //   console.log(JSON.stringify(events, null, 2))
-  // })
 })

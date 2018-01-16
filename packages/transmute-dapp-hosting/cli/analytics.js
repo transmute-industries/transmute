@@ -57,8 +57,7 @@ const getStorageUtilization = async (
       let events = await T.Store.readFSAs(
         store,
         eventStoreAdapter,
-        relic.web3,
-        cutomerContract.owner
+        relic.web3
       );
 
       let adapterEvents = events.filter((event) =>{

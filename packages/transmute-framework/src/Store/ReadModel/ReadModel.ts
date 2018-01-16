@@ -77,7 +77,7 @@ export class ReadModel implements IReadModel {
       changes = true
     }
     let startIndex = this.state.lastEvent !== null ? this.state.lastEvent + 1 : 0
-    let events = await Store.readFSAs(store, readModelAdapter, web3, fromAddress, startIndex)
+    let events = await Store.readFSAs(store, readModelAdapter, web3, startIndex)
     changes = changes || events.length > 0
     if (changes) {
       this.applyEvents(events)
