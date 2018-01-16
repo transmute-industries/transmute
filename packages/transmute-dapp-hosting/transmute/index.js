@@ -1,14 +1,20 @@
 const web3 = require("./web3");
+const Web3 = require("web3");
+const ProviderEngine = require("web3-provider-engine");
+const RpcSubprovider = require("web3-provider-engine/subproviders/rpc");
+const WalletSubprovider = require("web3-provider-engine/subproviders/wallet");
+
 const eventStoreAdapter = require("./eventStoreAdapter");
 const readModelAdapter = require("./readModelAdapter");
 
 const T = require("transmute-framework");
 const TransmuteCrypto = require("transmute-crypto");
 
+const RPC_HOST = 'http://localhost:8545'
+
 const init = async () => {
   const relic = new T.Relic(web3);
   const accounts = await relic.getAccounts();
-
   const generateTestWallets = async num => {
     const sodium = await TransmuteCrypto.getSodium();
     let testWallets = [];
@@ -26,11 +32,26 @@ const init = async () => {
     return testWallets;
   };
 
+  const getRelicWalletWithPrivateKey = (unPrefixedPrivateKeyHexString) =>{
+    const engine = new ProviderEngine()
+    const wallet = TransmuteCrypto.getWalletFromPrivateKey(unPrefixedPrivateKeyHexString)
+    const address = TransmuteCrypto.getDefaultAddressFromWallet(wallet)
+    engine.addProvider(new WalletSubprovider(wallet, {}))
+    engine.addProvider(
+      new RpcSubprovider({
+        rpcUrl: RPC_HOST
+      })
+    )
+    engine.start()
+    return new T.Relic(new Web3(engine));
+  }
+
   return {
     T,
     relic,
     accounts,
     generateTestWallets,
+    getRelicWalletWithPrivateKey,
     eventStoreAdapter,
     readModelAdapter
   };
