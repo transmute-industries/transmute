@@ -58,10 +58,10 @@ export class ReadModel implements IReadModel {
     }
   }
 
-  applyEvents = async (events: IFSA[]) => {
+  applyEvents = (events: IFSA[]) => {
     for (let i = 0; i < events.length; i++) {
       let event = events[i]
-      this.state = await this.reducer(this.state, event)
+      this.state = this.reducer(this.state, event)
     }
   }
 

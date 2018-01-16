@@ -32,7 +32,6 @@ export default class PackageService {
 
   getReadModel = async readModelAdapter => {
     let state: IReadModelState = JSON.parse(JSON.stringify(R.initialState))
-
     state.contractAddress = this.packageManager.address
     state.readModelStoreKey = `${state.readModelType}:${state.contractAddress}`
 
@@ -47,42 +46,6 @@ export default class PackageService {
         })
       })
     }
-
-    // const updateAdapterMeta = async (state, action: any) => {
-
-    // let eventMultihash = action.meta.adapterPayload.value;
-    // let eventStat: any = await getStat(eventMultihash);
-    // let newCumulativeEventSize =
-    //   state.model.adapterMeta[action.meta.valueType].cumulativeEventSize +
-    //   eventStat.CumulativeSize;
-    // // console.log("some adapter events have hashs inside.. count them too");
-    // let packageStat: any = await getStat(action.payload.multihash);
-    // let newCumulativePacakgeSize =
-    //   state.model.adapterMeta[action.meta.valueType].cumulativePackageSize +
-    //   packageStat.CumulativeSize;
-
-    // TERRIBLE TERRIBLE !!!!!! TERRIBLE
-    // storing all event refs in the read model is totally unacceptable for anything,
-    // except maybe a package manager...
-    // if (state.model.adapterMeta[action.meta.valueType].allRefs.indexOf(eventMultihash) === -1) {
-    //   state.model.adapterMeta[action.meta.valueType].allRefs.push(eventMultihash);
-    // }
-    // if (
-    //   state.model.adapterMeta[action.meta.valueType].allRefs.indexOf(action.payload.multihash) ===
-    //   -1
-    // ) {
-    //   state.model.adapterMeta[action.meta.valueType].allRefs.push(action.payload.multihash);
-    // }
-
-    // return {
-    //   ...state.model.adapterMeta,
-    //   [action.meta.valueType]: {
-    //     ...state.model.adapterMeta[action.meta.valueType],
-    //     cumulativeEventSize: newCumulativeEventSize,
-    //     cumulativePackageSize: newCumulativePacakgeSize
-    //   }
-    // };
-    // };
 
     const getAdapterMetaFromEvent = async (action: IFSA) => {
       let eventMultihash = action.meta.adapterPayload.value
@@ -111,6 +74,7 @@ export default class PackageService {
       this.eventStoreAdapter,
       this.relic.web3
     )
-    console.log(JSON.stringify(ipfsReadModel, null, 2))
+    // console.log(JSON.stringify(ipfsReadModel, null, 2))
+    return ipfsReadModel
   }
 }
