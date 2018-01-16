@@ -59,7 +59,7 @@ const eventStoreAdapter = new EventStoreAdapter({
 })
 
 export const getSetupAsync = async () => {
-  const { relic } = getDefaultRelic()
+  const relic = getDefaultRelic()
 
   const accounts = await relic.getAccounts()
 
