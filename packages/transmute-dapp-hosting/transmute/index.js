@@ -3,35 +3,34 @@ const eventStoreAdapter = require("./eventStoreAdapter");
 const readModelAdapter = require("./readModelAdapter");
 
 const T = require("transmute-framework");
+const TransmuteCrypto = require("transmute-crypto");
 
 const init = async () => {
   const relic = new T.Relic(web3);
   const accounts = await relic.getAccounts();
 
-  //   let factory = await T.Factory.create(relic.web3, accounts[0]);
-
-  //   let factorReadModel = await T.Factory.getReadModel(
-  //     factory,
-  //     eventStoreAdapter,
-  //     readModelAdapter,
-  //     relic.web3,
-  //     accounts[0]
-  //   );
-
-  //   let eventStore = await T.Factory.createStore(
-  //     factory,
-  //     accounts,
-  //     eventStoreAdapter,
-  //     relic.web3,
-  //     accounts[0]
-  //   );
+  const generateTestWallets = async num => {
+    const sodium = await TransmuteCrypto.getSodium();
+    let testWallets = [];
+    for (let i = 0; i < num; i++) {
+      const alice = sodium.crypto_box_keypair();
+      const unPrefixedPrivateKeyHexString = sodium.to_hex(alice.privateKey);
+      let address = T.Utils.privateKeyHexToAddress(
+        "0x" + unPrefixedPrivateKeyHexString
+      );
+      testWallets.push({
+        address: "0x" + sodium.to_hex(address),
+        privateKey: "0x" + unPrefixedPrivateKeyHexString
+      });
+    }
+    return testWallets;
+  };
 
   return {
     T,
     relic,
     accounts,
-    // factory,
-    // eventStore,
+    generateTestWallets,
     eventStoreAdapter,
     readModelAdapter
   };
