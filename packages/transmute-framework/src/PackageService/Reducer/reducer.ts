@@ -1,19 +1,5 @@
 import { InternalEventTypes } from '../../transmute-framework'
 
-let globalIPFS
-
-let getStat = mhash => {
-  return new Promise((resolve, reject) => {
-    globalIPFS.stat(mhash, (err, result) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(result)
-      }
-    })
-  })
-}
-
 export const initialState = {
   readModelStoreKey: '', // readModelType:contractAddress
   readModelType: 'PackageManager',
@@ -28,46 +14,29 @@ const updatesFromMeta = (meta: any) => {
   }
 }
 
-const updateAdapterMeta = async (state, action: any) => {
+const updatesFromAdapterMeta = (state, meta: any) => {
   state.model.adapterMeta = state.model.adapterMeta || {}
-  state.model.adapterMeta[action.meta.valueType] = state.model.adapterMeta[
-    action.meta.valueType
-  ] || {
+  state.model.adapterMeta[meta.valueType] = state.model.adapterMeta[meta.valueType] || {
     cumulativeEventSize: 0,
     cumulativePackageSize: 0,
     allRefs: []
   }
 
-  let eventMultihash = action.meta.adapterPayload.value
-  let eventStat: any = await getStat(eventMultihash)
-  let newCumulativeEventSize =
-    state.model.adapterMeta[action.meta.valueType].cumulativeEventSize + eventStat.CumulativeSize
-  // console.log("some adapter events have hashs inside.. count them too");
-  let packageStat: any = await getStat(action.payload.multihash)
-  let newCumulativePacakgeSize =
-    state.model.adapterMeta[action.meta.valueType].cumulativePackageSize +
-    packageStat.CumulativeSize
+  state.model.adapterMeta[meta.valueType].cumulativeEventSize += meta.adapterMeta.eventSize
+  state.model.adapterMeta[meta.valueType].cumulativePackageSize += meta.adapterMeta.pacakgeSize
 
   // TERRIBLE TERRIBLE !!!!!! TERRIBLE
   // storing all event refs in the read model is totally unacceptable for anything,
   // except maybe a package manager...
-  if (state.model.adapterMeta[action.meta.valueType].allRefs.indexOf(eventMultihash) === -1) {
-    state.model.adapterMeta[action.meta.valueType].allRefs.push(eventMultihash)
+  if (state.model.adapterMeta[meta.valueType].allRefs.indexOf(meta.adapterMeta.eventHash) === -1) {
+    state.model.adapterMeta[meta.valueType].allRefs.push(meta.adapterMeta.eventHash)
   }
   if (
-    state.model.adapterMeta[action.meta.valueType].allRefs.indexOf(action.payload.multihash) === -1
+    state.model.adapterMeta[meta.valueType].allRefs.indexOf(meta.adapterMeta.packageHash) === -1
   ) {
-    state.model.adapterMeta[action.meta.valueType].allRefs.push(action.payload.multihash)
+    state.model.adapterMeta[meta.valueType].allRefs.push(meta.adapterMeta.packageHash)
   }
-
-  return {
-    ...state.model.adapterMeta,
-    [action.meta.valueType]: {
-      ...state.model.adapterMeta[action.meta.valueType],
-      cumulativeEventSize: newCumulativeEventSize,
-      cumulativePackageSize: newCumulativePacakgeSize
-    }
-  }
+  return state.model.adapterMeta
 }
 
 const handlers: any = {
@@ -94,7 +63,7 @@ const handlers: any = {
     }
   },
   PACKAGE_UPDATED: async (state: any, action: any) => {
-    // console.log(action);
+    console.log(action.meta.adapterMeta)
     // make sure to settle object before returning it.
     let newState = {
       ...state,
@@ -104,8 +73,8 @@ const handlers: any = {
           ...state.model[action.payload.name],
           version: action.payload.version,
           multihash: action.payload.multihash
-        }
-        // adapterMeta: await updateAdapterMeta(state, action)
+        },
+        adapterMeta: await updatesFromAdapterMeta(state, action.meta)
       },
       ...updatesFromMeta(action.meta)
     }
