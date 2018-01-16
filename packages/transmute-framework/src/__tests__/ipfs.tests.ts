@@ -57,7 +57,8 @@ const updateAdapterMeta = async (state, action: any) => {
     action.meta.valueType
   ] || {
     cumulativeEventSize: 0,
-    cumulativePackageSize: 0
+    cumulativePackageSize: 0,
+    allRefs: []
   }
 
   let eventMultihash = action.meta.adapterPayload.value
@@ -65,12 +66,22 @@ const updateAdapterMeta = async (state, action: any) => {
   let newCumulativeEventSize =
     state.model.adapterMeta[action.meta.valueType].cumulativeEventSize + eventStat.CumulativeSize
   // console.log("some adapter events have hashs inside.. count them too");
-  // console.log(action.payload.multihash);
   let packageStat: any = await getStat(action.payload.multihash)
-  // console.log(packageStat)
   let newCumulativePacakgeSize =
     state.model.adapterMeta[action.meta.valueType].cumulativePackageSize +
     packageStat.CumulativeSize
+
+  // TERRIBLE TERRIBLE !!!!!! TERRIBLE
+  // storing all event refs in the read model is totally unacceptable for anything,
+  // except maybe a package manager...
+  if (state.model.adapterMeta[action.meta.valueType].allRefs.indexOf(eventMultihash) === -1) {
+    state.model.adapterMeta[action.meta.valueType].allRefs.push(eventMultihash)
+  }
+  if (
+    state.model.adapterMeta[action.meta.valueType].allRefs.indexOf(action.payload.multihash) === -1
+  ) {
+    state.model.adapterMeta[action.meta.valueType].allRefs.push(action.payload.multihash)
+  }
 
   return {
     ...state.model.adapterMeta,
