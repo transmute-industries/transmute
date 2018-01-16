@@ -56,10 +56,12 @@ export class ReadModel implements IReadModel {
     }
   }
 
-  applyEvents = (events: IFSA[]) => {
-    events.forEach((event: IFSA) => {
-      this.state = this.reducer(this.state, event)
-    })
+  applyEvents = async (events: IFSA[]) => {
+    return Promise.all(
+      events.map(async (event: IFSA) => {
+        this.state = await this.reducer(this.state, event)
+      })
+    )
   }
 
   sync = async (store: EventStore, readModelAdapter: EventStoreAdapter, web3: W3) => {
@@ -75,7 +77,7 @@ export class ReadModel implements IReadModel {
     let events = await Store.readFSAs(store, readModelAdapter, web3, startIndex)
     changes = changes || events.length > 0
     if (changes) {
-      this.applyEvents(events)
+      await this.applyEvents(events)
       this.readModelAdapter.setItem(this.state.readModelStoreKey, this.state)
     }
     return changes
