@@ -8,6 +8,12 @@ const WalletSubprovider = require('web3-provider-engine/subproviders/wallet.js')
 
 import * as TransmuteCrypto from 'transmute-crypto'
 
+import {
+  getDefaultWeb3,
+  getWeb3FromWalletWithMneumonic,
+  getWeb3FromWalletWithPrivateKey
+} from '../__mocks__/getWeb3'
+
 const RPC_HOST = 'http://localhost:8545'
 
 const getAccounts = (web3: any): Promise<string[]> => {
@@ -32,60 +38,20 @@ describe('web3 tests', () => {
   })
 
   it('supports provider engine default', async () => {
-    const engine = new ProviderEngine()
-    engine.addProvider(
-      new RpcSubprovider({
-        rpcUrl: RPC_HOST
-      })
-    )
-    const web3 = new Web3(engine)
-    engine.start()
+    const { web3 } = getDefaultWeb3()
     let accounts = await getAccounts(web3)
     expect(accounts.length).toBe(10)
   })
 
-  it('supports provider engine wallet', async () => {
-    const engine = new ProviderEngine()
-
-    let mneumonic = TransmuteCrypto.generateMnemonic()
-
-    let wallet = TransmuteCrypto.getWalletFromMnemonic(mneumonic)
-    let address = TransmuteCrypto.getDefaultAddressFromWallet(wallet)
-
-    engine.addProvider(new WalletSubprovider(wallet, {}))
-
-    engine.addProvider(
-      new RpcSubprovider({
-        rpcUrl: RPC_HOST
-      })
-    )
-
-    const web3 = new Web3(engine)
-    engine.start()
-
+  it('supports provider engine wallet from menumonic', async () => {
+    const { web3, address } = getWeb3FromWalletWithMneumonic()
     let accounts = await getAccounts(web3)
     expect(accounts.length).toBe(1)
     expect(accounts[0]).toBe(web3.utils.toChecksumAddress(address))
   })
 
   it('supports provider engine wallet from sodium private key', async () => {
-    const engine = new ProviderEngine()
-    const sodium = await TransmuteCrypto.getSodium()
-    const alice = sodium.crypto_box_keypair()
-    const unPrefixedPrivateKeyHexString = sodium.to_hex(alice.privateKey)
-    const wallet = TransmuteCrypto.getWalletFromPrivateKey(unPrefixedPrivateKeyHexString)
-    const address = TransmuteCrypto.getDefaultAddressFromWallet(wallet)
-    engine.addProvider(new WalletSubprovider(wallet, {}))
-
-    engine.addProvider(
-      new RpcSubprovider({
-        rpcUrl: RPC_HOST
-      })
-    )
-
-    const web3 = new Web3(engine)
-    engine.start()
-
+    const { web3, address } = await getWeb3FromWalletWithPrivateKey()
     let accounts = await getAccounts(web3)
     expect(accounts.length).toBe(1)
     expect(accounts[0]).toBe(web3.utils.toChecksumAddress(address))
