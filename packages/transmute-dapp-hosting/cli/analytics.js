@@ -51,7 +51,7 @@ const getStorageUtilization = async (
     for (let j = 0; j < customerContractAddresses.length; j++) {
       let customerContractAddress = customerContractAddresses[j];
       let cutomerContract = customerContracts[customerContractAddress];
-      
+
       console.log("cutomerContract: ", cutomerContract);
       let store = await T.EventStore.At(cutomerContract.address);
       let events = await T.Store.readFSAs(
@@ -60,7 +60,12 @@ const getStorageUtilization = async (
         relic.web3,
         cutomerContract.owner
       );
-      console.log(events)
+
+      let adapterEvents = events.filter((event) =>{
+          return !event.meta.isInternal;
+      })
+      
+      console.log(adapterEvents)
     }
   }
 
