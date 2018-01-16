@@ -40,7 +40,6 @@ let { getContractUtilization, getStorageUtilization} = require("./analytics");
     let store = await T.Factory.createStore(
       factory,
       accounts,
-      eventStoreAdapter,
       relic.web3,
       accounts[0]
     );

@@ -28,7 +28,6 @@ export const init = async () => {
   // let eventStore = await T.Factory.createStore(
   //   factory,
   //   accounts,
-  //   eventStoreAdapter,
   //   relic.web3,
   //   accounts[0]
   // );

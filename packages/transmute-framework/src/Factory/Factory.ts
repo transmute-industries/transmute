@@ -31,7 +31,6 @@ export namespace Factory {
   export const createStore = async (
     factory: EventStoreFactory,
     whitelist: string[],
-    adapter: EventStoreAdapter,
     web3: any,
     fromAddress: string
   ) => {
@@ -40,7 +39,7 @@ export namespace Factory {
       whitelist,
       W3.TC.txParamsDefaultDeploy(fromAddress)
     )
-    const events = await adapter.extractEventsFromLogs(receipt.logs)
+    const events = await EventTransformer.getFSAsFromReceipt(receipt)
     let factoryEvents = EventTransformer.filterEventsByMeta(events, 'msgSender', fromAddress)
     return EventStore.At(factoryEvents[0].payload.value)
   }
