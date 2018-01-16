@@ -15,8 +15,8 @@ export namespace Store {
   /**
    * Store eventCount
    */
-  export const eventCount = async (store: EventStore, web3: any, fromAddress: string) => {
-    let countBigNumber = await store.eventCount(W3.TC.txParamsDefaultDeploy(fromAddress))
+  export const eventCount = async (store: EventStore) => {
+    let countBigNumber = await store.eventCount()
     return countBigNumber.toNumber()
   }
 

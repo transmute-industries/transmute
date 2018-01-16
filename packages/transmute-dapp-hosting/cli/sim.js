@@ -10,6 +10,8 @@ let subscriptionsTypes = {
 
 let customerSubscriptions = {};
 
+let { getContractUtilization, getStorageUtilization} = require("./analytics");
+
 (async () => {
   try {
     console.log("\n");
@@ -52,11 +54,14 @@ let customerSubscriptions = {};
     let events = T.EventTransformer.getFSAsFromReceipt(receipt);
     console.log(JSON.stringify(events, null, 2), "\n");
 
-    console.log("# Customer contract utilization is knowable.");
-    console.log("FALSE", "\n");
+    console.log("# Customer contract utilization is:\n");
+    let contractUtilization = await getContractUtilization(factory);
+    console.log("\n", JSON.stringify(contractUtilization, null, 2), "\n");
 
     console.log("# Customer storage utilization is knowable.");
-    console.log("FALSE", "\n");
+    let storageUtilization = await getStorageUtilization(relic, eventStoreAdapter, contractUtilization);
+    console.log("\n", JSON.stringify(storageUtilization, null, 2), "\n");
+    // console.log("FALSE", "\n");
 
     console.log("# Customer utilization increases as packages are published.");
     console.log("FALSE", "\n");
@@ -70,9 +75,7 @@ let customerSubscriptions = {};
     console.log("# Customer is warned when publishing exceeds utilization.");
     console.log("FALSE", "\n");
 
-    // 
-
-
+    //
   } catch (e) {
     console.log("Error: ", e);
   }
