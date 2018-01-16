@@ -10,7 +10,7 @@ let subscriptionsTypes = {
 
 let customerSubscriptions = {};
 
-let { getContractUtilization, getStorageUtilization} = require("./analytics");
+let { getContractUtilization, getStorageUtilization } = require("./analytics");
 
 (async () => {
   try {
@@ -53,17 +53,30 @@ let { getContractUtilization, getStorageUtilization} = require("./analytics");
     let events = T.EventTransformer.getFSAsFromReceipt(receipt);
     console.log(JSON.stringify(events, null, 2), "\n");
 
-    console.log("# Customer contract utilization is:\n");
-    let contractUtilization = await getContractUtilization(factory);
+    console.log("# Customer contract & storage utilization is knowable:\n");
+    let contractUtilization = await getContractUtilization(relic,
+      eventStoreAdapter,
+      readModelAdapter, factory);
     console.log("\n", JSON.stringify(contractUtilization, null, 2), "\n");
 
-    console.log("# Customer storage utilization is knowable.");
-    let storageUtilization = await getStorageUtilization(relic, eventStoreAdapter, contractUtilization);
-    console.log("\n", JSON.stringify(storageUtilization, null, 2), "\n");
-    // console.log("FALSE", "\n");
-
-    console.log("# Customer utilization increases as packages are published.");
-    console.log("FALSE", "\n");
+    console.log("# Customer utilization increases as packages are published.\n");
+    let ps = new T.PackageService(relic, store, eventStoreAdapter);
+    await ps.publishEvent(
+      {
+        type: "PACKAGE_UPDATED",
+        payload: {
+          name: "bobo",
+          multihash: "QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen",
+          version: "0.0.1"
+        },
+        meta: {
+          adapter: "I"
+        }
+      },
+      accounts[0]
+    );
+    let readModel = await ps.getReadModel(readModelAdapter);
+    console.log(JSON.stringify(readModel.state, null, 2), "\n");
 
     console.log("# Customer can delete packages to reduce utilization.");
     console.log("FALSE", "\n");
