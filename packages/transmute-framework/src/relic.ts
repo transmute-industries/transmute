@@ -2,10 +2,9 @@ import { W3 } from './transmute-framework'
 
 class Relic {
   web3: W3
-  W3 = W3
 
   constructor(web3: any) {
-    this.web3 = web3
+    W3.Default = this.web3 = web3
   }
 
   getAccounts = (): Promise<string[]> => {

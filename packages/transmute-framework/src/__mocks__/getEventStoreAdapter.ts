@@ -14,8 +14,8 @@ import {
 const bs58 = require('bs58')
 const util = require('ethereumjs-util')
 
-let ipfsAdapter = require('../../../transmute-adapter-ipfs')
-let nodeStorageAdapter = require('../../../transmute-adapter-node-storage')
+let ipfsAdapter = require('transmute-adapter-ipfs')
+let nodeStorageAdapter = require('transmute-adapter-node-storage')
 
 let nodeStorageDB = nodeStorageAdapter.getStorage()
 let ipfs = ipfsAdapter.getStorage()

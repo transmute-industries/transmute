@@ -12,6 +12,11 @@ export const GAS_COSTS = {
 }
 
 export namespace Store {
+  // useful when changing web3 providers...
+  export const get = async (address: string, web3: W3) => {
+    return EventStore.At(address, web3)
+  }
+
   /**
    * Store eventCount
    */
@@ -21,7 +26,10 @@ export namespace Store {
   }
 
   export const transferOwnership = async (store: EventStore, from: string, to: string) => {
-    let receipt = await store.transferOwnership(to, W3.TC.txParamsDefaultDeploy(from))
+    let receipt = await store.transferOwnership(
+      to.toLowerCase(),
+      W3.TC.txParamsDefaultDeploy(from.toLowerCase())
+    )
     let events = EventTransformer.getFSAsFromReceipt(receipt)
     return events
   }

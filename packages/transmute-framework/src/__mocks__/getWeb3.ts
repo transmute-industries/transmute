@@ -8,6 +8,17 @@ const RPC_HOST = 'http://localhost:8545'
 
 import * as TransmuteCrypto from 'transmute-crypto'
 
+export const getAccounts = (web3: any): Promise<string[]> => {
+  return new Promise((resolve, reject) => {
+    web3.eth.getAccounts((err, accounts) => {
+      if (err) {
+        reject(err)
+      }
+      resolve(accounts)
+    })
+  })
+}
+
 export const getDefaultWeb3 = () => {
   const engine = new ProviderEngine()
   engine.addProvider(
