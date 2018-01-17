@@ -9,23 +9,13 @@ const WalletSubprovider = require('web3-provider-engine/subproviders/wallet.js')
 import * as TransmuteCrypto from 'transmute-crypto'
 
 import {
+  getAccounts,
   getDefaultWeb3,
   getWeb3FromWalletWithMneumonic,
   getWeb3FromWalletWithPrivateKey
 } from '../__mocks__/getWeb3'
 
 const RPC_HOST = 'http://localhost:8545'
-
-const getAccounts = (web3: any): Promise<string[]> => {
-  return new Promise((resolve, reject) => {
-    web3.eth.getAccounts((err, accounts) => {
-      if (err) {
-        reject(err)
-      }
-      resolve(accounts)
-    })
-  })
-}
 
 /**
  * web3 tests

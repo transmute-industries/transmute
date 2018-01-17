@@ -51,8 +51,7 @@ describe('PackageService tests', () => {
     // console.log(JSON.stringify(readModel.state, null, 2))
 
     event = await ps.deletePackage('QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen', accounts[0])
-
     readModel = await ps.getReadModel(readModelAdapter)
-    console.log(JSON.stringify(readModel.state, null, 2))
+    // console.log(JSON.stringify(readModel.state, null, 2))
   })
 })

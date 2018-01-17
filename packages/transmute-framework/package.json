@@ -67,6 +67,7 @@
       "node",
       "json"
     ],
+    "modulePathIgnorePatterns": [ "/dist/"],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "/test/",
