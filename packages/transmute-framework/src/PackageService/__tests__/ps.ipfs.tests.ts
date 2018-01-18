@@ -36,12 +36,12 @@ describe('PackageService tests', () => {
     let ps = new PackageService(relic, store, setup.eventStoreAdapter)
 
     let event = await ps.publishPackage(
-      'QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen',
+      'Qme7DMBUe1EjXAKoEXzNh7G7NgMeGw9i2uLfB9bKVR7hHZ',
       'bobo@0.0.1',
       accounts[0]
     )
     event = await ps.publishPackage(
-      'QmQh3iDyetVbjuyyXBNdrVo6ePtNGyjDU65QEXxSewfXaK',
+      'QmYG8q3btc4xb3GhtdQzwdxtuZiAoxGKNS9sMBrqDKNws2',
       'bobo@0.0.2',
       accounts[0]
     )
@@ -50,7 +50,7 @@ describe('PackageService tests', () => {
     let readModel = await ps.getReadModel(readModelAdapter)
     // console.log(JSON.stringify(readModel.state, null, 2))
 
-    event = await ps.deletePackage('QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen', accounts[0])
+    event = await ps.deletePackage('Qme7DMBUe1EjXAKoEXzNh7G7NgMeGw9i2uLfB9bKVR7hHZ', accounts[0])
     readModel = await ps.getReadModel(readModelAdapter)
     // console.log(JSON.stringify(readModel.state, null, 2))
   })

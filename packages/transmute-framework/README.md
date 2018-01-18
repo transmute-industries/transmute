@@ -12,6 +12,9 @@ Add transmute-ipfs setup tests to make sure that hashes exist on travis IPFS nod
 Implement CLI support for wallets...
 Use CLI and wallets and package service together, to publish and delete packages.
 
+Setup stripe dev account...
+
+
 ### Commands:
 
 `yarn contracts:regenerate && yarn test`

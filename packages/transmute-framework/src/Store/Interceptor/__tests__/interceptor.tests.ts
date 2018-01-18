@@ -46,7 +46,7 @@ describe('Interceptor test', () => {
       // Imagine doing more complicated async writing in here...
       if (event.meta.adapter === 'I') {
         Object.keys(event.payload).forEach(payloadKey => {
-          event.payload[payloadKey] = 'QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen'
+          event.payload[payloadKey] = 'Qme7DMBUe1EjXAKoEXzNh7G7NgMeGw9i2uLfB9bKVR7hHZ'
         })
       }
       if (event.meta.adapter === 'N') {
@@ -61,9 +61,9 @@ describe('Interceptor test', () => {
       {
         type: 'TEST_1',
         payload: {
-          heavy1: 'QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen',
-          heavy2: 'QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen',
-          heavy3: 'QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen'
+          heavy1: 'Qme7DMBUe1EjXAKoEXzNh7G7NgMeGw9i2uLfB9bKVR7hHZ',
+          heavy2: 'Qme7DMBUe1EjXAKoEXzNh7G7NgMeGw9i2uLfB9bKVR7hHZ',
+          heavy3: 'Qme7DMBUe1EjXAKoEXzNh7G7NgMeGw9i2uLfB9bKVR7hHZ'
         },
         meta: {
           adapter: 'I'

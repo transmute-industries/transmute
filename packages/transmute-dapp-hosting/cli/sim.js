@@ -68,7 +68,7 @@ let { getContractUtilization, getStorageUtilization } = require("./analytics");
     );
     let ps = new T.PackageService(relic, store, eventStoreAdapter);
     await ps.publishPackage(
-      "QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen",
+      "Qme7DMBUe1EjXAKoEXzNh7G7NgMeGw9i2uLfB9bKVR7hHZ",
       "bobo@0.0.1",
       accounts[0]
     );
@@ -76,7 +76,7 @@ let { getContractUtilization, getStorageUtilization } = require("./analytics");
     console.log(JSON.stringify(readModel.state, null, 2), "\n");
 
     await ps.publishPackage(
-      "QmQh3iDyetVbjuyyXBNdrVo6ePtNGyjDU65QEXxSewfXaK",
+      "QmYG8q3btc4xb3GhtdQzwdxtuZiAoxGKNS9sMBrqDKNws2",
       "bobo@0.0.2",
       accounts[0]
     );
@@ -86,7 +86,7 @@ let { getContractUtilization, getStorageUtilization } = require("./analytics");
 
     console.log("# Customer can delete packages to reduce utilization.\n");
     await ps.deletePackage(
-      "QmNrEidQrAbxx3FzxNt9E6qjEDZrtvzxUVh47BXm55Zuen",
+      "Qme7DMBUe1EjXAKoEXzNh7G7NgMeGw9i2uLfB9bKVR7hHZ",
       accounts[0]
     );
     readModel = await ps.getReadModel(readModelAdapter);
