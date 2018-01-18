@@ -9,6 +9,7 @@
 
 # migrate -> generate -> test
 lerna bootstrap
+
 cd ./packages/transmute-contracts
 yarn cleanup
 yarn contracts:migrate
@@ -17,4 +18,5 @@ yarn install
 lerna bootstrap
 yarn cleanup
 yarn contracts:generate
+lerna run test --scope transmute-ipfs
 yarn test
