@@ -5,21 +5,16 @@ module.exports = vorpal => {
   vorpal
     .command("version", "display version information")
     .action((args, callback) => {
-      // console.log("Transmute CLI: " + require("../package.json").version);
-      // console.log(
-      //   "Transmute Framework: " +
-      //     require("../package.json").dependencies["transmute-framework"]
-      // );
-
-      let T = require('transmute-framework')
-
-      console.log(T);
-      
+      console.log("transmute-cli\t\t" + require("../package.json").version);
+      console.log(
+        "transmute-framework\t" +
+          require("../package.json").dependencies["transmute-framework"]
+      );
       callback();
     });
 
   require("./tour")(vorpal);
-  require("./web3")(vorpal);
+  require("./init")(vorpal);
 
   // require("./install")(vorpal);
   // require("./setup")(vorpal);
