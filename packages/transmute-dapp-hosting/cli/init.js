@@ -15,14 +15,7 @@
 //       //   const T = require("transmute-framework");
 //       //   const transmute = require("../transmute");
 
-//       //   const {
-//       //     T,
-//       //     relic,
-//       //     // accounts,
-//       //     // eventStoreAdapter,
-//       //     // readModelAdapter,
-//       //     // getRelicWalletWithPrivateKey
-//       //   } = await transmute.init();
+//     
 
 //       //   console.log(accounts);
 

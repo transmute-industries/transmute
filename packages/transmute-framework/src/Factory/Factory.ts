@@ -8,7 +8,8 @@ import {
   ReadModel,
   IReadModelState,
   IReadModelAdapter,
-  IReadModel
+  IReadModel,
+  Utils
 } from '../transmute-framework'
 
 import Reducer from './Reducer'
@@ -17,11 +18,17 @@ export namespace Factory {
   /**
    * Factory create
    */
-  export const create = async (web3: any, fromAddress: string): Promise<EventStoreFactory> => {
+  export const create = async (
+    web3: any,
+    fromAddress: string
+  ): Promise<EventStoreFactory> => {
     W3.Default = web3
-    const instance = await EventStoreFactory.New(W3.TC.txParamsDefaultDeploy(fromAddress), {
-      _multisig: fromAddress
-    })
+    const instance = await EventStoreFactory.New(
+      W3.TC.txParamsDefaultDeploy(fromAddress),
+      {
+        _multisig: fromAddress
+      }
+    )
     return instance
   }
 
@@ -40,12 +47,21 @@ export namespace Factory {
       W3.TC.txParamsDefaultDeploy(fromAddress)
     )
     const events = await EventTransformer.getFSAsFromReceipt(receipt)
-    let factoryEvents = EventTransformer.filterEventsByMeta(events, 'msgSender', fromAddress)
+    let factoryEvents = EventTransformer.filterEventsByMeta(
+      events,
+      'msgSender',
+      Utils.toChecksumAddress(fromAddress)
+    )
     return EventStore.At(factoryEvents[0].payload.value)
   }
 
-  export const getEventStores = async (factory: EventStoreFactory, fromAddress: string) => {
-    let addresses = await factory.getEventStores(W3.TC.txParamsDefaultDeploy(fromAddress))
+  export const getEventStores = async (
+    factory: EventStoreFactory,
+    fromAddress: string
+  ) => {
+    let addresses = await factory.getEventStores(
+      W3.TC.txParamsDefaultDeploy(fromAddress)
+    )
     return addresses
   }
 
@@ -59,12 +75,18 @@ export namespace Factory {
     web3: any,
     fromAddress: string
   ) => {
-    let state: IReadModelState = JSON.parse(JSON.stringify(Reducer.initialState))
+    let state: IReadModelState = JSON.parse(
+      JSON.stringify(Reducer.initialState)
+    )
 
     state.contractAddress = factory.address
     state.readModelStoreKey = `${state.readModelType}:${state.contractAddress}`
 
-    let factoryReadModel = new ReadModel(readModelAdapter, Reducer.reducer, state)
+    let factoryReadModel = new ReadModel(
+      readModelAdapter,
+      Reducer.reducer,
+      state
+    )
 
     let changes = await factoryReadModel.sync(factory as any, adapter, web3)
 
