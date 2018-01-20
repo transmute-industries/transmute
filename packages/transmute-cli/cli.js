@@ -230,12 +230,17 @@ vorpal
             accounts[0].toLowerCase()
           );
           // console.log(store);
-          let ps = new T.PackageService(relic, store, eventStoreAdapter);
-          let psReadModel = await ps.getReadModel(readModelAdapter);
+          let ps = new T.PackageService(
+            relic,
+            store,
+            eventStoreAdapter,
+            readModelAdapter
+          );
+          await ps.requireLatestReadModel();
           // console.log(psReadModel);
           await writeFile(
             "./PackageManager.ReadModel.json",
-            JSON.stringify(psReadModel.state, null, 2)
+            JSON.stringify(ps.readModel.state, null, 2)
           );
           vorpal.logger.log(
             "\n./PackageManager.ReadModel.json written to disk.\n"
@@ -291,7 +296,12 @@ vorpal
     // console.log(dirHash)
 
     let store = await T.EventStore.At(pmReadModelJson.contractAddress);
-    let ps = new T.PackageService(relic, store, eventStoreAdapter);
+    let ps = new T.PackageService(
+      relic,
+      store,
+      eventStoreAdapter,
+      readModelAdapter
+    );
 
     let events = await ps.publishPackage(
       dirHash,
@@ -299,15 +309,15 @@ vorpal
       accounts[0].toLowerCase()
     );
     vorpal.logger.log(JSON.stringify(events, null, 2));
-    let psReadModel = await ps.getReadModel(readModelAdapter);
+
     await writeFile(
       "./PackageManager.ReadModel.json",
-      JSON.stringify(psReadModel.state, null, 2)
+      JSON.stringify(ps.readModel.state, null, 2)
     );
     vorpal.logger.log("\n./PackageManager.ReadModel.json written to disk.\n");
   });
 
-  vorpal
+vorpal
   .command(
     "delete-package <password> <packageHash>",
     "publishes a delete event to the store, it may take some time for IPFS to stop serving the package."
@@ -322,9 +332,13 @@ vorpal
     }
     const pmReadModelJson = require("./PackageManager.ReadModel.json");
 
-    if (!pmReadModelJson.model[args.packageHash]){
+    if (!pmReadModelJson.model[args.packageHash]) {
       vorpal.logger.log("\n");
-      vorpal.logger.error(`${args.packageHash} does not exist in ./PackageManager.ReadModel.json\n`);
+      vorpal.logger.error(
+        `${
+          args.packageHash
+        } does not exist in ./PackageManager.ReadModel.json\n`
+      );
       return callback();
     }
 
@@ -337,18 +351,26 @@ vorpal
     const accounts = await relic.getAccounts();
 
     let store = await T.EventStore.At(pmReadModelJson.contractAddress);
-    let ps = new T.PackageService(relic, store, eventStoreAdapter);
+    let ps = new T.PackageService(
+      relic,
+      store,
+      eventStoreAdapter,
+      readModelAdapter
+    );
 
-    let events = await ps.deletePackage(args.packageHash, accounts[0].toLowerCase())
-    
-    // let readModel = await ps.getReadModel(readModelAdapter);
-    // // console.log(readModel.state)
-    // await writeFile(
-    //   "./PackageManager.ReadModel.json",
-    //   JSON.stringify(readModel.state, null, 2)
-    // );
-    // vorpal.logger.log("\n./PackageManager.ReadModel.json written to disk.\n");
-  })
+    let events = await ps.deletePackage(
+      args.packageHash,
+      accounts[0].toLowerCase()
+    );
+
+    JSON.stringify(events, null, 2);
+
+    await writeFile(
+      "./PackageManager.ReadModel.json",
+      JSON.stringify(ps.readModel.state, null, 2)
+    );
+    vorpal.logger.log("\n./PackageManager.ReadModel.json written to disk.\n");
+  });
 
 vorpal
   .parse(process.argv)

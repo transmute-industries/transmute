@@ -1,23 +1,25 @@
 {
-  "readModelStoreKey": "PackageManager:0x7d0dF7CEc62d8857F511c0a564A3Dd0200FdE0D5",
+  "readModelStoreKey": "PackageManager:0x1c51caC0aeEa14e5D3f6398074D3188Bb86cb82E",
   "readModelType": "PackageManager",
-  "contractAddress": "0x7d0dF7CEc62d8857F511c0a564A3Dd0200FdE0D5",
-  "lastEvent": 3,
+  "contractAddress": "0x1c51caC0aeEa14e5D3f6398074D3188Bb86cb82E",
+  "lastEvent": 5,
   "model": {
     "owner": "0xA57A724F9f5E24F0d1516c4E2C752bb2D30069fC",
     "whitelisted": true,
     "adapterMeta": {
       "I": {
         "eventRefs": {
-          "QmScTCbHHobSBpXd4ng81w7FJ5W6GLLnKY2zXCpKEANyQq": 85
+          "QmScTCbHHobSBpXd4ng81w7FJ5W6GLLnKY2zXCpKEANyQq": 85,
+          "QmVVr66TX3cgRaVfmxzgmxpYGoZV8EFXuZS6raJ91F7GcA": 85,
+          "QmTdoDYN8nhgvTBWUsTT6JJCWVXoeCZs6szQ2AhSK86KwT": 70
         },
-        "cumulativeEventSize": 85,
+        "cumulativeEventSize": 240,
         "packageRefs": {
-          "Qmf4EwP2aphXsrVSuyEdDsGRHRikRds93wqk7R2B5qH1fc": 337
+          "QmTtLRJXV2BRWKR9PNvGrnnDHW87CMPwTfxir6DJRCtajm": 337
         },
         "cumulativePackageSize": 337
       }
     },
-    "Qmf4EwP2aphXsrVSuyEdDsGRHRikRds93wqk7R2B5qH1fc": "dapp1"
+    "QmTtLRJXV2BRWKR9PNvGrnnDHW87CMPwTfxir6DJRCtajm": "dapp2"
   }
 }
