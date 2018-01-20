@@ -251,7 +251,7 @@ vorpal
 
 vorpal
   .command(
-    "publish-dir <password> <targetPath>",
+    "publish-package <password> <targetPath>",
     "publishes a directory to ipfs with an store event."
   )
   .types({ string: ["_"] })
@@ -306,6 +306,49 @@ vorpal
     );
     vorpal.logger.log("\n./PackageManager.ReadModel.json written to disk.\n");
   });
+
+  vorpal
+  .command(
+    "delete-package <password> <packageHash>",
+    "publishes a delete event to the store, it may take some time for IPFS to stop serving the package."
+  )
+  .types({ string: ["_"] })
+  .action(async (args, callback) => {
+    if (!fs.existsSync("./PackageManager.ReadModel.json")) {
+      vorpal.logger.log("\n");
+      vorpal.logger.error("./PackageManager.ReadModel.json does not exist.\n");
+      vorpal.logger.info("run: transmute create-store <password>\n");
+      return callback();
+    }
+    const pmReadModelJson = require("./PackageManager.ReadModel.json");
+
+    if (!pmReadModelJson.model[args.packageHash]){
+      vorpal.logger.log("\n");
+      vorpal.logger.error(`${args.packageHash} does not exist in ./PackageManager.ReadModel.json\n`);
+      return callback();
+    }
+
+    const setup = await init();
+    const { eventStoreAdapter, readModelAdapter } = setup;
+
+    const decryptedAccount = await getDecryptedAccount(args.password);
+    const web3 = getWeb3(decryptedAccount);
+    const relic = new T.Relic(web3);
+    const accounts = await relic.getAccounts();
+
+    let store = await T.EventStore.At(pmReadModelJson.contractAddress);
+    let ps = new T.PackageService(relic, store, eventStoreAdapter);
+
+    let events = await ps.deletePackage(args.packageHash, accounts[0].toLowerCase())
+    
+    // let readModel = await ps.getReadModel(readModelAdapter);
+    // // console.log(readModel.state)
+    // await writeFile(
+    //   "./PackageManager.ReadModel.json",
+    //   JSON.stringify(readModel.state, null, 2)
+    // );
+    // vorpal.logger.log("\n./PackageManager.ReadModel.json written to disk.\n");
+  })
 
 vorpal
   .parse(process.argv)

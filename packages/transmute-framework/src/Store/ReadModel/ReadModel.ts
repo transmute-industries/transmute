@@ -10,7 +10,11 @@ import {
   Interceptor
 } from '../../transmute-framework'
 
-const STATE_REQUIRED_PROPS = ['contractAddress', 'readModelType', 'readModelStoreKey']
+const STATE_REQUIRED_PROPS = [
+  'contractAddress',
+  'readModelType',
+  'readModelStoreKey'
+]
 
 export class ReadModel implements IReadModel {
   constructor(
@@ -26,11 +30,15 @@ export class ReadModel implements IReadModel {
     }
 
     if (reducer === undefined) {
-      throw new Error('reducer is not defined. pass a reducer to the constructor.')
+      throw new Error(
+        'reducer is not defined. pass a reducer to the constructor.'
+      )
     }
 
     if (state === undefined) {
-      throw new Error('state is not defined. pass a default state to the constructor.')
+      throw new Error(
+        'state is not defined. pass a default state to the constructor.'
+      )
     }
 
     this.requireStateToHaveDefaultProperties(state)
@@ -49,11 +57,12 @@ export class ReadModel implements IReadModel {
       }
     })
 
-    if (state.readModelStoreKey !== `${state.readModelType}:${state.contractAddress}`) {
+    if (
+      state.readModelStoreKey !==
+      `${state.readModelType}:${state.contractAddress}`
+    ) {
       throw new Error(
-        `state.readModelStoreKey is not formatted correctly. it should be ${state.readModelType}:${
-          state.contractAddress
-        }`
+        `state.readModelStoreKey is not formatted correctly. it should be ${state.readModelType}:${state.contractAddress}`
       )
     }
   }
@@ -65,17 +74,29 @@ export class ReadModel implements IReadModel {
     }
   }
 
-  sync = async (store: EventStore, readModelAdapter: EventStoreAdapter, web3: W3) => {
+  sync = async (
+    store: EventStore,
+    eventStoreAdapter: EventStoreAdapter,
+    web3: W3
+  ) => {
     let changes = false
     try {
-      this.state = await this.readModelAdapter.getItem(this.state.readModelStoreKey)
+      this.state = await this.readModelAdapter.getItem(
+        this.state.readModelStoreKey
+      )
     } catch (e) {
       // this case when we have not persisted a read model before OR
       // there is a bug is getItem/setItem....
       changes = true
     }
-    let startIndex = this.state.lastEvent !== null ? this.state.lastEvent + 1 : 0
-    let events = await Store.readFSAs(store, readModelAdapter, web3, startIndex)
+    let startIndex =
+      this.state.lastEvent !== null ? this.state.lastEvent + 1 : 0
+    let events = await Store.readFSAs(
+      store,
+      eventStoreAdapter,
+      web3,
+      startIndex
+    )
 
     // Interceptors are used to transform events that have been read from the chain.
     // encryption, loading, size calcs, etc...

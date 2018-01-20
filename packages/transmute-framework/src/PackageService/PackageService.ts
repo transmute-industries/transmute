@@ -2,11 +2,13 @@ import {
   Relic,
   Store,
   EventStoreAdapter,
+  IReadModelAdapter,
   PackageManager,
   W3,
   IFSA,
   IReadModelState,
-  ReadModel
+  ReadModel,
+  IReadModel
 } from '../transmute-framework'
 
 import R from './Reducer'
@@ -14,12 +16,25 @@ import R from './Reducer'
 const MAPPER_ENCODING = 'I'
 
 export default class PackageService {
+  readModel: ReadModel
+
   constructor(
     public relic: Relic,
     public packageManager: PackageManager,
-    public eventStoreAdapter: EventStoreAdapter
+    public eventStoreAdapter: EventStoreAdapter,
+    public readModelAdapter: IReadModelAdapter
   ) {
     // console.log("created...");
+  }
+
+  requireLatestReadModel = async () => {
+    this.readModel = await this.getReadModel()
+
+    // if (!this.readModel) {
+    //   this.readModel = await this.getReadModel();
+    // } else {
+    //   this.readModel.sync(this.packageManager, this.eventStoreAdapter, this.relic.web3);
+    // }
   }
 
   publishPackage = async (
@@ -27,7 +42,13 @@ export default class PackageService {
     name: string,
     fromAddress: string
   ) => {
-    return await Store.writeFSA(
+    await this.requireLatestReadModel()
+
+    if (this.readModel.state.model[multihash]) {
+      throw new Error('package already exists in read model.')
+    }
+
+    const events = await Store.writeFSA(
       this.packageManager,
       this.eventStoreAdapter,
       this.relic.web3,
@@ -43,10 +64,20 @@ export default class PackageService {
         }
       }
     )
+
+    await this.requireLatestReadModel()
+
+    return events
   }
 
   deletePackage = async (multihash: string, fromAddress: string) => {
-    return await Store.writeFSA(
+    await this.requireLatestReadModel()
+
+    if (!this.readModel.state.model[multihash]) {
+      throw new Error('package does not exist in read model.')
+    }
+
+    const event = await Store.writeFSA(
       this.packageManager,
       this.eventStoreAdapter,
       this.relic.web3,
@@ -61,9 +92,13 @@ export default class PackageService {
         }
       }
     )
+
+    await this.requireLatestReadModel()
+
+    return event
   }
 
-  getReadModel = async readModelAdapter => {
+  getReadModel = async () => {
     let state: IReadModelState = JSON.parse(JSON.stringify(R.initialState))
     state.contractAddress = this.packageManager.address
     state.readModelStoreKey = `${state.readModelType}:${state.contractAddress}`
@@ -112,18 +147,21 @@ export default class PackageService {
       }
     ]
 
-    let ipfsReadModel = new ReadModel(
-      readModelAdapter,
-      R.reducer,
-      state,
-      interceptorChain
-    )
-    let changes = await ipfsReadModel.sync(
+    if (!this.readModel) {
+      this.readModel = new ReadModel(
+        this.readModelAdapter,
+        R.reducer,
+        state,
+        interceptorChain
+      )
+    }
+
+    let changes = await this.readModel.sync(
       this.packageManager,
       this.eventStoreAdapter,
       this.relic.web3
     )
     // console.log(JSON.stringify(ipfsReadModel, null, 2))
-    return ipfsReadModel
+    return this.readModel
   }
 }
