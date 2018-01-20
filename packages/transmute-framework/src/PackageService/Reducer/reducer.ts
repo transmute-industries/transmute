@@ -14,52 +14,65 @@ const updatesFromMeta = (meta: any) => {
   }
 }
 
-const handlePackageUpdate = (state, meta: any) => {
-  state.model.adapterMeta = state.model.adapterMeta || {}
-  state.model.adapterMeta[meta.valueType] = state.model.adapterMeta[meta.valueType] || {
-    cumulativeEventSize: 0,
-    cumulativePackageSize: 0,
-    allRefs: []
-  }
-  state.model.adapterMeta[meta.valueType].cumulativeEventSize += meta.adapterMeta.eventSize
-  state.model.adapterMeta[meta.valueType].cumulativePackageSize += meta.adapterMeta.pacakgeSize
-  // console.log("+ " + meta.adapterMeta.pacakgeSize);
-  // TERRIBLE TERRIBLE !!!!!! TERRIBLE
-  // storing all event refs in the read model is totally unacceptable for anything,
-  // except maybe a package manager...
-  if (state.model.adapterMeta[meta.valueType].allRefs.indexOf(meta.adapterMeta.eventHash) === -1) {
-    state.model.adapterMeta[meta.valueType].allRefs.push(meta.adapterMeta.eventHash)
-  }
-  if (
-    state.model.adapterMeta[meta.valueType].allRefs.indexOf(meta.adapterMeta.packageHash) === -1
-  ) {
-    state.model.adapterMeta[meta.valueType].allRefs.push(meta.adapterMeta.packageHash)
-  }
-  return state.model.adapterMeta
+const calculateCostFromRefs = (refs: any) => {
+  let keys = Object.keys(refs)
+  let size = 0
+  keys.forEach(key => {
+    size += refs[key]
+  })
+  return size
 }
 
-const handlePackageDelete = (state, meta: any) => {
+const handlePackageUpdate = (state, action: any) => {
+  const meta = action.meta
   state.model.adapterMeta = state.model.adapterMeta || {}
-  state.model.adapterMeta[meta.valueType] = state.model.adapterMeta[meta.valueType] || {
+  state.model.adapterMeta[meta.valueType] = state.model.adapterMeta[
+    meta.valueType
+  ] || {
+    eventRefs: {},
     cumulativeEventSize: 0,
-    cumulativePackageSize: 0,
-    allRefs: []
+    packageRefs: {},
+    cumulativePackageSize: 0
   }
-  state.model.adapterMeta[meta.valueType].cumulativeEventSize += meta.adapterMeta.eventSize
-  state.model.adapterMeta[meta.valueType].cumulativePackageSize -= meta.adapterMeta.pacakgeSize
+  const thisEventAdapterMeta = state.model.adapterMeta[meta.valueType]
+  const eventRefs = thisEventAdapterMeta.eventRefs
+  const packageRefs = thisEventAdapterMeta.packageRefs
+  const eventRef = meta.adapterMeta.eventHash
+  const eventSize = meta.adapterMeta.eventSize
+  const packageRef = meta.adapterMeta.packageHash
+  const packageSize = meta.adapterMeta.packageSize
+  eventRefs[eventRef] = eventSize
+  packageRefs[packageRef] = packageSize
+  state.model[packageRef] = action.payload.name
+  thisEventAdapterMeta.cumulativeEventSize = calculateCostFromRefs(eventRefs)
+  thisEventAdapterMeta.cumulativePackageSize = calculateCostFromRefs(
+    packageRefs
+  )
+  return state.model
+}
 
-  // console.log("- " + meta.adapterMeta.pacakgeSize);
-  let refs = state.model.adapterMeta[meta.valueType].allRefs
-  // TERRIBLE TERRIBLE !!!!!! TERRIBLE
-  // storing all event refs in the read model is totally unacceptable for anything,
-  // except maybe a package manager...
-  if (refs.indexOf(meta.adapterMeta.eventHash) === -1) {
-    refs.push(meta.adapterMeta.eventHash)
-  }
-  // when deleting we remove the package reference from the readModel here...
-  let idx = refs.indexOf(meta.adapterMeta.packageHash)
-  if (idx !== -1) refs.splice(idx, 1)
-  return state.model.adapterMeta
+const handlePackageDelete = (state, action: any) => {
+  const meta = action.meta
+  state.model.adapterMeta = state.model.adapterMeta
+
+  const thisEventAdapterMeta = state.model.adapterMeta[meta.valueType]
+  const eventRefs = state.model.adapterMeta[meta.valueType].eventRefs
+  const packageRefs = state.model.adapterMeta[meta.valueType].packageRefs
+
+  const eventRef = meta.adapterMeta.eventHash
+  const eventSize = meta.adapterMeta.eventSize
+  eventRefs[eventRef] = eventSize
+
+  const packageRef = meta.adapterMeta.packageHash
+  delete packageRefs[packageRef]
+  delete state.model[packageRef]
+
+  thisEventAdapterMeta.cumulativeEventSize = calculateCostFromRefs(eventRefs)
+  thisEventAdapterMeta.cumulativePackageSize = calculateCostFromRefs(
+    packageRefs
+  )
+
+  return state
 }
 
 const handlers: any = {
@@ -90,11 +103,7 @@ const handlers: any = {
     // make sure to settle object before returning it.
     let newState = {
       ...state,
-      model: {
-        ...state.model,
-        [action.payload.multihash]: action.payload.name,
-        adapterMeta: handlePackageUpdate(state, action.meta)
-      },
+      model: handlePackageUpdate(state, action),
       ...updatesFromMeta(action.meta)
     }
     return newState
@@ -105,11 +114,7 @@ const handlers: any = {
     // console.log(action.meta);
     let newState = {
       ...state,
-      model: {
-        ...state.model,
-        [action.payload.multihash]: undefined,
-        adapterMeta: handlePackageDelete(state, action.meta)
-      },
+      model: handlePackageDelete(state, action),
       ...updatesFromMeta(action.meta)
     }
     return newState

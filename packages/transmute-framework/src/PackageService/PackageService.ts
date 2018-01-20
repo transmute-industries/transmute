@@ -22,7 +22,11 @@ export default class PackageService {
     // console.log("created...");
   }
 
-  publishPackage = async (multihash: string, name: string, fromAddress: string) => {
+  publishPackage = async (
+    multihash: string,
+    name: string,
+    fromAddress: string
+  ) => {
     return await Store.writeFSA(
       this.packageManager,
       this.eventStoreAdapter,
@@ -68,7 +72,9 @@ export default class PackageService {
     // for package manager to be extended beyond ipfs
     let getStat = mhash => {
       return new Promise((resolve, reject) => {
-        this.eventStoreAdapter.mapper[MAPPER_ENCODING].db.stat(mhash, (err, result) => {
+        this.eventStoreAdapter.mapper[
+          MAPPER_ENCODING
+        ].db.stat(mhash, (err, result) => {
           if (err) {
             reject(err)
           } else {
@@ -86,7 +92,7 @@ export default class PackageService {
         eventHash: eventMultihash,
         eventSize: eventStat.CumulativeSize,
         packageHash: action.payload.multihash,
-        pacakgeSize: packageStat.CumulativeSize
+        packageSize: packageStat.CumulativeSize
       }
     }
 
@@ -106,7 +112,12 @@ export default class PackageService {
       }
     ]
 
-    let ipfsReadModel = new ReadModel(readModelAdapter, R.reducer, state, interceptorChain)
+    let ipfsReadModel = new ReadModel(
+      readModelAdapter,
+      R.reducer,
+      state,
+      interceptorChain
+    )
     let changes = await ipfsReadModel.sync(
       this.packageManager,
       this.eventStoreAdapter,
