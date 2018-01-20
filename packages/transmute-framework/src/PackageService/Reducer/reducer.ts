@@ -72,7 +72,7 @@ const handlePackageDelete = (state, action: any) => {
     packageRefs
   )
 
-  return state
+  return state.model
 }
 
 const handlers: any = {
@@ -99,7 +99,7 @@ const handlers: any = {
     }
   },
   PACKAGE_UPDATED: (state: any, action: any) => {
-    // console.log(action.meta.adapterMeta)
+    // console.log('delets seem bust ', action)
     // make sure to settle object before returning it.
     let newState = {
       ...state,

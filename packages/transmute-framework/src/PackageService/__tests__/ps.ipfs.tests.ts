@@ -37,24 +37,122 @@ describe('PackageService tests', () => {
     factory = setup.factory
   })
 
-  it('PackageService is special case of eventstore', async () => {
+  it('is special case of eventstore', async () => {
     let store = await Factory.createStore(
       factory,
       accounts,
       relic.web3,
       accounts[0]
     )
-    let ps = new PackageService(relic, store, setup.eventStoreAdapter)
+    let ps = new PackageService(
+      relic,
+      store,
+      setup.eventStoreAdapter,
+      readModelAdapter
+    )
   })
 
-  it('PackageService can publish packages', async () => {
+  it('can publish packages', async () => {
     let store = await Factory.createStore(
       factory,
       accounts,
       relic.web3,
       accounts[0]
     )
-    let ps = new PackageService(relic, store, setup.eventStoreAdapter)
+    let ps = new PackageService(
+      relic,
+      store,
+      setup.eventStoreAdapter,
+      readModelAdapter
+    )
+    let event = await ps.publishPackage(
+      'Qme7DMBUe1EjXAKoEXzNh7G7NgMeGw9i2uLfB9bKVR7hHZ',
+      'bobo@0.0.1',
+      accounts[0]
+    )
+
+    event = await ps.publishPackage(
+      'QmYG8q3btc4xb3GhtdQzwdxtuZiAoxGKNS9sMBrqDKNws2',
+      'bobo@0.0.2',
+      accounts[0]
+    )
+    expect(Object.keys(ps.readModel.state.model).length).toBe(5)
+  })
+
+  it('throws error when package already exists.', async () => {
+    let store = await Factory.createStore(
+      factory,
+      accounts,
+      relic.web3,
+      accounts[0]
+    )
+    let ps = new PackageService(
+      relic,
+      store,
+      setup.eventStoreAdapter,
+      readModelAdapter
+    )
+    let event = await ps.publishPackage(
+      'Qme7DMBUe1EjXAKoEXzNh7G7NgMeGw9i2uLfB9bKVR7hHZ',
+      'bobo@0.0.1',
+      accounts[0]
+    )
+    try {
+      event = await ps.publishPackage(
+        'Qme7DMBUe1EjXAKoEXzNh7G7NgMeGw9i2uLfB9bKVR7hHZ',
+        'bobo@0.0.1',
+        accounts[0]
+      )
+    } catch (e) {
+      expect(e.message).toBe('package already exists in read model.')
+    }
+  })
+
+  it('can delete packages', async () => {
+    let store = await Factory.createStore(
+      factory,
+      accounts,
+      relic.web3,
+      accounts[0]
+    )
+    let ps = new PackageService(
+      relic,
+      store,
+      setup.eventStoreAdapter,
+      readModelAdapter
+    )
+    let event = await ps.publishPackage(
+      'Qme7DMBUe1EjXAKoEXzNh7G7NgMeGw9i2uLfB9bKVR7hHZ',
+      'bobo@0.0.1',
+      accounts[0]
+    )
+
+    event = await ps.publishPackage(
+      'QmYG8q3btc4xb3GhtdQzwdxtuZiAoxGKNS9sMBrqDKNws2',
+      'bobo@0.0.2',
+      accounts[0]
+    )
+
+    event = await ps.deletePackage(
+      'QmYG8q3btc4xb3GhtdQzwdxtuZiAoxGKNS9sMBrqDKNws2',
+      accounts[0]
+    )
+    expect(Object.keys(ps.readModel.state.model).length).toBe(4)
+  })
+
+  it('throws error when deleting a package that does not exist in read model', async () => {
+    let store = await Factory.createStore(
+      factory,
+      accounts,
+      relic.web3,
+      accounts[0]
+    )
+    let ps = new PackageService(
+      relic,
+      store,
+      setup.eventStoreAdapter,
+      readModelAdapter
+    )
     let event = await ps.publishPackage(
       'Qme7DMBUe1EjXAKoEXzNh7G7NgMeGw9i2uLfB9bKVR7hHZ',
       'bobo@0.0.1',
@@ -65,16 +163,34 @@ describe('PackageService tests', () => {
       'bobo@0.0.2',
       accounts[0]
     )
+    event = await ps.deletePackage(
+      'QmYG8q3btc4xb3GhtdQzwdxtuZiAoxGKNS9sMBrqDKNws2',
+      accounts[0]
+    )
+    expect(Object.keys(ps.readModel.state.model).length).toBe(4)
+    try {
+      event = await ps.deletePackage(
+        'QmYG8q3btc4xb3GhtdQzwdxtuZiAoxGKNS9sMBrqDKNws2',
+        accounts[0]
+      )
+    } catch (e) {
+      expect(e.message).toBe('package does not exist in read model.')
+    }
   })
 
-  it('PackageService can deletePackages', async () => {
+  it('all references and costs are tracked.', async () => {
     let store = await Factory.createStore(
       factory,
       accounts,
       relic.web3,
       accounts[0]
     )
-    let ps = new PackageService(relic, store, setup.eventStoreAdapter)
+    let ps = new PackageService(
+      relic,
+      store,
+      setup.eventStoreAdapter,
+      readModelAdapter
+    )
     let event = await ps.publishPackage(
       'Qme7DMBUe1EjXAKoEXzNh7G7NgMeGw9i2uLfB9bKVR7hHZ',
       'bobo@0.0.1',
@@ -85,42 +201,12 @@ describe('PackageService tests', () => {
       'bobo@0.0.2',
       accounts[0]
     )
-
-    // console.log("published event: ", event);
-    let readModel = await ps.getReadModel(readModelAdapter)
-    // console.log(JSON.stringify(readModel.state, null, 2))
+    let readModel = await ps.getReadModel()
     event = await ps.deletePackage(
       'Qme7DMBUe1EjXAKoEXzNh7G7NgMeGw9i2uLfB9bKVR7hHZ',
       accounts[0]
     )
-    readModel = await ps.getReadModel(readModelAdapter)
-    // console.log(JSON.stringify(readModel.state, null, 2))
-  })
-
-  it('PackageService all references and costs are tracked.', async () => {
-    let store = await Factory.createStore(
-      factory,
-      accounts,
-      relic.web3,
-      accounts[0]
-    )
-    let ps = new PackageService(relic, store, setup.eventStoreAdapter)
-    let event = await ps.publishPackage(
-      'Qme7DMBUe1EjXAKoEXzNh7G7NgMeGw9i2uLfB9bKVR7hHZ',
-      'bobo@0.0.1',
-      accounts[0]
-    )
-    event = await ps.publishPackage(
-      'QmYG8q3btc4xb3GhtdQzwdxtuZiAoxGKNS9sMBrqDKNws2',
-      'bobo@0.0.2',
-      accounts[0]
-    )
-    let readModel = await ps.getReadModel(readModelAdapter)
-    event = await ps.deletePackage(
-      'Qme7DMBUe1EjXAKoEXzNh7G7NgMeGw9i2uLfB9bKVR7hHZ',
-      accounts[0]
-    )
-    readModel = await ps.getReadModel(readModelAdapter)
-    // console.log(JSON.stringify(readModel.state, null, 2))
+    // console.log(JSON.stringify(ps.readModel.state, null, 2))
+    // need tests here...
   })
 })
