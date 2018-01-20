@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const vorpalLog = require("vorpal-log");
 const vorpal = require("vorpal")();
+const path = require("path");
 const fs = require("fs");
 const fse = require("fs-extra");
 const ethereumjsWallet = require("ethereumjs-wallet");
@@ -13,6 +14,8 @@ vorpal.use(vorpalLog);
 
 const T = require("transmute-framework");
 const TC = require("transmute-crypto");
+const TransmuteIpfs = require("transmute-ipfs");
+
 const { init } = require("./transmute");
 
 const RPC_HOST = "http://localhost:8545";
@@ -217,11 +220,9 @@ vorpal
           const factory = await T.EventStoreFactory.At(
             factoryReadModelJson.contractAddress
           );
-
           let whitelist = accounts.map(acc => {
             return T.Utils.toChecksumAddress(acc);
           });
-
           let store = await T.Factory.createStore(
             factory,
             whitelist,
@@ -246,6 +247,64 @@ vorpal
       }
     }
     callback();
+  });
+
+vorpal
+  .command(
+    "publish-dir <password> <targetPath>",
+    "publishes a directory to ipfs with an store event."
+  )
+  .types({ string: ["_"] })
+  .action(async (args, callback) => {
+    if (!fs.existsSync("./PackageManager.ReadModel.json")) {
+      vorpal.logger.log("\n");
+      vorpal.logger.error("./PackageManager.ReadModel.json does not exist.\n");
+      vorpal.logger.info("run: transmute create-store <password>\n");
+      return callback();
+    }
+    const pmReadModelJson = require("./PackageManager.ReadModel.json");
+    let packageJsonTargetPath = path.join(
+      "./",
+      args.targetPath,
+      "package.json"
+    );
+    let fileExists = fs.existsSync(packageJsonTargetPath);
+    let dirPackageJson = require("./" + packageJsonTargetPath);
+    if (!fileExists) {
+      vorpal.logger.log("\n");
+      vorpal.logger.error("targePath does not contain package.json\n");
+      return callback();
+    }
+
+    const setup = await init();
+    const { eventStoreAdapter, readModelAdapter } = setup;
+    let TI = new TransmuteIpfs();
+    const decryptedAccount = await getDecryptedAccount(args.password);
+    const web3 = getWeb3(decryptedAccount);
+    const relic = new T.Relic(web3);
+    const accounts = await relic.getAccounts();
+    const ignorelist = await TI.getIgnoreList();
+    // console.log(ignorelist)
+    let results = await TI.addDirectory(args.targetPath, ignorelist);
+    // console.log(results)
+    let dirHash = results.pop().hash;
+    // console.log(dirHash)
+
+    let store = await T.EventStore.At(pmReadModelJson.contractAddress);
+    let ps = new T.PackageService(relic, store, eventStoreAdapter);
+
+    let events = await ps.publishPackage(
+      dirHash,
+      dirPackageJson.name,
+      accounts[0].toLowerCase()
+    );
+    vorpal.logger.log(JSON.stringify(events, null, 2));
+    let psReadModel = await ps.getReadModel(readModelAdapter);
+    await writeFile(
+      "./PackageManager.ReadModel.json",
+      JSON.stringify(psReadModel.state, null, 2)
+    );
+    vorpal.logger.log("\n./PackageManager.ReadModel.json written to disk.\n");
   });
 
 vorpal
