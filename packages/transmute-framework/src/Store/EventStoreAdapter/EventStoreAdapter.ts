@@ -29,7 +29,16 @@ export class EventStoreAdapter {
         ValueType: Utils.toAscii(args.ValueType)
       }
       // console.log(mutatingEvent.Value);
-      let key = this.mapper[mutatingEvent.ValueType].readIDFromBytes32(mutatingEvent.Value)
+
+      if (!this.mapper[mutatingEvent.ValueType]) {
+        throw new Error(
+          'EventStoreAdapter has not mapper for events of valueType: ' +
+            mutatingEvent.ValueType
+        )
+      }
+      let key = this.mapper[mutatingEvent.ValueType].readIDFromBytes32(
+        mutatingEvent.Value
+      )
       let value = await this.mapper[mutatingEvent.ValueType].adapter.getItem(
         this.mapper[mutatingEvent.ValueType].db,
         key
@@ -92,7 +101,9 @@ export class EventStoreAdapter {
         }
 
         if (this.mapper[event.meta.adapter] === undefined) {
-          throw new Error('mapper not provided for event.meta.adapter: ' + event.meta.adapter)
+          throw new Error(
+            'mapper not provided for event.meta.adapter: ' + event.meta.adapter
+          )
         }
         // console.log("event: ", event);
         let adaptedEvent = await this.convertFSAPayload(event)
@@ -128,10 +139,16 @@ export class EventStoreAdapter {
     return esEventParams
   }
 
-  writeFSA = async (store: EventStore, fromAddress: string, event: IFSA): Promise<IFSA> => {
+  writeFSA = async (
+    store: EventStore,
+    fromAddress: string,
+    event: IFSA
+  ): Promise<IFSA> => {
     if (event.type.length > 32) {
       throw new Error(
-        'fsa.type (S) is more than 32 bytes. value length = ' + event.type.length + ' chars'
+        'fsa.type (S) is more than 32 bytes. value length = ' +
+          event.type.length +
+          ' chars'
       )
     }
 
@@ -169,7 +186,8 @@ export class EventStoreAdapter {
     this.mapperKeys.forEach((mapperKey: string) => {
       if (TransmuteSolidityEncodingTypes.indexOf(mapperKey) !== -1) {
         throw new Error(
-          'Mapper keys cannot container reserved encoding types: ' + TransmuteSolidityEncodingTypes
+          'Mapper keys cannot container reserved encoding types: ' +
+            TransmuteSolidityEncodingTypes
         )
       }
     })
@@ -181,16 +199,26 @@ export class EventStoreAdapter {
         this.mapper[mapperKey] === undefined ||
         this.mapper[mapperKey].readIDFromBytes32 === undefined
       ) {
-        throw new Error('Mapper : ' + mapperKey + ' does not implement IAdapterMapper')
+        throw new Error(
+          'Mapper : ' + mapperKey + ' does not implement IAdapterMapper'
+        )
       }
     })
   }
 
-  getItem = async (adapter: ITransmuteStoreAdapter, db: any, key: string): Promise<any> => {
+  getItem = async (
+    adapter: ITransmuteStoreAdapter,
+    db: any,
+    key: string
+  ): Promise<any> => {
     return adapter.getItem(db, key)
   }
 
-  setItem = async (adapter: ITransmuteStoreAdapter, db: any, value: any): Promise<string> => {
+  setItem = async (
+    adapter: ITransmuteStoreAdapter,
+    db: any,
+    value: any
+  ): Promise<string> => {
     return adapter.setItem(db, value)
   }
 
@@ -206,7 +234,10 @@ export class EventStoreAdapter {
         if (event.payload.value.length > 66) {
           // check hex chars only 0-f/F
           if (!Utils.isHex(event.payload.value)) {
-            throw new Error('solidity bytes32 received invalid hex string: ' + event.payload.value)
+            throw new Error(
+              'solidity bytes32 received invalid hex string: ' +
+                event.payload.value
+            )
           }
         }
       }
@@ -247,7 +278,13 @@ export class EventStoreAdapter {
     return _value
   }
 
-  marshal = async (_eventType: any, _keyType: any, _valueType: any, _key: any, _value: any) => {
+  marshal = async (
+    _eventType: any,
+    _keyType: any,
+    _valueType: any,
+    _key: any,
+    _value: any
+  ) => {
     return {
       eventType: _eventType,
       keyType: _keyType,

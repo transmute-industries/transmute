@@ -81,9 +81,14 @@ export class ReadModel implements IReadModel {
   ) => {
     let changes = false
     try {
+      console.warn('read model may be stale.')
+      let backup = JSON.parse(JSON.stringify(this.state))
       this.state = await this.readModelAdapter.getItem(
         this.state.readModelStoreKey
       )
+      if (!this.state) {
+        this.state = backup
+      }
     } catch (e) {
       // this case when we have not persisted a read model before OR
       // there is a bug is getItem/setItem....
