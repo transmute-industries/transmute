@@ -1,0 +1,1 @@
+export const TOAST_MESSAGE = "TOAST_MESSAGE";
