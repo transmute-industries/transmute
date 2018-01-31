@@ -26,6 +26,7 @@
     "vorpal-log": "^1.1.0"
   },
   "scripts": {
+    "prep": "lerna run --scope transmute-framework contracts:regenerate && lerna run --scope transmute-framework build",
     "cleanup": "rm read_model_storage* ",
     "transmute-alpha": "node cli.js",
     "start": "react-scripts start",

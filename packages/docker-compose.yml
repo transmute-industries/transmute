@@ -1,0 +1,21 @@
+version: '2'
+services:
+
+  testrpc:
+    environment:
+      - RPC_HOST=testrpc
+    build: ./testrpc
+    ports:
+      - "8545:8545"
+
+  ipfs:
+    build: ./ipfs
+    ports:
+     - "8080:8080"
+     - "5001:5001"
+     - "4001:4001"
+    #  Uncomment this if you want to persist your IPFS data locally
+    #  Otherwise it will always be a new instance (no persistence)
+    # volumes:
+    #   - ~/.ipfs/:/data/ipfs/
+    

@@ -142,7 +142,7 @@ vorpal
     const tx = await relic.sendWei(accounts[0], args.address, args.amountWei);
     vorpal.logger.info(tx);
     let balance = await web3.eth.getBalance(args.address);
-    vorpal.logger.log("\nAddress: 0x" + args.address);
+    vorpal.logger.log("\nAddress: " + args.address);
     vorpal.logger.log("\nBalance: " + balance + "\n");
     callback();
   });
@@ -339,6 +339,8 @@ vorpal
     vorpal.logger.log(
       "\n./src/PackageManager.ReadModel.json written to disk.\n"
     );
+
+    callback();
   });
 
 vorpal
@@ -398,51 +400,81 @@ vorpal
     vorpal.logger.log(
       "\n./src/PackageManager.ReadModel.json written to disk.\n"
     );
+
+    callback();
   });
-
-
 
 vorpal
-.command(
-  "link <email> <password>",
-  "Login with the email and password you setup on alpha.transmute.industries. "
-)
-.action(async (args, callback) => {
-  if (!fs.existsSync("./encryptedAccount.json")) {
-    vorpal.logger.error("No account found.");
-    vorpal.logger.info(
-      "To create an account use: create-web3-account <password> "
-    );
-    callback();
-  }
+  .command(
+    "register <email> <password>",
+    "Create a firebase account with email and password."
+  )
+  .action(async (args, callback) => {
+    const createUser = async (email, password) => {
+      return new Promise((resolve, reject) => {
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(email, password)
+          .then(user => {
+            resolve(user);
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
+    };
 
-  const login = async (email, password) => {
-    return new Promise((resolve, reject) => {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password)
-        .then(user => {
-          resolve(user);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-  };
-  const encryptedAccount = await getEncryptedAccount();
-  const user = await login(args.email, args.password);
-  const db = app.database();
-  const ref = db.ref(`user-data/${user.uid}`);
-  await ref.set({
-    [encryptedAccount.address]: "claimed",
-    factory: require('./src/EventStoreFactory.ReadModel.json'),
-    packageManager: require('./src/PackageManager.ReadModel.json')
+    try {
+      let user = await createUser(args.email, args.password);
+      vorpal.logger.info("User created. " + "\n");
+    } catch (error) {
+      vorpal.logger.error(error.message + "\n");
+    }
+
+    callback();
   });
-  let myUserData = (await ref.once("value")).val();
-  vorpal.logger.log("Your user data (public information during alpha).\n");
-  vorpal.logger.log(JSON.stringify(myUserData, null, 2) + "\n");
-  callback();
-});
+
+vorpal
+  .command(
+    "link <email> <password>",
+    "Link your Factory and PackageManager with your firebase account."
+  )
+  .action(async (args, callback) => {
+    if (!fs.existsSync("./encryptedAccount.json")) {
+      vorpal.logger.error("No account found.");
+      vorpal.logger.info(
+        "To create an account use: create-web3-account <password> "
+      );
+      callback();
+    }
+
+    const login = async (email, password) => {
+      return new Promise((resolve, reject) => {
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(email, password)
+          .then(user => {
+            resolve(user);
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
+    };
+    const encryptedAccount = await getEncryptedAccount();
+    const user = await login(args.email, args.password);
+    const db = app.database();
+    const ref = db.ref(`user-data/${user.uid}`);
+    await ref.set({
+      [encryptedAccount.address]: "claimed",
+      factory: require("./src/EventStoreFactory.ReadModel.json"),
+      packageManager: require("./src/PackageManager.ReadModel.json")
+    });
+    let myUserData = (await ref.once("value")).val();
+    vorpal.logger.log("Your user data (public information during alpha).\n");
+    vorpal.logger.log(JSON.stringify(myUserData, null, 2) + "\n");
+    callback();
+  });
 
 vorpal.use(vorpalTour, {
   command: "tour",
@@ -473,20 +505,22 @@ vorpal.use(vorpalTour, {
     tour
       .step(3)
       .begin(
-        'Run "fund <your address> 39989750658133700101" fund your new wallet from the default web3 account.'
+        'Run "fund <your_address> 100000000000000000" fund your new wallet from the default web3 account.'
       )
       .expect("command", (data, cb) => {
         cb(data.command.indexOf("fund") !== -1);
       })
       .reject(
-        'Uh.. Let\'s type "fund <your address> 39989750658133700101" instead..'
+        'Uh.. Let\'s type "fund <your_address> 100000000000000000" instead..'
       )
       .wait(500)
       .end("See your updated balance?");
 
     tour
       .step(4)
-      .begin('Now lets create a factory. Run "create-factory <your_password>" ')
+      .begin(
+        'Now let\'s create a factory. Run "create-factory <your_password>" '
+      )
       .expect("command", (data, cb) => {
         cb(data.command.indexOf("create-factory") !== -1);
       })
@@ -499,7 +533,7 @@ vorpal.use(vorpalTour, {
     tour
       .step(5)
       .begin(
-        'Now lets create a package manager. Run "create-package-manager <your_password>" '
+        'Now let\'s create a package manager. Run "create-package-manager <your_password>" '
       )
       .expect("command", (data, cb) => {
         cb(data.command.indexOf("create-package-manager") !== -1);
@@ -513,9 +547,9 @@ vorpal.use(vorpalTour, {
       );
 
     tour
-      .step(5)
+      .step(6)
       .begin(
-        'Now lets publish a package. Run "publish-package <your_password> ./data/dapp1" '
+        "Now let's publish a package. Run \"publish-package <your_password> ./data/dapp1"
       )
       .expect("command", (data, cb) => {
         cb(data.command.indexOf("publish-package") !== -1);
@@ -526,13 +560,39 @@ vorpal.use(vorpalTour, {
         "./src/PackageManager.ReadModel.json now shows your published package."
       );
 
+    tour
+      .step(7)
+      .begin(
+        "Now let's create a firebase user account for use with the web app demo. Run 'register <email> <password>'."
+      )
+      .expect("command", (data, cb) => {
+        cb(data.command.indexOf("register") !== -1);
+      })
+      .reject('Uh.. Let\'s type "register <email> <password>" instead..')
+      .wait(500)
+      .end("You now have a firebase account.");
+
+    tour
+      .step(8)
+      .begin(
+        'Now let\'s link your Factory and PackageManager contracts with your firebase account. Run "link <email> <password>".'
+      )
+      .expect("command", (data, cb) => {
+        cb(data.command.indexOf("link") !== -1);
+      })
+      .reject('Uh.. Let\'s type "link <email> <password>" instead..')
+      .wait(500)
+      .end(
+        "You have now linked your smart contracts with your firebase account."
+      );
+
     // A delay in millis between steps.
     tour.wait(1000);
 
-    // Ends the tour, spits text to the user.
     tour.end(
-      "Congrats! Head over to alpha.transmute.industries, to login and see your packages. or run it locally with: npm run start"
+      "Congrats! Now exit the CLI (ctrl + c) and run 'npm run start' and visit http://localhost:3000, login with your firebase account to see your packages."
     );
+
 
     return tour;
   }
