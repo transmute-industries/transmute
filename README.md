@@ -9,6 +9,7 @@
 * [IPFS](https://ipfs.io/)
 * [Ganache CLI](https://github.com/trufflesuite/ganache-cli)
 * [Truffle](http://truffleframework.com/)
+* [Docker](https://www.docker.com/)
 
 ```
 npm install -g lerna ethereumjs-testrpc truffle
@@ -18,7 +19,7 @@ npm install -g lerna ethereumjs-testrpc truffle
 
 ```
 lerna clean
-lerna bootrstrap
+lerna bootstrap
 lerna run cleanup
 lerna run contracts:migrate
 lerna run contracts:generate
