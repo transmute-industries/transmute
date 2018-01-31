@@ -6,7 +6,7 @@ import { push } from "react-router-redux";
 
 import { routes } from "../pages";
 import { toastMessage } from "../store/toast/actionCreators";
-import firebase from 'firebase'
+import firebase from "firebase";
 
 const Register = ({ transmute, toastMessage, redirectToPath }) => (
   <div>
@@ -53,18 +53,15 @@ const Register = ({ transmute, toastMessage, redirectToPath }) => (
         </div>
         <br />
         <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input className="mdl-textfield__input" type="email" id="email" />
-        <label className="mdl-textfield__label" for="email">
-          Email
-        </label>
-      </div>
-      <br />
-      <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input className="mdl-textfield__input" type="password" id="password" />
-        <label className="mdl-textfield__label" for="password">
-          Password
-        </label>
-      </div>
+          <input
+            className="mdl-textfield__input"
+            type="password"
+            id="password"
+          />
+          <label className="mdl-textfield__label" for="password">
+            Password
+          </label>
+        </div>
         <br />
         <button className="mdl-button mdl-button--accent mdl-js-button mdl-button--raised">
           Register
