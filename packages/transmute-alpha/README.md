@@ -6,7 +6,7 @@
 
 Install lerna with `npm i lerna -g`.
 
-Next, you will need to start IPFS and testrpc locally. From inside `./packages/`, run:
+Next, you will need to start IPFS and testrpc locally.  Run:
 
 ```
 docker-compose up
