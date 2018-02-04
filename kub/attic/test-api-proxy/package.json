@@ -1,0 +1,19 @@
+{
+  "name": "test-api-proxy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "docker:build": "docker build -t or13/test-api-proxy .",
+    "docker:start": "docker run -p 127.0.0.1:3001:3001 -it or13/test-api-proxy",
+    "docker:publish": "docker push or13/test-api-proxy"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "express-async-await": "^1.1.0",
+    "http-proxy": "^1.16.2"
+  }
+}

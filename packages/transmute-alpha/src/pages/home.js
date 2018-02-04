@@ -100,8 +100,8 @@ const Home = ({ transmute, firebase, navigateTo}) => (
         {/* <h4>User Data Rebuilt from IPFS and Ethereum</h4>
         <pre>{JSON.stringify(transmute, null, 2)}</pre> */}
 
-        {/* <h4>Full PackageManger ReadModel</h4>
-        <pre>{JSON.stringify(transmute.packageManagerState, null, 2)}</pre> */}
+        <h4>Full PackageManger ReadModel</h4>
+        <pre>{JSON.stringify(transmute.packageManagerState, null, 2)}</pre>
       </div>
     )}
   </div>
