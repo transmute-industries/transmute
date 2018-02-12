@@ -12,4 +12,5 @@ With the framework come tutorials for managing ethereum depenencies with kuberne
 
 ### Getting started
 
-- [Setup Tutorials](https://github.com/transmute-industries/transmute/tree/master/tutorials)
+- [Setup MiniKube](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube)
+- [Setup IPFS](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube/ipfs)
