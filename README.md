@@ -24,6 +24,12 @@ In order to build and test the framework locally, we have created a tutorial. Be
 docker-compose up
 ```
 
+Before you can run the packages, we need to setup lerna:
+
+```
+lerna bootstrap
+```
+
 Next, navigate to the `transmute-compliance-demo` directory.
 
 ```
