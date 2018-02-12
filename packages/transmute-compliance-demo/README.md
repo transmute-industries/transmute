@@ -1,10 +1,5 @@
 # Transmute Compliance Demo
 
-## You will need:
-
-* [Latest Node.js](https://nodejs.org/)
-* [Docker](https://www.docker.com/)
-
 ## Getting Started
 
 For now, you will need to clone the mono repo and use lerna to run this demo.
