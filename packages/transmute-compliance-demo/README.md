@@ -23,7 +23,7 @@ Normally, you would do this as a build step in your own project.
 npm run prep
 ```
 
-Unfortunatly, kubernetes support for this demo is not currently stable. For now, you will need to run ipfs and testrpc with docker-compose from the root directory of the repo:
+Unfortunatly, kubernetes support for this demo is not currently stable. For now, you will need to run ipfs and testrpc with docker-compose from the root directory of the , if you have not already:
 
 ```
 docker-compose up
