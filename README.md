@@ -14,14 +14,12 @@ With the framework come tutorials for managing ethereum depenencies with kuberne
 
 ### Getting started
 
-#### Dependencies
-- [Latest Node.js](https://nodejs.org/)
-- [Docker](https://www.docker.com/)
-
-In order to build and test the framework locally, we have created a tutorial. Before you can start, we'll need to start a local ipfs node and the ganache-cli.
+#### [Set up MiniKube](./tutorials/minikube)
 
 ```
-docker-compose up
+minikube start
+```
+
 ```
 
 Before you can run the packages, we need to setup lerna:
