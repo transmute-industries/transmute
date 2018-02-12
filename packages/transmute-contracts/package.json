@@ -5,6 +5,7 @@
   "main": "truffle.js",
   "scripts": {
     "cleanup": "rm -rf ./build",
+    "build": "npm run contracts:migrate",
     "contracts:migrate":
       "npm run cleanup && GANACHE_CLI=$(minikube --namespace transmute-testrpc  service transmute-testrpc-ganache-cli --url ) truffle migrate --reset"
   },
