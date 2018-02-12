@@ -31,9 +31,9 @@ lerna bootstrap
 
 ### Compliance
 
-Many compliance use cases involve linking off-chain data to on-chain smart contracts, which can provide an immutable audit log. Such transactions are expensive, but through through the EventStore Adapter some cost can be saved through off chain storage.
+Many compliance use cases involve linking off-chain data to on-chain smart contracts, which can provide an immutable audit log. Such transactions are expensive, but with the transmute framework some cost can be saved through off chain storage, via a hopefully familar redux interface.
 
-In this tutorial, we'll show you how to write events to ethereum smart contracts. You will also learn how ReadModels are formed by reducing the events from a smart contract. ReadModels represent the state of a smart contract as it processes each event. ReadModels can be saved to databases and queried against, and are an interface for off chain services to use to understand smart contract states.
+In this tutorial, we'll show you how to write events to ethereum smart contracts, and how ReadModels represent the state of a smart contract as it processes each event. ReadModels can be saved to databases and queried over time, and are an interface for off chain services.
 
 You'll learn:
 

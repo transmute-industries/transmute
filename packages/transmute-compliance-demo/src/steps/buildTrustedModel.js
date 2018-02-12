@@ -19,6 +19,25 @@ module.exports = vorpal => {
       } = await init();
       const deployFromDefault = T.W3.TC.txParamsDefaultDeploy(accounts[0]);
 
+      vorpal.logger.info("Syncing a ReadModel from a Smart Contract: \n");
+      console.log(`
+      const eventStoreReadModel = require("../../EventStore.ReadModel.json");
+      const eventStore = await T.Store.get(
+        eventStoreReadModel.contractAddress,
+        relic.web3
+      );
+      const readModel = getReadModel(
+        T,
+        eventStoreReadModel.contractAddress,
+        readModelAdapter
+      );
+
+      let updated = await readModel.sync(
+        eventStore,
+        eventStoreAdapter,
+        T.Relic.web3
+      );
+      `);
       const eventStoreReadModel = require("../../EventStore.ReadModel.json");
       const eventStore = await T.Store.get(
         eventStoreReadModel.contractAddress,

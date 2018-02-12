@@ -6,7 +6,8 @@ module.exports = vorpal => {
   vorpal
     .command("createEventStore", "Create an EvenStore Smart Contract.")
     .action(async (args, callback) => {
-      const { init } = require("../transmute/index");
+      vorpal.logger.info('Creating a new eventstore and getting its ReadModel: \n')
+      console.log(`
       const { T, eventStoreAdapter, readModelAdapter, accounts } = await init();
       const deployFromDefault = T.W3.TC.txParamsDefaultDeploy(accounts[0]);
       const newEventStore = await T.EventStore.New(deployFromDefault);
@@ -15,7 +16,6 @@ module.exports = vorpal => {
         deployFromDefault
       );
       let events = T.EventTransformer.getFSAsFromReceipt(receipt);
-
       const readModel = getReadModel(
         T,
         newEventStore.address,
@@ -27,7 +27,27 @@ module.exports = vorpal => {
         eventStoreAdapter,
         T.Relic.web3
       );
+      `)
+      const { init } = require("../transmute/index");
+      const { T, eventStoreAdapter, readModelAdapter, accounts } = await init();
+      const deployFromDefault = T.W3.TC.txParamsDefaultDeploy(accounts[0]);
+      const newEventStore = await T.EventStore.New(deployFromDefault);
+      const receipt = await newEventStore.setWhitelist(
+        accounts,
+        deployFromDefault
+      );
+      let events = T.EventTransformer.getFSAsFromReceipt(receipt);
+      const readModel = getReadModel(
+        T,
+        newEventStore.address,
+        readModelAdapter
+      );
 
+      let updated = await readModel.sync(
+        newEventStore,
+        eventStoreAdapter,
+        T.Relic.web3
+      );
       await writeFile(
         "./EventStore.ReadModel.json",
         JSON.stringify(readModel.state, null, 2)
