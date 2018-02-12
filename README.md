@@ -2,6 +2,8 @@
 
 Open source transmute framework and platform packages.
 
+🚧 Pardon our mess as we upgrade to support kubernetes. 🚧
+
 🔥 DO NOT USE IN PRODUCTION 🔥
 
 ### The transmute framework is a library for connecting off-chain data with on-chain smart contracts.
@@ -14,3 +16,4 @@ With the framework come tutorials for managing ethereum depenencies with kuberne
 
 - [Setup MiniKube](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube)
 - [Setup IPFS](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube/ipfs)
+- [Setup Ganache-CLI](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube/ganache-cli)

@@ -1,13 +1,17 @@
 // const LightWalletProvider = require('@digix/truffle-lightwallet-provider')
 
+const TESTRPC_HOST_PROVIDER = process.env.GANACHE_CLI;
+const HOST = TESTRPC_HOST_PROVIDER.split('//')[1].split(':')[0]
+const PORT = TESTRPC_HOST_PROVIDER.split(":")[2]
+
 module.exports = {
   networks: {
     development: {
-      host: 'localhost',
-      port: 8545,
-      network_id: '*',
-      gas: 4600000,
-    },
+      host: HOST || "localhost",
+      port: PORT || 8545,
+      network_id: "*",
+      gas: 4600000
+    }
     // "ropsten": {
     //   provider: new LightWalletProvider({
     //     keystore: './sigmate-v3-ti.json',
@@ -29,5 +33,5 @@ module.exports = {
     //   port: 80,
     //   network_id: "*" // Match any network id
     // }
-  },
-}
+  }
+};

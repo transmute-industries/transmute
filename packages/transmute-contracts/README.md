@@ -1,10 +1,11 @@
 # Transmute Contracts
 
-Transmute Smart Contracts with Truffle Tests and Solidity Coverage
+Transmute smart contacts.
 
 ```
 npm install
 npm run test
 npm run test:coverage
+npm run contracts:migrate
 ```
 
