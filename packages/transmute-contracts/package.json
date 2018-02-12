@@ -5,9 +5,6 @@
   "main": "truffle.js",
   "scripts": {
     "cleanup": "rm -rf ./build",
-    "build": "npm run test:coverage && npm run migrate",
-    "test:coverage": "./node_modules/.bin/solidity-coverage",
-    "test:coverage:report": "codecov",
     "contracts:migrate":
       "npm run cleanup && GANACHE_CLI=$(minikube --namespace transmute-testrpc  service transmute-testrpc-ganache-cli --url ) truffle migrate --reset"
   },
