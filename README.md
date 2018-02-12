@@ -27,6 +27,7 @@ docker-compose up
 Before you can run the packages, we need to setup lerna:
 
 ```
+npm install -g lerna
 lerna bootstrap
 ```
 
