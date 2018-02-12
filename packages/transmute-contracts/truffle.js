@@ -1,14 +1,14 @@
 // const LightWalletProvider = require('@digix/truffle-lightwallet-provider')
 
-const TESTRPC_HOST_PROVIDER = process.env.GANACHE_CLI;
+const TESTRPC_HOST_PROVIDER = process.env.GANACHE_CLI || 'http://localhost:8545';
 const HOST = TESTRPC_HOST_PROVIDER.split('//')[1].split(':')[0]
 const PORT = TESTRPC_HOST_PROVIDER.split(":")[2]
 
 module.exports = {
   networks: {
     development: {
-      host: HOST || "localhost",
-      port: PORT || 8545,
+      host: HOST,
+      port: PORT,
       network_id: "*",
       gas: 4600000
     }

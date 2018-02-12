@@ -1,7 +1,19 @@
 const IPFS = require("ipfs-mini");
 
+
+const IPFS_API = process.env.IPFS_API;
+const HOST = IPFS_API.split("//")[1].split(":")[0];
+const PORT = IPFS_API.split(":")[2];
+
+console.log(PORT)
+
+
 const getStorage = () => {
-  return new IPFS({ host: "localhost", port: 5001, protocol: "http" });
+  return new IPFS({
+    host: HOST | "localhost",
+    port: PORT | 5001,
+    protocol: "http"
+  });
 };
 
 const getItem = (ipfs, key) => {
