@@ -14,13 +14,9 @@ With the framework come tutorials for managing ethereum depenencies with kuberne
 
 ### Getting started
 
-#### [Set up MiniKube](./tutorials/minikube)
-
-```
-minikube start
-```
-
-```
+- [Setup MiniKube](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube)
+- [Setup IPFS](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube/ipfs)
+- [Setup Ganache-CLI](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube/ganache-cli)
 
 Before you can run the packages, we need to setup lerna:
 
@@ -37,8 +33,3 @@ cd packages/transmute-compliance-demo
 
 Follow the instructions in the [Compliance Demo Read Me](./packages/transmute-compliance-demo)
 
-<!-- 
-- [Setup MiniKube](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube)
-- [Setup IPFS](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube/ipfs)
-- [Setup Ganache-CLI](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube/ganache-cli)
--->
