@@ -14,6 +14,8 @@ With the framework come tutorials for managing ethereum depenencies with kuberne
 
 ### Getting started
 
+#### Note: Use npm with this project, yarn does not play nicely with our lerna setup.
+
 * [Setup MiniKube](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube)
 * [Setup IPFS](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube/ipfs)
 * [Setup Ganache-CLI](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube/ganache-cli)

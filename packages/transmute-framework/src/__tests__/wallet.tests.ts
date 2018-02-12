@@ -1,6 +1,5 @@
 import { getDefaultRelic } from '../__mocks__/getRelic'
 import { Relic, Utils, Factory, Store, W3, EventStore } from '../transmute-framework'
-import * as TransmuteCrypto from 'transmute-crypto'
 
 const RPC_HOST = 'http://localhost:8545'
 

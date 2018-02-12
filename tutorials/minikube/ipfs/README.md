@@ -4,6 +4,12 @@ In this tutorial, you will learn how to use `helm` and `kubectl` to setup ipfs i
 
 We'll assume you have already setup `minikube` and `helm`. if you have not, see this [minikube setup tutorial](../README.md).
 
+## Start Minikube
+
+```
+minikube start
+```
+
 # Install IPFS Chart
 
 ```
@@ -15,7 +21,7 @@ Test that ipfs install correctly by following the instructions logged to console
 ```
 export POD_NAME=$(kubectl get pods --namespace transmute-ipfs -l "app=ipfs,release=transmute-ipfs"  -o jsonpath="{.items[0].metadata.name}")
 echo "Use the API Gateway by accessing http://localhost:8080/ipfs/QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG/readme"
-kubectl --namespace transmute-ipfs port-forward $POD_NAME 8080:8080
+kubectl --namespace transmute-ipfs port-forward $POD_NAME 8080:8080 &
 ```
 
 ## Expose IPFS
@@ -75,8 +81,8 @@ curl $IPFS_API/api/v0/pin/add?arg=QmNsrSKdN13Q6VHiggU5aANg1GHapQJEBVzpHF22tJj8Ew
 ### Unpin the file you added:
 
 ```
-curl $IPFS_API/api/v0/pin/rm?arg=QmSUFD7V8MfmLYEHWw9phnGEFhrjuYxGTgzEtMJuNoB6Jq
-# {"Message":"not pinned","Code":0}
+curl $IPFS_API/api/v0/pin/rm?arg=QmNsrSKdN13Q6VHiggU5aANg1GHapQJEBVzpHF22tJj8Ew
+# {"Pins":["QmNsrSKdN13Q6VHiggU5aANg1GHapQJEBVzpHF22tJj8Ew"]}
 ```
 
 ### Call garbage collect
@@ -96,5 +102,5 @@ If you wish to restart this tutorial locally, here is how to delete everything t
 helm delete transmute-ipfs --purge
 
 # delete service interfaces
-kubectl delete service ipfs-api ipfs-gateway  --namespace transmute-ipfs
+kubectl delete service ipfs-api ipfs-gateway --namespace transmute-ipfs
 ```

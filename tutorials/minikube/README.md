@@ -12,6 +12,11 @@ helm version
 minikube version
 ```
 
+Start minikube
+```
+minikube start
+```
+
 For compatibility with subsequent tutorials, we recommend updating your `hosts` file like so:
 
 ```

@@ -6,7 +6,7 @@ import WalletSubprovider from 'web3-provider-engine/subproviders/wallet'
 
 const RPC_HOST = 'http://localhost:8545'
 
-import * as TransmuteCrypto from 'transmute-crypto'
+const TransmuteCrypto = require('transmute-crypto')
 
 export const getAccounts = (web3: any): Promise<string[]> => {
   return new Promise((resolve, reject) => {

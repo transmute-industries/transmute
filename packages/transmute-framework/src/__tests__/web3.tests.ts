@@ -6,8 +6,6 @@ const ProviderEngine = require('web3-provider-engine')
 const RpcSubprovider = require('web3-provider-engine/subproviders/rpc.js')
 const WalletSubprovider = require('web3-provider-engine/subproviders/wallet.js')
 
-import * as TransmuteCrypto from 'transmute-crypto'
-
 import {
   getAccounts,
   getDefaultWeb3,
