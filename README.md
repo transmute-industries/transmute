@@ -16,9 +16,9 @@ With the framework come tutorials for managing ethereum depenencies with kuberne
 
 #### Note: Use npm with this project, yarn does not play nicely with our lerna setup.
 
-* [Setup MiniKube](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube)
-* [Setup IPFS](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube/ipfs)
-* [Setup Ganache-CLI](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube/ganache-cli)
+* [Setup Minikube](https://github.com/transmute-industries/transmute/tree/master/demos/minikube-setup)
+* [Setup IPFS](https://github.com/transmute-industries/transmute/tree/master/demos/minikube-setup/ipfs)
+* [Setup Ganache-CLI](https://github.com/transmute-industries/transmute/tree/master/demos/minikube-setup/ganache-cli)
 
 We can use lerna and k8s services to configure the smart contracts:
 

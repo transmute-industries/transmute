@@ -1,0 +1,12 @@
+{
+  "name": "ganache-cli",
+  "version": "1.0.1-alpha.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "docker:build": "docker build -t transmute/ganache-cli -f Dockerfile .",
+    "docker:start": "docker run -p 127.0.0.1:8545:8545 -it transmute/ganache-cli"
+  },
+  "author": "",
+  "license": "ISC"
+}

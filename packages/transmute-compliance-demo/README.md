@@ -1,5 +1,7 @@
 # Transmute Compliance Demo
 
+### Make sure that you have reviewed 'Getting Started' section of the [root README](https://github.com/transmute-industries/transmute) prior to continuing.
+
 ## Getting Started
 
 For now, you will need to clone the mono repo and use lerna to run this demo.
