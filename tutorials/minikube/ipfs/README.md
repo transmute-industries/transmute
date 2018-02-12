@@ -4,25 +4,24 @@ In this tutorial, you will learn how to use `helm` and `kubectl` to setup ipfs i
 
 We'll assume you have already setup `minikube` and `helm`. if you have not, see this [minikube setup tutorial](../README.md).
 
-
 # Install IPFS Chart
 
 ```
-helm install stable/ipfs --name transmute-ipfs
+helm install stable/ipfs --name transmute-ipfs --namespace transmute-ipfs
 ```
 
 Test that ipfs install correctly by following the instructions logged to console. Here they are again:
 
 ```
-export POD_NAME=$(kubectl get pods --namespace default -l "app=ipfs,release=transmute-ipfs"  -o jsonpath="{.items[0].metadata.name}")
+export POD_NAME=$(kubectl get pods --namespace transmute-ipfs -l "app=ipfs,release=transmute-ipfs"  -o jsonpath="{.items[0].metadata.name}")
 echo "Use the API Gateway by accessing http://localhost:8080/ipfs/QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG/readme"
-kubectl --namespace default port-forward $POD_NAME 8080:8080
+kubectl --namespace transmute-ipfs port-forward $POD_NAME 8080:8080
 ```
 
 ## Expose IPFS
 
 ```
-kubectl get service transmute-ipfs-ipfs
+kubectl get services --namespace transmute-ipfs
 ```
 
 Note that this ipfs service is of type `ClusterIP`:
@@ -37,8 +36,8 @@ kubectl apply -f ./ipfs-api.service.yaml
 We need to use the NodePort services to expose both the api and gateway interfaces:
 
 ```
-export IPFS_GATEWAY=$(minikube service --url ipfs-gateway)
-export IPFS_API=$(minikube service --url ipfs-api)
+export IPFS_GATEWAY=$(minikube service --url ipfs-gateway --namespace transmute-ipfs)
+export IPFS_API=$(minikube service --url ipfs-api --namespace transmute-ipfs)
 ```
 
 ### Check the readme
@@ -97,5 +96,5 @@ If you wish to restart this tutorial locally, here is how to delete everything t
 helm delete transmute-ipfs --purge
 
 # delete service interfaces
-kubectl delete service ipfs-api ipfs-gateway 
+kubectl delete service ipfs-api ipfs-gateway  --namespace transmute-ipfs
 ```
