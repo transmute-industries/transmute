@@ -12,8 +12,4 @@ With the framework come tutorials for managing ethereum depenencies with kuberne
 
 ### Getting started
 
-First, you will need to setup minikube: 
-
-- [Setup MiniKube](/tutorials/tree/master/minikube)
-- [Setup IPFS](/tutorials/tree/master/minikube/ipfs)
-- [Setup Ganache CLI](/tutorials/tree/master/minikube/ganache-cli)
+- [Setup Tutorials](https://github.com/transmute-industries/transmute/tree/master/tutorials)
