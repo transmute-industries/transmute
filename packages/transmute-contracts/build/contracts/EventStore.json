@@ -6006,70 +6006,7 @@
     "name": "solc",
     "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
   },
-  "networks": {
-    "1518386532040": {
-      "events": {
-        "0x6b3c8873ff9b1c068470039341f6473e929874a38caab2cee207f5a533504169": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "Id",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "TxOrigin",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "MsgSender",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "Created",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "EventType",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "KeyType",
-              "type": "bytes1"
-            },
-            {
-              "indexed": false,
-              "name": "ValueType",
-              "type": "bytes1"
-            },
-            {
-              "indexed": false,
-              "name": "Key",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "Value",
-              "type": "bytes32"
-            }
-          ],
-          "name": "EsEvent",
-          "type": "event"
-        }
-      },
-      "links": {
-        "EventStoreLib": "0x1d7181dc76c9e88d95c8ef155b67af43cb11f394",
-        "AddressSetLib": "0xf3bd833188d9efe2451629d87600984dad696e98",
-        "Bytes32SetLib": "0x0e88efdffeaecc20f9b0044e05bf5756920205cb"
-      },
-      "address": "0x2ddbfb1df9ad500781a7d506e007fb699beee42d"
-    }
-  },
+  "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-02-11T22:09:34.754Z"
+  "updatedAt": "2018-02-12T00:36:33.651Z"
 }

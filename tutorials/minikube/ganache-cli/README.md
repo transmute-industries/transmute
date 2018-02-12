@@ -8,7 +8,7 @@ We'll assume you have already setup `minikube` and `helm`. if you have not, see 
 ## Install Ganache-CLI with Helm
 
 ```
-helm install ./ganache-cli --name=transmute-testrpc
+helm install ./ganache-cli --name=transmute-testrpc --namepsace transmute-testrpc
 ```
 
 ## Testing Ganache-CLI on Minikube
@@ -16,7 +16,7 @@ helm install ./ganache-cli --name=transmute-testrpc
 We need to use the NodePort services to expose the rpc interface:
 
 ```
-export GANACHE_CLI=$(minikube service transmute-testrpc-ganache-cli --url )
+export GANACHE_CLI=$(minikube --namespace transmute-testrpc  service transmute-testrpc-ganache-cli --url )
 ```
 
 Ask for the client version:  
