@@ -14,7 +14,7 @@ With the framework come tutorials for managing ethereum depenencies with kuberne
 
 ### Getting started
 
-### Dependencies
+#### Dependencies
 - [Latest Node.js](https://nodejs.org/)
 - [Docker](https://www.docker.com/)
 
