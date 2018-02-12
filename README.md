@@ -28,7 +28,7 @@ export IPFS_API=$(minikube service --url ipfs-api --namespace transmute-ipfs)
 npm install -g lerna
 git clone https://github.com/transmute-industries/transmute.git
 lerna bootstrap
-lerna run build --ignore transmute-alpha
+lerna run build --ignore transmute-alpha --ignore transmute-framework
 lerna run prep --scope transmute-compliance-demo
 ```
 
