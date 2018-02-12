@@ -28,11 +28,7 @@
   "scripts": {
     "prep": "lerna run --scope transmute-framework contracts:regenerate && lerna run --scope transmute-framework build",
     "cleanup": "rm read_model_storage* ",
-    "demo": "node ./src/cli.js",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "demo": "IPFS_GATEWAY=$(minikube service --url ipfs-gateway --namespace transmute-ipfs) IPFS_API=$(minikube service --url ipfs-api --namespace transmute-ipfs) GANACHE_CLI=$(minikube --namespace transmute-testrpc  service transmute-testrpc-ganache-cli --url )  node ./src/cli.js"
   },
   "devDependencies": {
     "transmute-adapter-ipfs": "^1.0.1-alpha.0.1",
