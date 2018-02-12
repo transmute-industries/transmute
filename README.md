@@ -1,6 +1,6 @@
 # Transmute
 
-Open source transmute framework and platform packages.
+A Blockchain framework for Identity and Compliance.
 
 🚧 Pardon our mess as we upgrade to support kubernetes. 🚧
 
@@ -10,7 +10,7 @@ Open source transmute framework and platform packages.
 
 This implementation is not optimized for cost, but for rapid prototyping. The framework is meant for developing proof of concepts quickly, and not currently ready for production use.
 
-With the framework come tutorials for managing ethereum depenencies with kubernetes. These will improve over time to support ethereum developers who want to use kubernetes locally or with cloud providers.
+With the framework come tutorials for managing ethereum depenencies with kubernetes locally or with cloud providers.
 
 ### Getting started
 
@@ -29,7 +29,19 @@ npm install -g lerna
 lerna bootstrap
 ```
 
-Next, navigate to the `transmute-compliance-demo` directory.
+### Compliance
+
+Many compliance use cases involve linking off-chain data to on-chain smart contracts, which can provide an immutable audit log. Such transactions are expensive, but through through the EventStore Adapter some cost can be saved through off chain storage.
+
+In this tutorial, we'll show you how to write events to ethereum smart contracts. You will also learn how ReadModels are formed by reducing the events from a smart contract. ReadModels represent the state of a smart contract as it processes each event. ReadModels can be saved to databases and queried against, and are an interface for off chain services to use to understand smart contract states.
+
+You'll learn:
+
+* How to create an eventstore contract.
+* How to save an event with an adapter.
+* How to use a ReadModel to get a smart contracts state.
+
+To get started, navigate to the `transmute-compliance-demo` directory.
 
 ```
 cd packages/transmute-compliance-demo
