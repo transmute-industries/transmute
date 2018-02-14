@@ -4,9 +4,17 @@
 
 ## Getting Started
 
-For now, you will need to clone the mono repo and use lerna to run this demo.
+This package comes preconfigured to use tranmsute hosted services, for demonstration purposes:
 
-In the future, you will be able to run this demo from public testnet and hosted services.
+Start the demo:
+
+```
+npm run demo
+```
+
+## Getting Started Advanced
+
+Warning, this method will redeploy smart contracts and may break!
 
 Install lerna globally: `npm i lerna -g`.
 
