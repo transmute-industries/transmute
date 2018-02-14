@@ -9,7 +9,7 @@ const readModelAdapter = require("./readModelAdapter");
 const T = require("transmute-framework");
 const TransmuteCrypto = require("transmute-crypto");
 
-const RPC_HOST = process.env.GANACHE_CLI || "http://localhost:8545";
+const RPC_HOST = process.env.GANACHE_CLI || "http://testrpc.transmute.network:8545";
 
 // const WalletSubprovider = require("web3-provider-engine/subproviders/wallet");
 
