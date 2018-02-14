@@ -1,6 +1,6 @@
 // const LightWalletProvider = require('@digix/truffle-lightwallet-provider')
 
-const TESTRPC_HOST_PROVIDER = process.env.GANACHE_CLI || 'http://localhost:8545';
+const TESTRPC_HOST_PROVIDER = process.env.GANACHE_CLI || 'http://testrpc.transmute.network:8545';
 const HOST = TESTRPC_HOST_PROVIDER.split('//')[1].split(':')[0]
 const PORT = TESTRPC_HOST_PROVIDER.split(":")[2]
 
