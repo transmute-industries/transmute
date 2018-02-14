@@ -8,6 +8,8 @@ spec:
   ports:
   - port: 5001
     name: ipfs-api-port
+  - port: 8080
+    name: ipfs-gateway-port
   selector:
     app: ipfs
   type: NodePort
