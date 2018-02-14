@@ -10,15 +10,13 @@ In the future, you will be able to run this demo from public testnet and hosted 
 
 Install lerna globally: `npm i lerna -g`.
 
-Before we get started, we'll want to setup Minikube, Ganache CLI, and IPFS.
+Before we get started, we'll want to make sure Ganache CLI, and IPFS are running.
 
-- [Setting up minikube](https://github.com/transmute-industries/transmute/blob/master/tutorials/minikube/README.md)
-- [Setting up ganache cli](https://github.com/transmute-industries/transmute/blob/master/tutorials/minikube/ganache-cli/README.md)
-- [Setting up ipfs](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube/ipfs/README.md)
+Either follow the minikube instructions, or run `docker-compose up` from the root directory.
 
-Next, we'll need to deploy some smart contracts and link them to the transmute framework.
+Next, we'll need to deploy some smart contracts to ganache-cli and link them to the transmute framework.
 
-Normally, you would do this as a build step in your own project.
+Normally, you would do this as a build step in your own project, or link against contracts deployed on the public test net. For this demo to work, you will need to make sure the contracts used by the framework are deployed to ganache-cli:
 
 ```
 npm run prep
