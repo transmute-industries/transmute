@@ -1,7 +1,7 @@
 const T = require("transmute-framework");
 const bs58 = require("bs58");
 
-const IPFS_API = process.env.IPFS_API || "http://localhost:5001";
+const IPFS_API = process.env.IPFS_API || "http://ipfs.transmute.network:5001";
 const HOST = IPFS_API.split("//")[1].split(":")[0];
 const PORT = IPFS_API.split(":")[2];
 
