@@ -33,8 +33,11 @@ kubectl get services --namespace transmute-ipfs
 Note that this ipfs service is of type `ClusterIP`:
 
 ```
-kubectl apply -f ./ipfs-gateway.service.yaml 
-kubectl apply -f ./ipfs-api.service.yaml 
+kubectl apply -f ./ipfs.service.yaml 
+
+# or 
+
+kubectl apply -f ./ipfs.service.minikube.yaml 
 ```
 
 ## Testing IPFS on Minikube
