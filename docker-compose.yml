@@ -4,12 +4,12 @@ services:
   testrpc:
     environment:
       - RPC_HOST=testrpc
-    build: ./testrpc
+    build: ./tutorials/docker-setup/ganache-cli
     ports:
       - "8545:8545"
 
   ipfs:
-    build: ./ipfs
+    build: ./tutorials/docker-setup/ipfs
     ports:
      - "8080:8080"
      - "5001:5001"
