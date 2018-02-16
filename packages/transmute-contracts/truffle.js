@@ -1,4 +1,4 @@
-// const LightWalletProvider = require('@digix/truffle-lightwallet-provider')
+const LightWalletProvider = require('@digix/truffle-lightwallet-provider')
 
 const TESTRPC_HOST_PROVIDER = process.env.GANACHE_CLI || 'http://testrpc.transmute.network:8545';
 const HOST = TESTRPC_HOST_PROVIDER.split('//')[1].split(':')[0]
@@ -14,13 +14,20 @@ module.exports = {
     },
     "ropsten": {
       provider: new LightWalletProvider({
-        keystore: './sigmate-v3-ti.json',
+        keystore: './ti-ropsten-wallet.json',
         password: process.env.PASSWORD,
         rpcUrl: 'https://ropsten.infura.io',
         debug: true, // optional, show JSON-RPC logs
         // prefund: 1e18, // optional, fund all lightwallet addresses (via coinbase) with this of wei
-        pollingInterval: 2000 // optional, polling interval for the provider (reduce for faster deploy with testRPC or kovan)
+        pollingInterval: 2000, // optional, polling interval for the provider (reduce for faster deploy with testRPC or kovan)
       }),
+      gas: 4600000,
+      solc: {
+        optimizer: {
+          enabled: true,
+          runs: 200
+        }
+      },
       network_id: '*',
     },
     // "parity": {
@@ -28,10 +35,5 @@ module.exports = {
     //   host: "localhost",
     //   port: 8545
     // },
-    // "azure": {
-    //   host: "testrpc.azurewebsites.net",
-    //   port: 80,
-    //   network_id: "*" // Match any network id
-    // }
   }
 };

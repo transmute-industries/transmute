@@ -767,6 +767,69 @@
     "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
   },
   "networks": {
+    "3": {
+      "events": {
+        "0x6b3c8873ff9b1c068470039341f6473e929874a38caab2cee207f5a533504169": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "Id",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "TxOrigin",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "MsgSender",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "Created",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "EventType",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "KeyType",
+              "type": "bytes1"
+            },
+            {
+              "indexed": false,
+              "name": "ValueType",
+              "type": "bytes1"
+            },
+            {
+              "indexed": false,
+              "name": "Key",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "Value",
+              "type": "bytes32"
+            }
+          ],
+          "name": "EsEvent",
+          "type": "event"
+        }
+      },
+      "links": {
+        "EventStoreLib": "0x550d9913c60c200ff3203de36f2dbcab22e20d51",
+        "AddressSetLib": "0xc12e37d361ee439b87cec83f0ab953f7bf3942b3",
+        "Bytes32SetLib": "0xe91883ddc9588b694fa58b3ad38f82af37dc87f4",
+        "EventStore": "0xb47aace497f98c4c9b14bea3c62035650b188f65"
+      },
+      "address": "0xbbb0114d449c51eb68c2fe7acf90bf2f54e00dae"
+    },
     "1518572580094": {
       "events": {
         "0x6b3c8873ff9b1c068470039341f6473e929874a38caab2cee207f5a533504169": {
@@ -832,5 +895,5 @@
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-02-14T03:30:10.776Z"
+  "updatedAt": "2018-02-16T20:15:40.762Z"
 }
