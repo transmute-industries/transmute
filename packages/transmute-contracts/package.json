@@ -6,8 +6,7 @@
   "scripts": {
     "cleanup": "rm -rf ./build",
     "build": "npm run contracts:migrate",
-    "contracts:migrate":
-      "npm run cleanup && truffle migrate --reset"
+    "contracts:migrate": "npm run cleanup && truffle migrate --reset"
   },
   "license": "MIT",
   "devDependencies": {
@@ -17,5 +16,10 @@
     "ethereumjs-util": "^5.1.2",
     "solidity-coverage": "^0.3.5",
     "web3-utils": "^1.0.0-beta.26"
+  },
+  "dependencies": {
+    "@digix/truffle-lightwallet-provider": "^0.1.4",
+    "bluebird": "^3.5.1",
+    "eth-lightwallet": "^3.0.1"
   }
 }
