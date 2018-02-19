@@ -1,6 +1,11 @@
 {
-  "extends": [
-    "tslint-config-standard",
-    "tslint-config-prettier"
-  ]
+  "extends": ["tslint-config-standard", "tslint-config-prettier"],
+  "rules": {
+    "member-ordering": [
+      false,
+      "public-before-private",
+      "static-before-instance",
+      "variables-before-functions"
+    ]
+  }
 }

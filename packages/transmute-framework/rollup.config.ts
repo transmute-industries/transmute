@@ -65,7 +65,7 @@ export default {
         // left-hand side can be an absolute path, a path
         // relative to the current directory, or the name
         // of a module in node_modules
-        "node_modules/soltsice/dist/src/index.js": ["W3", "SoltsiceContract"]
+        "soltsice": ["W3", "SoltsiceContract"]
       }
     }),
 

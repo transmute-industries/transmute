@@ -2,7 +2,7 @@
 // import "core-js/fn/array.find"
 // ...
 
-import { W3 } from 'soltsice'
+import { W3 as untypedW3 } from 'soltsice'
 
 import { BigNumber } from 'bignumber.js'
 
@@ -16,5 +16,7 @@ export * from './TransmuteContracts'
 export * from './Factory'
 export * from './Store'
 export * from './PackageService'
+
+const W3: any = untypedW3
 
 export { Relic, Utils, TransmuteContracts, W3 }
