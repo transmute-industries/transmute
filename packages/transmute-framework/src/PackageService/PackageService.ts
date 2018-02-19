@@ -25,6 +25,7 @@ export default class PackageService {
     public readModelAdapter: IReadModelAdapter
   ) {
     // console.log("created...");
+    this.readModel = undefined as any
   }
 
   requireLatestReadModel = async () => {
