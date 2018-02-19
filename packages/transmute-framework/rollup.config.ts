@@ -1,48 +1,48 @@
-import resolve from "rollup-plugin-node-resolve";
+import resolve from 'rollup-plugin-node-resolve';
 import builtins from 'rollup-plugin-node-builtins';
-import json from "rollup-plugin-json";
-import commonjs from "rollup-plugin-commonjs";
-import sourceMaps from "rollup-plugin-sourcemaps";
-import replace from "rollup-plugin-re";
-import camelCase from "lodash.camelcase";
+import json from 'rollup-plugin-json';
+import commonjs from 'rollup-plugin-commonjs';
+import sourceMaps from 'rollup-plugin-sourcemaps';
+import replace from 'rollup-plugin-re';
+import camelCase from 'lodash.camelcase';
 
-const pkg = require("./package.json");
+const pkg = require('./package.json');
 
-const libraryName = "transmute-framework";
+const libraryName = 'transmute-framework';
 
 export default {
   input: `dist/es/${libraryName}.js`,
   output: [
-    { file: pkg.main, name: camelCase(libraryName), format: "umd" },
-    { file: pkg.module, format: "es" }
+    { file: pkg.main, name: camelCase(libraryName), format: 'umd' },
+    { file: pkg.module, format: 'es' }
   ],
   sourcemap: true,
   // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
   external: [
-    "tar",
-    "crypto",
-    "websocket",
-    "scrypt",
+    'tar',
+    'crypto',
+    'websocket',
+    'scrypt',
     'lodash',
-    "elliptic",
-    "web3",
-    "web3-provider-engine",
-    // "bignumber.js"
-    "soltsice"
+    'elliptic',
+    'web3',
+    'web3-provider-engine',
+    'bignumber.js',
+    'soltsice'
   ],
   globals: {
-    "soltsice" : "soltsice",
-    "web3": "Web3",
-    "web3-provider-engine": "ProviderEngine",
-    elliptic: 'elliptic',
-    crypto: "crypto"
+    // "soltsice" : "soltsice",
     // "bignumber.js": "BigNumber"
+    web3: 'Web3',
+    'web3-provider-engine': 'ProviderEngine',
+    elliptic: 'elliptic',
+    crypto: 'crypto'
   },
   watch: {
-    include: "dist/es/**"
+    include: 'dist/es/**'
   },
   moduleContext: {
-    'dist/es/relic.js': 'this',
+    'dist/es/relic.js': 'this'
   },
   plugins: [
     builtins(),
@@ -56,7 +56,7 @@ export default {
       jsnext: true,
       main: true,
       browser: true,
-      extensions: [".js", ".json"]
+      extensions: ['.js', '.json']
     }),
 
     // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
@@ -65,7 +65,7 @@ export default {
         // left-hand side can be an absolute path, a path
         // relative to the current directory, or the name
         // of a module in node_modules
-        "soltsice": ["W3", "SoltsiceContract"]
+        soltsice: ['W3', 'SoltsiceContract']
       }
     }),
 
@@ -75,7 +75,7 @@ export default {
           match: /TransmuteContracts(\/|\\)/,
           test: /'..\/contracts\/.*\.json'/g,
           replace: somePath => {
-            return somePath.replace('..', '.')
+            return somePath.replace('..', '.');
           }
         }
       ]
