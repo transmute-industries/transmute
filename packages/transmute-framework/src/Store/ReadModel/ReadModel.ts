@@ -77,7 +77,7 @@ export class ReadModel implements IReadModel {
   sync = async (
     store: EventStore,
     eventStoreAdapter: EventStoreAdapter,
-    web3: W3
+    web3: any
   ) => {
     let changes = false
     try {
