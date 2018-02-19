@@ -1,12 +1,9 @@
 const IPFS = require("ipfs-mini");
 
 
-const IPFS_API = process.env.IPFS_API;
+const IPFS_API = process.env.IPFS_API || 'http://ipfs.transmute.network:5001';
 const HOST = IPFS_API.split("//")[1].split(":")[0];
 const PORT = IPFS_API.split(":")[2];
-
-console.log(PORT)
-
 
 const getStorage = () => {
   return new IPFS({
