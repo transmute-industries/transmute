@@ -1,7 +1,7 @@
 import { W3 } from './transmute-framework'
 
 class Relic {
-  web3: W3
+  web3: any
 
   constructor(web3: any) {
     W3.Default = this.web3 = web3
@@ -29,7 +29,11 @@ class Relic {
     }) as Promise<number>
   }
 
-  async sendWei(fromAddress: string, toAddress, amountWei: number): Promise<string> {
+  async sendWei(
+    fromAddress: string,
+    toAddress,
+    amountWei: number
+  ): Promise<string> {
     return new Promise((resolve, reject) => {
       ;(this.web3 as any).eth.sendTransaction(
         {
