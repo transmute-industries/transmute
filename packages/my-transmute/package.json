@@ -1,0 +1,32 @@
+{
+  "name": "my-transmute",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "history": "^4.7.2",
+    "json-logic-js": "^1.2.2",
+    "material-ui": "^1.0.0-beta.33",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "react-router-redux": "^5.0.0-alpha.9",
+    "react-scripts-ts": "2.13.0",
+    "redux": "^3.7.2",
+    "soltsice": "^0.10.3",
+    "transmute-framework": "^0.1.52",
+    "web3": "^1.0.0-beta.30"
+  },
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.1.2",
+    "@types/node": "^9.4.6",
+    "@types/react": "^16.0.38",
+    "@types/react-dom": "^16.0.4",
+    "typescript": "^2.7.2"
+  }
+}
