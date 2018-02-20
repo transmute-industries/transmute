@@ -1,11 +1,12 @@
 const IPFS = require('ipfs-mini');
 
-const getStorage = provider => {
-  return new IPFS({
-    host: provider.split('//')[1].split(':')[0],
-    port: provider.split(':')[2],
-    protocol: provider.split('//')[0]
-  });
+const getStorage = config => {
+  if (!config) {
+    throw new Error(
+      'Config required, see https://github.com/SilentCicero/ipfs-mini'
+    );
+  }
+  return new IPFS(config);
 };
 
 const getItem = (ipfs, key) => {
