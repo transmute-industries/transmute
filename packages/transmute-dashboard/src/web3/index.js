@@ -11,11 +11,11 @@ export const getWeb3RpcConnection = async () => {
         new Web3.providers.HttpProvider('http://localhost:8545')
       );
     }
-    try{
-      let accounts = await web3js.eth.getAccounts();
+    try {
+      await web3js.eth.getAccounts();
       resolve(web3js);
-    } catch(e){
-      reject(e)
+    } catch (e) {
+      reject(e);
     }
   });
 };

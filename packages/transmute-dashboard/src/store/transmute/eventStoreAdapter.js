@@ -12,7 +12,9 @@ export const getAdapterAsync = async () => {
   });
 
   let id = await ipfs.stat('QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG');
-  console.log(id);
+  if (id === undefined) {
+    throw new Error('Unable to connect to ipfs.');
+  }
 
   const eventStoreAdapter = new T.EventStoreAdapter({
     I: {

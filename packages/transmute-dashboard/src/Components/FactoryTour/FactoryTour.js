@@ -27,7 +27,7 @@ const styles = theme => ({
 
 class FactoryTour extends React.Component {
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
+    // console.log(nextProps);
     if (
       nextProps.transmute.hasWeb3 &&
       this.props.transmute.factoryTour.activeStep === 0
