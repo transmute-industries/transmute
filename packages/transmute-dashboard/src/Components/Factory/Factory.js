@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import transmute from '../../store/transmute';
 
-import { LinearProgress } from 'material-ui/Progress';
+// import { LinearProgress } from 'material-ui/Progress';
 
 import FactoryTour from '../FactoryTour';
 

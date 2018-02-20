@@ -6,7 +6,7 @@ import transmute from '../../../store/transmute';
 
 class CreateFactory extends React.Component {
   render() {
-    console.log(window.TT);
+    // console.log(window.TT);
     return (
       <div className="CreateFactory">
         <Typography>Factory Smart Contract:</Typography>
@@ -17,7 +17,7 @@ class CreateFactory extends React.Component {
           variant="raised"
           color="secondary"
           onClick={async () => {
-            console.log('factory...');
+            console.log('factory...', transmute);
             // let accounts = await transmute.middleware.getWeb3Accounts();
             // this.props.actions.setWeb3Accounts(accounts);
           }}
