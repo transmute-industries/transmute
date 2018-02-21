@@ -1,5 +1,4 @@
 import {
-  W3,
   EventTransformer,
   Store,
   EventStoreFactory,
@@ -11,6 +10,8 @@ import {
   IReadModel,
   Utils
 } from '../transmute-framework'
+
+import { W3 } from 'soltsice'
 
 import Reducer from './Reducer'
 
