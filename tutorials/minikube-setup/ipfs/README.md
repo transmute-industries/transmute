@@ -34,6 +34,7 @@ Note that this ipfs service is of type `ClusterIP`:
 
 ```
 kubectl apply -f ./ipfs.service.yaml 
+kubectl apply -f ./ipfs.ingress.yaml --namespace transmute-ipfs
 
 # or 
 
