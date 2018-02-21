@@ -2,18 +2,27 @@ import * as T from 'transmute-framework';
 
 import bs58 from 'bs58';
 
+import axios from 'axios';
+
 let ipfsAdapter = require('transmute-adapter-ipfs');
+
+const ipfsConfig = {
+  host: 'ipfs2.transmute.network',
+  port: 5001,
+  protocol: 'http'
+};
 
 export const getAdapterAsync = async () => {
   const ipfs = ipfsAdapter.getStorage({
-    host: 'ipfs.transmute.network',
-    port: 5001,
-    protocol: 'http'
+    ...ipfsConfig
   });
 
-  let id = await ipfs.stat('QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG');
-  if (id === undefined) {
-    throw new Error('Unable to connect to ipfs.');
+  let response = await axios.get(
+    `http://${ipfsConfig.host}:${ipfsConfig.port}/api/v0/id`
+  );
+
+  if (!response.data.ID) {
+    throw new Error('cannot connect to ipfs');
   }
 
   const eventStoreAdapter = new T.EventStoreAdapter({
