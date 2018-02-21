@@ -24,8 +24,9 @@ export default store => {
     try {
       eventStoreAdapter = await getAdapterAsync();
       store.dispatch(actionCreators.onIpfsConnectionSuccess());
+      console.log('after....');
     } catch (e) {
-      console.warn('ipfs...', e.message);
+      console.error('ipfs...', e);
       store.dispatch(actionCreators.onIpfsConnectionRefused());
     }
   });
