@@ -7,7 +7,7 @@ import axios from 'axios';
 let ipfsAdapter = require('transmute-adapter-ipfs');
 
 const ipfsConfig = {
-  host: 'ipfs2.transmute.network',
+  host: 'localhost',
   port: 5001,
   protocol: 'http'
 };
