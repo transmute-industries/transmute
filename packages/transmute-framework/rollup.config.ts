@@ -42,7 +42,7 @@ export default {
     include: 'dist/es/**'
   },
   moduleContext: {
-    'dist/es/relic.js': 'this'
+    'dist/es/relic.js': 'this',
   },
   plugins: [
     builtins(),
