@@ -1,5 +1,5 @@
+import { W3 } from 'soltsice'
 import {
-  W3,
   IFSA,
   Store,
   IReadModel,
@@ -81,7 +81,7 @@ export class ReadModel implements IReadModel {
   ) => {
     let changes = false
     try {
-      console.warn('read model may be stale.')
+      // console.warn('read model may be stale.')
       let backup = JSON.parse(JSON.stringify(this.state))
       this.state = await this.readModelAdapter.getItem(
         this.state.readModelStoreKey

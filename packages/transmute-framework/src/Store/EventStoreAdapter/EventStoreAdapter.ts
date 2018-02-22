@@ -1,5 +1,5 @@
+import { W3 } from 'soltsice'
 import {
-  W3,
   Utils,
   IFSA,
   ITransmuteStoreAdapter,
@@ -169,7 +169,7 @@ export class EventStoreAdapter {
       marshalledEvent.valueType,
       marshalledEvent.key,
       marshalledEvent.value,
-      W3.TC.txParamsDefaultDeploy(fromAddress, WRITE_EVENT_GAS_COST)
+      W3.TX.txParamsDefaultDeploy(fromAddress, WRITE_EVENT_GAS_COST)
     )
 
     // console.log('receipt', receipt)

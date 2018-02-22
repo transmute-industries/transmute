@@ -1,7 +1,8 @@
 import { getDefaultRelic } from './getRelic'
 
+import { W3 } from 'soltsice'
+
 import {
-  W3,
   Relic,
   TransmuteContracts,
   EventStoreAdapter,
@@ -18,7 +19,16 @@ let ipfsAdapter = require('transmute-adapter-ipfs')
 let nodeStorageAdapter = require('transmute-adapter-node-storage')
 
 let nodeStorageDB = nodeStorageAdapter.getStorage()
-let ipfs = ipfsAdapter.getStorage()
+
+const ipfsConfig = {
+  host: 'localhost',
+  port: 5001,
+  protocol: 'http'
+}
+
+let ipfs = ipfsAdapter.getStorage({
+  ...ipfsConfig
+})
 
 export const getDefaultEventStoreAdapter = () => {
   return new EventStoreAdapter({

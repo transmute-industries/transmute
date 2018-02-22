@@ -254,7 +254,7 @@ describe("PackageManager", () => {
     W3.Default = relic.web3;
 
     // create a new package manager contract
-    let newPM = await PackageManager.New(W3.TC.txParamsDefaultDeploy(testWallets[0].address), {
+    let newPM = await PackageManager.New(W3.TX.txParamsDefaultDeploy(testWallets[0].address), {
       _multisig: testWallets[0].address
     });
 
@@ -278,7 +278,7 @@ describe("PackageManager", () => {
     // set the package manager whitelist
     let reciept = await newPM.setWhitelist(
       localWallets,
-      W3.TC.txParamsDefaultDeploy(testWallets[0].address)
+      W3.TX.txParamsDefaultDeploy(testWallets[0].address)
     );
     let events = EventTransformer.getFSAsFromReceipt(reciept);
     // console.log(reciept)
