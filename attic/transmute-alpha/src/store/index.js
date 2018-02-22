@@ -54,6 +54,7 @@ firebase.auth().onAuthStateChanged(async user => {
 
     const db = firebase.database();
     const ref = db.ref(`user-data/${user.uid}`);
+    
     const userData = (await ref.once("value")).val();
     store.dispatch(setUserData(userData));
 
