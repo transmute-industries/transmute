@@ -1,10 +1,8 @@
 import * as T from 'transmute-framework';
 
-import { getWeb3RpcConnection } from '../../web3';
 import * as actionCreators from './actionCreators';
 
-import { getAdapterAsync as getEventStoreAdapter } from './eventStoreAdapter';
-import { getAdapterAsync as getReadModelAdapter } from './readModelAdapter';
+import transmute from '../../transmute-config';
 
 export default store => {
   setTimeout(async () => {
@@ -14,7 +12,8 @@ export default store => {
     let readModelAdapter;
 
     try {
-      web3 = await getWeb3RpcConnection();
+      web3 = await transmute.web3.getWeb3();
+
       store.dispatch(actionCreators.onWeb3ConnectionSuccess());
       relic = new T.Relic(web3);
     } catch (e) {
@@ -22,25 +21,28 @@ export default store => {
       store.dispatch(actionCreators.onWeb3ConnectionRefused());
     }
 
-    try {
-      eventStoreAdapter = await getEventStoreAdapter();
-      store.dispatch(actionCreators.onIpfsConnectionSuccess());
-    } catch (e) {
-      console.error('ipfs...', e);
-      store.dispatch(actionCreators.onIpfsConnectionRefused());
-    }
+    // try {
+    //   eventStoreAdapter = await getEventStoreAdapterAsync();
+    //   store.dispatch(actionCreators.onIpfsConnectionSuccess());
+    // } catch (e) {
+    //   console.error('ipfs...', e);
+    //   store.dispatch(actionCreators.onIpfsConnectionRefused());
+    // }
 
-    try {
-      readModelAdapter = await getReadModelAdapter();
-      console.log('localstorage....', readModelAdapter);
-    } catch (e) {
-      console.error('localstorage...', e);
-    }
+    // try {
+    //   readModelAdapter = await getReadModelAdapterAsync();
+    //   console.log('localstorage....', readModelAdapter);
+    // } catch (e) {
+    //   console.error('localstorage...', e);
+    // }
+
+    let accounts = await web3.eth.getAccounts();
 
     window.TT = {
       relic,
-      eventStoreAdapter,
-      readModelAdapter
+      accounts
+      // eventStoreAdapter,
+      // readModelAdapter
     };
   });
 };

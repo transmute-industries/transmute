@@ -1,17 +1,15 @@
-let T = require("transmute-framework");
-let web3 = require('../../transmute/web3')
+let T = require('transmute-framework');
+let web3 = require('../../transmute/web3');
 
 let relic = new T.Relic(web3);
 
-let localStorageAdapter = require("transmute-adapter-local-storage");
+let localStorageAdapter = require('transmute-adapter-local-storage');
 
 let localStorageDB = localStorageAdapter.getStorage();
 
+const bs58 = require('bs58');
 
-const bs58 = require("bs58");
-
-let ipfsAdapter = require("transmute-adapter-ipfs");
-
+let ipfsAdapter = require('transmute-adapter-ipfs');
 
 const ipfsConfig = {
   host: 'localhost',
@@ -19,21 +17,20 @@ const ipfsConfig = {
   protocol: 'http'
 };
 
-
 let ipfs = ipfsAdapter.getStorage(ipfsConfig);
 
 const eventStoreAdapter = new T.EventStoreAdapter({
   I: {
-    keyName: "multihash",
+    keyName: 'multihash',
     adapter: ipfsAdapter,
     db: ipfs,
     readIDFromBytes32: bytes32 => {
-      return bs58.encode(new Buffer("1220" + bytes32.slice(2), "hex"));
+      return bs58.encode(new Buffer('1220' + bytes32.slice(2), 'hex'));
     },
     writeIDToBytes32: id => {
-      return "0x" + new Buffer(bs58.decode(id).slice(2)).toString("hex");
+      return '0x' + new Buffer(bs58.decode(id).slice(2)).toString('hex');
     }
-  },
+  }
 });
 
 const readModelAdapter = {

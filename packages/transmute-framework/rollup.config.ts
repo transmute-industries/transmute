@@ -31,8 +31,8 @@ export default {
     'soltsice'
   ],
   globals: {
-    // "soltsice" : "soltsice",
-    // "bignumber.js": "BigNumber"
+    "soltsice" : "soltsice",
+    "bignumber.js": "BigNumber",
     web3: 'Web3',
     'web3-provider-engine': 'ProviderEngine',
     elliptic: 'elliptic',

@@ -2,22 +2,9 @@
 
 Ethereum Integration Middleware for JavaScript Developers.
 
-## Minimal Example?
-
-See `../provider-engine-test-app`. 
-
-#### TODO
-
-Add transmute-ipfs setup tests to make sure that hashes exist on travis IPFS node!
-Implement CLI support for wallets...
-Use CLI and wallets and package service together, to publish and delete packages.
-
-Setup stripe dev account...
-
-
 ### Commands:
 
-`yarn contracts:regenerate && yarn test`
+`npm run contracts:regenerate && npm run test`
 
 Useful when testing contacts. 
 

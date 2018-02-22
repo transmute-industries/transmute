@@ -5,11 +5,11 @@ import { W3, SoltsiceContract } from 'soltsice'
  * UIntSetSpec API
  */
 export class UIntSetSpec extends SoltsiceContract {
-  public static get Artifacts() {
+  static get Artifacts() {
     return require('../contracts/UIntSetSpec.json')
   }
 
-  public static get BytecodeHash() {
+  static get BytecodeHash() {
     // we need this before ctor, but artifacts are static and we cannot pass it to the base class, so need to generate
     let artifacts = UIntSetSpec.Artifacts
     if (!artifacts || !artifacts.bytecode) {
@@ -20,57 +20,21 @@ export class UIntSetSpec extends SoltsiceContract {
   }
 
   // tslint:disable-next-line:max-line-length
-  public static async New(
+  static async New(
     deploymentParams: W3.TX.TxParams,
     ctorParams?: {},
     w3?: W3,
-    link?: SoltsiceContract[],
-    privateKey?: string
+    link?: SoltsiceContract[]
   ): Promise<UIntSetSpec> {
-    w3 = w3 || W3.Default
-    if (!privateKey) {
-      let contract = new UIntSetSpec(deploymentParams, ctorParams, w3, link)
-      await contract._instancePromise
-      return contract
-    } else {
-      let data = UIntSetSpec.NewData(ctorParams, w3)
-      let txHash = await w3.sendSignedTransaction(
-        W3.zeroAddress,
-        privateKey,
-        data,
-        deploymentParams
-      )
-      let txReceipt = await w3.waitTransactionReceipt(txHash)
-      let rawAddress = txReceipt.contractAddress
-      let contract = await UIntSetSpec.At(rawAddress, w3)
-      return contract
-    }
+    let contract = new UIntSetSpec(deploymentParams, ctorParams, w3, link)
+    await contract._instancePromise
+    return contract
   }
 
-  public static async At(
-    address: string | object,
-    w3?: W3
-  ): Promise<UIntSetSpec> {
+  static async At(address: string | object, w3?: W3): Promise<UIntSetSpec> {
     let contract = new UIntSetSpec(address, undefined, w3, undefined)
     await contract._instancePromise
     return contract
-  }
-
-  public static async Deployed(w3?: W3): Promise<UIntSetSpec> {
-    let contract = new UIntSetSpec('', undefined, w3, undefined)
-    await contract._instancePromise
-    return contract
-  }
-
-  // tslint:disable-next-line:max-line-length
-  public static NewData(ctorParams?: {}, w3?: W3): string {
-    // tslint:disable-next-line:max-line-length
-    let data = SoltsiceContract.NewDataImpl(
-      w3,
-      UIntSetSpec.Artifacts,
-      ctorParams ? [] : []
-    )
-    return data
   }
 
   protected constructor(
@@ -80,13 +44,7 @@ export class UIntSetSpec extends SoltsiceContract {
     link?: SoltsiceContract[]
   ) {
     // tslint:disable-next-line:max-line-length
-    super(
-      w3,
-      UIntSetSpec.Artifacts,
-      ctorParams ? [] : [],
-      deploymentParams,
-      link
-    )
+    super(w3, UIntSetSpec.Artifacts, ctorParams ? [] : [], deploymentParams, link)
   }
   /*
         Contract methods
@@ -96,10 +54,7 @@ export class UIntSetSpec extends SoltsiceContract {
   public add = Object.assign(
     // tslint:disable-next-line:max-line-length
     // tslint:disable-next-line:variable-name
-    (
-      value: BigNumber | number,
-      txParams?: W3.TX.TxParams
-    ): Promise<W3.TX.TransactionResult> => {
+    (value: BigNumber | number, txParams?: W3.TX.TxParams): Promise<W3.TX.TransactionResult> => {
       return new Promise((resolve, reject) => {
         this._instance
           .add(value, txParams || this._sendParams)
@@ -110,38 +65,14 @@ export class UIntSetSpec extends SoltsiceContract {
     {
       // tslint:disable-next-line:max-line-length
       // tslint:disable-next-line:variable-name
-      sendTransaction: Object.assign(
-        (
-          value: BigNumber | number,
-          txParams?: W3.TX.TxParams
-        ): Promise<string> => {
-          return new Promise((resolve, reject) => {
-            this._instance.add
-              .sendTransaction(value, txParams || this._sendParams)
-              .then(res => resolve(res))
-              .catch(err => reject(err))
-          })
-        },
-        {
-          // tslint:disable-next-line:max-line-length
-          // tslint:disable-next-line:variable-name
-          sendSigned: (
-            value: BigNumber | number,
-            privateKey: string,
-            txParams?: W3.TX.TxParams,
-            nonce?: number
-          ): Promise<string> => {
-            // tslint:disable-next-line:max-line-length
-            return this.w3.sendSignedTransaction(
-              this.address,
-              privateKey,
-              this._instance.add.request(value).params[0].data,
-              txParams,
-              nonce
-            )
-          }
-        }
-      )
+      sendTransaction: (value: BigNumber | number, txParams?: W3.TX.TxParams): Promise<string> => {
+        return new Promise((resolve, reject) => {
+          this._instance.add
+            .sendTransaction(value, txParams || this._sendParams)
+            .then(res => resolve(res))
+            .catch(err => reject(err))
+        })
+      }
     },
     {
       // tslint:disable-next-line:max-line-length
@@ -165,7 +96,7 @@ export class UIntSetSpec extends SoltsiceContract {
 
   // tslint:disable-next-line:max-line-length
   // tslint:disable-next-line:variable-name
-  public getValues(txParams?: W3.TX.TxParams): Promise<BigNumber[]> {
+  public getValues(txParams?: W3.TX.TxParams): Promise<BigNumber> {
     return new Promise((resolve, reject) => {
       this._instance.getValues
         .call(txParams || this._sendParams)
@@ -193,48 +124,23 @@ export class UIntSetSpec extends SoltsiceContract {
     {
       // tslint:disable-next-line:max-line-length
       // tslint:disable-next-line:variable-name
-      sendTransaction: Object.assign(
-        (
-          index: BigNumber | number,
-          value: BigNumber | number,
-          txParams?: W3.TX.TxParams
-        ): Promise<string> => {
-          return new Promise((resolve, reject) => {
-            this._instance.set
-              .sendTransaction(index, value, txParams || this._sendParams)
-              .then(res => resolve(res))
-              .catch(err => reject(err))
-          })
-        },
-        {
-          // tslint:disable-next-line:max-line-length
-          // tslint:disable-next-line:variable-name
-          sendSigned: (
-            index: BigNumber | number,
-            value: BigNumber | number,
-            privateKey: string,
-            txParams?: W3.TX.TxParams,
-            nonce?: number
-          ): Promise<string> => {
-            // tslint:disable-next-line:max-line-length
-            return this.w3.sendSignedTransaction(
-              this.address,
-              privateKey,
-              this._instance.set.request(index, value).params[0].data,
-              txParams,
-              nonce
-            )
-          }
-        }
-      )
+      sendTransaction: (
+        index: BigNumber | number,
+        value: BigNumber | number,
+        txParams?: W3.TX.TxParams
+      ): Promise<string> => {
+        return new Promise((resolve, reject) => {
+          this._instance.set
+            .sendTransaction(index, value, txParams || this._sendParams)
+            .then(res => resolve(res))
+            .catch(err => reject(err))
+        })
+      }
     },
     {
       // tslint:disable-next-line:max-line-length
       // tslint:disable-next-line:variable-name
-      data: (
-        index: BigNumber | number,
-        value: BigNumber | number
-      ): Promise<string> => {
+      data: (index: BigNumber | number, value: BigNumber | number): Promise<string> => {
         return new Promise((resolve, reject) => {
           resolve(this._instance.set.request(index, value).params[0].data)
         })
@@ -243,16 +149,13 @@ export class UIntSetSpec extends SoltsiceContract {
     {
       // tslint:disable-next-line:max-line-length
       // tslint:disable-next-line:variable-name
-      estimateGas: (
-        index: BigNumber | number,
-        value: BigNumber | number
-      ): Promise<number> => {
+      estimateGas: (index: BigNumber | number, value: BigNumber | number): Promise<number> => {
         return new Promise((resolve, reject) => {
           this._instance.set.estimateGas(index, value).then(g => resolve(g))
         })
       }
     }
-  );
+  )
 
   // tslint:disable-next-line:max-line-length
   // tslint:disable-next-line:variable-name
@@ -280,10 +183,7 @@ export class UIntSetSpec extends SoltsiceContract {
   public remove = Object.assign(
     // tslint:disable-next-line:max-line-length
     // tslint:disable-next-line:variable-name
-    (
-      value: BigNumber | number,
-      txParams?: W3.TX.TxParams
-    ): Promise<W3.TX.TransactionResult> => {
+    (value: BigNumber | number, txParams?: W3.TX.TxParams): Promise<W3.TX.TransactionResult> => {
       return new Promise((resolve, reject) => {
         this._instance
           .remove(value, txParams || this._sendParams)
@@ -294,38 +194,14 @@ export class UIntSetSpec extends SoltsiceContract {
     {
       // tslint:disable-next-line:max-line-length
       // tslint:disable-next-line:variable-name
-      sendTransaction: Object.assign(
-        (
-          value: BigNumber | number,
-          txParams?: W3.TX.TxParams
-        ): Promise<string> => {
-          return new Promise((resolve, reject) => {
-            this._instance.remove
-              .sendTransaction(value, txParams || this._sendParams)
-              .then(res => resolve(res))
-              .catch(err => reject(err))
-          })
-        },
-        {
-          // tslint:disable-next-line:max-line-length
-          // tslint:disable-next-line:variable-name
-          sendSigned: (
-            value: BigNumber | number,
-            privateKey: string,
-            txParams?: W3.TX.TxParams,
-            nonce?: number
-          ): Promise<string> => {
-            // tslint:disable-next-line:max-line-length
-            return this.w3.sendSignedTransaction(
-              this.address,
-              privateKey,
-              this._instance.remove.request(value).params[0].data,
-              txParams,
-              nonce
-            )
-          }
-        }
-      )
+      sendTransaction: (value: BigNumber | number, txParams?: W3.TX.TxParams): Promise<string> => {
+        return new Promise((resolve, reject) => {
+          this._instance.remove
+            .sendTransaction(value, txParams || this._sendParams)
+            .then(res => resolve(res))
+            .catch(err => reject(err))
+        })
+      }
     },
     {
       // tslint:disable-next-line:max-line-length
@@ -351,10 +227,7 @@ export class UIntSetSpec extends SoltsiceContract {
   public pop = Object.assign(
     // tslint:disable-next-line:max-line-length
     // tslint:disable-next-line:variable-name
-    (
-      index: BigNumber | number,
-      txParams?: W3.TX.TxParams
-    ): Promise<W3.TX.TransactionResult> => {
+    (index: BigNumber | number, txParams?: W3.TX.TxParams): Promise<W3.TX.TransactionResult> => {
       return new Promise((resolve, reject) => {
         this._instance
           .pop(index, txParams || this._sendParams)
@@ -365,38 +238,14 @@ export class UIntSetSpec extends SoltsiceContract {
     {
       // tslint:disable-next-line:max-line-length
       // tslint:disable-next-line:variable-name
-      sendTransaction: Object.assign(
-        (
-          index: BigNumber | number,
-          txParams?: W3.TX.TxParams
-        ): Promise<string> => {
-          return new Promise((resolve, reject) => {
-            this._instance.pop
-              .sendTransaction(index, txParams || this._sendParams)
-              .then(res => resolve(res))
-              .catch(err => reject(err))
-          })
-        },
-        {
-          // tslint:disable-next-line:max-line-length
-          // tslint:disable-next-line:variable-name
-          sendSigned: (
-            index: BigNumber | number,
-            privateKey: string,
-            txParams?: W3.TX.TxParams,
-            nonce?: number
-          ): Promise<string> => {
-            // tslint:disable-next-line:max-line-length
-            return this.w3.sendSignedTransaction(
-              this.address,
-              privateKey,
-              this._instance.pop.request(index).params[0].data,
-              txParams,
-              nonce
-            )
-          }
-        }
-      )
+      sendTransaction: (index: BigNumber | number, txParams?: W3.TX.TxParams): Promise<string> => {
+        return new Promise((resolve, reject) => {
+          this._instance.pop
+            .sendTransaction(index, txParams || this._sendParams)
+            .then(res => resolve(res))
+            .catch(err => reject(err))
+        })
+      }
     },
     {
       // tslint:disable-next-line:max-line-length
@@ -433,34 +282,14 @@ export class UIntSetSpec extends SoltsiceContract {
     {
       // tslint:disable-next-line:max-line-length
       // tslint:disable-next-line:variable-name
-      sendTransaction: Object.assign(
-        (txParams?: W3.TX.TxParams): Promise<string> => {
-          return new Promise((resolve, reject) => {
-            this._instance.destroy
-              .sendTransaction(txParams || this._sendParams)
-              .then(res => resolve(res))
-              .catch(err => reject(err))
-          })
-        },
-        {
-          // tslint:disable-next-line:max-line-length
-          // tslint:disable-next-line:variable-name
-          sendSigned: (
-            privateKey: string,
-            txParams?: W3.TX.TxParams,
-            nonce?: number
-          ): Promise<string> => {
-            // tslint:disable-next-line:max-line-length
-            return this.w3.sendSignedTransaction(
-              this.address,
-              privateKey,
-              this._instance.destroy.request().params[0].data,
-              txParams,
-              nonce
-            )
-          }
-        }
-      )
+      sendTransaction: (txParams?: W3.TX.TxParams): Promise<string> => {
+        return new Promise((resolve, reject) => {
+          this._instance.destroy
+            .sendTransaction(txParams || this._sendParams)
+            .then(res => resolve(res))
+            .catch(err => reject(err))
+        })
+      }
     },
     {
       // tslint:disable-next-line:max-line-length
@@ -517,10 +346,7 @@ export class UIntSetSpec extends SoltsiceContract {
 
   // tslint:disable-next-line:max-line-length
   // tslint:disable-next-line:variable-name
-  public indexOf(
-    value: BigNumber | number,
-    txParams?: W3.TX.TxParams
-  ): Promise<BigNumber> {
+  public indexOf(value: BigNumber | number, txParams?: W3.TX.TxParams): Promise<BigNumber> {
     return new Promise((resolve, reject) => {
       this._instance.indexOf
         .call(value, txParams || this._sendParams)
@@ -542,10 +368,7 @@ export class UIntSetSpec extends SoltsiceContract {
 
   // tslint:disable-next-line:max-line-length
   // tslint:disable-next-line:variable-name
-  public get(
-    index: BigNumber | number,
-    txParams?: W3.TX.TxParams
-  ): Promise<BigNumber> {
+  public get(index: BigNumber | number, txParams?: W3.TX.TxParams): Promise<BigNumber> {
     return new Promise((resolve, reject) => {
       this._instance.get
         .call(index, txParams || this._sendParams)
@@ -556,10 +379,7 @@ export class UIntSetSpec extends SoltsiceContract {
 
   // tslint:disable-next-line:max-line-length
   // tslint:disable-next-line:variable-name
-  public contains(
-    value: BigNumber | number,
-    txParams?: W3.TX.TxParams
-  ): Promise<boolean> {
+  public contains(value: BigNumber | number, txParams?: W3.TX.TxParams): Promise<boolean> {
     return new Promise((resolve, reject) => {
       this._instance.contains
         .call(value, txParams || this._sendParams)
@@ -572,10 +392,7 @@ export class UIntSetSpec extends SoltsiceContract {
   public transferOwnership = Object.assign(
     // tslint:disable-next-line:max-line-length
     // tslint:disable-next-line:variable-name
-    (
-      newOwner: string,
-      txParams?: W3.TX.TxParams
-    ): Promise<W3.TX.TransactionResult> => {
+    (newOwner: string, txParams?: W3.TX.TxParams): Promise<W3.TX.TransactionResult> => {
       return new Promise((resolve, reject) => {
         this._instance
           .transferOwnership(newOwner, txParams || this._sendParams)
@@ -586,44 +403,21 @@ export class UIntSetSpec extends SoltsiceContract {
     {
       // tslint:disable-next-line:max-line-length
       // tslint:disable-next-line:variable-name
-      sendTransaction: Object.assign(
-        (newOwner: string, txParams?: W3.TX.TxParams): Promise<string> => {
-          return new Promise((resolve, reject) => {
-            this._instance.transferOwnership
-              .sendTransaction(newOwner, txParams || this._sendParams)
-              .then(res => resolve(res))
-              .catch(err => reject(err))
-          })
-        },
-        {
-          // tslint:disable-next-line:max-line-length
-          // tslint:disable-next-line:variable-name
-          sendSigned: (
-            newOwner: string,
-            privateKey: string,
-            txParams?: W3.TX.TxParams,
-            nonce?: number
-          ): Promise<string> => {
-            // tslint:disable-next-line:max-line-length
-            return this.w3.sendSignedTransaction(
-              this.address,
-              privateKey,
-              this._instance.transferOwnership.request(newOwner).params[0].data,
-              txParams,
-              nonce
-            )
-          }
-        }
-      )
+      sendTransaction: (newOwner: string, txParams?: W3.TX.TxParams): Promise<string> => {
+        return new Promise((resolve, reject) => {
+          this._instance.transferOwnership
+            .sendTransaction(newOwner, txParams || this._sendParams)
+            .then(res => resolve(res))
+            .catch(err => reject(err))
+        })
+      }
     },
     {
       // tslint:disable-next-line:max-line-length
       // tslint:disable-next-line:variable-name
       data: (newOwner: string): Promise<string> => {
         return new Promise((resolve, reject) => {
-          resolve(
-            this._instance.transferOwnership.request(newOwner).params[0].data
-          )
+          resolve(this._instance.transferOwnership.request(newOwner).params[0].data)
         })
       }
     },
@@ -632,9 +426,7 @@ export class UIntSetSpec extends SoltsiceContract {
       // tslint:disable-next-line:variable-name
       estimateGas: (newOwner: string): Promise<number> => {
         return new Promise((resolve, reject) => {
-          this._instance.transferOwnership
-            .estimateGas(newOwner)
-            .then(g => resolve(g))
+          this._instance.transferOwnership.estimateGas(newOwner).then(g => resolve(g))
         })
       }
     }
@@ -644,10 +436,7 @@ export class UIntSetSpec extends SoltsiceContract {
   public destroyAndSend = Object.assign(
     // tslint:disable-next-line:max-line-length
     // tslint:disable-next-line:variable-name
-    (
-      _recipient: string,
-      txParams?: W3.TX.TxParams
-    ): Promise<W3.TX.TransactionResult> => {
+    (_recipient: string, txParams?: W3.TX.TxParams): Promise<W3.TX.TransactionResult> => {
       return new Promise((resolve, reject) => {
         this._instance
           .destroyAndSend(_recipient, txParams || this._sendParams)
@@ -658,44 +447,21 @@ export class UIntSetSpec extends SoltsiceContract {
     {
       // tslint:disable-next-line:max-line-length
       // tslint:disable-next-line:variable-name
-      sendTransaction: Object.assign(
-        (_recipient: string, txParams?: W3.TX.TxParams): Promise<string> => {
-          return new Promise((resolve, reject) => {
-            this._instance.destroyAndSend
-              .sendTransaction(_recipient, txParams || this._sendParams)
-              .then(res => resolve(res))
-              .catch(err => reject(err))
-          })
-        },
-        {
-          // tslint:disable-next-line:max-line-length
-          // tslint:disable-next-line:variable-name
-          sendSigned: (
-            _recipient: string,
-            privateKey: string,
-            txParams?: W3.TX.TxParams,
-            nonce?: number
-          ): Promise<string> => {
-            // tslint:disable-next-line:max-line-length
-            return this.w3.sendSignedTransaction(
-              this.address,
-              privateKey,
-              this._instance.destroyAndSend.request(_recipient).params[0].data,
-              txParams,
-              nonce
-            )
-          }
-        }
-      )
+      sendTransaction: (_recipient: string, txParams?: W3.TX.TxParams): Promise<string> => {
+        return new Promise((resolve, reject) => {
+          this._instance.destroyAndSend
+            .sendTransaction(_recipient, txParams || this._sendParams)
+            .then(res => resolve(res))
+            .catch(err => reject(err))
+        })
+      }
     },
     {
       // tslint:disable-next-line:max-line-length
       // tslint:disable-next-line:variable-name
       data: (_recipient: string): Promise<string> => {
         return new Promise((resolve, reject) => {
-          resolve(
-            this._instance.destroyAndSend.request(_recipient).params[0].data
-          )
+          resolve(this._instance.destroyAndSend.request(_recipient).params[0].data)
         })
       }
     },
@@ -704,9 +470,7 @@ export class UIntSetSpec extends SoltsiceContract {
       // tslint:disable-next-line:variable-name
       estimateGas: (_recipient: string): Promise<number> => {
         return new Promise((resolve, reject) => {
-          this._instance.destroyAndSend
-            .estimateGas(_recipient)
-            .then(g => resolve(g))
+          this._instance.destroyAndSend.estimateGas(_recipient).then(g => resolve(g))
         })
       }
     }
