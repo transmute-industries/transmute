@@ -1,4 +1,6 @@
-import Web3 from 'web3';
+const Web3 = require('web3');
+const ProviderEngine = require('web3-provider-engine');
+const RpcSubprovider = require('web3-provider-engine/subproviders/rpc');
 
 const web3Config = {
   providerUrl: 'http://localhost:8545'
@@ -13,9 +15,20 @@ export const getWeb3 = async () => {
       console.log(
         `MetaMask not available, defaulting to ${web3Config.providerUrl}\n`
       );
-      web3js = new Web3(
-        new Web3.providers.HttpProvider(web3Config.providerUrl)
+
+      // const WalletSubprovider = require("web3-provider-engine/subproviders/wallet");
+
+      const engine = new ProviderEngine();
+
+      engine.addProvider(
+        new RpcSubprovider({
+          rpcUrl: web3Config.providerUrl
+        })
       );
+
+      engine.start();
+
+      web3js = new Web3(engine);
     }
     try {
       await web3js.eth.getAccounts();
