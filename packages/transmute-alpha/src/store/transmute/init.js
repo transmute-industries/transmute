@@ -11,7 +11,16 @@ let localStorageDB = localStorageAdapter.getStorage();
 const bs58 = require("bs58");
 
 let ipfsAdapter = require("transmute-adapter-ipfs");
-let ipfs = ipfsAdapter.getStorage();
+
+
+const ipfsConfig = {
+  host: 'localhost',
+  port: 5001,
+  protocol: 'http'
+};
+
+
+let ipfs = ipfsAdapter.getStorage(ipfsConfig);
 
 const eventStoreAdapter = new T.EventStoreAdapter({
   I: {

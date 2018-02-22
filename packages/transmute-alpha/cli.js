@@ -19,7 +19,7 @@ const TransmuteIpfs = require("transmute-ipfs");
 
 vorpal.use(vorpalLog);
 
-const RPC_HOST = "http://ropsten.infura.io";
+const RPC_HOST = "http://localhost:8545";
 
 const getWeb3 = account => {
   const engine = new ProviderEngine();
