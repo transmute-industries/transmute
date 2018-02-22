@@ -1,4 +1,4 @@
-import { W3 } from './transmute-framework'
+import { W3 } from 'soltsice'
 
 class Relic {
   web3: any

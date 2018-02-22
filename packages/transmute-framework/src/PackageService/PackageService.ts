@@ -1,10 +1,10 @@
+import { W3 } from 'soltsice'
 import {
   Relic,
   Store,
   EventStoreAdapter,
   IReadModelAdapter,
   PackageManager,
-  W3,
   IFSA,
   IReadModelState,
   ReadModel,

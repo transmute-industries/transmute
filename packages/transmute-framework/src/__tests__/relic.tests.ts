@@ -1,5 +1,6 @@
 import { getDefaultRelic } from '../__mocks__/getRelic'
-import { Relic, Utils, Factory, Store, W3 } from '../transmute-framework'
+import { W3 } from 'soltsice'
+import { Relic, Utils, Factory, Store } from '../transmute-framework'
 const TransmuteCrypto = require('transmute-crypto')
 
 const RPC_HOST = 'http://localhost:8545'
@@ -10,7 +11,9 @@ const generateTestWallets = async (num: number) => {
   for (let i = 0; i < num; i++) {
     const alice = sodium.crypto_box_keypair()
     const unPrefixedPrivateKeyHexString = sodium.to_hex(alice.privateKey)
-    let address = Utils.privateKeyHexToAddress('0x' + unPrefixedPrivateKeyHexString)
+    let address = Utils.privateKeyHexToAddress(
+      '0x' + unPrefixedPrivateKeyHexString
+    )
     testWallets.push({
       address: '0x' + sodium.to_hex(address),
       privateKey: '0x' + unPrefixedPrivateKeyHexString
@@ -19,21 +22,38 @@ const generateTestWallets = async (num: number) => {
   return testWallets
 }
 
-import { getAccounts, getDefaultWeb3, getWeb3FromWalletWithPrivateKey } from '../__mocks__/getWeb3'
+import {
+  getAccounts,
+  getDefaultWeb3,
+  getWeb3FromWalletWithPrivateKey
+} from '../__mocks__/getWeb3'
 
 /**
  * Relic tests
  */
 describe('Relic tests', () => {
-  const allWalletBalancesAre = async (relic, testWallets, expectedBalanceWei: number) => {
+  const allWalletBalancesAre = async (
+    relic,
+    testWallets,
+    expectedBalanceWei: number
+  ) => {
     for (let i = 0; i < testWallets.length; i++) {
       let bal = await relic.getBalance(testWallets[i].address)
       expect(bal).toBe(expectedBalanceWei)
     }
   }
-  const fundWallets = async (relic, defaultAccount, testWallets, amountWei: number) => {
+  const fundWallets = async (
+    relic,
+    defaultAccount,
+    testWallets,
+    amountWei: number
+  ) => {
     for (let i = 0; i < testWallets.length; i++) {
-      let txhash = await relic.sendWei(defaultAccount, testWallets[i].address, amountWei)
+      let txhash = await relic.sendWei(
+        defaultAccount,
+        testWallets[i].address,
+        amountWei
+      )
       expect(txhash).toBeDefined()
     }
   }
@@ -65,7 +85,11 @@ describe('Relic tests', () => {
       [{ address: walletAccounts[0] }],
       150000000000000000
     )
-    await allWalletBalancesAre(defaultRelic, [{ address: walletAccounts[0] }], 150000000000000000)
+    await allWalletBalancesAre(
+      defaultRelic,
+      [{ address: walletAccounts[0] }],
+      150000000000000000
+    )
 
     let factory = await Factory.create(defaultRelic.web3, defaultAccounts[0])
     let store = await Factory.createStore(
@@ -75,7 +99,11 @@ describe('Relic tests', () => {
       defaultAccounts[0]
     )
 
-    let events = await Store.transferOwnership(store, defaultAccounts[0], walletAccounts[0])
+    let events = await Store.transferOwnership(
+      store,
+      defaultAccounts[0],
+      walletAccounts[0]
+    )
     let storeOwner = Utils.toChecksumAddress(await store.owner())
     expect(storeOwner).toBe(walletAccounts[0])
 
@@ -83,7 +111,11 @@ describe('Relic tests', () => {
     let store2Owner = Utils.toChecksumAddress(await store2.owner())
     expect(storeOwner).toEqual(store2Owner)
 
-    events = await Store.transferOwnership(store2, store2Owner, defaultAccounts[2])
+    events = await Store.transferOwnership(
+      store2,
+      store2Owner,
+      defaultAccounts[2]
+    )
     store2Owner = Utils.toChecksumAddress(await store2.owner())
     expect(defaultAccounts[2]).toEqual(store2Owner)
   })

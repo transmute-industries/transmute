@@ -1,7 +1,6 @@
 import { getSetupAsync } from '../../__mocks__/setup'
-
+import { W3 } from 'soltsice'
 import {
-  W3,
   Relic,
   EventStoreAdapter,
   EventTransformer,

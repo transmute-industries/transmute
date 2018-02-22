@@ -1,7 +1,6 @@
 import { getSetupAsync } from '../../__mocks__/setup'
-
+import { W3 } from 'soltsice'
 import {
-  W3,
   Relic,
   EventStoreAdapter,
   EventTransformer,
@@ -76,7 +75,8 @@ describe('Store', () => {
       await Store.writeFSA(store, eventStoreAdapter, relic.web3, accounts[0], {
         type: 'test',
         payload: {
-          REALLY_LARGE_KEY_BIGGER_THAN_BYTES_32_STRING______________________: 'value'
+          REALLY_LARGE_KEY_BIGGER_THAN_BYTES_32_STRING______________________:
+            'value'
         },
         meta: {}
       })
@@ -144,7 +144,8 @@ describe('Store', () => {
         type: 'test',
         payload: {
           key: 'bytes32',
-          value: 'REALLY_LARGE_VALUE_BIGGER_THAN_BYTES_32_STRING______________________'
+          value:
+            'REALLY_LARGE_VALUE_BIGGER_THAN_BYTES_32_STRING______________________'
         },
         meta: {}
       })
@@ -161,7 +162,8 @@ describe('Store', () => {
         type: 'test',
         payload: {
           key: 'bytes32',
-          value: '0x000000000000000000000000000000000000000000000000000000000000000-'
+          value:
+            '0x000000000000000000000000000000000000000000000000000000000000000-'
         },
         meta: {}
       })
@@ -178,7 +180,8 @@ describe('Store', () => {
         type: 'test',
         payload: {
           key: 'bytes32',
-          value: '000000000000000000000000000000000000000000000000000000000000000A'
+          value:
+            '000000000000000000000000000000000000000000000000000000000000000A'
         },
         meta: {}
       })
@@ -192,15 +195,19 @@ describe('Store', () => {
   it('throws error when payload.type is to big', async () => {
     try {
       await Store.writeFSA(store, eventStoreAdapter, relic.web3, accounts[0], {
-        type: 'REALLY_LARGE_VALUE_BIGGER_THAN_BYTES_32_STRING______________________',
+        type:
+          'REALLY_LARGE_VALUE_BIGGER_THAN_BYTES_32_STRING______________________',
         payload: {
           key: 'bytes32',
-          value: '000000000000000000000000000000000000000000000000000000000000000A'
+          value:
+            '000000000000000000000000000000000000000000000000000000000000000A'
         },
         meta: {}
       })
     } catch (e) {
-      expect(e.message).toBe('fsa.type (S) is more than 32 bytes. value length = 68 chars')
+      expect(e.message).toBe(
+        'fsa.type (S) is more than 32 bytes. value length = 68 chars'
+      )
     }
   })
 })

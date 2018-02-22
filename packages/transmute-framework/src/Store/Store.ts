@@ -1,5 +1,5 @@
+import { W3 } from 'soltsice'
 import {
-  W3,
   EventStore,
   Utils,
   EventStoreAdapter,
@@ -32,7 +32,7 @@ export namespace Store {
   ) => {
     let receipt = await store.transferOwnership(
       to.toLowerCase(),
-      W3.TC.txParamsDefaultDeploy(from.toLowerCase())
+      W3.TX.txParamsDefaultDeploy(from.toLowerCase())
     )
     let events = EventTransformer.getFSAsFromReceipt(receipt)
     return events

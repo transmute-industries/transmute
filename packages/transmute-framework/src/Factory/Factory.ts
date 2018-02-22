@@ -25,7 +25,7 @@ export namespace Factory {
   ): Promise<EventStoreFactory> => {
     W3.Default = web3
     const instance = await EventStoreFactory.New(
-      W3.TC.txParamsDefaultDeploy(fromAddress),
+      W3.TX.txParamsDefaultDeploy(fromAddress),
       {
         _multisig: fromAddress
       }
@@ -45,7 +45,7 @@ export namespace Factory {
     W3.Default = web3
     const receipt = await factory.createEventStore(
       whitelist,
-      W3.TC.txParamsDefaultDeploy(fromAddress)
+      W3.TX.txParamsDefaultDeploy(fromAddress)
     )
     const events = await EventTransformer.getFSAsFromReceipt(receipt)
     let factoryEvents = EventTransformer.filterEventsByMeta(
@@ -61,7 +61,7 @@ export namespace Factory {
     fromAddress: string
   ) => {
     let addresses = await factory.getEventStores(
-      W3.TC.txParamsDefaultDeploy(fromAddress)
+      W3.TX.txParamsDefaultDeploy(fromAddress)
     )
     return addresses
   }

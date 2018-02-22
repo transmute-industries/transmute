@@ -1,6 +1,6 @@
 import { getDefaultRelic } from '../__mocks__/getRelic'
-import { W3, Relic, EventTransformer, PackageManager } from '../transmute-framework'
-
+import { Relic, EventTransformer, PackageManager } from '../transmute-framework'
+import { W3 } from 'soltsice'
 /**
  * contract tests
  */
@@ -14,7 +14,7 @@ describe('contract tests', () => {
 
   it('can create a contract', async () => {
     let packageManagerContract = await PackageManager.New(
-      W3.TC.txParamsDefaultDeploy(accounts[0]),
+      W3.TX.txParamsDefaultDeploy(accounts[0]),
       {
         _multisig: accounts[0]
       }

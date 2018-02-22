@@ -1,7 +1,6 @@
 import { getDefaultRelic } from '../../../__mocks__/getRelic'
-
+import { W3 } from 'soltsice'
 import {
-  W3,
   Relic,
   Utils,
   EventStoreFactory,
@@ -26,11 +25,14 @@ describe('EventStore', () => {
     accounts = await relic.getAccounts()
   })
 
-  const transferOwnershipTest = async (eventStore: EventStore, newOwner: string) => {
+  const transferOwnershipTest = async (
+    eventStore: EventStore,
+    newOwner: string
+  ) => {
     let currentOwner = await eventStore.owner()
     receipt = await eventStore.transferOwnership(
       newOwner,
-      W3.TC.txParamsDefaultDeploy(currentOwner)
+      W3.TX.txParamsDefaultDeploy(currentOwner)
     )
     events = EventTransformer.getFSAsFromReceipt(receipt)
     expect(events[0].type).toEqual(InternalEventTypes.NEW_OWNER)
@@ -43,27 +45,42 @@ describe('EventStore', () => {
   describe('eventStore creation', async () => {
     it('can create eventStore with the factory', async () => {
       // create a new factory
-      factory = await EventStoreFactory.New(W3.TC.txParamsDefaultDeploy(accounts[0]), {
-        _multisig: accounts[0]
-      })
+      factory = await EventStoreFactory.New(
+        W3.TX.txParamsDefaultDeploy(accounts[0]),
+        {
+          _multisig: accounts[0]
+        }
+      )
 
       let whitelist = accounts.slice(2, 4)
 
-      receipt = await factory.createEventStore(whitelist, W3.TC.txParamsDefaultDeploy(accounts[0]))
+      receipt = await factory.createEventStore(
+        whitelist,
+        W3.TX.txParamsDefaultDeploy(accounts[0])
+      )
       events = EventTransformer.getFSAsFromReceipt(receipt)
-      let factoryEvents = EventTransformer.filterEventsByMeta(events, 'msgSender', accounts[0])
+      let factoryEvents = EventTransformer.filterEventsByMeta(
+        events,
+        'msgSender',
+        accounts[0]
+      )
 
       let eventStore = await EventStore.At(factoryEvents[0].payload.value)
 
       // the eventStore whitelist is setup correctly
       let eventStoreWhitelist = await eventStore.getWhitelist()
-      expect(eventStoreWhitelist.map(Utils.toChecksumAddress)).toEqual(whitelist)
+      expect(eventStoreWhitelist.map(Utils.toChecksumAddress)).toEqual(
+        whitelist
+      )
 
       // we expect 3 events in a newly created eventStore
       let eventCount = await eventStore.eventCount()
       expect(eventCount.toNumber()).toBe(3)
 
-      let esEventValues = await eventStore.readEvent(2, W3.TC.txParamsDefaultSend(accounts[0]))
+      let esEventValues = await eventStore.readEvent(
+        2,
+        W3.TX.txParamsDefaultSend(accounts[0])
+      )
       let event = EventTransformer.arrayToFSA(esEventValues)
 
       // we expect the factory caller to be the owner
@@ -78,16 +95,22 @@ describe('EventStore', () => {
 
     it('can create eventStore with out the factory', async () => {
       // create EventStore without the factory
-      let eventStore = await EventStore.New(W3.TC.txParamsDefaultDeploy(accounts[0]), {
-        _multisig: accounts[0]
-      })
+      let eventStore = await EventStore.New(
+        W3.TX.txParamsDefaultDeploy(accounts[0]),
+        {
+          _multisig: accounts[0]
+        }
+      )
 
       // expect 1 event in this case
       let eventCount = await eventStore.eventCount()
       expect(eventCount.toNumber()).toBe(1)
 
       // expect the event to be NEW_OWNER
-      let esEventValues = await eventStore.readEvent(0, W3.TC.txParamsDefaultSend(accounts[0]))
+      let esEventValues = await eventStore.readEvent(
+        0,
+        W3.TX.txParamsDefaultSend(accounts[0])
+      )
       let event = EventTransformer.arrayToFSA(esEventValues)
       expect(event.type).toBe(InternalEventTypes.NEW_OWNER)
       expect(event.payload.value).toBe(accounts[0])
@@ -104,7 +127,7 @@ describe('EventStore', () => {
       let whitelist = accounts.slice(3, 5)
       receipt = await eventStore.setWhitelist(
         whitelist,
-        W3.TC.txParamsDefaultDeploy(eventStoreOwner)
+        W3.TX.txParamsDefaultDeploy(eventStoreOwner)
       )
       events = EventTransformer.getFSAsFromReceipt(receipt)
       expect(events[0].type).toBe(InternalEventTypes.WL_SET)

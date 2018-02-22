@@ -1,6 +1,7 @@
 import { getDefaultRelic } from '../../../__mocks__/getRelic'
+
+import { W3 } from 'soltsice'
 import {
-  W3,
   Relic,
   Utils,
   IFSA,
@@ -31,13 +32,23 @@ describe('EventStore', () => {
 
   const getEventStore = async () => {
     let whitelist = accounts.slice(0, 3)
-    factory = await EventStoreFactory.New(W3.TC.txParamsDefaultDeploy(accounts[0]), {
-      _multisig: accounts[0]
-    })
+    factory = await EventStoreFactory.New(
+      W3.TX.txParamsDefaultDeploy(accounts[0]),
+      {
+        _multisig: accounts[0]
+      }
+    )
     // create a new eventStore
-    receipt = await factory.createEventStore(whitelist, W3.TC.txParamsDefaultDeploy(accounts[1]))
+    receipt = await factory.createEventStore(
+      whitelist,
+      W3.TX.txParamsDefaultDeploy(accounts[1])
+    )
     events = EventTransformer.getFSAsFromReceipt(receipt)
-    let factoryEvents = EventTransformer.filterEventsByMeta(events, 'msgSender', accounts[1])
+    let factoryEvents = EventTransformer.filterEventsByMeta(
+      events,
+      'msgSender',
+      accounts[1]
+    )
     return EventStore.At(factoryEvents[0].payload.value)
   }
 
@@ -60,10 +71,12 @@ describe('EventStore', () => {
             event.valueType,
             event.key,
             event.value,
-            W3.TC.txParamsDefaultDeploy(accounts[0], WRITE_EVENT_GAS_COST)
+            W3.TX.txParamsDefaultDeploy(accounts[0], WRITE_EVENT_GAS_COST)
           )
         } catch (e) {
-          expect(e.message).toBe('VM Exception while processing transaction: revert')
+          expect(e.message).toBe(
+            'VM Exception while processing transaction: revert'
+          )
         }
       })
     })

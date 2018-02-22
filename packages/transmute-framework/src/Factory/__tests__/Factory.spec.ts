@@ -2,8 +2,13 @@ const Storage = require('node-storage')
 
 import { getSetupAsync } from '../../__mocks__/setup'
 
-import { W3, Relic, EventStoreFactory, Factory, EventStoreAdapter } from '../../transmute-framework'
-
+import {
+  Relic,
+  EventStoreFactory,
+  Factory,
+  EventStoreAdapter
+} from '../../transmute-framework'
+import { W3 } from 'soltsice'
 /**
  * Factory test
  */
@@ -54,10 +59,19 @@ describe('Factory', () => {
     expect(eventStoreContractAddresses.length).toBe(1)
 
     // adding a new event store should update the read model
-    let eventStore = await Factory.createStore(factory, accounts, relic.web3, accounts[0])
+    let eventStore = await Factory.createStore(
+      factory,
+      accounts,
+      relic.web3,
+      accounts[0]
+    )
 
     // console.log(eventStoreAdapter.eventMap)
-    let changes = await readModel.sync(factory as any, eventStoreAdapter, relic.web3)
+    let changes = await readModel.sync(
+      factory as any,
+      eventStoreAdapter,
+      relic.web3
+    )
     // console.log(changes)
 
     expect(Object.keys(readModel.state.model).length).toBe(2)
