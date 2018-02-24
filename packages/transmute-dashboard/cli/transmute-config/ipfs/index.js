@@ -1,9 +1,5 @@
-const ipfsConfig = {
-  host: 'localhost',
-  port: 5001,
-  protocol: 'http'
-};
+const transmuteConfig = require('../../../src/transmute-config.json');
 
 module.exports = {
-  ipfsConfig
+  ipfsConfig: transmuteConfig.prod.ipfs.config
 };

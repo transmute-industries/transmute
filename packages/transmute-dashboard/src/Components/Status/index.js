@@ -21,26 +21,34 @@ class Status extends React.Component {
     const { relic, accounts, eventStoreAdapter, readModelAdapter } = window.TT;
 
     this.props.actions.setWeb3Accounts(accounts);
-    const factory = await T.Factory.create(relic.web3, accounts[0]);
-    const factoryReadModel = await T.Factory.getReadModel(
-      factory,
-      eventStoreAdapter,
-      readModelAdapter,
-      relic.web3,
-      accounts[0]
+    // const factory = await T.Factory.create(relic.web3, accounts[0]);
+    // const factoryReadModel = await T.Factory.getReadModel(
+    //   factory,
+    //   eventStoreAdapter,
+    //   readModelAdapter,
+    //   relic.web3,
+    //   accounts[0]
+    // );
+    // await factoryReadModel.sync(factory, eventStoreAdapter, relic.web3);
+
+    const factory = await T.EventStoreFactory.At(
+      '0x3742cc15b0939be0ce085cdda799d56a26b037a0'
     );
-    await factoryReadModel.sync(factory, eventStoreAdapter, relic.web3);
-
-    const eventStore = await T.Factory.createStore(
-      factory,
-      accounts,
-      relic.web3,
-      accounts[0]
+    console.log('factory: ', factory);
+    // const eventStore = await T.Factory.createStore(
+    //   factory,
+    //   accounts,
+    //   relic.web3,
+    //   accounts[0]
+    // );
+    const eventStore = await T.EventStore.At(
+      '0x7103Eb3Fe55fB84cACB274854686B503b9f6bC37'
     );
+    // console.log(eventStore);
 
-    await factoryReadModel.sync(factory, eventStoreAdapter, relic.web3);
+    // await factoryReadModel.sync(factory, eventStoreAdapter, relic.web3);
 
-    this.props.actions.onFactoryReadModelUpdate(factoryReadModel.state);
+    // this.props.actions.onFactoryReadModelUpdate(factoryReadModel.state);
 
     const events = [
       {
@@ -52,27 +60,27 @@ class Status extends React.Component {
         meta: {
           adapter: 'I'
         }
-      },
-      {
-        type: 'DOCUMENT_SIGNED',
-        payload: {
-          name: 'Alice',
-          signature: '0x...'
-        },
-        meta: {
-          adapter: 'I'
-        }
-      },
-      {
-        type: 'DOCUMENT_SIGNED',
-        payload: {
-          name: 'Bob',
-          signature: '0x...'
-        },
-        meta: {
-          adapter: 'I'
-        }
       }
+      // {
+      //   type: 'DOCUMENT_SIGNED',
+      //   payload: {
+      //     name: 'Alice',
+      //     signature: '0x...'
+      //   },
+      //   meta: {
+      //     adapter: 'I'
+      //   }
+      // },
+      // {
+      //   type: 'DOCUMENT_SIGNED',
+      //   payload: {
+      //     name: 'Bob',
+      //     signature: '0x...'
+      //   },
+      //   meta: {
+      //     adapter: 'I'
+      //   }
+      // }
     ];
 
     const writtenEvents = await T.Store.writeFSAs(
@@ -83,7 +91,7 @@ class Status extends React.Component {
       events
     );
 
-    this.props.actions.onSaveEvents(writtenEvents)
+    this.props.actions.onSaveEvents(writtenEvents);
     const documentContract = {
       readModelStoreKey: `EventStore:${eventStore.address}`,
       readModelType: 'EventStore',

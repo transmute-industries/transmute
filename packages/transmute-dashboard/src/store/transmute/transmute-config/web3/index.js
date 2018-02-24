@@ -2,9 +2,8 @@ const Web3 = require('web3');
 const ProviderEngine = require('web3-provider-engine');
 const RpcSubprovider = require('web3-provider-engine/subproviders/rpc');
 
-const web3Config = {
-  providerUrl: 'http://localhost:8545'
-};
+const transmuteConfig = require('../../../../transmute-config.json');
+const providerUrl = transmuteConfig.prod.web3.providerUrl;
 
 export const getWeb3 = async () => {
   let web3js;
@@ -12,9 +11,7 @@ export const getWeb3 = async () => {
     if (typeof window !== 'undefined' && typeof window.web3 !== 'undefined') {
       web3js = new Web3(window.web3.currentProvider);
     } else {
-      console.log(
-        `MetaMask not available, defaulting to ${web3Config.providerUrl}\n`
-      );
+      console.log(`MetaMask not available, defaulting to ${providerUrl}\n`);
 
       // const WalletSubprovider = require("web3-provider-engine/subproviders/wallet");
 
@@ -22,7 +19,7 @@ export const getWeb3 = async () => {
 
       engine.addProvider(
         new RpcSubprovider({
-          rpcUrl: web3Config.providerUrl
+          rpcUrl: providerUrl
         })
       );
 
@@ -39,7 +36,6 @@ export const getWeb3 = async () => {
   });
 };
 
-
 export default {
   getWeb3
-}
+};

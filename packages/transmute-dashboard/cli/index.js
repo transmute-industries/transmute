@@ -16,6 +16,7 @@ vorpal.use(vorpalLog);
 
 require('./status')(vorpal);
 require('./web3')(vorpal);
+require('./publish')(vorpal);
 
 // const RPC_HOST = "http://localhost:8545";
 
