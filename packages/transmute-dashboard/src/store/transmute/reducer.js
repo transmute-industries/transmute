@@ -45,6 +45,24 @@ const handlers = {
         ...action.payload
       }
     };
+  },
+  [Constants.FACTORY_READMODEL_UPDATE]: (state, action) => {
+    return {
+      ...state,
+      factory: action.payload
+    };
+  },
+  [Constants.EVENTSTORE_READMODEL_UPDATE]: (state, action) => {
+    return {
+      ...state,
+      eventStore: action.payload
+    };
+  },
+  [Constants.SAVE_EVENTS]: (state, action) => {
+    return {
+      ...state,
+      events: action.payload
+    };
   }
 };
 

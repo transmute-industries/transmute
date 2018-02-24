@@ -41,3 +41,24 @@ export const onIpfsConnectionSuccess = () => {
     type: Constants.IPFS_CONNECTION_SUCCESS
   };
 };
+
+export const onFactoryReadModelUpdate = readModel => {
+  return {
+    type: Constants.FACTORY_READMODEL_UPDATE,
+    payload: readModel
+  };
+};
+
+export const onEventStoreReadModelUpdate = readModel => {
+  return {
+    type: Constants.EVENTSTORE_READMODEL_UPDATE,
+    payload: readModel
+  };
+};
+
+export const onSaveEvents = events => {
+  return {
+    type: Constants.SAVE_EVENTS,
+    payload: events
+  };
+};

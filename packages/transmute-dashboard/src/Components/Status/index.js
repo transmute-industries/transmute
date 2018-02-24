@@ -12,52 +12,105 @@ import { bindActionCreators } from 'redux';
 
 import * as T from 'transmute-framework';
 
+import transmute from '../../store/transmute';
+
+import EventStoreTabs from '../EventStoreTabs';
+
 class Status extends React.Component {
+  demo = async () => {
+    const { relic, accounts, eventStoreAdapter, readModelAdapter } = window.TT;
+
+    this.props.actions.setWeb3Accounts(accounts);
+    const factory = await T.Factory.create(relic.web3, accounts[0]);
+    const factoryReadModel = await T.Factory.getReadModel(
+      factory,
+      eventStoreAdapter,
+      readModelAdapter,
+      relic.web3,
+      accounts[0]
+    );
+    await factoryReadModel.sync(factory, eventStoreAdapter, relic.web3);
+
+    const eventStore = await T.Factory.createStore(
+      factory,
+      accounts,
+      relic.web3,
+      accounts[0]
+    );
+
+    await factoryReadModel.sync(factory, eventStoreAdapter, relic.web3);
+
+    this.props.actions.onFactoryReadModelUpdate(factoryReadModel.state);
+
+    const events = [
+      {
+        type: 'DOCUMENT_CREATED',
+        payload: {
+          name: 'po.1337',
+          multihash: 'QmceFAWK6QbNVLfNZsFmvi7xycFkHMEAeviYuVwT7Q3TLr'
+        },
+        meta: {
+          adapter: 'I'
+        }
+      },
+      {
+        type: 'DOCUMENT_SIGNED',
+        payload: {
+          name: 'Alice',
+          signature: '0x...'
+        },
+        meta: {
+          adapter: 'I'
+        }
+      },
+      {
+        type: 'DOCUMENT_SIGNED',
+        payload: {
+          name: 'Bob',
+          signature: '0x...'
+        },
+        meta: {
+          adapter: 'I'
+        }
+      }
+    ];
+
+    const writtenEvents = await T.Store.writeFSAs(
+      eventStore,
+      eventStoreAdapter,
+      relic.web3,
+      accounts[0],
+      events
+    );
+
+    this.props.actions.onSaveEvents(writtenEvents)
+    const documentContract = {
+      readModelStoreKey: `EventStore:${eventStore.address}`,
+      readModelType: 'EventStore',
+      contractAddress: `${eventStore.address}`,
+      lastEvent: null,
+      model: {}
+    };
+
+    let eventStoreReadModel = new T.ReadModel(
+      readModelAdapter,
+      transmute.eventStoreReducers.documentReducer,
+      documentContract
+    );
+    await eventStoreReadModel.sync(eventStore, eventStoreAdapter, relic.web3);
+
+    this.props.actions.onEventStoreReadModelUpdate(eventStoreReadModel.state);
+  };
   render() {
     // if (this.props.transmute.accounts === null) {
     //   return <LinearProgress color="secondary" />;
     // }
     return (
       <div className="Status" style={{ height: '100%' }}>
-        <pre>
-          {JSON.stringify(
-            {
-              transmuteConfig: {
-                // ...window.TT.ipfs.ipfsConfig
-              },
-              accounts: this.props.transmute.accounts
-            },
-            null,
-            2
-          )}
-        </pre>
-
-        <Button
-          variant="raised"
-          color="secondary"
-          onClick={async () => {
-            const {
-              relic,
-              accounts,
-              eventStoreAdapter,
-              readModelAdapter
-            } = window.TT;
-
-            this.props.actions.setWeb3Accounts(accounts);
-            let factory = await T.Factory.create(relic.web3, accounts[0]);
-            // let readModel = await T.Factory.getReadModel(
-            //   factory,
-            //   eventStoreAdapter,
-            //   readModelAdapter,
-            //   relic.web3,
-            //   accounts[0]
-            // );
-
-            // console.log(factory);
-          }}
-        >
-          Smoke Test
+        <Button variant="raised" color="secondary" onClick={this.demo}>
+          Demo
         </Button>
+        <EventStoreTabs transmute={this.props.transmute} />
       </div>
     );
   }
