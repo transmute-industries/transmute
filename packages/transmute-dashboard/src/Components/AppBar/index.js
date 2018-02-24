@@ -102,7 +102,7 @@ const styles = theme => ({
 
 class MiniDrawer extends React.Component {
   state = {
-    auth: true,
+    auth: false,
     isDrawerOpen: false
   };
 
@@ -158,7 +158,7 @@ class MiniDrawer extends React.Component {
                 noWrap
                 className={classNames(classes.flex)}
               >
-                Transmute
+                EventStore Demo
               </Typography>
 
               {auth && (
@@ -212,9 +212,9 @@ class MiniDrawer extends React.Component {
                   )}
                 </IconButton>
               </div>
-              <Divider />
-              <List>{demoMenuList}</List>
               {/* <Divider />
+              <List>{demoMenuList}</List>
+              <Divider />
               <List>{otherMailFolderListItems}</List> */}
             </div>
           </Drawer>

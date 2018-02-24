@@ -18,6 +18,8 @@ export default store => {
       store.dispatch(actionCreators.onWeb3ConnectionSuccess());
       relic = new T.Relic(web3);
       toast.success('Web3 Connected.');
+      const accounts = await relic.getAccounts();
+      store.dispatch(actionCreators.setWeb3Accounts(accounts));
     } catch (e) {
       console.warn('web3...', e.message);
       store.dispatch(actionCreators.onWeb3ConnectionRefused());
@@ -48,5 +50,7 @@ export default store => {
       eventStoreAdapter,
       readModelAdapter
     };
+
+  
   });
 };
