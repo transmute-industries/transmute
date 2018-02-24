@@ -1,12 +1,14 @@
-const T = require('transmute-framework');
+import * as T from 'transmute-framework';
 
-const bs58 = require('bs58');
+import bs58 from 'bs58';
 
-const axios = require('axios');
+import axios from 'axios';
 
-let ipfsAdapter = require('transmute-adapter-ipfs');
+import ipfsAdapter from 'transmute-adapter-ipfs';
 
-const { ipfsConfig } = require('./ipfs');
+import ipfs from './ipfs';
+
+const { ipfsConfig } = ipfs;
 
 const getEventStoreAdapterAsync = async () => {
   const ipfs = ipfsAdapter.getStorage({
@@ -37,6 +39,4 @@ const getEventStoreAdapterAsync = async () => {
   return eventStoreAdapter;
 };
 
-export default {
-  getEventStoreAdapterAsync
-};
+export default getEventStoreAdapterAsync;

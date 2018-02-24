@@ -38,3 +38,8 @@ export const getWeb3 = async () => {
     }
   });
 };
+
+
+export default {
+  getWeb3
+}

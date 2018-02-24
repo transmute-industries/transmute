@@ -7,7 +7,7 @@ import { ReadModel } from 'transmute-framework';
 
 class CreateFactory extends React.Component {
   render() {
-    console.log('start here....')
+    console.log('start here....');
     return (
       <div className="CreateFactory">
         <Typography>Factory Smart Contract:</Typography>
@@ -18,18 +18,15 @@ class CreateFactory extends React.Component {
           variant="raised"
           color="secondary"
           onClick={async () => {
-            transmute.middleware.createFactory()
-            // console.log('factory...', , window.TT);
+            let factory = await transmute.middleware.createFactory();
 
-            // Create Factory,
+            console.log('yolo...')
 
-            // Get ReadModel,
+            // let readModel = await transmute.middleware.getFactoryReadModel(
+            //   factory
+            // );
 
-            // Delete ReadModel,
-
-            // Rebuild ReadModel
-            // let accounts = await transmute.middleware.getWeb3Accounts();
-            // this.props.actions.setWeb3Accounts(accounts);
+            // console.log(readModel)
           }}
         >
           Create Factory
