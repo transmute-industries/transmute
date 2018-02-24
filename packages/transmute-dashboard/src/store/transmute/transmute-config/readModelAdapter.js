@@ -1,5 +1,5 @@
-let localStorageAdapter = require('transmute-adapter-local-storage');
-let localStorageDB = localStorageAdapter.getStorage();
+import localStorageAdapter from 'transmute-adapter-local-storage';
+const localStorageDB = localStorageAdapter.getStorage();
 
 const getReadModelAdapterAsync = async () => {
   const readModelAdapter = {
@@ -15,6 +15,4 @@ const getReadModelAdapterAsync = async () => {
   return readModelAdapter;
 };
 
-export default {
-  getReadModelAdapterAsync
-};
+export default getReadModelAdapterAsync;

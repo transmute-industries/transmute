@@ -1,25 +1,31 @@
 import * as Constants from './constants';
 
+// import { toast } from 'react-toastify';
+
 const handlers = {
   [Constants.WEB3_CONNECTION_REFUSED]: (state, action) => {
+    // toast.error('Web3 Connection Refused');
     return {
       ...state,
       hasWeb3: false
     };
   },
   [Constants.WEB3_CONNECTION_SUCCESS]: (state, action) => {
+    // toast.success('Web3 Connected');
     return {
       ...state,
       hasWeb3: true
     };
   },
   [Constants.IPFS_CONNECTION_REFUSED]: (state, action) => {
+    // toast.error('IPFS Connection Refused');
     return {
       ...state,
       hasIpfs: false
     };
   },
   [Constants.IPFS_CONNECTION_SUCCESS]: (state, action) => {
+    // toast.success('IPFS Connected');
     return {
       ...state,
       hasIpfs: true

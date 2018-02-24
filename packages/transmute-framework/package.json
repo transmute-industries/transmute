@@ -36,7 +36,7 @@
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
     "precommit": "lint-staged",
-    "contracts:generate": "npm run cleanup && cp -R ./node_modules/transmute-contracts/build/contracts ./src && node ./node_modules/soltsice/dist/src/soltsice.js ./src/contracts/ ./src/TransmuteContracts",
+    "contracts:generate": "npm run cleanup && cp -R ./node_modules/transmute-contracts/build/contracts ./src && node ./node_modules/soltsice/dist/soltsice.js ./src/contracts/ ./src/TransmuteContracts",
     "contracts:regenerate": "lerna run contracts:migrate && lerna bootstrap && yarn run contracts:generate"
   },
   "lint-staged": {
@@ -134,7 +134,7 @@
     "ethereumjs-util": "^5.1.2",
     "jiff": "^0.7.3",
     "json-logic-js": "^1.2.1",
-    "soltsice": "^0.10.6",
+    "soltsice": "^0.10.11",
     "transmute-adapter-ipfs": "^1.0.1-alpha.0.2",
     "transmute-adapter-node-storage": "^1.0.1-alpha.0.2",
     "transmute-contracts": "^0.1.4-alpha.0.2",

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -15,6 +16,7 @@ import Routes from '../Routes';
 
 import AppBar from '../AppBar';
 
+
 class App extends Component {
   render() {
     return (
@@ -22,6 +24,7 @@ class App extends Component {
         <ConnectedRouter history={history}>
           <MuiThemeProvider theme={theme}>
             <AppBar>
+              <ToastContainer />
               <Routes />
             </AppBar>
           </MuiThemeProvider>
