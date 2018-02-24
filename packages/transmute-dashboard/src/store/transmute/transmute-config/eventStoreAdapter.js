@@ -4,9 +4,42 @@ import bs58 from 'bs58';
 
 import axios from 'axios';
 
-import ipfsAdapter from 'transmute-adapter-ipfs';
-
 import ipfs from './ipfs';
+
+const IPFS = require('ipfs-mini');
+
+const getStorage = config => {
+  if (!config) {
+    throw new Error(
+      'Config required, see https://github.com/SilentCicero/ipfs-mini'
+    );
+  }
+  return new IPFS(config);
+};
+
+const getItem = (ipfs, key) => {
+  return new Promise((resolve, reject) => {
+    ipfs.catJSON(key, (err, result) => {
+      if (err) return reject(err);
+      resolve(result);
+    });
+  });
+};
+
+const setItem = (ipfs, value) => {
+  return new Promise((resolve, reject) => {
+    ipfs.addJSON(value, (err, result) => {
+      if (err) return reject(err);
+      resolve(result);
+    });
+  });
+};
+
+const ipfsAdapter = {
+  getStorage,
+  getItem,
+  setItem
+};
 
 const { ipfsConfig } = ipfs;
 
