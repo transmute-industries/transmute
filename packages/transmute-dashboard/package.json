@@ -1,5 +1,6 @@
 {
   "name": "transmute-dashboard",
+  "homepage": "http://transmute-industries.github.io/transmute",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -66,9 +67,12 @@
     "transmute": "node ./cli/index.js",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
+    "gh-pages": "^1.1.0",
     "vorpal": "^1.12.0",
     "vorpal-log": "^1.1.0",
     "vorpal-tour": "0.0.5"
