@@ -113,7 +113,7 @@ export const startDemo = async props => {
     }
   );
 
-  console.log(eventStoreReadModel);
+  // console.log(eventStoreReadModel);
 
   await eventStoreReadModel.sync(eventStore, eventStoreAdapter, relic.web3);
 
