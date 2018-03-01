@@ -1,0 +1,10 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ipfs
+  labels:
+    app: ipfs
+spec:
+  backend:
+    serviceName: transmute-ipfs-dev-ipfs
+    servicePort: 8080

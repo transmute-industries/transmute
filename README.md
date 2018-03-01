@@ -30,9 +30,9 @@ lerna run build --scope transmute-framework
 
 If you wish to run everything locally, you can use this minikube setup:
 
-* [Setup Minikube](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube-setup)
-* [Setup IPFS](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube-setup/ipfs)
-* [Setup Ganache-CLI](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube-setup/ganache-cli)
+* [Setup Minikube](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube)
+* [Setup IPFS](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube/ipfs)
+* [Setup Ganache-CLI](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube/ganache-cli)
 
 When using minikube, before running scripts, you will want to export these env vars:
 
