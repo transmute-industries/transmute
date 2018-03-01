@@ -51,6 +51,13 @@ export default store => {
       readModelAdapter
     };
 
-  
+    // console.log(`
+    // window.TT = {
+    //   relic,
+    //   accounts,
+    //   eventStoreAdapter,
+    //   readModelAdapter
+    // };`);
+
   });
 };

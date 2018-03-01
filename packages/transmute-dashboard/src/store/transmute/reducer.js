@@ -7,7 +7,7 @@ const handlers = {
     // toast.error('Web3 Connection Refused');
     return {
       ...state,
-      hasWeb3: false
+      hasWeb3: false,
     };
   },
   [Constants.WEB3_CONNECTION_SUCCESS]: (state, action) => {
@@ -58,10 +58,17 @@ const handlers = {
       eventStore: action.payload
     };
   },
+
   [Constants.SAVE_EVENTS]: (state, action) => {
     return {
       ...state,
       events: action.payload
+    };
+  },
+  [Constants.UPDATE_EDITOR]: (state, action) => {
+    return {
+      ...state,
+      editorValue: action.payload
     };
   }
 };
@@ -70,6 +77,7 @@ export const initialState = {
   hasWeb3: false,
   hasIpfs: false,
   accounts: null,
+  events: [],
   factoryTour: {
     activeStep: 2
   }

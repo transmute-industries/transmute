@@ -92,6 +92,7 @@ class Status extends React.Component {
     );
 
     this.props.actions.onSaveEvents(writtenEvents);
+    
     const documentContract = {
       readModelStoreKey: `EventStore:${eventStore.address}`,
       readModelType: 'EventStore',

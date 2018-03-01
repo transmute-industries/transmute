@@ -7,15 +7,8 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { store, history } from '../../store';
 import theme from '../../theme';
-// import Routes from '../../Routes';
 
-// import * as T from 'transmute-framework'
-// console.log(T)
-
-import Routes from '../Routes';
-
-import AppBar from '../AppBar';
-
+import Demo from '../Demo';
 
 class App extends Component {
   render() {
@@ -23,10 +16,10 @@ class App extends Component {
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <MuiThemeProvider theme={theme}>
-            <AppBar>
+            <div>
               <ToastContainer />
-              <Routes />
-            </AppBar>
+              <Demo />
+            </div>
           </MuiThemeProvider>
         </ConnectedRouter>
       </Provider>

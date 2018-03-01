@@ -62,3 +62,10 @@ export const onSaveEvents = events => {
     payload: events
   };
 };
+
+export const updateEditor = text => {
+  return {
+    type: Constants.UPDATE_EDITOR,
+    payload: text
+  };
+};
