@@ -114,16 +114,66 @@ const outputEvents = await T.Store.writeFSAs(
       <div className={classes.root}>
         <div className={classes.header}>
           <h1>Welcome to the Transmute Alpha Demo!</h1>
-
           <h3>
             Save Events to Ethereum and IPFS with the Transmute Framework.
           </h3>
 
-          <Typography>
-            🚧  The Transmute Framework is in alpha, we are collecting feedback,
-            please consider filling out this survey:
-          </Typography>
+          <a
+            href="https://github.com/transmute-industries/transmute"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Source on Github
+          </a>
+
           <br />
+
+          <h5>🚧 Disclaimers!</h5>
+
+          <Typography>
+            <a
+              href="https://kb.iu.edu/d/bdny"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              You will need to allow mixed content to use our test IPFS server.
+            </a>
+            <br />
+            <br />
+            We plan to fix this shortly.
+          </Typography>
+
+          <br />
+
+          <Typography>
+            The smart contracts used in the alpha are deployed to the Ropsten
+            Testnet. This means that you will need Ropsten Ether to use the
+            demo. &nbsp;
+            <a
+              href="https://transmute.industries/contact"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ask us for Ropsten Ether.
+            </a>
+          </Typography>
+
+          <br />
+
+          <Typography>
+            The Transmute Framework is alpha software, we are collecting
+            feedback, please consider filling out this survey:
+            <br />
+            <br />
+            <a
+              href="https://transmute.typeform.com/to/eZsUGP"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Alpha Feedback Survey
+            </a>
+          </Typography>
+
           <br />
 
           <Button

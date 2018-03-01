@@ -50,7 +50,6 @@ export const startDemo = async props => {
 
   toast.info('Use MetaMask to Submit the Event.');
 
-
   const outputEvents = await T.Store.writeFSAs(
     eventStore,
     eventStoreAdapter,
@@ -93,7 +92,6 @@ export const startDemo = async props => {
   //   0
   // );
   // console.log(outputEvents);
-
 
   console.log(JSON.stringify(outputEvents, null, 2));
 
@@ -141,17 +139,16 @@ await eventStoreReadModel.sync(eventStore, eventStoreAdapter, relic.web3);
 // This model is built automatically from IPFS and Ethereum
 /*
 const eventStoreReadModelState = ${JSON.stringify(
-  eventStoreReadModel.state,
-  null,
-  2
-)}
+    eventStoreReadModel.state,
+    null,
+    2
+  )}
 */
 
 /*
-This concluded the demo.
-To learn more, please checkout our blog post.
+This concludes the demo.
 If you have any feedback, we want it!
-Please fill out this survey:
+Please fill out this survey: https://transmute.typeform.com/to/eZsUGP
 
 Made with ❤️ in Austin TX
 

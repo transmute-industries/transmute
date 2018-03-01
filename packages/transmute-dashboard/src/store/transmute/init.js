@@ -17,11 +17,20 @@ export default store => {
       web3 = await transmute.web3.getWeb3();
       store.dispatch(actionCreators.onWeb3ConnectionSuccess());
       relic = new T.Relic(web3);
-      toast.success('Web3 Connected.');
+
       const accounts = await relic.getAccounts();
+
+   
       store.dispatch(actionCreators.setWeb3Accounts(accounts));
+      if (!accounts.length) {
+        throw new Error('No accounts available.');
+      }
+      toast.success('Web3 Connected.');
+      
     } catch (e) {
       console.warn('web3...', e.message);
+
+      toast.error('Install and Sign in to MetaMask.');
       store.dispatch(actionCreators.onWeb3ConnectionRefused());
     }
 
@@ -58,6 +67,5 @@ export default store => {
     //   eventStoreAdapter,
     //   readModelAdapter
     // };`);
-
   });
 };
