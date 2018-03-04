@@ -20,6 +20,7 @@ before_script:
 - ./configure
 - make nsenter
 - sudo cp nsenter /usr/local/bin
+- cd ../..
 
 - curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
 - helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
@@ -27,6 +28,7 @@ before_script:
 - sleep 60
 - kubectl cluster-info
 - nsenter --version
+
 
 script:
 - helm install stable/ipfs --name mini-ipfs
