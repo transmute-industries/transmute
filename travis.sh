@@ -1,5 +1,6 @@
 
-helm ls
+# helm ls
+# helm install stable/ipfs
 
 # cd packages/transmute-minikube
 # npm install

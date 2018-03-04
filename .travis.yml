@@ -12,11 +12,12 @@ before_script:
 - curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
 - npm install -g lerna
 script:
-- curl -L https://raw.githubusercontent.com/cncf/k8s-conformance/master/sonobuoy-conformance.yaml | kubectl apply -f -
-- helm init
+# - curl -L https://raw.githubusercontent.com/cncf/k8s-conformance/master/sonobuoy-conformance.yaml | kubectl apply -f -
+- helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
 - sleep 60
 - kubectl cluster-info
-- ./travis.sh
+- helm search ipfs
+# - ./travis.sh
 
 # sudo: required
 # dist: trusty
