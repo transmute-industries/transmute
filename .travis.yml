@@ -13,12 +13,10 @@ before_script:
 - npm install -g lerna
 script:
 # - curl -L https://raw.githubusercontent.com/cncf/k8s-conformance/master/sonobuoy-conformance.yaml | kubectl apply -f -
-- helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
+- helm init --force-upgrade
 - sleep 60
 - kubectl cluster-info
 - helm search ipfs
-- helm ls
-- sleep 10
 - helm install --name mini-ipfs stable/ipfs
 
 # - helm install --name mini-kong stable/kong
