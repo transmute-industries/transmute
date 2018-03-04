@@ -20,7 +20,7 @@ before_script:
 - ./configure
 - make nsenter
 - sudo cp nsenter /usr/local/bin
-- cd ../..
+- cd
 
 - curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
 - helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
@@ -34,6 +34,7 @@ script:
 - helm install stable/ipfs --name mini-ipfs
 - helm install stable/kong --name mini-kong
 - sleep 60
+- pwd
 - ./travis.sh
 
 # - curl -L https://raw.githubusercontent.com/cncf/k8s-conformance/master/sonobuoy-conformance.yaml | kubectl apply -f -
