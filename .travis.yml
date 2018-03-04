@@ -32,7 +32,7 @@ script:
 - helm install stable/ipfs --name mini-ipfs
 - helm install stable/kong --name mini-kong
 - sleep 60
-- ./travish.sh
+- ./travis.sh
 
 # - curl -L https://raw.githubusercontent.com/cncf/k8s-conformance/master/sonobuoy-conformance.yaml | kubectl apply -f -
 # - ./travis.sh
