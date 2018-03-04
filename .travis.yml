@@ -14,6 +14,7 @@ script:
 - kubectl cluster-info 
 - kubectl run travis-echoserver --image=k8s.gcr.io/echoserver:1.4
 - kubectl get deployment
+- curl -L https://raw.githubusercontent.com/cncf/k8s-conformance/master/sonobuoy-conformance.yaml | kubectl apply -f -
 
 
 
