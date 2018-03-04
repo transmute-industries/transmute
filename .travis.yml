@@ -1,5 +1,9 @@
 sudo: required
 
+cache:
+  directories:
+  - $HOME/.yarn-cache
+
 env:
 - CHANGE_MINIKUBE_NONE_USER=true
 
@@ -9,13 +13,16 @@ before_script:
 - sudo minikube start --vm-driver=none --kubernetes-version=v1.9.0
 - minikube update-context
 - JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
-
+- curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
+- npm install -g yarn --cache-min 999999999 lerna
 script:
+- curl -L https://raw.githubusercontent.com/cncf/k8s-conformance/master/sonobuoy-conformance.yaml | kubectl apply -f -
+- helm init
 - kubectl cluster-info 
 - kubectl run travis-echoserver --image=k8s.gcr.io/echoserver:1.4
 - kubectl get deployment
-- curl -L https://raw.githubusercontent.com/cncf/k8s-conformance/master/sonobuoy-conformance.yaml | kubectl apply -f -
-
+- lerna bootstrap --scope transmute-minikube
+- lerna run test --scope transmute-minikube
 
 
 # sudo: required
