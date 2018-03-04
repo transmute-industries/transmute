@@ -20,13 +20,11 @@ export default store => {
 
       const accounts = await relic.getAccounts();
 
-   
       store.dispatch(actionCreators.setWeb3Accounts(accounts));
       if (!accounts.length) {
         throw new Error('No accounts available.');
       }
       toast.success('Web3 Connected.');
-      
     } catch (e) {
       console.warn('web3...', e.message);
 
@@ -40,6 +38,7 @@ export default store => {
       toast.success('IPFS EventStore Adapter Connected.');
     } catch (e) {
       console.error('ipfs...', e);
+      toast.error('Allow Mixed Content to use our IPFS test server.');
       store.dispatch(actionCreators.onIpfsConnectionRefused());
     }
 
