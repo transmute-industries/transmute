@@ -16,7 +16,10 @@ script:
 - helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
 - sleep 60
 - kubectl cluster-info
-- helm search ipfs
+- helm install --name mini-ipfs stable/ipfs
+- helm install --name mini-kong stable/kong
+- sleep 60
+- helm ls
 # - ./travis.sh
 
 # sudo: required
