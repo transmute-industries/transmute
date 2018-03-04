@@ -1,12 +1,17 @@
 // https://emojipedia.org/unicode-8.0/
 const shell = require('shelljs');
 
-it('can get services', () => {
+import { sleep } from './_tools';
 
+it('can get services', async () => {
   // if (shell.exec('helm install stable/ipfs').code !== 0) {
   //   shell.echo('🙍  Error failed to install IPFS with helm.');
   //   shell.exit(1);
   // }
+
+  await sleep(3);
+
+  console.log('hello');
 
   // if (shell.exec('helm ls').code !== 0) {
   //   shell.echo('🙍  Error failed to list helm charts');

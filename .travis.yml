@@ -14,6 +14,7 @@ before_script:
 script:
 - curl -L https://raw.githubusercontent.com/cncf/k8s-conformance/master/sonobuoy-conformance.yaml | kubectl apply -f -
 - helm init
+- sleep 5
 - kubectl cluster-info
 - ./travis.sh
 
