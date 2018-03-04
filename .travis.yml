@@ -14,7 +14,7 @@ before_script:
 - npm install -g lerna
 script:
 - kubectl cluster-info
-- helm search ipfs
+- helm install stable/kong --name mini-kong
 
 
 
