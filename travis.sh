@@ -1,10 +1,8 @@
 
-# helm ls
-# helm install stable/ipfs
 
-# cd packages/transmute-minikube
-# npm install
-# npm run test
+cd packages/transmute-minikube
+npm install
+npm run test
 
 # lerna clean
 # lerna bootrstrap

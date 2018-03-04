@@ -25,14 +25,14 @@ before_script:
 - helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
 - npm install -g lerna
 - sleep 60
-
-script:
 - kubectl cluster-info
 - nsenter --version
 
+script:
+- helm install stable/ipfs --name mini-ipfs
 - helm install stable/kong --name mini-kong
-
-
+- sleep 60
+- ./travish.sh
 
 # - curl -L https://raw.githubusercontent.com/cncf/k8s-conformance/master/sonobuoy-conformance.yaml | kubectl apply -f -
 # - ./travis.sh

@@ -1,42 +1,24 @@
-// https://emojipedia.org/unicode-8.0/
-const shell = require('shelljs');
-
-import { sleep } from './_tools';
+import * as tools from './_tools';
 
 describe('root', () => {
-  it('helm can search ipfs', async () => {
-    const command = `
-helm search ipfs
-`;
+  const ipfsIp = tools.getIpfsInternalClusterIp();
+  const kongAPI = tools.getKongApiEndpoint();
+  const kongProxy = tools.getKongProxyEndpoint();
 
-    const execution = shell.exec(command);
-
-    if (execution.code !== 0) {
-      shell.echo('🙍  Error failed to list helm charts');
-      shell.exit(1);
-    }
-    
-    console.log(execution.stdout);
+  beforeAll(() => {
+    tools.deleteIpfsFromKong(kongAPI);
+    const response = tools.addIpfsGatewayToKong(kongAPI, ipfsIp);
+    console.log(JSON.stringify(response, null, 2));
+    console.log('created example api.');
   });
 
-  // it('can get services', async () => {
-  //   // if (shell.exec('helm install stable/ipfs').code !== 0) {
-  //   //   shell.echo('🙍  Error failed to install IPFS with helm.');
-  //   //   shell.exit(1);
-  //   // }
+  it('can get ipfs readme from kong', () => {
+    const readme = tools.getIpfsReadmeFromKong(kongProxy);
+    console.log(readme);
+  });
 
-  //   // await sleep(3);
-
-  //   console.log('hello222');
-
-  //   // setTimeout(() => {
-  //   //   console.log('exiting tests after 10 seconds');
-  //   //   process.exit(0);
-  //   // }, 10 * 1000);
-
-  //   // if (shell.exec('kubectl logs -f -n sonobuoy sonobuoy').code !== 0) {
-  //   //   shell.echo('🙍  Error failed tail sonobuoy logs ');
-  //   //   shell.exit(1);
-  //   // }
-  // });
+  afterAll(() => {
+    const response = tools.deleteIpfsFromKong(kongAPI);
+    console.log('deleted example api.');
+  });
 });
