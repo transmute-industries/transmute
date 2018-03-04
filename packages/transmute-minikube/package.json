@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react-scripts": "1.1.1"
+    "react-scripts": "1.1.1",
+    "shelljs": "^0.8.1"
   },
   "scripts": {
-    "test": "react-scripts test --env=jsdom"
+    "bootstrap": "lerna bootstrap --scope transmute-minikube",
+    "test": "react-scripts test"
   }
 }
