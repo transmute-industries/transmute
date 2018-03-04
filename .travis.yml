@@ -1,21 +1,24 @@
 sudo: required
 
-before_script:
-- curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
-- curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
-- helm init
-# - npm install -g lerna
+env:
+- CHANGE_MINIKUBE_NONE_USER=true
 
+before_script:
+- curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.9.0/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
+- curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+- sudo minikube start --vm-driver=none --kubernetes-version=v1.9.0
+- minikube update-context
+- JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
+- curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
+- helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
+- npm install -g lerna
 script:
-# - curl -L https://raw.githubusercontent.com/cncf/k8s-conformance/master/sonobuoy-conformance.yaml | kubectl apply -f -
 - kubectl cluster-info
 - helm search ipfs
-- helm install --name mini-ipfs stable/ipfs
 
-# - helm install --name mini-kong stable/kong
-# - sleep 60
 
-# - minikube service --url mini-kong-kong-proxy
+
+# - curl -L https://raw.githubusercontent.com/cncf/k8s-conformance/master/sonobuoy-conformance.yaml | kubectl apply -f -
 # - ./travis.sh
 
 # sudo: required
