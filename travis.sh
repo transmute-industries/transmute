@@ -1,3 +1,6 @@
+cd packages/transmute-minikube
+npm install
+npm run test
 
 # lerna clean
 # lerna bootrstrap
@@ -8,15 +11,15 @@
 # lerna run test --scope transmute-framework
 
 # migrate -> generate -> test
-lerna bootstrap
+# lerna bootstrap
 
-cd ./packages/transmute-contracts
-yarn cleanup
-yarn contracts:migrate
-cd ../../packages/transmute-framework
-yarn install
-lerna bootstrap
-yarn cleanup
-yarn contracts:generate
-lerna run test --scope transmute-ipfs
-yarn test
+# cd ./packages/transmute-contracts
+# yarn cleanup
+# yarn contracts:migrate
+# cd ../../packages/transmute-framework
+# yarn install
+# lerna bootstrap
+# yarn cleanup
+# yarn contracts:generate
+# lerna run test --scope transmute-ipfs
+# yarn test
