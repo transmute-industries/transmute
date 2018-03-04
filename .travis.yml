@@ -9,12 +9,14 @@ before_script:
 - sudo minikube start --vm-driver=none --kubernetes-version=v1.9.0
 - minikube update-context
 - JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
-- curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
+- ./ci/ubuntu-compile-nsenter.sh && sudo cp .tmp/util-linux-2.30.2/nsenter /usr/bin
+- curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh
+- chmod 700 get_helm.sh
+- ./get_helm.sh
+- helm init
 - npm install -g lerna
 script:
 # - curl -L https://raw.githubusercontent.com/cncf/k8s-conformance/master/sonobuoy-conformance.yaml | kubectl apply -f -
-- helm init --force-upgrade
-- sleep 60
 - kubectl cluster-info
 - helm search ipfs
 - helm install --name mini-ipfs stable/ipfs
