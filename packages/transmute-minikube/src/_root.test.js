@@ -8,10 +8,10 @@ it('can get services', () => {
   //   shell.exit(1);
   // }
 
-  if (shell.exec('helm ls').code !== 0) {
-    shell.echo('🙍  Error failed list helm charts');
-    shell.exit(1);
-  }
+  // if (shell.exec('helm ls').code !== 0) {
+  //   shell.echo('🙍  Error failed to list helm charts');
+  //   shell.exit(1);
+  // }
 
   // setTimeout(() => {
   //   console.log('exiting tests after 10 seconds');

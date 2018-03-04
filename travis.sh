@@ -1,6 +1,9 @@
-cd packages/transmute-minikube
-npm install
-npm run test
+
+helm ls
+
+# cd packages/transmute-minikube
+# npm install
+# npm run test
 
 # lerna clean
 # lerna bootrstrap
