@@ -1,5 +1,4 @@
-sudo: required
-dist: trusty
+os: osx
 
 env:
 - CHANGE_MINIKUBE_NONE_USER=true
