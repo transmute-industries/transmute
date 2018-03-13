@@ -4,6 +4,11 @@ cd packages/transmute-minikube
 npm install
 npm run test
 
+echo "$(minikube ip) ipfs.transmute.minikube" | sudo tee -a /etc/hosts
+echo "$(minikube ip) testrpc.transmute.minikube" | sudo tee -a /etc/hosts
+
+# export GANACHE_CLI=$(minikube --namespace transmute-testrpc service transmute-testrpc-ganache-cli --url)
+
 # lerna clean
 # lerna bootrstrap
 # lerna run cleanup

@@ -20,7 +20,7 @@ minikube start
 For compatibility with subsequent tutorials, we recommend updating your `hosts` file like so:
 
 ```
-echo "$(minikube ip) minikube.transmute.local" | sudo tee -a /etc/hosts
+echo "$(minikube ip) transmute.minikube" | sudo tee -a /etc/hosts
 ```
 
 Confirm this has worked with:
@@ -34,12 +34,12 @@ You should see something like:
 ```
 ...
 
-192.168.99.100 minikube.transmute.minikube
+192.168.99.100 transmute.minikube
 ```
 
 You can now access your minikube dashboard here:
 
-* http://minikube.transmute.local:30000/#!/node/minikube?namespace=default
+* http://transmute.minikube:30000/#!/node/minikube?namespace=default
 
 You can start and stop minikube with:
 
