@@ -8,7 +8,7 @@ import { ConnectedRouter } from 'react-router-redux';
 import { store, history } from '../../store';
 import theme from '../../theme';
 
-import Demo from '../Demo';
+import Routes from '../Routes';
 
 class App extends Component {
   render() {
@@ -18,7 +18,7 @@ class App extends Component {
           <MuiThemeProvider theme={theme}>
             <div>
               <ToastContainer />
-              <Demo />
+              <Routes />
             </div>
           </MuiThemeProvider>
         </ConnectedRouter>
