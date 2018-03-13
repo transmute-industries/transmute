@@ -34,7 +34,7 @@ You should see something like:
 ```
 ...
 
-192.168.99.100 minikube.transmute.local
+192.168.99.100 minikube.transmute.minikube
 ```
 
 You can now access your minikube dashboard here:
