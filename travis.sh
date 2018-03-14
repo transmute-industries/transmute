@@ -1,8 +1,4 @@
 
-echo "$(minikube ip)  transmute.minikube" | sudo tee -a /etc/hosts
-echo "$(minikube ip)  ipfs.transmute.minikube" | sudo tee -a /etc/hosts
-echo "$(minikube ip)  ganache.transmute.minikube" | sudo tee -a /etc/hosts
-
 export IPFS_CLUSTER_IP=$(kubectl get service mini-ipfs-ipfs -o json | jq -r '.spec.clusterIP');
 
 curl -k -X POST \
