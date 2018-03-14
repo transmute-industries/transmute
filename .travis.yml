@@ -28,6 +28,7 @@ before_script:
 - sleep 60
 - kubectl cluster-info
 - nsenter --version
+- minikube addons enable ingress
 
 
 script:
@@ -39,9 +40,19 @@ script:
 - echo "$(minikube ip)  transmute.minikube" | sudo tee -a /etc/hosts
 - echo "$(minikube ip)  ipfs.transmute.minikube" | sudo tee -a /etc/hosts
 - echo "$(minikube ip)  ganache.transmute.minikube" | sudo tee -a /etc/hosts
+
+- cat /etc/hosts
+
 - curl http://transmute.minikube:30000
 
+
+- export GANACHE_CLI=$(minikube service mini-ganache-ganache-cli --url)
+- curl -X POST --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":67}' $GANACHE_CLI; echo
+
 - export KONG_ADMIN_PORT=$(kubectl get service mini-kong-kong-admin -o json | jq -r '.spec.ports[0].nodePort')
+- curl -k https://$(minikube ip):$KONG_ADMIN_PORT
+
+
 - export KONG_ADMIN_URL=$(echo 'https://transmute.minikube:'$KONG_ADMIN_PORT)
 
 - export KONG_PROXY_PORT=$(kubectl get service mini-kong-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
