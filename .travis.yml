@@ -37,6 +37,8 @@ script:
 - helm install ./tutorials/minikube/kong-ganache/ganache-cli --name=mini-ganache
 - sleep 60
 
+- kubectl get services
+
 - echo "$(minikube ip)  transmute.minikube" | sudo tee -a /etc/hosts
 - echo "$(minikube ip)  ipfs.transmute.minikube" | sudo tee -a /etc/hosts
 - echo "$(minikube ip)  ganache.transmute.minikube" | sudo tee -a /etc/hosts
@@ -53,6 +55,10 @@ script:
 
 - export KONG_PROXY_URL=$(minikube service mini-kong-kong-proxy --url | sed 's,http://,https://,g')
 - curl -k $KONG_PROXY_URL
+
+- export IPFS_CLUSTER_IP=$(kubectl get service mini-ipfs-ipfs -o json | jq -r '.spec.clusterIP');
+
+- ./travis.sh
 
 # - export KONG_ADMIN_PORT=$(kubectl get service mini-kong-kong-admin -o json | jq -r '.spec.ports[0].nodePort')
 # - curl -k https://$(minikube ip):$KONG_ADMIN_PORT

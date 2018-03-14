@@ -1,16 +1,13 @@
 
 
-helm ls
-
-kubectl get services
-
 curl -k -X POST \
   --url $KONG_ADMIN_URL/apis/ \
   --data 'name=ipfs' \
   --data 'hosts=ipfs.transmute.minikube' \
   --data 'upstream_url=http://'$IPFS_CLUSTER_IP':5001/'
 
-# curl -k https://ipfs.transmute.minikube:32443/api/v0/id
+curl -k $KONG_PROXY_URL/api/v0/id \
+  --header 'Host: ipfs.transmute.minikube'
 
 # export GANACHE_CLUSTER_IP=$(kubectl get service mini-ganache-ganache-cli -o json | jq -r '.spec.clusterIP');
 
