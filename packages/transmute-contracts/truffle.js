@@ -1,4 +1,7 @@
 const LightWalletProvider = require('@digix/truffle-lightwallet-provider')
+const Web3 = require('web3');
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 module.exports = {
   networks: {
@@ -8,9 +11,8 @@ module.exports = {
       network_id: "*",
       gas: 4600000
     },
-    testrpc: {
-      host: 'testrpc.transmute.network',
-      port: 8545,
+    ganache: {
+      provider: new Web3.providers.HttpProvider('https://ganache.transmute.minikube:32443'),
       network_id: "*",
       gas: 4600000
     },
