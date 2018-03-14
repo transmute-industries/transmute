@@ -6,6 +6,8 @@ curl -k -X POST \
   --data 'hosts=ipfs.transmute.minikube' \
   --data 'upstream_url=http://'$IPFS_CLUSTER_IP':5001/'
 
+curl -k $IPFS_GATEWAY/api/v0/id 
+
 curl -k $KONG_PROXY_URL/api/v0/id \
   --header 'Host: ipfs.transmute.minikube'
 
