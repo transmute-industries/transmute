@@ -41,6 +41,15 @@ script:
 - echo "$(minikube ip)  ganache.transmute.minikube" | sudo tee -a /etc/hosts
 - curl http://transmute.minikube:30000
 
+- export KONG_ADMIN_PORT=$(kubectl get service mini-kong-kong-admin -o json | jq -r '.spec.ports[0].nodePort')
+- export KONG_ADMIN_URL=$(echo 'https://transmute.minikube:'$KONG_ADMIN_PORT)
+
+- export KONG_PROXY_PORT=$(kubectl get service mini-kong-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
+- export KONG_PROXY_URL=$(echo 'https://transmute.minikube:'$KONG_PROXY_PORT)
+
+- export IPFS_CLUSTER_IP=$(kubectl get service mini-ipfs-ipfs -o json | jq -r '.spec.clusterIP');
+
+- curl -k $KONG_ADMIN_URL/apis
 - ./travis.sh
 
 

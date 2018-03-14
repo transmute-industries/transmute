@@ -353,6 +353,10 @@ describe('ipfs-mini', () => {
           done();
         }
       );
+
+      setTimeout(() => {
+        process.exit(0);
+      }, 3 * 1000);
     });
   });
 });
