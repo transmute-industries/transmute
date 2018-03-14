@@ -35,7 +35,9 @@ script:
 - helm install stable/kong --name mini-kong
 - helm install ./tutorials/minikube/kong-ganache/ganache-cli --name=mini-ganache
 - sleep 60
-- ./travis.sh
+
+- echo "$(minikube ip)  transmute.minikube" | sudo tee -a /etc/hosts
+- curl http://transmute.minikube:30000
 
 # - curl -L https://raw.githubusercontent.com/cncf/k8s-conformance/master/sonobuoy-conformance.yaml | kubectl apply -f -
 # - ./travis.sh
