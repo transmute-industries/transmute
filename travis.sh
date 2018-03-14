@@ -1,4 +1,9 @@
 
+
+helm ls
+
+kubectl get services
+
 export IPFS_CLUSTER_IP=$(kubectl get service mini-ipfs-ipfs -o json | jq -r '.spec.clusterIP');
 
 curl -k -X POST \
