@@ -45,24 +45,27 @@ script:
 
 - curl http://transmute.minikube:30000
 
-
 - export GANACHE_CLI=$(minikube service mini-ganache-ganache-cli --url)
 - curl -X POST --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":67}' $GANACHE_CLI; echo
 
-- export KONG_ADMIN_PORT=$(kubectl get service mini-kong-kong-admin -o json | jq -r '.spec.ports[0].nodePort')
-- curl -k https://$(minikube ip):$KONG_ADMIN_PORT
+- export KONG_ADMIN_URL=$(minikube service mini-kong-kong-admin --url | sed 's,http://,https://,g')
+- curl -k $KONG_ADMIN_URL
 
+- export KONG_PROXY_URL=$(minikube service mini-kong-kong-proxy --url | sed 's,http://,https://,g')
+- curl -k $KONG_PROXY_URL
 
-- export KONG_ADMIN_URL=$(echo 'https://transmute.minikube:'$KONG_ADMIN_PORT)
+# - export KONG_ADMIN_PORT=$(kubectl get service mini-kong-kong-admin -o json | jq -r '.spec.ports[0].nodePort')
+# - curl -k https://$(minikube ip):$KONG_ADMIN_PORT
 
-- export KONG_PROXY_PORT=$(kubectl get service mini-kong-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
-- export KONG_PROXY_URL=$(echo 'https://transmute.minikube:'$KONG_PROXY_PORT)
+# - export KONG_ADMIN_URL=$(echo 'https://transmute.minikube:'$KONG_ADMIN_PORT)
 
-- export IPFS_CLUSTER_IP=$(kubectl get service mini-ipfs-ipfs -o json | jq -r '.spec.clusterIP');
+# - export KONG_PROXY_PORT=$(kubectl get service mini-kong-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
+# - export KONG_PROXY_URL=$(echo 'https://transmute.minikube:'$KONG_PROXY_PORT)
 
-- curl -k $KONG_ADMIN_URL/apis
-- ./travis.sh
+# - export IPFS_CLUSTER_IP=$(kubectl get service mini-ipfs-ipfs -o json | jq -r '.spec.clusterIP');
 
+# - curl -k $KONG_ADMIN_URL/apis
+# - ./travis.sh
 
 # - curl -L https://raw.githubusercontent.com/cncf/k8s-conformance/master/sonobuoy-conformance.yaml | kubectl apply -f -
 
