@@ -49,22 +49,19 @@ minikube ip
 
 The rest of this tutorial assumes the minikube ip address is `192.168.99.100`.
 
-Now we can configure Kong to secure IPFS. First, use `kubectl` to get the `ClusterIP` of IPFS.
+Now we connect Kong to Ganache:
 
 ```
-kubectl get services
-```
+export GANACHE_CLUSTER_IP=$(kubectl get service mini-ganache-ganache-cli -o json | jq -r '.spec.clusterIP');
 
-The rest of this tutorial assumes the `ClusterIP` of ipfs is `10.111.23.116`.
 
-Now lets add the ipfs api to kong:
 
 ```
 curl -k -X POST \
-  --url https://192.168.99.100:32444/apis/ \
+  --url https://transmute.minikube:32444/apis/ \
   --data 'name=ganache' \
   --data 'hosts=ganache.transmute.minikube' \
-  --data 'upstream_url=http://10.111.23.116:8545/'
+  --data 'upstream_url=http://'$GANACHE_CLUSTER_IP':8545/'
 ```
 
 Confirm Kong is forwarding requests to ganache:
@@ -79,4 +76,6 @@ Remove the things created in this tutorial:
 
 ```
 helm delete --purge mini-ganache
+curl -k -X DELETE \
+  --url https://transmute.minikube:32444/apis/ganache
 ```

@@ -12,7 +12,7 @@ before_script:
 - minikube update-context
 - JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
 
-- sudo apt-get install build-essential libncurses5-dev libslang2-dev gettext zlib1g-dev libselinux1-dev debhelper lsb-release pkg-config po-debconf autoconf automake autopoint libtool python2.7-dev
+- sudo apt-get install jq build-essential libncurses5-dev libslang2-dev gettext zlib1g-dev libselinux1-dev debhelper lsb-release pkg-config po-debconf autoconf automake autopoint libtool python2.7-dev
 - cd /tmp
 - wget https://www.kernel.org/pub/linux/utils/util-linux/v2.25/util-linux-2.25.tar.gz
 - tar -xvf util-linux-2.25.tar.gz
@@ -33,7 +33,7 @@ before_script:
 script:
 - helm install stable/ipfs --name mini-ipfs
 - helm install stable/kong --name mini-kong
-- helm install ./tutorials/ganache-cli/ganache-cli --name=transmute-ganache
+- helm install ./tutorials/ganache-cli/ganache-cli --name=mini-ganache
 - sleep 60
 - ./travis.sh
 
