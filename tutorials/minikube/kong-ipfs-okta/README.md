@@ -125,7 +125,7 @@ Now that we are authenticated, we can add files (increase storage costs):
 curl -k -F "data=@./example.json" https://ipfs.transmute.minikube:32443/api/v0/add \
   --header 'Authorization: Bearer <access_token>'
 
-# {"Name":"example.json","Hash":"   "}
+# {"Name":"example.json","Hash":"QmSy81WPaR8boDDJ22RHTnpk9jPXVfsdXALDsBthznLYNs"}
 ```
 
 And retrieve your json file:
