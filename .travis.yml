@@ -52,10 +52,10 @@ script:
 - curl -X POST --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":67}' $GANACHE_CLI; echo
 
 - export KONG_ADMIN_URL=$(minikube service mini-kong-kong-admin --url | sed 's,http://,https://,g')
-- curl -k $KONG_ADMIN_URL
+# - curl -k $KONG_ADMIN_URL
 
 - export KONG_PROXY_URL=$(minikube service mini-kong-kong-proxy --url | sed 's,http://,https://,g')
-- curl -k $KONG_PROXY_URL
+# - curl -k $KONG_PROXY_URL
 
 - ./travis.sh
 

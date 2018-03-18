@@ -1,24 +1,44 @@
 
+echo 'KONG ADMIN: ' $KONG_ADMIN_URL
+echo 'KONG PROXY: ' $KONG_PROXY_URL
+
+echo 'SETTING UP IPFS'
+
+# Get the service clusterIp for Kong to use.
 export IPFS_CLUSTER_IP=$(kubectl get service mini-ipfs-ipfs -o json | jq -r '.spec.clusterIP');
 
+# Add IPFS API to Kong
 curl -k -X POST \
   --url $KONG_ADMIN_URL/apis/ \
   --data 'name=ipfs' \
   --data 'hosts=ipfs.transmute.minikube' \
   --data 'upstream_url=http://'$IPFS_CLUSTER_IP':5001/'
-
+  
+# Configure CORS for IPFS via Kong
 curl -k -X POST $KONG_ADMIN_URL/apis/ipfs/plugins \
     --data "name=cors" \
     --data "config.origins=*" \
     --data "config.methods=GET, PUT, POST"
 
-echo 'KONG ADMIN: ' $KONG_ADMIN_URL
-echo 'KONG PROXY: ' $KONG_PROXY_URL
 
 echo 'IPFS HEALTHCHECK'
 
+# Test IPFS via Kong
 curl -k $KONG_PROXY_URL/api/v0/id \
   --header 'Host: ipfs.transmute.minikube'
+
+
+echo 'SETTING UP GANACHE'
+# Get the service clusterIp for Kong to use.
+export GANACHE_CLUSTER_IP=$(kubectl get service mini-ganache-ganache-cli -o json | jq -r '.spec.clusterIP');
+
+
+# Add Ganache API to Kong
+curl -k -X POST \
+  --url $KONG_ADMIN_URL/apis/ \
+  --data 'name=ganache' \
+  --data 'hosts=ganache.transmute.minikube' \
+  --data 'upstream_url=http://'$GANACHE_CLUSTER_IP':8545/'
 
 echo 'GANACHE HEALTHCHECK'
 

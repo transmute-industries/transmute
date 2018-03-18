@@ -28,7 +28,7 @@ Transmute solidity contracts and a simple truffle setup.
 
 ### transmute-adapters
 
-Adapters are simple middleware used by the framework to store objects. 
+Adapters are simple middleware used by the framework to store objects. Encryption should be used before saving objects to adapters.
 
 <!-- 
 ### Recommended Setup
