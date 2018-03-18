@@ -1,10 +1,7 @@
 let ipfsAdapter = require('transmute-adapter-ipfs')
 
-let ipfs = ipfsAdapter.getStorage({
-  host: 'ipfs.transmute.minikube',
-  port: 32443,
-  protocol: 'https'
-})
+let transmuteConfig = require('../transmute-config.json')
+let ipfs = ipfsAdapter.getStorage(transmuteConfig.minikube.ipfs.config)
 
 describe('ipfs tests', () => {
   it('vanilla ipfs provider', async () => {

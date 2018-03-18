@@ -6,7 +6,9 @@ import WalletSubprovider from 'web3-provider-engine/subproviders/wallet'
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
-const RPC_HOST = 'https://ganache.transmute.minikube:32443'
+const transmuteConfig = require('../transmute-config.json')
+
+const RPC_HOST = transmuteConfig.minikube.web3.providerUrl
 
 const TransmuteCrypto = require('transmute-crypto')
 

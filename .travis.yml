@@ -46,7 +46,7 @@ script:
 
 - cat /etc/hosts
 
-- curl http://transmute.minikube:30000
+# - curl http://transmute.minikube:30000
 
 - export GANACHE_CLI=$(minikube service mini-ganache-ganache-cli --url)
 - curl -X POST --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":67}' $GANACHE_CLI; echo
@@ -57,16 +57,19 @@ script:
 - export KONG_PROXY_URL=$(minikube service mini-kong-kong-proxy --url | sed 's,http://,https://,g')
 - curl -k $KONG_PROXY_URL
 
+- ./travis.sh
+
+##### DEAD CODE #####
+
+# - lerna bootstrap
+# - lerna run --scope transmute-contracts contracts:migrate:ganache
+# - lerna run --scope transmute-framework contracts:generate
+
 # - export KONG_PROXY_PORT=$(kubectl get service mini-kong-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
 # - export IPFS_GATEWAY=$(echo 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT)
 
 # - curl -k $IPFS_GATEWAY/api/v0/id 
 
-- ./travis.sh
-
-- lerna bootstrap
-- lerna run --scope transmute-contracts contracts:migrate:ganache
-- lerna run --scope transmute-framework contracts:generate
 
 # - export KONG_ADMIN_PORT=$(kubectl get service mini-kong-kong-admin -o json | jq -r '.spec.ports[0].nodePort')
 # - curl -k https://$(minikube ip):$KONG_ADMIN_PORT

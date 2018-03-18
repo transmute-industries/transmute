@@ -12,8 +12,19 @@ curl -k -X POST $KONG_ADMIN_URL/apis/ipfs/plugins \
     --data "config.origins=*" \
     --data "config.methods=GET, PUT, POST"
 
+echo 'KONG ADMIN: ' $KONG_ADMIN_URL
+echo 'KONG PROXY: ' $KONG_PROXY_URL
+
+echo 'IPFS HEALTHCHECK'
+
 curl -k $KONG_PROXY_URL/api/v0/id \
   --header 'Host: ipfs.transmute.minikube'
+
+echo 'GANACHE HEALTHCHECK'
+
+curl -k -X POST $KONG_PROXY_URL \
+  --header 'Host: ganache.transmute.minikube' \
+  --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":67}'
 
 # curl -k $IPFS_GATEWAY/api/v0/id 
 
