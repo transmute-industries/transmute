@@ -4,7 +4,6 @@ export KONG_PROXY_PORT=$(kubectl get service mini-kong-kong-proxy -o json | jq -
 
 # TESTING
 
-
 # export OLD_KONG_PROXY_PORT=32443
 # export NEW_KONG_PROXY_PORT=11111
 
@@ -15,13 +14,14 @@ export KONG_PROXY_PORT=$(kubectl get service mini-kong-kong-proxy -o json | jq -
 export OLD_KONG_PROXY_PORT=32443
 export NEW_KONG_PROXY_PORT=$KONG_PROXY_PORT
 
-export TARGET_DIR=`pwd`/packages/transmute-framework/src/transmute-config.json
+export FRAMEWORK_CONFIG=`pwd`/packages/transmute-framework/src/transmute-config.json
+export CONTRACTS_CONFIG=`pwd`/packages/transmute-contracts/transmute-config.json
 
-echo 'Updating Kong Proxy Port in' $TARGET_DIR
-echo 'Changing  ' $OLD_KONG_PROXY_PORT
-echo 'To        ' $NEW_KONG_PROXY_PORT
+find $FRAMEWORK_CONFIG -type f | xargs sed -i 's/'$OLD_KONG_PROXY_PORT'/'$NEW_KONG_PROXY_PORT'/g'
+find $CONTRACTS_CONFIG -type f | xargs sed -i 's/'$OLD_KONG_PROXY_PORT'/'$NEW_KONG_PROXY_PORT'/g'
 
-find $TARGET_DIR -type f | xargs sed -i 's/'$OLD_KONG_PROXY_PORT'/'$NEW_KONG_PROXY_PORT'/g'
+echo 'FRAMEWORK_CONFIG'
+cat $FRAMEWORK_CONFIG
 
-echo 'TRANSMUTE CONFIG'
-cat `pwd`/packages/transmute-framework/src/transmute-config.json
+echo 'CONTRACTS_CONFIG'
+cat $CONTRACTS_CONFIG
