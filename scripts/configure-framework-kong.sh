@@ -21,7 +21,7 @@ echo 'Updating Kong Proxy Port in' $TARGET_DIR
 echo 'Changing  ' $OLD_KONG_PROXY_PORT
 echo 'To        ' $NEW_KONG_PROXY_PORT
 
-find $TARGET_DIR -type f | xargs sed -i '' 's/'$OLD_KONG_PROXY_PORT'/'$NEW_KONG_PROXY_PORT'/g'
+find $TARGET_DIR -type f | xargs sed -i 's/'$OLD_KONG_PROXY_PORT'/'$NEW_KONG_PROXY_PORT'/g'
 
 echo 'TRANSMUTE CONFIG'
 cat `pwd`/packages/transmute-framework/src/transmute-config.json
