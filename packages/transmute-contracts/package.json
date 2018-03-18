@@ -7,7 +7,7 @@
     "cleanup": "rm -rf ./build",
     "build": "npm run contracts:migrate",
     "contracts:migrate": "npm run cleanup && truffle migrate --network ganache --reset",
-    "contracts:migrate:ganache": "truffle migrate --network ganache --reset"
+    "contracts:migrate:ganache": "NODE_TLS_REJECT_UNAUTHORIZED=0 truffle migrate --network ganache --reset"
   },
   "license": "MIT",
   "devDependencies": {

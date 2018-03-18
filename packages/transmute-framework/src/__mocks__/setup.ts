@@ -1,5 +1,3 @@
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
-
 import { getDefaultRelic } from './getRelic'
 import { getDefaultEventStoreAdapter } from './getEventStoreAdapter'
 import { getDefaultReadModelAdapter } from './getReadModelAdapter'

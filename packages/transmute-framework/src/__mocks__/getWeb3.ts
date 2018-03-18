@@ -4,8 +4,6 @@ import ProviderEngine from 'web3-provider-engine'
 import RpcSubprovider from 'web3-provider-engine/subproviders/rpc'
 import WalletSubprovider from 'web3-provider-engine/subproviders/wallet'
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
-
 const transmuteConfig = require('../transmute-config.json')
 
 const RPC_HOST = transmuteConfig.minikube.web3.providerUrl

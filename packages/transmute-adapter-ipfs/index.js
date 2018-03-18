@@ -1,7 +1,5 @@
 const IPFS = require('ipfs-mini');
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED=0
-
 const getStorage = config => {
   if (!config) {
     throw new Error(

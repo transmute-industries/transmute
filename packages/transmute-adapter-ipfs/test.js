@@ -1,11 +1,10 @@
 const adapter = require('./index');
-process.env.NODE_TLS_REJECT_UNAUTHORIZED=0
+
+const transmuteConfig = require('./transmute-config.json')
+
 const tests = async () => {
-  const db = adapter.getStorage({
-    "host": "ipfs.transmute.minikube",
-    "port": 32443,
-    "protocol": "https"
-  });
+  const db = adapter.getStorage(transmuteConfig.minikube.ipfs.config);
+  
   let data1 = await adapter.setItem(db, { hello: 'world' });
   let data2 = await adapter.getItem(
     db,
