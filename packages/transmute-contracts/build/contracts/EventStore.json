@@ -6007,7 +6007,7 @@
     "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
   },
   "networks": {
-    "1519274751399": {
+    "1521388626023": {
       "events": {
         "0x6b3c8873ff9b1c068470039341f6473e929874a38caab2cee207f5a533504169": {
           "anonymous": false,
@@ -6063,75 +6063,13 @@
         }
       },
       "links": {
-        "EventStoreLib": "0x4673682fc16540b024e7db287dd7c9b4c83f033d",
-        "AddressSetLib": "0x0b619730b601b7fc0e0273a8ed88a4b8ed07fab5",
-        "Bytes32SetLib": "0xa1d39d55fed69baed5d53bcc30980d5117d279c0"
+        "EventStoreLib": "0x67affa7fa77c0cc008ca14481a91f79913828a30",
+        "AddressSetLib": "0x00d2ab351dd0cfe67b7d012b7d65b1f6c5f3f14b",
+        "Bytes32SetLib": "0x87dcf4f607a1e0df20b221d06f94fd1b2957cf1b"
       },
-      "address": "0x3f4f7c9e076441240389648329b525b140c757ec"
-    },
-    "1520983944940": {
-      "events": {
-        "0x6b3c8873ff9b1c068470039341f6473e929874a38caab2cee207f5a533504169": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "Id",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "TxOrigin",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "MsgSender",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "Created",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "EventType",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "KeyType",
-              "type": "bytes1"
-            },
-            {
-              "indexed": false,
-              "name": "ValueType",
-              "type": "bytes1"
-            },
-            {
-              "indexed": false,
-              "name": "Key",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "Value",
-              "type": "bytes32"
-            }
-          ],
-          "name": "EsEvent",
-          "type": "event"
-        }
-      },
-      "links": {
-        "EventStoreLib": "0xccc3e6bb9aa55884da13bd52cb5ccce3a08758e3",
-        "AddressSetLib": "0x36fbd93118ed64520b5f0eb7222695e93d300d1f",
-        "Bytes32SetLib": "0x8961a3236b8e70cf23d8effee72cecb9ce1f1b99"
-      },
-      "address": "0xd63fd3e91baf0ae54d81640d395a6635ffb133af"
+      "address": "0x3649d3a5ce729a88a39e94d1a31c398b26934814"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-03-14T14:19:37.299Z"
+  "updatedAt": "2018-03-18T17:38:52.169Z"
 }

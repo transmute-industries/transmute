@@ -7,7 +7,10 @@ curl -k -X POST \
   --data 'hosts=ipfs.transmute.minikube' \
   --data 'upstream_url=http://'$IPFS_CLUSTER_IP':5001/'
 
-
+curl -k -X POST $KONG_ADMIN_URL/apis/ipfs/plugins \
+    --data "name=cors" \
+    --data "config.origins=*" \
+    --data "config.methods=GET, PUT, POST"
 
 curl -k $KONG_PROXY_URL/api/v0/id \
   --header 'Host: ipfs.transmute.minikube'
@@ -27,9 +30,9 @@ curl -k $KONG_PROXY_URL/api/v0/id \
 # export GANACHE_CLI=$(minikube --namespace transmute-testrpc service transmute-testrpc-ganache-cli --url)
 
 # lerna clean
-# lerna bootrstrap
+# lerna bootstrap
 # lerna run cleanup
-# lerna run contracts:migrate
+# lerna run contracts:migrate:ganache
 # lerna run contracts:generate
 # lerna bootstrap
 # lerna run test --scope transmute-framework

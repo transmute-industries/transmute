@@ -1,7 +1,8 @@
 const LightWalletProvider = require('@digix/truffle-lightwallet-provider')
 const Web3 = require('web3');
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED=0
 
 module.exports = {
   networks: {

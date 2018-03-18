@@ -20,14 +20,19 @@ let nodeStorageAdapter = require('transmute-adapter-node-storage')
 
 let nodeStorageDB = nodeStorageAdapter.getStorage()
 
+const transmuteConfig = require('../transmute-config.json')
+
 const ipfsConfig = {
-  host: 'localhost',
-  port: 5001,
-  protocol: 'http'
+  ...transmuteConfig.minikube.ipfs.config
+  // host: 'localhost',
+  // port: 5001,
+  // protocol: 'http'
 }
 
 let ipfs = ipfsAdapter.getStorage({
-  ...ipfsConfig
+  host: 'ipfs.transmute.minikube',
+  port: 32443,
+  protocol: 'https'
 })
 
 export const getDefaultEventStoreAdapter = () => {

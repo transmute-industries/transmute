@@ -1,10 +1,13 @@
 const bs58 = require('bs58')
 import { EventStoreAdapter } from '../../../transmute-framework'
 
+const transmuteConfig = require('../../../transmute-config.json')
+
 const ipfsConfig = {
-  host: 'localhost',
-  port: 5001,
-  protocol: 'http'
+  ...transmuteConfig.minikube.ipfs.config
+  // host: 'localhost',
+  // port: 5001,
+  // protocol: 'http'
 }
 
 /**
@@ -69,9 +72,7 @@ describe('Good adapter tests', () => {
     let payload = {
       multihash: 'QmcEMXuJYiyDQpbU1BaFQngaBajPEs9UUHuQnPUYSLWa1B'
     }
-    let encodedId = storeTypeAdapter.mapper['I'].writeIDToBytes32(
-      payload.multihash
-    )
+    let encodedId = storeTypeAdapter.mapper['I'].writeIDToBytes32(payload.multihash)
     let decodedId = storeTypeAdapter.mapper['I'].readIDFromBytes32(encodedId)
     expect(payload.multihash).toBe(decodedId)
   })

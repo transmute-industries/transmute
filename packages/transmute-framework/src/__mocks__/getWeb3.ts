@@ -4,7 +4,9 @@ import ProviderEngine from 'web3-provider-engine'
 import RpcSubprovider from 'web3-provider-engine/subproviders/rpc'
 import WalletSubprovider from 'web3-provider-engine/subproviders/wallet'
 
-const RPC_HOST = 'http://localhost:8545'
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+
+const RPC_HOST = 'https://ganache.transmute.minikube:32443'
 
 const TransmuteCrypto = require('transmute-crypto')
 

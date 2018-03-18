@@ -13,7 +13,7 @@ import {
   getWeb3FromWalletWithPrivateKey
 } from '../__mocks__/getWeb3'
 
-const RPC_HOST = 'http://localhost:8545'
+const RPC_HOST = 'https://ganache.transmute.minikube:32443'
 
 /**
  * web3 tests

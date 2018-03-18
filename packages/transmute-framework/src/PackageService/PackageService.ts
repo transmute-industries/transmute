@@ -38,16 +38,12 @@ export default class PackageService {
     // }
   }
 
-  publishPackage = async (
-    multihash: string,
-    name: string,
-    fromAddress: string
-  ) => {
-    await this.requireLatestReadModel()
+  publishPackage = async (multihash: string, name: string, fromAddress: string) => {
+    // await this.requireLatestReadModel()
 
-    if (this.readModel.state.model[multihash]) {
-      throw new Error('package already exists in read model.')
-    }
+    // if (this.readModel.state.model[multihash]) {
+    //   throw new Error('package already exists in read model.')
+    // }
 
     const events = await Store.writeFSA(
       this.packageManager,
@@ -108,9 +104,7 @@ export default class PackageService {
     // for package manager to be extended beyond ipfs
     let getStat = mhash => {
       return new Promise((resolve, reject) => {
-        this.eventStoreAdapter.mapper[
-          MAPPER_ENCODING
-        ].db.stat(mhash, (err, result) => {
+        this.eventStoreAdapter.mapper[MAPPER_ENCODING].db.stat(mhash, (err, result) => {
           if (err) {
             reject(err)
           } else {
@@ -149,12 +143,7 @@ export default class PackageService {
     ]
 
     if (!this.readModel) {
-      this.readModel = new ReadModel(
-        this.readModelAdapter,
-        R.reducer,
-        state,
-        interceptorChain
-      )
+      this.readModel = new ReadModel(this.readModelAdapter, R.reducer, state, interceptorChain)
     }
 
     let changes = await this.readModel.sync(

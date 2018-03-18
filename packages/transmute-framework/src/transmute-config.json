@@ -11,6 +11,18 @@
       "providerUrl": "http://localhost:8545"
     }
   },
+  "minikube": {
+    "ipfs": {
+      "config": {
+        "host": "ipfs.transmute.minikube",
+        "port": 32443,
+        "protocol": "https"
+      }
+    },
+    "web3": {
+      "providerUrl": "https://ganache.transmute.minikube:32443"
+    }
+  },
   "prod": {
     "ipfs": {
       "config": {
@@ -24,3 +36,5 @@
     }
   }
 }
+
+

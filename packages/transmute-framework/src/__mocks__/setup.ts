@@ -1,3 +1,5 @@
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+
 import { getDefaultRelic } from './getRelic'
 import { getDefaultEventStoreAdapter } from './getEventStoreAdapter'
 import { getDefaultReadModelAdapter } from './getReadModelAdapter'
@@ -20,12 +22,7 @@ export const getSetupAsync = async () => {
 
   const accounts = await relic.getAccounts()
   const factory = await Factory.create(relic.web3, accounts[0])
-  const store = await Factory.createStore(
-    factory,
-    accounts.slice(0, 5),
-    relic.web3,
-    accounts[0]
-  )
+  const store = await Factory.createStore(factory, accounts.slice(0, 5), relic.web3, accounts[0])
 
   return {
     relic,

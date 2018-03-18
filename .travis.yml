@@ -64,6 +64,10 @@ script:
 
 - ./travis.sh
 
+- lerna bootstrap
+- lerna run contracts:migrate:ganache
+- lerna run contracts:generate
+
 # - export KONG_ADMIN_PORT=$(kubectl get service mini-kong-kong-admin -o json | jq -r '.spec.ports[0].nodePort')
 # - curl -k https://$(minikube ip):$KONG_ADMIN_PORT
 
