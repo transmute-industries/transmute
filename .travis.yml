@@ -24,7 +24,7 @@ before_script:
 
 - curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
 - helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
-- npm install -g lerna
+- npm install -g lerna truffle
 - sleep 60
 - kubectl cluster-info
 - nsenter --version
@@ -65,8 +65,8 @@ script:
 - ./travis.sh
 
 - lerna bootstrap
-- lerna run contracts:migrate:ganache
-- lerna run contracts:generate
+- lerna run --scope transmute-contracts contracts:migrate:ganache
+- lerna run --scope transmute-framework contracts:generate
 
 # - export KONG_ADMIN_PORT=$(kubectl get service mini-kong-kong-admin -o json | jq -r '.spec.ports[0].nodePort')
 # - curl -k https://$(minikube ip):$KONG_ADMIN_PORT
