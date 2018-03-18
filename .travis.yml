@@ -25,7 +25,6 @@ before_script:
 - curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
 - helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
 
-- sudo npm install -g npm
 - node -v
 - npm -v
 - npm cache clean
