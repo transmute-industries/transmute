@@ -22,11 +22,9 @@ curl -k -X POST \
   --data "config.methods=GET, PUT, POST"
 
 echo 'IPFS HEALTHCHECK'
+echo 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT
 
 # Test IPFS via Kong
-curl -k -X GET \
-  --url $KONG_PROXY_URL/api/v0/id \
-  --header 'Host: ipfs.transmute.minikube'
 
 curl -k -X GET \
   --url 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT'/api/v0/id' 

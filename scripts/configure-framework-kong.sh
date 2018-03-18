@@ -25,3 +25,6 @@ cat $FRAMEWORK_CONFIG
 
 echo 'CONTRACTS_CONFIG'
 cat $CONTRACTS_CONFIG
+
+curl -k -X GET \
+    --url KONG_ADMIN_URL/apis

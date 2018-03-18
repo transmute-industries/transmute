@@ -24,7 +24,16 @@ before_script:
 
 - curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
 - helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
+
+- sudo npm install -g npm
+- node -v
+- npm -v
+- npm cache clean
 - npm install -g lerna truffle
+
+- lerna -v
+- truffle version
+
 - sleep 60
 - kubectl cluster-info
 - nsenter --version
@@ -55,6 +64,7 @@ script:
 
 - lerna bootstrap
 - lerna run --scope transmute-contracts contracts:migrate:ganache
+- sleep 30
 - lerna run --scope transmute-framework contracts:generate
 - lerna run --scope transmute-crypto build
 - lerna run --scope transmute-framework test
