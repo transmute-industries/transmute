@@ -57,5 +57,5 @@ script:
 - lerna run --scope transmute-contracts contracts:migrate:ganache
 - lerna run --scope transmute-framework contracts:generate
 - lerna run --scope transmute-crypto build
-- lerna bootstrap
-- lerna run --scope transmute-framework test
+- sleep 60
+- lerna run --stream --scope transmute-framework test

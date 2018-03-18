@@ -9,11 +9,11 @@ read_model_storage
 plainTextKeyStore.json
 encryptedAccount.json
 
-# packages/transmute-framework/src/contracts/
-# packages/transmute-contracts/build/contracts/
-
 *.DS_STORE
 
 backup
 
 on_deck
+
+packages/transmute-contracts/build/contracts
+packages/transmute-framework/src/contracts

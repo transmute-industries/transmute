@@ -30,6 +30,21 @@ Transmute solidity contracts and a simple truffle setup.
 
 Adapters are simple middleware used by the framework to store objects. Encryption should be used before saving objects to adapters.
 
+
+### Setup Local Dev Env
+* [Setup Minikube](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube)
+* [Setup IPFS](https://github.com/transmute-industries/transmute/tree/master/tutorials/minikube/ipfs)
+* [Setup Ganache-CLI]
+
+```
+lerna bootstrap
+lerna run --scope transmute-contracts contracts:migrate:ganache
+lerna run --scope transmute-framework contracts:generate
+lerna run --scope transmute-crypto build
+lerna run --stream --scope transmute-framework test
+```
+
+
 <!-- 
 ### Recommended Setup
 
