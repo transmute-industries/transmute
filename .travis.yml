@@ -27,7 +27,7 @@ before_script:
 
 - node -v
 - npm -v
-- npm cache clean
+
 - npm install -g lerna truffle
 
 - lerna -v
