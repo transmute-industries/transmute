@@ -56,7 +56,8 @@ script:
 
 - lerna bootstrap
 - lerna run --scope transmute-contracts contracts:migrate:ganache
-# - lerna run --scope transmute-framework contracts:generate
+- lerna run --scope transmute-framework contracts:generate
+- lerna run --scope transmute-framework test
 
 ##### DEAD CODE #####
 
