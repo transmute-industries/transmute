@@ -1,3 +1,6 @@
+export KONG_ADMIN_URL=$(minikube service mini-kong-kong-admin --url | sed 's,http://,https://,g')
+export KONG_PROXY_URL=$(minikube service mini-kong-kong-proxy --url | sed 's,http://,https://,g')
+export KONG_PROXY_PORT=$(kubectl get service mini-kong-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
 
 # TESTING
 
@@ -9,7 +12,7 @@
 
 # REAL
 export OLD_KONG_PROXY_PORT=32443
-export NEW_KONG_PROXY_PORT=$(kubectl get service mini-kong-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
+export NEW_KONG_PROXY_PORT=$KONG_PROXY_PORT
 
 export TARGET_DIR=`pwd`/packages/transmute-framework/src
 

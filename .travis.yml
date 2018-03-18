@@ -46,7 +46,6 @@ script:
 
 - cat /etc/hosts
 
-- ./scripts/configure-kong.sh
 - ./scripts/configure-kong-ipfs.sh
 - ./scripts/configure-kong-ganache.sh
 - ./scripts/configure-framework-kong.sh 
