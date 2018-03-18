@@ -41,7 +41,7 @@ lerna bootstrap
 lerna run --scope transmute-contracts contracts:migrate:ganache
 lerna run --scope transmute-framework contracts:generate
 lerna run --scope transmute-crypto build
-lerna run --stream --scope transmute-framework test
+lerna run --scope transmute-framework test
 ```
 
 

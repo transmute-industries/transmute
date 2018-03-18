@@ -23,4 +23,4 @@ curl -k -X POST \
 
 curl -k -X POST \
   --url 'https://ganache.transmute.minikube:'$KONG_PROXY_PORT \
-  --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":67}'
+  --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":68}'
