@@ -28,7 +28,7 @@ before_script:
 - node -v
 - npm -v
 
-- npm install -g lerna@2.9.0 truffle@4.0.1 
+- npm install -g codecov lerna@2.9.0 truffle@4.0.1 
 
 - lerna -v
 - truffle version
