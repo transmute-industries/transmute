@@ -12,7 +12,7 @@
   "scripts": {
     "start": "npm test",
     "build": "./node_modules/bili/dist/cli.js ./src/index.js",
-    "test": "react-scripts test",
+    "test": "NODE_TLS_REJECT_UNAUTHORIZED='0' react-scripts test",
     "eject": "react-scripts eject"
   },
   "repository": {

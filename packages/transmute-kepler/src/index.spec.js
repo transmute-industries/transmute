@@ -1,10 +1,11 @@
 const assert = require('chai').assert;
 const IPFS = require('./index.js');
-
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
 const transmuteConfig = require('./transmute-config.json');
-const config = transmuteConfig.minikube.ipfs.config
+
+const config = {
+  ...transmuteConfig.minikube.ipfs.config,
+  authorization: 'Bearer ' + process.env.ACCESS_TOKEN
+};
 
 describe('ipfs-mini', () => {
   describe('constructor', () => {
@@ -40,7 +41,6 @@ describe('ipfs-mini', () => {
 
     it('should throw when invalid', () => {
       const ipfs = new IPFS();
-
       assert.throws(() => ipfs.setProvider(2342353535), Error);
     });
   });
