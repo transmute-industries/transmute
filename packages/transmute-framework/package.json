@@ -75,16 +75,7 @@
       "/dist/",
       "TransmuteContracts"
     ],
-    "coverageThreshold": {
-      "global": {
-        "statements": 90,
-        "branches": 80,
-        "lines": 90,
-        "functions": 85
-      }
-    },
-    "collectCoverage": true,
-    "mapCoverage": true
+    "collectCoverage": true
   },
   "devDependencies": {
     "@types/jest": "^21.1.9",
