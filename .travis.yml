@@ -57,13 +57,14 @@ script:
 - export KONG_PROXY_URL=$(minikube service mini-kong-kong-proxy --url | sed 's,http://,https://,g')
 - export KONG_PROXY_PORT=$(kubectl get service mini-kong-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
 
+- npm install
 - ./scripts/configure-kong-ipfs.sh
-- ./scripts/configure-kong-ganache.sh
-- ./scripts/configure-framework-kong.sh 
+# - ./scripts/configure-kong-ganache.sh
+# - ./scripts/configure-framework-kong.sh 
 
-- lerna bootstrap
-- lerna run --scope transmute-contracts contracts:migrate:ganache
-- lerna run --scope transmute-framework contracts:generate
-- lerna run --scope transmute-crypto build
-- lerna run --scope transmute-framework test
-- lerna run --scope transmute-framework test:coverage:report
+# - lerna bootstrap
+# - lerna run --scope transmute-contracts contracts:migrate:ganache
+# - lerna run --scope transmute-framework contracts:generate
+# - lerna run --scope transmute-crypto build
+# - lerna run --scope transmute-framework test
+# - lerna run --scope transmute-framework test:coverage:report

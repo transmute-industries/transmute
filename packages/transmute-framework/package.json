@@ -25,7 +25,7 @@
     "cleanup": "npm run prebuild",
     "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist",
-    "build": "tsc && tsc --module commonjs --outDir dist/lib && rollup -c rollup.config.ts && typedoc --out dist/docs --target es6 --theme minimal --mode file src && cp -R ./src/contracts ./dist/contracts",
+    "build": "tsc && tsc --module commonjs --outDir dist/lib && rollup -c rollup.config.ts && typedoc --out dist/docs --target es6 --theme minimal --mode file src && cp -R ./src/contracts/ ./dist/contracts/",
     "start": "tsc -w & rollup -c rollup.config.ts -w",
     "test": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest --runInBand --coverage --no-cache",
     "test:watch": "jest --watch",
