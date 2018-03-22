@@ -16,6 +16,8 @@ import AccountCircle from 'material-ui-icons/AccountCircle';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import { demoMenuList } from './tileData';
 
+import { withAuth } from '@okta/okta-react';
+
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -102,7 +104,7 @@ const styles = theme => ({
 
 class MiniDrawer extends React.Component {
   state = {
-    auth: false,
+    user: false,
     isDrawerOpen: false
   };
 
@@ -114,10 +116,6 @@ class MiniDrawer extends React.Component {
     this.setState({ isDrawerOpen: false });
   };
 
-  handleChange = (event, checked) => {
-    this.setState({ auth: checked });
-  };
-
   handleMenu = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -126,9 +124,18 @@ class MiniDrawer extends React.Component {
     this.setState({ anchorEl: null });
   };
 
+  async componentWillMount() {
+    if (await this.props.auth.isAuthenticated()) {
+      const user = await this.props.auth.getUser();
+      this.setState({
+        user
+      });
+    }
+  }
+
   render() {
     const { classes, theme } = this.props;
-    const { auth, anchorEl } = this.state;
+    const { user, anchorEl } = this.state;
     const isMenuOpen = Boolean(anchorEl);
 
     return (
@@ -158,10 +165,10 @@ class MiniDrawer extends React.Component {
                 noWrap
                 className={classNames(classes.flex)}
               >
-                EventStore Demo
+                Transmute
               </Typography>
 
-              {auth && (
+              {user && (
                 <div>
                   <IconButton
                     aria-owns={isMenuOpen ? 'menu-appbar' : null}
@@ -212,9 +219,9 @@ class MiniDrawer extends React.Component {
                   )}
                 </IconButton>
               </div>
-              {/* <Divider />
-              <List>{demoMenuList}</List>
               <Divider />
+              <List>{demoMenuList}</List>
+              {/* <Divider />
               <List>{otherMailFolderListItems}</List> */}
             </div>
           </Drawer>
@@ -230,4 +237,4 @@ MiniDrawer.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(MiniDrawer);
+export default withStyles(styles, { withTheme: true })(withAuth(MiniDrawer));

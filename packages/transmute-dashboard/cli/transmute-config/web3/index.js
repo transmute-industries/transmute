@@ -5,7 +5,7 @@ const transmuteConfig = require('../../../src/transmute-config.json');
 
 
 const web3Config = {
-  providerUrl: transmuteConfig.prod.web3.providerUrl
+  providerUrl: transmuteConfig.dev.web3.providerUrl
 };
 
 const getWeb3 = async () => {

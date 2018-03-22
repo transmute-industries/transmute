@@ -3,7 +3,7 @@ const ProviderEngine = require('web3-provider-engine');
 const RpcSubprovider = require('web3-provider-engine/subproviders/rpc');
 
 const transmuteConfig = require('../../../../transmute-config.json');
-const providerUrl = transmuteConfig.minikube.web3.providerUrl;
+const providerUrl = transmuteConfig.dev.web3.providerUrl;
 
 export const getWeb3 = async () => {
   let web3js;

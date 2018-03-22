@@ -10,16 +10,15 @@ import theme from '../../theme';
 
 import Routes from '../Routes';
 
+
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <MuiThemeProvider theme={theme}>
-            <div>
               <ToastContainer />
               <Routes />
-            </div>
           </MuiThemeProvider>
         </ConnectedRouter>
       </Provider>

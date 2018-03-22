@@ -188,6 +188,22 @@ IPFS.prototype.stat = function cat(ipfsHash, callback) {
 };
 
 /**
+ * Get the node id for ipfs
+ * @param {Function} `callback` a callback, with (error, stats Object)
+ * @callback {String} `data` returns the output data
+ */
+IPFS.prototype.id = function id(callback) {
+  const self = this;
+  self.sendAsync(
+    {
+      uri: `/id`
+    },
+    callback
+  );
+};
+
+
+/**
  * Get the data from an IPFS hash
  * @param {String} `ipfsHash` a single IPFS hash String
  * @param {Function} `callback` a callback, with (error, stats Object)
