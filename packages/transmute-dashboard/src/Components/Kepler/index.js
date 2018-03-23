@@ -13,15 +13,15 @@ import transmuteConfig from '../../transmute-config.json';
 
 const config = transmuteConfig.dev.ipfs.config;
 
-import Playground from 'playground-js-api'
+// import Playground from 'playground-js-api'
 
-var config = {...};
-Playground.authenticate(config, "qsocks").then(function(ticket){
-  config.ticket = ticket
-  qsocks.ConnectOpenApp(config).then(function(result){
-    //we're now connected
-  });
-});
+// var config = {...};
+// Playground.authenticate(config, "qsocks").then(function(ticket){
+//   config.ticket = ticket
+//   qsocks.ConnectOpenApp(config).then(function(result){
+//     //we're now connected
+//   });
+// });
 
 class Kepler extends Component {
   render() {

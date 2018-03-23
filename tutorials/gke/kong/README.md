@@ -166,7 +166,7 @@ spec:
 ```
 
 
-Use this instead...
+Maybe use this instead...
 
 https://github.com/luispabon/kong-certbot-agent
 

@@ -1,4 +1,4 @@
-pragma solidity ^0.4.17;
+pragma solidity ^0.4.19;
 
 import "./EventStoreLib.sol";
 
@@ -12,6 +12,11 @@ contract EventStore {
         owner = msg.sender;
     }
 
+    function count() public view 
+    returns (uint){
+        return store.events.length;
+    }
+
     function write(bytes32 key, bytes32 value) public {
         require(msg.sender == owner);
         EventStoreLib.write(
@@ -20,9 +25,9 @@ contract EventStore {
             value
         );
     }
-
+    
     function read(uint index) public view
-    returns (address, bytes32, bytes32 ){
+    returns (uint, address, bytes32, bytes32 ){
         return EventStoreLib.read(store, index);
     }
 

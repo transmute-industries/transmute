@@ -15,7 +15,8 @@ module.exports = class TransmuteIpfsAdapter {
     });
   }
   async readObject(multihash) {
-    return (await this.ipfs.object.get(multihash)).data.toString();
+    let data = (await this.ipfs.object.get(multihash)).data.toString();
+    return JSON.parse(data);
   }
 
   bytes32ToMultihash(hash) {

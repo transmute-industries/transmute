@@ -1,7 +1,6 @@
 
 const http = require('https');
 const jwkToPem = require('jwk-to-pem');
-const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
 let hostname = process.env.OKTA_HOSTNAME;

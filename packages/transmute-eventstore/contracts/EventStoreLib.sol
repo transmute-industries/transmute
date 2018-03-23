@@ -1,14 +1,16 @@
-pragma solidity ^0.4.17;
+pragma solidity ^0.4.19;
 
 library EventStoreLib {
 
     event TransmuteEvent(
+        uint index,
         address sender,
         bytes32 key,
         bytes32 value
     );
 
     struct TransmuteEventStruct {
+        uint index;
         address sender;
         bytes32 key;  
         bytes32 value; 
@@ -23,20 +25,21 @@ library EventStoreLib {
         bytes32 key,
         bytes32 value
     ) public returns (uint) {
-        uint index = self.events.length;
         TransmuteEventStruct memory evt;
+        evt.index = self.events.length;
         evt.sender = msg.sender;
         evt.key = key;
         evt.value = value;
-        TransmuteEvent(evt.sender, evt.key, evt.value);
+        TransmuteEvent(evt.index, evt.sender, evt.key, evt.value);
         self.events.push(evt);
-        return index;
+        return evt.index;
     }
 
     function read(TransmuteStorage storage self, uint index) public constant
-    returns (address, bytes32, bytes32 ) {
+    returns (uint, address, bytes32, bytes32 ) {
         TransmuteEventStruct memory evt = self.events[index];
         return (
+            evt.index,
             evt.sender,
             evt.key,
             evt.value

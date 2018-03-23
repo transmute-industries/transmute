@@ -3,26 +3,19 @@
   "version": "0.0.1",
   "description": "EventStore Middleware",
   "main": "dist/transmute-eventstore.min.js",
-  "files": [
-    "dist",
-    "src"
-  ],
+  "files": ["dist", "src"],
   "scripts": {
     "start": "npm test",
     "build": "./node_modules/bili/dist/cli.js --format umd-min ./src/index.js",
-    "test": "react-scripts test",
+    "test": "react-scripts test --coverage",
     "eject": "react-scripts eject"
   },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/transmute-industries/transmute.git"
   },
-  "keywords": [
-    "transmute"
-  ],
-  "authors": [
-    "Orie Steele <orie@transmute.industries>"
-  ],
+  "keywords": ["transmute"],
+  "authors": ["Orie Steele <orie@transmute.industries>"],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/transmute-industries/transmute/issues"

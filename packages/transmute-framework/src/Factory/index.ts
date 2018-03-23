@@ -1,1 +1,0 @@
-export { Factory } from './Factory'
