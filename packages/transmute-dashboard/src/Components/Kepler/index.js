@@ -5,7 +5,7 @@ import AppBar from '../AppBar';
 
 import Button from 'material-ui/Button';
 
-import IPFS from 'transmute-kepler';
+// import IPFS from 'transmute-kepler';
 
 import axios from 'axios';
 

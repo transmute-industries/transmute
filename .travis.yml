@@ -60,12 +60,14 @@ script:
 - npm install
 - ./scripts/configure-kong-ipfs.sh
 - ./scripts/configure-kong-okta-ipfs.sh
-# - ./scripts/configure-kong-ganache.sh
-# - ./scripts/configure-framework-kong.sh 
+- ./scripts/configure-kong-ganache.sh
+- ./scripts/configure-framework-kong.sh 
 
-# - lerna bootstrap
-# - lerna run --scope transmute-contracts contracts:migrate:ganache
-# - lerna run --scope transmute-framework contracts:generate
-# - lerna run --scope transmute-crypto build
+- lerna bootstrap
+- lerna run --scope transmute-eventstore truffle:migrate:minikube
+- lerna run --scope transmute-eventstore truffle:test:minikube
+- lerna run --scope transmute-eventstore test
+- TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore test:smoke 
+
 # - lerna run --scope transmute-framework test
 # - lerna run --scope transmute-framework test:coverage:report

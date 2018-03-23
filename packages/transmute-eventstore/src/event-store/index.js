@@ -164,7 +164,7 @@ module.exports = class TransmuteEventStore {
     if (!values) {
       throw new Error('Failed to read values from index.');
     }
-    
+
     const decoded = [
       values[0].toNumber(),
       values[1],
@@ -194,7 +194,11 @@ module.exports = class TransmuteEventStore {
   }
 
   async healthy() {
-    return this.ipfs.healthy();
+    this.requireInstance();
+    return {
+      ipfs: await this.ipfs.healthy(),
+      eventStoreContract: this.eventStoreContractInstance.address
+    };
   }
 
   destroy(address) {
