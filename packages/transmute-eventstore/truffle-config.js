@@ -10,12 +10,5 @@ module.exports = {
       ),
       network_id: '*' // Match any network id
     },
-    minikube: {
-      provider: new Web3.providers.HttpProvider(
-        transmuteConfig.web3Config.providerUrl
-      ),
-      network_id: '*',
-      gas: 4600000
-    }
   }
 };
