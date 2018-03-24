@@ -11,8 +11,8 @@
     "test:smoke": "node ./smoke_tests/module.test.js",
     "truffle:test": "truffle test",
     "truffle:migrate": "truffle migrate",
-    "truffle:test:minikube": "truffle test --network minikube",
-    "truffle:migrate:minikube": "truffle migrate --network minikube",
+    "truffle:test:minikube": "NODE_TLS_REJECT_UNAUTHORIZED=0 truffle test --network minikube",
+    "truffle:migrate:minikube": "NODE_TLS_REJECT_UNAUTHORIZED=0 truffle migrate --network minikube",
     "eject": "react-scripts eject"
   },
   "repository": {
