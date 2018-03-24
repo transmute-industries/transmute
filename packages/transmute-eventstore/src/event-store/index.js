@@ -1,6 +1,6 @@
 const Web3 = require('web3');
-const ProviderEngine = require('web3-provider-engine');
-const RpcSubprovider = require('web3-provider-engine/subproviders/rpc.js');
+// const ProviderEngine = require('web3-provider-engine');
+// const RpcSubprovider = require('web3-provider-engine/subproviders/rpc.js');
 
 const contract = require('truffle-contract');
 const KeenTracking = require('keen-tracking');
@@ -42,19 +42,21 @@ module.exports = class TransmuteEventStore {
       );
     }
 
-    var engine = new ProviderEngine();
+    // var engine = new ProviderEngine();
 
-    engine.addProvider(
-      new RpcSubprovider({
-        rpcUrl: web3Config.providerUrl
-      })
-    );
+    // engine.addProvider(
+    //   new RpcSubprovider({
+    //     rpcUrl: web3Config.providerUrl
+    //   })
+    // );
 
-    engine.start();
+    // engine.start();
 
     this.version = pack.version;
 
-    this.web3 = new Web3(engine);
+    this.web3 = new Web3(
+      new Web3.providers.HttpProvider(web3Config.providerUrl)
+    );
     this.eventStoreArtifact = eventStoreArtifact;
 
     this.eventStoreContract = contract(this.eventStoreArtifact);
@@ -62,6 +64,17 @@ module.exports = class TransmuteEventStore {
 
     this.keen = new KeenTracking(keenConfig);
     this.ipfs = new TransmuteIpfsAdatper(ipfsConfig);
+  }
+
+  async getWeb3Accounts() {
+    return new Promise((resolve, reject) => {
+      this.web3.eth.getAccounts((err, accounts) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(accounts);
+      });
+    });
   }
 
   async init() {

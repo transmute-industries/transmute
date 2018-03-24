@@ -1,9 +1,8 @@
 const TransmuteEventStore = require('../index.js');
 
-const { env } = require('../../../../../transmute-config');
+const transmuteConfig = require('../../../../../transmute-config');
 const eventStoreArtifact = require('../../../build/contracts/EventStore.json');
 
-const TRANSMUTE_ENV = process.env.TRANSMUTE_ENV;
 
 describe('transmute-eventstore', () => {
   describe('constructor', () => {
@@ -16,13 +15,13 @@ describe('transmute-eventstore', () => {
       }).toThrow();
       const eventStore = new TransmuteEventStore({
         eventStoreArtifact,
-        ...env[TRANSMUTE_ENV]
+        ...transmuteConfig
       });
     });
     it('sets version', async () => {
       const eventStore = new TransmuteEventStore({
         eventStoreArtifact,
-        ...env[TRANSMUTE_ENV]
+        ...transmuteConfig
       });
       expect(eventStore.version).toBe('0.0.1');
     });
@@ -32,9 +31,9 @@ describe('transmute-eventstore', () => {
     it('returns a new TransmuteEventStore with a new contract instance.', async () => {
       const eventStore = new TransmuteEventStore({
         eventStoreArtifact,
-        ...env[TRANSMUTE_ENV]
+        ...transmuteConfig
       });
-      const accounts = await eventStore.web3.eth.getAccounts();
+      const accounts = await eventStore.getWeb3Accounts();
       let newEventStore = await eventStore.clone(accounts[0]);
       expect(
         newEventStore.eventStoreContract.address !==
@@ -48,7 +47,7 @@ describe('transmute-eventstore', () => {
       try {
         const eventStore = new TransmuteEventStore({
           eventStoreArtifact,
-          ...env[TRANSMUTE_ENV]
+          ...transmuteConfig
         });
         const info = await eventStore.healthy();
       } catch (e) {
@@ -59,7 +58,7 @@ describe('transmute-eventstore', () => {
     // it('checks that all services are connected', async () => {
     //   const eventStore = new TransmuteEventStore({
     //     eventStoreArtifact,
-    //     ...env[TRANSMUTE_ENV]
+    //     ...transmuteConfig
     //   });
     //   await eventStore.init();
     //   const info = await eventStore.healthy();

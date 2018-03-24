@@ -1,22 +1,19 @@
 const TransmuteEventStore = require('../../index');
-const { env } = require('../../../../../transmute-config');
+const transmuteConfig = require('../../../../../transmute-config');
 const eventStoreArtifact = require('../../../build/contracts/EventStore.json');
 
 const StreamModel = require('../index');
 
 const mockEvents = require('../../__mock__/events.json');
 
-
-const TRANSMUTE_ENV = process.env.TRANSMUTE_ENV;
-
 const eventStore = new TransmuteEventStore({
   eventStoreArtifact,
-  ...env[TRANSMUTE_ENV]
+  ...transmuteConfig
 });
 
 describe('sync', () => {
   // it('handles the empty case', async () => {
-  //   const accounts = await eventStore.web3.eth.getAccounts();
+  //   const accounts = await eventStore.getWeb3Accounts();
   //   let newEventStore = await eventStore.clone(accounts[0]);
   //   const filter = event => {
   //     return true;
@@ -30,7 +27,7 @@ describe('sync', () => {
   // });
 
   // it('handles new events', async () => {
-  //   const accounts = await eventStore.web3.eth.getAccounts();
+  //   const accounts = await eventStore.getWeb3Accounts();
   //   let newEventStore = await eventStore.clone(accounts[0]);
   //   const filter = event => {
   //     return true;
@@ -52,13 +49,13 @@ describe('sync', () => {
   // });
 
   it('handles persisted state', async () => {
-    const accounts = await eventStore.web3.eth.getAccounts();
+    const accounts = await eventStore.getWeb3Accounts();
     let newEventStore = await eventStore.clone(accounts[0]);
     const filter = event => {
       return true;
     };
     const reducer = (state, event) => {
-      let eventHash = eventStore.web3.utils.keccak256(JSON.stringify(event));
+      let eventHash = eventStore.web3.sha3(JSON.stringify(event));
       const eventHashes = new Set(state.eventHashes || []);
       eventHashes.add(eventHash);
       return {

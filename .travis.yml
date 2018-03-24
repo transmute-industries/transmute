@@ -64,10 +64,13 @@ script:
 - ./scripts/configure-framework-kong.sh 
 
 - lerna bootstrap
+- TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore truffle:coverage:minikube
 - TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore truffle:migrate:minikube
-- TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore truffle:test:minikube
 - TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore test
+- TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore test:report
+- TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore build
 - TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore test:smoke 
 
-# - lerna run --scope transmute-framework test
-# - lerna run --scope transmute-framework test:coverage:report
+after_script:
+- lerna run --scope transmute-eventstore truffle:coverage:minikube
+- lerna run --scope transmute-eventstore truffle:coverage:minikube:report

@@ -1,22 +1,20 @@
 const TransmuteEventStore = require('../index.js');
-const { env } = require('../../../../../transmute-config');
+const transmuteConfig = require('../../../../../transmute-config');
 const eventStoreArtifact = require('../../../build/contracts/EventStore.json');
 
 const events = require('../../__mock__/events.json');
 
 
-const TRANSMUTE_ENV = process.env.TRANSMUTE_ENV;
-
 const eventStore = new TransmuteEventStore({
   eventStoreArtifact,
-  ...env[TRANSMUTE_ENV]
+  ...transmuteConfig
 });
 
 describe('transmute-eventstore', () => {
   describe('write', () => {
     it('can save events', async () => {
       await eventStore.init();
-      const accounts = await eventStore.web3.eth.getAccounts();
+      const accounts = await eventStore.getWeb3Accounts();
       events.map(async event => {
         let result = await eventStore.write(
           accounts[0],
@@ -40,7 +38,7 @@ describe('transmute-eventstore', () => {
   describe('read', () => {
     it('can read events', async () => {
       await eventStore.init();
-      const accounts = await eventStore.web3.eth.getAccounts();
+      const accounts = await eventStore.getWeb3Accounts();
       let event = await eventStore.read(0, accounts[0]);
       expect(event.sender).toBeDefined();
       expect(event.key).toBeDefined();
@@ -59,7 +57,7 @@ describe('transmute-eventstore', () => {
   //   it('supports getting a single event', async () => {
   //     await eventStore.init()
   //     let events = await eventStore.getSlice(0, 0);
-  //     const accounts = await eventStore.web3.eth.getAccounts();
+  //     const accounts = await eventStore.getWeb3Accounts();
   //     // avoid checksum errors
   //     expect(events[0].sender).toEqual(accounts[0].toLowerCase());
   //     expect(events[0].key).toEqual(mockEvents[0].key);

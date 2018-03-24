@@ -1,12 +1,9 @@
-const { env } = require('../../../../../../transmute-config');
-
+const transmuteConfig = require('../../../../../../transmute-config');
 const TransmuteIpfsAdatper = require('../index');
-
-const TRANSMUTE_ENV = process.env.TRANSMUTE_ENV;
 
 describe('TransmuteIpfsAdatper', () => {
   it('writeObject', async () => {
-    let tia = new TransmuteIpfsAdatper(env[TRANSMUTE_ENV].ipfs);
+    let tia = new TransmuteIpfsAdatper(transmuteConfig.ipfsConfig);
     let dagNode = await tia.writeObject({
       hello: 'world'
     });
@@ -14,7 +11,7 @@ describe('TransmuteIpfsAdatper', () => {
   });
 
   it('readObject', async () => {
-    let tia = new TransmuteIpfsAdatper(env[TRANSMUTE_ENV].ipfs);
+    let tia = new TransmuteIpfsAdatper(transmuteConfig.ipfsConfig);
     let dagNode = await tia.readObject(
       'QmS8NCThLouhUyomKpWaRoPZtu72qRh1myD3DUBAqz8qrX'
     );
@@ -23,7 +20,7 @@ describe('TransmuteIpfsAdatper', () => {
 
   it('headers', async () => {
     let tia = new TransmuteIpfsAdatper({
-      ...env[TRANSMUTE_ENV].ipfs,
+      ...transmuteConfig.ipfsConfig,
       headers: {
         // authorization: 'Bearer XYZ',
         // host: 'ipfs.transmute.minikube'
