@@ -2,6 +2,14 @@ const transmuteConfig = require('../../../../../../transmute-config');
 const TransmuteIpfsAdatper = require('../index');
 
 describe('TransmuteIpfsAdatper', () => {
+  it('healthy', async () => {
+    let tia = new TransmuteIpfsAdatper({
+      ...transmuteConfig.ipfsConfig
+    });
+    let health = await tia.healthy();
+    // console.log(health);
+  });
+
   it('writeObject', async () => {
     let tia = new TransmuteIpfsAdatper(transmuteConfig.ipfsConfig);
     let dagNode = await tia.writeObject({
@@ -18,14 +26,4 @@ describe('TransmuteIpfsAdatper', () => {
     expect(dagNode).toBeDefined();
   });
 
-  it('headers', async () => {
-    let tia = new TransmuteIpfsAdatper({
-      ...transmuteConfig.ipfsConfig,
-      headers: {
-        // authorization: 'Bearer XYZ',
-        // host: 'ipfs.transmute.minikube'
-      }
-    });
-    let health = await tia.healthy();
-  });
 });

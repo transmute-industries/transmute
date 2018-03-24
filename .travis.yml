@@ -46,27 +46,23 @@ script:
 
 - kubectl get services
 
-- echo "\n" | sudo tee -a /etc/hosts
-- echo "$(minikube ip)  transmute.minikube" | sudo tee -a /etc/hosts
-- echo "$(minikube ip)  ipfs.transmute.minikube" | sudo tee -a /etc/hosts
-- echo "$(minikube ip)  ganache.transmute.minikube" | sudo tee -a /etc/hosts
 
-- cat /etc/hosts
 
 - export KONG_ADMIN_URL=$(minikube service mini-kong-kong-admin --url | sed 's,http://,https://,g')
 - export KONG_PROXY_URL=$(minikube service mini-kong-kong-proxy --url | sed 's,http://,https://,g')
 - export KONG_PROXY_PORT=$(kubectl get service mini-kong-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
 
 - npm install
+- ./scripts/configure-hosts.sh
+- ./scripts/configure-kong-ganache.sh
 - ./scripts/configure-kong-ipfs.sh
 - ./scripts/configure-kong-okta-ipfs.sh
-- ./scripts/configure-kong-ganache.sh
 - ./scripts/configure-framework-kong.sh 
 
 - lerna bootstrap
 
 - TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore truffle:migrate
-- TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore test
+- TRANSMUTE_ENV=minikube ACCESS_TOKEN=$ACCESS_TOKEN lerna run --scope transmute-eventstore test
 - TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore test:report
 - TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore build
 # - TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore test:smoke 
