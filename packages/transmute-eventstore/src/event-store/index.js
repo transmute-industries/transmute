@@ -8,7 +8,7 @@ const KeenTracking = require('keen-tracking');
 const TransmuteIpfsAdatper = require('../decentralized-storage/ipfs');
 const pack = require('../../package.json');
 
-const MAX_GAS = 309600;
+const GAS = require('../gas')
 
 module.exports = class TransmuteEventStore {
   constructor(config) {
@@ -94,7 +94,7 @@ module.exports = class TransmuteEventStore {
   async clone(fromAddress) {
     const newContract = await this.eventStoreContract.new({
       from: fromAddress,
-      gas: MAX_GAS
+      gas: GAS.MAX_GAS
     });
     let instance = Object.assign(
       Object.create(Object.getPrototypeOf(this)),
@@ -116,17 +116,13 @@ module.exports = class TransmuteEventStore {
     const valueMultihash = valueDagNode._json.multihash;
     const valueBytes32ID = ipfs.multihashToBytes32(valueMultihash);
 
-    const estimatedGasCost = await eventStoreContractInstance.write.estimateGas(
-      keyBytes32ID,
-      valueBytes32ID
-    );
 
     const tx = await eventStoreContractInstance.write.sendTransaction(
       keyBytes32ID,
       valueBytes32ID,
       {
         from: fromAddress,
-        gas: estimatedGasCost + 2050
+        gas: GAS.EVENT_GAS_COST
       }
     );
 
