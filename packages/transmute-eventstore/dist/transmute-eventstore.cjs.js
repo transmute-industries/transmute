@@ -5,8 +5,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var ipfsApi = _interopDefault(require('ipfs-api'));
 var bs58 = _interopDefault(require('bs58'));
 var web3 = _interopDefault(require('web3'));
-var web3ProviderEngine = _interopDefault(require('web3-provider-engine'));
-var rpc = _interopDefault(require('web3-provider-engine/subproviders/rpc.js'));
 var truffleContract = _interopDefault(require('truffle-contract'));
 var keenTracking = _interopDefault(require('keen-tracking'));
 
@@ -918,12 +916,14 @@ var main = "dist/transmute-eventstore.min.js";
 var files = ["dist", "src"];
 var scripts = {
   "start": "npm test",
-  "truffle:test": "truffle test",
-  "truffle:migrate": "truffle migrate",
-  "truffle:test:minikube": "truffle test --network minikube",
-  "truffle:migrate:minikube": "truffle migrate --network minikube",
   "build": "./node_modules/bili/dist/cli.js --format cjs ./src/index.js",
-  "test": "NODE_TLS_REJECT_UNAUTHORIZED=0 react-scripts test --coverage",
+  "test": "NODE_TLS_REJECT_UNAUTHORIZED=0 react-scripts test --coverage --forceExit",
+  "test:report": "codecov && rm -rf ./coverage",
+  "test:smoke": "node ./smoke_tests/module.test.js",
+  "truffle:test": "NODE_TLS_REJECT_UNAUTHORIZED=0 truffle test",
+  "truffle:migrate": "NODE_TLS_REJECT_UNAUTHORIZED=0 truffle migrate",
+  "truffle:coverage": "./node_modules/.bin/solidity-coverage",
+  "truffle:coverage:report": "cat coverage/lcov.info | coveralls",
   "eject": "react-scripts eject"
 };
 var repository = {
@@ -939,14 +939,17 @@ var bugs = {
 var homepage = "https://github.com/transmute-industries/transmute#readme";
 var devDependencies = {
   "bili": "^3.0.4",
-  "react-scripts": "^1.1.1"
+  "codecov": "^3.0.0",
+  "coveralls": "^3.0.0",
+  "react-scripts": "^1.1.1",
+  "solidity-coverage": "^0.4.14"
 };
 var dependencies = {
   "bs58": "^4.0.1",
   "ipfs-api": "^18.2.0",
   "keen-tracking": "^1.1.3",
   "truffle-contract": "^3.0.4",
-  "web3": "^1.0.0-beta.33",
+  "web3": "^0.19.1",
   "web3-provider-engine": "^13.6.6",
   "zeppelin-solidity": "^1.6.0"
 };
@@ -991,10 +994,8 @@ var _classCallCheck$2 = require$$0.classCallCheck;
 
 var _createClass$2 = require$$0.createClass;
 
-
-
-
-
+ // const ProviderEngine = require('web3-provider-engine');
+// const RpcSubprovider = require('web3-provider-engine/subproviders/rpc.js');
 
 
 
@@ -1036,15 +1037,17 @@ function () {
 
     if (!ipfsConfig) {
       throw new Error('an ipfsConfig property is required in constructor argument.');
-    }
+    } // var engine = new ProviderEngine();
+    // engine.addProvider(
+    //   new RpcSubprovider({
+    //     rpcUrl: web3Config.providerUrl
+    //   })
+    // );
+    // engine.start();
 
-    var engine = new web3ProviderEngine();
-    engine.addProvider(new rpc({
-      rpcUrl: web3Config.providerUrl
-    }));
-    engine.start();
+
     this.version = pack.version;
-    this.web3 = new web3(engine);
+    this.web3 = new web3(new web3.providers.HttpProvider(web3Config.providerUrl));
     this.eventStoreArtifact = eventStoreArtifact;
     this.eventStoreContract = truffleContract(this.eventStoreArtifact);
     this.eventStoreContract.setProvider(this.web3.currentProvider);
@@ -1053,6 +1056,23 @@ function () {
   }
 
   _createClass$2(TransmuteEventStore, [{
+    key: "getWeb3Accounts",
+    value: function getWeb3Accounts() {
+      return new Promise(function ($return, $error) {
+        var _this = this;
+
+        return $return(new Promise(function (resolve, reject) {
+          _this.web3.eth.getAccounts(function (err, accounts) {
+            if (err) {
+              reject(err);
+            }
+
+            resolve(accounts);
+          });
+        }));
+      }.bind(this));
+    }
+  }, {
     key: "init",
     value: function init() {
       return new Promise(function ($return, $error) {

@@ -1,11 +1,10 @@
 const TransmuteEventStore = require('../dist/transmute-eventstore.cjs');
-
-const { env } = require('../../../transmute-config');
+const transmuteConfig = require('../../../transmute-config');
 const eventStoreArtifact = require('../build/contracts/EventStore.json');
 
 const eventStore = new TransmuteEventStore({
   eventStoreArtifact,
-  ...env[process.env.TRANSMUTE_ENV]
+  ...transmuteConfig
 });
 
 console.log('EventStore version: ', eventStore.version);

@@ -13,12 +13,10 @@
     "test": "NODE_TLS_REJECT_UNAUTHORIZED=0 react-scripts test --coverage --forceExit",
     "test:report": "codecov && rm -rf ./coverage",
     "test:smoke": "node ./smoke_tests/module.test.js",
-    "truffle:test": "truffle test",
-    "truffle:migrate": "truffle migrate",
-    "truffle:test:minikube": "NODE_TLS_REJECT_UNAUTHORIZED=0 truffle test --network minikube",
-    "truffle:migrate:minikube": "NODE_TLS_REJECT_UNAUTHORIZED=0 truffle migrate --network minikube",
-    "truffle:coverage:minikube": "./node_modules/.bin/solidity-coverage",
-    "truffle:coverage:minikube:report": "cat coverage/lcov.info | coveralls",
+    "truffle:test": "NODE_TLS_REJECT_UNAUTHORIZED=0 truffle test",
+    "truffle:migrate": "NODE_TLS_REJECT_UNAUTHORIZED=0 truffle migrate",
+    "truffle:coverage": "./node_modules/.bin/solidity-coverage",
+    "truffle:coverage:report": "cat coverage/lcov.info | coveralls",
     "eject": "react-scripts eject"
   },
   "repository": {
