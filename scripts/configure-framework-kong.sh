@@ -14,17 +14,11 @@ export KONG_PROXY_PORT=$(kubectl get service mini-kong-kong-proxy -o json | jq -
 export OLD_KONG_PROXY_PORT=32443
 export NEW_KONG_PROXY_PORT=$KONG_PROXY_PORT
 
-export FRAMEWORK_CONFIG=`pwd`/packages/transmute-framework/src/transmute-config.json
-export CONTRACTS_CONFIG=`pwd`/packages/transmute-contracts/transmute-config.json
+export TRANSMUTE_CONFIG=`pwd`/transmute-config/env.json
 
-find $FRAMEWORK_CONFIG -type f | xargs sed -i 's/'$OLD_KONG_PROXY_PORT'/'$NEW_KONG_PROXY_PORT'/g'
-find $CONTRACTS_CONFIG -type f | xargs sed -i 's/'$OLD_KONG_PROXY_PORT'/'$NEW_KONG_PROXY_PORT'/g'
 
-echo 'FRAMEWORK_CONFIG'
-cat $FRAMEWORK_CONFIG
+find $TRANSMUTE_CONFIG -type f | xargs sed -i 's/'$OLD_KONG_PROXY_PORT'/'$NEW_KONG_PROXY_PORT'/g'
 
-echo 'CONTRACTS_CONFIG'
-cat $CONTRACTS_CONFIG
 
 curl -k -X GET \
     --url $KONG_ADMIN_URL/apis
