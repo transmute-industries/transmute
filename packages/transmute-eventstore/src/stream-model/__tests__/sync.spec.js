@@ -6,56 +6,60 @@ const StreamModel = require('../index');
 
 const mockEvents = require('../../__mock__/events.json');
 
-const eventStore = new TransmuteEventStore({
-  eventStoreArtifact,
-  ...transmuteConfig
-});
-
 describe('sync', () => {
-  // it('handles the empty case', async () => {
-  //   const accounts = await eventStore.getWeb3Accounts();
-  //   let newEventStore = await eventStore.clone(accounts[0]);
-  //   const filter = event => {
-  //     return true;
-  //   };
-  //   const reducer = (state, event) => {
-  //     return state;
-  //   };
-  //   const streamModel = new StreamModel(newEventStore, filter, reducer);
-  //   await streamModel.sync();
-  //   expect(streamModel.state.lastIndex).toBe(null);
-  // });
+  const eventStore = new TransmuteEventStore({
+    eventStoreArtifact,
+    ...transmuteConfig
+  });
 
-  // it('handles new events', async () => {
-  //   const accounts = await eventStore.getWeb3Accounts();
-  //   let newEventStore = await eventStore.clone(accounts[0]);
-  //   const filter = event => {
-  //     return true;
-  //   };
-  //   const reducer = (state, event) => {
-  //     return {
-  //       ...state,
-  //       eventsProcessed: (state.eventsProcessed | 0) + 1
-  //     };
-  //   };
-  //   const streamModel = new StreamModel(newEventStore, filter, reducer);
-  //   await newEventStore.write(
-  //     accounts[0],
-  //     mockEvents[0].key,
-  //     mockEvents[0].value
-  //   );
-  //   await streamModel.sync();
-  //   expect(streamModel.state.model.eventsProcessed).toBe(1);
-  // });
+  let accounts;
 
-  it('handles persisted state', async () => {
-    const accounts = await eventStore.getWeb3Accounts();
+  beforeAll(async () => {
+    await eventStore.init();
+    accounts = await eventStore.getWeb3Accounts();
+  });
+
+  it('handles the empty case', async () => {
     let newEventStore = await eventStore.clone(accounts[0]);
     const filter = event => {
       return true;
     };
     const reducer = (state, event) => {
-      let eventHash = eventStore.web3.sha3(JSON.stringify(event));
+      return state;
+    };
+    const streamModel = new StreamModel(newEventStore, filter, reducer);
+    await streamModel.sync();
+    expect(streamModel.state.lastIndex).toBe(null);
+  });
+
+  it('handles new events', async () => {
+    let newEventStore = await eventStore.clone(accounts[0]);
+    const filter = event => {
+      return true;
+    };
+    const reducer = (state, event) => {
+      return {
+        ...state,
+        eventsProcessed: (state.eventsProcessed | 0) + 1
+      };
+    };
+    const streamModel = new StreamModel(newEventStore, filter, reducer);
+    await newEventStore.write(
+      accounts[0],
+      mockEvents[0].key,
+      mockEvents[0].value
+    );
+    await streamModel.sync();
+    expect(streamModel.state.model.eventsProcessed).toBe(1);
+  });
+
+  it('handles persisted state', async () => {
+    let newEventStore = await eventStore.clone(accounts[0]);
+    const filter = event => {
+      return true;
+    };
+    const reducer = (state, event) => {
+      let eventHash = newEventStore.web3.sha3(JSON.stringify(event));
       const eventHashes = new Set(state.eventHashes || []);
       eventHashes.add(eventHash);
       return {
