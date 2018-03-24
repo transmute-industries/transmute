@@ -60,6 +60,7 @@ script:
 - lerna bootstrap
 
 - TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore truffle:migrate
+- TRANSMUTE_ENV=minikube lerna run --scope ipfs-api build
 - export ACCESS_TOKEN=$(node ./scripts/okta/get-okta-token.js) && TRANSMUTE_ENV=minikube ACCESS_TOKEN=$ACCESS_TOKEN lerna run --scope transmute-eventstore test
 - TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore test:report
 - TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore build
