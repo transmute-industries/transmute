@@ -2,9 +2,11 @@ const TransmuteEventStore = require('../../index');
 const { env } = require('../../../../../transmute-config');
 const eventStoreArtifact = require('../../../build/contracts/EventStore.json');
 
+const TRANSMUTE_ENV = process.env.TRANSMUTE_ENV;
+
 const eventStore = new TransmuteEventStore({
   eventStoreArtifact,
-  ...env.localhost
+  ...env[TRANSMUTE_ENV]
 });
 
 const StreamModel = require('../index');

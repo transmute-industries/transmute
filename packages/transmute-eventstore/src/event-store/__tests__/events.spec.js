@@ -4,9 +4,12 @@ const eventStoreArtifact = require('../../../build/contracts/EventStore.json');
 
 const events = require('../../__mock__/events.json');
 
+
+const TRANSMUTE_ENV = process.env.TRANSMUTE_ENV;
+
 const eventStore = new TransmuteEventStore({
   eventStoreArtifact,
-  ...env.localhost
+  ...env[TRANSMUTE_ENV]
 });
 
 describe('transmute-eventstore', () => {

@@ -6,9 +6,12 @@ const StreamModel = require('../index');
 
 const mockEvents = require('../../__mock__/events.json');
 
+
+const TRANSMUTE_ENV = process.env.TRANSMUTE_ENV;
+
 const eventStore = new TransmuteEventStore({
   eventStoreArtifact,
-  ...env.localhost
+  ...env[TRANSMUTE_ENV]
 });
 
 describe('sync', () => {

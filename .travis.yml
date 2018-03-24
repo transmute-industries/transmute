@@ -28,7 +28,7 @@ before_script:
 - node -v
 - npm -v
 
-- npm install -g codecov lerna@2.9.0 truffle@4.0.1 
+- npm install -g codecov lerna@2.9.0 truffle@4.1.3
 
 - lerna -v
 - truffle version
@@ -64,9 +64,9 @@ script:
 - ./scripts/configure-framework-kong.sh 
 
 - lerna bootstrap
-- lerna run --scope transmute-eventstore truffle:migrate:minikube
-- lerna run --scope transmute-eventstore truffle:test:minikube
-- lerna run --scope transmute-eventstore test
+- TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore truffle:migrate:minikube
+- TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore truffle:test:minikube
+- TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore test
 - TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore test:smoke 
 
 # - lerna run --scope transmute-framework test

@@ -7,7 +7,7 @@
   "scripts": {
     "start": "npm test",
     "build": "./node_modules/bili/dist/cli.js --format cjs ./src/index.js",
-    "test": "NODE_TLS_REJECT_UNAUTHORIZED=0 react-scripts test --coverage",
+    "test": "NODE_TLS_REJECT_UNAUTHORIZED=0 react-scripts test --coverage --forceExit",
     "test:smoke": "node ./smoke_tests/module.test.js",
     "truffle:test": "truffle test",
     "truffle:migrate": "truffle migrate",
