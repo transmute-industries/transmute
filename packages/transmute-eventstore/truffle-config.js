@@ -2,6 +2,8 @@
 
 const transmuteConfig = require('../../transmute-config')
 
+const TRANSMUTE_ENV = process.env.TRANSMUTE_ENV;
+
 module.exports = {
   migrations_directory: "./migrations",
   networks: {
