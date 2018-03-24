@@ -8,9 +8,7 @@ let env = defaultEnv[TRANSMUTE_ENV];
 
 env.ipfsConfig = {
   ...env.ipfsConfig,
-  headers: {
-    authorization: 'Bearer ' + ACCESS_TOKEN
-  }
+  authorization: 'Bearer ' + ACCESS_TOKEN
 };
 
 module.exports = env;
