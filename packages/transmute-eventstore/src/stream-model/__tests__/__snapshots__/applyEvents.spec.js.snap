@@ -2,44 +2,40 @@
 
 exports[`applyEvents respects filter 1`] = `
 Object {
-  "contractAddress": "0x5c3ebf0fdb3176dfe8ffde603bcfccf7e33fad7e",
-  "lastIndex": "4",
-  "model": Object {
-    "events": Array [
-      Object {
-        "index": "1",
-        "key": Object {
-          "id": "0",
-          "type": "patient",
-        },
-        "value": Object {
-          "type": "USER_REGISTERED",
-          "username": "bob@example.com",
-        },
+  "events": Array [
+    Object {
+      "index": "1",
+      "key": Object {
+        "id": "0",
+        "type": "patient",
       },
-      Object {
-        "index": "3",
-        "key": Object {
-          "id": "0",
-          "type": "patient",
-        },
-        "value": Object {
-          "guid": "0x0...",
-          "type": "DEVICE_LINKED",
-        },
+      "value": Object {
+        "type": "USER_REGISTERED",
+        "username": "bob@example.com",
       },
-      Object {
-        "index": "4",
-        "key": Object {
-          "id": "0",
-          "type": "patient",
-        },
-        "value": Object {
-          "type": "USER_UPDATED",
-          "username": "bob2@example.com",
-        },
+    },
+    Object {
+      "index": "3",
+      "key": Object {
+        "id": "0",
+        "type": "patient",
       },
-    ],
-  },
+      "value": Object {
+        "guid": "0x0...",
+        "type": "DEVICE_LINKED",
+      },
+    },
+    Object {
+      "index": "4",
+      "key": Object {
+        "id": "0",
+        "type": "patient",
+      },
+      "value": Object {
+        "type": "USER_UPDATED",
+        "username": "bob2@example.com",
+      },
+    },
+  ],
 }
 `;

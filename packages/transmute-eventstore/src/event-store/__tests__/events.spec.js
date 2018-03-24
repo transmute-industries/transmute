@@ -2,43 +2,46 @@ const TransmuteEventStore = require('../index.js');
 const transmuteConfig = require('../../../../../transmute-config');
 const eventStoreArtifact = require('../../../build/contracts/EventStore.json');
 
-const events = require('../../__mock__/events.json');
-
-
-const eventStore = new TransmuteEventStore({
-  eventStoreArtifact,
-  ...transmuteConfig
-});
+const mockEvents = require('../../__mock__/events.json');
 
 describe('transmute-eventstore', () => {
+  let accounts;
+  const eventStore = new TransmuteEventStore({
+    eventStoreArtifact,
+    ...transmuteConfig
+  });
+
+  beforeAll(async () => {
+    await eventStore.init();
+    accounts = await eventStore.getWeb3Accounts();
+  });
+
   describe('write', () => {
     it('can save events', async () => {
-      await eventStore.init();
-      const accounts = await eventStore.getWeb3Accounts();
-      events.map(async event => {
-        let result = await eventStore.write(
-          accounts[0],
-          event.key,
-          event.value
-        );
-        expect(result.event).toBeDefined();
-        expect(result.event.sender).toBeDefined();
-        expect(result.event.key).toBeDefined();
-        expect(result.event.value).toBeDefined();
+      return Promise.all(
+        mockEvents.map(async event => {
+          let result = await eventStore.write(
+            accounts[0],
+            event.key,
+            event.value
+          );
+          expect(result.event).toBeDefined();
+          expect(result.event.sender).toBeDefined();
+          expect(result.event.key).toBeDefined();
+          expect(result.event.value).toBeDefined();
 
-        expect(result.meta).toBeDefined();
-        expect(result.meta.tx).toBeDefined();
-        expect(result.meta.ipfs).toBeDefined();
-        expect(result.meta.bytes32).toBeDefined();
-        expect(result.meta.receipt).toBeDefined();
-      });
+          expect(result.meta).toBeDefined();
+          expect(result.meta.tx).toBeDefined();
+          expect(result.meta.ipfs).toBeDefined();
+          expect(result.meta.bytes32).toBeDefined();
+          expect(result.meta.receipt).toBeDefined();
+        })
+      );
     });
   });
 
   describe('read', () => {
     it('can read events', async () => {
-      await eventStore.init();
-      const accounts = await eventStore.getWeb3Accounts();
       let event = await eventStore.read(0, accounts[0]);
       expect(event.sender).toBeDefined();
       expect(event.key).toBeDefined();
@@ -46,28 +49,29 @@ describe('transmute-eventstore', () => {
     });
   });
 
-  // describe('getSlice', () => {
-  //   it.skip('throws on invalid params', async () => {
+  describe('getSlice', () => {
+    
+    // it('throws on invalid params', async () => {
+    //   try {
+    //     let events = eventStore.getSlice(1, 0);
+    //   } catch (e) {
+    //     // expected
+    //   }
+    // });
 
-  //     expect(() => {
-  //       let events = eventStore.getSlice(1, 0);
-  //     }).toThrow();
-  //   });
+    it('supports getting a single event', async () => {
+      let events = await eventStore.getSlice(0, 0);
+      const accounts = await eventStore.getWeb3Accounts();
+      // avoid checksum errors
+      expect(events[0].sender).toEqual(accounts[0].toLowerCase());
+      expect(events[0].key).toEqual(mockEvents[0].key);
+      expect(events[0].value).toEqual(mockEvents[0].value);
+    });
 
-  //   it('supports getting a single event', async () => {
-  //     await eventStore.init()
-  //     let events = await eventStore.getSlice(0, 0);
-  //     const accounts = await eventStore.getWeb3Accounts();
-  //     // avoid checksum errors
-  //     expect(events[0].sender).toEqual(accounts[0].toLowerCase());
-  //     expect(events[0].key).toEqual(mockEvents[0].key);
-  //     expect(events[0].value).toEqual(mockEvents[0].value);
-  //   });
-
-  //   it('supports getting a slice', async () => {
-  //     await eventStore.init()
-  //     let events = await eventStore.getSlice(0, 3);
-  //     expect(events.length).toBe(4)
-  //   });
-  // });
+    it('supports getting a slice', async () => {
+      await eventStore.init();
+      let events = await eventStore.getSlice(0, 3);
+      expect(events.length).toBe(4);
+    });
+  });
 });

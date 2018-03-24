@@ -41,6 +41,6 @@ describe('applyEvents', () => {
     };
     const streamModel = new StreamModel(eventStore, filter, reducer);
     streamModel.applyEvents(events);
-    expect(streamModel.state).toMatchSnapshot();
+    expect(streamModel.state.model).toMatchSnapshot();
   });
 });
