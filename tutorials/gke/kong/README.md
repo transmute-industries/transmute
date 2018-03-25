@@ -51,7 +51,7 @@ export IPFS_CLUSTER_IP=$(kubectl get service -n alpha decentralized-storage-ipfs
 curl -k -X POST \
   --url https://localhost:8444/apis/ \
   --data 'name=ipfs' \
-  --data 'hosts=ipfs.transmute.network' \
+  --data 'uris=/' \
   --data "https_only=true" \
   --data 'upstream_url=http://'$IPFS_CLUSTER_IP':5001/'
 
