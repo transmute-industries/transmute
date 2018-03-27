@@ -5,7 +5,8 @@ import { Route } from 'react-router';
 import { Security, ImplicitCallback } from '@okta/okta-react';
 
 import Home from '../Home';
-import Kepler from '../Kepler';
+import Login from '../Login';
+import Settings from '../Settings';
 
 const config = {
   issuer: 'https://dev-665774.oktapreview.com/oauth2/default',
@@ -22,7 +23,8 @@ class Routes extends React.Component {
         redirect_uri={config.redirect_uri}
       >
         <Route path="/" exact={true} component={Home} />
-        <Route path="/kepler" exact={true} component={Kepler} />
+        <Route path="/login" exact={true} component={Login} />
+        <Route path="/settings" exact={true} component={Settings} />
         <Route path="/implicit/callback" component={ImplicitCallback} />
       </Security>
     );

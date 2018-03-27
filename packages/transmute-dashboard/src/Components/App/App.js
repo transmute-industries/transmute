@@ -10,7 +10,6 @@ import theme from '../../theme';
 
 import Routes from '../Routes';
 
-
 class App extends Component {
   render() {
     return (

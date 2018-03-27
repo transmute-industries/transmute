@@ -14,9 +14,13 @@ import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 import AccountCircle from 'material-ui-icons/AccountCircle';
 import Menu, { MenuItem } from 'material-ui/Menu';
-import { demoMenuList } from './tileData';
+
+import Button from 'material-ui/Button';
 
 import { withAuth } from '@okta/okta-react';
+
+import PrimaryMenu from './PrimaryMenu';
+import SecondaryMenu from './SecondaryMenu';
 
 const drawerWidth = 240;
 
@@ -27,6 +31,9 @@ const styles = theme => ({
     // marginTop: theme.spacing.unit * 3,
     zIndex: 1,
     overflow: 'hidden'
+  },
+  loginButton: {
+    marginRight: '10px'
   },
   flex: {
     flex: 1
@@ -167,6 +174,16 @@ class MiniDrawer extends React.Component {
               >
                 Transmute
               </Typography>
+              {!user && (
+                <Button
+                  variant="raised"
+                  color="secondary"
+                  onClick={this.props.auth.login}
+                  className={classes.loginButton}
+                >
+                  Login
+                </Button>
+              )}
 
               {user && (
                 <div>
@@ -220,9 +237,11 @@ class MiniDrawer extends React.Component {
                 </IconButton>
               </div>
               <Divider />
-              <List>{demoMenuList}</List>
-              {/* <Divider />
-              <List>{otherMailFolderListItems}</List> */}
+
+              <PrimaryMenu />
+              <Divider />
+              <SecondaryMenu />
+              
             </div>
           </Drawer>
           <main className={classes.content}>{this.props.children}</main>
