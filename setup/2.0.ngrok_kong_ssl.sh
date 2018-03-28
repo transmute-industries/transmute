@@ -1,4 +1,10 @@
 
+# Setup ngrok
+# https://ngrok.com/docs
+
+# Custom Domains
+# https://ngrok.com/docs#custom-domains
+
 # example ngrok config
 
 # authtoken: TOKEN

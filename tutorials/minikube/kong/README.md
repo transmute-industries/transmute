@@ -4,15 +4,15 @@
 
 ```
 helm search kong
-helm install stable/kong --name mini-kong
+helm install stable/kong --name gateway
 ```
 
 ### Test Kong
 
 ```
 
-export KONG_API=$(minikube service --url mini-kong-kong-admin)
-export KONG_PROXY=$(minikube service --url mini-kong-kong-proxy)
+export KONG_API=$(minikube service --url gateway-kong-admin)
+export KONG_PROXY=$(minikube service --url gateway-kong-proxy)
 
 ```
 

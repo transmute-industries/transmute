@@ -50,16 +50,11 @@ curl -k -X GET \
   | jq
 
 
-echo 'In order to enable CORS for web apps, you will need to remote to the IPFS pod an run some commands.'
+echo 'Enabling CORS for IPFS'
 
-# export POD_NAME=$(kubectl get pods --namespace default -l "app=ipfs,release=decentralized-storage"  -o jsonpath="{.items[0].metadata.name}")
-# kubectl exec -it -n alpha $POD_NAME -- /bin/bash
-# ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
-# ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST"]'
-
-echo 'then restart the pod...'
-
-# kubectl get pod POD_NAME -n default -o yaml | kubectl replace --force -f -
+export POD_NAME=$(kubectl get pods --namespace default -l "app=ipfs,release=decentralized-storage"  -o jsonpath="{.items[0].metadata.name}")
+kubectl exec -it $POD_NAME -- ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
+kubectl exec -it $POD_NAME -- ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST"]'
 
 
 

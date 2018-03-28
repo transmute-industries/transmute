@@ -72,7 +72,7 @@
     "test": "node scripts/test.js --env=jsdom",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "truffle:migrate": "truffle migrate && cp -r ./build/contracts/ ./src/contracts"
+    "truffle:migrate": "truffle migrate && cp -r ./build/contracts/ ./src"
   },
   "devDependencies": {
     "gh-pages": "^1.1.0",

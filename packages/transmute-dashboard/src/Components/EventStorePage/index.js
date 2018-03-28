@@ -54,14 +54,17 @@ class EventStorePage extends Component {
 
     const accounts = await eventStore.getWeb3Accounts();
 
-    let events = await eventStore.getSlice(0, totalCount - 1);
+    let events = [];
+    if (totalCount) {
+      events = await eventStore.getSlice(0, totalCount - 1);
 
-    events = events.map(event => {
-      return {
-        ...event,
-        id: event.index
-      };
-    });
+      events = events.map(event => {
+        return {
+          ...event,
+          id: event.index
+        };
+      });
+    }
 
     this.setState({
       accounts,

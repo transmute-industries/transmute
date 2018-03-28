@@ -15,5 +15,5 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: mini-kong-kong-proxy
+          serviceName: gateway-kong-proxy
           servicePort: 8443

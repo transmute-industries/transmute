@@ -23,7 +23,7 @@ let ipfsProvider = `${transmuteConfig.ipfsConfig.protocol}//${
   transmuteConfig.ipfsConfig.host
 }:${transmuteConfig.ipfsConfig.port}`;
 
-console.log(ipfsProvider);
+// console.log(ipfsProvider);
 const {
   EventStore,
   IpfsAdapter

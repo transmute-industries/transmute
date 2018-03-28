@@ -13,7 +13,7 @@ minikube start
 ## Install Ganache and Kong
 
 ```
-helm install ./ganache-cli --name=mini-ganache
+helm install ./ganache-cli --name=ganache
 helm install stable/kong --name kong-mini
 
 
@@ -32,7 +32,7 @@ echo "$(minikube ip) ganache.transmute.minikube" | sudo tee -a /etc/hosts
 We need to use the NodePort services to expose the rpc interface:
 
 ```
-export GANACHE_CLI=$(minikube service mini-ganache-ganache-cli --url)
+export GANACHE_CLI=$(minikube service ganache-ganache-cli --url)
 ```
 
 Ask for the client version:
@@ -52,7 +52,7 @@ The rest of this tutorial assumes the minikube ip address is `192.168.99.100`.
 Now we connect Kong to Ganache:
 
 ```
-export GANACHE_CLUSTER_IP=$(kubectl get service mini-ganache-ganache-cli -o json | jq -r '.spec.clusterIP');
+export GANACHE_CLUSTER_IP=$(kubectl get service ganache-ganache-cli -o json | jq -r '.spec.clusterIP');
 
 
 
@@ -75,7 +75,7 @@ curl -k -X POST --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":
 Remove the things created in this tutorial:
 
 ```
-helm delete --purge mini-ganache
+helm delete --purge ganache
 curl -k -X DELETE \
   --url https://transmute.minikube:32444/apis/ganache
 ```

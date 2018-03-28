@@ -39,16 +39,16 @@ before_script:
 - minikube addons enable ingress
 
 script:
-- helm install stable/kong --name mini-kong
+- helm install stable/kong --name gateway
 - helm install stable/ipfs --name mini-ipfs
-- helm install ./tutorials/minikube/kong-ganache/ganache-cli --name=mini-ganache
+- helm install ./charts/ganache-cli --name=ganache
 - sleep 180
 
 - kubectl get services
 
-- export KONG_ADMIN_URL=$(minikube service mini-kong-kong-admin --url | sed 's,http://,https://,g')
-- export KONG_PROXY_URL=$(minikube service mini-kong-kong-proxy --url | sed 's,http://,https://,g')
-- export KONG_PROXY_PORT=$(kubectl get service mini-kong-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
+- export KONG_ADMIN_URL=$(minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
+- export KONG_PROXY_URL=$(minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
+- export KONG_PROXY_PORT=$(kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
 
 - npm install
 - ./scripts/configure-hosts.sh

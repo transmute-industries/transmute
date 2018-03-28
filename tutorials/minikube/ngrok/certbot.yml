@@ -43,7 +43,7 @@ spec:
           - name: TERM
             value: linux
           - name: KONG_ENDPOINT
-            value: https://mini-kong-kong-admin.default.svc.cluster.local:8444
+            value: https://gateway-kong-admin.default.svc.cluster.local:8444
           - name: EMAIL
             value: orie@transmute.industries
           - name: DOMAINS
