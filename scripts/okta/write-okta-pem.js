@@ -1,9 +1,10 @@
-
+#!/usr/bin/env node
 const http = require('https');
 const jwkToPem = require('jwk-to-pem');
 const fs = require('fs');
 
 let hostname = process.env.OKTA_HOSTNAME;
+let output = process.env.OUTPUT_FILE || './scripts/okta/okta.pem';
 
 const getJWKS = () => {
   return new Promise((resolve, reject) => {
@@ -44,5 +45,5 @@ const writeFile = (filepath, data) => {
 (async () => {
   const response = await getJWKS();
   const pem = jwkToPem(response.keys[0]);
-  await writeFile('./scripts/okta/okta.pem', pem);
+  await writeFile(output, pem);
 })();

@@ -7,6 +7,7 @@ import { Security, ImplicitCallback } from '@okta/okta-react';
 import Home from '../Home';
 import Login from '../Login';
 import Settings from '../Settings';
+import Dashboard from '../Dashboard';
 
 const config = {
   issuer: 'https://dev-665774.oktapreview.com/oauth2/default',
@@ -25,6 +26,7 @@ class Routes extends React.Component {
         <Route path="/" exact={true} component={Home} />
         <Route path="/login" exact={true} component={Login} />
         <Route path="/settings" exact={true} component={Settings} />
+        <Route path="/dashboard" exact={true} component={Dashboard} />
         <Route path="/implicit/callback" component={ImplicitCallback} />
       </Security>
     );

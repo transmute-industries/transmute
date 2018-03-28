@@ -1,5 +1,7 @@
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var ipfsApi = _interopDefault(require('ipfs-api'));
@@ -988,6 +990,13 @@ var _package$1 = /*#__PURE__*/Object.freeze({
   default: _package
 });
 
+var MAX_GAS = 500000;
+var EVENT_GAS_COST = 500000;
+var gas = {
+  MAX_GAS: MAX_GAS,
+  EVENT_GAS_COST: EVENT_GAS_COST
+};
+
 var pack = ( _package$1 && _package ) || _package$1;
 
 var _classCallCheck$2 = require$$0.classCallCheck;
@@ -1006,13 +1015,13 @@ var _createClass$2 = require$$0.createClass;
 
 
 
-var MAX_GAS = 309600;
+
 
 var eventStore =
 /*#__PURE__*/
 function () {
-  function TransmuteEventStore(config) {
-    _classCallCheck$2(this, TransmuteEventStore);
+  function EventStore(config) {
+    _classCallCheck$2(this, EventStore);
 
     if (!config) {
       throw new Error('a config of form { eventStoreArtifact, web3, keen, ipfs } is required.');
@@ -1055,7 +1064,7 @@ function () {
     this.ipfs = new ipfs(ipfsConfig);
   }
 
-  _createClass$2(TransmuteEventStore, [{
+  _createClass$2(EventStore, [{
     key: "getWeb3Accounts",
     value: function getWeb3Accounts() {
       return new Promise(function ($return, $error) {
@@ -1108,7 +1117,7 @@ function () {
         var newContract, instance;
         return Promise.resolve(this.eventStoreContract.new({
           from: fromAddress,
-          gas: MAX_GAS
+          gas: gas.MAX_GAS
         })).then(function ($await_6) {
           try {
             newContract = $await_6;
@@ -1125,7 +1134,7 @@ function () {
     key: "write",
     value: function write(fromAddress, key, value) {
       return new Promise(function ($return, $error) {
-        var web3$$1, ipfs$$1, eventStoreContractInstance, keyDagNode, keyMultihash, keyBytes32ID, valueDagNode, valueMultihash, valueBytes32ID, estimatedGasCost, tx, receipt;
+        var web3$$1, ipfs$$1, eventStoreContractInstance, keyDagNode, keyMultihash, keyBytes32ID, valueDagNode, valueMultihash, valueBytes32ID, tx, receipt;
         this.requireInstance();
         web3$$1 = this.web3, ipfs$$1 = this.ipfs, eventStoreContractInstance = this.eventStoreContractInstance;
         return Promise.resolve(ipfs$$1.writeObject(key)).then(function ($await_7) {
@@ -1138,46 +1147,39 @@ function () {
                 valueDagNode = $await_8;
                 valueMultihash = valueDagNode._json.multihash;
                 valueBytes32ID = ipfs$$1.multihashToBytes32(valueMultihash);
-                return Promise.resolve(eventStoreContractInstance.write.estimateGas(keyBytes32ID, valueBytes32ID)).then(function ($await_9) {
+                return Promise.resolve(eventStoreContractInstance.write.sendTransaction(keyBytes32ID, valueBytes32ID, {
+                  from: fromAddress,
+                  gas: gas.EVENT_GAS_COST
+                })).then(function ($await_9) {
                   try {
-                    estimatedGasCost = $await_9;
-                    return Promise.resolve(eventStoreContractInstance.write.sendTransaction(keyBytes32ID, valueBytes32ID, {
-                      from: fromAddress,
-                      gas: estimatedGasCost + 2050
-                    })).then(function ($await_10) {
-                      try {
-                        tx = $await_10;
-                        receipt = web3$$1.eth.getTransactionReceipt(tx);
-                        // console.log(rec);
-                        // this.keen.recordEvent('TransmuteEvent', {
-                        //   key,
-                        //   value,
-                        //   rec: rec
-                        // });
-                        // return rec;
-                        return $return({
-                          event: {
-                            sender: fromAddress,
-                            key: key,
-                            value: value
-                          },
-                          meta: {
-                            tx: tx,
-                            ipfs: {
-                              key: keyMultihash,
-                              value: valueMultihash
-                            },
-                            bytes32: {
-                              key: keyBytes32ID,
-                              value: valueBytes32ID
-                            },
-                            receipt: receipt
-                          }
-                        });
-                      } catch ($boundEx) {
-                        return $error($boundEx);
+                    tx = $await_9;
+                    receipt = web3$$1.eth.getTransactionReceipt(tx);
+                    // console.log(rec);
+                    // this.keen.recordEvent('TransmuteEvent', {
+                    //   key,
+                    //   value,
+                    //   rec: rec
+                    // });
+                    // return rec;
+                    return $return({
+                      event: {
+                        sender: fromAddress,
+                        key: key,
+                        value: value
+                      },
+                      meta: {
+                        tx: tx,
+                        ipfs: {
+                          key: keyMultihash,
+                          value: valueMultihash
+                        },
+                        bytes32: {
+                          key: keyBytes32ID,
+                          value: valueBytes32ID
+                        },
+                        receipt: receipt
                       }
-                    }.bind(this), $error);
+                    });
                   } catch ($boundEx) {
                     return $error($boundEx);
                   }
@@ -1207,15 +1209,15 @@ function () {
             }
 
             decoded = [values[0].toNumber(), values[1], ipfs$$1.bytes32ToMultihash(values[2]), ipfs$$1.bytes32ToMultihash(values[3])];
-            return Promise.resolve(ipfs$$1.readObject(decoded[2])).then(function ($await_11) {
+            return Promise.resolve(ipfs$$1.readObject(decoded[2])).then(function ($await_10) {
               try {
-                return Promise.resolve(ipfs$$1.readObject(decoded[3])).then(function ($await_12) {
+                return Promise.resolve(ipfs$$1.readObject(decoded[3])).then(function ($await_11) {
                   try {
                     return $return({
                       index: decoded[0],
                       sender: decoded[1],
-                      key: $await_11,
-                      value: $await_12
+                      key: $await_10,
+                      value: $await_11
                     });
                   } catch ($boundEx) {
                     return $error($boundEx);
@@ -1243,9 +1245,9 @@ function () {
         }.bind(this);
 
         try {
-          return Promise.resolve(eventStoreContractInstance.read(index)).then(function ($await_13) {
+          return Promise.resolve(eventStoreContractInstance.read(index)).then(function ($await_12) {
             try {
-              values = $await_13;
+              values = $await_12;
               return $Try_1_Post();
             } catch ($boundEx) {
               return $Try_1_Catch($boundEx);
@@ -1285,9 +1287,9 @@ function () {
 
         function $Loop_3() {
           if (index <= endIndex) {
-            return Promise.resolve(this.read(index)).then(function ($await_14) {
+            return Promise.resolve(this.read(index)).then(function ($await_13) {
               try {
-                events.push($await_14);
+                events.push($await_13);
                 index++;
                 return $Loop_3;
               } catch ($boundEx) {
@@ -1307,10 +1309,10 @@ function () {
     value: function healthy() {
       return new Promise(function ($return, $error) {
         this.requireInstance();
-        return Promise.resolve(this.ipfs.healthy()).then(function ($await_15) {
+        return Promise.resolve(this.ipfs.healthy()).then(function ($await_14) {
           try {
             return $return({
-              ipfs: $await_15,
+              ipfs: $await_14,
               eventStoreContract: this.eventStoreContractInstance.address
             });
           } catch ($boundEx) {
@@ -1326,9 +1328,97 @@ function () {
     }
   }]);
 
-  return TransmuteEventStore;
+  return EventStore;
 }();
 
-var src = eventStore;
+var _classCallCheck$3 = require$$0.classCallCheck;
 
-module.exports = src;
+var streamModel = function StreamModel(eventStore, filter, reducer, state) {
+  var _this = this;
+
+  _classCallCheck$3(this, StreamModel);
+
+  Object.defineProperty(this, "applyEvent", {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    value: function value(event) {
+      // console.log(event.index)
+      _this.state.model = _this.reducer(_this.state.model, event);
+      _this.state.lastIndex = event.index;
+    }
+  });
+  Object.defineProperty(this, "applyEvents", {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    value: function value(events) {
+      events.filter(_this.filter).map(_this.applyEvent);
+    }
+  });
+  Object.defineProperty(this, "sync", {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    value: function value() {
+      return new Promise(function ($return, $error) {
+        var web3$$1, eventCount, updates;
+        web3$$1 = _this.eventStore.web3;
+        return Promise.resolve(_this.eventStore.eventStoreContractInstance.count.call()).then(function ($await_2) {
+          try {
+            eventCount = $await_2.toNumber();
+
+            if (eventCount === 0) {
+              return $return();
+            }
+
+            if (_this.state.lastIndex == null || _this.state.lastIndex < eventCount) {
+              return Promise.resolve(_this.eventStore.getSlice(_this.state.lastIndex || 0, eventCount - 1)).then(function ($await_3) {
+                try {
+                  updates = $await_3;
+
+                  _this.applyEvents(updates);
+
+                  return $If_1.call(this);
+                } catch ($boundEx) {
+                  return $error($boundEx);
+                }
+              }.bind(this), $error);
+            }
+
+            function $If_1() {
+              return $return();
+            }
+
+            return $If_1.call(this);
+          } catch ($boundEx) {
+            return $error($boundEx);
+          }
+        }.bind(this), $error);
+      }.bind(this));
+    }
+  });
+  eventStore.requireInstance();
+  this.eventStore = eventStore;
+  this.filter = filter;
+  this.reducer = reducer;
+  this.state = state || {
+    contractAddress: this.eventStore.eventStoreContractInstance.address,
+    model: {},
+    lastIndex: null
+  };
+};
+
+var src = {
+  EventStore: eventStore,
+  StreamModel: streamModel,
+  IpfsAdapter: ipfs
+};
+var src_1 = src.EventStore;
+var src_2 = src.StreamModel;
+var src_3 = src.IpfsAdapter;
+
+exports.default = src;
+exports.EventStore = src_1;
+exports.StreamModel = src_2;
+exports.IpfsAdapter = src_3;

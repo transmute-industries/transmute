@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
-import List from 'material-ui/List';
 import Typography from 'material-ui/Typography';
 import Divider from 'material-ui/Divider';
 import IconButton from 'material-ui/IconButton';
@@ -111,7 +110,7 @@ const styles = theme => ({
 
 class MiniDrawer extends React.Component {
   state = {
-    user: false,
+    authenticated: false,
     isDrawerOpen: false
   };
 
@@ -131,18 +130,29 @@ class MiniDrawer extends React.Component {
     this.setState({ anchorEl: null });
   };
 
-  async componentWillMount() {
-    if (await this.props.auth.isAuthenticated()) {
-      const user = await this.props.auth.getUser();
-      this.setState({
-        user
-      });
+  constructor(props) {
+    super(props);
+    this.state = { authenticated: null };
+    this.checkAuthentication = this.checkAuthentication.bind(this);
+    this.checkAuthentication();
+  }
+
+  async checkAuthentication() {
+    const authenticated = await this.props.auth.isAuthenticated();
+    if (authenticated !== this.state.authenticated) {
+      this.setState({ authenticated });
     }
   }
 
+  componentDidUpdate() {
+    this.checkAuthentication();
+  }
+
+ 
+
   render() {
     const { classes, theme } = this.props;
-    const { user, anchorEl } = this.state;
+    const { authenticated, anchorEl } = this.state;
     const isMenuOpen = Boolean(anchorEl);
 
     return (
@@ -174,7 +184,7 @@ class MiniDrawer extends React.Component {
               >
                 Transmute
               </Typography>
-              {!user && (
+              {!authenticated && (
                 <Button
                   variant="raised"
                   color="secondary"
@@ -185,7 +195,7 @@ class MiniDrawer extends React.Component {
                 </Button>
               )}
 
-              {user && (
+              {authenticated && (
                 <div>
                   <IconButton
                     aria-owns={isMenuOpen ? 'menu-appbar' : null}
@@ -211,6 +221,7 @@ class MiniDrawer extends React.Component {
                   >
                     <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                     <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                    <MenuItem onClick={this.props.auth.logout}>Logout</MenuItem>
                   </Menu>
                 </div>
               )}
@@ -238,10 +249,9 @@ class MiniDrawer extends React.Component {
               </div>
               <Divider />
 
-              <PrimaryMenu />
-              <Divider />
+              {this.state.authenticated && <PrimaryMenu />}
+
               <SecondaryMenu />
-              
             </div>
           </Drawer>
           <main className={classes.content}>{this.props.children}</main>

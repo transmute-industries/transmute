@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const http = require('https');
 const querystring = require('querystring');
 

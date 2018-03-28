@@ -5,5 +5,9 @@
     "jwk-to-pem": "^2.0.0",
     "lerna": "^2.5.1"
   },
-  "scripts": {}
+  "scripts": {
+    "setup": "./setup/0.init.sh",
+    "status": "./setup/x1.status.sh",
+    "teardown": "./setup/x2.teardown.sh"
+  }
 }

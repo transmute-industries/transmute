@@ -1,8 +1,8 @@
-const TransmuteEventStore = require('../../index');
+const { EventStore } = require('../../index');
 const transmuteConfig = require('../../../../../transmute-config');
 const eventStoreArtifact = require('../../../build/contracts/EventStore.json');
 
-const eventStore = new TransmuteEventStore({
+const eventStore = new EventStore({
   eventStoreArtifact,
   ...transmuteConfig
 });
@@ -12,9 +12,23 @@ const StreamModel = require('../index');
 const events = require('../../__mock__/events.json');
 
 describe('applyEvents', () => {
+  let accounts;
+  let eventStore;
+
   beforeAll(async () => {
+    eventStore = new EventStore({
+      eventStoreArtifact,
+      ...transmuteConfig
+    });
     await eventStore.init();
+    accounts = await eventStore.getWeb3Accounts();
   });
+
+  // new event store per test
+  beforeEach(async () => {
+    eventStore = await eventStore.clone(accounts[0]);
+  });
+
   it('idempotent', async () => {
     const filter = event => {
       return true;

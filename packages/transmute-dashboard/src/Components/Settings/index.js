@@ -21,7 +21,7 @@ class Settings extends Component {
 
             let data = await axios
               .create({
-                baseURL: 'https://ipfs.transmute.network:8443',
+                baseURL: 'https://ipfs.transmute.live:32443',
                 timeout: 1000
               })
               .get('/api/v0/id?jwt=' + accessToken);

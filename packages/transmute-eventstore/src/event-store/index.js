@@ -10,7 +10,7 @@ const pack = require('../../package.json');
 
 const GAS = require('../gas')
 
-module.exports = class TransmuteEventStore {
+module.exports = class EventStore {
   constructor(config) {
     if (!config) {
       throw new Error(

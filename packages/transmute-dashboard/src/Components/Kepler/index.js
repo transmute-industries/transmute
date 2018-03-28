@@ -31,20 +31,7 @@ class Kepler extends Component {
           variant="raised"
           color="secondary"
           onClick={async () => {
-            // const accessToken = await this.props.auth.getAccessToken();
-            // console.log(accessToken);
-
-            // // let ipfs = new IPFS({
-            // //   ...config,
-            // //   authorization: 'Bearer ' + accessToken,
-            // // });
-            // // let data = await axios
-            // // .create({
-            // //   baseURL: 'https://ipfs.transmute.minikube:32443',
-            // //   timeout: 1000,
-            // //   headers: { authorization: 'Bearer ' + accessToken }
-            // // })
-            // // .get('/api/v0/id');
+          
 
             // let data = await axios.get('http://localhost:5001/api/v0/id');
 

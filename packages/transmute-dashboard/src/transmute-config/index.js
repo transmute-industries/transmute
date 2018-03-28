@@ -1,6 +1,6 @@
 const defaultEnv = require('./env.json');
 
-const TRANSMUTE_ENV = process.env.TRANSMUTE_ENV || 'minikube';
+const TRANSMUTE_ENV = process.env.TRANSMUTE_ENV || 'orie';
 
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 

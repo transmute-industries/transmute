@@ -1,4 +1,4 @@
-const TransmuteEventStore = require('../index.js');
+const EventStore = require('../index.js');
 
 const transmuteConfig = require('../../../../../transmute-config');
 const eventStoreArtifact = require('../../../build/contracts/EventStore.json');
@@ -8,18 +8,18 @@ describe('transmute-eventstore', () => {
   describe('constructor', () => {
     it('is safe', async () => {
       expect(() => {
-        const eventStore = new TransmuteEventStore();
+        const eventStore = new EventStore();
       }).toThrow();
       expect(() => {
-        const eventStore = new TransmuteEventStore({});
+        const eventStore = new EventStore({});
       }).toThrow();
-      const eventStore = new TransmuteEventStore({
+      const eventStore = new EventStore({
         eventStoreArtifact,
         ...transmuteConfig
       });
     });
     it('sets version', async () => {
-      const eventStore = new TransmuteEventStore({
+      const eventStore = new EventStore({
         eventStoreArtifact,
         ...transmuteConfig
       });
@@ -28,8 +28,8 @@ describe('transmute-eventstore', () => {
   });
 
   describe('clone', () => {
-    it('returns a new TransmuteEventStore with a new contract instance.', async () => {
-      const eventStore = new TransmuteEventStore({
+    it('returns a new EventStore with a new contract instance.', async () => {
+      const eventStore = new EventStore({
         eventStoreArtifact,
         ...transmuteConfig
       });
@@ -45,7 +45,7 @@ describe('transmute-eventstore', () => {
   describe('healthy', () => {
     it('throws when not init', async () => {
       try {
-        const eventStore = new TransmuteEventStore({
+        const eventStore = new EventStore({
           eventStoreArtifact,
           ...transmuteConfig
         });
@@ -56,7 +56,7 @@ describe('transmute-eventstore', () => {
     });
 
     // it('checks that all services are connected', async () => {
-    //   const eventStore = new TransmuteEventStore({
+    //   const eventStore = new EventStore({
     //     eventStoreArtifact,
     //     ...transmuteConfig
     //   });
