@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { withAuth } from '@okta/okta-react';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { push } from 'react-router-redux';
+
 import AppBar from '../AppBar';
 
 import Button from 'material-ui/Button';
@@ -27,13 +31,24 @@ const {
 
 // console.log(transmuteConfig, TransmuteEventStore)
 
-
 class Dashboard extends Component {
+  async componentWillMount() {
+    const eventStore = new EventStore({
+      eventStoreArtifact,
+      ...transmuteConfig
+    });
+
+    await eventStore.init();
+
+    this.setState({
+      defaultEventStoreContractAddress:
+        eventStore.eventStoreContractInstance.address
+    });
+  }
   render() {
     return (
       <AppBar>
-        <EventsTable />
-        <Button
+        {/* <Button
           variant="raised"
           color="secondary"
           onClick={async () => {
@@ -44,82 +59,45 @@ class Dashboard extends Component {
               ...transmuteConfig.ipfsConfig
             });
             let data = await ipfs.healthy();
-            // console.log(data);
-            // axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
-            // console.log(accessToken);
-            // let data = await axios
-            //   .create({
-            //     baseURL: 'https://orie.transmute.live:32443',
-            //     timeout: 1000
-            //   })
-            //   .get('/api/v0/id' );
-            // console.log(data);
+            console.log(data);
           }}
         >
           IPFS
-        </Button>
+        </Button> */}
 
         <Button
           variant="raised"
           color="secondary"
-          onClick={async () => {
-            const accessToken = (await this.props.auth.getAccessToken()) || '';
-            transmuteConfig.ipfsConfig.authorization = 'Bearer ' + accessToken;
-
-            console.log(accessToken);
-
-            console.log(transmuteConfig);
-
-            const eventStore = new EventStore({
-              eventStoreArtifact,
-              ...transmuteConfig
-            });
-
-            await eventStore.init();
-
-            const accounts = await eventStore.getWeb3Accounts();
-            console.log(accounts);
-
-            let event = {
-              index: '1',
-              key: {
-                type: 'patient',
-                id: '0'
-              },
-              value: {
-                type: 'USER_REGISTERED',
-                username: 'bob@example.com'
-              }
-            };
-
-            let result = await eventStore.write(
-              accounts[0],
-              event.key,
-              event.value
+          onClick={() => {
+            this.props.actions.go(
+              '/eventstore/' + this.state.defaultEventStoreContractAddress
             );
-
-            console.log(result);
-
-            // console.log(accessToken);
-
-            // // const accounts = await eventStore.getWeb3Accounts();
-            // // let newEventStore = await eventStore.clone(accounts[0]);
-
-            // let resp = await axios
-            //   .create({
-            //     baseURL: ipfsHost,
-            //     timeout: 1000
-            //   })
-            //   .get('/api/v0/id?jwt=' + accessToken);
-
-            // console.log(resp.data);
           }}
         >
-          EventStore
+          Demo EventStore
         </Button>
       </AppBar>
     );
   }
 }
 
-export default withAuth(Dashboard);
+function mapStateToProps(state) {
+  return {
+    pathname: state.router.location
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(
+      {
+        go: somePath => push(somePath)
+      },
+      dispatch
+    )
+  };
+}
+
+export default withAuth(
+  connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+);
