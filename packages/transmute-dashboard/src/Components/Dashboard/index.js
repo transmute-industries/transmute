@@ -5,6 +5,8 @@ import AppBar from '../AppBar';
 
 import Button from 'material-ui/Button';
 
+import EventsTable from '../EventsTable';
+
 import axios from 'axios';
 
 import Web3 from 'web3';
@@ -25,10 +27,12 @@ const {
 
 // console.log(transmuteConfig, TransmuteEventStore)
 
+
 class Dashboard extends Component {
   render() {
     return (
       <AppBar>
+        <EventsTable />
         <Button
           variant="raised"
           color="secondary"

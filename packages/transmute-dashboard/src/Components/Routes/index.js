@@ -8,6 +8,7 @@ import Home from '../Home';
 import Login from '../Login';
 import Settings from '../Settings';
 import Dashboard from '../Dashboard';
+import EventStorePage from '../EventStorePage';
 
 const config = {
   issuer: 'https://dev-665774.oktapreview.com/oauth2/default',
@@ -27,6 +28,7 @@ class Routes extends React.Component {
         <Route path="/login" exact={true} component={Login} />
         <Route path="/settings" exact={true} component={Settings} />
         <Route path="/dashboard" exact={true} component={Dashboard} />
+        <Route path="/eventstore/:address" exact={true} component={EventStorePage} />
         <Route path="/implicit/callback" component={ImplicitCallback} />
       </Security>
     );
