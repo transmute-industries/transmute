@@ -40,12 +40,13 @@ before_script:
 
 script:
 - helm install stable/kong --name gateway
-- helm install stable/ipfs --name mini-ipfs
+- helm install stable/ipfs --name decentralized-storage
 - helm install ./charts/ganache-cli --name=ganache
 - sleep 180
 
 - kubectl get services
 
+- export MINIKUBE_IP=$(minikube ip)
 - export KONG_ADMIN_URL=$(minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
 - export KONG_PROXY_URL=$(minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
 - export KONG_PROXY_PORT=$(kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')

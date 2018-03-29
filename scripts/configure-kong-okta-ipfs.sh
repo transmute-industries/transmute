@@ -12,8 +12,6 @@ export CONSUMER_ID=$(curl -k -X POST $KONG_ADMIN_URL/consumers \
     --data "custom_id=0" \
     | jq -r '.id')
 
-# curl -k -X DELETE $KONG_ADMIN_URL/consumers/29f2ad8b-2696-4bf7-88a4-27f4b30376eb \
-
 # Download JWT Signing Key
 node ./scripts/okta/write-okta-pem.js
 
