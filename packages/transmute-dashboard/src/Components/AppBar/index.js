@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
-import List from 'material-ui/List';
 import Typography from 'material-ui/Typography';
 import Divider from 'material-ui/Divider';
 import IconButton from 'material-ui/IconButton';
@@ -14,7 +13,13 @@ import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 import AccountCircle from 'material-ui-icons/AccountCircle';
 import Menu, { MenuItem } from 'material-ui/Menu';
-import { demoMenuList } from './tileData';
+
+import Button from 'material-ui/Button';
+
+import { withAuth } from '@okta/okta-react';
+
+import PrimaryMenu from './PrimaryMenu';
+import SecondaryMenu from './SecondaryMenu';
 
 const drawerWidth = 240;
 
@@ -25,6 +30,9 @@ const styles = theme => ({
     // marginTop: theme.spacing.unit * 3,
     zIndex: 1,
     overflow: 'hidden'
+  },
+  loginButton: {
+    marginRight: '10px'
   },
   flex: {
     flex: 1
@@ -102,7 +110,7 @@ const styles = theme => ({
 
 class MiniDrawer extends React.Component {
   state = {
-    auth: false,
+    authenticated: false,
     isDrawerOpen: false
   };
 
@@ -114,10 +122,6 @@ class MiniDrawer extends React.Component {
     this.setState({ isDrawerOpen: false });
   };
 
-  handleChange = (event, checked) => {
-    this.setState({ auth: checked });
-  };
-
   handleMenu = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -126,9 +130,29 @@ class MiniDrawer extends React.Component {
     this.setState({ anchorEl: null });
   };
 
+  constructor(props) {
+    super(props);
+    this.state = { authenticated: null };
+    this.checkAuthentication = this.checkAuthentication.bind(this);
+    this.checkAuthentication();
+  }
+
+  async checkAuthentication() {
+    const authenticated = await this.props.auth.isAuthenticated();
+    if (authenticated !== this.state.authenticated) {
+      this.setState({ authenticated });
+    }
+  }
+
+  componentDidUpdate() {
+    this.checkAuthentication();
+  }
+
+ 
+
   render() {
     const { classes, theme } = this.props;
-    const { auth, anchorEl } = this.state;
+    const { authenticated, anchorEl } = this.state;
     const isMenuOpen = Boolean(anchorEl);
 
     return (
@@ -158,10 +182,20 @@ class MiniDrawer extends React.Component {
                 noWrap
                 className={classNames(classes.flex)}
               >
-                EventStore Demo
+                Transmute
               </Typography>
+              {!authenticated && (
+                <Button
+                  variant="raised"
+                  color="secondary"
+                  onClick={this.props.auth.login}
+                  className={classes.loginButton}
+                >
+                  Login
+                </Button>
+              )}
 
-              {auth && (
+              {authenticated && (
                 <div>
                   <IconButton
                     aria-owns={isMenuOpen ? 'menu-appbar' : null}
@@ -187,6 +221,7 @@ class MiniDrawer extends React.Component {
                   >
                     <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                     <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                    <MenuItem onClick={this.props.auth.logout}>Logout</MenuItem>
                   </Menu>
                 </div>
               )}
@@ -212,10 +247,11 @@ class MiniDrawer extends React.Component {
                   )}
                 </IconButton>
               </div>
-              {/* <Divider />
-              <List>{demoMenuList}</List>
               <Divider />
-              <List>{otherMailFolderListItems}</List> */}
+
+              {this.state.authenticated && <PrimaryMenu />}
+
+              <SecondaryMenu />
             </div>
           </Drawer>
           <main className={classes.content}>{this.props.children}</main>
@@ -230,4 +266,4 @@ MiniDrawer.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(MiniDrawer);
+export default withStyles(styles, { withTheme: true })(withAuth(MiniDrawer));

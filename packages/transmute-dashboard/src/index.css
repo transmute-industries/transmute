@@ -9,3 +9,8 @@ body {
 #root {
     height: 100%;
 }
+
+#root div:nth-child(2) {
+    height: 100%;
+}
+

@@ -1,10 +1,13 @@
 {
   "license": "MIT",
   "devDependencies": {
+    "jsonwebtoken": "^8.2.0",
+    "jwk-to-pem": "^2.0.0",
     "lerna": "^2.5.1"
   },
   "scripts": {
-    "migrate": "lerna run migrate --scope transmute-contracts",
-    "travis": "lerna run replace_and_test --scope transmute-framework"
+    "setup": "./setup/0.init.sh",
+    "status": "./setup/x1.status.sh",
+    "teardown": "./setup/x2.teardown.sh"
   }
 }

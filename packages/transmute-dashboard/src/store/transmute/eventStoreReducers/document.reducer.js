@@ -1,18 +1,24 @@
 const handlers = {
-  ['DOCUMENT_CREATED']: (state, action) => {
+  DOCUMENT_CREATED: (state, action) => {
     return {
       ...state,
-      created: {
-        ...action.payload
+      model: {
+        ...state.model,
+        created: {
+          ...action.payload
+        }
       }
     };
   },
-  ['DOCUMENT_SIGNED']: (state, action) => {
+  DOCUMENT_SIGNED: (state, action) => {
     return {
       ...state,
-      signatures: {
-        ...state.signatures,
-        [action.payload.name]: action.payload.signature
+      model: {
+        ...state.model,
+        signatures: {
+          ...state.signatures,
+          [action.payload.name]: action.payload.signature
+        }
       }
     };
   }
