@@ -21,7 +21,7 @@ class Settings extends Component {
 
             let data = await axios
               .create({
-                baseURL: 'https://ipfs.transmute.org:30503',
+                baseURL: '$KONG_NGROK_PROXY_URL',
                 timeout: 1000
               })
               .get('/api/v0/id?jwt=' + accessToken);

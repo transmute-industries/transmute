@@ -13,7 +13,7 @@ say 'kong is now ready...'
 
 export KONG_NGROK_PROXY_URL=$(minikube service gateway-kong-proxy --url | sed 's,http://'$MINIKUBE_IP',https://'$KONG_NGROK_HOST',g')
 
-echo $KONG_NGROK_PROXY_URL
+echo "KONG_NGROK_PROXY_URL "$KONG_NGROK_PROXY_URL
 
 curl -k -X GET \
   --url $KONG_ADMIN_URL/apis \

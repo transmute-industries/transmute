@@ -37,7 +37,7 @@ echo 'MINIKUBE_IP ' $MINIKUBE_IP
 
 echo ''
 
-./setup/1.install_kong.sh
+. ./setup/1.install_kong.sh
 
 echo 'Now ready to configure SSL...'
 
@@ -49,7 +49,7 @@ echo 'Now ready to configure SSL...'
 #  ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝     ╚══════╝╚══════╝╚══════╝
                                                                            
 
-./setup/2.ngrok_kong_ssl.sh
+. ./setup/2.ngrok_kong_ssl.sh
 
 echo 'Now ready to install IPFS...'
 
@@ -63,7 +63,7 @@ read -p "Press enter to continue"
 # ██║██║ ╚████║███████║   ██║   ██║  ██║███████╗███████╗    ██║██║     ██║     ███████║
 # ╚═╝╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝    ╚═╝╚═╝     ╚═╝     ╚══════╝
                                                                                      
-./setup/3.install_ipfs.sh
+. ./setup/3.install_ipfs.sh
 
 
 # ██╗███╗   ██╗███████╗████████╗ █████╗ ██╗     ██╗          ██████╗  █████╗ ███╗   ██╗ █████╗  ██████╗██╗  ██╗███████╗
@@ -73,4 +73,4 @@ read -p "Press enter to continue"
 # ██║██║ ╚████║███████║   ██║   ██║  ██║███████╗███████╗    ╚██████╔╝██║  ██║██║ ╚████║██║  ██║╚██████╗██║  ██║███████╗
 # ╚═╝╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝     ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝
                                                                                                                      
-./setup/4.install_ganache.sh
+. ./setup/4.install_ganache.sh

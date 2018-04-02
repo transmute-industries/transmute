@@ -11,9 +11,9 @@ import Dashboard from '../Dashboard';
 import EventStorePage from '../EventStorePage';
 
 const config = {
-  issuer: 'https://dev-665774.oktapreview.com/oauth2/default',
+  issuer: '$OKTA_HOSTNAME',
   redirect_uri: window.location.origin + '/implicit/callback',
-  client_id: '0oaed6dpppzPxFKTp0h7'
+  client_id: '$OKTA_CLIENT_ID'
 };
 
 class Routes extends React.Component {
