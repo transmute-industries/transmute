@@ -16,10 +16,9 @@ This guide will walk you through getting setup with Transmute.
 ### Minikube and Helm
 1. Minikube is a tool that makes it easy to run Kubernetes locally. Minikube runs a single-node Kubernetes cluster inside a VM on your laptop. [Install Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
 2. Helm is a tool for managing Kubernetes charts. Charts are packages of pre-configured Kubernetes resources. [Install Helm](https://github.com/kubernetes/helm/blob/master/docs/install.md)
-3. Run `$ helm version` to ensure helm has been installed properly
-4. Run `$ minikube version` to ensure minikube has been installed properly
-5. Run `$ minikube start` to start your local kubernetes cluster
-6. Run `$ minikube stop` to stop your local kubernetes cluster
+3. Run `$ minikube version` to ensure minikube has been installed properly
+4. Run `$ minikube start` to start your local kubernetes cluster
+5. Run `$ helm version` to ensure helm has been installed properly
 
 ### Custom Domain
 In order to secure resources with SSL, you will need a custom domain. You can reserve one with [Google Domains](domains.google.com) or similar domain registration services.
@@ -39,6 +38,11 @@ tunnels:
     addr: 80
     proto: http
     hostname: $YOUR_CUSTOM_SUBDOMAIN
+  # kong:
+  #   addr: $KONG_URL_AND_PORT
+  #   proto: tls
+  #   bind_tls: true
+  #   hostname: $YOUR_CUSTOM_SUBDOMAIN
 ```
 6. Update `transmute-config/.example.env` with:
     * `KONG_NGROK_HOST` will map to $YOUR_CUSTOM_SUBDOMAIN (Ex: dev.example.com)
@@ -56,8 +60,8 @@ Cerbot allows us to create SSl certificates with letsencrypt for our subdomain.
 
 ### Okta
 1. [Sign Up](https://developer.okta.com/signup/)
-2. [Add an OpenID Connect Client in Okta](https://developer.okta.com/quickstart/#/react/nodejs/generic) (Only complete the section with this name and then skip over to the configuration section) - This will be for authenticating users on your frontend.
-3. Use the "Configuration" section and information about your application in Okta to update the values in `packages/trasnmute-dashboard/src/Components/Routes/index.js`
+2. [Add an OpenID Connect Client in Okta](https://developer.okta.com/quickstart/#/react/nodejs/generic) __Make sure to use port 3000 and not 8080 for these URIs__ - This will be for authenticating users on your frontend.
+3. Use the "Configuration" section and information about your application in Okta to update the values in `packages/transmute-dashboard/src/Components/Routes/index.js`
 4. Add a native application (Applications -> add application) - this will be for testing the issuance of JWTs during setup.
     * For "Allowed grant types", choose "Authorization Code", "Refresh Token", and "Resource Owner Password".
     * Click "Done"
@@ -98,3 +102,5 @@ Final steps - linking everything and migrating your smart contracts
 6. Navigate to the `/packages/transmute-dashboard/` directory
 7. Run `npm run truffle:migrate`
 8. Run `npm run start`
+
+That's it! Login to the app and click on the dashbaord button in the side menu to begin recording events!

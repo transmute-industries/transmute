@@ -16,7 +16,6 @@ say $WELCOME
 echo 'Transmute Config can be found here:\n'
 
 echo ' - ./transmute-config/.env'
-echo ' - ./transmute-config/env.json'
 
 echo ''
 
