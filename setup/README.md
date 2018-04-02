@@ -39,7 +39,7 @@ Setup your ngrok configuration file:
 authtoken: TOKEN
 tunnels:
   kong:
-    addr: 192.168.99.100:32443
+    addr: 192.168.99.100:30689
     proto: tls
     bind_tls: true
     hostname: orie.transmute.live

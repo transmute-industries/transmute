@@ -1,5 +1,3 @@
-
-
 helm install stable/ipfs --name decentralized-storage
 
 export IPFS_CLUSTER_IP=$(kubectl get service decentralized-storage-ipfs -o json | jq -r '.spec.clusterIP');
@@ -24,7 +22,7 @@ curl -k -X POST \
   --data "name=jwt"  \
   | jq
 
-./scripts/okta/write-okta-pem.js
+node ../scripts/okta/write-okta-pem.js
 
 curl -k -X POST \
   --url $KONG_ADMIN_URL/consumers \
@@ -34,11 +32,11 @@ curl -k -X POST \
 curl -k -X POST \
   --url $KONG_ADMIN_URL/consumers/$KONG_CONSUMER_USERNAME/jwt \
   -F "algorithm=RS256" \
-  -F "rsa_public_key=@"$OUTPUT_FILE \
+  -F "rsa_public_key=@okta.pem" \
   -F "key=https://"$OKTA_HOSTNAME"/oauth2/default"  | jq
 
 
-export ACCESS_TOKEN=$(node ./scripts/okta/get-okta-token.js)
+export ACCESS_TOKEN=$(node ../scripts/okta/get-okta-token.js)
 
 export KONG_NGROK_PROXY_URL=$(minikube service gateway-kong-proxy --url | sed 's,http://'$MINIKUBE_IP',https://'$KONG_NGROK_HOST',g')
 
@@ -55,6 +53,6 @@ echo 'Enabling CORS for IPFS'
 export POD_NAME=$(kubectl get pods --namespace default -l "app=ipfs,release=decentralized-storage"  -o jsonpath="{.items[0].metadata.name}")
 kubectl exec -it $POD_NAME -- ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
 kubectl exec -it $POD_NAME -- ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST"]'
-
+kubectl get pod $POD_NAME -o yaml | kubectl replace --force -f -
 
 

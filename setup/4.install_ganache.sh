@@ -1,11 +1,8 @@
+helm install ../charts/ganache-cli/ --name ganache
 
-
-
-helm install ./charts/ganache-cli/ --name ganache
-
-# export KONG_ADMIN_URL=$(minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
-# export GANACHE_CLUSTER_IP=$(kubectl get service ganache-ganache-cli -o json | jq -r '.spec.clusterIP');
-# export KONG_NGROK_PROXY_URL=$(minikube service gateway-kong-proxy --url | sed 's,http://'$MINIKUBE_IP',https://'$KONG_NGROK_HOST',g')
+export KONG_ADMIN_URL=$(minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
+export GANACHE_CLUSTER_IP=$(kubectl get service ganache-ganache-cli -o json | jq -r '.spec.clusterIP');
+export KONG_NGROK_PROXY_URL=$(minikube service gateway-kong-proxy --url | sed 's,http://'$MINIKUBE_IP',https://'$KONG_NGROK_HOST',g')
 
 curl -k -X POST \
   --url $KONG_ADMIN_URL/apis/ \

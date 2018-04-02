@@ -48,11 +48,8 @@ echo 'Now ready to configure SSL...'
 # ╚██████╗╚██████╔╝██║ ╚████║██║     ██║╚██████╔╝    ███████║███████║███████╗
 #  ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝     ╚══════╝╚══════╝╚══════╝
                                                                            
-echo 'Edit and run ./setup/2.0.ngrok_kong_ssl.sh'
 
-read -p "Press enter to continue"
-
-./setup/2.1.ngrok_kong_ssl.sh
+./setup/2.ngrok_kong_ssl.sh
 
 echo 'Now ready to install IPFS...'
 

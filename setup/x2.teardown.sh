@@ -19,6 +19,6 @@ helm delete --purge ganache
 
 helm delete --purge gateway 
 
-rm ./setup/okta.pem
+rm okta.pem
 
 say 'helm teardown complete.'
