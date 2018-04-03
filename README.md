@@ -89,8 +89,8 @@ At the end of this process, you should see the following variables listed in the
 * Kong proxy port `KONG_PROXY_PORT`
 
 With these we will be updating a few files.
-1. Update `/transmute-config/env.json` with these values. (`KONG_PROXY_PORT` should not be in quotes, it is a number)
-2. Copy `/transmute-config/env.json` into `/packages/transmute-dashboard/src/transmute-config/env.json`
+1. Update `/packages/transmute-dashboard/src/transmute-config/env.json` with these values. (`KONG_PROXY_PORT` should not be in quotes, it is a number)
+2. Copy `/packages/transmute-dashboard/src/transmute-config/env.json` into `/transmute-config/env.json`
 3. Update `$KONG_NGROK_PROXY_URL` in `/packages/transmute-dashboard/src/Components/Settings/index.js`
 
 Final steps - linking everything and migrating your smart contracts

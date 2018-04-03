@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
@@ -188,7 +190,7 @@ class MiniDrawer extends React.Component {
                 <Button
                   variant="raised"
                   color="secondary"
-                  onClick={this.props.auth.login}
+                  href="/login"
                   className={classes.loginButton}
                 >
                   Login
@@ -266,4 +268,4 @@ MiniDrawer.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(withAuth(MiniDrawer));
+export default withStyles(styles, { withTheme: true })(withAuth(MiniDrawer))

@@ -99,14 +99,14 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x6060604052341561000f57600080fd5b60018054600160a060020a03191633600160a060020a0316179055610380806100396000396000f30060606040526004361061006b5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041662f55d9d811461007057806306661abd1461009e5780638da5cb5b146100c3578063e2e52ec1146100ff578063ed2e5a9714610118575b600080fd5b341561007b57600080fd5b61009c73ffffffffffffffffffffffffffffffffffffffff6004351661016f565b005b34156100a957600080fd5b6100b16101b0565b60405190815260200160405180910390f35b34156100ce57600080fd5b6100d66101b6565b60405173ffffffffffffffffffffffffffffffffffffffff909116815260200160405180910390f35b341561010a57600080fd5b61009c6004356024356101d2565b341561012357600080fd5b61012e60043561029a565b60405193845273ffffffffffffffffffffffffffffffffffffffff909216602084015260408084019190915260608301919091526080909101905180910390f35b6001543373ffffffffffffffffffffffffffffffffffffffff90811691161461019757600080fd5b8073ffffffffffffffffffffffffffffffffffffffff16ff5b60005490565b60015473ffffffffffffffffffffffffffffffffffffffff1681565b6001543373ffffffffffffffffffffffffffffffffffffffff9081169116146101fa57600080fd5b73__EventStoreLib_________________________630d93ee9c600084846000604051602001526040517c010000000000000000000000000000000000000000000000000000000063ffffffff861602815260048101939093526024830191909152604482015260640160206040518083038186803b151561027b57600080fd5b6102c65a03f4151561028c57600080fd5b505050604051805150505050565b60008060008073__EventStoreLib_________________________631b68f0916000876000604051608001526040517c010000000000000000000000000000000000000000000000000000000063ffffffff85160281526004810192909252602482015260440160806040518083038186803b151561031857600080fd5b6102c65a03f4151561032957600080fd5b50505060405180519060200180519060200180519060200180519050935093509350935091935091935600a165627a7a72305820f98bbdccf82d196c2a52ea51baad6089d7090b4bb73953999490ebec92180a5c0029",
-  "deployedBytecode": "0x60606040526004361061006b5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041662f55d9d811461007057806306661abd1461009e5780638da5cb5b146100c3578063e2e52ec1146100ff578063ed2e5a9714610118575b600080fd5b341561007b57600080fd5b61009c73ffffffffffffffffffffffffffffffffffffffff6004351661016f565b005b34156100a957600080fd5b6100b16101b0565b60405190815260200160405180910390f35b34156100ce57600080fd5b6100d66101b6565b60405173ffffffffffffffffffffffffffffffffffffffff909116815260200160405180910390f35b341561010a57600080fd5b61009c6004356024356101d2565b341561012357600080fd5b61012e60043561029a565b60405193845273ffffffffffffffffffffffffffffffffffffffff909216602084015260408084019190915260608301919091526080909101905180910390f35b6001543373ffffffffffffffffffffffffffffffffffffffff90811691161461019757600080fd5b8073ffffffffffffffffffffffffffffffffffffffff16ff5b60005490565b60015473ffffffffffffffffffffffffffffffffffffffff1681565b6001543373ffffffffffffffffffffffffffffffffffffffff9081169116146101fa57600080fd5b73__EventStoreLib_________________________630d93ee9c600084846000604051602001526040517c010000000000000000000000000000000000000000000000000000000063ffffffff861602815260048101939093526024830191909152604482015260640160206040518083038186803b151561027b57600080fd5b6102c65a03f4151561028c57600080fd5b505050604051805150505050565b60008060008073__EventStoreLib_________________________631b68f0916000876000604051608001526040517c010000000000000000000000000000000000000000000000000000000063ffffffff85160281526004810192909252602482015260440160806040518083038186803b151561031857600080fd5b6102c65a03f4151561032957600080fd5b50505060405180519060200180519060200180519060200180519050935093509350935091935091935600a165627a7a72305820f98bbdccf82d196c2a52ea51baad6089d7090b4bb73953999490ebec92180a5c0029",
-  "sourceMap": "57:727:0:-;;;155:64;;;;;;;;194:5;:18;;-1:-1:-1;;;;;;194:18:0;202:10;-1:-1:-1;;;;;194:18:0;;;;57:727;;;-1:-1:-1;57:727:0;;",
-  "deployedSourceMap": "57:727:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;667:115;;;;;;;;;;;;;;;;;;225:91;;;;;;;;;;;;;;;;;;;;;;;;;;;127:20;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;322:189;;;;;;;;;;;;;;;;521:140;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;667:115;739:5;;725:10;739:5;725:19;;;739:5;;725:19;717:28;;;;;;768:6;755:20;;;225:91;268:4;290:19;225:91;:::o;127:20::-;;;;;;:::o;322:189::-;404:5;;390:10;404:5;390:19;;;404:5;;390:19;382:28;;;;;;420:13;:19;453:5;472:3;489:5;420:84;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;;;322:189:0:o;521:140::-;572:4;578:7;587;596;622:13;:18;641:5;648;622:32;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;615:39;;;;;;;;521:140;;;;;:::o",
+  "bytecode": "0x6060604052341561000f57600080fd5b33600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506104888061005f6000396000f30060606040526004361061006c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168062f55d9d1461007157806306661abd146100aa5780638da5cb5b146100d3578063e2e52ec114610128578063ed2e5a971461015c575b600080fd5b341561007c57600080fd5b6100a8600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506101e4565b005b34156100b557600080fd5b6100bd610259565b6040518082815260200191505060405180910390f35b34156100de57600080fd5b6100e6610268565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b341561013357600080fd5b61015a6004808035600019169060200190919080356000191690602001909190505061028e565b005b341561016757600080fd5b61017d600480803590602001909190505061039e565b604051808581526020018473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018360001916600019168152602001826000191660001916815260200194505050505060405180910390f35b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561024057600080fd5b8073ffffffffffffffffffffffffffffffffffffffff16ff5b60008060000180549050905090565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161415156102ea57600080fd5b73__EventStoreLib_________________________630d93ee9c600084846000604051602001526040518463ffffffff167c01000000000000000000000000000000000000000000000000000000000281526004018084815260200183600019166000191681526020018260001916600019168152602001935050505060206040518083038186803b151561037e57600080fd5b6102c65a03f4151561038f57600080fd5b50505060405180519050505050565b60008060008073__EventStoreLib_________________________631b68f0916000876000604051608001526040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808381526020018281526020019250505060806040518083038186803b151561042057600080fd5b6102c65a03f4151561043157600080fd5b50505060405180519060200180519060200180519060200180519050935093509350935091935091935600a165627a7a72305820741782bd26eb748072cddce0d9181e7968ff867e4cad065a1f7ba54e9d99a1ab0029",
+  "deployedBytecode": "0x60606040526004361061006c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168062f55d9d1461007157806306661abd146100aa5780638da5cb5b146100d3578063e2e52ec114610128578063ed2e5a971461015c575b600080fd5b341561007c57600080fd5b6100a8600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506101e4565b005b34156100b557600080fd5b6100bd610259565b6040518082815260200191505060405180910390f35b34156100de57600080fd5b6100e6610268565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b341561013357600080fd5b61015a6004808035600019169060200190919080356000191690602001909190505061028e565b005b341561016757600080fd5b61017d600480803590602001909190505061039e565b604051808581526020018473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018360001916600019168152602001826000191660001916815260200194505050505060405180910390f35b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561024057600080fd5b8073ffffffffffffffffffffffffffffffffffffffff16ff5b60008060000180549050905090565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161415156102ea57600080fd5b73__EventStoreLib_________________________630d93ee9c600084846000604051602001526040518463ffffffff167c01000000000000000000000000000000000000000000000000000000000281526004018084815260200183600019166000191681526020018260001916600019168152602001935050505060206040518083038186803b151561037e57600080fd5b6102c65a03f4151561038f57600080fd5b50505060405180519050505050565b60008060008073__EventStoreLib_________________________631b68f0916000876000604051608001526040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808381526020018281526020019250505060806040518083038186803b151561042057600080fd5b6102c65a03f4151561043157600080fd5b50505060405180519060200180519060200180519060200180519050935093509350935091935091935600a165627a7a72305820741782bd26eb748072cddce0d9181e7968ff867e4cad065a1f7ba54e9d99a1ab0029",
+  "sourceMap": "57:727:0:-;;;155:64;;;;;;;;202:10;194:5;;:18;;;;;;;;;;;;;;;;;;57:727;;;;;;",
+  "deployedSourceMap": "57:727:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;667:115;;;;;;;;;;;;;;;;;;;;;;;;;;;;225:91;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;127:20;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;322:189;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;521:140;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;667:115;739:5;;;;;;;;;;;725:19;;:10;:19;;;717:28;;;;;;;;768:6;755:20;;;225:91;268:4;290:5;:12;;:19;;;;283:26;;225:91;:::o;127:20::-;;;;;;;;;;;;;:::o;322:189::-;404:5;;;;;;;;;;;390:19;;:10;:19;;;382:28;;;;;;;;420:13;:19;453:5;472:3;489:5;420:84;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;322:189;;:::o;521:140::-;572:4;578:7;587;596;622:13;:18;641:5;648;622:32;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;615:39;;;;;;;;521:140;;;;;:::o",
   "source": "pragma solidity ^0.4.19;\n\nimport \"./EventStoreLib.sol\";\n\ncontract EventStore {\n\n    EventStoreLib.TransmuteStorage store;\n\n    address public owner;\n \n    function EventStore() public {\n        owner = msg.sender;\n    }\n\n    function count() public view \n    returns (uint){\n        return store.events.length;\n    }\n\n    function write(bytes32 key, bytes32 value) public {\n        require(msg.sender == owner);\n        EventStoreLib.write(\n            store,\n            key,\n            value\n        );\n    }\n    \n    function read(uint index) public view\n    returns (uint, address, bytes32, bytes32 ){\n        return EventStoreLib.read(store, index);\n    }\n\n    function destroy(address target) public {\n        require(msg.sender == owner);\n        selfdestruct(target);\n    }\n}",
-  "sourcePath": "/Users/orie/OR13/transmute/packages/transmute-eventstore/contracts/EventStore.sol",
+  "sourcePath": "/Users/ericolszewski/Developer/Transmute/projects/sandbox/transmute/packages/transmute-eventstore/contracts/EventStore.sol",
   "ast": {
-    "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-eventstore/contracts/EventStore.sol",
+    "absolutePath": "/Users/ericolszewski/Developer/Transmute/projects/sandbox/transmute/packages/transmute-eventstore/contracts/EventStore.sol",
     "exportedSymbols": {
       "EventStore": [
         86
@@ -127,7 +127,7 @@
         "src": "0:24:0"
       },
       {
-        "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-eventstore/contracts/EventStoreLib.sol",
+        "absolutePath": "/Users/ericolszewski/Developer/Transmute/projects/sandbox/transmute/packages/transmute-eventstore/contracts/EventStoreLib.sol",
         "file": "./EventStoreLib.sol",
         "id": 2,
         "nodeType": "ImportDirective",
@@ -241,7 +241,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 221,
+                        "referencedDeclaration": 278,
                         "src": "202:3:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -441,7 +441,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 221,
+                            "referencedDeclaration": 278,
                             "src": "390:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -495,7 +495,7 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 224,
+                      "referencedDeclaration": 281,
                       "src": "382:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -988,7 +988,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 221,
+                            "referencedDeclaration": 278,
                             "src": "725:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -1042,7 +1042,7 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 224,
+                      "referencedDeclaration": 281,
                       "src": "717:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -1096,7 +1096,7 @@
                       "name": "selfdestruct",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 227,
+                      "referencedDeclaration": 284,
                       "src": "755:12:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_selfdestruct_nonpayable$_t_address_$returns$__$",
@@ -1184,7 +1184,7 @@
     "src": "0:784:0"
   },
   "legacyAST": {
-    "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-eventstore/contracts/EventStore.sol",
+    "absolutePath": "/Users/ericolszewski/Developer/Transmute/projects/sandbox/transmute/packages/transmute-eventstore/contracts/EventStore.sol",
     "exportedSymbols": {
       "EventStore": [
         86
@@ -1205,7 +1205,7 @@
         "src": "0:24:0"
       },
       {
-        "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-eventstore/contracts/EventStoreLib.sol",
+        "absolutePath": "/Users/ericolszewski/Developer/Transmute/projects/sandbox/transmute/packages/transmute-eventstore/contracts/EventStoreLib.sol",
         "file": "./EventStoreLib.sol",
         "id": 2,
         "nodeType": "ImportDirective",
@@ -1319,7 +1319,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 221,
+                        "referencedDeclaration": 278,
                         "src": "202:3:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -1519,7 +1519,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 221,
+                            "referencedDeclaration": 278,
                             "src": "390:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -1573,7 +1573,7 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 224,
+                      "referencedDeclaration": 281,
                       "src": "382:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -2066,7 +2066,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 221,
+                            "referencedDeclaration": 278,
                             "src": "725:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -2120,7 +2120,7 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 224,
+                      "referencedDeclaration": 281,
                       "src": "717:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -2174,7 +2174,7 @@
                       "name": "selfdestruct",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 227,
+                      "referencedDeclaration": 284,
                       "src": "755:12:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_selfdestruct_nonpayable$_t_address_$returns$__$",
@@ -2612,7 +2612,7 @@
       "address": "0x0029b817079e61559ac8e328c81f93b6f8064dbe",
       "transactionHash": "0xa1a830fd7bab32e38a16fd139bece87916e0ffe5702d0e831eaaf1a49122d461"
     },
-    "1522245407739": {
+    "1522683543396": {
       "events": {
         "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
           "anonymous": false,
@@ -2643,12 +2643,12 @@
         }
       },
       "links": {
-        "EventStoreLib": "0x8122cde49b988204a2ecc5e9581c267b4c7301f5"
+        "EventStoreLib": "0x401d3b45078686ed3c4d23bf6fa47ca7c98e1263"
       },
-      "address": "0x525499c1ec88fb73f476ec94f6313d713a8233c1",
-      "transactionHash": "0xc08dc5309b0731752237816af14b068226f66b62c17f8f0a86d8dc7f244d6780"
+      "address": "0x039ea343685a648459f221decd83ec0f213ba9dc",
+      "transactionHash": "0x686769881da0075bb06ffa8f4de07b83c21d964c333d1d9becc4ca70b037787a"
     },
-    "1522248729445": {
+    "1522776330146": {
       "events": {
         "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
           "anonymous": false,
@@ -2679,12 +2679,12 @@
         }
       },
       "links": {
-        "EventStoreLib": "0x9c6eba18829e0acac18eb44def3a27d92ddd46cc"
+        "EventStoreLib": "0x0c5bbdcac785b7551e57f325696c8d857d51cbcb"
       },
-      "address": "0xae709ae4269bb4b8e43df7bbc1ae8af2879d0a01",
-      "transactionHash": "0xb884a13a184c4352b9febb17ca7c203ef60a9d5431ec1407f1ae7ad002c6718a"
+      "address": "0x0abc9ac4649b2321fa48efbaf017a5455bffd969",
+      "transactionHash": "0x7e17894609decdda7ab145fcf5e40ec1e00c69abab8eede2eecab00fec24a92f"
     }
   },
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-03-28T14:53:54.804Z"
+  "updatedAt": "2018-04-03T21:13:37.554Z"
 }
