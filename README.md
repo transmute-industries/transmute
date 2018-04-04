@@ -46,6 +46,8 @@ tunnels:
 ```
 6. Update `transmute-config/.example.env` with:
     * `KONG_NGROK_HOST` will map to $YOUR_CUSTOM_SUBDOMAIN (Ex: dev.example.com)
+7. Update your hosts file to map $YOUR_CUSTOM_SUBDOMAIN to your minikube ip
+    * `echo "$(minikube ip)  $YOUR_CUSTOM_SUBDOMAIN" | sudo tee -a /etc/hosts`
 
 ### Certbot
 Cerbot allows us to create SSl certificates with letsencrypt for our subdomain.
