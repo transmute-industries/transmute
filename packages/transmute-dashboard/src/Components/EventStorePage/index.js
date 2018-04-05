@@ -33,6 +33,7 @@ class EventStorePage extends Component {
       eventStoreArtifact,
       ...transmuteConfig
     });
+
     eventStore.eventStoreContractInstance = await eventStore.eventStoreContract.at(
       maybeAddress
     );
@@ -75,12 +76,35 @@ class EventStorePage extends Component {
     await this.loadAllEvents();
   };
 
+  onUploadFile = (event) => {
+    event.stopPropagation()
+    event.preventDefault()
+    const file = event.target.files[0]
+    let reader = new window.FileReader()
+    reader.onloadend = () => this.writeFileFromReader(reader)
+    reader.readAsArrayBuffer(file)
+  }
+
+  writeFileFromReader = (reader) => {
+    let ipfsId
+    const buffer = Buffer.from(reader.result)
+    let { eventStore } = this.state;
+    eventStore.ipfs.ipfs.add(buffer, { progress: (prog) => console.log(`received: ${prog}`) })
+      .then((response) => {
+        ipfsId = response[0].hash
+        console.log("api/v0/cat?arg=" + ipfsId)
+      }).catch((err) => {
+        console.error(err)
+      })
+  }
+
   render() {
     return (
       <div>
         <RecordEventDialog
           defaultEvent={this.props.defaultEvent}
           onSave={this.onSaveEvent}
+          onUpload={this.onUploadFile}
         />
         <EventsTable events={this.state.events} />
       </div>
