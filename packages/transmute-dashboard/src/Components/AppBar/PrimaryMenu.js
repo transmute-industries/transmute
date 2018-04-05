@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { push } from 'react-router-redux';
+import { Link } from 'react-router-dom';
 
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
@@ -24,25 +24,23 @@ class PrimaryMenu extends Component {
         <ListItem
           button
           key={'dashboard'}
-          onClick={() => {
-            this.props.actions.go('/dashboard');
-          }}
         >
-          <ListItemIcon>
-            <Dashboard />
-          </ListItemIcon>
+          <Link to='/dashboard'>
+            <ListItemIcon>
+              <Dashboard />
+            </ListItemIcon>
+          </Link>
           <ListItemText primary="Dashboard" />
         </ListItem>
         <ListItem
           button
           key={'settings'}
-          onClick={() => {
-            this.props.actions.go('/settings');
-          }}
         >
-          <ListItemIcon>
-            <Settings />
-          </ListItemIcon>
+          <Link to='/settings'>
+            <ListItemIcon>
+              <Settings />
+            </ListItemIcon>
+          </Link>
           <ListItemText primary="Settings" />
         </ListItem>
 
@@ -52,21 +50,4 @@ class PrimaryMenu extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return { todos: state.todos };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(
-      {
-        go: somePath => push(somePath)
-      },
-      dispatch
-    )
-  };
-}
-
-export default withAuth(
-  connect(mapStateToProps, mapDispatchToProps)(PrimaryMenu)
-);
+export default withAuth(PrimaryMenu);
