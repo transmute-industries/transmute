@@ -65,8 +65,6 @@ script:
 - TRANSMUTE_ENV=minikube ACCESS_TOKEN=$(node ./scripts/okta/get-okta-token.js) lerna run --scope transmute-eventstore test
 - TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore test:report
 - TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore build
-# - TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore test:smoke 
-
 - TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore truffle:test
 
 - lerna run --scope transmute-eventstore truffle:coverage
