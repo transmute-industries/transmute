@@ -1,68 +1,72 @@
-import React, { Component } from 'react';
-import { withAuth } from '@okta/okta-react';
+import LoginPage from './LoginPage';
 
-import AppBar from '../AppBar';
+export default LoginPage;
 
-import Button from 'material-ui/Button';
+// import React, { Component } from 'react';
+// import { withAuth } from '@okta/okta-react';
 
-// import IPFS from 'transmute-kepler';
+// import AppBar from '../AppBar';
 
-// import transmuteConfig from '../../transmute-config.json';
+// import Button from 'material-ui/Button';
 
-// const config = transmuteConfig.dev.ipfs.config;
+// // import IPFS from 'transmute-kepler';
 
-// import Playground from 'playground-js-api'
+// // import transmuteConfig from '../../transmute-config.json';
 
-// var config = {...};
-// Playground.authenticate(config, "qsocks").then(function(ticket){
-//   config.ticket = ticket
-//   qsocks.ConnectOpenApp(config).then(function(result){
-//     //we're now connected
-//   });
-// });
+// // const config = transmuteConfig.dev.ipfs.config;
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { authenticated: null };
-    this.checkAuthentication = this.checkAuthentication.bind(this);
-    this.checkAuthentication();
-  }
+// // import Playground from 'playground-js-api'
 
-  async checkAuthentication() {
-    const authenticated = await this.props.auth.isAuthenticated();
-    if (authenticated !== this.state.authenticated) {
-      this.setState({ authenticated });
-    }
-  }
+// // var config = {...};
+// // Playground.authenticate(config, "qsocks").then(function(ticket){
+// //   config.ticket = ticket
+// //   qsocks.ConnectOpenApp(config).then(function(result){
+// //     //we're now connected
+// //   });
+// // });
 
-  componentDidUpdate() {
-    this.checkAuthentication();
-  }
+// class Login extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = { authenticated: null };
+//     this.checkAuthentication = this.checkAuthentication.bind(this);
+//     this.checkAuthentication();
+//   }
 
-  render() {
-    return (
-      <AppBar>
-        {this.state.authenticated ? (
-          <Button
-            variant="raised"
-            color="secondary"
-            onClick={this.props.auth.logout}
-          >
-            Logout
-          </Button>
-        ) : (
-          <Button
-            variant="raised"
-            color="secondary"
-            onClick={this.props.auth.login}
-          >
-            Login
-          </Button>
-        )}
-      </AppBar>
-    );
-  }
-}
+//   async checkAuthentication() {
+//     const authenticated = await this.props.auth.isAuthenticated();
+//     if (authenticated !== this.state.authenticated) {
+//       this.setState({ authenticated });
+//     }
+//   }
 
-export default withAuth(Login);
+//   componentDidUpdate() {
+//     this.checkAuthentication();
+//   }
+
+//   render() {
+//     return (
+//       <AppBar>
+//         {this.state.authenticated ? (
+//           <Button
+//             variant="raised"
+//             color="secondary"
+//             onClick={this.props.auth.logout}
+//           >
+//             Logout
+//           </Button>
+//         ) : (
+//           <Button
+//             variant="raised"
+//             color="secondary"
+//             onClick={this.props.auth.login}
+//           >
+//             Login
+//           </Button>
+//         )}
+//       </AppBar>
+//     );
+//   }
+// }
+
+// export default withAuth(Login);

@@ -1,17 +1,9 @@
 import React, { Component } from 'react';
-
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { push } from 'react-router-redux';
-
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 
 import { withAuth } from '@okta/okta-react';
 
 import {
-  Fingerprint,
-  Dashboard,
-  Settings,
   HelpOutline,
   BugReport,
   Code
@@ -64,21 +56,4 @@ class SecondaryMenu extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return { todos: state.todos };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(
-      {
-        go: somePath => push(somePath)
-      },
-      dispatch
-    )
-  };
-}
-
-export default withAuth(
-  connect(mapStateToProps, mapDispatchToProps)(SecondaryMenu)
-);
+export default withAuth(SecondaryMenu);
