@@ -16,17 +16,18 @@ class Settings extends Component {
           variant="raised"
           color="secondary"
           onClick={async () => {
-            const accessToken = await this.props.auth.getAccessToken();
-            console.log(accessToken);
+            this.props.history.push('/dashbboard?hello=1');
+            // const accessToken = await this.props.auth.getAccessToken();
+            // console.log(accessToken);
 
-            let data = await axios
-              .create({
-                baseURL: '$KONG_NGROK_PROXY_URL',
-                timeout: 1000
-              })
-              .get('/api/v0/id?jwt=' + accessToken);
+            // let data = await axios
+            //   .create({
+            //     baseURL: '$KONG_NGROK_PROXY_URL',
+            //     timeout: 1000
+            //   })
+            //   .get('/api/v0/id?jwt=' + accessToken);
 
-            console.log(data);
+            // console.log(data);
           }}
         >
           Test IPFS

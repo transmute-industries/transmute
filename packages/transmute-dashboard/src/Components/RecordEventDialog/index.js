@@ -37,6 +37,10 @@ class ResponsiveDialog extends React.Component {
     this.handleClose();
   };
 
+  handleUpload = (event) => {
+    this.props.onUpload(event);
+  };
+
   componentWillMount() {
     this.setState({
       eventEditor: JSON.stringify(this.props.defaultEvent, null, 2)
@@ -54,6 +58,22 @@ class ResponsiveDialog extends React.Component {
           onClick={this.handleClickOpen}
         >
           Record Event
+        </Button>
+        <input
+          id="file"
+          type="file"
+          onChange={this.handleUpload}
+          style={{
+            width: 0,
+            height: 0,
+            opacity: 0,
+            overflow: 'hidden',
+            position: 'absolute',
+            zIndex: 1,
+          }}
+        />
+        <Button component="label" htmlFor="file">
+          Choose a file
         </Button>
         <Dialog
           fullScreen={fullScreen}
