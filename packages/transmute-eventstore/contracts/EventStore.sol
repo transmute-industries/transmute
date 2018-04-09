@@ -7,9 +7,11 @@ contract EventStore {
     EventStoreLib.TransmuteStorage store;
 
     address public owner;
+
+    function () public payable { revert(); }
  
     function EventStore() public {
-        owner = msg.sender;
+        owner = tx.origin;
     }
 
     function count() public view 
@@ -18,7 +20,6 @@ contract EventStore {
     }
 
     function write(bytes32 key, bytes32 value) public {
-        require(msg.sender == owner);
         EventStoreLib.write(
             store,
             key,
