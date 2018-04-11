@@ -14,13 +14,20 @@ contract EventStoreFactory {
         owner = msg.sender;
     }
 
-    function createEventStore() public returns (address) {
+    function createEventStore() public
+    returns (address) {
         EventStore eventStore = new EventStore();
         eventStores.push(address(eventStore));
         return address(eventStore);
     }
 
-    function getEventStores() public view returns (address[]) {
+    function getEventStores() public view
+    returns (address[]) {
         return eventStores;
+    }
+
+    function destroy(address target) public {
+        require(msg.sender == owner);
+        selfdestruct(target);
     }
 }

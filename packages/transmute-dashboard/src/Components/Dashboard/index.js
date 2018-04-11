@@ -2,31 +2,32 @@ import React, { Component } from 'react';
 import { withAuth } from '@okta/okta-react';
 import Button from 'material-ui/Button';
 
-let eventStoreArtifact = require('../../contracts/EventStore.json');
+let eventStoreFactoryArtifact = require('../../contracts/EventStoreFactory.json');
 
 let transmuteConfig = require('../../transmute-config');
 
 const {
-  EventStore
+  EventStoreFactory
 } = require('transmute-eventstore/dist/transmute-eventstore.cjs');
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
-    this.state = { defaultEventStoreContractAddress: null };
+    this.state = { defaultEventStoreFactoryContractAddress: null };
   }
 
   async componentWillMount() {
-    const eventStore = new EventStore({
-      eventStoreArtifact,
+    const eventStoreFactory = new EventStoreFactory({
+      eventStoreFactoryArtifact,
       ...transmuteConfig
     });
 
-    await eventStore.init();
+    await eventStoreFactory.init();
+    console.log('eventStoreFactory: ', eventStoreFactory);
 
     this.setState({
-      defaultEventStoreContractAddress:
-        eventStore.eventStoreContractInstance.address
+      defaultEventStoreFactoryContractAddress:
+        eventStoreFactory.eventStoreFactoryContractInstance.address
     });
   }
 
@@ -35,10 +36,10 @@ class Dashboard extends Component {
       <Button
         variant="raised"
         color="secondary"
-        href={"/eventstore/" + this.state.defaultEventStoreContractAddress}
+        href={"/eventstorefactory/" + this.state.defaultEventStoreFactoryContractAddress}
       >
-        Demo EventStore
-        </Button>
+        Demo EventStoreFactory
+      </Button>
     );
   }
 }

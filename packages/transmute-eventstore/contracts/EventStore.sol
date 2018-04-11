@@ -15,7 +15,7 @@ contract EventStore {
     }
 
     function count() public view 
-    returns (uint){
+    returns (uint) {
         return store.events.length;
     }
 
@@ -28,7 +28,7 @@ contract EventStore {
     }
     
     function read(uint index) public view
-    returns (uint, address, bytes32, bytes32 ){
+    returns (uint, address, bytes32, bytes32 ) {
         return EventStoreLib.read(store, index);
     }
 

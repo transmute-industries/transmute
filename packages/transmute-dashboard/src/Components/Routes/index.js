@@ -11,6 +11,7 @@ import Home from '../Home';
 import Login from '../Login';
 import Settings from '../Settings';
 import Dashboard from '../Dashboard';
+import EventStoreFactoryPage from '../EventStoreFactoryPage';
 import EventStorePage from '../EventStorePage';
 
 const auth = new Auth({
@@ -28,6 +29,7 @@ class Routes extends React.Component {
           <Route path='/login' exact={true} render={() => <Login baseUrl={config.url} />} />
           <SecureRoute path="/settings" exact={true} component={Settings} />
           <SecureRoute path="/dashboard" exact={true} component={Dashboard} />
+          <SecureRoute path="/eventstorefactory/:address" exact={true} component={EventStoreFactoryPage} />
           <SecureRoute path="/eventstore/:address" exact={true} component={EventStorePage} />
           <Route path="/implicit/callback" component={ImplicitCallback} />
         </AppBar>

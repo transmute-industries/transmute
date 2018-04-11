@@ -63,14 +63,6 @@ describe('transmute-eventstore', () => {
   });
 
   describe('getSlice', () => {
-    // it('throws on invalid params', async () => {
-    //   try {
-    //     let events = eventStore.getSlice(1, 0);
-    //   } catch (e) {
-    //     // expected
-    //   }
-    // });
-
     it('supports getting a single event', async () => {
       const mockEvent = mockEvents[0];
       let result = await eventStore.write(

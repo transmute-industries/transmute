@@ -54,14 +54,5 @@ describe('transmute-eventstore', () => {
         // expected...
       }
     });
-
-    // it('checks that all services are connected', async () => {
-    //   const eventStore = new EventStore({
-    //     eventStoreArtifact,
-    //     ...transmuteConfig
-    //   });
-    //   await eventStore.init();
-    //   const info = await eventStore.healthy();
-    // });
   });
 });

@@ -1,11 +1,8 @@
 const Web3 = require('web3');
-// const ProviderEngine = require('web3-provider-engine');
-// const RpcSubprovider = require('web3-provider-engine/subproviders/rpc.js');
-
 const contract = require('truffle-contract');
 const KeenTracking = require('keen-tracking');
 
-const TransmuteIpfsAdatper = require('../decentralized-storage/ipfs');
+const TransmuteIpfsAdapter = require('../decentralized-storage/ipfs');
 const pack = require('../../package.json');
 
 const GAS = require('../gas')
@@ -18,7 +15,7 @@ module.exports = class EventStore {
       );
     }
 
-    let { eventStoreArtifact, web3Config, keenConfig, ipfsConfig } = config;
+    let { eventStoreArtifact, web3Config, keenConfig, ipfsConfig, eventStoreAddress } = config;
 
     if (!eventStoreArtifact) {
       throw new Error(
@@ -42,28 +39,18 @@ module.exports = class EventStore {
       );
     }
 
-    // var engine = new ProviderEngine();
-
-    // engine.addProvider(
-    //   new RpcSubprovider({
-    //     rpcUrl: web3Config.providerUrl
-    //   })
-    // );
-
-    // engine.start();
-
     this.version = pack.version;
 
     this.web3 = new Web3(
       new Web3.providers.HttpProvider(web3Config.providerUrl)
     );
-    this.eventStoreArtifact = eventStoreArtifact;
 
+    this.eventStoreArtifact = eventStoreArtifact;
     this.eventStoreContract = contract(this.eventStoreArtifact);
     this.eventStoreContract.setProvider(this.web3.currentProvider);
 
     this.keen = new KeenTracking(keenConfig);
-    this.ipfs = new TransmuteIpfsAdatper(ipfsConfig);
+    this.ipfs = new TransmuteIpfsAdapter(ipfsConfig);
   }
 
   async getWeb3Accounts() {
@@ -127,14 +114,6 @@ module.exports = class EventStore {
     );
 
     const receipt = web3.eth.getTransactionReceipt(tx);
-
-    // console.log(rec);
-    // this.keen.recordEvent('TransmuteEvent', {
-    //   key,
-    //   value,
-    //   rec: rec
-    // });
-    // return rec;
 
     return {
       event: {
@@ -211,6 +190,6 @@ module.exports = class EventStore {
   }
 
   destroy(address) {
-    return this.eventStore.destroy(address);
+    return this.eventStoreContractInstance.destroy(address);
   }
 };
