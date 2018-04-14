@@ -69,3 +69,19 @@ export const updateEditor = text => {
     payload: text
   };
 };
+
+//
+
+export const registerViaEmail = data => {
+  return {
+    type: Constants.REGISTER_VIA_EMAIL,
+    payload: data
+  };
+};
+
+export const registerError = error => {
+  return {
+    type: Constants.REGISTER_ERROR,
+    payload: error
+  };
+};

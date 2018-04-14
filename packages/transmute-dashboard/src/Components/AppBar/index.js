@@ -150,8 +150,6 @@ class MiniDrawer extends React.Component {
     this.checkAuthentication();
   }
 
-
-
   render() {
     const { classes, theme } = this.props;
     const { authenticated, anchorEl } = this.state;
@@ -187,14 +185,24 @@ class MiniDrawer extends React.Component {
                 Transmute
               </Typography>
               {!authenticated && (
-                <Button
-                  variant="raised"
-                  color="secondary"
-                  href="/login"
-                  className={classes.loginButton}
-                >
-                  Login
-                </Button>
+                <div>
+                  <Button
+                    variant="raised"
+                    color="primary"
+                    href="/register"
+                    className={classes.loginButton}
+                  >
+                    Register
+                  </Button>
+                  <Button
+                    variant="raised"
+                    color="secondary"
+                    href="/login"
+                    className={classes.loginButton}
+                  >
+                    Login
+                  </Button>
+                </div>
               )}
 
               {authenticated && (
@@ -245,8 +253,8 @@ class MiniDrawer extends React.Component {
                   {theme.direction === 'rtl' ? (
                     <ChevronRightIcon />
                   ) : (
-                      <ChevronLeftIcon />
-                    )}
+                    <ChevronLeftIcon />
+                  )}
                 </IconButton>
               </div>
               <Divider />
@@ -268,4 +276,4 @@ MiniDrawer.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(withAuth(MiniDrawer))
+export default withStyles(styles, { withTheme: true })(withAuth(MiniDrawer));
