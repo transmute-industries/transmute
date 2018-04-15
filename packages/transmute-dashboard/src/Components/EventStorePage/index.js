@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom';
 
 import Button from 'material-ui/Button';
 
-import EventsTable from '../EventsTable';
-import RecordEventDialog from '../RecordEventDialog';
+import EventsTable from './EventsTable';
+import RecordEventDialog from './RecordEventDialog';
 
 let eventStoreArtifact = require('../../contracts/EventStore.json');
 let transmuteConfig = require('../../transmute-config');

@@ -10,7 +10,7 @@ body {
     height: 100%;
 }
 
-#root div:nth-child(2) {
+#root > div  {
     height: 100%;
 }
 

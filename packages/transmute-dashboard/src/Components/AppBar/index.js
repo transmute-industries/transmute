@@ -16,12 +16,18 @@ import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 import AccountCircle from 'material-ui-icons/AccountCircle';
 import Menu, { MenuItem } from 'material-ui/Menu';
 
+import { push } from 'react-router-redux';
+
 import Button from 'material-ui/Button';
 
 import { withAuth } from '@okta/okta-react';
 
+import * as actionsCreators from '../../store/user/actionCreators';
+
 import PrimaryMenu from './PrimaryMenu';
 import SecondaryMenu from './SecondaryMenu';
+
+import { history } from '../../store';
 
 const drawerWidth = 240;
 
@@ -143,6 +149,12 @@ class MiniDrawer extends React.Component {
     const authenticated = await this.props.auth.isAuthenticated();
     if (authenticated !== this.state.authenticated) {
       this.setState({ authenticated });
+      // if (!this.props.user.info && authenticated) {
+      //   const user = await this.props.auth.getUser();
+      //   this.props.setUserInfo(user);
+      // } else {
+      //   this.props.setUserInfo(null);
+      // }
     }
   }
 
@@ -177,6 +189,10 @@ class MiniDrawer extends React.Component {
                 <MenuIcon />
               </IconButton>
               <Typography
+                onClick={() => {
+                  history.push('/');
+                }}
+                style={{ cursor: 'pointer' }}
                 variant="title"
                 color="inherit"
                 noWrap
@@ -197,7 +213,12 @@ class MiniDrawer extends React.Component {
                   <Button
                     variant="raised"
                     color="secondary"
-                    href="/login"
+                    onClick={() => {
+                      // console.log(this.props);
+                      // this.props.goToPath('/login')
+                      history.push('/login');
+                      // this.props.auth.login();
+                    }}
                     className={classes.loginButton}
                   >
                     Login
@@ -231,7 +252,13 @@ class MiniDrawer extends React.Component {
                   >
                     <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                     <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                    <MenuItem onClick={this.props.auth.logout}>Logout</MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        this.props.auth.logout();
+                      }}
+                    >
+                      Logout
+                    </MenuItem>
                   </Menu>
                 </div>
               )}
@@ -258,9 +285,7 @@ class MiniDrawer extends React.Component {
                 </IconButton>
               </div>
               <Divider />
-
               {this.state.authenticated && <PrimaryMenu />}
-
               <SecondaryMenu />
             </div>
           </Drawer>
@@ -276,4 +301,21 @@ MiniDrawer.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(withAuth(MiniDrawer));
+const mapStateToProps = state => {
+  return {
+    user: state.user
+    // error: state.user.error
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    goToPath: somePath => {
+      dispatch(push(somePath));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withStyles(styles, { withTheme: true })(withAuth(MiniDrawer))
+);

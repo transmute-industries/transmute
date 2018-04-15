@@ -16,5 +16,3 @@ export const SAVE_EVENTS = 'SAVE_EVENTS';
 
 export const UPDATE_EDITOR = 'UPDATE_EDITOR';
 
-export const REGISTER_VIA_EMAIL = 'REGISTER_VIA_EMAIL';
-export const REGISTER_ERROR = 'REGISTER_ERROR';
