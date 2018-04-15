@@ -22,8 +22,6 @@ import Button from 'material-ui/Button';
 
 import { withAuth } from '@okta/okta-react';
 
-import * as actionsCreators from '../../store/user/actionCreators';
-
 import PrimaryMenu from './PrimaryMenu';
 import SecondaryMenu from './SecondaryMenu';
 
@@ -205,7 +203,9 @@ class MiniDrawer extends React.Component {
                   <Button
                     variant="raised"
                     color="primary"
-                    href="/register"
+                    onClick={() => {
+                      history.push('/register');
+                    }}
                     className={classes.loginButton}
                   >
                     Register
@@ -214,10 +214,7 @@ class MiniDrawer extends React.Component {
                     variant="raised"
                     color="secondary"
                     onClick={() => {
-                      // console.log(this.props);
-                      // this.props.goToPath('/login')
                       history.push('/login');
-                      // this.props.auth.login();
                     }}
                     className={classes.loginButton}
                   >
