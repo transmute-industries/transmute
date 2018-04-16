@@ -38,3 +38,9 @@ export const loginApiCall = (oktaAuth, email, password) => {
       });
   };
 };
+
+export const setWeb3Account = (web3Account) => {
+  return dispatch => {
+    dispatch(actionCreators.setWeb3Account(web3Account));
+  };
+};

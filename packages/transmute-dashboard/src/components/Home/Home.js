@@ -6,24 +6,11 @@ import AppBar from '../AppBar';
 class Home extends Component {
   render() {
     return (
-      <AppBar>
+      <div>
         <h1>Home</h1>
-        <button onClick={this.props.go}>Test Location</button>
-      </AppBar>
+      </div>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    // todo: state.todos[0]
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    go: () => dispatch(push('/protected'))
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;
