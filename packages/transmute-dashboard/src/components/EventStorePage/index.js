@@ -105,6 +105,7 @@ class EventStorePage extends Component {
           defaultEvent={this.props.defaultEvent}
           onSave={this.onSaveEvent}
           onUpload={this.onUploadFile}
+          history={this.props.history}
         />
         <EventsTable events={this.state.events} />
       </div>
@@ -112,22 +113,4 @@ class EventStorePage extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    defaultEvent: {
-      index: '1',
-      key: {
-        type: 'patient',
-        id: '0'
-      },
-      value: {
-        type: 'USER_REGISTERED',
-        username: 'bob@example.com'
-      }
-    }
-  };
-}
-
-export default withAuth(
-  connect(mapStateToProps, null)(EventStorePage)
-);
+export default (connect(null, null)(withAuth(EventStorePage)));

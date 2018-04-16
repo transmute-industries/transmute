@@ -1,9 +1,9 @@
 const transmuteConfig = require('../../../../../../transmute-config');
-const TransmuteIpfsAdatper = require('../index');
+const TransmuteIpfsAdapter = require('../index');
 
-describe('TransmuteIpfsAdatper', () => {
+describe('TransmuteIpfsAdapter', () => {
   it('healthy', async () => {
-    let tia = new TransmuteIpfsAdatper({
+    let tia = new TransmuteIpfsAdapter({
       ...transmuteConfig.ipfsConfig
     });
     let health = await tia.healthy();
@@ -11,7 +11,7 @@ describe('TransmuteIpfsAdatper', () => {
   });
 
   it('writeObject', async () => {
-    let tia = new TransmuteIpfsAdatper(transmuteConfig.ipfsConfig);
+    let tia = new TransmuteIpfsAdapter(transmuteConfig.ipfsConfig);
     let dagNode = await tia.writeObject({
       hello: 'world'
     });
@@ -19,7 +19,7 @@ describe('TransmuteIpfsAdatper', () => {
   });
 
   it('readObject', async () => {
-    let tia = new TransmuteIpfsAdatper(transmuteConfig.ipfsConfig);
+    let tia = new TransmuteIpfsAdapter(transmuteConfig.ipfsConfig);
     let dagNode = await tia.readObject(
       'QmS8NCThLouhUyomKpWaRoPZtu72qRh1myD3DUBAqz8qrX'
     );

@@ -277,8 +277,8 @@ class MiniDrawer extends React.Component {
                   {theme.direction === 'rtl' ? (
                     <ChevronRightIcon />
                   ) : (
-                    <ChevronLeftIcon />
-                  )}
+                      <ChevronLeftIcon />
+                    )}
                 </IconButton>
               </div>
               <Divider />
@@ -298,21 +298,4 @@ MiniDrawer.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => {
-  return {
-    user: state.user
-    // error: state.user.error
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    goToPath: somePath => {
-      dispatch(push(somePath));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(styles, { withTheme: true })(withAuth(MiniDrawer))
-);
+export default withStyles(styles, { withTheme: true })(withAuth(MiniDrawer))

@@ -8,8 +8,6 @@ import { reducer as user } from './user/reducer';
 
 import { routerReducer, routerMiddleware } from 'react-router-redux';
 
-// import transmute from './transmute';
-
 export const history = createHistory();
 
 const middleware = [routerMiddleware(history), thunk, logger];
@@ -31,7 +29,5 @@ export const store = createStore(
     user: user,
     router: routerReducer
   }),
-  enhancer
+  applyMiddleware(...middleware)
 );
-
-// transmute.init(store);

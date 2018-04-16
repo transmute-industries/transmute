@@ -73,7 +73,15 @@ class ResponsiveDialog extends React.Component {
           }}
         />
         <Button component="label" htmlFor="file">
-          Choose a file
+          Upload Document
+        </Button>
+        <Button
+          color="secondary"
+          variant="raised"
+          onClick={() => this.props.history.push(
+            window.location.pathname +"/model?filter=document&reducer=document")}
+        >
+          View Documents
         </Button>
         <Dialog
           fullScreen={fullScreen}

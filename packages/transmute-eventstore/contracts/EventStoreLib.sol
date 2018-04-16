@@ -44,7 +44,5 @@ library EventStoreLib {
             evt.key,
             evt.value
         );
-    }
-
-   
+    }   
 }

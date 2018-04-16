@@ -15,8 +15,10 @@ backup
 
 on_deck
 
-packages/transmute-framework/src/contracts
-packages/transmute-dashboard/src/contracts
+packages/transmute-framework/src/contracts/
+packages/transmute-dashboard/src/contracts/
+packages/transmute-eventstore/build/
+*.package-lock.json
 
 scratch
 

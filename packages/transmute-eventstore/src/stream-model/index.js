@@ -12,7 +12,6 @@ module.exports = class StreamModel {
   }
 
   applyEvent = event => {
-    // console.log(event.index)
     this.state.model = this.reducer(this.state.model, event);
     this.state.lastIndex = event.index;
   };
