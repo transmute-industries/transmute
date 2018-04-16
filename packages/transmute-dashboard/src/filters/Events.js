@@ -1,7 +1,6 @@
 import moment from 'moment';
 import _ from 'lodash';
 import { Types, Comparisons } from '../constants/filters';
-import mockEvents from './Events.json';
 
 export const attributeFilter = (event, filter) => {
   let { attribute, value, comparison, type } = filter;
