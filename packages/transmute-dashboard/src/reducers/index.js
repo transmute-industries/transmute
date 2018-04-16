@@ -4,7 +4,7 @@ import user from "./User";
 
 const OktaAppReducer = combineReducers({
   transmute,
-  user: user
+  user
 });
 
 export default OktaAppReducer;

@@ -7,24 +7,27 @@ import { Link } from 'react-router-dom';
 
 import Button from 'material-ui/Button';
 
-import EventsTable from '../EventsTable';
-import RecordEventDialog from '../RecordEventDialog';
+import StreamModelTable from '../StreamModelTable';
+
+import EventsReducer from '../../reducers/Events';
+import { filters } from '../../filters/Events';
 
 let eventStoreArtifact = require('../../contracts/EventStore.json');
 let transmuteConfig = require('../../transmute-config');
 
 const {
-  EventStore
+  EventStore,
+  StreamModel
 } = require('transmute-eventstore/dist/transmute-eventstore.cjs');
 
-class EventStorePage extends Component {
+class StreamModelPage extends Component {
   state = {
     accounts: null,
     eventStore: null,
     events: []
   };
 
-  loadAllEvents = async () => {
+  createStreamModel = async () => {
     const maybeAddress = window.location.pathname.split('/')[2];
     const accessToken = (await this.props.auth.getAccessToken()) || '';
     transmuteConfig.ipfsConfig.authorization = 'Bearer ' + accessToken;
@@ -54,63 +57,34 @@ class EventStorePage extends Component {
       });
     }
 
+    const url = new URL(window.location.href);
+    const filter = filters(url.searchParams.get("filter"));
+
+    const streamModel = new StreamModel(eventStore, filter, EventsReducer);
+    streamModel.applyEvents(events);
+    console.log('streamModel.state.model: ', streamModel.state.model)
+
     this.setState({
       accounts,
       eventStore,
-      events
+      events,
+      streamModel: streamModel.state.model
     });
   };
 
   async componentWillMount() {
-    await this.loadAllEvents();
-  }
-
-  onSaveEvent = async someEvent => {
-    let parsedEvent = JSON.parse(someEvent);
-    let { eventStore, accounts } = this.state;
-    let result = await eventStore.write(
-      accounts[0],
-      parsedEvent.key,
-      parsedEvent.value
-    );
-    await this.loadAllEvents();
-  };
-
-  onUploadFile = (event) => {
-    event.stopPropagation()
-    event.preventDefault()
-    const file = event.target.files[0]
-    let reader = new window.FileReader()
-    reader.onloadend = () => this.writeFileFromReader(reader)
-    reader.readAsArrayBuffer(file)
-  }
-
-  writeFileFromReader = (reader) => {
-    let ipfsId
-    const buffer = Buffer.from(reader.result)
-    let { eventStore } = this.state;
-    eventStore.ipfs.ipfs.add(buffer, { progress: (prog) => console.log(`received: ${prog}`) })
-      .then((response) => {
-        ipfsId = response[0].hash
-        console.log("api/v0/cat?arg=" + ipfsId)
-      }).catch((err) => {
-        console.error(err)
-      })
+    await this.createStreamModel();
   }
 
   render() {
     return (
       <div>
-        <RecordEventDialog
-          defaultEvent={this.props.defaultEvent}
-          onSave={this.onSaveEvent}
-          onUpload={this.onUploadFile}
-          history={this.props.history}
-        />
-        <EventsTable events={this.state.events} />
+        <StreamModelTable streamModel={this.state.streamModel} />
       </div>
     );
   }
 }
 
-export default (connect(null, null)(withAuth(EventStorePage)));
+export default withAuth(
+  connect(null, null)(StreamModelPage)
+);

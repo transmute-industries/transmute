@@ -7,7 +7,6 @@ import { bindActionCreators } from 'redux';
 import Button from 'material-ui/Button';
 
 import EventStoresTable from '../EventStoresTable';
-// import RecordEventDialog from '../RecordEventDialog';
 
 let eventStoreArtifact = require('../../contracts/EventStore.json');
 let eventStoreFactoryArtifact = require('../../contracts/EventStoreFactory.json');
@@ -87,7 +86,7 @@ class EventStoreFactoryPage extends Component {
           onClick={this.createEventStore}
         >
           Create EventStore
-      </Button>
+        </Button>
         <EventStoresTable eventStores={this.state.eventStores} history={this.props.history}/>
       </div>
     );

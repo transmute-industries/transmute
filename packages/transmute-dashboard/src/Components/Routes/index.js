@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import { Security, SecureRoute, ImplicitCallback, Auth } from '@okta/okta-react';
 
@@ -13,6 +13,7 @@ import Settings from '../Settings';
 import Dashboard from '../Dashboard';
 import EventStoreFactoryPage from '../EventStoreFactoryPage';
 import EventStorePage from '../EventStorePage';
+import StreamModelPage from '../StreamModelPage';
 
 const auth = new Auth({
   issuer: config.issuer,
@@ -25,13 +26,16 @@ class Routes extends React.Component {
     return (
       <Security auth={auth}>
         <AppBar>
-          <Route path="/" exact={true} component={Home} />
-          <Route path='/login' exact={true} render={() => <Login baseUrl={config.url} />} />
-          <SecureRoute path="/settings" exact={true} component={Settings} />
-          <SecureRoute path="/dashboard" exact={true} component={Dashboard} />
-          <SecureRoute path="/eventstorefactory/:address" exact={true} component={EventStoreFactoryPage} />
-          <SecureRoute path="/eventstore/:address" exact={true} component={EventStorePage} />
-          <Route path="/implicit/callback" component={ImplicitCallback} />
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path='/login' exact render={() => <Login baseUrl={config.url} />} />
+            <SecureRoute path="/settings" exact component={Settings} />
+            <SecureRoute path="/dashboard" exact component={Dashboard} />
+            <SecureRoute path="/eventstorefactory/:address" exact component={EventStoreFactoryPage} />
+            <SecureRoute path="/eventstore/:address/model" component={StreamModelPage} />
+            <SecureRoute path="/eventstore/:address" exact component={EventStorePage} />
+            <Route path="/implicit/callback" component={ImplicitCallback} />
+          </Switch>
         </AppBar>
       </Security>
     );

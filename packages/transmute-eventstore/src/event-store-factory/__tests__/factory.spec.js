@@ -11,20 +11,41 @@ describe('transmute-eventstore-factory', () => {
       eventStoreFactoryArtifact,
       ...transmuteConfig
     });
-    await eventStoreFactory.init();
     accounts = await eventStoreFactory.getWeb3Accounts();
+
+    try {
+      return await eventStoreFactory.getEventStores();
+    } catch (err) {
+      expect(err.name).toEqual("Error");
+    }
+
+    await eventStoreFactory.init();
+  });
+
+  // new event store factory per test
+  beforeEach(async () => {
+    eventStoreFactory = await eventStoreFactory.clone(accounts[0]);
   });
 
   describe('createEventStore', () => {
     it('can create an EventStore', async () => {
-      console.log("creating an eventstore");
+      let initialEventStores = await eventStoreFactory.getEventStores();
       let result = await eventStoreFactory.createEventStore(
         accounts[0]
       );
-      console.log("eventstore created")
-
       let eventStores = await eventStoreFactory.getEventStores();
-      expect(eventStores.length).toBe(1);
+      expect(eventStores.length - initialEventStores.length).toBe(1);
+    });
+  });
+
+  describe('destroy', () => {
+    it('can destroy an EventStoreFactory', async () => {
+      await eventStoreFactory.destroy(accounts[0], accounts[0]);
+      try {
+        return await eventStoreFactory.getEventStores();
+      } catch (err) {
+        expect(err.name).toEqual("Error");
+      }
     });
   });
 });

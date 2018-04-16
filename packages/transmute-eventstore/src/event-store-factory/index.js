@@ -71,6 +71,19 @@ module.exports = class EventStoreFactory {
     }
   }
 
+  async clone(fromAddress) {
+    const newContract = await this.eventStoreFactoryContract.new({
+      from: fromAddress,
+      gas: GAS.MAX_GAS
+    });
+    let instance = Object.assign(
+      Object.create(Object.getPrototypeOf(this)),
+      this
+    );
+    instance.eventStoreFactoryContractInstance = newContract;
+    return instance;
+  }
+
   async createEventStore(fromAddress) {
     this.requireInstance();
     return await this.eventStoreFactoryContractInstance.createEventStore({ 
@@ -84,21 +97,11 @@ module.exports = class EventStoreFactory {
     return await this.eventStoreFactoryContractInstance.getEventStores();
   }
 
-  async getSlice(startIndex, endIndex) {
-    if (!(endIndex >= startIndex)) {
-      throw new Error('startIndex must be less than or equal to endIndex.');
-    }
-    let index = startIndex;
-    let events = [];
-    while (index <= endIndex) {
-      events.push(await this.read(index));
-      index++;
-    }
-    return events;
-  }
-
-  destroy(address) {
+  async destroy(fromAddress, address) {
     this.requireInstance();
-    return this.eventStoreFactoryContractInstance.destroy(address);
+    return await this.eventStoreFactoryContractInstance.destroy(address, {
+      from: fromAddress,
+      gas: GAS.MAX_GAS
+    });
   }
 };
