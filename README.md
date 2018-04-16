@@ -13,6 +13,8 @@ Setup
 =====
 This guide will walk you through getting setup with Transmute.
 
+Here is a [video](https://drive.google.com/open?id=1ETHBCGyHYahiK-97fRE4-MAebbcp_N8n) to help guide you along.
+
 ### Minikube and Helm
 1. Minikube is a tool that makes it easy to run Kubernetes locally. Minikube runs a single-node Kubernetes cluster inside a VM on your laptop. [Install Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
 2. Helm is a tool for managing Kubernetes charts. Charts are packages of pre-configured Kubernetes resources. [Install Helm](https://github.com/kubernetes/helm/blob/master/docs/install.md)
@@ -57,8 +59,7 @@ Cerbot allows us to create SSl certificates with letsencrypt for our subdomain.
     * Select '2: Spin up a temporary webserver (standalone)'
     * Enter $YOUR_CUSTOM_SUBDOMAIN for domain name(s)
 4. Stop the ngrok process you started in step 2
-5. If successful, your cert should be in `/etc/letsencrypt/live/`. You will then add an entry into your hosts file mapping your subdomain to your running minikube ip address (you must have minikube running)
-`echo "$(minikube ip)  $YOUR_CUSTOM_SUBDOMAIN" | sudo tee -a /etc/hosts`
+5. If successful, your cert should be in `/etc/letsencrypt/live/`.
 
 ### Okta
 1. [Sign Up](https://developer.okta.com/signup/)

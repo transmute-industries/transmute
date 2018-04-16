@@ -9,7 +9,7 @@ import Button from 'material-ui/Button';
 
 import StreamModelTable from '../StreamModelTable';
 
-import EventsReducer from '../../reducers/Events';
+import { reducer as EventsReducer } from '../../store/documents/reducer';
 import { filters } from '../../filters/Events';
 
 let eventStoreArtifact = require('../../contracts/EventStore.json');
@@ -62,7 +62,6 @@ class StreamModelPage extends Component {
 
     const streamModel = new StreamModel(eventStore, filter, EventsReducer);
     streamModel.applyEvents(events);
-    console.log('streamModel.state.model: ', streamModel.state.model)
 
     this.setState({
       accounts,

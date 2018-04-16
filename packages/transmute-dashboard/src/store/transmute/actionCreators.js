@@ -69,3 +69,4 @@ export const updateEditor = text => {
     payload: text
   };
 };
+

@@ -1,0 +1,4 @@
+export const DOCUMENT_CREATED = 'DOCUMENT_CREATED';
+export const DOCUMENT_SIGNED = 'DOCUMENT_SIGNED';
+
+

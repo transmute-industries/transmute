@@ -16,12 +16,16 @@ import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 import AccountCircle from 'material-ui-icons/AccountCircle';
 import Menu, { MenuItem } from 'material-ui/Menu';
 
+import { push } from 'react-router-redux';
+
 import Button from 'material-ui/Button';
 
 import { withAuth } from '@okta/okta-react';
 
 import PrimaryMenu from './PrimaryMenu';
 import SecondaryMenu from './SecondaryMenu';
+
+import { history } from '../../store';
 
 const drawerWidth = 240;
 
@@ -143,14 +147,18 @@ class MiniDrawer extends React.Component {
     const authenticated = await this.props.auth.isAuthenticated();
     if (authenticated !== this.state.authenticated) {
       this.setState({ authenticated });
+      // if (!this.props.user.info && authenticated) {
+      //   const user = await this.props.auth.getUser();
+      //   this.props.setUserInfo(user);
+      // } else {
+      //   this.props.setUserInfo(null);
+      // }
     }
   }
 
   componentDidUpdate() {
     this.checkAuthentication();
   }
-
-
 
   render() {
     const { classes, theme } = this.props;
@@ -179,6 +187,10 @@ class MiniDrawer extends React.Component {
                 <MenuIcon />
               </IconButton>
               <Typography
+                onClick={() => {
+                  history.push('/');
+                }}
+                style={{ cursor: 'pointer' }}
                 variant="title"
                 color="inherit"
                 noWrap
@@ -187,14 +199,28 @@ class MiniDrawer extends React.Component {
                 Transmute
               </Typography>
               {!authenticated && (
-                <Button
-                  variant="raised"
-                  color="secondary"
-                  href="/login"
-                  className={classes.loginButton}
-                >
-                  Login
-                </Button>
+                <div>
+                  <Button
+                    variant="raised"
+                    color="primary"
+                    onClick={() => {
+                      history.push('/register');
+                    }}
+                    className={classes.loginButton}
+                  >
+                    Register
+                  </Button>
+                  <Button
+                    variant="raised"
+                    color="secondary"
+                    onClick={() => {
+                      history.push('/login');
+                    }}
+                    className={classes.loginButton}
+                  >
+                    Login
+                  </Button>
+                </div>
               )}
 
               {authenticated && (
@@ -223,7 +249,13 @@ class MiniDrawer extends React.Component {
                   >
                     <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                     <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                    <MenuItem onClick={this.props.auth.logout}>Logout</MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        this.props.auth.logout();
+                      }}
+                    >
+                      Logout
+                    </MenuItem>
                   </Menu>
                 </div>
               )}
@@ -250,9 +282,7 @@ class MiniDrawer extends React.Component {
                 </IconButton>
               </div>
               <Divider />
-
               {this.state.authenticated && <PrimaryMenu />}
-
               <SecondaryMenu />
             </div>
           </Drawer>

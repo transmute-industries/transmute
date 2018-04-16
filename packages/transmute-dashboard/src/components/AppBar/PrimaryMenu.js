@@ -16,27 +16,23 @@ class PrimaryMenu extends Component {
     return (
       <List>
         <ListItem button key={'account'}>
-          <ListItemIcon>
-            <Fingerprint />
-          </ListItemIcon>
+          <Link to="/account">
+            <ListItemIcon>
+              <Fingerprint />
+            </ListItemIcon>
+          </Link>
           <ListItemText primary="Account" />
         </ListItem>
-        <ListItem
-          button
-          key={'dashboard'}
-        >
-          <Link to='/dashboard'>
+        <ListItem button key={'dashboard'}>
+          <Link to="/dashboard">
             <ListItemIcon>
               <Dashboard />
             </ListItemIcon>
           </Link>
           <ListItemText primary="Dashboard" />
         </ListItem>
-        <ListItem
-          button
-          key={'settings'}
-        >
-          <Link to='/settings'>
+        <ListItem button key={'settings'}>
+          <Link to="/settings">
             <ListItemIcon>
               <Settings />
             </ListItemIcon>
