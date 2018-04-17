@@ -9,6 +9,7 @@ import Button from 'material-ui/Button';
 import EventStoresTable from '../EventStoresTable';
 
 import { EventStoreFactory, EventStore } from 'transmute-eventstore';
+import AppBar from '../AppBar';
 
 let eventStoreArtifact = require('../../contracts/EventStore.json');
 let eventStoreFactoryArtifact = require('../../contracts/EventStoreFactory.json');
@@ -76,7 +77,7 @@ class EventStoreFactoryPage extends Component {
 
   render() {
     return (
-      <div>
+      <AppBar>
         <Button
           variant="raised"
           color="secondary"
@@ -85,7 +86,7 @@ class EventStoreFactoryPage extends Component {
           Create EventStore
         </Button>
         <EventStoresTable eventStores={this.state.eventStores} history={this.props.history}/>
-      </div>
+      </AppBar>
     );
   }
 }

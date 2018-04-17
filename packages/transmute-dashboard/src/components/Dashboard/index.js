@@ -13,6 +13,7 @@ import Typography from 'material-ui/Typography';
 import theme from '../../theme';
 
 import { EventStoreFactory } from 'transmute-eventstore';
+import AppBar from '../AppBar';
 
 import * as actionsCreators from '../../store/user/actionCreators';
 
@@ -57,10 +58,11 @@ class Dashboard extends Component {
     this.setState({
       defaultEventStoreFactoryContractAddress:
         eventStoreFactory.eventStoreFactoryContractInstance.address,
-        accounts,
-        eventStores,
-        eventStore: null,
-        loading: false
+      accounts,
+      eventStores,
+      account: this.state.account == null ? accounts[0] : this.state.account,
+      eventStore: eventStores.length > 0 ? eventStores[0] : this.state.eventStore,
+      loading: false
     });
   }
 
@@ -69,12 +71,16 @@ class Dashboard extends Component {
     this.props.setWeb3Account(event.target.value);
   };
 
+  selectEventStore = event => {
+    this.setState({ eventStore: event.target.value });
+  };
+
   render() {
     if (this.state.loading) return null;
     const { classes } = this.props;
 
     return (
-      <div>
+      <AppBar>
         <Card className={classes.card}>
           {/* <CardMedia
             className={classes.media}
@@ -91,7 +97,7 @@ class Dashboard extends Component {
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="uncontrolled-native">Account</InputLabel>
               <Select
-                value={this.state.account == null ? this.state.accounts[0] : this.state.account}
+                value={this.state.account}
                 native
                 defaultValue={30}
                 onChange={this.selectAccount}
@@ -103,7 +109,7 @@ class Dashboard extends Component {
                     value={account}
                     style={{
                       fontWeight:
-                        (this.state.account !== null && this.state.account.indexOf(account) === -1)
+                        (this.state.account.indexOf(account) === -1)
                           ? theme.typography.fontWeightRegular
                           : theme.typography.fontWeightMedium,
                     }}>
@@ -115,7 +121,7 @@ class Dashboard extends Component {
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="uncontrolled-native">EventStore</InputLabel>
               <Select
-                value={this.state.eventStore == null ? this.state.eventStores[0] : this.state.eventStore}
+                value={this.state.eventStore}
                 native
                 defaultValue={30}
                 onChange={this.selectEventStore}
@@ -127,7 +133,7 @@ class Dashboard extends Component {
                     value={eventStore}
                     style={{
                       fontWeight:
-                        (this.state.eventStore !== null && this.state.eventStore.indexOf(eventStore) === -1)
+                        (this.state.eventStore.indexOf(eventStore) === -1)
                           ? theme.typography.fontWeightRegular
                           : theme.typography.fontWeightMedium,
                     }}>
@@ -138,9 +144,14 @@ class Dashboard extends Component {
             </FormControl>
           </CardContent>
           <CardActions>
-            <Button size="small" color="primary">
+            <Button
+              size="small"
+              color="primary"
+              disabled={this.state.eventStore == null}
+              href={"/eventstore/" + this.state.eventStore + '/signature'}
+            >
               View Demo
-          </Button>
+            </Button>
             <Button
               size="small"
               color="primary"
@@ -150,7 +161,7 @@ class Dashboard extends Component {
           </Button>
           </CardActions>
         </Card>
-      </div>
+      </AppBar>
     );
   }
 }

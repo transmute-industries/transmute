@@ -7,16 +7,13 @@ import { Link } from 'react-router-dom';
 
 import Button from 'material-ui/Button';
 
-import EventsTable from './EventsTable';
-import RecordEventDialog from './RecordEventDialog';
-
 import { EventStore } from 'transmute-eventstore';
 import AppBar from '../AppBar';
 
 let eventStoreArtifact = require('../../contracts/EventStore.json');
 let transmuteConfig = require('../../transmute-config');
 
-class EventStorePage extends Component {
+class SignaturePage extends Component {
   state = {
     accounts: null,
     eventStore: null,
@@ -100,16 +97,10 @@ class EventStorePage extends Component {
   render() {
     return (
       <AppBar>
-        <RecordEventDialog
-          defaultEvent={this.props.defaultEvent}
-          onSave={this.onSaveEvent}
-          onUpload={this.onUploadFile}
-          history={this.props.history}
-        />
-        <EventsTable events={this.state.events} />
+        <span>Hey!</span>
       </AppBar>
     );
   }
 }
 
-export default (connect(null, null)(withAuth(EventStorePage)));
+export default (connect(null, null)(withAuth(SignaturePage)));

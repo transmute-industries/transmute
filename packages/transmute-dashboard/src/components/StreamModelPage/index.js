@@ -13,6 +13,7 @@ import { reducer as EventsReducer } from '../../store/documents/reducer';
 import { filters } from '../../filters/Events';
 
 import { StreamModel, EventStore } from 'transmute-eventstore';
+import AppBar from '../AppBar';
 
 let eventStoreArtifact = require('../../contracts/EventStore.json');
 let transmuteConfig = require('../../transmute-config');
@@ -74,9 +75,9 @@ class StreamModelPage extends Component {
 
   render() {
     return (
-      <div>
+      <AppBar>
         <StreamModelTable streamModel={this.state.streamModel} />
-      </div>
+      </AppBar>
     );
   }
 }
