@@ -84,11 +84,11 @@ class SignaturePage extends Component {
     await this.createStreamModel();
   }
 
-  onSaveSignature = async (id, hash) => {
+  onSaveSignature = async (address, hash) => {
     let { eventStore } = this.state;
     let result = await eventStore.write(
       this.props.user.web3Account,
-      { "type": "user", "id": id },
+      { "type": "user", "id": address },
       { "type": "SIGNATURE_CREATED", "hash": hash }
     );
     await this.createStreamModel();
@@ -109,7 +109,7 @@ class SignaturePage extends Component {
     let { eventStore } = this.state;
     eventStore.ipfs.ipfs.add(buffer, { progress: (prog) => console.log(`received: ${prog}`) })
       .then(response => {
-        this.onSaveSignature('1', response[0].hash).then(res => console.log('res? ', res));
+        this.onSaveSignature(this.props.user.web3Account, response[0].hash).then(res => console.log('res? ', res));
         console.log("api/v0/cat?arg=" + response[0].hash)
       }).catch((err) => {
         console.error(err)
@@ -129,6 +129,31 @@ class SignaturePage extends Component {
             alt="My Signature"
             className={classes.image}
           />
+          <input
+            id="file"
+            type="file"
+            onChange={this.onUploadSignature}
+            style={{
+              width: 0,
+              height: 0,
+              opacity: 0,
+              overflow: 'hidden',
+              position: 'absolute',
+              zIndex: 1,
+            }}
+          />
+          <br/>
+          <Button component="label" htmlFor="file">
+            Upload New Signature
+          </Button>
+          <br />
+          <Button
+            color="secondary"
+            variant="raised"
+            href={"/eventstore/" + this.state.eventStore.eventStoreContractInstance.address + "/documents"}
+          >
+            View Documents
+          </Button>
         </AppBar>
       )
     } else {

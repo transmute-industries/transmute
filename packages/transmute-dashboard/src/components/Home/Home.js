@@ -6,9 +6,9 @@ import AppBar from '../AppBar';
 class Home extends Component {
   render() {
     return (
-      <div>
+      <AppBar>
         <h1>Home</h1>
-      </div>
+      </AppBar>
     );
   }
 }

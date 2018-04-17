@@ -14,6 +14,7 @@ import EventStoreFactoryPage from '../EventStoreFactoryPage';
 import EventStorePage from '../EventStorePage';
 import StreamModelPage from '../StreamModelPage';
 import SignaturePage from '../SignaturePage';
+import DocumentsPage from '../DocumentsPage';
 
 function onAuthRequired({ history }) {
   history.push('/login');
@@ -38,6 +39,7 @@ class Routes extends React.Component {
           <SecureRoute path="/dashboard" exact component={Dashboard} />
           <SecureRoute path="/eventstorefactory/:address" exact component={EventStoreFactoryPage} />
           <SecureRoute path="/eventstore/:address/model" component={StreamModelPage} />
+          <SecureRoute path="/eventstore/:address/documents" component={DocumentsPage} />
           <SecureRoute path="/eventstore/:address/signature" component={SignaturePage} />
           <SecureRoute path="/eventstore/:address" exact component={EventStorePage} />
         </Switch>
