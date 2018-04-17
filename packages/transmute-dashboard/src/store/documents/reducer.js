@@ -2,6 +2,16 @@ import * as Constants from './constants';
 
 export const reducer = (state, event) => {
   switch (event.value.type) {
+    case Constants.SIGNATURE_ADDED:
+    case Constants.SIGNATURE_CREATED: {
+      return {
+        ...state,
+        signatures: {
+          ...state.signatures,
+          [event.sender]: event.value.hash
+        }
+      }
+    }
     case Constants.DOCUMENT_CREATED: {
       return {
         ...state,

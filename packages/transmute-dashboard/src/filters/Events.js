@@ -57,9 +57,21 @@ export const documentFilter = (event) => {
   return event.key.type === 'document';
 };
 
+export const userFilter = (event) => {
+  return event.key.type === 'user';
+};
+
+export const noFilter = (event) => {
+  return true
+};
+
 export const filters = (filterType) => {
   switch (filterType) {
     case 'document':
       return documentFilter
+    case 'user':
+      return userFilter
+    case 'none':
+      return noFilter
   }
 };
