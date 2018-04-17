@@ -1,5 +1,5 @@
 const Web3 = require('web3');
-const transmuteConfig = require('../../transmute-config');
+const transmuteConfig = require('./transmute-config');
 
 module.exports = {
   migrations_directory: './migrations',

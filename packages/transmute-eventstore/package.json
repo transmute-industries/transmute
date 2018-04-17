@@ -2,7 +2,7 @@
   "name": "transmute-eventstore",
   "version": "0.0.1",
   "description": "EventStore Middleware",
-  "main": "dist/transmute-eventstore.min.js",
+  "main": "src/index.js",
   "files": [
     "dist",
     "src"
@@ -35,7 +35,7 @@
   },
   "homepage": "https://github.com/transmute-industries/transmute#readme",
   "devDependencies": {
-    "bili": "^3.0.4",
+    "bili": "3.0.0",
     "codecov": "^3.0.0",
     "coveralls": "^3.0.0",
     "react-scripts": "^1.1.1",
@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "bs58": "^4.0.1",
-    "ipfs-api": "^18.2.0",
+    "ipfs-api": "^20.0.1",
     "keen-tracking": "^1.1.3",
     "truffle-contract": "^3.0.4",
     "web3": "^0.19.1",

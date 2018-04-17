@@ -10,12 +10,10 @@ import Button from 'material-ui/Button';
 import EventsTable from './EventsTable';
 import RecordEventDialog from './RecordEventDialog';
 
+import { EventStore } from 'transmute-eventstore';
+
 let eventStoreArtifact = require('../../contracts/EventStore.json');
 let transmuteConfig = require('../../transmute-config');
-
-const {
-  EventStore
-} = require('transmute-eventstore/dist/transmute-eventstore.cjs');
 
 class EventStorePage extends Component {
   state = {

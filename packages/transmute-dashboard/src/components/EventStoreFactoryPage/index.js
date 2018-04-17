@@ -8,14 +8,11 @@ import Button from 'material-ui/Button';
 
 import EventStoresTable from '../EventStoresTable';
 
+import { EventStoreFactory, EventStore } from 'transmute-eventstore';
+
 let eventStoreArtifact = require('../../contracts/EventStore.json');
 let eventStoreFactoryArtifact = require('../../contracts/EventStoreFactory.json');
 let transmuteConfig = require('../../transmute-config');
-
-const {
-  EventStoreFactory,
-  EventStore
-} = require('transmute-eventstore/dist/transmute-eventstore.cjs');
 
 class EventStoreFactoryPage extends Component {
   state = {

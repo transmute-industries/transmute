@@ -12,15 +12,13 @@ import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import theme from '../../theme';
 
+import { EventStoreFactory } from 'transmute-eventstore';
+
 import * as actionsCreators from '../../store/user/actionCreators';
 
 let eventStoreFactoryArtifact = require('../../contracts/EventStoreFactory.json');
 
 let transmuteConfig = require('../../transmute-config');
-
-const {
-  EventStoreFactory
-} = require('transmute-eventstore/dist/transmute-eventstore.cjs');
 
 const styles = {
   card: {

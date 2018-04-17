@@ -11,16 +11,16 @@ module.exports = class StreamModel {
     };
   }
 
-  applyEvent = event => {
+  applyEvent(event) {
     this.state.model = this.reducer(this.state.model, event);
     this.state.lastIndex = event.index;
   };
 
-  applyEvents = events => {
-    events.filter(this.filter).map(this.applyEvent);
+  applyEvents(events) {
+    events.filter(this.filter).map(this.applyEvent.bind(this));
   };
 
-  sync = async () => {
+  async sync() {
     const web3 = this.eventStore.web3;
     const eventCount = (await this.eventStore.eventStoreContractInstance.count.call()).toNumber();
     if (eventCount === 0) {
