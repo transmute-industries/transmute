@@ -8,14 +8,14 @@ export const reducer = (state, event) => {
         ...state,
         signatures: {
           ...state.signatures,
-          [event.sender]: event.value.hash
+          [event.sender]: { 'name': event.value.name, 'hash': event.value.hash }
         }
       }
     }
     case Constants.DOCUMENT_CREATED: {
       return {
         ...state,
-        documents: { ...(state.documents || {}), [event.value.hash]: { 'signatures': [] } }
+        documents: { ...(state.documents || {}), [event.value.hash]: { 'name': event.value.name, 'signatures': [] } }
       }
     }
     case Constants.DOCUMENT_SIGNED: {
@@ -23,9 +23,9 @@ export const reducer = (state, event) => {
         ...state,
         documents: {
           ...state.documents,
-          [event.value.hash]: {
-            ...state.documents[event.value.hash],
-            'signatures': [...state.documents[event.value.hash].signatures, event.value.hash]
+          [event.key.id]: {
+            ...state.documents[event.key.id],
+            'signatures': [...(state.documents[event.key.id] != null ? state.documents[event.key.id].signatures : []), event.value.hash]
           }
         }
       }

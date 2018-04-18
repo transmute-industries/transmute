@@ -84,12 +84,12 @@ class SignaturePage extends Component {
     await this.createStreamModel();
   }
 
-  onSaveSignature = async (address, hash) => {
+  onSaveSignature = async (signatureHash, filename) => {
     let { eventStore } = this.state;
     let result = await eventStore.write(
       this.props.user.web3Account,
-      { "type": "user", "id": address },
-      { "type": "SIGNATURE_CREATED", "hash": hash }
+      { "type": "user", "id": this.props.user.web3Account },
+      { "type": "SIGNATURE_CREATED", "hash": signatureHash, "name": filename }
     );
     await this.createStreamModel();
   };
@@ -98,19 +98,20 @@ class SignaturePage extends Component {
     event.stopPropagation()
     event.preventDefault()
     const file = event.target.files[0]
+    const filename = event.target.value.split(/(\\|\/)/g).pop()
     let reader = new window.FileReader()
-    reader.onloadend = () => this.writeFileFromReader(reader)
+    reader.onloadend = () => this.writeFileFromReader(reader, filename)
     reader.readAsArrayBuffer(file)
   }
 
-  writeFileFromReader = (reader) => {
+  writeFileFromReader = (reader, filename) => {
     let ipfsId
     const buffer = Buffer.from(reader.result)
     let { eventStore } = this.state;
     eventStore.ipfs.ipfs.add(buffer, { progress: (prog) => console.log(`received: ${prog}`) })
       .then(response => {
-        this.onSaveSignature(this.props.user.web3Account, response[0].hash).then(res => console.log('res? ', res));
-        console.log("api/v0/cat?arg=" + response[0].hash)
+        this.onSaveSignature(response[0].hash, filename).then(res => console.log('res? ', res));
+        console.log("https://ipfs.transmute.network/api/v0/cat?arg=" + response[0].hash)
       }).catch((err) => {
         console.error(err)
       })
@@ -118,17 +119,19 @@ class SignaturePage extends Component {
 
   render() {
     const { classes } = this.props;
-    console.log("this.state.streamModel: ", this.state.streamModel)
     if (this.state.loading) return null;
-    if (_.includes(_.keys(this.state.streamModel.signatures), this.props.user.web3Account)) {
+    const signatureUploaded = _.includes(_.keys(this.state.streamModel.signatures), this.props.user.web3Account);
       return (
         <AppBar>
-          <h2>My Signature</h2>
-          <img
-            src={'https://ipfs.io/ipfs/' + this.state.streamModel.signatures[this.props.user.web3Account]}
-            alt="My Signature"
-            className={classes.image}
-          />
+          { signatureUploaded ? 
+            <div>
+            <h2>My Signature</h2>
+            <img
+                src={'https://ipfs.transmute.network/api/v0/cat?arg=' + this.state.streamModel.signatures[this.props.user.web3Account].hash}
+              alt="My Signature"
+              className={classes.image}
+            /></div> : <h2>No signatures found for your account, please upload one.</h2>
+          }
           <input
             id="file"
             type="file"
@@ -146,39 +149,16 @@ class SignaturePage extends Component {
           <Button component="label" htmlFor="file">
             Upload New Signature
           </Button>
-          <br />
-          <Button
-            color="secondary"
-            variant="raised"
-            href={"/eventstore/" + this.state.eventStore.eventStoreContractInstance.address + "/documents"}
-          >
-            View Documents
-          </Button>
+          {signatureUploaded && 
+            <Button
+              color="secondary"
+              href={"/eventstore/" + this.state.eventStore.eventStoreContractInstance.address + "/documents"}
+            >
+              View Documents
+            </Button>
+          }
         </AppBar>
       )
-    } else {
-      return (
-        <AppBar>
-          <h2>No signatures found for your account, please upload one.</h2>
-          <input
-            id="file"
-            type="file"
-            onChange={this.onUploadSignature}
-            style={{
-              width: 0,
-              height: 0,
-              opacity: 0,
-              overflow: 'hidden',
-              position: 'absolute',
-              zIndex: 1,
-            }}
-          />
-          <Button component="label" htmlFor="file">
-            Upload Signature
-        </Button>
-        </AppBar>
-      );
-    }
   }
 }
 

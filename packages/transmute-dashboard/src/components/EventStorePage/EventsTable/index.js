@@ -43,7 +43,7 @@ const columnData = [
   }
 ];
 
-class EnhancedTableHead extends React.Component {
+class EventsTableHead extends React.Component {
   createSortHandler = property => event => {
     this.props.onRequestSort(event, property);
   };
@@ -96,7 +96,7 @@ class EnhancedTableHead extends React.Component {
   }
 }
 
-EnhancedTableHead.propTypes = {
+EventsTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
@@ -130,7 +130,7 @@ const toolbarStyles = theme => ({
   }
 });
 
-let EnhancedTableToolbar = props => {
+let EventsTableToolbar = props => {
   const { numSelected, classes } = props;
 
   return (
@@ -139,15 +139,7 @@ let EnhancedTableToolbar = props => {
         [classes.highlight]: numSelected > 0
       })}
     >
-      <div className={classes.title}>
-        {numSelected > 0 ? (
-          <Typography color="inherit" variant="subheading">
-            {numSelected} selected
-          </Typography>
-        ) : (
-          <Typography variant="title">Events</Typography>
-        )}
-      </div>
+      <Typography variant="title">Events</Typography>
       <div className={classes.spacer} />
       <div className={classes.actions}>
         {numSelected > 0 ? (
@@ -168,12 +160,12 @@ let EnhancedTableToolbar = props => {
   );
 };
 
-EnhancedTableToolbar.propTypes = {
+EventsTableToolbar.propTypes = {
   classes: PropTypes.object.isRequired,
   numSelected: PropTypes.number.isRequired
 };
 
-EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
+EventsTableToolbar = withStyles(toolbarStyles)(EventsTableToolbar);
 
 const styles = theme => ({
   root: {
@@ -188,10 +180,8 @@ const styles = theme => ({
   }
 });
 
-class EnhancedTable extends React.Component {
+class EventsTable extends React.Component {
   componentWillReceiveProps(nextProps) {
-    console.log('look for events: ', nextProps);
-
     if (nextProps.events) {
       this.setState({
         data: nextProps.events
@@ -206,10 +196,7 @@ class EnhancedTable extends React.Component {
       order: 'desc',
       orderBy: 'index',
       selected: [],
-      data: []
-        .sort
-        // (a, b) => (a.calories < b.calories ? -1 : 1)
-        (),
+      data: props.events == null ? [] : props.events,
       page: 0,
       rowsPerPage: 8
     };
@@ -278,10 +265,10 @@ class EnhancedTable extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EventsTableToolbar numSelected={selected.length} />
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
-            <EnhancedTableHead
+            <EventsTableHead
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
@@ -349,8 +336,8 @@ class EnhancedTable extends React.Component {
   }
 }
 
-EnhancedTable.propTypes = {
+EventsTable.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(EnhancedTable);
+export default withStyles(styles)(EventsTable);

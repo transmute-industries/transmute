@@ -147,18 +147,18 @@ class Dashboard extends Component {
             <Button
               size="small"
               color="primary"
+              href={"/eventstorefactory/" + this.state.defaultEventStoreFactoryContractAddress}
+            >
+              Create EventStore
+            </Button>
+            <Button
+              size="small"
+              color="secondary"
               disabled={this.state.eventStore == null}
               href={"/eventstore/" + this.state.eventStore + '/signature'}
             >
               View Demo
             </Button>
-            <Button
-              size="small"
-              color="primary"
-              href={"/eventstorefactory/" + this.state.defaultEventStoreFactoryContractAddress}
-            >
-              Create EventStore
-          </Button>
           </CardActions>
         </Card>
       </AppBar>
