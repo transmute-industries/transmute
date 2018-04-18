@@ -121,8 +121,7 @@ class StreamModelTable extends React.Component {
     this.state = {
       order: 'desc',
       orderBy: 'index',
-      data: []
-        .sort(),
+      data: [],
       page: 0,
       rowsPerPage: 8
     };
@@ -159,7 +158,6 @@ class StreamModelTable extends React.Component {
                   return (
                     <TableRow
                       hover
-                      onClick={() => console.log('click') }
                       role="checkbox"
                       tabIndex={-1}
                     >

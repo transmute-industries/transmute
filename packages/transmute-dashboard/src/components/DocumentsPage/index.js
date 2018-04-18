@@ -1,27 +1,15 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Link } from 'react-router-dom';
-import { withAuth } from '@okta/okta-react';
 import _ from 'lodash';
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { withAuth } from '@okta/okta-react';
 import { withStyles } from 'material-ui/styles';
-import ExpansionPanel, {
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
-} from 'material-ui/ExpansionPanel';
-import Typography from 'material-ui/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Button from 'material-ui/Button';
-import Paper from 'material-ui/Paper';
-import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 
 import { StreamModel, EventStore } from 'transmute-eventstore';
 
-import EventsTable from '../EventStorePage/EventsTable';
 import AppBar from '../AppBar';
+import ProfileCard from './ProfileCard';
+import DocumentsList from './DocumentsList';
+import EventsTable from '../EventStorePage/EventsTable';
 import theme from '../../theme';
 
 import { reducer as EventsReducer } from '../../store/documents/reducer';
@@ -31,26 +19,9 @@ let eventStoreArtifact = require('../../contracts/EventStore.json');
 let transmuteConfig = require('../../transmute-config');
 
 const styles = theme => ({
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular,
-  },
-  root: theme.mixins.gutters({
-    paddingRight: 8,
-    paddingLeft: 8,
-    paddingTop: 20
-  }),
-  gridList: {
-    flexWrap: 'nowrap',
-    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-    transform: 'translateZ(0)',
-  },
   spacer: {
     flex: '1 1 100%',
     height: 20
-  },
-  title: {
-    paddingBottom: 20
   }
 });
 
@@ -103,9 +74,9 @@ class DocumentsPage extends Component {
     this.setState({
       eventStore,
       events,
-      signature,
-      signatures: streamModel.state.model.signatures,
       documents: streamModel.state.model.documents,
+      user: await this.props.auth.getUser(),
+      signature,
       loading: false
     });
   };
@@ -114,13 +85,53 @@ class DocumentsPage extends Component {
     await this.createStreamModel();
   }
 
-  onSaveDocument = async (documentHash, filename) => {
+  onUploadDocument = (event) => {
+    this.onUploadFile(event, 'DOCUMENT');
+  }
+
+  onUploadSignature = (event) => {
+    this.onUploadFile(event, 'SIGNATURE');
+  }
+
+  onUploadFile = (event, type) => {
+    event.stopPropagation()
+    event.preventDefault()
+    const file = event.target.files[0]
+    const filename = event.target.value.split(/(\\|\/)/g).pop()
+    let reader = new window.FileReader()
+    reader.onloadend = () => this.writeFileFromReader(reader, filename, type)
+    reader.readAsArrayBuffer(file)
+  }
+
+  writeFileFromReader = (reader, filename, type) => {
+    let ipfsId
+    const buffer = Buffer.from(reader.result)
     let { eventStore } = this.state;
-    let result = await eventStore.write(
-      this.props.user.web3Account,
-      { "type": "document", "id": documentHash },
-      { "type": "DOCUMENT_CREATED", "hash": documentHash, "name": filename }
-    );
+    eventStore.ipfs.ipfs.add(buffer, { progress: (prog) => console.log(`received: ${prog}`) })
+      .then(response => {
+        this.onSaveDocument(response[0].hash, filename, type).then(res => console.log('file uploaded'));
+        console.log("https://ipfs.transmute.network/api/v0/cat?arg=" + response[0].hash)
+      }).catch((err) => {
+        console.error(err)
+      })
+  }
+
+  onSaveDocument = async (fileHash, filename, eventType) => {
+    let { eventStore } = this.state;
+
+    if (eventType === 'DOCUMENT') {
+      await eventStore.write(
+        this.props.user.web3Account,
+        { "type": "document", "id": fileHash },
+        { "type": "DOCUMENT_CREATED", "hash": fileHash, "name": filename }
+      );
+    } else if (eventType === 'SIGNATURE') {
+      await eventStore.write(
+        this.props.user.web3Account,
+        { "type": "user", "id": this.props.user.web3Account },
+        { "type": "SIGNATURE_CREATED", "hash": fileHash, "name": filename }
+      );
+    }
     await this.createStreamModel();
   };
 
@@ -134,92 +145,16 @@ class DocumentsPage extends Component {
     await this.createStreamModel();
   };
 
-  onUploadDocument = (event) => {
-    event.stopPropagation()
-    event.preventDefault()
-    const file = event.target.files[0]
-    const filename = event.target.value.split(/(\\|\/)/g).pop()
-    let reader = new window.FileReader()
-    reader.onloadend = () => this.writeFileFromReader(reader, filename)
-    reader.readAsArrayBuffer(file)
-  }
-
-  writeFileFromReader = (reader, filename) => {
-    let ipfsId
-    const buffer = Buffer.from(reader.result)
-    let { eventStore } = this.state;
-    eventStore.ipfs.ipfs.add(buffer, { progress: (prog) => console.log(`received: ${prog}`) })
-      .then(response => {
-        this.onSaveDocument(response[0].hash, filename).then(res => console.log('file uploaded'));
-        console.log("https://ipfs.transmute.network/api/v0/cat?arg=" + response[0].hash)
-      }).catch((err) => {
-        console.error(err)
-      })
-  }
-
   render() {
     const { classes } = this.props;
+    const { events, documents, user, signature } = this.state;
     if (this.state.loading) return null;
     return (
       <AppBar>
-        <Card>
-          <CardContent className={classes.root}>
-            <Typography variant="title" component="h2" className={classes.title}>
-              Documents
-            </Typography>
-            {_.map(this.state.documents, (value, key) => (
-              <ExpansionPanel>
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography className={classes.heading}>{value.name}</Typography>
-                </ExpansionPanelSummary>
-                <ExpansionPanelDetails>
-                  <GridList className={classes.gridList}>
-                    {value.signatures.map(signature => (
-                      <GridListTile key={signature} href={'https://ipfs.transmute.network/api/v0/cat?arg=' + signature}>
-                        <img src={'https://ipfs.transmute.network/api/v0/cat?arg=' + signature} alt={signature} />
-                      </GridListTile>
-                    ))}
-                  </GridList>
-                </ExpansionPanelDetails>
-                <Button color="primary" href={'https://ipfs.transmute.network/api/v0/cat?arg=' + key} target="_blank">
-                  View Document
-                </Button>
-                {value.signatures.indexOf(this.state.signature) === -1 &&
-                  <Button
-                    color="secondary"
-                    onClick={() => this.onSignDocument(key)}
-                  >
-                    Sign
-                  </Button>
-                }
-              </ExpansionPanel>
-            ))}
-          </CardContent>
-          <CardActions>
-            <input
-              id="file"
-              type="file"
-              onChange={this.onUploadDocument}
-              style={{
-                width: 0,
-                height: 0,
-                opacity: 0,
-                overflow: 'hidden',
-                position: 'absolute',
-                zIndex: 1,
-              }}
-            />
-            <br />
-            <Button
-              color="secondary"
-              component="label"
-              htmlFor="file"
-            >
-              Upload New Document
-            </Button>
-          </CardActions>
-        </Card>
-        <EventsTable events={this.state.events} />
+        <ProfileCard user={user} signature={signature} onSignatureUpload={this.onUploadSignature} />
+        <div className={classes.spacer} />
+        <DocumentsList documents={documents} signature={signature} onDocumentUpload={this.onUploadDocument} onDocumentSign={this.onSignDocument} />
+        <EventsTable events={events} />
         <div className={classes.spacer} />
         <div className={classes.spacer} />
       </AppBar>

@@ -52,20 +52,12 @@ class EventsTableHead extends React.Component {
       onSelectAllClick,
       order,
       orderBy,
-      numSelected,
       rowCount
     } = this.props;
 
     return (
       <TableHead>
         <TableRow>
-          <TableCell padding="checkbox">
-            <Checkbox
-              indeterminate={numSelected > 0 && numSelected < rowCount}
-              checked={numSelected === rowCount}
-              onChange={onSelectAllClick}
-            />
-          </TableCell>
           {columnData.map(column => {
             return (
               <TableCell
@@ -96,29 +88,10 @@ class EventsTableHead extends React.Component {
   }
 }
 
-EventsTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.string.isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired
-};
-
 const toolbarStyles = theme => ({
   root: {
     paddingRight: theme.spacing.unit
   },
-  highlight:
-    theme.palette.type === 'light'
-      ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85)
-        }
-      : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark
-        },
   spacer: {
     flex: '1 1 100%'
   },
@@ -131,30 +104,12 @@ const toolbarStyles = theme => ({
 });
 
 let EventsTableToolbar = props => {
-  const { numSelected, classes } = props;
+  const { classes } = props;
 
   return (
-    <Toolbar
-      className={classNames(classes.root, {
-        [classes.highlight]: numSelected > 0
-      })}
-    >
-      <Typography variant="title">Events</Typography>
-      <div className={classes.spacer} />
-      <div className={classes.actions}>
-        {numSelected > 0 ? (
-          <Tooltip title="Delete">
-            <IconButton aria-label="Delete">
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        ) : (
-          <Tooltip title="Filter list">
-            <IconButton aria-label="Filter list">
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
-        )}
+    <Toolbar className={classes.root}>
+      <div className={classes.title}>
+        <Typography variant="title">Events</Typography>
       </div>
     </Toolbar>
   );
@@ -162,7 +117,6 @@ let EventsTableToolbar = props => {
 
 EventsTableToolbar.propTypes = {
   classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired
 };
 
 EventsTableToolbar = withStyles(toolbarStyles)(EventsTableToolbar);
@@ -195,10 +149,9 @@ class EventsTable extends React.Component {
     this.state = {
       order: 'desc',
       orderBy: 'index',
-      selected: [],
       data: props.events == null ? [] : props.events,
       page: 0,
-      rowsPerPage: 8
+      rowsPerPage: 10
     };
   }
 
@@ -218,35 +171,6 @@ class EventsTable extends React.Component {
     this.setState({ data, order, orderBy });
   };
 
-  handleSelectAllClick = (event, checked) => {
-    if (checked) {
-      this.setState({ selected: this.state.data.map(n => n.id) });
-      return;
-    }
-    this.setState({ selected: [] });
-  };
-
-  handleClick = (event, id) => {
-    const { selected } = this.state;
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    this.setState({ selected: newSelected });
-  };
-
   handleChangePage = (event, page) => {
     this.setState({ page });
   };
@@ -259,20 +183,18 @@ class EventsTable extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
+    const { data, order, orderBy, rowsPerPage, page } = this.state;
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
     return (
       <Paper className={classes.root}>
-        <EventsTableToolbar numSelected={selected.length} />
+        <EventsTableToolbar />
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <EventsTableHead
-              numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              onSelectAllClick={this.handleSelectAllClick}
               onRequestSort={this.handleRequestSort}
               rowCount={data.length}
             />
@@ -280,20 +202,13 @@ class EventsTable extends React.Component {
               {data
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => {
-                  const isSelected = this.isSelected(n.id);
                   return (
                     <TableRow
                       hover
-                      onClick={event => this.handleClick(event, n.id)}
                       role="checkbox"
-                      aria-checked={isSelected}
                       tabIndex={-1}
                       key={n.id}
-                      selected={isSelected}
                     >
-                      <TableCell padding="checkbox">
-                        <Checkbox checked={isSelected} />
-                      </TableCell>
                       <TableCell numeric>{n.index}</TableCell>
                       <TableCell>{n.sender.substring(0, 16) + '...'}</TableCell>
                       <TableCell>

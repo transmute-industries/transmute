@@ -155,7 +155,7 @@ class Dashboard extends Component {
               size="small"
               color="secondary"
               disabled={this.state.eventStore == null}
-              href={"/eventstore/" + this.state.eventStore + '/signature'}
+              href={"/eventstore/" + this.state.eventStore + '/documents'}
             >
               View Demo
             </Button>
