@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 import Button from 'material-ui/Button';
 
-import StreamModelTable from '../StreamModelTable';
+import StreamModelTable from './StreamModelTable';
 
 import { reducer as EventsReducer } from '../../store/documents/reducer';
 import { filters } from '../../filters/Events';

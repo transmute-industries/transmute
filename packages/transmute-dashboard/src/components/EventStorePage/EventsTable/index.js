@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
@@ -202,23 +203,37 @@ class EventsTable extends React.Component {
               {data
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => {
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={n.id}
-                    >
-                      <TableCell numeric>{n.index}</TableCell>
-                      <TableCell>{n.sender.substring(0, 16) + '...'}</TableCell>
-                      <TableCell>
-                        <pre>{JSON.stringify(n.key, null, 2)}</pre>
-                      </TableCell>
-                      <TableCell>
-                        <pre>{JSON.stringify(n.value, null, 2)}</pre>
-                      </TableCell>
-                    </TableRow>
-                  );
+                  return n.sender === this.props.user.web3Account ?
+                     (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={n.id}
+                      >
+                        <TableCell numeric>{n.index}</TableCell>
+                        <TableCell>{n.sender.substring(0, 16) + '...'}</TableCell>
+                        <TableCell>
+                          <pre>{JSON.stringify(n.key, null, 2)}</pre>
+                        </TableCell>
+                        <TableCell>
+                          <pre>{JSON.stringify(n.value, null, 2)}</pre>
+                        </TableCell>
+                      </TableRow>
+                    ) :
+                    (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={n.id}
+                      >
+                        <TableCell numeric>{n.index}</TableCell>
+                        <TableCell>[ENCRYPTED]</TableCell>
+                        <TableCell>[ENCRYPTED]</TableCell>
+                        <TableCell>[ENCRYPTED]</TableCell>
+                      </TableRow>
+                    )
                 })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 49 * emptyRows }}>
@@ -255,4 +270,11 @@ EventsTable.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(EventsTable);
+
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
+export default withStyles(styles)(connect(mapStateToProps, null)(EventsTable));
