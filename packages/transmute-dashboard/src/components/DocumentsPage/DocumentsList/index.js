@@ -16,7 +16,7 @@ import ExpansionPanel, {
 
 const styles = theme => ({
   image: {
-    maxWidth: 500
+    width: '100%'
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),

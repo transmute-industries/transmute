@@ -15,15 +15,15 @@ class PrimaryMenu extends Component {
   render() {
     return (
       <List>
-        <ListItem button key={'dashboard'}>
-          <Link to="/dashboard">
+        <ListItem button key={'home'}>
+          <Link to="/">
             <ListItemIcon>
               <Dashboard />
             </ListItemIcon>
           </Link>
           <ListItemText primary="Dashboard" />
         </ListItem>
-        <ListItem button key={'account'}>
+        {/* <ListItem button key={'account'}>
           <Link to="/account">
             <ListItemIcon>
               <Fingerprint />
@@ -39,7 +39,7 @@ class PrimaryMenu extends Component {
           </Link>
           <ListItemText primary="Settings" />
         </ListItem>
-        <Divider />
+        <Divider /> */}
       </List>
     );
   }

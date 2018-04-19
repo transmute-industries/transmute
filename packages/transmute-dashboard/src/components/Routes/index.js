@@ -15,7 +15,6 @@ import config from '../../okta_config';
 import Home from '../Home';
 import Login from '../Auth/Login';
 import Register from '../Register';
-import Dashboard from '../Dashboard';
 import EventStoreFactoryPage from '../EventStoreFactoryPage';
 import EventStorePage from '../EventStorePage';
 import StreamModelPage from '../StreamModelPage';
@@ -51,11 +50,6 @@ class Routes extends React.Component {
           <Route
             path="/implicit/callback"
             component={ImplicitCallback}
-          />
-          <SecureRoute
-            path="/dashboard"
-            exact
-            component={Dashboard}
           />
           <SecureRoute
             path="/eventstorefactory/:address"

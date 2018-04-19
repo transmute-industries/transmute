@@ -23,7 +23,7 @@ class EventStoreFactoryPage extends Component {
   };
 
   loadAllEventStores = async () => {
-    const maybeAddress = window.location.pathname.split('/')[3];
+    const maybeAddress = window.location.pathname.split('/')[2];
     const accessToken = (await this.props.auth.getAccessToken()) || '';
     transmuteConfig.ipfsConfig.authorization = 'Bearer ' + accessToken;
 
