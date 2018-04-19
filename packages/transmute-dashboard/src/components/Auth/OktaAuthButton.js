@@ -39,7 +39,7 @@ export default withAuth(
         </Button>
       ) : (
         <Button variant="raised" color="primary" onClick={this.login}>
-          Login
+          Login2
         </Button>
       );
     }

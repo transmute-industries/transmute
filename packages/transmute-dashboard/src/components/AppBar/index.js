@@ -15,6 +15,8 @@ import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 import AccountCircle from 'material-ui-icons/AccountCircle';
 import Menu, { MenuItem } from 'material-ui/Menu';
+import OktaAuthButton from '../Auth/OktaAuthButton';
+import * as actionCreators from '../../store/user/actionCreators'
 
 import { push } from 'react-router-redux';
 
@@ -28,6 +30,8 @@ import SecondaryMenu from './SecondaryMenu';
 import { history } from '../../store';
 
 const drawerWidth = 240;
+
+
 
 const styles = theme => ({
   root: {
@@ -252,6 +256,7 @@ class MiniDrawer extends React.Component {
                     <MenuItem onClick={this.handleClose}>My account</MenuItem>
                     <MenuItem
                       onClick={() => {
+                        this.props.logoutUser()
                         this.props.auth.logout();
                       }}
                     >
@@ -278,8 +283,8 @@ class MiniDrawer extends React.Component {
                   {theme.direction === 'rtl' ? (
                     <ChevronRightIcon />
                   ) : (
-                      <ChevronLeftIcon />
-                    )}
+                    <ChevronLeftIcon />
+                  )}
                 </IconButton>
               </div>
               <Divider />
@@ -299,4 +304,22 @@ MiniDrawer.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(withAuth(MiniDrawer))
+const mapStateToProps = state => {
+  return {
+    // sessionToken: state.user.sessionToken,
+    error: state.user.error
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    logoutUser: () =>
+      dispatch(actionCreators.logout())
+  };
+};
+
+export default withStyles(styles,  { withTheme: true })(
+  connect(mapStateToProps, mapDispatchToProps)(withAuth(MiniDrawer))
+);
+
+
