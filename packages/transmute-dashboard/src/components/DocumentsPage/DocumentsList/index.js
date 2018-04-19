@@ -15,6 +15,9 @@ import ExpansionPanel, {
 } from 'material-ui/ExpansionPanel';
 
 const styles = theme => ({
+  image: {
+    maxWidth: 500
+  },
   heading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
@@ -83,7 +86,7 @@ class DocumentsList extends React.Component {
                 <GridList className={classes.gridList}>
                   {value.signatures.map(signature => (
                     <GridListTile key={signature} href={'https://ipfs.transmute.network/api/v0/cat?arg=' + signature}>
-                      <img src={'https://ipfs.transmute.network/api/v0/cat?arg=' + signature} alt={signature} />
+                      <img src={'https://ipfs.transmute.network/api/v0/cat?arg=' + signature} className={classes.image} alt={signature} />
                     </GridListTile>
                   ))}
                 </GridList>
@@ -91,7 +94,7 @@ class DocumentsList extends React.Component {
               <Button color="primary" href={'https://ipfs.transmute.network/api/v0/cat?arg=' + key} target="_blank">
                 View Document
                 </Button>
-              {value.signatures.indexOf(signature) === -1 &&
+              {signature !== null && value.signatures.indexOf(signature) === -1 &&
                 <Button
                   color="secondary"
                   onClick={() => this.handleSignDocument(key)}

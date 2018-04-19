@@ -7,9 +7,8 @@ import Button from 'material-ui/Button';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 
 const styles = theme => ({
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
+  image: {
+    maxWidth: 500
   },
   root: theme.mixins.gutters({
     paddingRight: 8,
