@@ -39,7 +39,7 @@ const styles = theme => ({
 
 class DocumentsList extends React.Component {
   componentWillReceiveProps(nextProps) {
-    if (nextProps.events) {
+    if (nextProps.documents && nextProps.signature) {
       this.setState({
         documents: nextProps.documents,
         signature: nextProps.signature
@@ -97,7 +97,7 @@ class DocumentsList extends React.Component {
                   onClick={() => this.handleSignDocument(key)}
                 >
                   Sign
-                  </Button>
+                </Button>
               }
             </ExpansionPanel>
           ))}
@@ -105,7 +105,7 @@ class DocumentsList extends React.Component {
         { signature !== null &&
           <CardActions>
             <input
-              id="file"
+              id="documentFile"
               type="file"
               onChange={this.handleDocumentUpload}
               style={{
@@ -120,7 +120,7 @@ class DocumentsList extends React.Component {
             <Button
               color="secondary"
               component="label"
-              htmlFor="file"
+              htmlFor="documentFile"
               disabled={signature === null}
             >
               Upload New Document

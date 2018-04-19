@@ -20,7 +20,7 @@ const styles = theme => ({
 
 class ProfileCard extends React.Component {
   componentWillReceiveProps(nextProps) {
-    if (nextProps.events) {
+    if (nextProps.signature && nextProps.user) {
       this.setState({
         signature: nextProps.signature,
         user: nextProps.user
@@ -44,7 +44,7 @@ class ProfileCard extends React.Component {
   render() {
     const { classes } = this.props;
     const { signature, user } = this.state;
-
+    
     return (
       <Card>
         <CardContent className={classes.root}>
@@ -63,7 +63,7 @@ class ProfileCard extends React.Component {
         </CardContent>
         <CardActions>
           <input
-            id="file"
+            id="signatureFile"
             type="file"
             onChange={this.handleSignatureUpload}
             style={{
@@ -76,7 +76,7 @@ class ProfileCard extends React.Component {
             }}
           />
           <br />
-          <Button component="label" htmlFor="file" color="secondary" disabled={signature !== null}>
+          <Button component="label" htmlFor="signatureFile" color="secondary" disabled={signature !== null}>
             Upload New Signature
           </Button>
         </CardActions>

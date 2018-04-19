@@ -23,7 +23,7 @@ class EventStoreFactoryPage extends Component {
   };
 
   loadAllEventStores = async () => {
-    const maybeAddress = window.location.pathname.split('/')[2];
+    const maybeAddress = window.location.pathname.split('/')[3];
     const accessToken = (await this.props.auth.getAccessToken()) || '';
     transmuteConfig.ipfsConfig.authorization = 'Bearer ' + accessToken;
 
@@ -45,7 +45,6 @@ class EventStoreFactoryPage extends Component {
 
     let eventStoreAddresses = [], eventStores = [];
     eventStoreAddresses = await eventStoreFactory.getEventStores();
-
 
     eventStores = await Promise.all(eventStoreAddresses.map(async eventStoreAddress => {
       let eventStoreContractInstance = await eventStore.eventStoreContract.at(eventStoreAddress);
@@ -71,7 +70,7 @@ class EventStoreFactoryPage extends Component {
 
   createEventStore = async () => {
     let { eventStoreFactory, accounts } = this.state;
-    let result = await eventStoreFactory.createEventStore(accounts[0]);
+    await eventStoreFactory.createEventStore(accounts[0]);
     await this.loadAllEventStores();
   };
 

@@ -13,7 +13,6 @@ import Dashboard from '../Dashboard';
 import EventStoreFactoryPage from '../EventStoreFactoryPage';
 import EventStorePage from '../EventStorePage';
 import StreamModelPage from '../StreamModelPage';
-import SignaturePage from '../SignaturePage';
 import DocumentsPage from '../DocumentsPage';
 
 function onAuthRequired({ history }) {
@@ -32,16 +31,15 @@ class Routes extends React.Component {
     return (
       <Security auth={auth}>
         <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path='/login' exact render={() => <Login baseUrl={config.url} />} />
-          <Route path='/register' exact render={() => <Register />} />
-          <Route path="/implicit/callback" component={ImplicitCallback} />
-          <SecureRoute path="/dashboard" exact component={Dashboard} />
-          <SecureRoute path="/eventstorefactory/:address" exact component={EventStoreFactoryPage} />
-          <SecureRoute path="/eventstore/:address/model" component={StreamModelPage} />
-          <SecureRoute path="/eventstore/:address/documents" component={DocumentsPage} />
-          <SecureRoute path="/eventstore/:address/signature" component={SignaturePage} />
-          <SecureRoute path="/eventstore/:address" exact component={EventStorePage} />
+          <Route path="/transmute" exact component={Home} />
+          <Route path='/transmute/login' exact render={() => <Login baseUrl={config.url} />} />
+          <Route path='/transmute/register' exact render={() => <Register />} />
+          <Route path="/transmute/implicit/callback" component={ImplicitCallback} />
+          <SecureRoute path="/transmute/dashboard" exact component={Dashboard} />
+          <SecureRoute path="/transmute/eventstorefactory/:address" exact component={EventStoreFactoryPage} />
+          <SecureRoute path="/transmute/eventstore/:address/model" component={StreamModelPage} />
+          <SecureRoute path="/transmute/eventstore/:address/documents" component={DocumentsPage} />
+          <SecureRoute path="/transmute/eventstore/:address" exact component={EventStorePage} />
         </Switch>
       </Security>
     );

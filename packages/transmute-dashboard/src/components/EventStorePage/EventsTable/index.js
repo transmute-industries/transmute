@@ -229,7 +229,7 @@ class EventsTable extends React.Component {
                         key={n.id}
                       >
                         <TableCell numeric>{n.index}</TableCell>
-                        <TableCell>[ENCRYPTED]</TableCell>
+                        <TableCell>{n.sender.substring(0, 16) + '...'}</TableCell>
                         <TableCell>[ENCRYPTED]</TableCell>
                         <TableCell>[ENCRYPTED]</TableCell>
                       </TableRow>

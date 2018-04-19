@@ -16,7 +16,7 @@ class PrimaryMenu extends Component {
     return (
       <List>
         <ListItem button key={'dashboard'}>
-          <Link to="/dashboard">
+          <Link to="/transmute/dashboard">
             <ListItemIcon>
               <Dashboard />
             </ListItemIcon>
@@ -24,7 +24,7 @@ class PrimaryMenu extends Component {
           <ListItemText primary="Dashboard" />
         </ListItem>
         <ListItem button key={'account'}>
-          <Link to="/account">
+          <Link to="/transmute/account">
             <ListItemIcon>
               <Fingerprint />
             </ListItemIcon>
@@ -32,7 +32,7 @@ class PrimaryMenu extends Component {
           <ListItemText primary="Account" />
         </ListItem>
         <ListItem button key={'settings'}>
-          <Link to="/settings">
+          <Link to="/transmute/settings">
             <ListItemIcon>
               <Settings />
             </ListItemIcon>

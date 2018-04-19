@@ -26,7 +26,7 @@ class StreamModelPage extends Component {
   };
 
   createStreamModel = async () => {
-    const maybeAddress = window.location.pathname.split('/')[2];
+    const maybeAddress = window.location.pathname.split('/')[3];
     const accessToken = (await this.props.auth.getAccessToken()) || '';
     transmuteConfig.ipfsConfig.authorization = 'Bearer ' + accessToken;
 

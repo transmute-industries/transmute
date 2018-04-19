@@ -82,11 +82,6 @@ class Dashboard extends Component {
     return (
       <AppBar>
         <Card className={classes.card}>
-          {/* <CardMedia
-            className={classes.media}
-            image="../../static/images/transmute.logo.png"
-            title="Transmute, Inc."
-          /> */}
           <CardContent>
             <Typography gutterBottom variant="headline" component="h2">
               E-Signer Demo
@@ -147,7 +142,7 @@ class Dashboard extends Component {
             <Button
               size="small"
               color="primary"
-              href={"/eventstorefactory/" + this.state.defaultEventStoreFactoryContractAddress}
+              href={"/transmute/eventstorefactory/" + this.state.defaultEventStoreFactoryContractAddress}
             >
               Create EventStore
             </Button>
@@ -155,7 +150,7 @@ class Dashboard extends Component {
               size="small"
               color="secondary"
               disabled={this.state.eventStore == null}
-              href={"/eventstore/" + this.state.eventStore + '/documents'}
+              href={"/transmute/eventstore/" + this.state.eventStore + '/documents'}
             >
               View Demo
             </Button>

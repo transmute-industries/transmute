@@ -149,10 +149,7 @@ class EventStoresTable extends React.Component {
     this.state = {
       order: 'desc',
       orderBy: 'index',
-      data: []
-        .sort
-        // (a, b) => (a.calories < b.calories ? -1 : 1)
-        (),
+      data: [],
       page: 0,
       rowsPerPage: 8
     };
@@ -206,7 +203,7 @@ class EventStoresTable extends React.Component {
                   return (
                     <TableRow
                       hover
-                      onClick={() => this.props.history.push("/eventstore/" + n.address) }
+                      onClick={() => this.props.history.push("/transmute/eventstore/" + n.address) }
                       role="checkbox"
                       tabIndex={-1}
                       key={n.id}
