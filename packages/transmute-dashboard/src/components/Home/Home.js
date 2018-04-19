@@ -9,7 +9,6 @@ class Home extends Component {
   render() {
     return (
       <AppBar>
-        <h1>Home</h1>
         <ESignDemo />
       </AppBar>
     );
