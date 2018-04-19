@@ -1,4 +1,4 @@
-const transmuteConfig = require('../../../../../../transmute-config');
+const transmuteConfig = require('../../../transmute-config');
 const TransmuteIpfsAdapter = require('../index');
 
 describe('TransmuteIpfsAdapter', () => {
