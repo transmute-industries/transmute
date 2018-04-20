@@ -9,10 +9,11 @@ import {
   Auth
 } from '@okta/okta-react';
 
-import { history } from '../../store'
+import { history } from '../../store';
 import config from '../../okta_config';
 
 import Home from '../Home';
+import Demo from '../Demo';
 import Login from '../Auth/Login';
 import Register from '../Register';
 import EventStoreFactoryPage from '../EventStoreFactoryPage';
@@ -23,8 +24,6 @@ import DocumentsPage from '../DocumentsPage';
 function onAuthRequired({ history }) {
   history.push('/login');
 }
-
-
 
 const auth = new Auth({
   issuer: config.issuer,
@@ -39,36 +38,32 @@ class Routes extends React.Component {
     return (
       <Security auth={auth}>
         <Switch>
-          {/* <Route exact path="/" render={() => <Redirect to="/transmute" />} /> */}
-          <Route path="/" exact component={Home} />
+          {/* <Route path="/" exact component={Home} /> */}
+          <Route exact path="/" render={() => <Redirect to="/demo" />} />
           <Route
             path="/login"
             exact
             render={() => <Login baseUrl={config.url} />}
           />
           <Route path="/register" exact render={() => <Register />} />
+
+          <Route path="/demo" component={Demo} />
+
+          <Route path="/implicit/callback" component={ImplicitCallback} />
           <Route
-            path="/implicit/callback"
-            component={ImplicitCallback}
-          />
-          <SecureRoute
             path="/eventstorefactory/:address"
             exact
             component={EventStoreFactoryPage}
           />
-          <SecureRoute
+          <Route
             path="/eventstore/:address/model"
             component={StreamModelPage}
           />
-          <SecureRoute
+          <Route
             path="/eventstore/:address/documents"
             component={DocumentsPage}
           />
-          <SecureRoute
-            path="/eventstore/:address"
-            exact
-            component={EventStorePage}
-          />
+          <Route path="/eventstore/:address" exact component={EventStorePage} />
         </Switch>
       </Security>
     );

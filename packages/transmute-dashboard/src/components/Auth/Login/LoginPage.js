@@ -18,7 +18,7 @@ const styles = theme => ({
   },
   margin: {
     margin: theme.spacing.unit
-  },
+  }
 });
 
 class LoginPage extends Component {
@@ -37,6 +37,12 @@ class LoginPage extends Component {
         <Grid item xs={12}>
           <LoginForm baseUrl={this.props.baseUrl} />
           {/* <OktaAuthButton /> */}
+
+          <p>
+            If you would like to access the demo, please join our{' '}
+            <a href="https://t.me/joinchat/ICVkOE_WTmzbGmtdl-5d8A">telegram</a>{' '}
+            and PM @OR13b.
+          </p>
         </Grid>
       </Grid>
     );

@@ -215,7 +215,7 @@ class MiniDrawer extends React.Component {
                   >
                     Register
                   </Button> */}
-                  <Button
+                  {/* <Button
                     variant="raised"
                     color="secondary"
                     onClick={() => {
@@ -224,7 +224,7 @@ class MiniDrawer extends React.Component {
                     className={classes.loginButton}
                   >
                     Login
-                  </Button>
+                  </Button> */}
                 </div>
               )}
 

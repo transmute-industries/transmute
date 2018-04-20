@@ -18,47 +18,52 @@ const styles = theme => ({
 });
 
 class ProfileCard extends React.Component {
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.signature && nextProps.user) {
-      this.setState({
-        signature: nextProps.signature,
-        user: nextProps.user
-      });
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.signature && nextProps.user) {
+  //     this.setState({
+  //       signature: nextProps.signature,
+  //       user: nextProps.user
+  //     });
+  //   }
+  // }
 
-  constructor(props, context) {
-    super(props, context);
+  // constructor(props, context) {
+  //   super(props, context);
 
-    this.state = {
-      signature: props.signature,
-      user: props.user
-    };
-  }
+  //   this.state = {
+  //     signature: props.signature,
+  //     user: props.user
+  //   };
+  // }
 
-  handleSignatureUpload = (event) => {
+  handleSignatureUpload = event => {
     this.props.onSignatureUpload(event);
   };
 
   render() {
-    const { classes } = this.props;
-    const { signature, user } = this.state;
-    
+    const { classes, signature } = this.props;
+    // console.log('what profile props:', this.props);
     return (
       <Card>
         <CardContent className={classes.root}>
           <Typography gutterBottom variant="headline" component="h2">
-            {user.name} ({user.email})
+            {/* {user.name} ({user.email}) */}
           </Typography>
-          {signature !== null ?
+          {signature !== null ? (
             <div>
               <p>My Signature</p>
               <img
-                src={'https://ipfs.transmute.network/api/v0/cat?arg=' + this.state.signature}
+                src={
+                  'https://ipfs.transmute.network/api/v0/cat?arg=' +
+                  this.props.signature
+                }
                 alt="My Signature"
                 className={classes.image}
-              /></div> : <p>No signatures found for your account, please upload one.</p>
-          }
+              />
+            </div>
+          ) : (
+            <p>No signatures found for your account, please upload one.</p>
+          )}
         </CardContent>
         <CardActions>
           <input
@@ -71,16 +76,21 @@ class ProfileCard extends React.Component {
               opacity: 0,
               overflow: 'hidden',
               position: 'absolute',
-              zIndex: 1,
+              zIndex: 1
             }}
           />
           <br />
-          <Button component="label" htmlFor="signatureFile" color="secondary" disabled={signature !== null}>
+          <Button
+            component="label"
+            htmlFor="signatureFile"
+            color="secondary"
+            disabled={signature !== null}
+          >
             Upload New Signature
           </Button>
         </CardActions>
       </Card>
-    )
+    );
   }
 }
 
