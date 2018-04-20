@@ -205,7 +205,7 @@ class MiniDrawer extends React.Component {
               </Typography>
               {!authenticated && (
                 <div>
-                  <Button
+                  {/* <Button
                     variant="raised"
                     color="primary"
                     onClick={() => {
@@ -214,7 +214,7 @@ class MiniDrawer extends React.Component {
                     className={classes.loginButton}
                   >
                     Register
-                  </Button>
+                  </Button> */}
                   <Button
                     variant="raised"
                     color="secondary"
@@ -252,8 +252,8 @@ class MiniDrawer extends React.Component {
                     open={isMenuOpen}
                     onClose={this.handleClose}
                   >
-                    <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                    {/* <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                    <MenuItem onClick={this.handleClose}>My account</MenuItem> */}
                     <MenuItem
                       onClick={() => {
                         this.props.logoutUser()

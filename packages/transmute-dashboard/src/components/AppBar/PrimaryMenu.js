@@ -11,16 +11,22 @@ import { withAuth } from '@okta/okta-react';
 
 import { Fingerprint, Dashboard, Settings } from 'material-ui-icons';
 
+import { history } from '../../store';
+
 class PrimaryMenu extends Component {
   render() {
     return (
       <List>
-        <ListItem button key={'home'}>
-          <Link to="/">
-            <ListItemIcon>
-              <Dashboard />
-            </ListItemIcon>
-          </Link>
+        <ListItem
+          button
+          key={'home'}
+          onClick={() => {
+            history.push('/');
+          }}
+        >
+          <ListItemIcon>
+            <Dashboard />
+          </ListItemIcon>
           <ListItemText primary="Dashboard" />
         </ListItem>
         {/* <ListItem button key={'account'}>

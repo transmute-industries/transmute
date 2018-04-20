@@ -3,11 +3,9 @@ import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 
 import { withAuth } from '@okta/okta-react';
 
-import {
-  HelpOutline,
-  BugReport,
-  Code
-} from 'material-ui-icons';
+import { history } from '../../store';
+
+import { Send, Slack, BugReport, Code } from 'material-ui-icons';
 
 class SecondaryMenu extends Component {
   constructor(props) {
@@ -31,21 +29,53 @@ class SecondaryMenu extends Component {
   render() {
     return (
       <List>
-        <ListItem button>
+        <ListItem
+          button
+          onClick={() => {
+            window.location.href =
+              'https://t.me/joinchat/ICVkOE_WTmzbGmtdl-5d8A';
+          }}
+        >
           <ListItemIcon>
-            <HelpOutline />
+            <Send />
           </ListItemIcon>
-          <ListItemText primary="Support" />
+          <ListItemText primary="Telegram" />
         </ListItem>
 
-        <ListItem button>
+           <ListItem
+          button
+          onClick={() => {
+            window.location.href =
+              'https://transmute-industries.slack.com/join/shared_invite/enQtMzE1MDYwNTQ4MDAzLTFhNGQ1OWVhYzEwMGQ3YTVkOTVmMDk1NDY1NGNmZGMwMmMyMjE5YTZlMjE2NzE1ZTYwYTEyNzU5MjgxM2RiYzE';
+          }}
+        >
+          <ListItemIcon>
+            <Send />
+          </ListItemIcon>
+          <ListItemText primary="Slack" />
+        </ListItem>
+
+        
+        <ListItem
+          button
+          onClick={() => {
+            window.location.href =
+              'https://github.com/transmute-industries/transmute/issues';
+          }}
+        >
           <ListItemIcon>
             <BugReport />
           </ListItemIcon>
           <ListItemText primary="Bug Report" />
         </ListItem>
 
-        <ListItem button>
+        <ListItem
+          button
+          onClick={() => {
+            window.location.href =
+              'https://github.com/transmute-industries/transmute';
+          }}
+        >
           <ListItemIcon>
             <Code />
           </ListItemIcon>

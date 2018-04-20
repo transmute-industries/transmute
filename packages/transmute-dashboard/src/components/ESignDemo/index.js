@@ -93,8 +93,9 @@ class ESignDemo extends Component {
             E-Signer Demo
           </Typography>
           <Typography component="p">
-            In this demo, we'll be creating and signing documents with our
-            Ethereum account.
+            In this demo, we'll be creating and signing documents with Ethereum and IPFS.
+            <br/>
+            <br/>
           </Typography>
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="uncontrolled-native">Account</InputLabel>

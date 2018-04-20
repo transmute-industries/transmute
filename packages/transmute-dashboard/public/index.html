@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="theme-color" content="#000000">
-    <!--
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#000000">
+  <!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.png">
-    <!--
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.png">
+  <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -19,14 +20,21 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>Transmute Alpha</title>
-  </head>
-  <body>
-    <noscript>
-      You need to enable JavaScript to run this app.
-    </noscript>
-    <div id="root"></div>
-    <!--
+  <title>Transmute Alpha</title>
+
+  <script type="text/javascript">
+    function createKeenWebAutoCollector() { window.keenWebAutoCollector = window.KeenWebAutoCollector.create({ projectId: '5ad93df5c9e77c00017c822c', writeKey: '4995DE8B21EDD6025E1CFFC6A86A6FCE81F5E9558EB97437043E2DCC1B8C420BFD903AD38034EEA8C59F931EA2386FEF5BC269B60AC68C196470925256FAFF15ECBC96F524BE313FCA2CCD6B7B1A5BC1E391F50343AF5CF593B861D252C0C52C', onloadCallbacks: window.keenWebAutoCollector.onloadCallbacks }), window.keenWebAutoCollector.loaded() } function initKeenWebAutoCollector() { window.keenWebAutoCollector.domReady() ? window.createKeenWebAutoCollector() : document.addEventListener("readystatechange", function () { window.keenWebAutoCollector.domReady() && window.createKeenWebAutoCollector() }) } window.keenWebAutoCollector = { onloadCallbacks: [], onload: function (a) { this.onloadCallbacks.push(a) }, domReady: function () { return ["ready", "complete"].indexOf(document.readyState) > -1 } };
+  </script>
+  <script async type="text/javascript" src="https://d26b395fwzu5fz.cloudfront.net/keen-web-autocollector-1.0.8.min.js" onload="initKeenWebAutoCollector()"></script>
+
+</head>
+
+<body>
+  <noscript>
+    You need to enable JavaScript to run this app.
+  </noscript>
+  <div id="root"></div>
+  <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -36,5 +44,6 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-  </body>
+</body>
+
 </html>
