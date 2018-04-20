@@ -203,7 +203,7 @@ class EventStoresTable extends React.Component {
                   return (
                     <TableRow
                       hover
-                      onClick={() => this.props.history.push("/transmute/eventstore/" + n.address) }
+                      onClick={() => this.props.history.push("/eventstore/" + n.address) }
                       role="checkbox"
                       tabIndex={-1}
                       key={n.id}
