@@ -71,3 +71,4 @@ script:
 
 - lerna run --scope transmute-eventstore truffle:coverage
 - lerna run --scope transmute-eventstore truffle:coverage:report
+- ./bootstrap
