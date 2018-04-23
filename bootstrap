@@ -1,0 +1,271 @@
+#!/bin/sh
+# Installs minikube, kubectl, and transmute into a minikube cluster
+: ${TRANSMUTE_DIR:=$HOME/.transmute}
+: ${TRANSMUTE_BIN:=$TRANSMUTE_DIR/bin}
+: ${VERBOSITY:=0}
+: ${HELM_INSTALL_DIR:=$TRANSMUTE_BIN}
+: ${MY_KUBE_VERSION:=v1.9.6}
+
+# Check for config env file
+if [ -e $TRANSMUTE_DIR/env ]; then
+  source $TRANSMUTE_DIR/env
+  if [ $VERBOSITY -gt '0' ]; then
+    ls -al $TRANSMUTE_DIR/env
+    env file found and sourced
+  fi
+fi
+
+
+errror () {
+  echo "-------------------------------------------------------------"
+  echo -e "\n \n  "
+  echo "ERROR!!!  --  "
+}
+
+# Check if a command exists
+check_cmd () {
+  if ! type "$1" > /dev/null; then
+    errror
+    echo "$1 was not found in your path!"
+    echo "To proceed please install $1 to your path and try again!"
+    exit 1
+  fi
+}
+
+warrrn () {
+  sleep 1
+  echo -n "(ctrl-c now to stop if this is not what you intend)!"
+  sleep 1; echo  -n "!"; sleep 1; echo  -n "!"
+  sleep 1; echo  -n "!"
+  sleep 1; echo "!"
+  sleep 1; echo "--"
+  sleep 1
+}
+
+chkdir () {
+  if [ ! -w $1 ] ; then
+    sudo mkdir -p $1
+    sudo chown $USER. $1
+  fi
+  if [ ! -w $1 ] ; then
+    errror
+    echo "Cannot write to $1, please check your permissions"
+    exit 2
+  fi
+}
+
+# these vars are used by the following functions
+LINE_TO_ADD=''
+TARGET_FILE_FOR_ADD=~/.profile
+
+check_if_line_exists()
+{
+  echo "Checking for '$LINE_TO_ADD'  in $TARGET_FILE_FOR_ADD"
+  grep -qsFx "$LINE_TO_ADD" $TARGET_FILE_FOR_ADD
+}
+
+add_line_to()
+{
+  echo "Adding '$LINE_TO_ADD'  to $TARGET_FILE_FOR_ADD"
+  TARGET_FILE=$TARGET_FILE_FOR_ADD
+    [ -w "$TARGET_FILE" ] || TARGET_FILE=$TARGET_FILE_FOR_ADD
+    printf "%s\n" "$LINE_TO_ADD" >> "$TARGET_FILE"
+}
+
+macminikube () {
+	echo 'Installing minikube'
+	brew cask install minikube
+}
+
+mackubectl () {
+	echo 'Installing kubectl'
+	brew install kubectl
+}
+
+machelm () {
+	echo 'Installing helm'
+	brew install kubernetes-helm
+}
+
+macnsenter () {
+	echo 'Installing nsenter'
+	brew install kubernetes-nsenter
+}
+
+windowsminikube () {
+	echo 'Installing minikube'
+	choco install minikube
+}
+
+windowskubectl () {
+	echo 'Installing kubectl'
+	choco install kubernetes-cli
+}
+
+windowshelm () {
+	echo 'Installing helm'
+	choco install helm
+}
+
+windowsnsenter () {
+	echo 'Installing nsenter'
+	choco install nsenter
+}
+
+install_kubectl_linux () {
+	echo 'Installing kubectl'
+	TMP=$(mktemp -d --suffix=KUBECTLTMP)
+	cd $TMP
+	curl -LO https://storage.googleapis.com/kubernetes-release/release/$MY_KUBE_VERSION/bin/linux/amd64/kubectl
+	chmod +x kubectl
+	sudo mv -v kubectl $TRANSMUTE_BIN
+	cd
+	rmdir $TMP
+}
+
+install_minikube_linux () {
+	echo 'Installing minikube'
+	TMP=$(mktemp -d --suffix=MINIKUBETMP)
+	mkdir -p $HOME/.kube || true
+	touch $HOME/.kube/config
+	cd $TMP
+	curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+  chmod +x minikube
+  sudo mv minikube $TRANSMUTE_BIN/
+	cd
+	rmdir $TMP
+}
+
+install_helm_linux () {
+	TMP=$(mktemp -d --suffix=HELMTMP)
+  cd $TMP
+	echo 'Getting helmget'
+	curl -Lo $TMP/helmget https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get
+	HELM_INSTALL_DIR=$HELM_INSTALL_DIR
+	echo 'Installing helm'
+	sudo -E bash -l $TMP/helmget
+	rm $TMP/helmget
+	cd
+	rmdir $TMP
+}
+
+install_ngrok_npm () {
+  npm i -g ngrok
+}
+
+windowsreqs () {
+  windowskubectl
+  windowsminikube
+  windowshelm
+  windowsnsenter
+  install_ngrok_npm
+}
+
+macreqs () {
+  mackubectl
+  macminikube
+  machelm
+  macnsenter
+  install_ngrok_npm
+}
+
+linuxreqs () {
+  #linuxreqs: $(TRANSMUTE_BIN) run_dotfiles minikube kubectl helm nsenter
+  install_kubectl_linux
+  install_minikube_linux
+  install_helm_linux
+  install_ngrok_npm
+}
+
+run_it () {
+set -e
+set -u
+
+# Let's display everything on stderr.
+exec 1>&2
+
+UNAME=$(uname)
+# Check to see if it starts with MINGW.
+if [ "$UNAME" = "CYGWIN_NT-10.0" ] ; then
+  check_cmd choco
+  check_cmd helm
+  PLATFORM="os.cygwin.x86_64"
+  echo "WARNING: Cygwin is not supported for this installer at this time!"
+  exit 1
+fi
+if [ "$UNAME" == "Linux" -o "$UNAME" == "Darwin" ] ; then
+  echo " $UNAME is a Supported OS"
+elif [ "$UNAME" ">" "MINGW" -a "$UNAME" "<" "MINGX" ] ; then
+  echo " $UNAME is a Supported OS"
+else
+  echo " $UNAME is not a Supported OS"
+  echo "Sorry, this OS is not supported yet via this installer."
+  exit 1
+fi
+
+if [ "$UNAME" = "Darwin" ] ; then
+  check_cmd brew
+  ### OSX ###
+  if [ "i386" != "$(uname -p)" -o "1" != "$(sysctl -n hw.cpu64bit_capable 2>/dev/null || echo 0)" ] ; then
+    # Can't just test uname -m = x86_64, because Snow Leopard can
+    # return other values.
+    echo "Only 64-bit Intel processors are supported at this time in OSX."
+    exit 1
+  fi
+
+  PLATFORM="os.osx.x86_64"
+elif [ "$UNAME" = "Linux" ] ; then
+  ### Linux ###
+  LINUX_ARCH=$(uname -m)
+  if [ "${LINUX_ARCH}" = "x86_64" ] ; then
+    PLATFORM="os.linux.x86_64"
+  else
+    echo "Unusable architecture: ${LINUX_ARCH}"
+    echo "transmute only supports x86_64 for now."
+    exit 1
+  fi
+fi
+
+echo "Warning!"
+sleep 1
+echo -e "This script will install minikube, kubectl and helm,
+and then install transmute into a local minikube cluster."
+warrrn
+
+if [ -e "$TRANSMUTE_DIR" ]; then
+  echo "$TRANSMUTE_DIR exists already, proceeding"
+else
+  cd $HOME
+  echo 'Cloning the latest transmute repo'
+  git clone --depth 1 https://github.com/transmute-industries/transmute.git .transmute
+fi
+
+
+# make reqs
+mkdir -p $TRANSMUTE_DIR
+mkdir -p $TRANSMUTE_BIN
+if [ "$PLATFORM" = "os.linux.x86_64" ] ; then
+  linuxreqs
+elif [ "$PLATFORM" = "os.osx.x86_64" ] ; then
+  macreqs
+elif [ "$PLATFORM" = "os.windows.x86_64" ] ; then
+  windowsreqs
+fi
+
+export PATH=$TRANSMUTE_BIN:$PATH
+check_cmd helm
+check_cmd kubectl
+check_cmd minikube
+check_cmd nsenter
+
+trap - EXIT
+# End run it wrapper
+}
+
+check_cmd mktemp
+check_cmd git
+check_cmd curl
+check_cmd uname
+check_cmd socat
+
+run_it
