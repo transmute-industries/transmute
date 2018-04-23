@@ -38,8 +38,8 @@ class Routes extends React.Component {
     return (
       <Security auth={auth}>
         <Switch>
-          {/* <Route path="/" exact component={Home} /> */}
-          <Route exact path="/" render={() => <Redirect to="/demo" />} />
+          <Route path="/" exact component={Home} />
+          {/* <Route exact path="/" render={() => <Redirect to="/demo" />} /> */}
           <Route
             path="/login"
             exact

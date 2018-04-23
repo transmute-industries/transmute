@@ -16,7 +16,7 @@ import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 import AccountCircle from 'material-ui-icons/AccountCircle';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import OktaAuthButton from '../Auth/OktaAuthButton';
-import * as actionCreators from '../../store/user/actionCreators'
+import * as actionCreators from '../../store/user/actionCreators';
 
 import { push } from 'react-router-redux';
 
@@ -30,8 +30,6 @@ import SecondaryMenu from './SecondaryMenu';
 import { history } from '../../store';
 
 const drawerWidth = 240;
-
-
 
 const styles = theme => ({
   root: {
@@ -204,8 +202,8 @@ class MiniDrawer extends React.Component {
                 Transmute
               </Typography>
               {!authenticated && (
-                <div>
-                  {/* <Button
+                <div style={{ paddingRight: '10px' }}>
+                  <Button
                     variant="raised"
                     color="primary"
                     onClick={() => {
@@ -214,17 +212,17 @@ class MiniDrawer extends React.Component {
                     className={classes.loginButton}
                   >
                     Register
-                  </Button> */}
-                  {/* <Button
+                  </Button>
+                  <Button
                     variant="raised"
-                    color="secondary"
+                    color="primary"
                     onClick={() => {
                       history.push('/login');
                     }}
                     className={classes.loginButton}
                   >
                     Login
-                  </Button> */}
+                  </Button>
                 </div>
               )}
 
@@ -256,7 +254,7 @@ class MiniDrawer extends React.Component {
                     <MenuItem onClick={this.handleClose}>My account</MenuItem> */}
                     <MenuItem
                       onClick={() => {
-                        this.props.logoutUser()
+                        this.props.logoutUser();
                         this.props.auth.logout();
                       }}
                     >
@@ -313,13 +311,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    logoutUser: () =>
-      dispatch(actionCreators.logout())
+    logoutUser: () => dispatch(actionCreators.logout())
   };
 };
 
-export default withStyles(styles,  { withTheme: true })(
+export default withStyles(styles, { withTheme: true })(
   connect(mapStateToProps, mapDispatchToProps)(withAuth(MiniDrawer))
 );
-
-
