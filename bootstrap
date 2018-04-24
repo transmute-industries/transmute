@@ -5,6 +5,7 @@
 : ${VERBOSITY:=0}
 : ${HELM_INSTALL_DIR:=$TRANSMUTE_BIN}
 : ${MY_KUBE_VERSION:=v1.9.6}
+: ${FIX_DOTFILES:= "true"}
 
 # Check for config env file
 if [ -e $TRANSMUTE_DIR/env ]; then
