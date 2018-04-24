@@ -503,7 +503,7 @@ fi
 check_cmd helm
 check_cmd kubectl
 check_cmd minikube
-check_cmd nsenter
+#check_cmd nsenter
 
 initializer
 
