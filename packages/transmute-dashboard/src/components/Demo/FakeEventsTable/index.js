@@ -49,7 +49,12 @@ class EventsTableHead extends React.Component {
     this.props.onRequestSort(event, property);
   };
   render() {
-    const { onSelectAllClick, order, orderBy, rowCount } = this.props;
+    const {
+      onSelectAllClick,
+      order,
+      orderBy,
+      rowCount
+    } = this.props;
 
     return (
       <TableHead>
@@ -112,7 +117,7 @@ let EventsTableToolbar = props => {
 };
 
 EventsTableToolbar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 EventsTableToolbar = withStyles(toolbarStyles)(EventsTableToolbar);
@@ -182,7 +187,7 @@ class EventsTable extends React.Component {
     const { data, order, orderBy, rowsPerPage, page } = this.state;
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-    let currentUserAddress = localStorage.getItem('currentUserAddress');
+      let currentUserAddress = localStorage.getItem('currentUserAddress');
     return (
       <Paper className={classes.root}>
         <EventsTableToolbar />
@@ -197,19 +202,38 @@ class EventsTable extends React.Component {
             <TableBody>
               {data
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(n => {
-                  return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={n.id}>
-                      <TableCell numeric>{n.index}</TableCell>
-                      <TableCell>{n.sender.substring(0, 16) + '...'}</TableCell>
-                      <TableCell>
-                        <pre>{JSON.stringify(n.key, null, 2)}</pre>
-                      </TableCell>
-                      <TableCell>
-                        <pre>{JSON.stringify(n.value, null, 2)}</pre>
-                      </TableCell>
-                    </TableRow>
-                  );
+                .map(n => { 
+                  return n.sender === currentUserAddress ?
+                     (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={n.id}
+                      >
+                        <TableCell numeric>{n.index}</TableCell>
+                        <TableCell>{n.sender.substring(0, 16) + '...'}</TableCell>
+                        <TableCell>
+                          <pre>{JSON.stringify(n.key, null, 2)}</pre>
+                        </TableCell>
+                        <TableCell>
+                          <pre>{JSON.stringify(n.value, null, 2)}</pre>
+                        </TableCell>
+                      </TableRow>
+                    ) :
+                    (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={n.id}
+                      >
+                        <TableCell numeric>{n.index}</TableCell>
+                        <TableCell>{n.sender.substring(0, 16) + '...'}</TableCell>
+                        <TableCell>[ENCRYPTED]</TableCell>
+                        <TableCell>[ENCRYPTED]</TableCell>
+                      </TableRow>
+                    )
                 })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 49 * emptyRows }}>
@@ -245,6 +269,7 @@ class EventsTable extends React.Component {
 EventsTable.propTypes = {
   classes: PropTypes.object.isRequired
 };
+
 
 const mapStateToProps = state => {
   return {

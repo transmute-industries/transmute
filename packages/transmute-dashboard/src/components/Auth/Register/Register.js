@@ -9,9 +9,9 @@ import { withStyles } from 'material-ui/styles';
 
 import { connect } from 'react-redux';
 
-import logo from '../../images/transmute.logo.png';
+import logo from '../../../images/transmute.logo.png';
 
-import * as actions from '../../store/user/actions';
+import * as actions from '../../../store/user/actions';
 
 const styles = theme => ({
   root: {
@@ -26,20 +26,17 @@ const styles = theme => ({
     margin: theme.spacing.unit
   },
   textField: {
-    // display: 'block',
     minWidth: '400px'
   },
-  textInput: {
-    // width: '100%'
-  }
+  textInput: {}
 });
 
 class Register extends Component {
   state = {
     error: null,
-    firstName: 'Alice',
-    lastName: 'Smith',
-    email: 'alice@example.com'
+    firstName: '',
+    lastName: '',
+    email: ''
   };
 
   handleSubmit = e => {
@@ -48,12 +45,6 @@ class Register extends Component {
     this.props.registerWithActivationEmail({
       ...this.state
     });
-
-    // this.props.loginApiCall(
-    //   this.oktaAuth,
-    //   this.state.email,
-    //   this.state.password
-    // );
   };
 
   handleChange = name => event => {

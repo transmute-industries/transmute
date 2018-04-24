@@ -18,7 +18,7 @@ import {
 import AppBar from '../AppBar';
 import ProfileCard from '../DocumentsPage/ProfileCard';
 import DocumentsList from '../DocumentsPage/DocumentsList';
-import EventsTable from '../EventStorePage/EventsTable';
+import EventsTable from './FakeEventsTable';
 import theme from '../../theme';
 
 import { filters } from '../../filters/Events';

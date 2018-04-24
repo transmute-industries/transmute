@@ -34,11 +34,7 @@ const columnData = [
 
 class StreamModelTableHead extends React.Component {
   render() {
-    const {
-      order,
-      orderBy,
-      rowCount
-    } = this.props;
+    const { order, orderBy, rowCount } = this.props;
 
     return (
       <TableHead>
@@ -50,8 +46,7 @@ class StreamModelTableHead extends React.Component {
                 numeric={column.numeric}
                 padding={column.disablePadding ? 'none' : 'default'}
                 sortDirection={orderBy === column.id ? order : false}
-              >
-              </TableCell>
+              />
             );
           }, this)}
         </TableRow>
@@ -156,11 +151,7 @@ class StreamModelTable extends React.Component {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => {
                   return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                    >
+                    <TableRow key={n} hover role="checkbox" tabIndex={-1}>
                       <TableCell>
                         <pre>{JSON.stringify(n, null, 2)}</pre>
                       </TableCell>

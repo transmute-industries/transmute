@@ -13,6 +13,12 @@ import { Fingerprint, Dashboard, Settings } from 'material-ui-icons';
 
 import { history } from '../../store';
 
+import { EventStoreFactory } from 'transmute-eventstore';
+
+let eventStoreFactoryArtifact = require('../../contracts/EventStoreFactory.json');
+
+let transmuteConfig = require('../../transmute-config');
+
 class PrimaryMenu extends Component {
   render() {
     return (
@@ -20,8 +26,15 @@ class PrimaryMenu extends Component {
         <ListItem
           button
           key={'home'}
-          onClick={() => {
-            history.push('/');
+          onClick={async () => {
+            const eventStoreFactory = new EventStoreFactory({
+              eventStoreFactoryArtifact,
+              ...transmuteConfig
+            });
+            await eventStoreFactory.init();
+            let address =
+              eventStoreFactory.eventStoreFactoryContractInstance.address;
+            history.push('/eventstorefactory/' + address);
           }}
         >
           <ListItemIcon>
