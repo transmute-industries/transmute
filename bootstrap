@@ -7,6 +7,7 @@
 : ${MY_KUBE_VERSION:=v1.9.6}
 : ${FIX_DOTFILES:= "true"}
 : ${NVM_DIR_ADDS:= "true"}
+: ${NVM $NVM_VERSION:='0.33.9'}
 
 # Check for config env file
 if [ -e $TRANSMUTE_DIR/env ]; then
@@ -190,11 +191,17 @@ dotfiles_install () {
 }
 
 install_nvm () {
-  if ! type "helm" > /dev/null; then
+  set +e
+  this_output=$(nvm  --version)
+  set -e
+
+  if [ "$this_output" = "$NVM_VERSION" ]; then
+    echo "NVM $NVM_VERSION is already installed skipping"
+  else
     touch ~/.profile
 
     set +e
-    curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | bash
+    curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v$NVM_VERSION/install.sh | bash
     set -e
 
     if [ "$FIX_DOTFILES" = "true" ]; then
