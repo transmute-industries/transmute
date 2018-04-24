@@ -92,8 +92,8 @@ machelm () {
 }
 
 macnsenter () {
-	echo 'Installing nsenter'
-	brew install kubernetes-nsenter
+	echo 'NOT Installing nsenter'
+	#brew install kubernetes-nsenter
 }
 
 windowsminikube () {
