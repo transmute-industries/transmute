@@ -1,4 +1,10 @@
 #!/bin/sh
+
+sudo apt-get install -yqq \
+  autopoint debhelper dh-apparmor intltool-debian jq libmail-sendmail-perl \
+  libselinux1-dev libsepol1-dev libslang2-dev libsys-hostname-long-perl \
+  po-debconf
+
 export CWD=$(pwd)
 curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.9.0/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
 curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.25.2/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
