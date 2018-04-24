@@ -113,27 +113,31 @@ windowsnsenter () {
 }
 
 install_kubectl_linux () {
-	echo 'Installing kubectl'
-	TMP=$(mktemp -d --suffix=KUBECTLTMP)
-	cd $TMP
-	curl -LO https://storage.googleapis.com/kubernetes-release/release/$MY_KUBE_VERSION/bin/linux/amd64/kubectl
-	chmod +x kubectl
-	sudo mv -v kubectl $TRANSMUTE_BIN
-	cd
-	rmdir $TMP
+  if ! type "kubectl" > /dev/null; then
+    echo 'Installing kubectl'
+    TMP=$(mktemp -d --suffix=KUBECTLTMP)
+    cd $TMP
+    curl -LO https://storage.googleapis.com/kubernetes-release/release/$MY_KUBE_VERSION/bin/linux/amd64/kubectl
+    chmod +x kubectl
+    sudo mv -v kubectl $TRANSMUTE_BIN
+    cd
+    rmdir $TMP
+  fi
 }
 
 install_minikube_linux () {
-	echo 'Installing minikube'
-	TMP=$(mktemp -d --suffix=MINIKUBETMP)
-	mkdir -p $HOME/.kube || true
-	touch $HOME/.kube/config
-	cd $TMP
-	curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-  chmod +x minikube
-  sudo mv minikube $TRANSMUTE_BIN/
-	cd
-	rmdir $TMP
+  if ! type "minikube" > /dev/null; then
+    echo 'Installing minikube'
+    TMP=$(mktemp -d --suffix=MINIKUBETMP)
+    mkdir -p $HOME/.kube || true
+    touch $HOME/.kube/config
+    cd $TMP
+    curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    chmod +x minikube
+    sudo mv minikube $TRANSMUTE_BIN/
+    cd
+    rmdir $TMP
+  fi
 }
 
 install_helm_linux () {
