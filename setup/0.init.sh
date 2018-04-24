@@ -1,10 +1,22 @@
 
 # http://patorjk.com/software/taag/#p=display&f=ANSI%20Shadow
 
-export WELCOME='Welcome to transmute, this guide will help you setup your environment. Before we get started, be sure to update your transmute-config.'
+speaker () {
+  WELCOME=$1
+  echo $WELCOME
+  if type "say" &> /dev/null; then
+    say "$WELCOME"
+  elif type "espeak" &> /dev/null; then
+    espeak "$WELCOME"
+  elif type "spd-say" &> /dev/null; then
+    spd-say "$WELCOME"
+  elif type "festival" &> /dev/null; then
+    echo "$WELCOME" | festival --tts
+  fi
+}
 
-echo $WELCOME
-say $WELCOME
+speaker 'Welcome to transmute, this guide will help you setup your environment. Before we get started, be sure to update your transmute-config.'
+
 
 # ███████╗███████╗████████╗██╗   ██╗██████╗      ██████╗ ██████╗ ███╗   ██╗███████╗██╗ ██████╗ 
 # ██╔════╝██╔════╝╚══██╔══╝██║   ██║██╔══██╗    ██╔════╝██╔═══██╗████╗  ██║██╔════╝██║██╔════╝ 
@@ -30,7 +42,7 @@ read -p "Press enter to continue"
 # ██║██║ ╚████║███████║   ██║   ██║  ██║███████╗███████╗    ██║  ██╗╚██████╔╝██║ ╚████║╚██████╔╝
 # ╚═╝╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝    ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ 
                                                                                               
-say 'Great, your environment has been established...\!'
+speaker 'Great, your environment has been established...\!'
 
 echo 'MINIKUBE_IP ' $MINIKUBE_IP
 

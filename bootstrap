@@ -416,7 +416,9 @@ linuxreqs () {
 
 initializer () {
   cd $TRANSMUTE_DIR/git/transmute
+  cp transmute-config/.example.env ./.env
   npm i
+  npm run setup
 }
 
 run_it () {
@@ -506,6 +508,9 @@ check_cmd minikube
 #check_cmd nsenter
 
 initializer
+
+echo 'The bootstrap has finished - you have completed all the way to "npm run setup" here --> https://github.com/transmute-industries/transmute#environment-scripts-and-updating.
+Proceed at "At the end of this process...."'
 
 trap - EXIT
 # End run it wrapper
