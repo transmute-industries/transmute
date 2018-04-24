@@ -137,27 +137,98 @@ install_minikube_linux () {
 }
 
 install_helm_linux () {
-	TMP=$(mktemp -d --suffix=HELMTMP)
-  cd $TMP
-	echo 'Getting helmget'
-	curl -Lo $TMP/helmget https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get
-	HELM_INSTALL_DIR=$HELM_INSTALL_DIR
-	echo 'Installing helm'
-	sudo -E bash -l $TMP/helmget
-	rm $TMP/helmget
-	cd
-	rmdir $TMP
+  if ! type "helm" > /dev/null; then
+    TMP=$(mktemp -d --suffix=HELMTMP)
+    cd $TMP
+    echo 'Getting helmget'
+    curl -Lo $TMP/helmget https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get
+    HELM_INSTALL_DIR=$HELM_INSTALL_DIR
+    echo 'Installing helm'
+    sudo -E bash -l $TMP/helmget
+    rm $TMP/helmget
+    cd
+    rmdir $TMP
+  fi
+}
+
+nvm_dir_adds () {
+  LINE_TO_ADD='export NVM_DIR=~/.nvm'
+  TARGET_FILE_FOR_ADD=~/.zshrc
+  check_if_line_exists || add_line_to
+  TARGET_FILE_FOR_ADD=~/.bash_profile
+  check_if_line_exists || add_line_to
+
+  LINE_TO_ADD='source ~/.nvm/nvm.sh'
+  TARGET_FILE_FOR_ADD=~/.zshrc
+  check_if_line_exists || add_line_to
+  TARGET_FILE_FOR_ADD=~/.bash_profile
+  check_if_line_exists || add_line_to
+}
+
+dotfiles_install () {
+  if [[ $VERBOSITY -gt '1' ]]; then
+    echo 'Adjusting dotfiles'
+  fi
+  touch ~/.zshrc
+  touch ~/.bashrc
+  touch ~/.bash_profile
+  touch ~/.profile
+  LINE_TO_ADD="source ~/.bashrc"
+  TARGET_FILE_FOR_ADD=~/.bash_profile
+  check_if_line_exists || add_line_to
+  LINE_TO_ADD="source ~/.profile"
+  TARGET_FILE_FOR_ADD=~/.zshrc
+  check_if_line_exists || add_line_to
+  TARGET_FILE_FOR_ADD=~/.bashrc
+  check_if_line_exists || add_line_to
+}
+
+install_nvm () {
+  touch ~/.profile
+
+  curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | bash
+
+  if [ "$FIX_DOTFILES" = "true" ]; then
+    dotfiles_install
+  fi
+
+  if [ "$NVM_DIR_ADDS" = "true" ]; then
+    nvm_dir_adds
+  fi
 }
 
 install_ngrok_npm () {
   npm i -g ngrok
 }
 
+lts_install () {
+  if [[ $VERBOSITY -gt '2' ]]; then
+    echo 'Installing Node 8 LTS/carbon'
+  fi
+
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+  nvm ls-remote --lts=carbon
+  if [[ $VERBOSITY -gt '2' ]]; then
+    echo "Engage nvm to install lts/carbon"
+  fi
+  nvm install --lts=carbon
+  if [[ $VERBOSITY -gt '2' ]]; then
+    echo "Engage nvm to alias lts/carbon to default"
+  fi
+  nvm alias default lts/carbon
+}
+
+
 windowsreqs () {
   windowskubectl
   windowsminikube
   windowshelm
   windowsnsenter
+  install_nvm
+  lts_install
   install_ngrok_npm
 }
 
@@ -166,6 +237,8 @@ macreqs () {
   macminikube
   machelm
   macnsenter
+  install_nvm
+  lts_install
   install_ngrok_npm
 }
 
@@ -174,6 +247,8 @@ linuxreqs () {
   install_kubectl_linux
   install_minikube_linux
   install_helm_linux
+  install_nvm
+  lts_install
   install_ngrok_npm
 }
 
