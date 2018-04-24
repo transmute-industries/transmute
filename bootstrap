@@ -7,7 +7,8 @@
 : ${MY_KUBE_VERSION:=v1.9.6}
 : ${FIX_DOTFILES:= "true"}
 : ${NVM_DIR_ADDS:= "true"}
-: ${NVM $NVM_VERSION:='0.33.9'}
+: ${NVM_VERSION:='0.33.9'}
+export PATH=$TRANSMUTE_BIN:$PATH
 
 # Check for config env file
 if [ -e $TRANSMUTE_DIR/env ]; then
@@ -190,8 +191,29 @@ dotfiles_install () {
   check_if_line_exists || add_line_to
 }
 
+install_certbot () {
+  if ! type "certbot-auto" > /dev/null; then
+    TMP=$(mktemp -d)
+    wget https://dl.eff.org/certbot-auto
+    chmod a+x ./certbot-auto
+    wget -N https://dl.eff.org/certbot-auto.asc
+    gpg2 --recv-key A2CFB51FA275A7286234E7B24D17C995CD9775F2
+    gpg2 --trusted-key 4D17C995CD9775F2 --verify certbot-auto.asc certbot-auto
+    sudo mv certbot-auto $TRANSMUTE_BIN/
+    set +e
+    certbot-auto
+    set -e
+    rm -Rf $TMP
+  else
+    echo 'certbot-auto already installed skipping'
+  fi
+}
+
 install_nvm () {
   set +e
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
   this_output=$(nvm  --version)
   set -e
 
@@ -215,31 +237,61 @@ install_nvm () {
 }
 
 install_ngrok_npm () {
-  npm i -g ngrok
+  if ! type "ngrok" > /dev/null; then
+    npm i -g ngrok
+  else
+    echo 'ngrok already installed skipping'
+  fi
 }
 
 lts_install () {
-  if [[ $VERBOSITY -gt '2' ]]; then
-    echo 'Installing Node 8 LTS/carbon'
-  fi
+  if ! type "npm" > /dev/null; then
+    if [[ $VERBOSITY -gt '2' ]]; then
+      echo 'Installing Node 8 LTS/carbon'
+    fi
 
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-  set +e
-  nvm ls-remote --lts=carbon
-  if [[ $VERBOSITY -gt '2' ]]; then
-    echo "Engage nvm to install lts/carbon"
+    set +e
+    nvm ls-remote --lts=carbon
+    if [[ $VERBOSITY -gt '2' ]]; then
+      echo "Engage nvm to install lts/carbon"
+    fi
+    nvm install --lts=carbon
+    if [[ $VERBOSITY -gt '2' ]]; then
+      echo "Engage nvm to alias lts/carbon to default"
+    fi
+    nvm alias default lts/carbon
+    nvm use --default --lts=carbon
+    set -e
+  else
+      echo 'npm already installed skipping'
   fi
-  nvm install --lts=carbon
-  if [[ $VERBOSITY -gt '2' ]]; then
-    echo "Engage nvm to alias lts/carbon to default"
-  fi
-  nvm alias default lts/carbon
-  set -e
 }
 
+install_jq () {
+  if ! type "jq" > /dev/null; then
+    if type "apt-get" > /dev/null; then
+      sudo apt-get install -y jq
+    elif type "dnf" > /dev/null; then
+      sudo dnf install -y jq
+    elif type "zypper" > /dev/null; then
+      sudo zypper --non-interactive install -y jq
+    elif type "pacman" > /dev/null; then
+      sudo pacman -Sy --noconfirm jq
+    elif type "brew" > /dev/null; then
+      brew jq < /dev/null
+    elif type "chocolatey" > /dev/null; then
+      chocolatey install jq
+    else
+      echo 'No appropriate installer found for jq, install jq and run this script again'
+    fi
+  else
+    echo 'jq already installed skipping'
+  fi
+}
 
 windowsreqs () {
   windowskubectl
@@ -249,6 +301,8 @@ windowsreqs () {
   install_nvm
   lts_install
   install_ngrok_npm
+  install_certbot
+  install_jq
 }
 
 macreqs () {
@@ -259,6 +313,8 @@ macreqs () {
   install_nvm
   lts_install
   install_ngrok_npm
+  install_certbot
+  install_jq
 }
 
 linuxreqs () {
@@ -269,6 +325,8 @@ linuxreqs () {
   install_nvm
   lts_install
   install_ngrok_npm
+  install_certbot
+  install_jq
 }
 
 run_it () {
@@ -326,14 +384,20 @@ echo -e "This script will install minikube, kubectl and helm,
 and then install transmute into a local minikube cluster."
 #warrrn
 
-if [ -e "$TRANSMUTE_DIR" ]; then
-  echo "$TRANSMUTE_DIR exists already, proceeding"
+if [ -e "$TRANSMUTE_DIR/git" ]; then
+  echo "$TRANSMUTE_DIR/git exists already, proceeding"
 else
   cd $HOME
-  echo 'Cloning the latest transmute repo'
-  git clone --depth 1 https://github.com/transmute-industries/transmute.git .transmute
+  mkdir -p $TRANSMUTE_DIR/git
 fi
 
+if [ -e "$TRANSMUTE_DIR/git/transmute" ]; then
+  echo "$TRANSMUTE_DIR/git/transmute exists already, proceeding"
+else
+  cd $TRANSMUTE_DIR/git
+  echo 'Cloning the latest transmute repo'
+  git clone --depth 1 https://github.com/transmute-industries/transmute.git
+fi
 
 # make reqs
 mkdir -p $TRANSMUTE_DIR
@@ -346,7 +410,6 @@ elif [ "$PLATFORM" = "os.windows.x86_64" ] ; then
   windowsreqs
 fi
 
-export PATH=$TRANSMUTE_BIN:$PATH
 check_cmd helm
 check_cmd kubectl
 check_cmd minikube
