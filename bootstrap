@@ -6,6 +6,7 @@
 : ${HELM_INSTALL_DIR:=$TRANSMUTE_BIN}
 : ${MY_KUBE_VERSION:=v1.9.6}
 : ${FIX_DOTFILES:= "true"}
+: ${NVM_DIR_ADDS:= "true"}
 
 # Check for config env file
 if [ -e $TRANSMUTE_DIR/env ]; then
@@ -191,7 +192,9 @@ dotfiles_install () {
 install_nvm () {
   touch ~/.profile
 
+  set +e
   curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | bash
+  set -e
 
   if [ "$FIX_DOTFILES" = "true" ]; then
     dotfiles_install
@@ -215,6 +218,7 @@ lts_install () {
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+  set +e
   nvm ls-remote --lts=carbon
   if [[ $VERBOSITY -gt '2' ]]; then
     echo "Engage nvm to install lts/carbon"
@@ -224,6 +228,7 @@ lts_install () {
     echo "Engage nvm to alias lts/carbon to default"
   fi
   nvm alias default lts/carbon
+  set -e
 }
 
 
@@ -310,7 +315,7 @@ echo "Warning!"
 sleep 1
 echo -e "This script will install minikube, kubectl and helm,
 and then install transmute into a local minikube cluster."
-warrrn
+#warrrn
 
 if [ -e "$TRANSMUTE_DIR" ]; then
   echo "$TRANSMUTE_DIR exists already, proceeding"
