@@ -1,50 +1,33 @@
-matrix:
-  include:
-    - os: linux
-      dist: trusty
-      sudo: required
-    - os: osx
-      osx_image: xcode7.2
+#!/bin/sh
+helm install stable/kong --name gateway
+helm install stable/ipfs --name decentralized-storage
+helm install ./charts/ganache-cli --name=ganache
+sleep 180
 
-env:
-- CHANGE_MINIKUBE_NONE_USER=true
+kubectl get services
 
-before_script:
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh .ci/linux_before_install.sh; fi
+export MINIKUBE_IP=$(minikube ip)
+export KONG_ADMIN_URL=$(minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
+export KONG_PROXY_URL=$(minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
+export KONG_PROXY_PORT=$(kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
 
-script:
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh .ci/linux_script.sh; fi
-  #- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sh .ci/mac_script.sh; fi
-- helm install stable/kong --name gateway
-- helm install stable/ipfs --name decentralized-storage
-- helm install ./charts/ganache-cli --name=ganache
-- sleep 180
+npm install
+./scripts/configure-hosts.sh
+./scripts/configure-kong-ganache.sh
+./scripts/configure-kong-ipfs.sh
+# ./scripts/configure-kong-okta-ipfs.sh
+./scripts/configure-framework-kong.sh 
 
-- kubectl get services
+lerna bootstrap
 
-- export MINIKUBE_IP=$(minikube ip)
-- export KONG_ADMIN_URL=$(minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
-- export KONG_PROXY_URL=$(minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
-- export KONG_PROXY_PORT=$(kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
+TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore truffle:migrate
+# TRANSMUTE_ENV=minikube lerna run --scope ipfs-api build
+TRANSMUTE_ENV=minikube ACCESS_TOKEN=$(node ./scripts/okta/get-okta-token.js) lerna run --scope transmute-eventstore test
+TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore test:report
+TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore build
+# TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore test:smoke 
 
-- npm install
-- ./scripts/configure-hosts.sh
-- ./scripts/configure-kong-ganache.sh
-- ./scripts/configure-kong-ipfs.sh
-# - ./scripts/configure-kong-okta-ipfs.sh
-- ./scripts/configure-framework-kong.sh 
+TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore truffle:test
 
-- lerna bootstrap
-
-- TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore truffle:migrate
-# - TRANSMUTE_ENV=minikube lerna run --scope ipfs-api build
-- TRANSMUTE_ENV=minikube ACCESS_TOKEN=$(node ./scripts/okta/get-okta-token.js) lerna run --scope transmute-eventstore test
-- TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore test:report
-- TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore build
-# - TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore test:smoke 
-
-- TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore truffle:test
-
-- lerna run --scope transmute-eventstore truffle:coverage
-- lerna run --scope transmute-eventstore truffle:coverage:report
-- ./bootstrap
+lerna run --scope transmute-eventstore truffle:coverage
+lerna run --scope transmute-eventstore truffle:coverage:report
