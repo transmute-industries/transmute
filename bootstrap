@@ -271,6 +271,72 @@ lts_install () {
   fi
 }
 
+install_socat () {
+  if ! type "socat" > /dev/null; then
+    if type "apt-get" > /dev/null; then
+      sudo apt-get install -y socat
+    elif type "dnf" > /dev/null; then
+      sudo dnf install -y socat
+    elif type "zypper" > /dev/null; then
+      sudo zypper --non-interactive install -y socat
+    elif type "pacman" > /dev/null; then
+      sudo pacman -Sy --noconfirm socat
+    elif type "brew" > /dev/null; then
+      brew install socat < /dev/null
+    elif type "chocolatey" > /dev/null; then
+      chocolatey install socat
+    else
+      echo 'No appropriate installer found for socat, install socat and run this script again'
+    fi
+  else
+    echo 'socat already installed skipping'
+  fi
+}
+
+install_curl () {
+  if ! type "curl" > /dev/null; then
+    if type "apt-get" > /dev/null; then
+      sudo apt-get install -y curl
+    elif type "dnf" > /dev/null; then
+      sudo dnf install -y curl
+    elif type "zypper" > /dev/null; then
+      sudo zypper --non-interactive install -y curl
+    elif type "pacman" > /dev/null; then
+      sudo pacman -Sy --noconfirm curl
+    elif type "brew" > /dev/null; then
+      brew install curl < /dev/null
+    elif type "chocolatey" > /dev/null; then
+      chocolatey install curl
+    else
+      echo 'No appropriate installer found for curl, install curl and run this script again'
+    fi
+  else
+    echo 'curl already installed skipping'
+  fi
+}
+
+install_git () {
+  if ! type "git" > /dev/null; then
+    if type "apt-get" > /dev/null; then
+      sudo apt-get install -y git
+    elif type "dnf" > /dev/null; then
+      sudo dnf install -y git
+    elif type "zypper" > /dev/null; then
+      sudo zypper --non-interactive install -y git
+    elif type "pacman" > /dev/null; then
+      sudo pacman -Sy --noconfirm git
+    elif type "brew" > /dev/null; then
+      brew install git < /dev/null
+    elif type "chocolatey" > /dev/null; then
+      chocolatey install git
+    else
+      echo 'No appropriate installer found for git, install git and run this script again'
+    fi
+  else
+    echo 'git already installed skipping'
+  fi
+}
+
 install_jq () {
   if ! type "jq" > /dev/null; then
     if type "apt-get" > /dev/null; then
@@ -282,7 +348,7 @@ install_jq () {
     elif type "pacman" > /dev/null; then
       sudo pacman -Sy --noconfirm jq
     elif type "brew" > /dev/null; then
-      brew jq < /dev/null
+      brew install jq < /dev/null
     elif type "chocolatey" > /dev/null; then
       chocolatey install jq
     else
@@ -294,6 +360,9 @@ install_jq () {
 }
 
 windowsreqs () {
+  install_curl
+  install_git
+  install_socat
   windowskubectl
   windowsminikube
   windowshelm
@@ -306,6 +375,9 @@ windowsreqs () {
 }
 
 macreqs () {
+  install_curl
+  install_git
+  install_socat
   mackubectl
   macminikube
   machelm
@@ -319,6 +391,9 @@ macreqs () {
 
 linuxreqs () {
   #linuxreqs: $(TRANSMUTE_BIN) run_dotfiles minikube kubectl helm nsenter
+  install_curl
+  install_git
+  install_socat
   install_kubectl_linux
   install_minikube_linux
   install_helm_linux
@@ -420,9 +495,6 @@ trap - EXIT
 }
 
 check_cmd mktemp
-check_cmd git
-check_cmd curl
 check_cmd uname
-check_cmd socat
 
 run_it
