@@ -414,6 +414,11 @@ linuxreqs () {
   install_jq
 }
 
+initializer () {
+  cd $TRANSMUTE_DIR/git/transmute
+  npm i
+}
+
 run_it () {
 set -e
 set -u
@@ -499,6 +504,8 @@ check_cmd helm
 check_cmd kubectl
 check_cmd minikube
 check_cmd nsenter
+
+initializer
 
 trap - EXIT
 # End run it wrapper
