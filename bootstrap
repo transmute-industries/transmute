@@ -8,6 +8,7 @@
 : ${FIX_DOTFILES:= "true"}
 : ${NVM_DIR_ADDS:= "true"}
 : ${NVM_VERSION:='0.33.9'}
+export CWD=$(pwd)
 export PATH=$TRANSMUTE_BIN:$PATH
 
 # Check for config env file
@@ -511,7 +512,7 @@ initializer
 echo 'The bootstrap has finished'
 echo '- you have completed all the way to "npm run setup" here:'
 echo 'https://github.com/transmute-industries/transmute#environment-scripts-and-updating.'
-echo "You should now run 'npm run setup' inside the $(readlink -f $TRANSMUTE_DIR)"
+echo "You should now run 'npm run setup' inside '$(readlink -f $TRANSMUTE_DIR)'"
 
 trap - EXIT
 # End run it wrapper
