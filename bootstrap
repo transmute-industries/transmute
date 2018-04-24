@@ -118,7 +118,7 @@ windowsnsenter () {
 }
 
 install_kubectl_linux () {
-  if ! type "kubectl" > /dev/null; then
+  if ! type "kubectl" &> /dev/null; then
     echo 'Installing kubectl'
     TMP=$(mktemp -d --suffix=KUBECTLTMP)
     cd $TMP
@@ -131,7 +131,7 @@ install_kubectl_linux () {
 }
 
 install_minikube_linux () {
-  if ! type "minikube" > /dev/null; then
+  if ! type "minikube" &> /dev/null; then
     echo 'Installing minikube'
     TMP=$(mktemp -d --suffix=MINIKUBETMP)
     mkdir -p $HOME/.kube || true
@@ -146,7 +146,7 @@ install_minikube_linux () {
 }
 
 install_helm_linux () {
-  if ! type "helm" > /dev/null; then
+  if ! type "helm" &> /dev/null; then
     TMP=$(mktemp -d --suffix=HELMTMP)
     cd $TMP
     echo 'Getting helmget'
@@ -193,7 +193,7 @@ dotfiles_install () {
 }
 
 install_certbot () {
-  if ! type "certbot-auto" > /dev/null; then
+  if ! type "certbot-auto" &> /dev/null; then
     TMP=$(mktemp -d)
     wget https://dl.eff.org/certbot-auto
     chmod a+x ./certbot-auto
@@ -245,7 +245,7 @@ install_nvm () {
 }
 
 install_ngrok_npm () {
-  if ! type "ngrok" > /dev/null; then
+  if ! type "ngrok" &> /dev/null; then
     npm i -g ngrok
   else
     echo 'ngrok already installed skipping'
@@ -253,7 +253,7 @@ install_ngrok_npm () {
 }
 
 lts_install () {
-  if ! type "npm" > /dev/null; then
+  if ! type "npm" &> /dev/null; then
     if [[ $VERBOSITY -gt '2' ]]; then
       echo 'Installing Node 8 LTS/carbon'
     fi
@@ -280,18 +280,18 @@ lts_install () {
 }
 
 install_socat () {
-  if ! type "socat" > /dev/null; then
-    if type "apt-get" > /dev/null; then
+  if ! type "socat" &> /dev/null; then
+    if type "apt-get" &> /dev/null; then
       sudo apt-get install -y socat
-    elif type "dnf" > /dev/null; then
+    elif type "dnf" &> /dev/null; then
       sudo dnf install -y socat
-    elif type "zypper" > /dev/null; then
+    elif type "zypper" &> /dev/null; then
       sudo zypper --non-interactive install -y socat
-    elif type "pacman" > /dev/null; then
+    elif type "pacman" &> /dev/null; then
       sudo pacman -Sy --noconfirm socat
-    elif type "brew" > /dev/null; then
+    elif type "brew" &> /dev/null; then
       brew install socat < /dev/null
-    elif type "chocolatey" > /dev/null; then
+    elif type "chocolatey" &> /dev/null; then
       chocolatey install socat
     else
       echo 'No appropriate installer found for socat, install socat and run this script again'
@@ -302,18 +302,18 @@ install_socat () {
 }
 
 install_curl () {
-  if ! type "curl" > /dev/null; then
-    if type "apt-get" > /dev/null; then
+  if ! type "curl" &> /dev/null; then
+    if type "apt-get" &> /dev/null; then
       sudo apt-get install -y curl
-    elif type "dnf" > /dev/null; then
+    elif type "dnf" &> /dev/null; then
       sudo dnf install -y curl
-    elif type "zypper" > /dev/null; then
+    elif type "zypper" &> /dev/null; then
       sudo zypper --non-interactive install -y curl
-    elif type "pacman" > /dev/null; then
+    elif type "pacman" &> /dev/null; then
       sudo pacman -Sy --noconfirm curl
-    elif type "brew" > /dev/null; then
+    elif type "brew" &> /dev/null; then
       brew install curl < /dev/null
-    elif type "chocolatey" > /dev/null; then
+    elif type "chocolatey" &> /dev/null; then
       chocolatey install curl
     else
       echo 'No appropriate installer found for curl, install curl and run this script again'
@@ -324,18 +324,18 @@ install_curl () {
 }
 
 install_git () {
-  if ! type "git" > /dev/null; then
-    if type "apt-get" > /dev/null; then
+  if ! type "git" &> /dev/null; then
+    if type "apt-get" &> /dev/null; then
       sudo apt-get install -y git
-    elif type "dnf" > /dev/null; then
+    elif type "dnf" &> /dev/null; then
       sudo dnf install -y git
-    elif type "zypper" > /dev/null; then
+    elif type "zypper" &> /dev/null; then
       sudo zypper --non-interactive install -y git
-    elif type "pacman" > /dev/null; then
+    elif type "pacman" &> /dev/null; then
       sudo pacman -Sy --noconfirm git
-    elif type "brew" > /dev/null; then
+    elif type "brew" &> /dev/null; then
       brew install git < /dev/null
-    elif type "chocolatey" > /dev/null; then
+    elif type "chocolatey" &> /dev/null; then
       chocolatey install git
     else
       echo 'No appropriate installer found for git, install git and run this script again'
@@ -346,18 +346,18 @@ install_git () {
 }
 
 install_jq () {
-  if ! type "jq" > /dev/null; then
-    if type "apt-get" > /dev/null; then
+  if ! type "jq" &> /dev/null; then
+    if type "apt-get" &> /dev/null; then
       sudo apt-get install -y jq
-    elif type "dnf" > /dev/null; then
+    elif type "dnf" &> /dev/null; then
       sudo dnf install -y jq
-    elif type "zypper" > /dev/null; then
+    elif type "zypper" &> /dev/null; then
       sudo zypper --non-interactive install -y jq
-    elif type "pacman" > /dev/null; then
+    elif type "pacman" &> /dev/null; then
       sudo pacman -Sy --noconfirm jq
-    elif type "brew" > /dev/null; then
+    elif type "brew" &> /dev/null; then
       brew install jq < /dev/null
-    elif type "chocolatey" > /dev/null; then
+    elif type "chocolatey" &> /dev/null; then
       chocolatey install jq
     else
       echo 'No appropriate installer found for jq, install jq and run this script again'
