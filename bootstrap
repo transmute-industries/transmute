@@ -378,6 +378,7 @@ macreqs () {
   install_curl
   install_git
   install_socat
+  brew install gnupg < /dev/null
   mackubectl
   macminikube
   machelm
