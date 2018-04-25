@@ -508,6 +508,8 @@ speaker "This script will install minikube, kubectl and helm,
 and then install transmute."
 warrrn
 
+echo "Checking $TRANSMUTE_DIR"
+
 if [ -e "$TRANSMUTE_DIR/git" ]; then
   echo "$TRANSMUTE_DIR/git exists already, proceeding"
 else
