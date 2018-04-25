@@ -1,4 +1,5 @@
 #!/bin/sh
+export PATH=$HOME/.transmute/bin:$PATH
 
 sudo minikube start --vm-driver=none --kubernetes-version=v1.9.4
 minikube update-context
