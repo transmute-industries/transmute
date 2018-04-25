@@ -17,6 +17,7 @@ chkdir /etc/kubernetes
 chkdir /var/lib
 chkdir /var/lib/localkube
 chkdir /var/lib/localkube/certs
+chkdir /lib/systemd/system
 
 sudo chown travis /usr/bin
 sudo chown travis /usr/local/bin
