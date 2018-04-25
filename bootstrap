@@ -458,7 +458,7 @@ initializer () {
 
 run_it () {
 set -e
-set -u
+#set -u
 
 # Let's display everything on stderr.
 exec 1>&2
