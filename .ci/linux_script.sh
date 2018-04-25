@@ -1,7 +1,8 @@
 #!/bin/sh
 export PATH=$HOME/.transmute/bin:$PATH
 
-sudo minikube start --vm-driver=none --kubernetes-version=v1.9.4
+echo $PATH
+minikube start --vm-driver=none --kubernetes-version=v1.9.4
 minikube update-context
 JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
 
