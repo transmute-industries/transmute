@@ -513,9 +513,9 @@ if [ -e "$TRANSMUTE_DIR/git" ]; then
   echo "$TRANSMUTE_DIR/git exists already, proceeding"
 else
   echo "$TRANSMUTE_DIR/git does not exist already, proceeding"
-  echo "cd $TRANSMUTE_DIR"
+  echo "This next 'cd' command fails on osx --> cd $TRANSMUTE_DIR"
   cd $TRANSMUTE_DIR
-  echo 'mkdir'
+  echo 'Notice this echo does not run on the failing osx builds'
   mkdir -p $TRANSMUTE_DIR/git
 fi
 
