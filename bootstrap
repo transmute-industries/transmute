@@ -1,6 +1,6 @@
 #!/bin/bash
 # Installs minikube, kubectl, and transmute into a minikube cluster
-: ${TRANSMUTE_RELEASE:='transmute-ipfs@1.0.1-alpha.0.3'}
+: ${TRANSMUTE_RELEASE:='master'}
 : ${TRANSMUTE_DIR:=$HOME/.transmute}
 : ${TRANSMUTE_BIN:=$TRANSMUTE_DIR/bin}
 : ${VERBOSITY:=0}
