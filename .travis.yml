@@ -7,6 +7,7 @@ matrix:
         - CHANGE_MINIKUBE_NONE_USER=true
         - MINIKUBE_VERSION=v0.25.2
         - USE_VOX=n
+      language: bash
       cache:
         directories:
         - $HOME/.minikube
@@ -15,6 +16,7 @@ matrix:
         - /usr/local/bin
     - os: osx
       osx_image: xcode9.3
+      language: bash
       cache:
         directories:
         - $HOME/.minikube
@@ -24,8 +26,6 @@ matrix:
         - CHANGE_MINIKUBE_NONE_USER=true
         - MINIKUBE_VERSION=v0.25.2
         - USE_VOX=n
-
-language: bash
 
 before_script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh .ci/linux_before_install.sh; fi
