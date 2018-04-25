@@ -20,6 +20,12 @@ chkdir /var/lib/localkube
 chkdir /var/lib/localkube/certs
 chkdir /lib/systemd/system
 
+if [ ! -e $HOME/minikube ]; then
+  curl -Lo minikube https://storage.googleapis.com/minikube/releases/$MINIKUBE_VERSION/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube $HOME/
+fi
+
+cp $HOME/minikube $HOME/.transmute/bin/
+
 sudo chown travis /usr/bin
 sudo chown travis /usr/local/bin
 minikube start --vm-driver=none --kubernetes-version=v1.9.4

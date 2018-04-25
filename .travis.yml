@@ -5,14 +5,15 @@ matrix:
       sudo: required
       env:
         - CHANGE_MINIKUBE_NONE_USER=true
+        - MINIKUBE_VERSION=v0.25.2
         - USE_VOX=n
       cache:
         directories:
         - $HOME/.minikube
         - $HOME/.transmute
         - $HOME/.kube
+        - /usr/local/bin
     - os: osx
-      osx_image: xcode7.2
       cache:
         directories:
         - $HOME/.minikube
@@ -20,6 +21,7 @@ matrix:
         - $HOME/.kube
       env:
         - CHANGE_MINIKUBE_NONE_USER=true
+        - MINIKUBE_VERSION=v0.25.2
         - USE_VOX=n
 
 before_script:
@@ -33,6 +35,5 @@ script:
 - PATH=$HOME/.transmute/bin:$PATH which minikube
 - which ngrok
 - which helm
-- sudo chown $USER /var/lib
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh .ci/linux_script.sh; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sh .ci/mac_script.sh; fi
