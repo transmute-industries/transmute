@@ -24,8 +24,9 @@ matrix:
 
 before_script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh .ci/linux_before_install.sh; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sh .ci/mac_before_script.sh; fi
+- bash -l ./bootstrap
 
 script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh .ci/linux_script.sh; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sh .ci/mac_script.sh; fi
-- bash -l ./bootstrap
