@@ -458,6 +458,8 @@ linuxreqs () {
 }
 
 initializer () {
+  ls  $TRANSMUTE_DIR/git
+  ls $TRANSMUTE_DIR/git/transmute
   cd $TRANSMUTE_DIR/git/transmute/transmute-config
   cp .example.env .env
   cd $TRANSMUTE_DIR/git/transmute
@@ -533,9 +535,11 @@ if [ -e "$TRANSMUTE_DIR/git/transmute" ]; then
   cd $CWD
 else
   cd $TRANSMUTE_DIR/git
+  pwd
   echo 'Cloning the latest transmute repo'
   git clone --depth 1 https://github.com/transmute-industries/transmute.git
   cd $TRANSMUTE_DIR/git/transmute
+  pwd
   git fetch --tags
   git checkout $TRANSMUTE_RELEASE
   cd $CWD
