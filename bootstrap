@@ -389,6 +389,7 @@ install_jq () {
 }
 
 windowsreqs () {
+  check_cmd chocolatey
   install_curl
   install_git
   install_socat
@@ -404,6 +405,7 @@ windowsreqs () {
 }
 
 macreqs () {
+  check_cmd brew
   install_curl
   install_git
   install_socat
@@ -452,18 +454,11 @@ set -u
 exec 1>&2
 
 UNAME=$(uname)
-# Check to see if it starts with MINGW.
-if [ "$UNAME" = "CYGWIN_NT-10.0" ] ; then
-  check_cmd choco
-  check_cmd helm
-  PLATFORM="os.cygwin.x86_64"
-  echo "WARNING: Cygwin is not supported for this installer at this time!"
-  exit 1
-fi
 if [ "$UNAME" = "Linux" -o "$UNAME" = "Darwin" ] ; then
   echo " $UNAME is a Supported OS"
 elif [ "$UNAME" ">" "MINGW" -a "$UNAME" "<" "MINGX" ] ; then
-  echo " $UNAME is a Supported OS"
+  echo " $UNAME is not a Supported OS"
+  exit 1
 else
   echo " $UNAME is not a Supported OS"
   echo "Sorry, this OS is not supported yet via this installer."
@@ -491,12 +486,14 @@ elif [ "$UNAME" = "Linux" ] ; then
     echo "transmute only supports x86_64 for now."
     exit 1
   fi
+elif [ "$UNAME" = "CYGWIN_NT-10.0" ] ; then
+  PLATFORM="os.cygwin.x86_64"
 fi
 
 speaker "Warning!"
 sleep 1
 speaker "This script will install minikube, kubectl and helm,
-and then install transmute into a local minikube cluster."
+and then install transmute.'
 warrrn
 
 if [ -e "$TRANSMUTE_DIR/git" ]; then
