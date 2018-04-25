@@ -36,11 +36,11 @@ script:
 - env
 - PATH=$HOME/.transmute/bin:$PATH which kubectl
 - PATH=$HOME/.transmute/bin:$PATH which minikube
-- which npm
-- which node
-- node -v
-- npm -v
-- which ngrok
-- which helm
+- bash -l -c "which npm"
+- bash -l -c "which node"
+- bash -l -c "node -v"
+- bash -l -c "npm -v"
+- bash -l -c "which ngrok"
+- bash -l -c "which helm"
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l .ci/linux_script; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sh .ci/mac_script.sh; fi
