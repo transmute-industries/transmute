@@ -14,6 +14,10 @@
 export CWD=$(pwd)
 export PATH=$TRANSMUTE_BIN:$PATH
 
+if [[ "$USE_VOX" == 'y' ]]; then
+  echo 'Using vox'
+fi
+
 speaker () {
   WELCOME=$1
   echo $WELCOME
