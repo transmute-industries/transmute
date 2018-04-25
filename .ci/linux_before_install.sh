@@ -27,6 +27,7 @@ fi
 if [ ! -e "$HOME/.transmute/bin/minikube" ]; then
   TMP=$(mktemp -d)
   cd $TMP
+  mkdir -p "$HOME/.transmute/bin"
   curl -Lo minikube https://storage.googleapis.com/minikube/releases/$MINIKUBE_VERSION/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube $HOME/.transmute/bin/
   cd $CWD
   rm -Rf $TMP
