@@ -1,17 +1,21 @@
+#!/bin/sh
 
+: ${USE_VOX:="true"}
 # http://patorjk.com/software/taag/#p=display&f=ANSI%20Shadow
 
 speaker () {
   WELCOME=$1
   echo $WELCOME
-  if type "say"        > /dev/null 2> /dev/null; then
-    say "$WELCOME"
-  elif type "espeak"   > /dev/null 2> /dev/null; then
-    espeak "$WELCOME"
-  elif type "spd-say"  > /dev/null 2> /dev/null; then
-    spd-say "$WELCOME"
-  elif type "festival" > /dev/null 2> /dev/null; then
-    echo "$WELCOME" | festival --tts
+  if [ "$USE_VOX" = "true" ]; then
+    if type "say"        > /dev/null 2> /dev/null; then
+      say "$WELCOME"
+    elif type "espeak"   > /dev/null 2> /dev/null; then
+      espeak "$WELCOME"
+    elif type "spd-say"  > /dev/null 2> /dev/null; then
+      spd-say "$WELCOME"
+    elif type "festival" > /dev/null 2> /dev/null; then
+      echo "$WELCOME" | festival --tts
+    fi
   fi
 }
 
@@ -25,13 +29,20 @@ speaker 'Welcome to transmute, this guide will help you setup your environment. 
 # ███████║███████╗   ██║   ╚██████╔╝██║         ╚██████╗╚██████╔╝██║ ╚████║██║     ██║╚██████╔╝
 # ╚══════╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝          ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝ 
                                                                                              
-echo 'Transmute Config can be found here:\n'
 
-echo ' - ./transmute-config/.env'
+if [ -e "./transmute-config/.env" ]; then
+  echo 'Transmute Config has been found here:\n'
+  echo ' - ./transmute-config/.env'
+else
+  speaker "Would you like me to copy the example environment?" answer
+  read -p "[yn]" answer
+  if [ "$answer" = y ] ; then
+      # run the command
+      cp ./transmute-config/.example.env  ./transmute-config/.env 
+  fi
+fi
 
-echo ''
-
-read -p "Press enter to continue"
+read -p "Press enter to continue" answer
 
 . ./transmute-config/.env
 
