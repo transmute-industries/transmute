@@ -1,4 +1,5 @@
 #!/bin/sh
+: ${USE_VOX:=y}
 helm install ./charts/ganache-cli/ --name ganache
 
 export KONG_ADMIN_URL=$(minikube service gateway-kong-admin --url | sed 's,http://,https://,g')

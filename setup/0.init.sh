@@ -1,12 +1,12 @@
 #!/bin/sh
+: ${USE_VOX:=y}
 
-: ${USE_VOX:="true"}
 # http://patorjk.com/software/taag/#p=display&f=ANSI%20Shadow
 
 speaker () {
   WELCOME=$1
   echo $WELCOME
-  if [ "$USE_VOX" = "true" ]; then
+  if [ "$USE_VOX" = y ]; then
     if type "say"        > /dev/null 2> /dev/null; then
       say "$WELCOME"
     elif type "espeak"   > /dev/null 2> /dev/null; then
@@ -19,7 +19,19 @@ speaker () {
   fi
 }
 
-speaker 'Welcome to transmute, this guide will help you setup your environment. Before we get started, be sure to update your transmute-config.'
+bail () {
+  speaker "then I am bailing out, you will need to create the environment file at  ./transmute-config/.env" answer
+  exit 1
+}
+
+
+speaker 'Welcome to transmute'
+speaker 'Before we get started, do you mind if I continue speaking?'
+speaker 'enter y or n'
+read -p '[yn]' USE_VOX
+export USE_VOX=$USE_VOX
+speaker 'This guide will help you setup your environment.'
+speaker 'let me check your transmute-config.'
 
 
 # ███████╗███████╗████████╗██╗   ██╗██████╗      ██████╗ ██████╗ ███╗   ██╗███████╗██╗ ██████╗ 
@@ -31,18 +43,36 @@ speaker 'Welcome to transmute, this guide will help you setup your environment. 
                                                                                              
 
 if [ -e "./transmute-config/.env" ]; then
-  echo 'Transmute Config has been found here:\n'
-  echo ' - ./transmute-config/.env'
+  speaker 'Transmute Config has been found here ./transmute-config/.env'
 else
-  speaker "Would you like me to copy the example environment?" answer
-  read -p "[yn]" answer
+  speaker "Would you like me to copy the example environment file?"
+  read -p '[yn]' answer
   if [ "$answer" = y ] ; then
-      # run the command
-      cp ./transmute-config/.example.env  ./transmute-config/.env 
+    # run the command
+    speaker "ok, I will copy the example environment file to transmute-config/.env"
+    cp ./transmute-config/.example.env  ./transmute-config/.env
+  else
+    bail
   fi
 fi
 
-read -p "Press enter to continue" answer
+speaker "Would you like to edit the environment file?"
+read -p '[yn]' answer
+if [ "$answer" = y ] ; then
+  if [ ! -z "$EDITOR" ] ; then
+    $EDITOR ./transmute-config/.env
+  else
+    speaker "You will need to set your EDITOR environment variable"
+    exit 1
+  fi
+fi
+
+if [ -e "./transmute-config/.env" ]; then
+  speaker "Press enter to continue if you are satisfied with transmute-config/.env" &
+  read -p ' ' answer
+else
+  bail
+fi
 
 . ./transmute-config/.env
 
@@ -55,7 +85,7 @@ read -p "Press enter to continue" answer
                                                                                               
 speaker 'Great, your environment has been established...\!'
 
-echo 'MINIKUBE_IP ' $MINIKUBE_IP
+echo "MINIKUBE_IP $MINIKUBE_IP"
 
 echo ''
 
@@ -75,7 +105,7 @@ echo 'Now ready to configure SSL...'
 
 echo 'Now ready to install IPFS...'
 
-read -p "Press enter to continue"
+read -p "Press enter to continue" answer
 
 
 # ██╗███╗   ██╗███████╗████████╗ █████╗ ██╗     ██╗         ██╗██████╗ ███████╗███████╗

@@ -1,4 +1,5 @@
 #!/bin/sh
+: ${USE_VOX:=y}
 helm install stable/kong --name gateway
 
 speaker () {

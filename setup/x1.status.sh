@@ -1,4 +1,5 @@
 #!/bin/sh
+: ${USE_VOX:=y}
 
 speaker () {
   WELCOME=$1
