@@ -514,6 +514,7 @@ if [ -e "$TRANSMUTE_DIR/git" ]; then
   echo "$TRANSMUTE_DIR/git exists already, proceeding"
 else
   echo "$TRANSMUTE_DIR/git does not exist already, proceeding"
+  echo "cd $TRANSMUTE_DIR"
   cd $TRANSMUTE_DIR
   echo 'mkdir'
   mkdir -p $TRANSMUTE_DIR/git
