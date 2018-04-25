@@ -302,7 +302,6 @@ lts_install () {
       echo "Engage nvm to alias lts/carbon to default"
     fi
     nvm alias default lts/carbon
-    nvm use --default --lts=carbon
     set -e
   else
       echo 'npm already installed skipping'
