@@ -17,7 +17,7 @@ export PATH=$TRANSMUTE_BIN:$PATH
 speaker () {
   WELCOME=$1
   echo $WELCOME
-  if [ "$USE_VOX" = y ]; then
+  if [[ "$USE_VOX" == 'y' ]]; then
     if type "say"        > /dev/null 2> /dev/null; then
       say "$WELCOME"
     elif type "espeak"   > /dev/null 2> /dev/null; then
