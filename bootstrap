@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Installs minikube, kubectl, and transmute into a minikube cluster
 : ${TRANSMUTE_DIR:=$HOME/.transmute}
 : ${TRANSMUTE_BIN:=$TRANSMUTE_DIR/bin}
