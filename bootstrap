@@ -43,20 +43,6 @@ if [ -e $TRANSMUTE_DIR/env ]; then
   fi
 fi
 
-speaker () {
-  WELCOME=$1
-  echo $WELCOME
-  if type "say" &> /dev/null; then
-    say "$WELCOME"
-  elif type "espeak" &> /dev/null; then
-    espeak "$WELCOME"
-  elif type "spd-say" &> /dev/null; then
-    spd-say "$WELCOME"
-  elif type "festival" &> /dev/null; then
-    echo "$WELCOME" | festival --tts
-  fi
-}
-
 errror () {
   echo "-------------------------------------------------------------"
   echo -e "\n \n  "
