@@ -9,8 +9,26 @@
 : ${FIX_DOTFILES:= "true"}
 : ${NVM_DIR_ADDS:= "true"}
 : ${NVM_VERSION:='0.33.9'}
+: ${USE_VOX:=y}
+
 export CWD=$(pwd)
 export PATH=$TRANSMUTE_BIN:$PATH
+
+speaker () {
+  WELCOME=$1
+  echo $WELCOME
+  if [ "$USE_VOX" = y ]; then
+    if type "say"        > /dev/null 2> /dev/null; then
+      say "$WELCOME"
+    elif type "espeak"   > /dev/null 2> /dev/null; then
+      espeak "$WELCOME"
+    elif type "spd-say"  > /dev/null 2> /dev/null; then
+      spd-say "$WELCOME"
+    elif type "festival" > /dev/null 2> /dev/null; then
+      echo "$WELCOME" | festival --tts
+    fi
+  fi
+}
 
 # Check for config env file
 if [ -e $TRANSMUTE_DIR/env ]; then

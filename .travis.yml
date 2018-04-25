@@ -8,6 +8,7 @@ matrix:
 
 env:
 - CHANGE_MINIKUBE_NONE_USER=true
+- USE_VOX=n
 
 before_script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh .ci/linux_before_install.sh; fi
