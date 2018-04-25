@@ -6,8 +6,18 @@ matrix:
       env:
         - CHANGE_MINIKUBE_NONE_USER=true
         - USE_VOX=n
+      cache:
+        directories:
+        - $HOME/.minikube
+        - $HOME/.transmute
+        - $HOME/.kube
     - os: osx
       osx_image: xcode7.2
+      cache:
+        directories:
+        - $HOME/.minikube
+        - $HOME/.transmute
+        - $HOME/.kube
       env:
         - CHANGE_MINIKUBE_NONE_USER=true
         - USE_VOX=n
