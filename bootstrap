@@ -494,7 +494,7 @@ fi
 speaker "Warning!"
 sleep 1
 speaker "This script will install minikube, kubectl and helm,
-and then install transmute.'
+and then install transmute."
 warrrn
 
 if [ -e "$TRANSMUTE_DIR/git" ]; then
