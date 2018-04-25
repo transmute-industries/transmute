@@ -1,6 +1,23 @@
 #!/bin/sh
 export PATH=$HOME/.transmute/bin:$PATH
 
+chkdir () {
+  if [ ! -w $1 ] ; then
+    sudo mkdir -p $1
+    sudo chown $USER. $1
+  fi
+  if [ ! -w $1 ] ; then
+    errror
+    echo "Cannot write to $1, please check your permissions"
+    exit 2
+  fi
+}
+
+chkdir /etc/kubernetes
+chkdir /var/lib
+chkdir /var/lib/localkube
+chkdir /var/lib/localkube/certs
+
 sudo chown travis /usr/bin
 sudo chown travis /usr/local/bin
 minikube start --vm-driver=none --kubernetes-version=v1.9.4
