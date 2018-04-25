@@ -20,6 +20,19 @@ if [ -e $TRANSMUTE_DIR/env ]; then
   fi
 fi
 
+speaker () {
+  WELCOME=$1
+  echo $WELCOME
+  if type "say" &> /dev/null; then
+    say "$WELCOME"
+  elif type "espeak" &> /dev/null; then
+    espeak "$WELCOME"
+  elif type "spd-say" &> /dev/null; then
+    spd-say "$WELCOME"
+  elif type "festival" &> /dev/null; then
+    echo "$WELCOME" | festival --tts
+  fi
+}
 
 errror () {
   echo "-------------------------------------------------------------"
@@ -424,9 +437,11 @@ linuxreqs () {
 }
 
 initializer () {
+  cd $TRANSMUTE_DIR/git/transmute/transmute-config
+  cp .example.env .env
   cd $TRANSMUTE_DIR/git/transmute
-  cp transmute-config/.example.env ./.env
   npm i
+  cd $CWD
 }
 
 run_it () {
@@ -478,11 +493,11 @@ elif [ "$UNAME" = "Linux" ] ; then
   fi
 fi
 
-echo "Warning!"
+speaker "Warning!"
 sleep 1
-echo "This script will install minikube, kubectl and helm,
+speaker "This script will install minikube, kubectl and helm,
 and then install transmute into a local minikube cluster."
-#warrrn
+warrrn
 
 if [ -e "$TRANSMUTE_DIR/git" ]; then
   echo "$TRANSMUTE_DIR/git exists already, proceeding"
@@ -517,10 +532,10 @@ check_cmd minikube
 
 initializer
 
-echo 'The bootstrap has finished'
-echo '- you have completed all the way to "npm run setup" here:'
-echo 'https://github.com/transmute-industries/transmute#environment-scripts-and-updating.'
-echo "You should now run 'npm run setup' inside '$(readlink -f $TRANSMUTE_DIR)'"
+speaker 'The bootstrap has finished'
+speaker '- you have completed all the way to "npm run setup" here:'
+speaker 'https://github.com/transmute-industries/transmute#environment-scripts-and-updating.'
+speaker "You should now run 'npm run setup' inside '$(readlink -f $TRANSMUTE_DIR)'"
 
 trap - EXIT
 # End run it wrapper

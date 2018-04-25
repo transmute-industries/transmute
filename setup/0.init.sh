@@ -4,13 +4,13 @@
 speaker () {
   WELCOME=$1
   echo $WELCOME
-  if type "say" &> /dev/null; then
+  if type "say"        > /dev/null 2> /dev/null; then
     say "$WELCOME"
-  elif type "espeak" &> /dev/null; then
+  elif type "espeak"   > /dev/null 2> /dev/null; then
     espeak "$WELCOME"
-  elif type "spd-say" &> /dev/null; then
+  elif type "spd-say"  > /dev/null 2> /dev/null; then
     spd-say "$WELCOME"
-  elif type "festival" &> /dev/null; then
+  elif type "festival" > /dev/null 2> /dev/null; then
     echo "$WELCOME" | festival --tts
   fi
 }
