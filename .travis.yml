@@ -24,6 +24,8 @@ matrix:
         - MINIKUBE_VERSION=v0.25.2
         - USE_VOX=n
 
+language: bash
+
 before_script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh .ci/linux_before_install.sh; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sh .ci/mac_before_script.sh; fi
