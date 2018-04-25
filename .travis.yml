@@ -36,6 +36,10 @@ script:
 - env
 - PATH=$HOME/.transmute/bin:$PATH which kubectl
 - PATH=$HOME/.transmute/bin:$PATH which minikube
+- which npm
+- which node
+- node -v
+- npm -v
 - which ngrok
 - which helm
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l .ci/linux_script; fi
