@@ -1,4 +1,25 @@
 #!/bin/sh
+
+sudo minikube start --vm-driver=none --kubernetes-version=v1.9.4
+minikube update-context
+JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
+
+curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
+helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
+
+node -v
+npm -v
+
+npm install -g codecov lerna@2.9.0 truffle@4.1.3
+
+lerna -v
+truffle version
+
+sleep 60
+kubectl cluster-info
+nsenter --version
+minikube addons enable ingress
+
 helm install stable/kong --name gateway
 helm install stable/ipfs --name decentralized-storage
 helm install ./charts/ganache-cli --name=ganache
