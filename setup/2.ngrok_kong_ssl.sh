@@ -1,3 +1,4 @@
+#!/bin/sh
 echo 'Adding Proxy Cert to Kong\n'
 
 echo $KONG_ADMIN_URL
