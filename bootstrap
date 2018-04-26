@@ -525,9 +525,9 @@ else
   echo "This next 'cd' command fails on osx --> cd $TRANSMUTE_DIR"
   set +e
   cd $TRANSMUTE_DIR
-  set -e
   echo 'Notice this echo does not run on the failing osx builds'
   mkdir -p $TRANSMUTE_DIR/git
+  set -e
 fi
 
 if [ -e "$TRANSMUTE_DIR/git/transmute" ]; then

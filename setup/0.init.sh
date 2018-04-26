@@ -10,11 +10,11 @@ speaker () {
     if type "say"        > /dev/null 2> /dev/null; then
       say "$WELCOME"
     elif type "espeak"   > /dev/null 2> /dev/null; then
-      espeak "$WELCOME"
+      espeak "$WELCOME"  > /dev/null 2> /dev/null
     elif type "spd-say"  > /dev/null 2> /dev/null; then
-      spd-say "$WELCOME"
+      spd-say "$WELCOME" > /dev/null 2> /dev/null
     elif type "festival" > /dev/null 2> /dev/null; then
-      echo "$WELCOME" | festival --tts
+      echo "$WELCOME" | festival --tts > /dev/null 2> /dev/null
     fi
   fi
 }
