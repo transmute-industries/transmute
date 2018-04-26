@@ -523,7 +523,9 @@ else
   cat $TRANSMUTE_DIR/test2
   rm $TRANSMUTE_DIR/test2
   echo "This next 'cd' command fails on osx --> cd $TRANSMUTE_DIR"
+  set +e
   cd $TRANSMUTE_DIR
+  set -e
   echo 'Notice this echo does not run on the failing osx builds'
   mkdir -p $TRANSMUTE_DIR/git
 fi
