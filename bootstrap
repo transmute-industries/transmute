@@ -515,6 +515,13 @@ else
   echo "$TRANSMUTE_DIR/git does not exist already, proceeding"
   whoami
   ls -lha $TRANSMUTE_DIR
+  touch $HOME/test1
+  echo test > $HOME/test1
+  cat $HOME/test1
+  rm $HOME/test1
+  echo test2 > $TRANSMUTE_DIR/test2
+  cat $TRANSMUTE_DIR/test2
+  rm $TRANSMUTE_DIR/test2
   echo "This next 'cd' command fails on osx --> cd $TRANSMUTE_DIR"
   cd $TRANSMUTE_DIR
   echo 'Notice this echo does not run on the failing osx builds'
