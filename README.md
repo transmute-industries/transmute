@@ -15,6 +15,20 @@ This guide will walk you through getting setup with Transmute.
 
 Here is a [video](https://drive.google.com/open?id=1ETHBCGyHYahiK-97fRE4-MAebbcp_N8n) to help guide you along.
 
+### Oneliner
+
+```
+curl -Ls https://raw.githubusercontent.com/transmute-industries/transmute/master/bootstrap | bash
+```
+
+Now you can proceed to the
+[Environment scripts and updating](https://github.com/transmute-industries/transmute#environment-scripts-and-updating)
+section and continue.
+
+Or alternately you can install manually...
+
+## Manual Installation
+
 ### Minikube and Helm
 1. Minikube is a tool that makes it easy to run Kubernetes locally. Minikube runs a single-node Kubernetes cluster inside a VM on your laptop. [Install Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
 2. Helm is a tool for managing Kubernetes charts. Charts are packages of pre-configured Kubernetes resources. [Install Helm](https://github.com/kubernetes/helm/blob/master/docs/install.md)
