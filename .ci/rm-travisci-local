@@ -1,0 +1,5 @@
+#!/bin/bash
+this_docker_id=$(cat .travisci-localtest.cid)
+docker stop $this_docker_id
+docker rm $this_docker_id
+rm .travisci-localtest.cid
