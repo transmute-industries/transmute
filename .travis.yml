@@ -40,7 +40,6 @@ script:
 - bash -l -c "which node"
 - bash -l -c "node -v"
 - bash -l -c "npm -v"
-- bash -l -c "npm i"
 - bash -l -c "which ngrok"
 - bash -l -c "which helm"
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l .ci/linux_script; fi
@@ -56,12 +55,12 @@ script:
 - export KONG_PROXY_URL=$(minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
 - export KONG_PROXY_PORT=$(kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
 
-- npm install
-- ./scripts/configure-hosts.sh
-- ./scripts/configure-kong-ganache.sh
-- ./scripts/configure-kong-ipfs.sh
-- ./scripts/configure-kong-okta-ipfs.sh
-- ./scripts/configure-framework-kong.sh 
+- bash -l -c "npm i"
+- bash -l -c "./scripts/configure-hosts.sh"
+- bash -l -c "./scripts/configure-kong-ganache.sh"
+- bash -l -c "./scripts/configure-kong-ipfs.sh"
+- bash -l -c "./scripts/configure-kong-okta-ipfs.sh"
+- bash -l -c "./scripts/configure-framework-kong.sh "
 
 - lerna bootstrap
 
