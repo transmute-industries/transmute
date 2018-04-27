@@ -20,7 +20,7 @@ npm install -g codecov lerna@2.9.0 truffle@4.1.3
 lerna -v
 truffle version
 
-sleep 60
+w8s/kubectl.w8
 kubectl cluster-info
 nsenter --version
 minikube addons enable ingress
