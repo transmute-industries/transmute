@@ -21,6 +21,11 @@ Here is a [video](https://drive.google.com/open?id=1ETHBCGyHYahiK-97fRE4-MAebbcp
 curl -Ls https://raw.githubusercontent.com/transmute-industries/transmute/master/bootstrap | bash
 ```
 
+Notice that will install kubectl, minikube, helm, and ngrok for you, if
+any of these things are already present on your path then they will be
+skipped.  If you find one of these components are out of date, delete it
+from your path and rerun the oneliner.
+
 Now you can proceed to the
 [Environment scripts and updating](https://github.com/transmute-industries/transmute#environment-scripts-and-updating)
 section and continue.
