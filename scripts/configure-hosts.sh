@@ -1,3 +1,5 @@
+#!/bin/bash
+set -e
 echo "" | sudo tee -a /etc/hosts
 echo "$(minikube ip)  transmute.minikube" | sudo tee -a /etc/hosts
 echo "$(minikube ip)  ipfs.transmute.minikube" | sudo tee -a /etc/hosts
