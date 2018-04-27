@@ -56,11 +56,11 @@ script:
 - export KONG_PROXY_PORT=$(kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
 
 - bash -l -c "npm i"
-- bash -l -c "./scripts/configure-hosts.sh"
-- bash -l -c "./scripts/configure-kong-ganache.sh"
-- bash -l -c "./scripts/configure-kong-ipfs.sh"
-- bash -l -c "./scripts/configure-kong-okta-ipfs.sh"
-- bash -l -c "./scripts/configure-framework-kong.sh "
+- PATH=$HOME/.transmute/bin:$PATH ./scripts/configure-hosts.sh
+- PATH=$HOME/.transmute/bin:$PATH ./scripts/configure-kong-ganache.sh
+- PATH=$HOME/.transmute/bin:$PATH ./scripts/configure-kong-ipfs.sh
+- PATH=$HOME/.transmute/bin:$PATH ./scripts/configure-kong-okta-ipfs.sh
+- PATH=$HOME/.transmute/bin:$PATH ./scripts/configure-framework-kong.sh
 
 - lerna bootstrap
 
