@@ -30,6 +30,7 @@ matrix:
 before_script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh .ci/linux_before_install.sh; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sh .ci/mac_before_script.sh; fi
+- bash -l -c "echo PATH=$HOME/.transmute/bin:$PATH >> $HOME/.bashrc"
 - bash -l ./bootstrap
 
 script:
@@ -56,7 +57,6 @@ script:
 - export KONG_PROXY_PORT=$(kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
 
 - bash -l -c "npm i"
-- bash -l -c "echo PATH=$HOME/.transmute/bin:$PATH >> $HOME/.bashrc"
 - bash -l -c "PATH=$HOME/.transmute/bin:$PATH ./scripts/configure-hosts.sh"
 - bash -l -c "./scripts/configure-kong-ganache.sh"
 - bash -l -c "./scripts/configure-kong-ipfs.sh"
