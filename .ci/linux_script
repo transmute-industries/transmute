@@ -11,6 +11,8 @@ JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.ty
 
 curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
 helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
+w8s/kube-dns.w8
+w8s/tiller.w8
 
 node -v
 npm -v
