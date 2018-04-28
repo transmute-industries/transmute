@@ -14,6 +14,7 @@ chkdir () {
 }
 
 chkdir /etc/kubernetes
+chkdir /etc/kubernetes/addons
 chkdir /etc/systemd
 chkdir /var/lib
 chkdir /var/lib/localkube
