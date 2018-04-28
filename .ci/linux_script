@@ -19,16 +19,14 @@ kubectl get pods -n kube-system
 kubectl get nodes
 kubectl get pods
 #export KUBECONFIG=$HOME/.kube/config
+#KUBECONFIG=$HOME/.kube/config \
 #echo "do helm install with $KUBECONFIG"
 #kubectl get nodes
 #w8s/generic.w8 nginx default
 which nsenter
 helm version
-KUBECONFIG=$HOME/.kube/config \
 helm install stable/kong --name gateway
-KUBECONFIG=$HOME/.kube/config \
 helm install stable/ipfs --name decentralized-storage
-KUBECONFIG=$HOME/.kube/config \
 helm install ./charts/ganache-cli --name=ganache
 
 node -v
