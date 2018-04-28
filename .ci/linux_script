@@ -5,10 +5,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-minikube start --vm-driver=none --kubernetes-version=v1.9.4
-minikube update-context
-JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
-
 curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
 helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
 w8s/kube-dns.w8
