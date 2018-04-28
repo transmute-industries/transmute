@@ -8,7 +8,14 @@ echo 'SETTING UP GANACHE'
 
 # Get the service clusterIp for Kong to use.
 export GANACHE_CLUSTER_IP=$(kubectl get service ganache-ganache-cli -o json | jq -r '.spec.clusterIP');
+echo "GANACHE_CLUSTER_IP $GANACHE_CLUSTER_IP"
 
+echo "# Add Ganache API to Kong
+curl -k -X POST \
+  --url $KONG_ADMIN_URL/apis/ \
+  --data 'name=ganache' \
+  --data 'hosts=ganache.transmute.minikube' \
+  --data 'upstream_url=http://'$GANACHE_CLUSTER_IP':8545/'"
 # Add Ganache API to Kong
 curl -k -X POST \
   --url $KONG_ADMIN_URL/apis/ \
