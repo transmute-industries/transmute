@@ -24,7 +24,7 @@ kubectl get pods
 #kubectl get nodes
 #w8s/generic.w8 nginx default
 which nsenter
-helm version
+helm version --debug
 helm install stable/kong --name gateway
 helm install stable/ipfs --name decentralized-storage
 helm install ./charts/ganache-cli --name=ganache
