@@ -10,15 +10,17 @@ w8s/kube-dns.w8
 #helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
 kubectl create -f ./tiller/rbac-tiller-config.yaml
 helm init --force-upgrade
+kubectl run nginx --image=nginx:alpine
 w8s/tiller.w8
 ls -lh ~/.kube/config
-kubectl get nodes
-kubectl get pods -n kube-system
 sleep 10
 kubectl get pods -n kube-system
+kubectl get nodes
+kubectl get pods
 #export KUBECONFIG=$HOME/.kube/config
 #echo "do helm install with $KUBECONFIG"
 #kubectl get nodes
+#w8s/generic.w8 nginx default
 KUBECONFIG=$HOME/.kube/config \
 helm install stable/kong --name gateway
 KUBECONFIG=$HOME/.kube/config \
