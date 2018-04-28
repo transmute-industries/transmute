@@ -10,6 +10,14 @@ w8s/kube-dns.w8
 #helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
 kubectl create -f ./tiller/rbac-tiller-config.yaml
 helm init --force-upgrade
+w8s/tiller.w8
+ls -lh ~/.kube/config
+export KUBECONFIG=$HOME/.kube/config
+echo "do helm install with $KUBECONFIG"
+kubectl get pods
+helm install stable/kong --name gateway
+helm install stable/ipfs --name decentralized-storage
+helm install ./charts/ganache-cli --name=ganache
 
 node -v
 npm -v
@@ -23,10 +31,3 @@ kubectl cluster-info
 nsenter --version
 minikube addons enable ingress
 
-w8s/tiller.w8
-ls -lh ~/.kube/config
-export KUBECONFIG=$HOME/.kube/config
-echo "do helm install with $KUBECONFIG"
-helm install stable/kong --name gateway
-helm install stable/ipfs --name decentralized-storage
-helm install ./charts/ganache-cli --name=ganache
