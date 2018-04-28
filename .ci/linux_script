@@ -12,9 +12,11 @@ kubectl create -f ./tiller/rbac-tiller-config.yaml
 helm init --force-upgrade
 w8s/tiller.w8
 ls -lh ~/.kube/config
-export KUBECONFIG=$HOME/.kube/config
-echo "do helm install with $KUBECONFIG"
+kubectl get nodes
 kubectl get pods
+#export KUBECONFIG=$HOME/.kube/config
+#echo "do helm install with $KUBECONFIG"
+#kubectl get nodes
 helm install stable/kong --name gateway
 helm install stable/ipfs --name decentralized-storage
 helm install ./charts/ganache-cli --name=ganache
