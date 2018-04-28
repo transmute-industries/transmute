@@ -47,32 +47,8 @@ script:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sh .ci/mac_script.sh; fi
 
 - bash -l -c "helm install ./charts/ganache-cli --name=ganache"
-- sleep 180
-
 - bash -l -c "kubectl get services"
-
-- bash -l -c "export MINIKUBE_IP=$(minikube ip)"
-- bash -l -c "export KONG_ADMIN_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-admin --url | sed 's,http://,https://,g')"
-- bash -l -c "export KONG_PROXY_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')"
-- bash -l -c "export KONG_PROXY_PORT=$(PATH=$HOME/.transmute/bin:$PATH kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')"
-
 - bash -l -c "npm i"
-- bash -l -c "PATH=$HOME/.transmute/bin:$PATH ./scripts/configure-hosts.sh"
-- bash -l -c "PATH=$HOME/.transmute/bin:$PATH ./scripts/configure-kong-ganache.sh"
-- bash -l -c "PATH=$HOME/.transmute/bin:$PATH ./scripts/configure-kong-ipfs.sh"
-- bash -l -c "PATH=$HOME/.transmute/bin:$PATH ./scripts/configure-kong-okta-ipfs.sh"
-- bash -l -c "PATH=$HOME/.transmute/bin:$PATH ./scripts/configure-framework-kong.sh "
+- bash -l -c "w8s/generic.w8 ganache default"
 
-- bash -l -c "PATH=$HOME/.transmute/bin:$PATH lerna bootstrap"
-
-- bash -l -c "PATH=$HOME/.transmute/bin:$PATH TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore truffle:migrate"
-- bash -l -c "PATH=$HOME/.transmute/bin:$PATH TRANSMUTE_ENV=minikube lerna run --scope ipfs-api build"
-- bash -l -c "PATH=$HOME/.transmute/bin:$PATH TRANSMUTE_ENV=minikube ACCESS_TOKEN=$(node ./scripts/okta/get-okta-token.js) lerna run --scope transmute-eventstore test"
-- bash -l -c "PATH=$HOME/.transmute/bin:$PATH TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore test:report"
-- bash -l -c "PATH=$HOME/.transmute/bin:$PATH TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore build"
-  # - bash -l -c "PATH=$HOME/.transmute/bin:$PATH TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore test:smoke "
-
-- bash -l -c "PATH=$HOME/.transmute/bin:$PATH TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore truffle:test"
-
-- bash -l -c "PATH=$HOME/.transmute/bin:$PATH lerna run --scope transmute-eventstore truffle:coverage"
-- bash -l -c "PATH=$HOME/.transmute/bin:$PATH lerna run --scope transmute-eventstore truffle:coverage:report"
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l ./scripts/spin-up-minkube.sh; fi
