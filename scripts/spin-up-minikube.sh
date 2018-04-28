@@ -8,10 +8,15 @@ export KONG_ADMIN_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway
 export KONG_PROXY_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
 export KONG_PROXY_PORT=$(PATH=$HOME/.transmute/bin:$PATH kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
 
+echo 'configure hosts'
 ./scripts/configure-hosts.sh
+echo 'configure ganache'
 ./scripts/configure-kong-ganache.sh
+echo 'configure ipfs'
 ./scripts/configure-kong-ipfs.sh
+echo 'configure okta'
 ./scripts/configure-kong-okta-ipfs.sh
+echo 'configure framework'
 ./scripts/configure-framework-kong.sh
 
 lerna bootstrap

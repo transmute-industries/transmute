@@ -4,7 +4,7 @@ export KONG_ADMIN_URL=$(minikube service gateway-kong-admin --url | sed 's,http:
 export KONG_PROXY_URL=$(minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
 export KONG_PROXY_PORT=$(kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
 
-# Configure Kong to use Okta to secure IPFS
+echo 'Configure Kong to use Okta to secure IPFS'
 
 curl -k -X POST $KONG_ADMIN_URL/apis/ipfs/plugins \
     --data "name=jwt"
