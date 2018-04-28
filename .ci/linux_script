@@ -21,7 +21,7 @@ kubectl get pods
 #echo "do helm install with $KUBECONFIG"
 #kubectl get nodes
 #w8s/generic.w8 nginx default
-helm status
+helm version
 KUBECONFIG=$HOME/.kube/config \
 helm install stable/kong --name gateway
 KUBECONFIG=$HOME/.kube/config \
