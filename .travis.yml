@@ -74,4 +74,7 @@ script:
 - bash -l -c "npm i"
 - bash -l -c "w8s/generic.w8 ganache default"
 
+- pwd
+- cd $TRAVIS_BUILD_DIR
+- pwd
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l ./scripts/spin-up-minkube.sh; fi
