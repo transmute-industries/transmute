@@ -39,21 +39,6 @@ language: node_js
 node_js:
   - "8"
 
-addons:
-  apt:
-    packages:
-      - curl
-      - rsync
-      - socat
-      - time
-      - devscripts
-      - ansible
-      - parallel
-      - golang
-      - nmap
-      - python-pip
-      - rlwrap
-
 before_script:
 # Download kubectl, which is a requirement for using minikube.
 # Download minikube.

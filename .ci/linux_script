@@ -5,9 +5,10 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
+w8s/kubectl.w8
 w8s/kube-dns.w8
-w8s/tiller.w8
+#helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
+helm init --force-upgrade
 
 node -v
 npm -v
@@ -17,11 +18,13 @@ npm install -g codecov lerna@2.9.0 truffle@4.1.3
 lerna -v
 truffle version
 
-w8s/kubectl.w8
 kubectl cluster-info
 nsenter --version
 minikube addons enable ingress
 
+w8s/tiller.w8
+ls -lh ~/.kube/config
+export KUBECONFIG=$HOME/.kube/config
+echo "do helm install with $KUBECONFIG"
 helm install stable/kong --name gateway
 helm install stable/ipfs --name decentralized-storage
-
