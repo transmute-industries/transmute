@@ -35,10 +35,6 @@ matrix:
         #- MINIKUBE_VERSION=v0.25.2
         #- USE_VOX=n
 
-language: node_js
-node_js:
-  - "8"
-
 before_script:
 # Download kubectl, which is a requirement for using minikube.
 # Download minikube.
