@@ -89,4 +89,4 @@ script:
 - pwd
 - cd $TRAVIS_BUILD_DIR
 - pwd
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l ./scripts/spin-up-minkube.sh; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l ./scripts/spin-up-minikube.sh; fi
