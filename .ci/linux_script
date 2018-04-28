@@ -5,7 +5,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
 helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
 w8s/kube-dns.w8
 w8s/tiller.w8

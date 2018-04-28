@@ -16,12 +16,12 @@ matrix:
       language: bash
       cache:
         directories:
+        - $HOME/.local/bin
+        - $HOME/.transmute
         - $HOME/.minikube
         - $HOME/.kube
-        - $HOME/.local/bin
-        - .git
         - /usr/local
-        - $HOME/.transmute
+        - .git
     #- os: osx
       #osx_image: xcode8.3
       #language: bash
@@ -62,6 +62,7 @@ before_script:
 - bash -l -c "echo PATH=$HOME/.transmute/bin:$PATH >> $HOME/.bashrc"
 - if [[ ! -e "/usr/local/bin/kubectl" ]]; then curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/$KUBE_VERSION/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/; fi
 - if [[ ! -e "/usr/local/bin/minikube" ]]; then curl -Lo minikube https://storage.googleapis.com/minikube/releases/$MINIKUBE_VERSION/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/; fi
+- if [[ ! -e "$HOME/.local/bin/helm" ]]; then bash -l < $(curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get); fi
 - if [[ ! -e "$HOME/.local/bin/nsenter" ]]; then .ci/ubuntu-compile-nsenter.sh && sudo cp .tmp/util-linux-2.30.2/nsenter $HOME/.local/bin; fi
 - minikube start --vm-driver=none --kubernetes-version=$KUBE_VERSION
 # Fix the kubectl context, as it's often stale.
