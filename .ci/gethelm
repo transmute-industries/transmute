@@ -13,7 +13,6 @@ cd $TMP
 echo "Installing $HELM_VERSION"
 curl -sL $HELM_URL -o helm.tgz
 echo $TMP
-/bin/bash
 tar zxvf helm.tgz
 
 cd linux-amd64
