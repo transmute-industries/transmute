@@ -9,8 +9,8 @@ export NVM_DIR="$HOME/.nvm"
 w8s/kubectl.w8
 w8s/kube-dns.w8
 kubectl create -f ./tiller/rbac-tiller-config.yaml
-helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
-#helm init --force-upgrade
+#helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
+helm init --upgrade
 kubectl run nginx --image=nginx:alpine
 w8s/tiller.w8
 ls -lh ~/.kube/config
