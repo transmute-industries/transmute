@@ -14,6 +14,8 @@ w8s/tiller.w8
 ls -lh ~/.kube/config
 kubectl get nodes
 kubectl get pods -n kube-system
+sleep 10
+kubectl get pods -n kube-system
 #export KUBECONFIG=$HOME/.kube/config
 #echo "do helm install with $KUBECONFIG"
 #kubectl get nodes
