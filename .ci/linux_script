@@ -29,3 +29,4 @@ export KUBECONFIG=$HOME/.kube/config
 echo "do helm install with $KUBECONFIG"
 helm install stable/kong --name gateway
 helm install stable/ipfs --name decentralized-storage
+helm install ./charts/ganache-cli --name=ganache
