@@ -12,7 +12,7 @@ matrix:
         - MINIKUBE_DRIVER=none
         - HELM_INSTALL_DIR=$HOME/.local/bin
         - NVM_DIR="$HOME/.nvm"
-        - KUBE_VERSION=v1.9.4
+        - KUBE_VERSION=v1.9.0
       language: bash
       cache:
         directories:
