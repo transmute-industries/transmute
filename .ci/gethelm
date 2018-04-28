@@ -1,5 +1,6 @@
 #!/bin/sh
 : ${HELM_VERSION:='v2.8.2'}
+: ${HELM_PREFIX:="$HOME/.local/bin"}
 : ${HELM_URL:='https://storage.googleapis.com/kubernetes-helm/helm-$HELM_VERSION-linux-amd64.tar.gz'}
 
 TMP=$(mktemp -d)
@@ -9,6 +10,7 @@ cleanup_tmp () {
 trap cleanup_tmp EXIT
 cd $TMP
 
+echo "Installing $HELM_VERSION"
 curl -sL -o helm $HELM_URL
 chmod +x helm
 sudo mv helm $HELM_PREFIX/helm
