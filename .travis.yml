@@ -22,6 +22,20 @@ matrix:
         - $HOME/.kube
         - /usr/local
         - .git
+      addons:
+        apt:
+          packages:
+            - curl
+            - rsync
+            - socat
+            - time
+            - devscripts
+            - ansible
+            - parallel
+            - golang
+            - nmap
+            - python-pip
+            - rlwrap
     #- os: osx
       #osx_image: xcode8.3
       #language: bash
