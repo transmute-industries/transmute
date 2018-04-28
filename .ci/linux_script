@@ -13,23 +13,23 @@ helm init --force-upgrade
 w8s/tiller.w8
 ls -lh ~/.kube/config
 kubectl get nodes
-kubectl get pods
+kubectl get pods -n kube-system
 #export KUBECONFIG=$HOME/.kube/config
 #echo "do helm install with $KUBECONFIG"
 #kubectl get nodes
+KUBECONFIG=$HOME/.kube/config \
 helm install stable/kong --name gateway
+KUBECONFIG=$HOME/.kube/config \
 helm install stable/ipfs --name decentralized-storage
+KUBECONFIG=$HOME/.kube/config \
 helm install ./charts/ganache-cli --name=ganache
 
 node -v
 npm -v
-
 npm install -g codecov lerna@2.9.0 truffle@4.1.3
-
 lerna -v
 truffle version
 
 kubectl cluster-info
 nsenter --version
 minikube addons enable ingress
-
