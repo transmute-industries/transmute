@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 PATH=$HOME/.transmute/bin:$PATH
 TRANSMUTE_ENV=minikube
 set -e
