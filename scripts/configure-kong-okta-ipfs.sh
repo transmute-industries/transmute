@@ -1,22 +1,22 @@
 #!/bin/bash
 : ${DO_JWT_DL:=y}
 set -e
-export KONG_ADMIN_URL=$(minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
-export KONG_PROXY_URL=$(minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
-export KONG_PROXY_PORT=$(kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
-
-echo 'Configure Kong to use Okta to secure IPFS'
-
-curl -k -X POST $KONG_ADMIN_URL/apis/ipfs/plugins \
-    --data "name=jwt"
-
-echo 'Export CONSUMER_ID'
-export CONSUMER_ID=$(curl -k -X POST $KONG_ADMIN_URL/consumers \
-    --data "username=bob@example.com" \
-    --data "custom_id=0" \
-    | jq -r '.id')
-
 if [[ "$DO_JWT_DL" == 'y' ]]; then
+  export KONG_ADMIN_URL=$(minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
+  export KONG_PROXY_URL=$(minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
+  export KONG_PROXY_PORT=$(kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
+
+  echo 'Configure Kong to use Okta to secure IPFS'
+
+  curl -k -X POST $KONG_ADMIN_URL/apis/ipfs/plugins \
+      --data "name=jwt"
+
+  echo 'Export CONSUMER_ID'
+  export CONSUMER_ID=$(curl -k -X POST $KONG_ADMIN_URL/consumers \
+      --data "username=bob@example.com" \
+      --data "custom_id=0" \
+      | jq -r '.id')
+
   # Download JWT Signing Key
   echo  'Download JWT Signing Key'
   echo 'Using vox'
