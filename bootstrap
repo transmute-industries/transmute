@@ -10,6 +10,7 @@
 : ${NVM_DIR_ADDS:= "true"}
 : ${NVM_VERSION:='0.33.9'}
 : ${USE_VOX:=y}
+: ${USE_WARN:=y}
 
 export CWD=$(pwd)
 export PATH=$TRANSMUTE_BIN:$PATH
@@ -527,7 +528,9 @@ speaker "Warning!"
 sleep 1
 speaker "This script will install minikube, kubectl and helm,
 and then install transmute."
-warrrn
+if [[ "$USE_WARN" == 'y' ]]; then
+  warrrn
+fi
 
 echo "Checking $TRANSMUTE_DIR"
 

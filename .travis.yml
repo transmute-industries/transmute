@@ -7,6 +7,7 @@ matrix:
         - CHANGE_MINIKUBE_NONE_USER=true
         - MINIKUBE_VERSION=v0.25.2
         - USE_VOX=n
+        - USE_WARN=n
         - MINIKUBE_MEMORY=7777
         - MINIKUBE_CPU=4
         - MINIKUBE_DRIVER=none
