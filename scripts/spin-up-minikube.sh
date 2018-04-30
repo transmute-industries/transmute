@@ -15,7 +15,7 @@ echo 'configure ganache'
 echo 'configure ipfs'
 ./scripts/configure-kong-ipfs.sh
 echo 'configure okta'
-./scripts/configure-kong-okta-ipfs.sh
+#./scripts/configure-kong-okta-ipfs.sh
 echo 'configure framework'
 ./scripts/configure-framework-kong.sh
 
