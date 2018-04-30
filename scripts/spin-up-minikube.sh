@@ -1,4 +1,5 @@
 #!/bin/sh
+: ${DO_JWT_DL:=y}
 PATH=$HOME/.transmute/bin:$PATH
 TRANSMUTE_ENV=minikube
 set -e
@@ -14,8 +15,10 @@ echo 'configure ganache'
 ./scripts/configure-kong-ganache.sh
 echo 'configure ipfs'
 ./scripts/configure-kong-ipfs.sh
-echo 'configure okta'
-./scripts/configure-kong-okta-ipfs.sh
+if [[ "$DO_JWT_DL" == 'y' ]]; then
+  echo 'configure okta'
+  ./scripts/configure-kong-okta-ipfs.sh
+fi
 echo 'configure framework'
 ./scripts/configure-framework-kong.sh
 
