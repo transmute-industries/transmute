@@ -17,7 +17,9 @@ export CONSUMER_ID=$(curl -k -X POST $KONG_ADMIN_URL/consumers \
 
 # Download JWT Signing Key
 echo  'Download JWT Signing Key'
-node ./scripts/okta/write-okta-pem.js
+echo 'commenting out for now'
+#node ./scripts/okta/write-okta-pem.js
+echo 'needs to be re-enabled'
 
 # Connect the API Consumer to okta
 echo 'Connect the API Consumer to okta'
