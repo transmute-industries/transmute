@@ -13,7 +13,7 @@ export GANACHE_CLUSTER_IP=$(kubectl get service ganache-ganache-cli -o json | jq
 echo "GANACHE_CLUSTER_IP $GANACHE_CLUSTER_IP"
 
 countzero=0
-echo "Waiting ganache to launch on $KONG_ADMIN_URL..."
+echo "Waiting for ganache to launch on $KONG_ADMIN_URL..."
 while ! nc -z $KONG_HOST $KONG_PORT; do
     if [[ "$countzero" -gt 200 ]]; then
       echo 'timeout'
