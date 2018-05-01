@@ -3,6 +3,7 @@
 PATH=$HOME/.transmute/bin:$PATH
 TRANSMUTE_ENV=minikube
 set -e
+./w8s/generic.w8 ganache default
 
 export MINIKUBE_IP=$(minikube ip)
 export KONG_ADMIN_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-admin --url | sed 's,http://,https://,g')

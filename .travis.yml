@@ -75,7 +75,6 @@ script:
   #- bash -l -c "kubectl get services"
   #- bash -l -c "kubectl get pods"
 - bash -l -c "npm i"
-- bash -l -c "w8s/generic.w8 ganache default"
   #- pwd
 - cd $TRAVIS_BUILD_DIR
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l ./scripts/spin-up-minikube.sh; fi
