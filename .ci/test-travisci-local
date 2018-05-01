@@ -1,4 +1,3 @@
 #!/bin/bash
 this_docker_id=$(cat .travisci-localtest.cid)
-this_url=https://gist.githubusercontent.com/joshuacox/28a4933fea2dd54e1ae9fa2894291e93/raw/70be0e9e02ee85d2414b89b5e8340d8f31758ab2/gistfile1.txt
-docker exec -it $this_docker_id /bin/bash -c "sudo -i -u travis bash -c '$(curl -sL $this_url)'"
+docker exec -it $this_docker_id /bin/bash -c "sudo -i -u travis bash .ci/test-travis.sh"
