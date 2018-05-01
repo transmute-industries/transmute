@@ -5,8 +5,7 @@ import { Route } from 'react-router-dom';
 import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import { store, history, persistor } from '../../store';
-import { PersistGate } from 'redux-persist/integration/react';
+import { store, history } from '../../store';
 import Routes from '../Routes';
 import theme from '../../theme';
 
@@ -15,11 +14,9 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <ConnectedRouter history={history}>
-              <Routes />
-            </ConnectedRouter>
-          </PersistGate>
+          <ConnectedRouter history={history}>
+            <Routes />
+          </ConnectedRouter>
         </Provider>
       </MuiThemeProvider>
     );

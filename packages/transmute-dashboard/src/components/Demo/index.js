@@ -16,9 +16,9 @@ import {
 } from 'transmute-eventstore';
 
 import AppBar from '../AppBar';
-import ProfileCard from '../DocumentsPage/ProfileCard';
-import DocumentsList from '../DocumentsPage/DocumentsList';
-import EventsTable from './FakeEventsTable';
+import ProfileCard from './ProfileCard';
+import DocumentsList from './DocumentsList';
+import EventsTable from './DemoEventsTable';
 import theme from '../../theme';
 
 import { filters } from '../../filters/Events';
@@ -66,10 +66,8 @@ class Demo extends Component {
     let eventStoreAddresses = await eventStoreFactory.getEventStores();
 
     if (!currentEventStoreAddress) {
-      // console.log('need to create an eventstore');
       let factoryAddress =
         eventStoreFactory.eventStoreFactoryContractInstance.address;
-      // console.log('factoryAddress: ', factoryAddress);
       let reciept = await eventStoreFactory.createEventStore(accounts[0]);
 
       currentEventStoreAddress =
@@ -78,7 +76,6 @@ class Demo extends Component {
         'currentEventStoreAddress',
         currentEventStoreAddress
       );
-      // console.log('eventStoreAddresses: ', eventStoreAddresses);
     } else {
       console.log('currentEventStoreAddress: ', currentEventStoreAddress);
     }
@@ -86,12 +83,7 @@ class Demo extends Component {
     let currentUserAddress = localStorage.getItem('currentUserAddress');
 
     if (!currentUserAddress) {
-      // console.log('need to create an eventstore');
-
       localStorage.setItem('currentUserAddress', accounts[0]);
-      // console.log('currentUserAddress: ', currentUserAddress);
-    } else {
-      console.log('currentUserAddress: ', currentUserAddress);
     }
 
     const eventStore = new EventStore({
@@ -231,22 +223,18 @@ class Demo extends Component {
   };
 
   selectAccount = async event => {
-    // this.setState({ account: event.target.value });
-    // await this.props.setWeb3Account(event.target.value);
-    // window.location.reload();
     localStorage.setItem('currentUserAddress', event.target.value);
     await this.init();
   };
 
   selectEventStore = async event => {
-    // this.setState({ eventStore: event.target.value });
     localStorage.setItem('currentEventStoreAddress', event.target.value);
     window.location.reload();
   };
 
   render() {
     const { classes } = this.props;
-    const { events, documents, user, signature } = this.state;
+    const { events, documents, user, signature, currentUserAddress } = this.state;
     if (this.state.loading) return null;
 
     return (
@@ -302,7 +290,7 @@ class Demo extends Component {
                       value={account}
                       style={{
                         fontWeight:
-                          this.state.currentUserAddress !== account
+                          currentUserAddress !== account
                             ? theme.typography.fontWeightRegular
                             : theme.typography.fontWeightMedium
                       }}
@@ -338,7 +326,7 @@ class Demo extends Component {
           onDocumentUpload={this.onUploadDocument}
           onDocumentSign={this.onSignDocument}
         />
-        <EventsTable events={events} />
+        <EventsTable events={events} currentUserAddress={currentUserAddress} />
         <div className={classes.spacer} />
         <div className={classes.spacer} />
       </AppBar>

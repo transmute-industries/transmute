@@ -183,11 +183,10 @@ class EventsTable extends React.Component {
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
-    const { classes } = this.props;
+    const { classes, currentUserAddress } = this.props;
     const { data, order, orderBy, rowsPerPage, page } = this.state;
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-      let currentUserAddress = localStorage.getItem('currentUserAddress');
     return (
       <Paper className={classes.root}>
         <EventsTableToolbar />

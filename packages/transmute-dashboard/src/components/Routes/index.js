@@ -19,7 +19,6 @@ import Register from '../Auth/Register';
 import EventStoreFactoryPage from '../EventStoreFactoryPage';
 import EventStorePage from '../EventStorePage';
 import StreamModelPage from '../StreamModelPage';
-import DocumentsPage from '../DocumentsPage';
 
 function onAuthRequired({ history }) {
   history.push('/login');
@@ -58,10 +57,6 @@ class Routes extends React.Component {
           <SecureRoute
             path="/eventstore/:address/model"
             component={StreamModelPage}
-          />
-          <SecureRoute
-            path="/eventstore/:address/documents"
-            component={DocumentsPage}
           />
           <SecureRoute
             path="/eventstore/:address"

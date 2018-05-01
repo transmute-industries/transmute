@@ -3,9 +3,6 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
-
 import { combineReducers } from 'redux';
 import { reducer as user } from './user/reducer';
 
@@ -27,17 +24,9 @@ const enhancer = composeEnhancers(
   // other store enhancers if any
 );
 
-const persistConfig = {
-  key: 'root',
-  storage,
-}
-
 export const store = createStore(
-  persistReducer(persistConfig,
-    combineReducers({
-      user: user,
-      router: routerReducer
-    })
-  ),
+  combineReducers({
+    user: user,
+    router: routerReducer
+  }),
   applyMiddleware(...middleware));
-export const persistor = persistStore(store)
