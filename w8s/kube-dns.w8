@@ -1,0 +1,24 @@
+#!/bin/sh
+
+echo -n "wait on Kube-DNS to become available"
+sleep 1
+
+# while loop
+countone=1
+# timeout for 15 minutes
+while [ $countone -lt 151 ]
+do
+  echo -n '.'
+  RESULT=$(kubectl get po --namespace kube-system |grep kube-dns|grep Running)
+  if [ "$RESULT" ]; then
+      sleep 3
+      echo '.'
+      echo "$RESULT"
+      break
+  fi
+  countone=`expr $countone + 1`
+  sleep 3
+done
+
+echo "Kube-DNS is now up and running"
+sleep 1

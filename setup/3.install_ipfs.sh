@@ -1,3 +1,4 @@
+#!/bin/sh
 helm install stable/ipfs --name decentralized-storage
 
 export IPFS_CLUSTER_IP=$(kubectl get service decentralized-storage-ipfs -o json | jq -r '.spec.clusterIP');
