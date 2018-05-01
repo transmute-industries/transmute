@@ -39,6 +39,11 @@ before_script:
 - minikube addons enable ingress
 
 script:
+- sleep 60
+- kubectl get services
+- helm version
+- kubectl version
+- helm ls
 - helm install stable/kong --name gateway
 - helm install stable/ipfs --name decentralized-storage
 - helm install ./charts/ganache-cli --name=ganache
