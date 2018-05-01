@@ -7,18 +7,16 @@ import { Link } from 'react-router-dom';
 
 import Button from 'material-ui/Button';
 
-import StreamModelTable from '../StreamModelTable';
+import StreamModelTable from './StreamModelTable';
 
 import { reducer as EventsReducer } from '../../store/documents/reducer';
 import { filters } from '../../filters/Events';
 
+import { StreamModel, EventStore } from 'transmute-eventstore';
+import AppBar from '../AppBar';
+
 let eventStoreArtifact = require('../../contracts/EventStore.json');
 let transmuteConfig = require('../../transmute-config');
-
-const {
-  EventStore,
-  StreamModel
-} = require('transmute-eventstore/dist/transmute-eventstore.cjs');
 
 class StreamModelPage extends Component {
   state = {
@@ -60,7 +58,7 @@ class StreamModelPage extends Component {
     const url = new URL(window.location.href);
     const filter = filters(url.searchParams.get("filter"));
 
-    const streamModel = new StreamModel(eventStore, filter, EventsReducer);
+    const streamModel = new StreamModel(eventStore, filter, EventsReducer, null);
     streamModel.applyEvents(events);
 
     this.setState({
@@ -77,9 +75,9 @@ class StreamModelPage extends Component {
 
   render() {
     return (
-      <div>
+      <AppBar>
         <StreamModelTable streamModel={this.state.streamModel} />
-      </div>
+      </AppBar>
     );
   }
 }

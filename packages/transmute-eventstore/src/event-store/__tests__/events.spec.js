@@ -1,5 +1,5 @@
 const EventStore = require('../index.js');
-const transmuteConfig = require('../../../../../transmute-config');
+const transmuteConfig = require('../../transmute-config');
 const eventStoreArtifact = require('../../../build/contracts/EventStore.json');
 
 const mockEvents = require('../../__mock__/events.json');

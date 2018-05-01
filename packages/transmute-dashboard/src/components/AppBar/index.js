@@ -15,6 +15,8 @@ import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 import AccountCircle from 'material-ui-icons/AccountCircle';
 import Menu, { MenuItem } from 'material-ui/Menu';
+import OktaAuthButton from '../Auth/OktaAuthButton';
+import * as actionCreators from '../../store/user/actionCreators';
 
 import { push } from 'react-router-redux';
 
@@ -110,7 +112,8 @@ const styles = theme => ({
     [theme.breakpoints.up('sm')]: {
       height: 'calc(100% - 64px)',
       marginTop: 64
-    }
+    },
+    overflow: 'scroll'
   }
 });
 
@@ -199,7 +202,7 @@ class MiniDrawer extends React.Component {
                 Transmute
               </Typography>
               {!authenticated && (
-                <div>
+                <div style={{ paddingRight: '10px' }}>
                   <Button
                     variant="raised"
                     color="primary"
@@ -212,7 +215,7 @@ class MiniDrawer extends React.Component {
                   </Button>
                   <Button
                     variant="raised"
-                    color="secondary"
+                    color="primary"
                     onClick={() => {
                       history.push('/login');
                     }}
@@ -247,10 +250,11 @@ class MiniDrawer extends React.Component {
                     open={isMenuOpen}
                     onClose={this.handleClose}
                   >
-                    <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                    {/* <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                    <MenuItem onClick={this.handleClose}>My account</MenuItem> */}
                     <MenuItem
                       onClick={() => {
+                        this.props.logoutUser();
                         this.props.auth.logout();
                       }}
                     >
@@ -277,8 +281,8 @@ class MiniDrawer extends React.Component {
                   {theme.direction === 'rtl' ? (
                     <ChevronRightIcon />
                   ) : (
-                      <ChevronLeftIcon />
-                    )}
+                    <ChevronLeftIcon />
+                  )}
                 </IconButton>
               </div>
               <Divider />
@@ -298,4 +302,19 @@ MiniDrawer.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(withAuth(MiniDrawer))
+const mapStateToProps = state => {
+  return {
+    // sessionToken: state.user.sessionToken,
+    error: state.user.error
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    logoutUser: () => dispatch(actionCreators.logout())
+  };
+};
+
+export default withStyles(styles, { withTheme: true })(
+  connect(mapStateToProps, mapDispatchToProps)(withAuth(MiniDrawer))
+);

@@ -25,7 +25,7 @@ echo 'configure framework'
 
 lerna bootstrap
 lerna run --scope transmute-eventstore truffle:migrate
-lerna run --scope ipfs-api build
+# lerna run --scope ipfs-api build
 ACCESS_TOKEN=$(node ./scripts/okta/get-okta-token.js) lerna run --scope transmute-eventstore test
 lerna run --scope transmute-eventstore test:report
 lerna run --scope transmute-eventstore build

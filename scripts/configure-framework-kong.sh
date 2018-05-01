@@ -16,10 +16,11 @@ export KONG_PROXY_PORT=$(kubectl get service gateway-kong-proxy -o json | jq -r 
 export OLD_KONG_PROXY_PORT=32443
 export NEW_KONG_PROXY_PORT=$KONG_PROXY_PORT
 
-export TRANSMUTE_CONFIG=`pwd`/transmute-config/env.json
+export FRAMEWORK_CONFIG=`pwd`/packages/transmute-eventstore/src/transmute-config/env.json
+export DASHBOARD_CONFIG=`pwd`/packages/transmute-dashboard/src/transmute-config/env.json
 
-
-find $TRANSMUTE_CONFIG -type f | xargs sed -i 's/'$OLD_KONG_PROXY_PORT'/'$NEW_KONG_PROXY_PORT'/g'
+find $FRAMEWORK_CONFIG -type f | xargs sed -i 's/'$OLD_KONG_PROXY_PORT'/'$NEW_KONG_PROXY_PORT'/g'
+find $DASHBOARD_CONFIG -type f | xargs sed -i 's/'$OLD_KONG_PROXY_PORT'/'$NEW_KONG_PROXY_PORT'/g'
 
 
 curl -k -X GET \

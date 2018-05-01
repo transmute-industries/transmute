@@ -29,5 +29,4 @@ export const store = createStore(
     user: user,
     router: routerReducer
   }),
-  applyMiddleware(...middleware)
-);
+  applyMiddleware(...middleware));

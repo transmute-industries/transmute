@@ -10,12 +10,11 @@ import Button from 'material-ui/Button';
 import EventsTable from './EventsTable';
 import RecordEventDialog from './RecordEventDialog';
 
+import { EventStore } from 'transmute-eventstore';
+import AppBar from '../AppBar';
+
 let eventStoreArtifact = require('../../contracts/EventStore.json');
 let transmuteConfig = require('../../transmute-config');
-
-const {
-  EventStore
-} = require('transmute-eventstore/dist/transmute-eventstore.cjs');
 
 class EventStorePage extends Component {
   state = {
@@ -76,39 +75,16 @@ class EventStorePage extends Component {
     await this.loadAllEvents();
   };
 
-  onUploadFile = (event) => {
-    event.stopPropagation()
-    event.preventDefault()
-    const file = event.target.files[0]
-    let reader = new window.FileReader()
-    reader.onloadend = () => this.writeFileFromReader(reader)
-    reader.readAsArrayBuffer(file)
-  }
-
-  writeFileFromReader = (reader) => {
-    let ipfsId
-    const buffer = Buffer.from(reader.result)
-    let { eventStore } = this.state;
-    eventStore.ipfs.ipfs.add(buffer, { progress: (prog) => console.log(`received: ${prog}`) })
-      .then((response) => {
-        ipfsId = response[0].hash
-        console.log("api/v0/cat?arg=" + ipfsId)
-      }).catch((err) => {
-        console.error(err)
-      })
-  }
-
   render() {
     return (
-      <div>
+      <AppBar>
         <RecordEventDialog
           defaultEvent={this.props.defaultEvent}
           onSave={this.onSaveEvent}
-          onUpload={this.onUploadFile}
           history={this.props.history}
         />
         <EventsTable events={this.state.events} />
-      </div>
+      </AppBar>
     );
   }
 }

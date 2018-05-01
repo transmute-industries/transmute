@@ -1,5 +1,5 @@
 const { EventStore } = require('../../index');
-const transmuteConfig = require('../../../../../transmute-config');
+const transmuteConfig = require('../../transmute-config');
 const eventStoreArtifact = require('../../../build/contracts/EventStore.json');
 
 const StreamModel = require('../index');

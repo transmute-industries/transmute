@@ -28,18 +28,22 @@ export const setUserInfo = userInfo => ({
   payload: userInfo
 });
 
+export const setWeb3Account = web3Account => ({
+  type: Constants.SET_WEB3_ACCOUNT,
+  payload: web3Account
+});
+
 export const loginSuccess = data => ({
   type: Constants.LOGIN_SUCCESS,
   payload: data
 });
 
-
 export const changePasswordError = error => ({
-    type: Constants.CHANGE_PASSWORD_ERROR,
-    payload: error
-  });
-  
-  export const changePasswordSuccess = data => ({
-    type: Constants.CHANGE_PASSWORD_SUCCESS,
-    payload: data
-  });
+  type: Constants.CHANGE_PASSWORD_ERROR,
+  payload: error
+});
+
+export const changePasswordSuccess = data => ({
+  type: Constants.CHANGE_PASSWORD_SUCCESS,
+  payload: data
+});

@@ -18,13 +18,6 @@ const styles = theme => ({
   },
   margin: {
     margin: theme.spacing.unit
-  },
-  textField: {
-    // display: 'block',
-    minWidth: '400px'
-  },
-  textInput: {
-    // width: '100%'
   }
 });
 
