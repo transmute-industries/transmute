@@ -1,0 +1,5 @@
+#!/bin/bash
+this_branch=master
+this_docker_id=$(cat .travisci-localtest.cid)
+this_url=https://gist.githubusercontent.com/joshuacox/28a4933fea2dd54e1ae9fa2894291e93/raw/1a325df9f5cdd7d1343be83c4c31a40e8121d5f2/pmt.sh
+docker exec -it $this_docker_id /bin/bash -c "curl -sL $this_url> /tmp/runme; sudo -i -u travis bash /tmp/runme transmute-industries transmute $this_branch"

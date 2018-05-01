@@ -1,0 +1,24 @@
+#!/bin/sh
+: ${REACTIONCOMMERCE_NAMESPACE:=r8s}
+
+echo -n "wait on the K8S cluster to become available"
+sleep 3
+
+# while loop
+countone=1
+# timeout for 15 minutes
+while [ $countone -lt 151 ]
+do
+   echo -n '.'
+   kubectl get po --namespace=$REACTIONCOMMERCE_NAMESPACE &> /dev/null
+   if [ $? -ne 1 ]; then
+      sleep 6
+      break
+  fi
+  countone=`expr $countone + 1`
+  sleep 3
+done
+
+echo  "."
+echo  "kubectl commands are now able to interact with Minikube cluster"
+sleep 3
