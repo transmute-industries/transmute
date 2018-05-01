@@ -39,7 +39,7 @@ before_script:
 - minikube addons enable ingress
 
 script:
-- sleep 60
+- sleep 180
 - kubectl get services
 - helm version
 - kubectl version
