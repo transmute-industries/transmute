@@ -1,0 +1,22 @@
+#!/bin/sh
+: ${REACTIONCOMMERCE_NAMESPACE:=r8s}
+
+echo -n "waiting for no CrashLoopBackOff"
+sleep 2
+
+# while loop
+countone=1
+# timeout for 15 minutes
+while [ $countone -lt 151 ]
+do
+  echo -n '.'
+  RESULT=$(kubectl get po --namespace=$REACTIONCOMMERCE_NAMESPACE | grep CrashLoopBackOff)
+  if [ ! "$RESULT" ]; then
+      break
+  fi
+  countone=`expr $countone + 1`
+  sleep 3
+done
+
+echo '.'
+echo "CrashLoopBackOff is now clear"

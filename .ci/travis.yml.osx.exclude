@@ -1,0 +1,36 @@
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: required
+      env:
+        - CHANGE_MINIKUBE_NONE_USER=true
+        - MINIKUBE_VERSION=v0.25.2
+        - USE_VOX=n
+      language: bash
+      cache:
+        directories:
+        - $HOME/.minikube
+        - $HOME/.transmute
+        - $HOME/.kube
+        - $HOME/.nvm
+        - /usr/local/bin
+
+before_script:
+- env
+- bash -l -c 'env'
+
+script:
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh .ci/linux_before_install.sh; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sh .ci/mac_before_script.sh; fi
+- bash -l ./bootstrap
+- PATH=$HOME/.transmute/bin:$PATH which kubectl
+- PATH=$HOME/.transmute/bin:$PATH which minikube
+- bash -l -c "which npm"
+- bash -l -c "which node"
+- bash -l -c "node -v"
+- bash -l -c "npm -v"
+- bash -l -c "which ngrok"
+- bash -l -c "which helm"
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l .ci/linux_script; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sh .ci/mac_script.sh; fi
