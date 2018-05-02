@@ -73,14 +73,14 @@ npm install
 
 lerna bootstrap
 
-TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore truffle:migrate
+TRANSMUTE_ENV=minikube lerna run --scope transmute-framework truffle:migrate
 # TRANSMUTE_ENV=minikube lerna run --scope ipfs-api build
-TRANSMUTE_ENV=minikube ACCESS_TOKEN=$(node ./scripts/okta/get-okta-token.js) lerna run --scope transmute-eventstore test
-TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore test:report
-TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore build
-# TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore test:smoke 
+TRANSMUTE_ENV=minikube ACCESS_TOKEN=$(node ./scripts/okta/get-okta-token.js) lerna run --scope transmute-framework test
+TRANSMUTE_ENV=minikube lerna run --scope transmute-framework test:report
+TRANSMUTE_ENV=minikube lerna run --scope transmute-framework build
+# TRANSMUTE_ENV=minikube lerna run --scope transmute-framework test:smoke 
 
-TRANSMUTE_ENV=minikube lerna run --scope transmute-eventstore truffle:test
+TRANSMUTE_ENV=minikube lerna run --scope transmute-framework truffle:test
 
-lerna run --scope transmute-eventstore truffle:coverage
-lerna run --scope transmute-eventstore truffle:coverage:report
+lerna run --scope transmute-framework truffle:coverage
+lerna run --scope transmute-framework truffle:coverage:report

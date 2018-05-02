@@ -13,7 +13,7 @@ import { Fingerprint, Dashboard, Settings } from 'material-ui-icons';
 
 import { history } from '../../store';
 
-import { EventStoreFactory } from 'transmute-eventstore';
+import { EventStoreFactory } from 'transmute-framework';
 
 let eventStoreFactoryArtifact = require('../../contracts/EventStoreFactory.json');
 

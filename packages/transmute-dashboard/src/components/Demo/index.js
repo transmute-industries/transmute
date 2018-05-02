@@ -13,7 +13,7 @@ import {
   EventStoreFactory,
   EventStore,
   StreamModel
-} from 'transmute-eventstore';
+} from 'transmute-framework';
 
 import AppBar from '../AppBar';
 import ProfileCard from './ProfileCard';

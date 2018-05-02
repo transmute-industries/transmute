@@ -1,11 +1,11 @@
 const EventStoreLib = artifacts.require(
-  'transmute-eventstore/contracts/EventStoreLib.sol'
+  'transmute-framework/contracts/EventStoreLib.sol'
 );
 const EventStore = artifacts.require(
-  'transmute-eventstore/contracts/EventStore.sol'
+  'transmute-framework/contracts/EventStore.sol'
 );
 const EventStoreFactory = artifacts.require(
-  'transmute-eventstore/contracts/EventStoreFactory.sol'
+  'transmute-framework/contracts/EventStoreFactory.sol'
 );
 
 const ESigner = artifacts.require('./ESigner.sol');

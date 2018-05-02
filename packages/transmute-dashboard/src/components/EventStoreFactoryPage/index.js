@@ -8,7 +8,7 @@ import Button from 'material-ui/Button';
 
 import EventStoresTable from './EventStoresTable';
 
-import { EventStoreFactory, EventStore } from 'transmute-eventstore';
+import { EventStoreFactory, EventStore } from 'transmute-framework';
 import AppBar from '../AppBar';
 
 let eventStoreArtifact = require('../../contracts/EventStore.json');
