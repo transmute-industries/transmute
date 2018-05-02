@@ -30,7 +30,7 @@ library EventStoreLib {
         evt.sender = msg.sender;
         evt.key = key;
         evt.value = value;
-        TransmuteEvent(evt.index, evt.sender, evt.key, evt.value);
+        emit TransmuteEvent(evt.index, evt.sender, evt.key, evt.value);
         self.events.push(evt);
         return evt.index;
     }
