@@ -10,7 +10,7 @@ contract EventStoreFactory {
 
     function () public payable { revert(); }
  
-    function EventStoreFactory() public {
+    constructor() public {
         owner = msg.sender;
     }
 

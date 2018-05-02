@@ -10,7 +10,7 @@ contract EventStore {
 
     function () public payable { revert(); }
  
-    function EventStore() public {
+    constructor() public {
         owner = tx.origin;
     }
 
