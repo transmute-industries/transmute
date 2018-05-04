@@ -24,12 +24,12 @@ echo 'configure framework'
 ./scripts/configure-framework-kong.sh
 
 lerna bootstrap
-lerna run --scope transmute-framework truffle:migrate
-# lerna run --scope ipfs-api build
-ACCESS_TOKEN=$(node ./scripts/okta/get-okta-token.js) lerna run --scope transmute-framework test
-lerna run --scope transmute-framework test:report
-lerna run --scope transmute-framework build
-# lerna run --scope transmute-framework test:smoke
 lerna run --scope transmute-framework truffle:test
 lerna run --scope transmute-framework truffle:coverage
 lerna run --scope transmute-framework truffle:coverage:report
+
+lerna run --scope transmute-framework truffle:migrate
+lerna run --scope transmute-framework test
+lerna run --scope transmute-framework test:report
+
+
