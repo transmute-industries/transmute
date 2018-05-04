@@ -17,7 +17,8 @@
     "truffle:migrate": "NODE_TLS_REJECT_UNAUTHORIZED=0 truffle migrate",
     "truffle:coverage": "./node_modules/.bin/solidity-coverage",
     "truffle:coverage:report": "cat coverage/lcov.info | coveralls",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json"
   },
   "repository": {
     "type": "git",
@@ -37,6 +38,8 @@
   "devDependencies": {
     "codecov": "^3.0.0",
     "coveralls": "^3.0.0",
+    "docdash": "^0.4.0",
+    "jsdoc": "^3.5.5",
     "react-scripts": "^1.1.1",
     "solidity-coverage": "^0.4.14"
   },

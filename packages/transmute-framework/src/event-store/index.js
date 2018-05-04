@@ -1,3 +1,9 @@
+/**
+ * A module for reading and writing objects to ipfs and ethereum.
+ * @module src/event-store
+ */
+
+
 const Web3 = require('web3');
 const contract = require('truffle-contract');
 const KeenTracking = require('keen-tracking');
@@ -7,6 +13,7 @@ const pack = require('../../package.json');
 
 const GAS = require('../gas')
 
+/** @class EventStore */
 module.exports = class EventStore {
   constructor(config) {
     if (!config) {
