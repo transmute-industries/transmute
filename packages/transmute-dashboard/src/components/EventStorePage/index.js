@@ -10,7 +10,7 @@ import Button from 'material-ui/Button';
 import EventsTable from './EventsTable';
 import RecordEventDialog from './RecordEventDialog';
 
-import { EventStore } from 'transmute-eventstore';
+import { EventStore } from 'transmute-framework';
 import AppBar from '../AppBar';
 
 let eventStoreArtifact = require('../../contracts/EventStore.json');

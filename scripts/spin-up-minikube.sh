@@ -24,12 +24,13 @@ echo 'configure framework'
 ./scripts/configure-framework-kong.sh
 
 lerna bootstrap
-lerna run --scope transmute-eventstore truffle:migrate
-# lerna run --scope ipfs-api build
-ACCESS_TOKEN=$(node ./scripts/okta/get-okta-token.js) lerna run --scope transmute-eventstore test
-lerna run --scope transmute-eventstore test:report
-lerna run --scope transmute-eventstore build
-# lerna run --scope transmute-eventstore test:smoke
-lerna run --scope transmute-eventstore truffle:test
-lerna run --scope transmute-eventstore truffle:coverage
-lerna run --scope transmute-eventstore truffle:coverage:report
+lerna run --scope transmute-framework truffle:test
+# Solidity coverage is broken in latest truffle
+# lerna run --scope transmute-framework truffle:coverage
+# lerna run --scope transmute-framework truffle:coverage:report
+
+lerna run --scope transmute-framework truffle:migrate
+lerna run --scope transmute-framework test
+lerna run --scope transmute-framework test:report
+
+

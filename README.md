@@ -118,8 +118,8 @@ With these we will be updating a few files.
 Final steps - linking everything and migrating your smart contracts
 1. Navigate to the root directory
 2. Run `lerna bootstrap`
-3. Run `lerna run --scope transmute-eventstore truffle:test`
-4. Run `lerna run --scope transmute-eventstore truffle:migrate`
+3. Run `lerna run --scope transmute-framework truffle:test`
+4. Run `lerna run --scope transmute-framework truffle:migrate`
 5. Run `lerna run --scope ipfs-api build`
 6. Navigate to the `/packages/transmute-dashboard/` directory
 7. Run `npm run truffle:migrate`

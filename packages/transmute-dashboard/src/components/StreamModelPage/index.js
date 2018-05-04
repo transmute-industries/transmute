@@ -12,7 +12,7 @@ import StreamModelTable from './StreamModelTable';
 import { reducer as EventsReducer } from '../../store/documents/reducer';
 import { filters } from '../../filters/Events';
 
-import { StreamModel, EventStore } from 'transmute-eventstore';
+import { StreamModel, EventStore } from 'transmute-framework';
 import AppBar from '../AppBar';
 
 let eventStoreArtifact = require('../../contracts/EventStore.json');
