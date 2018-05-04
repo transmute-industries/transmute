@@ -277,7 +277,7 @@ install_nvm () {
 
 install_lerna_npm () {
   if ! type "lerna" >/dev/null 2>/dev/null; then
-    npm i -g lerna@2.9.0
+    sudo npm i -g lerna@2.9.0
   else
     echo 'lerna already installed skipping'
   fi
@@ -285,7 +285,7 @@ install_lerna_npm () {
 
 install_truffle_npm () {
   if ! type "truffle" >/dev/null 2>/dev/null; then
-    npm i -g truffle@4.1.7
+    sudo npm i -g truffle@4.1.7
   else
     echo 'truffle already installed skipping'
   fi
@@ -293,7 +293,7 @@ install_truffle_npm () {
 
 install_ngrok_npm () {
   if ! type "ngrok" >/dev/null 2>/dev/null; then
-    npm i -g ngrok
+    sudo npm i -g ngrok
   else
     echo 'ngrok already installed skipping'
   fi
