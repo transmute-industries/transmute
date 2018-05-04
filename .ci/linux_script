@@ -31,7 +31,6 @@ helm install ./charts/ganache-cli --name=ganache
 
 node -v
 npm -v
-npm install -g codecov lerna@2.9.0 truffle@4.1.3
 lerna -v
 truffle version
 
