@@ -25,8 +25,9 @@ echo 'configure framework'
 
 lerna bootstrap
 lerna run --scope transmute-framework truffle:test
-lerna run --scope transmute-framework truffle:coverage
-lerna run --scope transmute-framework truffle:coverage:report
+# Solidity coverage is broken in latest truffle
+# lerna run --scope transmute-framework truffle:coverage
+# lerna run --scope transmute-framework truffle:coverage:report
 
 lerna run --scope transmute-framework truffle:migrate
 lerna run --scope transmute-framework test
