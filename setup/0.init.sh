@@ -24,14 +24,23 @@ bail () {
   exit 1
 }
 
-
 speaker 'Welcome to transmute'
-speaker 'Before we get started, do you mind if I continue speaking?'
-speaker 'enter y or n'
+speaker 'Should I continue speaking? (y or n)'
+
 read -p '[yn]' USE_VOX
 export USE_VOX=$USE_VOX
+
+speaker "You should have run 'npm i' before this script. exit now if thats not the case."
+
+speaker "Make sure minikube is running."
+
+speaker "Also make sure you have configured your .env correctly with okta."
+
+speaker "You will need an okta application with 'Resource Owner Password' and 'Client Authentication' for OKTA_CLIENT_ID and OKTA_CLIENT_SECRET."
+
+
 speaker 'This guide will help you setup your environment.'
-speaker 'let me check your transmute-config.'
+speaker 'Let me check your transmute-config.'
 
 
 # ███████╗███████╗████████╗██╗   ██╗██████╗      ██████╗ ██████╗ ███╗   ██╗███████╗██╗ ██████╗ 
@@ -83,7 +92,7 @@ fi
 # ██║██║ ╚████║███████║   ██║   ██║  ██║███████╗███████╗    ██║  ██╗╚██████╔╝██║ ╚████║╚██████╔╝
 # ╚═╝╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝    ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ 
                                                                                               
-speaker 'Great, your environment has been established...\!'
+speaker 'Great, your environment has been established...'
 
 echo "MINIKUBE_IP $MINIKUBE_IP"
 
@@ -93,15 +102,15 @@ echo ''
 
 echo 'Now ready to configure SSL...'
 
-#  ██████╗ ██████╗ ███╗   ██╗███████╗██╗ ██████╗     ███████╗███████╗██╗     
-# ██╔════╝██╔═══██╗████╗  ██║██╔════╝██║██╔════╝     ██╔════╝██╔════╝██║     
-# ██║     ██║   ██║██╔██╗ ██║█████╗  ██║██║  ███╗    ███████╗███████╗██║     
-# ██║     ██║   ██║██║╚██╗██║██╔══╝  ██║██║   ██║    ╚════██║╚════██║██║     
-# ╚██████╗╚██████╔╝██║ ╚████║██║     ██║╚██████╔╝    ███████║███████║███████╗
-#  ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝     ╚══════╝╚══════╝╚══════╝
+# #  ██████╗ ██████╗ ███╗   ██╗███████╗██╗ ██████╗     ███████╗███████╗██╗     
+# # ██╔════╝██╔═══██╗████╗  ██║██╔════╝██║██╔════╝     ██╔════╝██╔════╝██║     
+# # ██║     ██║   ██║██╔██╗ ██║█████╗  ██║██║  ███╗    ███████╗███████╗██║     
+# # ██║     ██║   ██║██║╚██╗██║██╔══╝  ██║██║   ██║    ╚════██║╚════██║██║     
+# # ╚██████╗╚██████╔╝██║ ╚████║██║     ██║╚██████╔╝    ███████║███████║███████╗
+# #  ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝     ╚══════╝╚══════╝╚══════╝
                                                                            
 
-. ./setup/2.ngrok_kong_ssl.sh
+# . ./setup/2.ngrok_kong_ssl.sh
 
 echo 'Now ready to install IPFS...'
 
