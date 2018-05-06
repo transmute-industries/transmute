@@ -13,7 +13,7 @@ curl -k -X POST \
   --data 'upstream_url=http://'$GANACHE_CLUSTER_IP':8545/' | jq
 
 echo "Waiting for Ganache..."
-sleep 30
+sleep 45
 echo "Ganache ready"
 
 curl -k -X POST \
