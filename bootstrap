@@ -275,6 +275,23 @@ install_nvm () {
   fi
 }
 
+announce_prefix_fail () {
+  echo "failed to write to the npm prefix directory, you should set your npm prefix to a directory you can write to"
+  echo "The following documentation details this procedure: https://docs.npmjs.com/getting-started/fixing-npm-permissions"
+}
+
+check_prefix_npm () {
+
+  trap announce_prefix_fail EXIT
+  TMP_FILE=$(mktemp -p $(npm config get prefix))
+  if [ "$?" -ne 0 ]; then
+    announce_prefix_fail
+  else
+    rm $TMP_FILE
+  fi
+  trap - EXIT
+}
+
 install_lerna_npm () {
   if ! type "lerna" >/dev/null 2>/dev/null; then
     npm i -g lerna@2.9.0
@@ -424,6 +441,7 @@ windowsreqs () {
   windowsnsenter
   install_nvm
   lts_install
+  check_prefix_npm
   install_ngrok_npm
   install_truffle_npm
   install_lerna_npm
@@ -445,6 +463,7 @@ macreqs () {
   macnsenter
   install_nvm
   lts_install
+  check_prefix_npm
   install_ngrok_npm
   install_truffle_npm
   install_lerna_npm
@@ -462,6 +481,7 @@ linuxreqs () {
   install_helm_linux
   install_nvm
   lts_install
+  check_prefix_npm
   install_ngrok_npm
   install_truffle_npm
   install_lerna_npm
