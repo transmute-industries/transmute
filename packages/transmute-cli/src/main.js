@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 //const argv = require('yargs').argv;
-const shell = require('shelljs');
-var vorpal = require('vorpal')();
+const vorpal = require('vorpal')();
 var hello = 'hello world!';
 var hello_cmd = "echo " + hello ;
+import {
+  aksls,
+  aks
+} from './commands/aks';
 
-const  MY_ENV = process.env.MY_ENV ||  'HELLO';
+const  MY_ENV = process.env.USE_KUBASH ||  'true';
 
 vorpal
   .command('login <loginService>')
@@ -22,23 +25,54 @@ vorpal
   });
 
 vorpal
-  .command('k8s <k8sAction> <clusterName>')
+  .command('k8s provision <clusterName>')
+  .description('Provision k8s cluster')
   .option('--gke', 'Use gcloud GKE')
   .option('--aks', 'Use Azure AKS')
   .option('--aws', 'Use Amazon AWS')
   .option('--minikube', 'Use minikube')
-  .option('provision', 'Provision new k8s cluster')
-  .option('terminate', 'Terminate k8s cluster')
-  .alias('k')
   .action(function(args, callback) {
-    this.log('k8s has not been implemented yet');
+    if (args.options.gke) {
+      // gkels()
+      this.log('has not been implemented yet');
+    } else if (args.options.aks) {
+      aksls()
+    } else if (args.options.aws) {
+      //awsls()
+      this.log('has not been implemented yet');
+    } else if (args.options.minikube) {
+      //minikubels()
+      this.log('has not been implemented yet');
+    }
     callback();
   });
 
 vorpal
-  .command('dapp <dappAction>')
-  .option('create', 'create a new dapp')
-  .autocomplete('create', 'teardown')
+  .command('k8s ls <clusterName>')
+  .description('list k8s clusters')
+  .option('--gke', 'Use gcloud GKE')
+  .option('--aks', 'Use Azure AKS')
+  .option('--aws', 'Use Amazon AWS')
+  .option('--minikube', 'Use minikube')
+  .action(function(args, callback) {
+    if (args.options.gke) {
+      // gkels()
+      this.log('has not been implemented yet');
+    } else if (args.options.aks) {
+      aksls()
+    } else if (args.options.aws) {
+      //awsls()
+      this.log('has not been implemented yet');
+    } else if (args.options.minikube) {
+      //minikubels()
+      this.log('has not been implemented yet');
+    }
+    callback();
+  });
+
+vorpal
+  .command('dapp create')
+  .description('create a new distributed app')
   .alias('d')
   .action(function(args, callback) {
     this.log('dapp has not been implemented yet');

@@ -4,6 +4,7 @@
   "description": "transmute cli",
   "main": "src/main.js",
   "scripts": {
+    "build": "babel src -d lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -12,14 +13,18 @@
   "author": "Transmute",
   "license": "ISC",
   "bin": {
-    "transmute": "./src/main.js"
+    "transmute": "./lib/main.js"
   },
   "dependencies": {
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-root-slash-import": "^1.1.0",
+    "lodash": "^4.17.10",
     "shelljs": "^0.8.1",
     "vorpal": "^1.12.0",
     "yargs": "^11.0.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0"
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
   }
 }
