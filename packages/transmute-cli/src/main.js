@@ -42,6 +42,10 @@ vorpal
   .command('k8s provision <clusterName>')
   .description('Provision k8s cluster')
   .option('--gke', 'Use gcloud GKE')
+  .option('--nodes <nodes>', 'How many nodes to create the cluster with')
+  .option('--clustername <clustername>', 'The cluster name to create the cluster with')
+  .option('--group <group>', 'The group to create the cluster with')
+  .option('--gensshkeys', 'Generate SSH keys')
   .option('--aks', 'Use Azure AKS')
   .option('--aws', 'Use Amazon AWS')
   .option('--minikube', 'Use minikube')
@@ -50,7 +54,16 @@ vorpal
       // gke.provision()
       this.log('has not been implemented yet');
     } else if (args.options.aks) {
-      aks.provision()
+      var myResourceGroup = args.options.group;
+      var myAKSCluster = args.options.clustername;
+      var myNodeCount = args.options.nodes;
+      if (args.options.gensshkeys) {
+        var GenSSHKeys = true;
+      }
+      else {
+        var GenSSHKeys = false;
+      }
+      aks.provision( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys )
     } else if (args.options.aws) {
       //aws.provision()
       this.log('has not been implemented yet');
