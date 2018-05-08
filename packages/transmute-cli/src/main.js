@@ -1,12 +1,9 @@
 #!/usr/bin/env node
 //const argv = require('yargs').argv;
 const vorpal = require('vorpal')();
+const aks = require('./commands/aks');
 var hello = 'hello world!';
 var hello_cmd = "echo " + hello ;
-import {
-  aksls,
-  aks
-} from './commands/aks';
 
 const  MY_ENV = process.env.USE_KUBASH ||  'true';
 
@@ -36,7 +33,7 @@ vorpal
       // gkels()
       this.log('has not been implemented yet');
     } else if (args.options.aks) {
-      aksls()
+      aks.ls()
     } else if (args.options.aws) {
       //awsls()
       this.log('has not been implemented yet');
@@ -59,7 +56,7 @@ vorpal
       // gkels()
       this.log('has not been implemented yet');
     } else if (args.options.aks) {
-      aksls()
+      aks.ls()
     } else if (args.options.aws) {
       //awsls()
       this.log('has not been implemented yet');
