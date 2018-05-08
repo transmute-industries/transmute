@@ -30,15 +30,15 @@ vorpal
   .option('--minikube', 'Use minikube')
   .action(function(args, callback) {
     if (args.options.gke) {
-      // gkels()
+      // gke.provision()
       this.log('has not been implemented yet');
     } else if (args.options.aks) {
-      aks.ls()
+      aks.provision()
     } else if (args.options.aws) {
-      //awsls()
+      //aws.provision()
       this.log('has not been implemented yet');
     } else if (args.options.minikube) {
-      //minikubels()
+      //minikube.provision()
       this.log('has not been implemented yet');
     }
     callback();
@@ -46,7 +46,7 @@ vorpal
 
 vorpal
   .command('k8s ls <clusterName>')
-  .description('list k8s clusters')
+  .description('List k8s clusters')
   .option('--gke', 'Use gcloud GKE')
   .option('--aks', 'Use Azure AKS')
   .option('--aws', 'Use Amazon AWS')
