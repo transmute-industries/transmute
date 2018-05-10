@@ -18,35 +18,35 @@ curl -k -X POST \
   --data "config.origins=*" \
   --data "config.methods=GET, PUT, POST"
 
-curl -k -X POST \
-  --url $KONG_ADMIN_URL/apis/ipfs/plugins \
-  --data "name=jwt"  \
-  | jq
+#curl -k -X POST \
+  #--url $KONG_ADMIN_URL/apis/ipfs/plugins \
+  #--data "name=jwt"  \
+  #| jq
 
-./scripts/okta/write-okta-pem.js
+#./scripts/okta/write-okta-pem.js
 
-curl -k -X POST \
-  --url $KONG_ADMIN_URL/consumers \
-  --data "username="$KONG_CONSUMER_USERNAME \
-  --data "custom_id="$KONG_CONSUMER_ID  | jq
+#curl -k -X POST \
+  #--url $KONG_ADMIN_URL/consumers \
+  #--data "username="$KONG_CONSUMER_USERNAME \
+  #--data "custom_id="$KONG_CONSUMER_ID  | jq
 
-curl -k -X POST \
-  --url $KONG_ADMIN_URL/consumers/$KONG_CONSUMER_USERNAME/jwt \
-  -F "algorithm=RS256" \
-  -F "rsa_public_key=@"$OUTPUT_FILE \
-  -F "key=https://"$OKTA_HOSTNAME"/oauth2/default"  | jq
+#curl -k -X POST \
+  #--url $KONG_ADMIN_URL/consumers/$KONG_CONSUMER_USERNAME/jwt \
+  #-F "algorithm=RS256" \
+  #-F "rsa_public_key=@"$OUTPUT_FILE \
+  #-F "key=https://"$OKTA_HOSTNAME"/oauth2/default"  | jq
 
 
-export ACCESS_TOKEN=$(node ./scripts/okta/get-okta-token.js)
+#export ACCESS_TOKEN=$(node ./scripts/okta/get-okta-token.js)
 
 export KONG_NGROK_PROXY_URL=$(minikube service gateway-kong-proxy --url | sed 's,http://'$MINIKUBE_IP',https://'$KONG_NGROK_HOST',g')
 
 sleep 3
 
-curl -k -X GET \
-  --url $KONG_NGROK_PROXY_URL/ipfs/api/v0/id \
-  --header 'Authorization: Bearer '$ACCESS_TOKEN \
-  | jq
+#curl -k -X GET \
+  #--url $KONG_NGROK_PROXY_URL/ipfs/api/v0/id \
+  #--header 'Authorization: Bearer '$ACCESS_TOKEN \
+  #| jq
 
 echo 'Enabling CORS for IPFS'
 
