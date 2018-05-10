@@ -1,16 +1,24 @@
 #!/usr/bin/env node
-//const argv = require('yargs').argv;
+
+// Process env vars
+const  MY_ENV = process.env.USE_KUBASH ||  'true';
+
+// Vorpal
 const vorpal = require('vorpal')();
 const vorpalLog = require('vorpal-log');
 const vorpalTour = require('vorpal-tour');
 vorpal.use(vorpalLog);
 
-const { writeFile } = require('./utils');
+// Okta
 // import auth from './auth0/index';
 const auth = require('./okta/index');
-const aks = require('./commands/aks');
 
-const  MY_ENV = process.env.USE_KUBASH ||  'true';
+// Utils
+const { writeFile } = require('./utils');
+
+// Commands
+const aks = require('./commands/aks');
+const minikube = require('./commands/minikube');
 
 auth(vorpal);
 
@@ -59,8 +67,7 @@ vorpal
       //aws.provision()
       this.log('has not been implemented yet');
     } else if (args.options.minikube) {
-      //minikube.provision()
-      this.log('has not been implemented yet');
+      minikube.provision()
     }
     callback();
   });
@@ -82,8 +89,7 @@ vorpal
       //awsls()
       this.log('has not been implemented yet');
     } else if (args.options.minikube) {
-      //minikubels()
-      this.log('has not been implemented yet');
+      minikube.ls()
     }
     callback();
   });
@@ -127,7 +133,7 @@ vorpal
   });
 
 vorpal
-  .command('push', 'Outputs "industries"')
+  .command('push', 'Pushes objects into the cloud')
   .alias('p')
   .action(function(args, callback) {
     this.log('push has not been implemented yet');
