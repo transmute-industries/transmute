@@ -6,8 +6,8 @@
 : ${VERBOSITY:=0}
 : ${HELM_INSTALL_DIR:=$TRANSMUTE_BIN}
 : ${MY_KUBE_VERSION:=v1.9.6}
-: ${FIX_DOTFILES:= "true"}
-: ${NVM_DIR_ADDS:= "true"}
+: ${FIX_DOTFILES:="true"}
+: ${NVM_DIR_ADDS:="true"}
 : ${NVM_VERSION:='0.33.9'}
 : ${USE_VOX:=y}
 : ${USE_WARN:=y}
@@ -201,17 +201,14 @@ dotfiles_install () {
   if [[ $VERBOSITY -gt '1' ]]; then
     echo 'Adjusting dotfiles'
   fi
-  touch ~/.zshrc
-  touch ~/.bashrc
-  touch ~/.bash_profile
-  touch ~/.profile
-  LINE_TO_ADD="source ~/.bashrc"
-  TARGET_FILE_FOR_ADD=~/.bash_profile
+  touch $HOME/.zshrc
+  touch $HOME/.bashrc
+  # here we'll make a bin dir in $HOME and add it to path
+  chkdir $TRANSMUTE_BIN
+  LINE_TO_ADD="$(printf "export PATH=%s:\$PATH" $TRANSMUTE_BIN)"
+  TARGET_FILE_FOR_ADD=$HOME/.bashrc
   check_if_line_exists || add_line_to
-  LINE_TO_ADD="source ~/.profile"
-  TARGET_FILE_FOR_ADD=~/.zshrc
-  check_if_line_exists || add_line_to
-  TARGET_FILE_FOR_ADD=~/.bashrc
+  TARGET_FILE_FOR_ADD=$HOME/.zshrc
   check_if_line_exists || add_line_to
 }
 
@@ -243,6 +240,7 @@ install_certbot () {
     certbot-auto
     set -e
     rm -Rf $TMP
+    rm certbot-auto.asc
   else
     echo 'certbot-auto already installed skipping'
   fi
@@ -264,10 +262,6 @@ install_nvm () {
     set +e
     curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v$NVM_VERSION/install.sh | bash
     set -e
-
-    if [ "$FIX_DOTFILES" = "true" ]; then
-      dotfiles_install
-    fi
 
     if [ "$NVM_DIR_ADDS" = "true" ]; then
       nvm_dir_adds
@@ -447,6 +441,7 @@ windowsreqs () {
   install_lerna_npm
   install_certbot
   install_jq
+  install_dotfiles
 }
 
 macreqs () {
@@ -469,6 +464,7 @@ macreqs () {
   install_lerna_npm
   install_certbot
   install_jq
+  install_dotfiles
 }
 
 linuxreqs () {
@@ -487,6 +483,7 @@ linuxreqs () {
   install_lerna_npm
   install_certbot
   install_jq
+  install_dotfiles
 }
 
 initializer () {
@@ -582,6 +579,10 @@ else
   git fetch --tags
   git checkout $TRANSMUTE_RELEASE
   cd $CWD
+fi
+
+if [ "$FIX_DOTFILES" = "true" ]; then
+  dotfiles_install
 fi
 
 # make reqs
