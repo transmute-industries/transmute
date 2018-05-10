@@ -1,0 +1,81 @@
+#!/bin/bash
+set -eu
+this_cluster_name=$1
+orig_pwd=$(pwd)
+
+# provision
+kubash -n $this_cluster_name provision --provisioner gke transmute-gke-$this_cluster_name.yaml
+
+# Grab the config file and make it default
+cp ~/.kubash/clusters/$this_cluster_name/config ~/.kube/
+
+# Install openebs for generic storage
+kubash -n $this_cluster_name openebs
+
+# Install helm
+kubash -n $this_cluster_name tiller
+
+# This taints the last node so it is unschedulable to normal k8s pods
+# and then will be populated solely by ingress to ensure ingress is not blocked by any other process
+this_ingress_node=$(kubectl get nodes|awk '{print $1}'|tail -1)
+kubash -n $this_cluster_name taint_ingress $this_ingress_node
+
+# voyager for ingress
+kubash -n $this_cluster_name voyager
+kubectl create secret generic acme-account --from-literal=ACME_EMAIL=$ACME_EMAIL
+
+# Spin up the dapp
+kubectl run transmute-dapp --image=joshuacox/transmute-dapp:render
+kubectl expose deployment transmute-dapp --name=web --port=80 --target-port=80
+kubectl expose deployment transmute-dapp --name=transmute-dapp --port=80 --target-port=80
+
+# Install transmute components into k8s
+# Grab the transmute dir
+transmute_dir=$HOME/transmute
+if [ -e "$transmute_dir" ]; then
+  echo "$transmute_dir exists already, proceeding" 
+else
+  cd $HOME
+  # This is a fork as right after I met transmute you guys cleared out some of the tutorial
+  # directories I was following.
+  git clone --depth=1 \
+   https://github.com/joshuacox/transmute.git
+  cd $orig_pwd
+fi
+
+# Ganache-cli
+helm install \
+ --name=transmute-testrpc \
+ $transmute_dir/tutorials/minikube-setup/ganache-cli/ganache-cli
+
+# ipfs
+## Storage class for ipfs
+kubectl apply -f \
+ $transmute_dir/tutorials/minikube-setup/ipfs/openebs-ipfs.yaml
+
+### Helm install ipfs
+helm install \
+ stable/ipfs \
+ --name transmute-ipfs \
+ --set \
+ persistence.storageClass=openebs-ipfs,persistence.size=4Gi,persistence.enabled=true
+
+# Kong
+helm install stable/kong --name king-kong
+
+# OpenFaaS
+## create namespaces
+kubectl create ns openfaas
+kubectl create ns openfaas-fn
+# OpenFaas Helmchart
+cd faas-netes/chart
+#helm install openfaas openfaas/ \
+#helm install openfaas/ \
+  #--name faaster-blaster \
+helm upgrade --install openfaas openfaas/ \
+  --namespace openfaas \
+  --set functionNamespace=openfaas-fn
+cd $orig_pwd
+
+# Ingress
+kubectl apply -f transmute-gke-$this_cluster_name-ing.yaml
