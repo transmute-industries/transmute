@@ -22,9 +22,9 @@ kubash -n $this_cluster_name voyager
 kubectl create secret generic acme-account --from-literal=ACME_EMAIL=$ACME_EMAIL
 
 # Spin up the dapp
-kubectl run transmute-dapp --image=joshuacox/transmute-dapp:render
-kubectl expose deployment transmute-dapp --name=web --port=80 --target-port=80
-kubectl expose deployment transmute-dapp --name=transmute-dapp --port=80 --target-port=80
+kubectl run webtest --image=nginx:alpine
+kubectl expose deployment webtest --name=web --port=80 --target-port=80
+kubectl expose deployment webtest --name=webtest --port=80 --target-port=80
 
 # Install transmute components into k8s
 # Grab the transmute dir
