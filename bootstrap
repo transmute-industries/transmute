@@ -604,8 +604,8 @@ check_cmd minikube
 initializer
 
 speaker 'The bootstrap has finished'
-speaker '- you have completed all the way to "npm run setup" here:'
-speaker 'https://github.com/transmute-industries/transmute#environment-scripts-and-updating.'
+speaker 'you have completed all the way to "npm run setup" here:'
+echo 'https://github.com/transmute-industries/transmute#environment-scripts-and-updating'
 speaker "You should now run 'npm run setup' inside '$(readlink -f $TRANSMUTE_DIR)'"
 
 trap - EXIT
