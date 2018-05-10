@@ -18,11 +18,28 @@ speaker () {
   fi
 }
 
-speaker 'waiting for kong to wake up, come back in '$SECONDS_FOR_KONG' seconds.'
+speaker 'waiting for kong to wake up, come back '
 
-echo 'please be patient while kong wakes up... seconds to wait: '$SECONDS_FOR_KONG
+#sleep $SECONDS_FOR_KONG
+# while loop
+countone=1
+# timeout for 15 minutes
+while [ $countone -lt 151 ]
+do
+  echo -n '.'
+  RESULT=$(kubectl get po --namespace=default | grep gateway-kong | grep Running)
+  if [ "$RESULT" ]; then
+      sleep 3
+      echo '.'
+      echo "$RESULT"
+      break
+  fi
+  countone=`expr $countone + 1`
+  sleep 3
+done
+sleep 1
 
-sleep $SECONDS_FOR_KONG
+echo "Kong is now up and running.."
 
 export KONG_ADMIN_URL=$(minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
 export KONG_PROXY_URL=$(minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
