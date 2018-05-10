@@ -441,7 +441,7 @@ windowsreqs () {
   install_lerna_npm
   install_certbot
   install_jq
-  install_dotfiles
+  dotfiles_install
 }
 
 macreqs () {
@@ -464,7 +464,7 @@ macreqs () {
   install_lerna_npm
   install_certbot
   install_jq
-  install_dotfiles
+  dotfiles_install
 }
 
 linuxreqs () {
@@ -483,7 +483,7 @@ linuxreqs () {
   install_lerna_npm
   install_certbot
   install_jq
-  install_dotfiles
+  dotfiles_install
 }
 
 initializer () {
