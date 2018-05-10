@@ -27,7 +27,7 @@ which nsenter
 helm version --debug
 helm install stable/kong --name gateway
 helm install stable/ipfs --name decentralized-storage
-helm install ./charts/ganache-cli --name=ganache
+helm install ./components/ganache/charts/ganache-cli --name=ganache
 
 node -v
 npm -v
