@@ -8,31 +8,11 @@ vorpal.use(vorpalLog);
 const { writeFile } = require('./utils');
 // import auth from './auth0/index';
 const auth = require('./okta/index');
-
 const aks = require('./commands/aks');
-const example = require('./commands/example');
-var hello = 'hello world!';
-var hello_cmd = "echo " + hello ;
 
 const  MY_ENV = process.env.USE_KUBASH ||  'true';
 
 auth(vorpal);
-
-vorpal
-  .command('example ls')
-  .description('example to service')
-  .action(function(args, callback) {
-    example.ls()
-    callback();
-  });
-
-vorpal
-  .command('example find')
-  .description('example to service')
-  .action(function(args, callback) {
-    example.find()
-    callback();
-  });
 
 vorpal
   .command('login <loginService>')
