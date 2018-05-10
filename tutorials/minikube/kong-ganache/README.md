@@ -13,7 +13,7 @@ minikube start
 ## Install Ganache and Kong
 
 ```
-helm install ./charts/ganache-cli --name=ganache
+helm install ./components/ganache/charts/ganache-cli --name=ganache
 helm install stable/kong --name gateway
 
 
