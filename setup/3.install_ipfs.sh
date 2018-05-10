@@ -48,12 +48,13 @@ curl -k -X GET \
   --header 'Authorization: Bearer '$ACCESS_TOKEN \
   | jq
 
-
 echo 'Enabling CORS for IPFS'
 
 export POD_NAME=$(kubectl get pods --namespace default -l "app=ipfs,release=decentralized-storage"  -o jsonpath="{.items[0].metadata.name}")
-kubectl exec -it $POD_NAME -- ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
-kubectl exec -it $POD_NAME -- ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST"]'
-# kubectl get pod $POD_NAME -o yaml | kubectl replace --force -f -
 
+ALLOW_ORIGIN_STAR="ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '[\"*\"]'"
+ALLOW_ORIGIN_METHODS="ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '[\"PUT\", \"GET\", \"POST\"]'"
 
+kubectl exec -it $POD_NAME /bin/bash -- -c "$ALLOW_ORIGIN_STAR"
+kubectl exec -it $POD_NAME /bin/bash -- -c "$ALLOW_ORIGIN_METHODS"
+kubectl delete pod $POD_NAME
