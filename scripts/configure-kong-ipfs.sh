@@ -22,11 +22,12 @@ curl -k -X POST \
   --url $KONG_ADMIN_URL/apis/ipfs/plugins \
   --data "name=cors" \
   --data "config.origins=*" \
-  --data "config.methods=GET, PUT, POST"
+  --data "config.methods=GET, PUT, POST" \
+  | jq
 
 echo 'IPFS HEALTHCHECK'
 echo 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT
 
 curl -k -X GET \
-  --url 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT'/api/v0/id' 
-
+  --url 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT'/api/v0/id' \
+  | jq
