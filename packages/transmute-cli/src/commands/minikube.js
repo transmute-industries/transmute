@@ -10,7 +10,7 @@ export function provision( clusterName ) {
   var prov_cmd = 'minikube start ';
   shell.exec(prov_cmd);
   console.log(prov_cmd);
-  var prov_cmd = "./commands/scripts/initializer " + clusterName;
+  var prov_cmd = "./scripts/initializer " + clusterName;
   shell.exec(prov_cmd);
 }
 

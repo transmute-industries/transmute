@@ -19,8 +19,18 @@ const { writeFile } = require('./utils');
 // Commands
 const aks = require('./commands/aks');
 const minikube = require('./commands/minikube');
+const runtest = require('./commands/runtest');
+const init = require('./commands/init');
 
 auth(vorpal);
+
+vorpal
+  .command('test')
+  .description('Login to service')
+  .action(function(args, callback) {
+    runtest.test()
+    callback();
+  });
 
 vorpal
   .command('login <loginService>')
@@ -33,6 +43,42 @@ vorpal
   .alias('l')
   .action(function(args, callback) {
     this.log('login has not been implemented yet');
+    callback();
+  });
+
+vorpal
+  .command('k8s init')
+  .description('Initialize k8s cluster')
+  .option('--gke', 'Use gcloud GKE')
+  .option('--nodes <nodes>', 'How many nodes to create the cluster with')
+  .option('--clustername <clustername>', 'The cluster name to create the cluster with')
+  .option('--group <group>', 'The group to create the cluster with')
+  .option('--gensshkeys', 'Generate SSH keys')
+  .option('--aks', 'Use Azure AKS')
+  .option('--aws', 'Use Amazon AWS')
+  .option('--minikube', 'Use minikube')
+  .action(function(args, callback) {
+    if (args.options.gke) {
+      // gke.init()
+      this.log('has not been implemented yet');
+    } else if (args.options.aks) {
+      var myResourceGroup = args.options.group;
+      var myAKSCluster = args.options.clustername;
+      var myNodeCount = args.options.nodes;
+      if (args.options.gensshkeys) {
+        var GenSSHKeys = true;
+      }
+      else {
+        var GenSSHKeys = false;
+      }
+      aks.register
+      aks.init( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys )
+    } else if (args.options.aws) {
+      //aws.init()
+      this.log('has not been implemented yet');
+    } else if (args.options.minikube) {
+      init.minikube()
+    }
     callback();
   });
 

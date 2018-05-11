@@ -4,7 +4,7 @@
   "description": "transmute cli",
   "main": "src/main.js",
   "scripts": {
-    "build": "babel src -d lib",
+    "build": "babel src -d lib; rsync -av legacy/scripts lib/; rsync -av legacy/setup lib/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
