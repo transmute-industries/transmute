@@ -15,6 +15,25 @@ This guide will walk you through getting setup with Transmute.
 
 Here is a [video](https://drive.google.com/open?id=1ETHBCGyHYahiK-97fRE4-MAebbcp_N8n) to help guide you along.
 
+### Oneliner
+
+```
+curl -Ls https://raw.githubusercontent.com/transmute-industries/transmute/master/bootstrap | bash
+```
+
+Notice that will install kubectl, minikube, helm, and ngrok for you, if
+any of these things are already present on your path then they will be
+skipped.  If you find one of these components are out of date, delete it
+from your path and rerun the oneliner.
+
+Now you can proceed to the
+[Environment scripts and updating](https://github.com/transmute-industries/transmute#environment-scripts-and-updating)
+section and continue.
+
+Or alternately you can install manually...
+
+## Manual Installation
+
 ### Minikube and Helm
 1. Minikube is a tool that makes it easy to run Kubernetes locally. Minikube runs a single-node Kubernetes cluster inside a VM on your laptop. [Install Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
 2. Helm is a tool for managing Kubernetes charts. Charts are packages of pre-configured Kubernetes resources. [Install Helm](https://github.com/kubernetes/helm/blob/master/docs/install.md)
@@ -99,8 +118,8 @@ With these we will be updating a few files.
 Final steps - linking everything and migrating your smart contracts
 1. Navigate to the root directory
 2. Run `lerna bootstrap`
-3. Run `lerna run --scope transmute-eventstore truffle:test`
-4. Run `lerna run --scope transmute-eventstore truffle:migrate`
+3. Run `lerna run --scope transmute-framework truffle:test`
+4. Run `lerna run --scope transmute-framework truffle:migrate`
 5. Run `lerna run --scope ipfs-api build`
 6. Navigate to the `/packages/transmute-dashboard/` directory
 7. Run `npm run truffle:migrate`

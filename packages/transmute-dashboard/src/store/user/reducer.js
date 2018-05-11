@@ -3,7 +3,8 @@ import * as Constants from './constants';
 export const initialState = {
   sessionToken: null,
   error: null,
-  success: ''
+  success: '',
+  web3Account: null
 };
 
 export const reducer = (state = initialState, action) => {
@@ -22,6 +23,8 @@ export const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { error: action.payload });
     case Constants.LOGOUT:
       return Object.assign({}, state, { sessionToken: null, error: null });
+    case Constants.SET_WEB3_ACCOUNT:
+      return Object.assign({}, state, { web3Account: action.payload });
     case Constants.LOGIN_ERROR:
       return Object.assign({}, state, {
         sessionToken: null,

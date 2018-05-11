@@ -1,3 +1,4 @@
+#!/bin/sh
 helm install ./charts/ganache-cli/ --name ganache
 
 export KONG_ADMIN_URL=$(minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
@@ -12,7 +13,7 @@ curl -k -X POST \
   --data 'upstream_url=http://'$GANACHE_CLUSTER_IP':8545/' | jq
 
 echo "Waiting for Ganache..."
-sleep 30
+sleep 45
 echo "Ganache ready"
 
 curl -k -X POST \

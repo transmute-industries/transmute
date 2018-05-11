@@ -15,8 +15,11 @@ backup
 
 on_deck
 
-packages/transmute-framework/src/contracts
-packages/transmute-dashboard/src/contracts
+packages/transmute-framework/src/contracts/
+packages/transmute-dashboard/src/contracts/
+packages/transmute-dashboard/src/okta_config.js
+packages/transmute-framework/build/
+*.package-lock.json
 
 scratch
 
@@ -26,6 +29,7 @@ okta.pem
 
 *.key
 *.crt
+*.cid
 
 .env
 

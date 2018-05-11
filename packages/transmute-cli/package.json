@@ -1,30 +1,24 @@
 {
   "name": "transmute-cli",
-  "version": "1.0.0",
-  "description": "transmute cli",
-  "main": "src/main.js",
-  "scripts": {
-    "build": "babel src -d lib",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "transmute"
-  ],
-  "author": "Transmute",
-  "license": "ISC",
-  "bin": {
-    "transmute": "./lib/main.js"
-  },
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "babel-plugin-transform-async-to-generator": "^6.24.1",
-    "babel-root-slash-import": "^1.1.0",
-    "lodash": "^4.17.10",
+    "auth0": "^2.9.1",
+    "bili": "^3.0.3",
+    "form-urlencoded": "^2.0.4",
+    "jsonwebtoken": "^8.2.0",
+    "jwk-to-pem": "^2.0.0",
+    "react-scripts": "1.1.1",
+    "shell.js": "^2.0.9",
     "shelljs": "^0.8.1",
+    "url-parse": "^1.2.0",
     "vorpal": "^1.12.0",
-    "yargs": "^11.0.0"
+    "vorpal-log": "^1.1.0",
+    "vorpal-tour": "0.0.5"
   },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1"
+  "scripts": {
+    "start": "node ./src/index.js",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   }
 }

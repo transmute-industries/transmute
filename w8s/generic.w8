@@ -1,0 +1,29 @@
+#!/bin/sh
+if [ $# -ne 2 ]; then
+  # Print usage
+  echo 'Error! wrong number of arguments'
+  echo 'usage:'
+  echo 'w8/generic.w8 what-to-wait-for in-what-namespace'
+  exit 1
+fi
+
+echo -n "wait on $1 to become available"
+sleep 1
+
+# while loop
+countone=1
+# timeout for 15 minutes
+while [ $countone -lt 151 ]
+do
+  echo -n '.'
+  RESULT=$(kubectl get po --namespace=$2 | grep $1 | grep Running)
+  if [ "$RESULT" ]; then
+      echo '.'
+      echo "$RESULT"
+      break
+  fi
+  countone=`expr $countone + 1`
+  sleep 3
+done
+
+echo "$1 is now up and running"

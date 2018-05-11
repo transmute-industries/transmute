@@ -91,24 +91,24 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x6060604052341561000f57600080fd5b61035a8061001e6000396000f30060606040526004361061004b5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416630d93ee9c81146100505780631b68f09114610073575b600080fd5b6100616004356024356044356100c2565b60405190815260200160405180910390f35b6100816004356024356101f6565b60405193845273ffffffffffffffffffffffffffffffffffffffff909216602084015260408084019190915260608301919091526080909101905180910390f35b60006100cc610289565b8454815273ffffffffffffffffffffffffffffffffffffffff3316602082015260408101849052606081018390527f4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64815182602001518360400151846060015160405193845273ffffffffffffffffffffffffffffffffffffffff909216602084015260408084019190915260608301919091526080909101905180910390a1845485906001810161017e83826102b0565b6000928352602090922083916004020181518155602082015160018201805473ffffffffffffffffffffffffffffffffffffffff191673ffffffffffffffffffffffffffffffffffffffff92909216919091179055604082015160028201556060820151600390910155508190505195945050505050565b600080600080610204610289565b865487908790811061021257fe5b90600052602060002090600402016080604051908101604090815282548252600183015473ffffffffffffffffffffffffffffffffffffffff166020830152600283015490820152600390910154606082015290508051816020015182604001518360600151929a91995097509095509350505050565b60806040519081016040908152600080835260208301819052908201819052606082015290565b8154818355818115116102dc576004028160040283600052602060002091820191016102dc91906102e1565b505050565b61032b91905b8082111561032757600080825560018201805473ffffffffffffffffffffffffffffffffffffffff191690556002820181905560038201556004016102e7565b5090565b905600a165627a7a723058208921701475f0d218e0f906bc1b80b6da5305eaacb77dcc516f34804dd3b4fcc60029",
-  "deployedBytecode": "0x60606040526004361061004b5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416630d93ee9c81146100505780631b68f09114610073575b600080fd5b6100616004356024356044356100c2565b60405190815260200160405180910390f35b6100816004356024356101f6565b60405193845273ffffffffffffffffffffffffffffffffffffffff909216602084015260408084019190915260608301919091526080909101905180910390f35b60006100cc610289565b8454815273ffffffffffffffffffffffffffffffffffffffff3316602082015260408101849052606081018390527f4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64815182602001518360400151846060015160405193845273ffffffffffffffffffffffffffffffffffffffff909216602084015260408084019190915260608301919091526080909101905180910390a1845485906001810161017e83826102b0565b6000928352602090922083916004020181518155602082015160018201805473ffffffffffffffffffffffffffffffffffffffff191673ffffffffffffffffffffffffffffffffffffffff92909216919091179055604082015160028201556060820151600390910155508190505195945050505050565b600080600080610204610289565b865487908790811061021257fe5b90600052602060002090600402016080604051908101604090815282548252600183015473ffffffffffffffffffffffffffffffffffffffff166020830152600283015490820152600390910154606082015290508051816020015182604001518360600151929a91995097509095509350505050565b60806040519081016040908152600080835260208301819052908201819052606082015290565b8154818355818115116102dc576004028160040283600052602060002091820191016102dc91906102e1565b505050565b61032b91905b8082111561032757600080825560018201805473ffffffffffffffffffffffffffffffffffffffff191690556002820181905560038201556004016102e7565b5090565b905600a165627a7a723058208921701475f0d218e0f906bc1b80b6da5305eaacb77dcc516f34804dd3b4fcc60029",
-  "sourceMap": "26:1099:1:-;;;;;;;;;;;;;;;;;",
-  "deployedSourceMap": "26:1099:1:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;384:421;;;;;;;;;;;;;;;;;;;;;;;;;811:307;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;384:421;504:4;520:31;;:::i;:::-;573:18;;561:30;;601:23;614:10;601:23;:10;;;:23;634:7;;;:13;;;657:9;;;:17;;;684:57;561:3;699:9;710:3;:10;;;722:3;:7;;;731:3;:9;;;684:57;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;751:21;;:4;;:21;;;;:4;:21;;:::i;:::-;;;;;;;;;768:3;;751:21;;;768:3;751:21;;;;;;;;;;;;-1:-1:-1;;751:21:1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;789:3:1;;-1:-1:-1;789:9:1;782:16;384:421;-1:-1:-1;;;;;384:421:1:o;811:307::-;897:4;903:7;912;921;941:31;;:::i;:::-;975:18;;:4;;987:5;;975:18;;;;;;;;;;;;;;;;941:52;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;941:52:1;1024:9;1047:3;:10;;;1071:3;:7;;;1092:3;:9;;;1003:108;;;;-1:-1:-1;1003:108:1;-1:-1:-1;1003:108:1;;-1:-1:-1;811:307:1;-1:-1:-1;;;;811:307:1:o;26:1099::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;26:1099:1;;;;;;;;;;;;;;;;;;;;;;;:::o",
-  "source": "pragma solidity ^0.4.19;\n\nlibrary EventStoreLib {\n\n    event TransmuteEvent(\n        uint index,\n        address sender,\n        bytes32 key,\n        bytes32 value\n    );\n\n    struct TransmuteEventStruct {\n        uint index;\n        address sender;\n        bytes32 key;  \n        bytes32 value; \n    }\n\n    struct TransmuteStorage {\n        TransmuteEventStruct[] events;\n    }\n\n    function write(\n        TransmuteStorage storage self,\n        bytes32 key,\n        bytes32 value\n    ) public returns (uint) {\n        TransmuteEventStruct memory evt;\n        evt.index = self.events.length;\n        evt.sender = msg.sender;\n        evt.key = key;\n        evt.value = value;\n        TransmuteEvent(evt.index, evt.sender, evt.key, evt.value);\n        self.events.push(evt);\n        return evt.index;\n    }\n\n    function read(TransmuteStorage storage self, uint index) public constant\n    returns (uint, address, bytes32, bytes32 ) {\n        TransmuteEventStruct memory evt = self.events[index];\n        return (\n            evt.index,\n            evt.sender,\n            evt.key,\n            evt.value\n        );\n    }\n\n   \n}\n",
-  "sourcePath": "/Users/orie/OR13/transmute/packages/transmute-eventstore/contracts/EventStoreLib.sol",
+  "bytecode": "0x610473610030600b82828239805160001a6073146000811461002057610022565bfe5b5030600052607381538281f3007300000000000000000000000000000000000000003014608060405260043610610063576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680630d93ee9c146100685780631b68f091146100c5575b600080fd5b81801561007457600080fd5b506100af6004803603810190808035906020019092919080356000191690602001909291908035600019169060200190929190505050610154565b6040518082815260200191505060405180910390f35b6100ed600480360381019080803590602001909291908035906020019092919050505061031d565b604051808581526020018473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018360001916600019168152602001826000191660001916815260200194505050505060405180910390f35b600061015e610402565b846000018054905081600001818152505033816020019073ffffffffffffffffffffffffffffffffffffffff16908173ffffffffffffffffffffffffffffffffffffffff1681525050838160400190600019169081600019168152505082816060019060001916908160001916815250507f4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb648160000151826020015183604001518460600151604051808581526020018473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018360001916600019168152602001826000191660001916815260200194505050505060405180910390a18460000181908060018154018082558091505090600182039060005260206000209060040201600090919290919091506000820151816000015560208201518160010160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550604082015181600201906000191690556060820151816003019060001916905550505080600001519150509392505050565b60008060008061032b610402565b866000018681548110151561033c57fe5b906000526020600020906004020160806040519081016040529081600082015481526020016001820160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200160028201546000191660001916815260200160038201546000191660001916815250509050806000015181602001518260400151836060015194509450945094505092959194509250565b60806040519081016040528060008152602001600073ffffffffffffffffffffffffffffffffffffffff168152602001600080191681526020016000801916815250905600a165627a7a72305820e63910c72e098db22938a1dd2a11ecd3784484e86948a306b46f71c0cba275c70029",
+  "deployedBytecode": "0x7300000000000000000000000000000000000000003014608060405260043610610063576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680630d93ee9c146100685780631b68f091146100c5575b600080fd5b81801561007457600080fd5b506100af6004803603810190808035906020019092919080356000191690602001909291908035600019169060200190929190505050610154565b6040518082815260200191505060405180910390f35b6100ed600480360381019080803590602001909291908035906020019092919050505061031d565b604051808581526020018473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018360001916600019168152602001826000191660001916815260200194505050505060405180910390f35b600061015e610402565b846000018054905081600001818152505033816020019073ffffffffffffffffffffffffffffffffffffffff16908173ffffffffffffffffffffffffffffffffffffffff1681525050838160400190600019169081600019168152505082816060019060001916908160001916815250507f4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb648160000151826020015183604001518460600151604051808581526020018473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018360001916600019168152602001826000191660001916815260200194505050505060405180910390a18460000181908060018154018082558091505090600182039060005260206000209060040201600090919290919091506000820151816000015560208201518160010160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550604082015181600201906000191690556060820151816003019060001916905550505080600001519150509392505050565b60008060008061032b610402565b866000018681548110151561033c57fe5b906000526020600020906004020160806040519081016040529081600082015481526020016001820160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200160028201546000191660001916815260200160038201546000191660001916815250509050806000015181602001518260400151836060015194509450945094505092959194509250565b60806040519081016040528060008152602001600073ffffffffffffffffffffffffffffffffffffffff168152602001600080191681526020016000801916815250905600a165627a7a72305820e63910c72e098db22938a1dd2a11ecd3784484e86948a306b46f71c0cba275c70029",
+  "sourceMap": "26:1102:2:-;;132:2:-1;166:7;155:9;146:7;137:37;252:7;246:14;243:1;238:23;232:4;229:33;270:1;265:20;;;;222:63;;265:20;274:9;222:63;;298:9;295:1;288:20;328:4;319:7;311:22;352:7;343;336:24",
+  "deployedSourceMap": "26:1102:2:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;384:426;;8:9:-1;5:2;;;30:1;27;20:12;5:2;384:426:2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;816:307;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;384:426;504:4;520:31;;:::i;:::-;573:4;:11;;:18;;;;561:3;:9;;:30;;;;;614:10;601:3;:10;;:23;;;;;;;;;;;644:3;634;:7;;:13;;;;;;;;;;;;;669:5;657:3;:9;;:17;;;;;;;;;;;;;689:57;704:3;:9;;;715:3;:10;;;727:3;:7;;;736:3;:9;;;689:57;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;756:4;:11;;773:3;756:21;;39:1:-1;33:3;27:10;23:18;57:10;52:3;45:23;79:10;72:17;;0:93;756:21:2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;794:3;:9;;;787:16;;384:426;;;;;;:::o;816:307::-;902:4;908:7;917;926;946:31;;:::i;:::-;980:4;:11;;992:5;980:18;;;;;;;;;;;;;;;;;;;;946:52;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1029:3;:9;;;1052:3;:10;;;1076:3;:7;;;1097:3;:9;;;1008:108;;;;;;;;816:307;;;;;;;;:::o;26:1102::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o",
+  "source": "pragma solidity ^0.4.19;\n\nlibrary EventStoreLib {\n\n    event TransmuteEvent(\n        uint index,\n        address sender,\n        bytes32 key,\n        bytes32 value\n    );\n\n    struct TransmuteEventStruct {\n        uint index;\n        address sender;\n        bytes32 key;  \n        bytes32 value; \n    }\n\n    struct TransmuteStorage {\n        TransmuteEventStruct[] events;\n    }\n\n    function write(\n        TransmuteStorage storage self,\n        bytes32 key,\n        bytes32 value\n    ) public returns (uint) {\n        TransmuteEventStruct memory evt;\n        evt.index = self.events.length;\n        evt.sender = msg.sender;\n        evt.key = key;\n        evt.value = value;\n        emit TransmuteEvent(evt.index, evt.sender, evt.key, evt.value);\n        self.events.push(evt);\n        return evt.index;\n    }\n\n    function read(TransmuteStorage storage self, uint index) public constant\n    returns (uint, address, bytes32, bytes32 ) {\n        TransmuteEventStruct memory evt = self.events[index];\n        return (\n            evt.index,\n            evt.sender,\n            evt.key,\n            evt.value\n        );\n    }   \n}\n",
+  "sourcePath": "/Users/orie/Desktop/Transmute/transmute/packages/transmute-framework/contracts/EventStoreLib.sol",
   "ast": {
-    "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-eventstore/contracts/EventStoreLib.sol",
+    "absolutePath": "/Users/orie/Desktop/Transmute/transmute/packages/transmute-framework/contracts/EventStoreLib.sol",
     "exportedSymbols": {
       "EventStoreLib": [
-        209
+        284
       ]
     },
-    "id": 210,
+    "id": 285,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 88,
+        "id": 163,
         "literals": [
           "solidity",
           "^",
@@ -116,7 +116,7 @@
           ".19"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:24:1"
+        "src": "0:24:2"
       },
       {
         "baseContracts": [],
@@ -124,30 +124,31 @@
         "contractKind": "library",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 209,
+        "id": 284,
         "linearizedBaseContracts": [
-          209
+          284
         ],
         "name": "EventStoreLib",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "anonymous": false,
-            "id": 98,
+            "documentation": null,
+            "id": 173,
             "name": "TransmuteEvent",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 97,
+              "id": 172,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 90,
+                  "id": 165,
                   "indexed": false,
                   "name": "index",
                   "nodeType": "VariableDeclaration",
-                  "scope": 98,
-                  "src": "85:10:1",
+                  "scope": 173,
+                  "src": "85:10:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -155,10 +156,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 89,
+                    "id": 164,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "85:4:1",
+                    "src": "85:4:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -169,12 +170,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 92,
+                  "id": 167,
                   "indexed": false,
                   "name": "sender",
                   "nodeType": "VariableDeclaration",
-                  "scope": 98,
-                  "src": "105:14:1",
+                  "scope": 173,
+                  "src": "105:14:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -182,10 +183,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 91,
+                    "id": 166,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "105:7:1",
+                    "src": "105:7:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -196,12 +197,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 94,
+                  "id": 169,
                   "indexed": false,
                   "name": "key",
                   "nodeType": "VariableDeclaration",
-                  "scope": 98,
-                  "src": "129:11:1",
+                  "scope": 173,
+                  "src": "129:11:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -209,10 +210,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 93,
+                    "id": 168,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "129:7:1",
+                    "src": "129:7:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -223,12 +224,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 96,
+                  "id": 171,
                   "indexed": false,
                   "name": "value",
                   "nodeType": "VariableDeclaration",
-                  "scope": 98,
-                  "src": "150:13:1",
+                  "scope": 173,
+                  "src": "150:13:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -236,10 +237,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 95,
+                    "id": 170,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "150:7:1",
+                    "src": "150:7:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -249,21 +250,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "75:94:1"
+              "src": "75:94:2"
             },
-            "src": "55:115:1"
+            "src": "55:115:2"
           },
           {
             "canonicalName": "EventStoreLib.TransmuteEventStruct",
-            "id": 107,
+            "id": 182,
             "members": [
               {
                 "constant": false,
-                "id": 100,
+                "id": 175,
                 "name": "index",
                 "nodeType": "VariableDeclaration",
-                "scope": 107,
-                "src": "214:10:1",
+                "scope": 182,
+                "src": "214:10:2",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -271,10 +272,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 99,
+                  "id": 174,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
-                  "src": "214:4:1",
+                  "src": "214:4:2",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -285,11 +286,11 @@
               },
               {
                 "constant": false,
-                "id": 102,
+                "id": 177,
                 "name": "sender",
                 "nodeType": "VariableDeclaration",
-                "scope": 107,
-                "src": "234:14:1",
+                "scope": 182,
+                "src": "234:14:2",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -297,10 +298,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 101,
+                  "id": 176,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "234:7:1",
+                  "src": "234:7:2",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
                     "typeString": "address"
@@ -311,11 +312,11 @@
               },
               {
                 "constant": false,
-                "id": 104,
+                "id": 179,
                 "name": "key",
                 "nodeType": "VariableDeclaration",
-                "scope": 107,
-                "src": "258:11:1",
+                "scope": 182,
+                "src": "258:11:2",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -323,10 +324,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 103,
+                  "id": 178,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "258:7:1",
+                  "src": "258:7:2",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -337,11 +338,11 @@
               },
               {
                 "constant": false,
-                "id": 106,
+                "id": 181,
                 "name": "value",
                 "nodeType": "VariableDeclaration",
-                "scope": 107,
-                "src": "281:13:1",
+                "scope": 182,
+                "src": "281:13:2",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -349,10 +350,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 105,
+                  "id": 180,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "281:7:1",
+                  "src": "281:7:2",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -364,47 +365,47 @@
             ],
             "name": "TransmuteEventStruct",
             "nodeType": "StructDefinition",
-            "scope": 209,
-            "src": "176:126:1",
+            "scope": 284,
+            "src": "176:126:2",
             "visibility": "public"
           },
           {
             "canonicalName": "EventStoreLib.TransmuteStorage",
-            "id": 111,
+            "id": 186,
             "members": [
               {
                 "constant": false,
-                "id": 110,
+                "id": 185,
                 "name": "events",
                 "nodeType": "VariableDeclaration",
-                "scope": 111,
-                "src": "342:29:1",
+                "scope": 186,
+                "src": "342:29:2",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_array$_t_struct$_TransmuteEventStruct_$107_storage_$dyn_storage_ptr",
-                  "typeString": "struct EventStoreLib.TransmuteEventStruct storage ref[] storage pointer"
+                  "typeIdentifier": "t_array$_t_struct$_TransmuteEventStruct_$182_storage_$dyn_storage_ptr",
+                  "typeString": "struct EventStoreLib.TransmuteEventStruct[]"
                 },
                 "typeName": {
                   "baseType": {
                     "contractScope": null,
-                    "id": 108,
+                    "id": 183,
                     "name": "TransmuteEventStruct",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 107,
-                    "src": "342:20:1",
+                    "referencedDeclaration": 182,
+                    "src": "342:20:2",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_storage_ptr",
-                      "typeString": "struct EventStoreLib.TransmuteEventStruct storage pointer"
+                      "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_storage_ptr",
+                      "typeString": "struct EventStoreLib.TransmuteEventStruct"
                     }
                   },
-                  "id": 109,
+                  "id": 184,
                   "length": null,
                   "nodeType": "ArrayTypeName",
-                  "src": "342:22:1",
+                  "src": "342:22:2",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_TransmuteEventStruct_$107_storage_$dyn_storage_ptr",
-                    "typeString": "struct EventStoreLib.TransmuteEventStruct storage ref[] storage pointer"
+                    "typeIdentifier": "t_array$_t_struct$_TransmuteEventStruct_$182_storage_$dyn_storage_ptr",
+                    "typeString": "struct EventStoreLib.TransmuteEventStruct[]"
                   }
                 },
                 "value": null,
@@ -413,57 +414,57 @@
             ],
             "name": "TransmuteStorage",
             "nodeType": "StructDefinition",
-            "scope": 209,
-            "src": "308:70:1",
+            "scope": 284,
+            "src": "308:70:2",
             "visibility": "public"
           },
           {
             "body": {
-              "id": 174,
+              "id": 249,
               "nodeType": "Block",
-              "src": "510:295:1",
+              "src": "510:300:2",
               "statements": [
                 {
                   "assignments": [],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 123,
+                      "id": 198,
                       "name": "evt",
                       "nodeType": "VariableDeclaration",
-                      "scope": 175,
-                      "src": "520:31:1",
+                      "scope": 250,
+                      "src": "520:31:2",
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
-                        "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
+                        "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
+                        "typeString": "struct EventStoreLib.TransmuteEventStruct"
                       },
                       "typeName": {
                         "contractScope": null,
-                        "id": 122,
+                        "id": 197,
                         "name": "TransmuteEventStruct",
                         "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 107,
-                        "src": "520:20:1",
+                        "referencedDeclaration": 182,
+                        "src": "520:20:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_storage_ptr",
-                          "typeString": "struct EventStoreLib.TransmuteEventStruct storage pointer"
+                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_storage_ptr",
+                          "typeString": "struct EventStoreLib.TransmuteEventStruct"
                         }
                       },
                       "value": null,
                       "visibility": "internal"
                     }
                   ],
-                  "id": 124,
+                  "id": 199,
                   "initialValue": null,
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "520:31:1"
+                  "src": "520:31:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 131,
+                    "id": 206,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -472,26 +473,26 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 125,
+                        "id": 200,
                         "name": "evt",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 123,
-                        "src": "561:3:1",
+                        "referencedDeclaration": 198,
+                        "src": "561:3:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                           "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                         }
                       },
-                      "id": 127,
+                      "id": 202,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "index",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 100,
-                      "src": "561:9:1",
+                      "referencedDeclaration": 175,
+                      "src": "561:9:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -505,32 +506,32 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 128,
+                          "id": 203,
                           "name": "self",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 113,
-                          "src": "573:4:1",
+                          "referencedDeclaration": 188,
+                          "src": "573:4:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_TransmuteStorage_$111_storage_ptr",
+                            "typeIdentifier": "t_struct$_TransmuteStorage_$186_storage_ptr",
                             "typeString": "struct EventStoreLib.TransmuteStorage storage pointer"
                           }
                         },
-                        "id": 129,
+                        "id": 204,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "events",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 110,
-                        "src": "573:11:1",
+                        "referencedDeclaration": 185,
+                        "src": "573:11:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_array$_t_struct$_TransmuteEventStruct_$107_storage_$dyn_storage",
+                          "typeIdentifier": "t_array$_t_struct$_TransmuteEventStruct_$182_storage_$dyn_storage",
                           "typeString": "struct EventStoreLib.TransmuteEventStruct storage ref[] storage ref"
                         }
                       },
-                      "id": 130,
+                      "id": 205,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
@@ -538,26 +539,26 @@
                       "memberName": "length",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": null,
-                      "src": "573:18:1",
+                      "src": "573:18:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "src": "561:30:1",
+                    "src": "561:30:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 132,
+                  "id": 207,
                   "nodeType": "ExpressionStatement",
-                  "src": "561:30:1"
+                  "src": "561:30:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 138,
+                    "id": 213,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -566,26 +567,26 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 133,
+                        "id": 208,
                         "name": "evt",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 123,
-                        "src": "601:3:1",
+                        "referencedDeclaration": 198,
+                        "src": "601:3:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                           "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                         }
                       },
-                      "id": 135,
+                      "id": 210,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "sender",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 102,
-                      "src": "601:10:1",
+                      "referencedDeclaration": 177,
+                      "src": "601:10:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
@@ -597,18 +598,18 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 136,
+                        "id": 211,
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 221,
-                        "src": "614:3:1",
+                        "referencedDeclaration": 299,
+                        "src": "614:3:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
                           "typeString": "msg"
                         }
                       },
-                      "id": 137,
+                      "id": 212,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -616,26 +617,26 @@
                       "memberName": "sender",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": null,
-                      "src": "614:10:1",
+                      "src": "614:10:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
                       }
                     },
-                    "src": "601:23:1",
+                    "src": "601:23:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
                     }
                   },
-                  "id": 139,
+                  "id": 214,
                   "nodeType": "ExpressionStatement",
-                  "src": "601:23:1"
+                  "src": "601:23:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 144,
+                    "id": 219,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -644,26 +645,26 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 140,
+                        "id": 215,
                         "name": "evt",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 123,
-                        "src": "634:3:1",
+                        "referencedDeclaration": 198,
+                        "src": "634:3:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                           "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                         }
                       },
-                      "id": 142,
+                      "id": 217,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "key",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 104,
-                      "src": "634:7:1",
+                      "referencedDeclaration": 179,
+                      "src": "634:7:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
                         "typeString": "bytes32"
@@ -673,31 +674,31 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 143,
+                      "id": 218,
                       "name": "key",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 115,
-                      "src": "644:3:1",
+                      "referencedDeclaration": 190,
+                      "src": "644:3:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
                         "typeString": "bytes32"
                       }
                     },
-                    "src": "634:13:1",
+                    "src": "634:13:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
                     }
                   },
-                  "id": 145,
+                  "id": 220,
                   "nodeType": "ExpressionStatement",
-                  "src": "634:13:1"
+                  "src": "634:13:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 150,
+                    "id": 225,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -706,26 +707,26 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 146,
+                        "id": 221,
                         "name": "evt",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 123,
-                        "src": "657:3:1",
+                        "referencedDeclaration": 198,
+                        "src": "657:3:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                           "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                         }
                       },
-                      "id": 148,
+                      "id": 223,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "value",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 106,
-                      "src": "657:9:1",
+                      "referencedDeclaration": 181,
+                      "src": "657:9:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
                         "typeString": "bytes32"
@@ -735,55 +736,55 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 149,
+                      "id": 224,
                       "name": "value",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 117,
-                      "src": "669:5:1",
+                      "referencedDeclaration": 192,
+                      "src": "669:5:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
                         "typeString": "bytes32"
                       }
                     },
-                    "src": "657:17:1",
+                    "src": "657:17:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
                     }
                   },
-                  "id": 151,
+                  "id": 226,
                   "nodeType": "ExpressionStatement",
-                  "src": "657:17:1"
+                  "src": "657:17:2"
                 },
                 {
-                  "expression": {
+                  "eventCall": {
                     "argumentTypes": null,
                     "arguments": [
                       {
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 153,
+                          "id": 228,
                           "name": "evt",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 123,
-                          "src": "699:3:1",
+                          "referencedDeclaration": 198,
+                          "src": "704:3:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                             "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                           }
                         },
-                        "id": 154,
+                        "id": 229,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "index",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 100,
-                        "src": "699:9:1",
+                        "referencedDeclaration": 175,
+                        "src": "704:9:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -793,26 +794,26 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 155,
+                          "id": 230,
                           "name": "evt",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 123,
-                          "src": "710:3:1",
+                          "referencedDeclaration": 198,
+                          "src": "715:3:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                             "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                           }
                         },
-                        "id": 156,
+                        "id": 231,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "sender",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 102,
-                        "src": "710:10:1",
+                        "referencedDeclaration": 177,
+                        "src": "715:10:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -822,26 +823,26 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 157,
+                          "id": 232,
                           "name": "evt",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 123,
-                          "src": "722:3:1",
+                          "referencedDeclaration": 198,
+                          "src": "727:3:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                             "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                           }
                         },
-                        "id": 158,
+                        "id": 233,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "key",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 104,
-                        "src": "722:7:1",
+                        "referencedDeclaration": 179,
+                        "src": "727:7:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
                           "typeString": "bytes32"
@@ -851,26 +852,26 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 159,
+                          "id": 234,
                           "name": "evt",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 123,
-                          "src": "731:3:1",
+                          "referencedDeclaration": 198,
+                          "src": "736:3:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                             "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                           }
                         },
-                        "id": 160,
+                        "id": 235,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "value",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 106,
-                        "src": "731:9:1",
+                        "referencedDeclaration": 181,
+                        "src": "736:9:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
                           "typeString": "bytes32"
@@ -896,18 +897,18 @@
                           "typeString": "bytes32"
                         }
                       ],
-                      "id": 152,
+                      "id": 227,
                       "name": "TransmuteEvent",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 98,
-                      "src": "684:14:1",
+                      "referencedDeclaration": 173,
+                      "src": "689:14:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_uint256_$_t_address_$_t_bytes32_$_t_bytes32_$returns$__$",
                         "typeString": "function (uint256,address,bytes32,bytes32)"
                       }
                     },
-                    "id": 161,
+                    "id": 236,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -915,15 +916,15 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "684:57:1",
+                    "src": "689:57:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 162,
-                  "nodeType": "ExpressionStatement",
-                  "src": "684:57:1"
+                  "id": 237,
+                  "nodeType": "EmitStatement",
+                  "src": "684:62:2"
                 },
                 {
                   "expression": {
@@ -931,14 +932,14 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 168,
+                        "id": 243,
                         "name": "evt",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 123,
-                        "src": "768:3:1",
+                        "referencedDeclaration": 198,
+                        "src": "773:3:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                           "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                         }
                       }
@@ -946,7 +947,7 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                           "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                         }
                       ],
@@ -954,32 +955,32 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 163,
+                          "id": 238,
                           "name": "self",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 113,
-                          "src": "751:4:1",
+                          "referencedDeclaration": 188,
+                          "src": "756:4:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_TransmuteStorage_$111_storage_ptr",
+                            "typeIdentifier": "t_struct$_TransmuteStorage_$186_storage_ptr",
                             "typeString": "struct EventStoreLib.TransmuteStorage storage pointer"
                           }
                         },
-                        "id": 166,
+                        "id": 241,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "events",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 110,
-                        "src": "751:11:1",
+                        "referencedDeclaration": 185,
+                        "src": "756:11:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_array$_t_struct$_TransmuteEventStruct_$107_storage_$dyn_storage",
+                          "typeIdentifier": "t_array$_t_struct$_TransmuteEventStruct_$182_storage_$dyn_storage",
                           "typeString": "struct EventStoreLib.TransmuteEventStruct storage ref[] storage ref"
                         }
                       },
-                      "id": 167,
+                      "id": 242,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -987,13 +988,13 @@
                       "memberName": "push",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": null,
-                      "src": "751:16:1",
+                      "src": "756:16:2",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_arraypush_nonpayable$_t_struct$_TransmuteEventStruct_$107_storage_$returns$_t_uint256_$",
+                        "typeIdentifier": "t_function_arraypush_nonpayable$_t_struct$_TransmuteEventStruct_$182_storage_$returns$_t_uint256_$",
                         "typeString": "function (struct EventStoreLib.TransmuteEventStruct storage ref) returns (uint256)"
                       }
                     },
-                    "id": 169,
+                    "id": 244,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1001,54 +1002,55 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "751:21:1",
+                    "src": "756:21:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 170,
+                  "id": 245,
                   "nodeType": "ExpressionStatement",
-                  "src": "751:21:1"
+                  "src": "756:21:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
                     "expression": {
                       "argumentTypes": null,
-                      "id": 171,
+                      "id": 246,
                       "name": "evt",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 123,
-                      "src": "789:3:1",
+                      "referencedDeclaration": 198,
+                      "src": "794:3:2",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                        "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                         "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                       }
                     },
-                    "id": 172,
+                    "id": 247,
                     "isConstant": false,
                     "isLValue": true,
                     "isPure": false,
                     "lValueRequested": false,
                     "memberName": "index",
                     "nodeType": "MemberAccess",
-                    "referencedDeclaration": 100,
-                    "src": "789:9:1",
+                    "referencedDeclaration": 175,
+                    "src": "794:9:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 121,
-                  "id": 173,
+                  "functionReturnParameters": 196,
+                  "id": 248,
                   "nodeType": "Return",
-                  "src": "782:16:1"
+                  "src": "787:16:2"
                 }
               ]
             },
-            "id": 175,
+            "documentation": null,
+            "id": 250,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -1056,32 +1058,32 @@
             "name": "write",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 118,
+              "id": 193,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 113,
+                  "id": 188,
                   "name": "self",
                   "nodeType": "VariableDeclaration",
-                  "scope": 175,
-                  "src": "408:29:1",
+                  "scope": 250,
+                  "src": "408:29:2",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_TransmuteStorage_$111_storage_ptr",
-                    "typeString": "struct EventStoreLib.TransmuteStorage storage pointer"
+                    "typeIdentifier": "t_struct$_TransmuteStorage_$186_storage_ptr",
+                    "typeString": "struct EventStoreLib.TransmuteStorage"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 112,
+                    "id": 187,
                     "name": "TransmuteStorage",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 111,
-                    "src": "408:16:1",
+                    "referencedDeclaration": 186,
+                    "src": "408:16:2",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_TransmuteStorage_$111_storage_ptr",
-                      "typeString": "struct EventStoreLib.TransmuteStorage storage pointer"
+                      "typeIdentifier": "t_struct$_TransmuteStorage_$186_storage_ptr",
+                      "typeString": "struct EventStoreLib.TransmuteStorage"
                     }
                   },
                   "value": null,
@@ -1089,11 +1091,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 115,
+                  "id": 190,
                   "name": "key",
                   "nodeType": "VariableDeclaration",
-                  "scope": 175,
-                  "src": "447:11:1",
+                  "scope": 250,
+                  "src": "447:11:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1101,10 +1103,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 114,
+                    "id": 189,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "447:7:1",
+                    "src": "447:7:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -1115,11 +1117,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 117,
+                  "id": 192,
                   "name": "value",
                   "nodeType": "VariableDeclaration",
-                  "scope": 175,
-                  "src": "468:13:1",
+                  "scope": 250,
+                  "src": "468:13:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1127,10 +1129,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 116,
+                    "id": 191,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "468:7:1",
+                    "src": "468:7:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -1140,20 +1142,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "398:89:1"
+              "src": "398:89:2"
             },
             "payable": false,
             "returnParameters": {
-              "id": 121,
+              "id": 196,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 120,
+                  "id": 195,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 175,
-                  "src": "504:4:1",
+                  "scope": 250,
+                  "src": "504:4:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1161,10 +1163,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 119,
+                    "id": 194,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "504:4:1",
+                    "src": "504:4:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1174,95 +1176,95 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "503:6:1"
+              "src": "503:6:2"
             },
-            "scope": 209,
-            "src": "384:421:1",
+            "scope": 284,
+            "src": "384:426:2",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 207,
+              "id": 282,
               "nodeType": "Block",
-              "src": "931:187:1",
+              "src": "936:187:2",
               "statements": [
                 {
                   "assignments": [
-                    191
+                    266
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 191,
+                      "id": 266,
                       "name": "evt",
                       "nodeType": "VariableDeclaration",
-                      "scope": 208,
-                      "src": "941:31:1",
+                      "scope": 283,
+                      "src": "946:31:2",
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
-                        "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
+                        "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
+                        "typeString": "struct EventStoreLib.TransmuteEventStruct"
                       },
                       "typeName": {
                         "contractScope": null,
-                        "id": 190,
+                        "id": 265,
                         "name": "TransmuteEventStruct",
                         "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 107,
-                        "src": "941:20:1",
+                        "referencedDeclaration": 182,
+                        "src": "946:20:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_storage_ptr",
-                          "typeString": "struct EventStoreLib.TransmuteEventStruct storage pointer"
+                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_storage_ptr",
+                          "typeString": "struct EventStoreLib.TransmuteEventStruct"
                         }
                       },
                       "value": null,
                       "visibility": "internal"
                     }
                   ],
-                  "id": 196,
+                  "id": 271,
                   "initialValue": {
                     "argumentTypes": null,
                     "baseExpression": {
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 192,
+                        "id": 267,
                         "name": "self",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 177,
-                        "src": "975:4:1",
+                        "referencedDeclaration": 252,
+                        "src": "980:4:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_TransmuteStorage_$111_storage_ptr",
+                          "typeIdentifier": "t_struct$_TransmuteStorage_$186_storage_ptr",
                           "typeString": "struct EventStoreLib.TransmuteStorage storage pointer"
                         }
                       },
-                      "id": 193,
+                      "id": 268,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "events",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 110,
-                      "src": "975:11:1",
+                      "referencedDeclaration": 185,
+                      "src": "980:11:2",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_array$_t_struct$_TransmuteEventStruct_$107_storage_$dyn_storage",
+                        "typeIdentifier": "t_array$_t_struct$_TransmuteEventStruct_$182_storage_$dyn_storage",
                         "typeString": "struct EventStoreLib.TransmuteEventStruct storage ref[] storage ref"
                       }
                     },
-                    "id": 195,
+                    "id": 270,
                     "indexExpression": {
                       "argumentTypes": null,
-                      "id": 194,
+                      "id": 269,
                       "name": "index",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 179,
-                      "src": "987:5:1",
+                      "referencedDeclaration": 254,
+                      "src": "992:5:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -1273,14 +1275,14 @@
                     "isPure": false,
                     "lValueRequested": false,
                     "nodeType": "IndexAccess",
-                    "src": "975:18:1",
+                    "src": "980:18:2",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_storage",
+                      "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_storage",
                       "typeString": "struct EventStoreLib.TransmuteEventStruct storage ref"
                     }
                   },
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "941:52:1"
+                  "src": "946:52:2"
                 },
                 {
                   "expression": {
@@ -1290,26 +1292,26 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 197,
+                          "id": 272,
                           "name": "evt",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 191,
-                          "src": "1024:3:1",
+                          "referencedDeclaration": 266,
+                          "src": "1029:3:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                             "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                           }
                         },
-                        "id": 198,
+                        "id": 273,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "index",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 100,
-                        "src": "1024:9:1",
+                        "referencedDeclaration": 175,
+                        "src": "1029:9:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -1319,26 +1321,26 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 199,
+                          "id": 274,
                           "name": "evt",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 191,
-                          "src": "1047:3:1",
+                          "referencedDeclaration": 266,
+                          "src": "1052:3:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                             "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                           }
                         },
-                        "id": 200,
+                        "id": 275,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "sender",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 102,
-                        "src": "1047:10:1",
+                        "referencedDeclaration": 177,
+                        "src": "1052:10:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -1348,26 +1350,26 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 201,
+                          "id": 276,
                           "name": "evt",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 191,
-                          "src": "1071:3:1",
+                          "referencedDeclaration": 266,
+                          "src": "1076:3:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                             "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                           }
                         },
-                        "id": 202,
+                        "id": 277,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "key",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 104,
-                        "src": "1071:7:1",
+                        "referencedDeclaration": 179,
+                        "src": "1076:7:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
                           "typeString": "bytes32"
@@ -1377,53 +1379,54 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 203,
+                          "id": 278,
                           "name": "evt",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 191,
-                          "src": "1092:3:1",
+                          "referencedDeclaration": 266,
+                          "src": "1097:3:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                             "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                           }
                         },
-                        "id": 204,
+                        "id": 279,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "value",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 106,
-                        "src": "1092:9:1",
+                        "referencedDeclaration": 181,
+                        "src": "1097:9:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
                           "typeString": "bytes32"
                         }
                       }
                     ],
-                    "id": 205,
+                    "id": 280,
                     "isConstant": false,
                     "isInlineArray": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "nodeType": "TupleExpression",
-                    "src": "1010:101:1",
+                    "src": "1015:101:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$_t_uint256_$_t_address_$_t_bytes32_$_t_bytes32_$",
                       "typeString": "tuple(uint256,address,bytes32,bytes32)"
                     }
                   },
-                  "functionReturnParameters": 189,
-                  "id": 206,
+                  "functionReturnParameters": 264,
+                  "id": 281,
                   "nodeType": "Return",
-                  "src": "1003:108:1"
+                  "src": "1008:108:2"
                 }
               ]
             },
-            "id": 208,
+            "documentation": null,
+            "id": 283,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -1431,32 +1434,32 @@
             "name": "read",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 180,
+              "id": 255,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 177,
+                  "id": 252,
                   "name": "self",
                   "nodeType": "VariableDeclaration",
-                  "scope": 208,
-                  "src": "825:29:1",
+                  "scope": 283,
+                  "src": "830:29:2",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_TransmuteStorage_$111_storage_ptr",
-                    "typeString": "struct EventStoreLib.TransmuteStorage storage pointer"
+                    "typeIdentifier": "t_struct$_TransmuteStorage_$186_storage_ptr",
+                    "typeString": "struct EventStoreLib.TransmuteStorage"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 176,
+                    "id": 251,
                     "name": "TransmuteStorage",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 111,
-                    "src": "825:16:1",
+                    "referencedDeclaration": 186,
+                    "src": "830:16:2",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_TransmuteStorage_$111_storage_ptr",
-                      "typeString": "struct EventStoreLib.TransmuteStorage storage pointer"
+                      "typeIdentifier": "t_struct$_TransmuteStorage_$186_storage_ptr",
+                      "typeString": "struct EventStoreLib.TransmuteStorage"
                     }
                   },
                   "value": null,
@@ -1464,11 +1467,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 179,
+                  "id": 254,
                   "name": "index",
                   "nodeType": "VariableDeclaration",
-                  "scope": 208,
-                  "src": "856:10:1",
+                  "scope": 283,
+                  "src": "861:10:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1476,10 +1479,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 178,
+                    "id": 253,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "856:4:1",
+                    "src": "861:4:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1489,20 +1492,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "824:43:1"
+              "src": "829:43:2"
             },
             "payable": false,
             "returnParameters": {
-              "id": 189,
+              "id": 264,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 182,
+                  "id": 257,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 208,
-                  "src": "897:4:1",
+                  "scope": 283,
+                  "src": "902:4:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1510,10 +1513,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 181,
+                    "id": 256,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "897:4:1",
+                    "src": "902:4:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1524,11 +1527,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 184,
+                  "id": 259,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 208,
-                  "src": "903:7:1",
+                  "scope": 283,
+                  "src": "908:7:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1536,10 +1539,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 183,
+                    "id": 258,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "903:7:1",
+                    "src": "908:7:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -1550,11 +1553,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 186,
+                  "id": 261,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 208,
-                  "src": "912:7:1",
+                  "scope": 283,
+                  "src": "917:7:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1562,10 +1565,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 185,
+                    "id": 260,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "912:7:1",
+                    "src": "917:7:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -1576,11 +1579,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 188,
+                  "id": 263,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 208,
-                  "src": "921:7:1",
+                  "scope": 283,
+                  "src": "926:7:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1588,10 +1591,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 187,
+                    "id": 262,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "921:7:1",
+                    "src": "926:7:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -1601,33 +1604,33 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "896:34:1"
+              "src": "901:34:2"
             },
-            "scope": 209,
-            "src": "811:307:1",
+            "scope": 284,
+            "src": "816:307:2",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 210,
-        "src": "26:1099:1"
+        "scope": 285,
+        "src": "26:1102:2"
       }
     ],
-    "src": "0:1126:1"
+    "src": "0:1129:2"
   },
   "legacyAST": {
-    "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-eventstore/contracts/EventStoreLib.sol",
+    "absolutePath": "/Users/orie/Desktop/Transmute/transmute/packages/transmute-framework/contracts/EventStoreLib.sol",
     "exportedSymbols": {
       "EventStoreLib": [
-        209
+        284
       ]
     },
-    "id": 210,
+    "id": 285,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 88,
+        "id": 163,
         "literals": [
           "solidity",
           "^",
@@ -1635,7 +1638,7 @@
           ".19"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:24:1"
+        "src": "0:24:2"
       },
       {
         "baseContracts": [],
@@ -1643,30 +1646,31 @@
         "contractKind": "library",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 209,
+        "id": 284,
         "linearizedBaseContracts": [
-          209
+          284
         ],
         "name": "EventStoreLib",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "anonymous": false,
-            "id": 98,
+            "documentation": null,
+            "id": 173,
             "name": "TransmuteEvent",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 97,
+              "id": 172,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 90,
+                  "id": 165,
                   "indexed": false,
                   "name": "index",
                   "nodeType": "VariableDeclaration",
-                  "scope": 98,
-                  "src": "85:10:1",
+                  "scope": 173,
+                  "src": "85:10:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1674,10 +1678,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 89,
+                    "id": 164,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "85:4:1",
+                    "src": "85:4:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1688,12 +1692,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 92,
+                  "id": 167,
                   "indexed": false,
                   "name": "sender",
                   "nodeType": "VariableDeclaration",
-                  "scope": 98,
-                  "src": "105:14:1",
+                  "scope": 173,
+                  "src": "105:14:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1701,10 +1705,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 91,
+                    "id": 166,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "105:7:1",
+                    "src": "105:7:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -1715,12 +1719,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 94,
+                  "id": 169,
                   "indexed": false,
                   "name": "key",
                   "nodeType": "VariableDeclaration",
-                  "scope": 98,
-                  "src": "129:11:1",
+                  "scope": 173,
+                  "src": "129:11:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1728,10 +1732,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 93,
+                    "id": 168,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "129:7:1",
+                    "src": "129:7:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -1742,12 +1746,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 96,
+                  "id": 171,
                   "indexed": false,
                   "name": "value",
                   "nodeType": "VariableDeclaration",
-                  "scope": 98,
-                  "src": "150:13:1",
+                  "scope": 173,
+                  "src": "150:13:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1755,10 +1759,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 95,
+                    "id": 170,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "150:7:1",
+                    "src": "150:7:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -1768,21 +1772,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "75:94:1"
+              "src": "75:94:2"
             },
-            "src": "55:115:1"
+            "src": "55:115:2"
           },
           {
             "canonicalName": "EventStoreLib.TransmuteEventStruct",
-            "id": 107,
+            "id": 182,
             "members": [
               {
                 "constant": false,
-                "id": 100,
+                "id": 175,
                 "name": "index",
                 "nodeType": "VariableDeclaration",
-                "scope": 107,
-                "src": "214:10:1",
+                "scope": 182,
+                "src": "214:10:2",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1790,10 +1794,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 99,
+                  "id": 174,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
-                  "src": "214:4:1",
+                  "src": "214:4:2",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -1804,11 +1808,11 @@
               },
               {
                 "constant": false,
-                "id": 102,
+                "id": 177,
                 "name": "sender",
                 "nodeType": "VariableDeclaration",
-                "scope": 107,
-                "src": "234:14:1",
+                "scope": 182,
+                "src": "234:14:2",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1816,10 +1820,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 101,
+                  "id": 176,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "234:7:1",
+                  "src": "234:7:2",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
                     "typeString": "address"
@@ -1830,11 +1834,11 @@
               },
               {
                 "constant": false,
-                "id": 104,
+                "id": 179,
                 "name": "key",
                 "nodeType": "VariableDeclaration",
-                "scope": 107,
-                "src": "258:11:1",
+                "scope": 182,
+                "src": "258:11:2",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1842,10 +1846,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 103,
+                  "id": 178,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "258:7:1",
+                  "src": "258:7:2",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -1856,11 +1860,11 @@
               },
               {
                 "constant": false,
-                "id": 106,
+                "id": 181,
                 "name": "value",
                 "nodeType": "VariableDeclaration",
-                "scope": 107,
-                "src": "281:13:1",
+                "scope": 182,
+                "src": "281:13:2",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1868,10 +1872,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 105,
+                  "id": 180,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "281:7:1",
+                  "src": "281:7:2",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -1883,47 +1887,47 @@
             ],
             "name": "TransmuteEventStruct",
             "nodeType": "StructDefinition",
-            "scope": 209,
-            "src": "176:126:1",
+            "scope": 284,
+            "src": "176:126:2",
             "visibility": "public"
           },
           {
             "canonicalName": "EventStoreLib.TransmuteStorage",
-            "id": 111,
+            "id": 186,
             "members": [
               {
                 "constant": false,
-                "id": 110,
+                "id": 185,
                 "name": "events",
                 "nodeType": "VariableDeclaration",
-                "scope": 111,
-                "src": "342:29:1",
+                "scope": 186,
+                "src": "342:29:2",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_array$_t_struct$_TransmuteEventStruct_$107_storage_$dyn_storage_ptr",
-                  "typeString": "struct EventStoreLib.TransmuteEventStruct storage ref[] storage pointer"
+                  "typeIdentifier": "t_array$_t_struct$_TransmuteEventStruct_$182_storage_$dyn_storage_ptr",
+                  "typeString": "struct EventStoreLib.TransmuteEventStruct[]"
                 },
                 "typeName": {
                   "baseType": {
                     "contractScope": null,
-                    "id": 108,
+                    "id": 183,
                     "name": "TransmuteEventStruct",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 107,
-                    "src": "342:20:1",
+                    "referencedDeclaration": 182,
+                    "src": "342:20:2",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_storage_ptr",
-                      "typeString": "struct EventStoreLib.TransmuteEventStruct storage pointer"
+                      "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_storage_ptr",
+                      "typeString": "struct EventStoreLib.TransmuteEventStruct"
                     }
                   },
-                  "id": 109,
+                  "id": 184,
                   "length": null,
                   "nodeType": "ArrayTypeName",
-                  "src": "342:22:1",
+                  "src": "342:22:2",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_TransmuteEventStruct_$107_storage_$dyn_storage_ptr",
-                    "typeString": "struct EventStoreLib.TransmuteEventStruct storage ref[] storage pointer"
+                    "typeIdentifier": "t_array$_t_struct$_TransmuteEventStruct_$182_storage_$dyn_storage_ptr",
+                    "typeString": "struct EventStoreLib.TransmuteEventStruct[]"
                   }
                 },
                 "value": null,
@@ -1932,57 +1936,57 @@
             ],
             "name": "TransmuteStorage",
             "nodeType": "StructDefinition",
-            "scope": 209,
-            "src": "308:70:1",
+            "scope": 284,
+            "src": "308:70:2",
             "visibility": "public"
           },
           {
             "body": {
-              "id": 174,
+              "id": 249,
               "nodeType": "Block",
-              "src": "510:295:1",
+              "src": "510:300:2",
               "statements": [
                 {
                   "assignments": [],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 123,
+                      "id": 198,
                       "name": "evt",
                       "nodeType": "VariableDeclaration",
-                      "scope": 175,
-                      "src": "520:31:1",
+                      "scope": 250,
+                      "src": "520:31:2",
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
-                        "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
+                        "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
+                        "typeString": "struct EventStoreLib.TransmuteEventStruct"
                       },
                       "typeName": {
                         "contractScope": null,
-                        "id": 122,
+                        "id": 197,
                         "name": "TransmuteEventStruct",
                         "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 107,
-                        "src": "520:20:1",
+                        "referencedDeclaration": 182,
+                        "src": "520:20:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_storage_ptr",
-                          "typeString": "struct EventStoreLib.TransmuteEventStruct storage pointer"
+                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_storage_ptr",
+                          "typeString": "struct EventStoreLib.TransmuteEventStruct"
                         }
                       },
                       "value": null,
                       "visibility": "internal"
                     }
                   ],
-                  "id": 124,
+                  "id": 199,
                   "initialValue": null,
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "520:31:1"
+                  "src": "520:31:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 131,
+                    "id": 206,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1991,26 +1995,26 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 125,
+                        "id": 200,
                         "name": "evt",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 123,
-                        "src": "561:3:1",
+                        "referencedDeclaration": 198,
+                        "src": "561:3:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                           "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                         }
                       },
-                      "id": 127,
+                      "id": 202,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "index",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 100,
-                      "src": "561:9:1",
+                      "referencedDeclaration": 175,
+                      "src": "561:9:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -2024,32 +2028,32 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 128,
+                          "id": 203,
                           "name": "self",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 113,
-                          "src": "573:4:1",
+                          "referencedDeclaration": 188,
+                          "src": "573:4:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_TransmuteStorage_$111_storage_ptr",
+                            "typeIdentifier": "t_struct$_TransmuteStorage_$186_storage_ptr",
                             "typeString": "struct EventStoreLib.TransmuteStorage storage pointer"
                           }
                         },
-                        "id": 129,
+                        "id": 204,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "events",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 110,
-                        "src": "573:11:1",
+                        "referencedDeclaration": 185,
+                        "src": "573:11:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_array$_t_struct$_TransmuteEventStruct_$107_storage_$dyn_storage",
+                          "typeIdentifier": "t_array$_t_struct$_TransmuteEventStruct_$182_storage_$dyn_storage",
                           "typeString": "struct EventStoreLib.TransmuteEventStruct storage ref[] storage ref"
                         }
                       },
-                      "id": 130,
+                      "id": 205,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
@@ -2057,26 +2061,26 @@
                       "memberName": "length",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": null,
-                      "src": "573:18:1",
+                      "src": "573:18:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "src": "561:30:1",
+                    "src": "561:30:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 132,
+                  "id": 207,
                   "nodeType": "ExpressionStatement",
-                  "src": "561:30:1"
+                  "src": "561:30:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 138,
+                    "id": 213,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2085,26 +2089,26 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 133,
+                        "id": 208,
                         "name": "evt",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 123,
-                        "src": "601:3:1",
+                        "referencedDeclaration": 198,
+                        "src": "601:3:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                           "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                         }
                       },
-                      "id": 135,
+                      "id": 210,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "sender",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 102,
-                      "src": "601:10:1",
+                      "referencedDeclaration": 177,
+                      "src": "601:10:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
@@ -2116,18 +2120,18 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 136,
+                        "id": 211,
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 221,
-                        "src": "614:3:1",
+                        "referencedDeclaration": 299,
+                        "src": "614:3:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
                           "typeString": "msg"
                         }
                       },
-                      "id": 137,
+                      "id": 212,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -2135,26 +2139,26 @@
                       "memberName": "sender",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": null,
-                      "src": "614:10:1",
+                      "src": "614:10:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
                       }
                     },
-                    "src": "601:23:1",
+                    "src": "601:23:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
                     }
                   },
-                  "id": 139,
+                  "id": 214,
                   "nodeType": "ExpressionStatement",
-                  "src": "601:23:1"
+                  "src": "601:23:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 144,
+                    "id": 219,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2163,26 +2167,26 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 140,
+                        "id": 215,
                         "name": "evt",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 123,
-                        "src": "634:3:1",
+                        "referencedDeclaration": 198,
+                        "src": "634:3:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                           "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                         }
                       },
-                      "id": 142,
+                      "id": 217,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "key",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 104,
-                      "src": "634:7:1",
+                      "referencedDeclaration": 179,
+                      "src": "634:7:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
                         "typeString": "bytes32"
@@ -2192,31 +2196,31 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 143,
+                      "id": 218,
                       "name": "key",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 115,
-                      "src": "644:3:1",
+                      "referencedDeclaration": 190,
+                      "src": "644:3:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
                         "typeString": "bytes32"
                       }
                     },
-                    "src": "634:13:1",
+                    "src": "634:13:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
                     }
                   },
-                  "id": 145,
+                  "id": 220,
                   "nodeType": "ExpressionStatement",
-                  "src": "634:13:1"
+                  "src": "634:13:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 150,
+                    "id": 225,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2225,26 +2229,26 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 146,
+                        "id": 221,
                         "name": "evt",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 123,
-                        "src": "657:3:1",
+                        "referencedDeclaration": 198,
+                        "src": "657:3:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                           "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                         }
                       },
-                      "id": 148,
+                      "id": 223,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "value",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 106,
-                      "src": "657:9:1",
+                      "referencedDeclaration": 181,
+                      "src": "657:9:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
                         "typeString": "bytes32"
@@ -2254,55 +2258,55 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 149,
+                      "id": 224,
                       "name": "value",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 117,
-                      "src": "669:5:1",
+                      "referencedDeclaration": 192,
+                      "src": "669:5:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
                         "typeString": "bytes32"
                       }
                     },
-                    "src": "657:17:1",
+                    "src": "657:17:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
                     }
                   },
-                  "id": 151,
+                  "id": 226,
                   "nodeType": "ExpressionStatement",
-                  "src": "657:17:1"
+                  "src": "657:17:2"
                 },
                 {
-                  "expression": {
+                  "eventCall": {
                     "argumentTypes": null,
                     "arguments": [
                       {
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 153,
+                          "id": 228,
                           "name": "evt",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 123,
-                          "src": "699:3:1",
+                          "referencedDeclaration": 198,
+                          "src": "704:3:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                             "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                           }
                         },
-                        "id": 154,
+                        "id": 229,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "index",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 100,
-                        "src": "699:9:1",
+                        "referencedDeclaration": 175,
+                        "src": "704:9:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -2312,26 +2316,26 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 155,
+                          "id": 230,
                           "name": "evt",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 123,
-                          "src": "710:3:1",
+                          "referencedDeclaration": 198,
+                          "src": "715:3:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                             "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                           }
                         },
-                        "id": 156,
+                        "id": 231,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "sender",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 102,
-                        "src": "710:10:1",
+                        "referencedDeclaration": 177,
+                        "src": "715:10:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -2341,26 +2345,26 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 157,
+                          "id": 232,
                           "name": "evt",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 123,
-                          "src": "722:3:1",
+                          "referencedDeclaration": 198,
+                          "src": "727:3:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                             "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                           }
                         },
-                        "id": 158,
+                        "id": 233,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "key",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 104,
-                        "src": "722:7:1",
+                        "referencedDeclaration": 179,
+                        "src": "727:7:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
                           "typeString": "bytes32"
@@ -2370,26 +2374,26 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 159,
+                          "id": 234,
                           "name": "evt",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 123,
-                          "src": "731:3:1",
+                          "referencedDeclaration": 198,
+                          "src": "736:3:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                             "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                           }
                         },
-                        "id": 160,
+                        "id": 235,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "value",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 106,
-                        "src": "731:9:1",
+                        "referencedDeclaration": 181,
+                        "src": "736:9:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
                           "typeString": "bytes32"
@@ -2415,18 +2419,18 @@
                           "typeString": "bytes32"
                         }
                       ],
-                      "id": 152,
+                      "id": 227,
                       "name": "TransmuteEvent",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 98,
-                      "src": "684:14:1",
+                      "referencedDeclaration": 173,
+                      "src": "689:14:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_uint256_$_t_address_$_t_bytes32_$_t_bytes32_$returns$__$",
                         "typeString": "function (uint256,address,bytes32,bytes32)"
                       }
                     },
-                    "id": 161,
+                    "id": 236,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2434,15 +2438,15 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "684:57:1",
+                    "src": "689:57:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 162,
-                  "nodeType": "ExpressionStatement",
-                  "src": "684:57:1"
+                  "id": 237,
+                  "nodeType": "EmitStatement",
+                  "src": "684:62:2"
                 },
                 {
                   "expression": {
@@ -2450,14 +2454,14 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 168,
+                        "id": 243,
                         "name": "evt",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 123,
-                        "src": "768:3:1",
+                        "referencedDeclaration": 198,
+                        "src": "773:3:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                           "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                         }
                       }
@@ -2465,7 +2469,7 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                           "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                         }
                       ],
@@ -2473,32 +2477,32 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 163,
+                          "id": 238,
                           "name": "self",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 113,
-                          "src": "751:4:1",
+                          "referencedDeclaration": 188,
+                          "src": "756:4:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_TransmuteStorage_$111_storage_ptr",
+                            "typeIdentifier": "t_struct$_TransmuteStorage_$186_storage_ptr",
                             "typeString": "struct EventStoreLib.TransmuteStorage storage pointer"
                           }
                         },
-                        "id": 166,
+                        "id": 241,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "events",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 110,
-                        "src": "751:11:1",
+                        "referencedDeclaration": 185,
+                        "src": "756:11:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_array$_t_struct$_TransmuteEventStruct_$107_storage_$dyn_storage",
+                          "typeIdentifier": "t_array$_t_struct$_TransmuteEventStruct_$182_storage_$dyn_storage",
                           "typeString": "struct EventStoreLib.TransmuteEventStruct storage ref[] storage ref"
                         }
                       },
-                      "id": 167,
+                      "id": 242,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -2506,13 +2510,13 @@
                       "memberName": "push",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": null,
-                      "src": "751:16:1",
+                      "src": "756:16:2",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_arraypush_nonpayable$_t_struct$_TransmuteEventStruct_$107_storage_$returns$_t_uint256_$",
+                        "typeIdentifier": "t_function_arraypush_nonpayable$_t_struct$_TransmuteEventStruct_$182_storage_$returns$_t_uint256_$",
                         "typeString": "function (struct EventStoreLib.TransmuteEventStruct storage ref) returns (uint256)"
                       }
                     },
-                    "id": 169,
+                    "id": 244,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2520,54 +2524,55 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "751:21:1",
+                    "src": "756:21:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 170,
+                  "id": 245,
                   "nodeType": "ExpressionStatement",
-                  "src": "751:21:1"
+                  "src": "756:21:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
                     "expression": {
                       "argumentTypes": null,
-                      "id": 171,
+                      "id": 246,
                       "name": "evt",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 123,
-                      "src": "789:3:1",
+                      "referencedDeclaration": 198,
+                      "src": "794:3:2",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                        "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                         "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                       }
                     },
-                    "id": 172,
+                    "id": 247,
                     "isConstant": false,
                     "isLValue": true,
                     "isPure": false,
                     "lValueRequested": false,
                     "memberName": "index",
                     "nodeType": "MemberAccess",
-                    "referencedDeclaration": 100,
-                    "src": "789:9:1",
+                    "referencedDeclaration": 175,
+                    "src": "794:9:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 121,
-                  "id": 173,
+                  "functionReturnParameters": 196,
+                  "id": 248,
                   "nodeType": "Return",
-                  "src": "782:16:1"
+                  "src": "787:16:2"
                 }
               ]
             },
-            "id": 175,
+            "documentation": null,
+            "id": 250,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -2575,32 +2580,32 @@
             "name": "write",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 118,
+              "id": 193,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 113,
+                  "id": 188,
                   "name": "self",
                   "nodeType": "VariableDeclaration",
-                  "scope": 175,
-                  "src": "408:29:1",
+                  "scope": 250,
+                  "src": "408:29:2",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_TransmuteStorage_$111_storage_ptr",
-                    "typeString": "struct EventStoreLib.TransmuteStorage storage pointer"
+                    "typeIdentifier": "t_struct$_TransmuteStorage_$186_storage_ptr",
+                    "typeString": "struct EventStoreLib.TransmuteStorage"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 112,
+                    "id": 187,
                     "name": "TransmuteStorage",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 111,
-                    "src": "408:16:1",
+                    "referencedDeclaration": 186,
+                    "src": "408:16:2",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_TransmuteStorage_$111_storage_ptr",
-                      "typeString": "struct EventStoreLib.TransmuteStorage storage pointer"
+                      "typeIdentifier": "t_struct$_TransmuteStorage_$186_storage_ptr",
+                      "typeString": "struct EventStoreLib.TransmuteStorage"
                     }
                   },
                   "value": null,
@@ -2608,11 +2613,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 115,
+                  "id": 190,
                   "name": "key",
                   "nodeType": "VariableDeclaration",
-                  "scope": 175,
-                  "src": "447:11:1",
+                  "scope": 250,
+                  "src": "447:11:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2620,10 +2625,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 114,
+                    "id": 189,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "447:7:1",
+                    "src": "447:7:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -2634,11 +2639,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 117,
+                  "id": 192,
                   "name": "value",
                   "nodeType": "VariableDeclaration",
-                  "scope": 175,
-                  "src": "468:13:1",
+                  "scope": 250,
+                  "src": "468:13:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2646,10 +2651,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 116,
+                    "id": 191,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "468:7:1",
+                    "src": "468:7:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -2659,20 +2664,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "398:89:1"
+              "src": "398:89:2"
             },
             "payable": false,
             "returnParameters": {
-              "id": 121,
+              "id": 196,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 120,
+                  "id": 195,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 175,
-                  "src": "504:4:1",
+                  "scope": 250,
+                  "src": "504:4:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2680,10 +2685,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 119,
+                    "id": 194,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "504:4:1",
+                    "src": "504:4:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2693,95 +2698,95 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "503:6:1"
+              "src": "503:6:2"
             },
-            "scope": 209,
-            "src": "384:421:1",
+            "scope": 284,
+            "src": "384:426:2",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 207,
+              "id": 282,
               "nodeType": "Block",
-              "src": "931:187:1",
+              "src": "936:187:2",
               "statements": [
                 {
                   "assignments": [
-                    191
+                    266
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 191,
+                      "id": 266,
                       "name": "evt",
                       "nodeType": "VariableDeclaration",
-                      "scope": 208,
-                      "src": "941:31:1",
+                      "scope": 283,
+                      "src": "946:31:2",
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
-                        "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
+                        "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
+                        "typeString": "struct EventStoreLib.TransmuteEventStruct"
                       },
                       "typeName": {
                         "contractScope": null,
-                        "id": 190,
+                        "id": 265,
                         "name": "TransmuteEventStruct",
                         "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 107,
-                        "src": "941:20:1",
+                        "referencedDeclaration": 182,
+                        "src": "946:20:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_storage_ptr",
-                          "typeString": "struct EventStoreLib.TransmuteEventStruct storage pointer"
+                          "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_storage_ptr",
+                          "typeString": "struct EventStoreLib.TransmuteEventStruct"
                         }
                       },
                       "value": null,
                       "visibility": "internal"
                     }
                   ],
-                  "id": 196,
+                  "id": 271,
                   "initialValue": {
                     "argumentTypes": null,
                     "baseExpression": {
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 192,
+                        "id": 267,
                         "name": "self",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 177,
-                        "src": "975:4:1",
+                        "referencedDeclaration": 252,
+                        "src": "980:4:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_TransmuteStorage_$111_storage_ptr",
+                          "typeIdentifier": "t_struct$_TransmuteStorage_$186_storage_ptr",
                           "typeString": "struct EventStoreLib.TransmuteStorage storage pointer"
                         }
                       },
-                      "id": 193,
+                      "id": 268,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "events",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 110,
-                      "src": "975:11:1",
+                      "referencedDeclaration": 185,
+                      "src": "980:11:2",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_array$_t_struct$_TransmuteEventStruct_$107_storage_$dyn_storage",
+                        "typeIdentifier": "t_array$_t_struct$_TransmuteEventStruct_$182_storage_$dyn_storage",
                         "typeString": "struct EventStoreLib.TransmuteEventStruct storage ref[] storage ref"
                       }
                     },
-                    "id": 195,
+                    "id": 270,
                     "indexExpression": {
                       "argumentTypes": null,
-                      "id": 194,
+                      "id": 269,
                       "name": "index",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 179,
-                      "src": "987:5:1",
+                      "referencedDeclaration": 254,
+                      "src": "992:5:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -2792,14 +2797,14 @@
                     "isPure": false,
                     "lValueRequested": false,
                     "nodeType": "IndexAccess",
-                    "src": "975:18:1",
+                    "src": "980:18:2",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_storage",
+                      "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_storage",
                       "typeString": "struct EventStoreLib.TransmuteEventStruct storage ref"
                     }
                   },
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "941:52:1"
+                  "src": "946:52:2"
                 },
                 {
                   "expression": {
@@ -2809,26 +2814,26 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 197,
+                          "id": 272,
                           "name": "evt",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 191,
-                          "src": "1024:3:1",
+                          "referencedDeclaration": 266,
+                          "src": "1029:3:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                             "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                           }
                         },
-                        "id": 198,
+                        "id": 273,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "index",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 100,
-                        "src": "1024:9:1",
+                        "referencedDeclaration": 175,
+                        "src": "1029:9:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -2838,26 +2843,26 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 199,
+                          "id": 274,
                           "name": "evt",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 191,
-                          "src": "1047:3:1",
+                          "referencedDeclaration": 266,
+                          "src": "1052:3:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                             "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                           }
                         },
-                        "id": 200,
+                        "id": 275,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "sender",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 102,
-                        "src": "1047:10:1",
+                        "referencedDeclaration": 177,
+                        "src": "1052:10:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -2867,26 +2872,26 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 201,
+                          "id": 276,
                           "name": "evt",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 191,
-                          "src": "1071:3:1",
+                          "referencedDeclaration": 266,
+                          "src": "1076:3:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                             "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                           }
                         },
-                        "id": 202,
+                        "id": 277,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "key",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 104,
-                        "src": "1071:7:1",
+                        "referencedDeclaration": 179,
+                        "src": "1076:7:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
                           "typeString": "bytes32"
@@ -2896,53 +2901,54 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 203,
+                          "id": 278,
                           "name": "evt",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 191,
-                          "src": "1092:3:1",
+                          "referencedDeclaration": 266,
+                          "src": "1097:3:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$107_memory_ptr",
+                            "typeIdentifier": "t_struct$_TransmuteEventStruct_$182_memory_ptr",
                             "typeString": "struct EventStoreLib.TransmuteEventStruct memory"
                           }
                         },
-                        "id": 204,
+                        "id": 279,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "value",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 106,
-                        "src": "1092:9:1",
+                        "referencedDeclaration": 181,
+                        "src": "1097:9:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
                           "typeString": "bytes32"
                         }
                       }
                     ],
-                    "id": 205,
+                    "id": 280,
                     "isConstant": false,
                     "isInlineArray": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "nodeType": "TupleExpression",
-                    "src": "1010:101:1",
+                    "src": "1015:101:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$_t_uint256_$_t_address_$_t_bytes32_$_t_bytes32_$",
                       "typeString": "tuple(uint256,address,bytes32,bytes32)"
                     }
                   },
-                  "functionReturnParameters": 189,
-                  "id": 206,
+                  "functionReturnParameters": 264,
+                  "id": 281,
                   "nodeType": "Return",
-                  "src": "1003:108:1"
+                  "src": "1008:108:2"
                 }
               ]
             },
-            "id": 208,
+            "documentation": null,
+            "id": 283,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -2950,32 +2956,32 @@
             "name": "read",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 180,
+              "id": 255,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 177,
+                  "id": 252,
                   "name": "self",
                   "nodeType": "VariableDeclaration",
-                  "scope": 208,
-                  "src": "825:29:1",
+                  "scope": 283,
+                  "src": "830:29:2",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_TransmuteStorage_$111_storage_ptr",
-                    "typeString": "struct EventStoreLib.TransmuteStorage storage pointer"
+                    "typeIdentifier": "t_struct$_TransmuteStorage_$186_storage_ptr",
+                    "typeString": "struct EventStoreLib.TransmuteStorage"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 176,
+                    "id": 251,
                     "name": "TransmuteStorage",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 111,
-                    "src": "825:16:1",
+                    "referencedDeclaration": 186,
+                    "src": "830:16:2",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_TransmuteStorage_$111_storage_ptr",
-                      "typeString": "struct EventStoreLib.TransmuteStorage storage pointer"
+                      "typeIdentifier": "t_struct$_TransmuteStorage_$186_storage_ptr",
+                      "typeString": "struct EventStoreLib.TransmuteStorage"
                     }
                   },
                   "value": null,
@@ -2983,11 +2989,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 179,
+                  "id": 254,
                   "name": "index",
                   "nodeType": "VariableDeclaration",
-                  "scope": 208,
-                  "src": "856:10:1",
+                  "scope": 283,
+                  "src": "861:10:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2995,10 +3001,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 178,
+                    "id": 253,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "856:4:1",
+                    "src": "861:4:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3008,20 +3014,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "824:43:1"
+              "src": "829:43:2"
             },
             "payable": false,
             "returnParameters": {
-              "id": 189,
+              "id": 264,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 182,
+                  "id": 257,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 208,
-                  "src": "897:4:1",
+                  "scope": 283,
+                  "src": "902:4:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3029,10 +3035,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 181,
+                    "id": 256,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "897:4:1",
+                    "src": "902:4:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3043,11 +3049,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 184,
+                  "id": 259,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 208,
-                  "src": "903:7:1",
+                  "scope": 283,
+                  "src": "908:7:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3055,10 +3061,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 183,
+                    "id": 258,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "903:7:1",
+                    "src": "908:7:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -3069,11 +3075,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 186,
+                  "id": 261,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 208,
-                  "src": "912:7:1",
+                  "scope": 283,
+                  "src": "917:7:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3081,10 +3087,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 185,
+                    "id": 260,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "912:7:1",
+                    "src": "917:7:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -3095,11 +3101,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 188,
+                  "id": 263,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 208,
-                  "src": "921:7:1",
+                  "scope": 283,
+                  "src": "926:7:2",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3107,10 +3113,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 187,
+                    "id": 262,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "921:7:1",
+                    "src": "926:7:2",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -3120,24 +3126,24 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "896:34:1"
+              "src": "901:34:2"
             },
-            "scope": 209,
-            "src": "811:307:1",
+            "scope": 284,
+            "src": "816:307:2",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 210,
-        "src": "26:1099:1"
+        "scope": 285,
+        "src": "26:1102:2"
       }
     ],
-    "src": "0:1126:1"
+    "src": "0:1129:2"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
+    "version": "0.4.23+commit.124ca40d.Emscripten.clang"
   },
   "networks": {
     "1521729411811": {
@@ -3468,7 +3474,7 @@
       "address": "0x37adc646d6d1e3c76994b524658a7767514bbd9e",
       "transactionHash": "0x62fa635c8a660b4674c4a8aceb1be45aab0a0c36094a9403c544683c942df717"
     },
-    "1522245407739": {
+    "1523655749164": {
       "events": {
         "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
           "anonymous": false,
@@ -3499,10 +3505,10 @@
         }
       },
       "links": {},
-      "address": "0x8122cde49b988204a2ecc5e9581c267b4c7301f5",
-      "transactionHash": "0x48b2557b3d69b45ab3a8d014744e6c4abdf7c88916e01b4078127f9b7125ef21"
+      "address": "0x539ae5ae3327b04239caef62e1da7d4e578d0786",
+      "transactionHash": "0x738323429f31e43b4b4c717f28a509acefb0c3c941da03f8d14c5800b87dc393"
     },
-    "1522248729445": {
+    "1525282514817": {
       "events": {
         "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
           "anonymous": false,
@@ -3533,10 +3539,44 @@
         }
       },
       "links": {},
-      "address": "0x9c6eba18829e0acac18eb44def3a27d92ddd46cc",
-      "transactionHash": "0x48b2557b3d69b45ab3a8d014744e6c4abdf7c88916e01b4078127f9b7125ef21"
+      "address": "0xd83fc26f607efb9f80798c05dd7f6ab864159270",
+      "transactionHash": "0x521c0e5730f7878ebdca17073c7fd0147f2f8188668e5a4ff02fcf9e74825c53"
+    },
+    "1525800439053": {
+      "events": {
+        "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "index",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "sender",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "key",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "value",
+              "type": "bytes32"
+            }
+          ],
+          "name": "TransmuteEvent",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x05f9fe88b9432091c69f6a5efbb49a128def95b3",
+      "transactionHash": "0x903fbe92327a9ef31110b17e7dcf710d9a2b0f24e9607de848c008f733e26ba6"
     }
   },
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-03-28T14:53:54.806Z"
+  "updatedAt": "2018-05-08T21:20:42.291Z"
 }

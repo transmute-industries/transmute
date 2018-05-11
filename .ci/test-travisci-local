@@ -1,0 +1,3 @@
+#!/bin/bash
+this_docker_id=$(cat .travisci-localtest.cid)
+docker exec -it $this_docker_id /bin/bash -c "sudo -i -u travis bash .ci/test-travis.sh"

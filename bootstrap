@@ -1,0 +1,617 @@
+#!/bin/bash
+# Installs minikube, kubectl, and transmute into a minikube cluster
+: ${TRANSMUTE_RELEASE:='master'}
+: ${TRANSMUTE_DIR:=$HOME/.transmute}
+: ${TRANSMUTE_BIN:=$TRANSMUTE_DIR/bin}
+: ${VERBOSITY:=0}
+: ${HELM_INSTALL_DIR:=$TRANSMUTE_BIN}
+: ${MY_KUBE_VERSION:=v1.9.6}
+: ${FIX_DOTFILES:= "true"}
+: ${NVM_DIR_ADDS:= "true"}
+: ${NVM_VERSION:='0.33.9'}
+: ${USE_VOX:=y}
+: ${USE_WARN:=y}
+
+export CWD=$(pwd)
+export PATH=$TRANSMUTE_BIN:$PATH
+
+if [[ "$USE_VOX" == 'y' ]]; then
+  echo 'Using vox'
+fi
+
+speaker () {
+  WELCOME=$1
+  echo $WELCOME
+  if [[ "$USE_VOX" == 'y' ]]; then
+    if type "say"        > /dev/null 2> /dev/null; then
+      say "$WELCOME"
+    elif type "espeak"   > /dev/null 2> /dev/null; then
+      espeak "$WELCOME"
+    elif type "spd-say"  > /dev/null 2> /dev/null; then
+      spd-say "$WELCOME"
+    elif type "festival" > /dev/null 2> /dev/null; then
+      echo "$WELCOME" | festival --tts
+    fi
+  fi
+}
+
+# Check for config env file
+if [ -e $TRANSMUTE_DIR/env ]; then
+  source $TRANSMUTE_DIR/env
+  if [ $VERBOSITY -gt '0' ]; then
+    ls -al $TRANSMUTE_DIR/env
+    env file found and sourced
+  fi
+fi
+
+errror () {
+  echo "-------------------------------------------------------------"
+  echo -e "\n \n  "
+  echo "ERROR!!!  --  "
+}
+
+# Check if a command exists
+check_cmd () {
+  if ! type "$1" > /dev/null; then
+    errror
+    echo "$1 was not found in your path!"
+    echo "To proceed please install $1 to your path and try again!"
+    exit 1
+  fi
+}
+
+warrrn () {
+  sleep 1
+  echo -n "(ctrl-c now to stop if this is not what you intend)!"
+  sleep 1; echo  -n "!"; sleep 1; echo  -n "!"
+  sleep 1; echo  -n "!"
+  sleep 1; echo "!"
+  sleep 1; echo "--"
+  sleep 1
+}
+
+chkdir () {
+  if [ ! -w $1 ] ; then
+    sudo mkdir -p $1
+    sudo chown $USER. $1
+  fi
+  if [ ! -w $1 ] ; then
+    errror
+    echo "Cannot write to $1, please check your permissions"
+    exit 2
+  fi
+}
+
+# these vars are used by the following functions
+LINE_TO_ADD=''
+TARGET_FILE_FOR_ADD=~/.profile
+
+check_if_line_exists()
+{
+  echo "Checking for '$LINE_TO_ADD'  in $TARGET_FILE_FOR_ADD"
+  grep -qsFx "$LINE_TO_ADD" $TARGET_FILE_FOR_ADD
+}
+
+add_line_to()
+{
+  echo "Adding '$LINE_TO_ADD'  to $TARGET_FILE_FOR_ADD"
+  TARGET_FILE=$TARGET_FILE_FOR_ADD
+    [ -w "$TARGET_FILE" ] || TARGET_FILE=$TARGET_FILE_FOR_ADD
+    printf "%s\n" "$LINE_TO_ADD" >> "$TARGET_FILE"
+}
+
+macminikube () {
+	echo 'Installing minikube'
+	brew cask install minikube
+}
+
+mackubectl () {
+	echo 'Installing kubectl'
+	brew install kubectl
+}
+
+machelm () {
+	echo 'Installing helm'
+	brew install kubernetes-helm
+}
+
+macnsenter () {
+	echo 'NOT Installing nsenter'
+	#brew install kubernetes-nsenter
+}
+
+windowsminikube () {
+	echo 'Installing minikube'
+	choco install minikube
+}
+
+windowskubectl () {
+	echo 'Installing kubectl'
+	choco install kubernetes-cli
+}
+
+windowshelm () {
+	echo 'Installing helm'
+	choco install helm
+}
+
+windowsnsenter () {
+	echo 'Installing nsenter'
+	choco install nsenter
+}
+
+install_kubectl_linux () {
+  if ! type "kubectl" >/dev/null 2>/dev/null; then
+    echo 'Installing kubectl'
+    TMP=$(mktemp -d --suffix=KUBECTLTMP)
+    cd $TMP
+    curl -LO https://storage.googleapis.com/kubernetes-release/release/$MY_KUBE_VERSION/bin/linux/amd64/kubectl
+    chmod +x kubectl
+    sudo mv -v kubectl $TRANSMUTE_BIN
+    cd
+    rmdir $TMP
+  fi
+}
+
+install_minikube_linux () {
+  if ! type "minikube" >/dev/null 2>/dev/null; then
+    echo 'Installing minikube'
+    TMP=$(mktemp -d --suffix=MINIKUBETMP)
+    mkdir -p $HOME/.kube || true
+    touch $HOME/.kube/config
+    cd $TMP
+    curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    chmod +x minikube
+    sudo mv minikube $TRANSMUTE_BIN/
+    cd
+    rmdir $TMP
+  fi
+}
+
+install_helm_linux () {
+  if ! type "helm" >/dev/null 2>/dev/null; then
+    TMP=$(mktemp -d --suffix=HELMTMP)
+    cd $TMP
+    echo 'Getting helmget'
+    curl -Lo $TMP/helmget https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get
+    HELM_INSTALL_DIR=$HELM_INSTALL_DIR
+    echo 'Installing helm'
+    sudo -E bash -l $TMP/helmget
+    rm $TMP/helmget
+    cd
+    rmdir $TMP
+  fi
+}
+
+nvm_dir_adds () {
+  LINE_TO_ADD='export NVM_DIR=~/.nvm'
+  TARGET_FILE_FOR_ADD=~/.zshrc
+  check_if_line_exists || add_line_to
+  TARGET_FILE_FOR_ADD=~/.bash_profile
+  check_if_line_exists || add_line_to
+
+  LINE_TO_ADD='source ~/.nvm/nvm.sh'
+  TARGET_FILE_FOR_ADD=~/.zshrc
+  check_if_line_exists || add_line_to
+  TARGET_FILE_FOR_ADD=~/.bash_profile
+  check_if_line_exists || add_line_to
+}
+
+dotfiles_install () {
+  if [[ $VERBOSITY -gt '1' ]]; then
+    echo 'Adjusting dotfiles'
+  fi
+  touch ~/.zshrc
+  touch ~/.bashrc
+  touch ~/.bash_profile
+  touch ~/.profile
+  LINE_TO_ADD="source ~/.bashrc"
+  TARGET_FILE_FOR_ADD=~/.bash_profile
+  check_if_line_exists || add_line_to
+  LINE_TO_ADD="source ~/.profile"
+  TARGET_FILE_FOR_ADD=~/.zshrc
+  check_if_line_exists || add_line_to
+  TARGET_FILE_FOR_ADD=~/.bashrc
+  check_if_line_exists || add_line_to
+}
+
+install_certbot () {
+  if ! type "certbot-auto" >/dev/null 2>/dev/null; then
+    TMP=$(mktemp -d)
+    wget https://dl.eff.org/certbot-auto
+    chmod a+x ./certbot-auto
+    wget -N https://dl.eff.org/certbot-auto.asc
+    if type "gpg2" >/dev/null 2>/dev/null; then
+      set +e
+      gpg2 --recv-key A2CFB51FA275A7286234E7B24D17C995CD9775F2
+      gpg2 --keyserver hkp://pool.sks-keyservers.net --recv-key A2CFB51FA275A7286234E7B24D17C995CD9775F2
+      gpg2 --keyserver hkp://ipv4.pool.sks-keyservers.net --recv-key A2CFB51FA275A7286234E7B24D17C995CD9775F2
+      set -e
+      gpg2 --trusted-key 4D17C995CD9775F2 --verify certbot-auto.asc certbot-auto
+    elif type "gpg" >/dev/null 2>/dev/null; then
+      set +e
+      gpg --recv-key A2CFB51FA275A7286234E7B24D17C995CD9775F2
+      gpg --keyserver hkp://pool.sks-keyservers.net --verbose --recv-key A2CFB51FA275A7286234E7B24D17C995CD9775F2
+      gpg --keyserver hkp://ipv4.pool.sks-keyservers.net --verbose --recv-key A2CFB51FA275A7286234E7B24D17C995CD9775F2
+      set -e
+      gpg --trusted-key 4D17C995CD9775F2 --verify certbot-auto.asc certbot-auto
+    else
+      echo 'gpg not found'
+    fi
+    sudo mv certbot-auto $TRANSMUTE_BIN/
+    set +e
+    certbot-auto
+    set -e
+    rm -Rf $TMP
+  else
+    echo 'certbot-auto already installed skipping'
+  fi
+}
+
+install_nvm () {
+  set +e
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+  this_output=$(nvm  --version)
+  set -e
+
+  if [ "$this_output" = "$NVM_VERSION" ]; then
+    echo "NVM $NVM_VERSION is already installed skipping"
+  else
+    touch ~/.profile
+
+    set +e
+    curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v$NVM_VERSION/install.sh | bash
+    set -e
+
+    if [ "$FIX_DOTFILES" = "true" ]; then
+      dotfiles_install
+    fi
+
+    if [ "$NVM_DIR_ADDS" = "true" ]; then
+      nvm_dir_adds
+    fi
+  fi
+}
+
+announce_prefix_fail () {
+  echo "failed to write to the npm prefix directory, you should set your npm prefix to a directory you can write to"
+  echo "The following documentation details this procedure: https://docs.npmjs.com/getting-started/fixing-npm-permissions"
+}
+
+check_prefix_npm () {
+
+  trap announce_prefix_fail EXIT
+  TMP_FILE=$(mktemp -p $(npm config get prefix))
+  if [ "$?" -ne 0 ]; then
+    announce_prefix_fail
+  else
+    rm $TMP_FILE
+  fi
+  trap - EXIT
+}
+
+install_lerna_npm () {
+  if ! type "lerna" >/dev/null 2>/dev/null; then
+    npm i -g lerna@2.9.0
+  else
+    echo 'lerna already installed skipping'
+  fi
+}
+
+install_truffle_npm () {
+  if ! type "truffle" >/dev/null 2>/dev/null; then
+    npm i -g truffle@4.1.7
+  else
+    echo 'truffle already installed skipping'
+  fi
+}
+
+install_ngrok_npm () {
+  if ! type "ngrok" >/dev/null 2>/dev/null; then
+    npm i -g ngrok
+  else
+    echo 'ngrok already installed skipping'
+  fi
+}
+
+lts_install () {
+  if ! type "npm" >/dev/null 2>/dev/null; then
+    if [[ $VERBOSITY -gt '2' ]]; then
+      echo 'Installing Node 8 LTS/carbon'
+    fi
+
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+    set +e
+    nvm ls-remote --lts=carbon
+    if [[ $VERBOSITY -gt '2' ]]; then
+      echo "Engage nvm to install lts/carbon"
+    fi
+    nvm install --lts=carbon
+    if [[ $VERBOSITY -gt '2' ]]; then
+      echo "Engage nvm to alias lts/carbon to default"
+    fi
+    nvm alias default lts/carbon
+    set -e
+  else
+      echo 'npm already installed skipping'
+  fi
+}
+
+install_socat () {
+  if ! type "socat" >/dev/null 2>/dev/null; then
+    if type "apt-get" >/dev/null 2>/dev/null; then
+      sudo apt-get install -y socat
+    elif type "dnf" >/dev/null 2>/dev/null; then
+      sudo dnf install -y socat
+    elif type "zypper" >/dev/null 2>/dev/null; then
+      sudo zypper --non-interactive install -y socat
+    elif type "pacman" >/dev/null 2>/dev/null; then
+      sudo pacman -Sy --noconfirm socat
+    elif type "brew" >/dev/null 2>/dev/null; then
+      brew install socat < /dev/null
+    elif type "chocolatey" >/dev/null 2>/dev/null; then
+      chocolatey install socat
+    else
+      echo 'No appropriate installer found for socat, install socat and run this script again'
+    fi
+  else
+    echo 'socat already installed skipping'
+  fi
+}
+
+install_curl () {
+  if ! type "curl" >/dev/null 2>/dev/null; then
+    if type "apt-get" >/dev/null 2>/dev/null; then
+      sudo apt-get install -y curl
+    elif type "dnf" >/dev/null 2>/dev/null; then
+      sudo dnf install -y curl
+    elif type "zypper" >/dev/null 2>/dev/null; then
+      sudo zypper --non-interactive install -y curl
+    elif type "pacman" >/dev/null 2>/dev/null; then
+      sudo pacman -Sy --noconfirm curl
+    elif type "brew" >/dev/null 2>/dev/null; then
+      brew install curl < /dev/null
+    elif type "chocolatey" >/dev/null 2>/dev/null; then
+      chocolatey install curl
+    else
+      echo 'No appropriate installer found for curl, install curl and run this script again'
+    fi
+  else
+    echo 'curl already installed skipping'
+  fi
+}
+
+install_git () {
+  if ! type "git" >/dev/null 2>/dev/null; then
+    if type "apt-get" >/dev/null 2>/dev/null; then
+      sudo apt-get install -y git
+    elif type "dnf" >/dev/null 2>/dev/null; then
+      sudo dnf install -y git
+    elif type "zypper" >/dev/null 2>/dev/null; then
+      sudo zypper --non-interactive install -y git
+    elif type "pacman" >/dev/null 2>/dev/null; then
+      sudo pacman -Sy --noconfirm git
+    elif type "brew" >/dev/null 2>/dev/null; then
+      brew install git < /dev/null
+    elif type "chocolatey" >/dev/null 2>/dev/null; then
+      chocolatey install git
+    else
+      echo 'No appropriate installer found for git, install git and run this script again'
+    fi
+  else
+    echo 'git already installed skipping'
+  fi
+}
+
+install_jq () {
+  if ! type "jq" >/dev/null 2>/dev/null; then
+    if type "apt-get" >/dev/null 2>/dev/null; then
+      sudo apt-get install -y jq
+    elif type "dnf" >/dev/null 2>/dev/null; then
+      sudo dnf install -y jq
+    elif type "zypper" >/dev/null 2>/dev/null; then
+      sudo zypper --non-interactive install -y jq
+    elif type "pacman" >/dev/null 2>/dev/null; then
+      sudo pacman -Sy --noconfirm jq
+    elif type "brew" >/dev/null 2>/dev/null; then
+      brew install jq < /dev/null
+    elif type "chocolatey" >/dev/null 2>/dev/null; then
+      chocolatey install jq
+    else
+      echo 'No appropriate installer found for jq, install jq and run this script again'
+    fi
+  else
+    echo 'jq already installed skipping'
+  fi
+}
+
+windowsreqs () {
+  check_cmd chocolatey
+  install_curl
+  install_git
+  install_socat
+  windowskubectl
+  windowsminikube
+  windowshelm
+  windowsnsenter
+  install_nvm
+  lts_install
+  check_prefix_npm
+  install_ngrok_npm
+  install_truffle_npm
+  install_lerna_npm
+  install_certbot
+  install_jq
+}
+
+macreqs () {
+  check_cmd brew
+  install_curl
+  install_git
+  install_socat
+  set +e
+  brew install gnupg < /dev/null
+  set -e
+  mackubectl
+  macminikube
+  machelm
+  macnsenter
+  install_nvm
+  lts_install
+  check_prefix_npm
+  install_ngrok_npm
+  install_truffle_npm
+  install_lerna_npm
+  install_certbot
+  install_jq
+}
+
+linuxreqs () {
+  #linuxreqs: $(TRANSMUTE_BIN) run_dotfiles minikube kubectl helm nsenter
+  install_curl
+  install_git
+  install_socat
+  install_kubectl_linux
+  install_minikube_linux
+  install_helm_linux
+  install_nvm
+  lts_install
+  check_prefix_npm
+  install_ngrok_npm
+  install_truffle_npm
+  install_lerna_npm
+  install_certbot
+  install_jq
+}
+
+initializer () {
+  ls  $TRANSMUTE_DIR/git
+  ls $TRANSMUTE_DIR/git/transmute
+  cd $TRANSMUTE_DIR/git/transmute/transmute-config
+  cp .example.env .env
+  cd $TRANSMUTE_DIR/git/transmute
+  npm i
+  cd $CWD
+}
+
+run_it () {
+set -e
+#set -u
+
+# Let's display everything on stderr.
+exec 1>&2
+
+UNAME=$(uname)
+if [ "$UNAME" = "Linux" -o "$UNAME" = "Darwin" ] ; then
+  echo " $UNAME is a Supported OS"
+elif [ "$UNAME" ">" "MINGW" -a "$UNAME" "<" "MINGX" ] ; then
+  echo " $UNAME is not a Supported OS"
+  exit 1
+else
+  echo " $UNAME is not a Supported OS"
+  echo "Sorry, this OS is not supported yet via this installer."
+  exit 1
+fi
+
+if [ "$UNAME" = "Darwin" ] ; then
+  check_cmd brew
+  ### OSX ###
+  echo 'Checking arch'
+  if [ "i386" != "$(uname -p)" -o "1" != "$(sysctl -n hw.cpu64bit_capable 2>/dev/null || echo 0)" ] ; then
+    # Can't just test uname -m = x86_64, because Snow Leopard can
+    # return other values.
+    echo "Only 64-bit Intel processors are supported at this time in OSX."
+    exit 1
+  fi
+
+  PLATFORM="os.osx.x86_64"
+elif [ "$UNAME" = "Linux" ] ; then
+  ### Linux ###
+  LINUX_ARCH=$(uname -m)
+  if [ "${LINUX_ARCH}" = "x86_64" ] ; then
+    PLATFORM="os.linux.x86_64"
+  else
+    echo "Unusable architecture: ${LINUX_ARCH}"
+    echo "transmute only supports x86_64 for now."
+    exit 1
+  fi
+elif [ "$UNAME" = "CYGWIN_NT-10.0" ] ; then
+  PLATFORM="os.cygwin.x86_64"
+fi
+
+speaker "Warning!"
+sleep 1
+speaker "This script will install minikube, kubectl and helm,
+and then install transmute."
+if [[ "$USE_WARN" == 'y' ]]; then
+  warrrn
+fi
+
+echo "Checking $TRANSMUTE_DIR"
+
+if [ -e "$TRANSMUTE_DIR/git" ]; then
+  echo "$TRANSMUTE_DIR/git exists already, proceeding"
+else
+  echo "$TRANSMUTE_DIR/git does not exist already, proceeding"
+  set +e
+  cd $TRANSMUTE_DIR
+  mkdir -p $TRANSMUTE_DIR/git
+  set -e
+fi
+
+if [ -e "$TRANSMUTE_DIR/git/transmute" ]; then
+  echo "$TRANSMUTE_DIR/git/transmute exists already, proceeding"
+  cd $TRANSMUTE_DIR/git
+  echo 'Updating the transmute repo'
+  cd $TRANSMUTE_DIR/git/transmute
+  git fetch --tags
+  git checkout $TRANSMUTE_RELEASE
+  cd $CWD
+else
+  cd $TRANSMUTE_DIR/git
+  pwd
+  echo 'Cloning the latest transmute repo'
+  git clone --depth 1 https://github.com/transmute-industries/transmute.git
+  cd $TRANSMUTE_DIR/git/transmute
+  pwd
+  git fetch --tags
+  git checkout $TRANSMUTE_RELEASE
+  cd $CWD
+fi
+
+# make reqs
+mkdir -p $TRANSMUTE_DIR
+mkdir -p $TRANSMUTE_BIN
+if [ "$PLATFORM" = "os.linux.x86_64" ] ; then
+  linuxreqs
+elif [ "$PLATFORM" = "os.osx.x86_64" ] ; then
+  macreqs
+elif [ "$PLATFORM" = "os.windows.x86_64" ] ; then
+  windowsreqs
+fi
+
+check_cmd helm
+check_cmd kubectl
+check_cmd minikube
+#check_cmd nsenter
+
+initializer
+
+speaker 'The bootstrap has finished'
+speaker '- you have completed all the way to "npm run setup" here:'
+speaker 'https://github.com/transmute-industries/transmute#environment-scripts-and-updating.'
+speaker "You should now run 'npm run setup' inside '$(readlink -f $TRANSMUTE_DIR)'"
+
+trap - EXIT
+# End run it wrapper
+}
+
+check_cmd mktemp
+check_cmd uname
+
+run_it

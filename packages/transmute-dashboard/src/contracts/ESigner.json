@@ -91,16 +91,21 @@
       "payable": false,
       "stateMutability": "view",
       "type": "function"
+    },
+    {
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "fallback"
     }
   ],
-  "bytecode": "0x606060405233600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550610488806100546000396000f30060606040526004361061006c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168062f55d9d1461007157806306661abd146100aa5780638da5cb5b146100d3578063e2e52ec114610128578063ed2e5a971461015c575b600080fd5b341561007c57600080fd5b6100a8600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506101e4565b005b34156100b557600080fd5b6100bd610259565b6040518082815260200191505060405180910390f35b34156100de57600080fd5b6100e6610268565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b341561013357600080fd5b61015a6004808035600019169060200190919080356000191690602001909190505061028e565b005b341561016757600080fd5b61017d600480803590602001909190505061039e565b604051808581526020018473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018360001916600019168152602001826000191660001916815260200194505050505060405180910390f35b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561024057600080fd5b8073ffffffffffffffffffffffffffffffffffffffff16ff5b60008060000180549050905090565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161415156102ea57600080fd5b73__EventStoreLib_________________________630d93ee9c600084846000604051602001526040518463ffffffff167c01000000000000000000000000000000000000000000000000000000000281526004018084815260200183600019166000191681526020018260001916600019168152602001935050505060206040518083038186803b151561037e57600080fd5b6102c65a03f4151561038f57600080fd5b50505060405180519050505050565b60008060008073__EventStoreLib_________________________631b68f0916000876000604051608001526040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808381526020018281526020019250505060806040518083038186803b151561042057600080fd5b6102c65a03f4151561043157600080fd5b50505060405180519060200180519060200180519060200180519050935093509350935091935091935600a165627a7a7230582076e99be02e246e84dcde966bb4c9c177501cc7dd58e1ea7ad813358f82a764150029",
-  "deployedBytecode": "0x60606040526004361061006c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168062f55d9d1461007157806306661abd146100aa5780638da5cb5b146100d3578063e2e52ec114610128578063ed2e5a971461015c575b600080fd5b341561007c57600080fd5b6100a8600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506101e4565b005b34156100b557600080fd5b6100bd610259565b6040518082815260200191505060405180910390f35b34156100de57600080fd5b6100e6610268565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b341561013357600080fd5b61015a6004808035600019169060200190919080356000191690602001909190505061028e565b005b341561016757600080fd5b61017d600480803590602001909190505061039e565b604051808581526020018473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018360001916600019168152602001826000191660001916815260200194505050505060405180910390f35b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561024057600080fd5b8073ffffffffffffffffffffffffffffffffffffffff16ff5b60008060000180549050905090565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161415156102ea57600080fd5b73__EventStoreLib_________________________630d93ee9c600084846000604051602001526040518463ffffffff167c01000000000000000000000000000000000000000000000000000000000281526004018084815260200183600019166000191681526020018260001916600019168152602001935050505060206040518083038186803b151561037e57600080fd5b6102c65a03f4151561038f57600080fd5b50505060405180519050505050565b60008060008073__EventStoreLib_________________________631b68f0916000876000604051608001526040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808381526020018281526020019250505060806040518083038186803b151561042057600080fd5b6102c65a03f4151561043157600080fd5b50505060405180519060200180519060200180519060200180519050935093509350935091935091935600a165627a7a7230582076e99be02e246e84dcde966bb4c9c177501cc7dd58e1ea7ad813358f82a764150029",
-  "sourceMap": "83:39:0:-;;;202:10:1;194:5;;:18;;;;;;;;;;;;;;;;;;83:39:0;;;;;;",
-  "deployedSourceMap": "83:39:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;667:115:1;;;;;;;;;;;;;;;;;;;;;;;;;;;;225:91;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;127:20;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;322:189;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;521:140;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;667:115;739:5;;;;;;;;;;;725:19;;:10;:19;;;717:28;;;;;;;;768:6;755:20;;;225:91;268:4;290:5;:12;;:19;;;;283:26;;225:91;:::o;127:20::-;;;;;;;;;;;;;:::o;322:189::-;404:5;;;;;;;;;;;390:19;;:10;:19;;;382:28;;;;;;;;420:13;:19;453:5;472:3;489:5;420:84;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;322:189;;:::o;521:140::-;572:4;578:7;587;596;622:13;:18;641:5;648;622:32;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;615:39;;;;;;;;521:140;;;;;:::o",
-  "source": "pragma solidity ^0.4.19;\n\nimport \"transmute-eventstore/contracts/EventStore.sol\";\n\ncontract ESigner is EventStore {\n\n   \n}",
-  "sourcePath": "/Users/orie/OR13/transmute/packages/transmute-dashboard/contracts/ESigner.sol",
+  "bytecode": "0x608060405232600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555061048b806100546000396000f30060806040526004361061006c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168062f55d9d1461007157806306661abd146100b45780638da5cb5b146100df578063e2e52ec114610136578063ed2e5a9714610175575b600080fd5b34801561007d57600080fd5b506100b2600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610207565b005b3480156100c057600080fd5b506100c961027c565b6040518082815260200191505060405180910390f35b3480156100eb57600080fd5b506100f461028b565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561014257600080fd5b50610173600480360381019080803560001916906020019092919080356000191690602001909291905050506102b1565b005b34801561018157600080fd5b506101a06004803603810190808035906020019092919050505061037d565b604051808581526020018473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018360001916600019168152602001826000191660001916815260200194505050505060405180910390f35b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561026357600080fd5b8073ffffffffffffffffffffffffffffffffffffffff16ff5b60008060000180549050905090565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b73__EventStoreLib_________________________630d93ee9c600084846040518463ffffffff167c01000000000000000000000000000000000000000000000000000000000281526004018084815260200183600019166000191681526020018260001916600019168152602001935050505060206040518083038186803b15801561033d57600080fd5b505af4158015610351573d6000803e3d6000fd5b505050506040513d602081101561036757600080fd5b8101908080519060200190929190505050505050565b60008060008073__EventStoreLib_________________________631b68f0916000876040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808381526020018281526020019250505060806040518083038186803b1580156103f757600080fd5b505af415801561040b573d6000803e3d6000fd5b505050506040513d608081101561042157600080fd5b8101908080519060200190929190805190602001909291908051906020019092919080519060200190929190505050935093509350935091935091935600a165627a7a7230582055311548e02443a23bcbf3bf80e792dcb1fe42d3a319079f49942e7c62487e0f0029",
+  "deployedBytecode": "0x60806040526004361061006c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168062f55d9d1461007157806306661abd146100b45780638da5cb5b146100df578063e2e52ec114610136578063ed2e5a9714610175575b600080fd5b34801561007d57600080fd5b506100b2600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610207565b005b3480156100c057600080fd5b506100c961027c565b6040518082815260200191505060405180910390f35b3480156100eb57600080fd5b506100f461028b565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561014257600080fd5b50610173600480360381019080803560001916906020019092919080356000191690602001909291905050506102b1565b005b34801561018157600080fd5b506101a06004803603810190808035906020019092919050505061037d565b604051808581526020018473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018360001916600019168152602001826000191660001916815260200194505050505060405180910390f35b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561026357600080fd5b8073ffffffffffffffffffffffffffffffffffffffff16ff5b60008060000180549050905090565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b73__EventStoreLib_________________________630d93ee9c600084846040518463ffffffff167c01000000000000000000000000000000000000000000000000000000000281526004018084815260200183600019166000191681526020018260001916600019168152602001935050505060206040518083038186803b15801561033d57600080fd5b505af4158015610351573d6000803e3d6000fd5b505050506040513d602081101561036757600080fd5b8101908080519060200190929190505050505050565b60008060008073__EventStoreLib_________________________631b68f0916000876040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808381526020018281526020019250505060806040518083038186803b1580156103f757600080fd5b505af415801561040b573d6000803e3d6000fd5b505050506040513d608081101561042157600080fd5b8101908080519060200190929190805190602001909291908051906020019092919080519060200190929190505050935093509350935091935091935600a165627a7a7230582055311548e02443a23bcbf3bf80e792dcb1fe42d3a319079f49942e7c62487e0f0029",
+  "sourceMap": "82:39:0:-;;;240:9:2;232:5;;:17;;;;;;;;;;;;;;;;;;82:39:0;;;;;;",
+  "deployedSourceMap": "82:39:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;183:8:2;;;668:115;;8:9:-1;5:2;;;30:1;27;20:12;5:2;668:115:2;;;;;;;;;;;;;;;;;;;;;;;;;;;;262:92;;8:9:-1;5:2;;;30:1;27;20:12;5:2;262:92:2;;;;;;;;;;;;;;;;;;;;;;;127:20;;8:9:-1;5:2;;;30:1;27;20:12;5:2;127:20:2;;;;;;;;;;;;;;;;;;;;;;;;;;;360:151;;8:9:-1;5:2;;;30:1;27;20:12;5:2;360:151:2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;521:141;;8:9:-1;5:2;;;30:1;27;20:12;5:2;521:141:2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;668:115;740:5;;;;;;;;;;;726:19;;:10;:19;;;718:28;;;;;;;;769:6;756:20;;;262:92;305:4;328:5;:12;;:19;;;;321:26;;262:92;:::o;127:20::-;;;;;;;;;;;;;:::o;360:151::-;420:13;:19;453:5;472:3;489:5;420:84;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;420:84:2;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;420:84:2;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;420:84:2;;;;;;;;;;;;;;;;;360:151;;:::o;521:141::-;572:4;578:7;587;596;623:13;:18;642:5;649;623:32;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;623:32:2;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;623:32:2;;;;;;;13:3:-1;8;5:12;2:2;;;30:1;27;20:12;2:2;623:32:2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;616:39;;;;;;;;521:141;;;;;:::o",
+  "source": "pragma solidity ^0.4.19;\n\nimport \"transmute-framework/contracts/EventStore.sol\";\n\ncontract ESigner is EventStore {\n\n   \n}",
+  "sourcePath": "/Users/orie/Desktop/Transmute/transmute/packages/transmute-dashboard/contracts/ESigner.sol",
   "ast": {
-    "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-dashboard/contracts/ESigner.sol",
+    "absolutePath": "/Users/orie/Desktop/Transmute/transmute/packages/transmute-dashboard/contracts/ESigner.sol",
     "exportedSymbols": {
       "ESigner": [
         5
@@ -121,39 +126,39 @@
         "src": "0:24:0"
       },
       {
-        "absolutePath": "transmute-eventstore/contracts/EventStore.sol",
-        "file": "transmute-eventstore/contracts/EventStore.sol",
+        "absolutePath": "transmute-framework/contracts/EventStore.sol",
+        "file": "transmute-framework/contracts/EventStore.sol",
         "id": 2,
         "nodeType": "ImportDirective",
         "scope": 6,
-        "sourceUnit": 93,
-        "src": "26:55:0",
+        "sourceUnit": 150,
+        "src": "26:54:0",
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
         "baseContracts": [
           {
-            "arguments": [],
+            "arguments": null,
             "baseName": {
               "contractScope": null,
               "id": 3,
               "name": "EventStore",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 92,
-              "src": "103:10:0",
+              "referencedDeclaration": 149,
+              "src": "102:10:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_EventStore_$92",
+                "typeIdentifier": "t_contract$_EventStore_$149",
                 "typeString": "contract EventStore"
               }
             },
             "id": 4,
             "nodeType": "InheritanceSpecifier",
-            "src": "103:10:0"
+            "src": "102:10:0"
           }
         ],
         "contractDependencies": [
-          92
+          149
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -161,19 +166,19 @@
         "id": 5,
         "linearizedBaseContracts": [
           5,
-          92
+          149
         ],
         "name": "ESigner",
         "nodeType": "ContractDefinition",
         "nodes": [],
         "scope": 6,
-        "src": "83:39:0"
+        "src": "82:39:0"
       }
     ],
-    "src": "0:122:0"
+    "src": "0:121:0"
   },
   "legacyAST": {
-    "absolutePath": "/Users/orie/OR13/transmute/packages/transmute-dashboard/contracts/ESigner.sol",
+    "absolutePath": "/Users/orie/Desktop/Transmute/transmute/packages/transmute-dashboard/contracts/ESigner.sol",
     "exportedSymbols": {
       "ESigner": [
         5
@@ -194,39 +199,39 @@
         "src": "0:24:0"
       },
       {
-        "absolutePath": "transmute-eventstore/contracts/EventStore.sol",
-        "file": "transmute-eventstore/contracts/EventStore.sol",
+        "absolutePath": "transmute-framework/contracts/EventStore.sol",
+        "file": "transmute-framework/contracts/EventStore.sol",
         "id": 2,
         "nodeType": "ImportDirective",
         "scope": 6,
-        "sourceUnit": 93,
-        "src": "26:55:0",
+        "sourceUnit": 150,
+        "src": "26:54:0",
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
         "baseContracts": [
           {
-            "arguments": [],
+            "arguments": null,
             "baseName": {
               "contractScope": null,
               "id": 3,
               "name": "EventStore",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 92,
-              "src": "103:10:0",
+              "referencedDeclaration": 149,
+              "src": "102:10:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_EventStore_$92",
+                "typeIdentifier": "t_contract$_EventStore_$149",
                 "typeString": "contract EventStore"
               }
             },
             "id": 4,
             "nodeType": "InheritanceSpecifier",
-            "src": "103:10:0"
+            "src": "102:10:0"
           }
         ],
         "contractDependencies": [
-          92
+          149
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -234,23 +239,23 @@
         "id": 5,
         "linearizedBaseContracts": [
           5,
-          92
+          149
         ],
         "name": "ESigner",
         "nodeType": "ContractDefinition",
         "nodes": [],
         "scope": 6,
-        "src": "83:39:0"
+        "src": "82:39:0"
       }
     ],
-    "src": "0:122:0"
+    "src": "0:121:0"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
+    "version": "0.4.23+commit.124ca40d.Emscripten.clang"
   },
   "networks": {
-    "1522183114697": {
+    "1525800439053": {
       "events": {
         "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
           "anonymous": false,
@@ -281,87 +286,13 @@
         }
       },
       "links": {
-        "EventStoreLib": "0x8f799fbd9509f3295561da40d7ff14df377bf830",
-        "EventStore": "0x299c3bf1983fd4ad79fc13ccc6c087ac0dd63bbf"
+        "EventStoreLib": "0x05f9fe88b9432091c69f6a5efbb49a128def95b3",
+        "EventStore": "0x849b488c0afdf80ed415fe0248b97d3291cbf6d6"
       },
-      "address": "0xeb4401bbbb0da058acc1ba340be9db039d99cddd",
-      "transactionHash": "0x5bc077095da9090069e4cac8c251bf92edff1bd9ab5f75288ec5aa28e011c9fb"
-    },
-    "1522245407739": {
-      "events": {
-        "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "index",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "sender",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "key",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "value",
-              "type": "bytes32"
-            }
-          ],
-          "name": "TransmuteEvent",
-          "type": "event"
-        }
-      },
-      "links": {
-        "EventStoreLib": "0x8122cde49b988204a2ecc5e9581c267b4c7301f5",
-        "EventStore": "0x525499c1ec88fb73f476ec94f6313d713a8233c1"
-      },
-      "address": "0x655cfcd35f8b08e5077b2278e8ef416faac7add4",
-      "transactionHash": "0x03e9ffdf3ad75ad744ba7812d7e3a58029fd84f6b1d0469bd76f9f6ffea0f76a"
-    },
-    "1522248729445": {
-      "events": {
-        "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "index",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "sender",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "key",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "value",
-              "type": "bytes32"
-            }
-          ],
-          "name": "TransmuteEvent",
-          "type": "event"
-        }
-      },
-      "links": {
-        "EventStoreLib": "0x9c6eba18829e0acac18eb44def3a27d92ddd46cc",
-        "EventStore": "0xae709ae4269bb4b8e43df7bbc1ae8af2879d0a01"
-      },
-      "address": "0xbdd63a23d303216ab636696608902066ab7fdda4",
-      "transactionHash": "0xbae9b25c365788a398cb8b5767a1d9a50078ffa2f563c17697f751b37f88aa8a"
+      "address": "0x29a1c7c7ba91823af4b6f497bc34416496d94fcf",
+      "transactionHash": "0xfef86b1c68429616dfccdf47aa146214724de67713815c4c2b01f07e465fc2b6"
     }
   },
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-03-28T14:53:54.802Z"
+  "updatedAt": "2018-05-08T21:20:42.289Z"
 }

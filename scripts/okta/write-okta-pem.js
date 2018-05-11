@@ -4,7 +4,7 @@ const jwkToPem = require('jwk-to-pem');
 const fs = require('fs');
 
 let hostname = process.env.OKTA_HOSTNAME;
-let output = process.env.OUTPUT_FILE || './scripts/okta/okta.pem';
+let output = process.env.OUTPUT_FILE;
 
 const getJWKS = () => {
   return new Promise((resolve, reject) => {
