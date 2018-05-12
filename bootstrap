@@ -277,7 +277,7 @@ announce_prefix_fail () {
 check_prefix_npm () {
 
   trap announce_prefix_fail EXIT
-  TMP_FILE=$(mktemp -p $(npm config get prefix))
+  TMP_FILE=$(mktemp $(npm config get prefix)/tmp.XXXXXXXXXX)
   if [ "$?" -ne 0 ]; then
     announce_prefix_fail
   else
