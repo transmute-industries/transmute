@@ -123,6 +123,7 @@ macnsenter () {
 
 macreadlink () {
 	echo 'Installing coreutils'
+	#Installs 'greadlink' tool
 	brew install coreutils
 }
 
