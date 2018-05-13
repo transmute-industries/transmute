@@ -20,7 +20,6 @@ if [[ "$DO_JWT_DL" == 'y' ]]; then
   echo 'configure okta'
   ./scripts/configure-kong-okta-ipfs.sh
 fi
-echo 'configure framework'
 ./scripts/configure-framework-kong.sh
 
 lerna bootstrap
