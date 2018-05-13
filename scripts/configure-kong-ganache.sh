@@ -35,11 +35,11 @@ curl -k -X POST \
   --url $KONG_ADMIN_URL/apis/ \
   --data 'name=ganache' \
   --data 'hosts=ganache.transmute.minikube' \
-  --data 'upstream_url=http://'$GANACHE_CLUSTER_IP':8545/' | jq
+  --data 'upstream_url=http://'$GANACHE_CLUSTER_IP':8545/' | jq -r 
 
 echo 'GANACHE HEALTHCHECK'
 echo "https://ganache.transmute.minikube:$KONG_PROXY_PORT"
 
 curl -k -X POST \
   --url "https://ganache.transmute.minikube:$KONG_PROXY_PORT/ganache" \
-  --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":68}' | jq
+  --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":68}' | jq -r
