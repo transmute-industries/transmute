@@ -18,7 +18,7 @@ Here is a [video](https://drive.google.com/open?id=1ETHBCGyHYahiK-97fRE4-MAebbcp
 ### Oneliner
 
 ```
-curl -Ls https://raw.githubusercontent.com/transmute-industries/transmute/master/bootstrap | bash
+curl -Ls https://git.io/transmute_bootstrap | bash
 ```
 
 Notice that will install kubectl, minikube, helm, and ngrok for you, if
