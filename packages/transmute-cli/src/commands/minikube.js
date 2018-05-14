@@ -1,20 +1,16 @@
-const shell = require('shelljs');
+const run = require('./runner');
 
-export function status() {
-  var status_cmd = 'minikube status';
-  shell.exec(status_cmd);
-  console.log(status_cmd);
+export function init() {
+  let cmd2run =  '/usr/bin/bash';
+  let arg1 =  "-c";
+  let arg2 =  "$HOME/.transmute/git/transmute/setup/0.init.sh";
+  run.spawn( cmd2run, arg1, arg2 );
 }
 
 export function provision( clusterName ) {
   var prov_cmd = 'minikube start ';
-  shell.exec(prov_cmd);
+  run.ner( prov_cmd );
   console.log(prov_cmd);
   var prov_cmd = "./scripts/initializer " + clusterName;
-  shell.exec(prov_cmd);
-}
-
-export function ls() {
-  var prov_cmd = "pwd; ls"
-  shell.exec(prov_cmd);
+  run.ner( prov_cmd );
 }

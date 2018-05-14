@@ -17,8 +17,7 @@ const auth = require('./okta/index');
 const { writeFile } = require('./utils');
 
 // Commands
-const aks = require('./commands/aks');
-const minikube = require('./commands/minikube');
+const provision = require('./commands/provision');
 const runtest = require('./commands/runtest');
 const init = require('./commands/init');
 
@@ -71,8 +70,8 @@ vorpal
       else {
         var GenSSHKeys = false;
       }
-      aks.register
-      aks.init( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys )
+      provision.aks_register
+      provision.aks_init( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys )
     } else if (args.options.aws) {
       //aws.init()
       this.log('has not been implemented yet');
@@ -107,13 +106,13 @@ vorpal
       else {
         var GenSSHKeys = false;
       }
-      aks.register
-      aks.provision( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys )
+      provision.aks_register
+      provision.aks_provision( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys )
     } else if (args.options.aws) {
       //aws.provision()
       this.log('has not been implemented yet');
     } else if (args.options.minikube) {
-      minikube.provision()
+      provision.minikube_provision()
     }
     callback();
   });
@@ -130,7 +129,7 @@ vorpal
       // gkels()
       this.log('has not been implemented yet');
     } else if (args.options.aks) {
-      aks.ls()
+      provision.aks_ls()
     } else if (args.options.aws) {
       //awsls()
       this.log('has not been implemented yet');
