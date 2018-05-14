@@ -4,8 +4,6 @@ export function minikube( clusterName ) {
   var prov_cmd = 'minikube start ';
   run.ner( prov_cmd );
   console.log(prov_cmd);
-  var prov_cmd = "./scripts/initializer " + clusterName;
-  run.ner( prov_cmd );
 }
 
 export function aks( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys ) {

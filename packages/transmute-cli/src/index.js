@@ -17,7 +17,7 @@ const auth = require('./okta/index');
 const { writeFile } = require('./utils');
 
 // Commands
-const init = require('./commands/ls');
+const ls = require('./commands/ls');
 const init = require('./commands/init');
 const runtest = require('./commands/runtest');
 const provision = require('./commands/provision');
@@ -82,7 +82,7 @@ vorpal
   });
 
 vorpal
-  .command('k8s provision <clusterName>')
+  .command('k8s provision')
   .description('Provision k8s cluster')
   .option('--gke', 'Use gcloud GKE')
   .option('--nodes <nodes>', 'How many nodes to create the cluster with')
