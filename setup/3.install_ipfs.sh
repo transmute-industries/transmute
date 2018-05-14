@@ -34,31 +34,31 @@ curl -k -X POST \
   --data 'uris=/' \
   --data 'strip_uri=true' \
   --data "https_only=true" \
-  --data 'upstream_url=http://'$IPFS_CLUSTER_IP':5001/'  | jq
+  --data 'upstream_url=http://'$IPFS_CLUSTER_IP':5001/'  | jq -r '.'
 
 curl -k -X POST \
   --url $KONG_ADMIN_URL/apis/ipfs/plugins \
   --data "name=cors" \
   --data "config.origins=*" \
-  --data "config.methods=GET, PUT, POST"
+  --data "config.methods=GET, PUT, POST" | jq -r '.'
 
 #curl -k -X POST \
   #--url $KONG_ADMIN_URL/apis/ipfs/plugins \
   #--data "name=jwt"  \
-  #| jq
+  #| jq -r '.'
 
 #./scripts/okta/write-okta-pem.js
 
 #curl -k -X POST \
   #--url $KONG_ADMIN_URL/consumers \
   #--data "username="$KONG_CONSUMER_USERNAME \
-  #--data "custom_id="$KONG_CONSUMER_ID  | jq
+  #--data "custom_id="$KONG_CONSUMER_ID  | jq -r '.'
 
 #curl -k -X POST \
   #--url $KONG_ADMIN_URL/consumers/$KONG_CONSUMER_USERNAME/jwt \
   #-F "algorithm=RS256" \
   #-F "rsa_public_key=@"$OUTPUT_FILE \
-  #-F "key=https://"$OKTA_HOSTNAME"/oauth2/default"  | jq
+  #-F "key=https://"$OKTA_HOSTNAME"/oauth2/default"  | jq -r '.'
 
 
 #export ACCESS_TOKEN=$(node ./scripts/okta/get-okta-token.js)
@@ -70,7 +70,7 @@ sleep 3
 #curl -k -X GET \
   #--url $KONG_NGROK_PROXY_URL/ipfs/api/v0/id \
   #--header 'Authorization: Bearer '$ACCESS_TOKEN \
-  #| jq
+  #| jq -r '.'
 
 echo 'Enabling CORS for IPFS'
 
