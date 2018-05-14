@@ -54,7 +54,10 @@ before_script:
 - if [[ ! -e "$HOME/.local/bin/nsenter" ]]; then .ci/ubuntu-compile-nsenter.sh; fi
 - sudo cp $HOME/.local/bin/nsenter /usr/bin/nsenter
 - bash -l ./bootstrap
-- minikube start --vm-driver=none --kubernetes-version=$KUBE_VERSION
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l transmute help; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l transmute k8s provision --minikube; fi
+  #- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l transmute k8s init --minikube; fi
+  #- minikube start --vm-driver=none --kubernetes-version=$KUBE_VERSION
 # Fix the kubectl context, as it's often stale.
 - minikube update-context
 

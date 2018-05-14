@@ -1,20 +1,18 @@
-const shell = require('shelljs');
+const run = require('./runner');
 
-export function ls() {
-  var ls_cmd = 'az aks list';
-  shell.exec(ls_cmd);
-  console.log(ls_cmd);
+export function minikube( clusterName ) {
+  var prov_cmd = 'minikube start ';
+  run.ner( prov_cmd );
+  console.log(prov_cmd);
 }
 
-export function register() {
-  shell.exec('az provider register -n Microsoft.Network');
-  shell.exec('az provider register -n Microsoft.Storage');
-  shell.exec('az provider register -n Microsoft.Compute');
-  shell.exec('az provider register -n Microsoft.ContainerService');
+export function aks( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys ) {
+  run.ner('az provider register -n Microsoft.Network');
+  run.ner('az provider register -n Microsoft.Storage');
+  run.ner('az provider register -n Microsoft.Compute');
+  run.ner('az provider register -n Microsoft.ContainerService');
   console.log('Registering Microsoft perms');
-}
 
-export function provision( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys ) {
   if (GenSSHKeys) {
     var gensshkeys_opt = ' --generate-ssh-keys';
   }
@@ -44,13 +42,13 @@ export function provision( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKey
     + nodes_opt
     + akscluster_opt
     + gensshkeys_opt;
-  shell.exec(prov_cmd);
+  run.ner(prov_cmd);
   console.log(prov_cmd);
   var prov_cmd = 'az aks get-credentials '
     + akscluster_opt
     + group_opt
-  shell.exec(prov_cmd);
+  run.ner(prov_cmd);
   console.log(prov_cmd);
   var init_cmd = "./scripts/initializer " + myAKSCluster;
-  shell.exec(init_cmd);
+  run.ner(init_cmd);
 }
