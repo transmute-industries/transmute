@@ -17,9 +17,10 @@ const auth = require('./okta/index');
 const { writeFile } = require('./utils');
 
 // Commands
-const provision = require('./commands/provision');
-const runtest = require('./commands/runtest');
+const init = require('./commands/ls');
 const init = require('./commands/init');
+const runtest = require('./commands/runtest');
+const provision = require('./commands/provision');
 
 auth(vorpal);
 
@@ -70,8 +71,7 @@ vorpal
       else {
         var GenSSHKeys = false;
       }
-      provision.aks_register
-      provision.aks_init( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys )
+      init.aks( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys )
     } else if (args.options.aws) {
       //aws.init()
       this.log('has not been implemented yet');
@@ -106,13 +106,12 @@ vorpal
       else {
         var GenSSHKeys = false;
       }
-      provision.aks_register
-      provision.aks_provision( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys )
+      provision.aks( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys );
     } else if (args.options.aws) {
       //aws.provision()
       this.log('has not been implemented yet');
     } else if (args.options.minikube) {
-      provision.minikube_provision()
+      provision.minikube();
     }
     callback();
   });
@@ -126,15 +125,15 @@ vorpal
   .option('--minikube', 'Use minikube')
   .action(function(args, callback) {
     if (args.options.gke) {
-      // gkels()
+      //ls.gke()
       this.log('has not been implemented yet');
     } else if (args.options.aks) {
-      provision.aks_ls()
+      ls.aks();
     } else if (args.options.aws) {
-      //awsls()
+      //ls.aws()
       this.log('has not been implemented yet');
     } else if (args.options.minikube) {
-      minikube.ls()
+      ls.minikube();
     }
     callback();
   });
