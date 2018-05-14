@@ -58,7 +58,7 @@ Getting and deleting apis:
 
 ```
 curl -k -X GET \
-  --url https://192.168.99.100:32444/apis/ | jq
+  --url https://192.168.99.100:32444/apis/ | jq -r '.'
 
 curl -k -X DELETE \
   --url https://192.168.99.100:32444/apis/ganache

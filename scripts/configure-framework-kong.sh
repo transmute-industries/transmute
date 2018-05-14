@@ -1,4 +1,7 @@
 #!/bin/bash
+
+echo 'UPDATE PACKAGES transmute-config/env.json'
+
 set -e
 export KONG_ADMIN_URL=$(minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
 export KONG_PROXY_URL=$(minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
@@ -24,4 +27,5 @@ find $DASHBOARD_CONFIG -type f | xargs sed -i 's/'$OLD_KONG_PROXY_PORT'/'$NEW_KO
 
 
 curl -k -X GET \
-    --url $KONG_ADMIN_URL/apis
+    --url $KONG_ADMIN_URL/apis \
+    | jq '.'

@@ -73,7 +73,7 @@ warrrn () {
 chkdir () {
   if [ ! -w $1 ] ; then
     sudo mkdir -p $1
-    sudo chown $USER. $1
+    sudo chown $USER $1
   fi
   if [ ! -w $1 ] ; then
     errror
@@ -118,6 +118,13 @@ machelm () {
 macnsenter () {
 	echo 'NOT Installing nsenter'
 	#brew install kubernetes-nsenter
+}
+
+
+macreadlink () {
+	echo 'Installing coreutils'
+	#Installs 'greadlink' tool
+	brew install coreutils
 }
 
 windowsminikube () {
@@ -277,7 +284,7 @@ announce_prefix_fail () {
 check_prefix_npm () {
 
   trap announce_prefix_fail EXIT
-  TMP_FILE=$(mktemp -p $(npm config get prefix))
+  TMP_FILE=$(mktemp $(npm config get prefix)/tmp.XXXXXXXXXX)
   if [ "$?" -ne 0 ]; then
     announce_prefix_fail
   else
@@ -456,6 +463,7 @@ macreqs () {
   macminikube
   machelm
   macnsenter
+  macreadlink
   install_nvm
   lts_install
   check_prefix_npm
@@ -606,7 +614,12 @@ initializer
 speaker 'The bootstrap has finished'
 speaker 'you have completed all the way to "npm run setup" here:'
 echo 'https://github.com/transmute-industries/transmute#environment-scripts-and-updating'
-speaker "You should now run 'npm run setup' inside '$(readlink -f $TRANSMUTE_DIR)'"
+if [ "$PLATFORM" = "os.osx.x86_64" ] ; then
+  SETUP_DIR=$(greadlink -f $TRANSMUTE_DIR)
+else
+  SETUP_DIR=$(readlink -f $TRANSMUTE_DIR)
+fi
+speaker "You should now run 'npm run setup' inside '$SETUP_DIR'"
 
 trap - EXIT
 # End run it wrapper

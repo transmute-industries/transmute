@@ -15,7 +15,8 @@ curl -k -X POST \
   --data 'name=ipfs' \
   --data 'hosts=ipfs.transmute.minikube' \
   --data "https_only=true" \
-  --data 'upstream_url=http://'$IPFS_CLUSTER_IP':5001/'
+  --data 'upstream_url=http://'$IPFS_CLUSTER_IP':5001/' \
+  | jq '.'
 
 # Configure CORS for IPFS via Kong
 curl -k -X POST \
@@ -23,11 +24,11 @@ curl -k -X POST \
   --data "name=cors" \
   --data "config.origins=*" \
   --data "config.methods=GET, PUT, POST" \
-  | jq
+  | jq '.'
 
 echo 'IPFS HEALTHCHECK'
 echo 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT
 
 curl -k -X GET \
   --url 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT'/api/v0/id' \
-  | jq
+  | jq '.'

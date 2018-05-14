@@ -18,13 +18,13 @@ speaker () {
 }
 
 curl -k -X DELETE \
-  --url $KONG_ADMIN_URL/apis/ipfs/plugins/cea869a3-faa4-44ae-a4d7-2e81a0cb32ef | jq
+  --url $KONG_ADMIN_URL/apis/ipfs/plugins/cea869a3-faa4-44ae-a4d7-2e81a0cb32ef | jq -r '.'
 
 curl -k -X DELETE \
-  --url $KONG_ADMIN_URL/apis/ipfs | jq
+  --url $KONG_ADMIN_URL/apis/ipfs | jq -r '.'
 
 curl -k -X DELETE \
-  --url $KONG_ADMIN_URL/consumers/$KONG_CONSUMER_USERNAME | jq
+  --url $KONG_ADMIN_URL/consumers/$KONG_CONSUMER_USERNAME | jq -r '.'
 
 curl -k -X DELETE \
   --url $KONG_ADMIN_URL/apis/ganache
