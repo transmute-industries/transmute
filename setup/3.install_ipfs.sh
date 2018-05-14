@@ -2,7 +2,6 @@
 kubectl create -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-operator.yaml
 kubectl create -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-storageclasses.yaml
 kubectl create -f ./components/ipfs/openebs-ipfs.yaml
-hthhps://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-storageclasses.yaml
 
 # while loop
 countone=1
