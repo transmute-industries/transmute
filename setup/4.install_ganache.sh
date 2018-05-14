@@ -10,7 +10,7 @@ curl -k -X POST \
   --url $KONG_ADMIN_URL/apis/ \
   --data 'name=ganache' \
   --data 'uris=/ganache' \
-  --data 'upstream_url=http://'$GANACHE_CLUSTER_IP':8545/' | jq
+  --data 'upstream_url=http://'$GANACHE_CLUSTER_IP':8545/' | jq -r '.'
 
 echo "Waiting for Ganache..."
 sleep 45
@@ -18,7 +18,7 @@ echo "Ganache ready"
 
 curl -k -X POST \
   --url $KONG_NGROK_PROXY_URL/ganache \
-  --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":68}' | jq
+  --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":68}' | jq -r '.'
 
 echo -e $"\n\n\n\nKONG_NGROK_PROXY_URL: "$KONG_NGROK_PROXY_URL
 echo -e $"KONG_NGROK_HOST: "$KONG_NGROK_HOST
