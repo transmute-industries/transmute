@@ -76,7 +76,12 @@ vorpal
       //aws.init()
       this.log('has not been implemented yet');
     } else if (args.options.minikube) {
-      init.minikube()
+      if ( args.options.clusterName ) {
+        init.minikube( args.options.clusterName );
+      }
+      else {
+        init.minikube();
+      }
     }
     callback();
   });

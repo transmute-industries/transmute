@@ -1,7 +1,7 @@
 const run = require('./runner');
 
-export function minikube() {
-  var prov_cmd = "./scripts/initializer " + clusterName;
+export function minikube( clusterName ) {
+  let prov_cmd = "$HOME/.transmute/git/transmute/scripts/initializer " + clusterName;
   run.ner( prov_cmd );
   let cmd2run =  '/usr/bin/bash';
   let arg1 =  "-c";
