@@ -22,6 +22,6 @@ helm ls
 kubectl get services
 
 curl -k -X GET \
-  --url $KONG_ADMIN_URL/apis/ipfs/plugins | jq
+  --url $KONG_ADMIN_URL/apis/ipfs/plugins | jq -r '.'
 
 speaker 'transmute is operational'

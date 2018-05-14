@@ -52,4 +52,4 @@ echo "KONG_NGROK_PROXY_URL "$KONG_NGROK_PROXY_URL
 
 curl -k -X GET \
   --url $KONG_ADMIN_URL/apis \
-  | jq
+  | jq -r '.'
