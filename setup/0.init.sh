@@ -135,3 +135,6 @@ read -p "Press enter to continue" answer
 # ╚═╝╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝     ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝
                                                                                                                      
 . ./setup/4.install_ganache.sh
+
+echo 'finally, you will need to configure your hosts file to make kong proxy work correctly.'
+echo 'you can used the script /scripts/configure-hosts.sh to do so.'

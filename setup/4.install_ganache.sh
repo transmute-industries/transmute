@@ -9,7 +9,7 @@ export KONG_PROXY_PORT=$(kubectl get service gateway-kong-proxy -o json | jq -r 
 curl -k -X POST \
   --url $KONG_ADMIN_URL/apis/ \
   --data 'name=ganache' \
-  --data 'uris=/ganache' \
+  --data 'hosts=ganache.transmute.minikube' \
   --data 'upstream_url=http://'$GANACHE_CLUSTER_IP':8545/' | jq -r '.'
 
 echo "Waiting for Ganache..."
