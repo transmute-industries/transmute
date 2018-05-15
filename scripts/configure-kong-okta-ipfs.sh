@@ -9,6 +9,12 @@ echo 'Configure Kong to use Okta to secure IPFS'
 curl -k -X POST $KONG_ADMIN_URL/apis/ipfs/plugins \
     --data "name=jwt"
 
+# How to delete a plugin.
+# Get the plugin id from the api
+# curl -k -X GET $KONG_ADMIN_URL/apis/ipfs/plugins 
+# Delete it from the api
+# curl -k -X DELETE $KONG_ADMIN_URL/apis/ipfs/plugins/e9522844-ef05-45b1-b3fa-09f380d4c0ec
+
 echo 'Export CONSUMER_ID'
 export CONSUMER_ID=$(curl -k -X POST $KONG_ADMIN_URL/consumers \
     --data "username=bob@example.com" \
