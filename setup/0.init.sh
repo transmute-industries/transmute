@@ -136,5 +136,16 @@ read -p "Press enter to continue" answer
                                                                                                                      
 . ./setup/4.install_ganache.sh
 
-echo 'finally, you will need to configure your hosts file to make kong proxy work correctly.'
-echo 'you can used the script /scripts/configure-hosts.sh to do so.'
+speaker "Would you like to update your hosts file automatically?"
+read -p '[yn]' answer
+if [ "$answer" = y ] ; then
+  . ../scripts/configure-hosts.sh
+fi
+
+if [ "$answer" = n ] ; then
+  speaker "Make sure to update your /etc/hosts file, before proceeding."
+  speaker "It should look like this:"
+  echo '192.168.99.100  transmute.minikube'
+  echo '192.168.99.100  ipfs.transmute.minikube'
+  echo '192.168.99.100  ganache.transmute.minikube'
+fi
