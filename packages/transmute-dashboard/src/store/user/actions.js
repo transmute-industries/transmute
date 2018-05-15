@@ -4,12 +4,11 @@ import axios from 'axios';
 import * as actionCreators from './actionCreators';
 import * as middleware from './middleware';
 
-export const register = async ({ firstName, lastName, email }) => {
+export const register = async ({ edArmorPub, secArmorPub }) => {
   try {
     let response = await middleware.register({
-      firstName,
-      lastName,
-      email
+      edArmorPub,
+      secArmorPub
     });
     return actionCreators.registerSuccess({
       ...response.data

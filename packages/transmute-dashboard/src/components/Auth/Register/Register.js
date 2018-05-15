@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import logo from '../../../images/transmute.logo.png';
 
 import * as actions from '../../../store/user/actions';
+const openpgp = require('openpgp');
 
 const styles = theme => ({
   root: {
@@ -34,9 +35,8 @@ const styles = theme => ({
 class Register extends Component {
   state = {
     error: null,
-    firstName: '',
-    lastName: '',
-    email: ''
+    edArmorPub: null,
+    secArmorPub: null
   };
 
   handleSubmit = e => {
@@ -47,14 +47,30 @@ class Register extends Component {
     });
   };
 
-  handleChange = name => event => {
+  handleKeyUpload = key => event => {
+    const file = event.target.files[0];
+    const filename = event.target.value.split(/(\\|\/)/g).pop();
+
+    let reader = new window.FileReader();
+    reader.onload = () => {
+      const pub = openpgp.key.readArmored(
+        reader.result
+      ).keys[0];
+      this.setState({
+        [key]: pub.armor()
+      });
+    };
+    reader.readAsText(file);
+  };
+
+  handleChange = key => async event => {
     this.setState({
-      [name]: event.target.value
+      [key]: event.target.value
     });
   };
 
   render() {
-    const { classes, user } = this.props;
+    const { classes, user, edArmorPub, secArmorPub } = this.props;
     const registerForm = (
       <Grid container className={classNames(classes.root)}>
         <Grid item xs={12}>
@@ -64,18 +80,32 @@ class Register extends Component {
             className={classNames(classes.margin, classes.logo)}
           />
         </Grid>
+
         <Grid item xs={12}>
           <FormControl
             className={classNames(classes.margin, classes.textField)}
           >
-            <InputLabel htmlFor="adornment-firstName">First Name</InputLabel>
-            <Input
-              className={classNames(classes.textInput)}
-              id="firstName"
-              type="text"
-              value={this.state.firstName}
-              onChange={this.handleChange('firstName')}
+            <input
+              id="edKeyFile"
+              type="file"
+              onChange={this.handleKeyUpload('edArmorPub')}
+              style={{
+                width: 0,
+                height: 0,
+                opacity: 0,
+                overflow: 'hidden',
+                position: 'absolute',
+                zIndex: 1,
+              }}
             />
+            <Button
+              color="secondary"
+              component="label"
+              htmlFor="edKeyFile"
+              // disabled={edArmorPub !== null}
+            >
+              Upload ED25519 Armored Public Key
+            </Button>
           </FormControl>
         </Grid>
 
@@ -83,29 +113,27 @@ class Register extends Component {
           <FormControl
             className={classNames(classes.margin, classes.textField)}
           >
-            <InputLabel htmlFor="adornment-lastName">Last Name</InputLabel>
-            <Input
-              className={classNames(classes.textInput)}
-              id="lastName"
-              type="text"
-              value={this.state.lastName}
-              onChange={this.handleChange('lastName')}
+            <input
+              id="secKeyFile"
+              type="file"
+              onChange={this.handleKeyUpload('secArmorPub')}
+              style={{
+                width: 0,
+                height: 0,
+                opacity: 0,
+                overflow: 'hidden',
+                position: 'absolute',
+                zIndex: 1,
+              }}
             />
-          </FormControl>
-        </Grid>
-
-        <Grid item xs={12}>
-          <FormControl
-            className={classNames(classes.margin, classes.textField)}
-          >
-            <InputLabel htmlFor="adornment-email">Email</InputLabel>
-            <Input
-              className={classNames(classes.textInput)}
-              id="email"
-              type="email"
-              value={this.state.email}
-              onChange={this.handleChange('email')}
-            />
+            <Button
+              color="secondary"
+              component="label"
+              htmlFor="secKeyFile"
+              // disabled={secArmorPub !== null}
+            >
+              Upload SECP256K1 Armored Public Key
+            </Button>
           </FormControl>
         </Grid>
 
@@ -114,9 +142,8 @@ class Register extends Component {
             variant="raised"
             color="secondary"
             disabled={
-              this.state.email.trim().length === 0 ||
-              this.state.firstName.trim().length === 0 ||
-              this.state.lastName.trim().length === 0
+              this.state.edArmorPub == null ||
+              this.state.secArmorPub == null
             }
             onClick={this.handleSubmit}
           >
@@ -125,6 +152,8 @@ class Register extends Component {
         </Grid>
       </Grid>
     );
+
+    
 
     const registrationSuccess = (
       <Grid container className={classNames(classes.root)}>
@@ -148,53 +177,12 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     registerWithActivationEmail: async formData => {
-      const { email, firstName, lastName } = formData;
+      const { edArmorPub, secArmorPub } = formData;
       const action = await actions.register({
-        email,
-        firstName,
-        lastName
+        edArmorPub,
+        secArmorPub
       });
-      // let action = {
-      //   type: 'REGISTRATION_SUCCESS',
-      //   payload: {
-      //     id: '00ueq5di6qxVeztjg0h7',
-      //     status: 'STAGED',
-      //     created: '2018-04-15T19:17:59.000Z',
-      //     activated: null,
-      //     statusChanged: null,
-      //     lastLogin: null,
-      //     lastUpdated: '2018-04-15T19:17:59.000Z',
-      //     passwordChanged: null,
-      //     profile: {
-      //       firstName: 'Alice',
-      //       lastName: 'Smith',
-      //       mobilePhone: null,
-      //       secondEmail: null,
-      //       login: 'alice@example.com',
-      //       email: 'alice@example.com'
-      //     },
-      //     credentials: {
-      //       provider: {
-      //         type: 'OKTA',
-      //         name: 'OKTA'
-      //       }
-      //     },
-      //     _links: {
-      //       activate: {
-      //         href:
-      //           'https://dev-665774.oktapreview.com/api/v1/users/00ueq5di6qxVeztjg0h7/lifecycle/activate',
-      //         method: 'POST'
-      //       },
-      //       self: {
-      //         href:
-      //           'https://dev-665774.oktapreview.com/api/v1/users/00ueq5di6qxVeztjg0h7'
-      //       }
-      //     }
-      //   }
-      // };
       dispatch(action);
-      // console.log(JSON.stringify(action, null, 2));
-      // dispatch(loginApiCall(oktaAuth, email, password))
     }
   };
 };
