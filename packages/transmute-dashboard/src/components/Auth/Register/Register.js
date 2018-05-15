@@ -56,18 +56,26 @@ class Register extends Component {
 
     let reader = new window.FileReader();
     reader.onload = () => {
-      const pub = openpgp.key.readArmored(
-        reader.result
-      ).keys[0];
-      if (pub.primaryKey.params[0].getName() !== key) {
+      let pub;
+      try {
+        pub = openpgp.key.readArmored(
+          reader.result
+        ).keys[0];
+        
+        if (pub.primaryKey.params[0].getName() !== key) {
+          this.setState({
+            error: `Uploaded key is ${pub.primaryKey.params[0].getName()}, please upload a ${key} key`
+          });
+        } else {
+          this.setState({
+            error: null,
+            [key]: pub.armor(),
+            [key_filename]: filename
+          });
+        }
+      } catch (err) {
         this.setState({
-          error: `Uploaded key is ${pub.primaryKey.params[0].getName()}, please upload a ${key} key`
-        });
-      } else {
-        this.setState({
-          error: null,
-          [key]: pub.armor(),
-          [key_filename]: filename
+          error: 'Uploaded file is not a key.'
         });
       }
     };
