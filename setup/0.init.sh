@@ -139,7 +139,7 @@ read -p "Press enter to continue" answer
 speaker "Would you like to update your hosts file automatically?"
 read -p '[yn]' answer
 if [ "$answer" = y ] ; then
-  . ../scripts/configure-hosts.sh
+  . ./scripts/configure-hosts.sh
 fi
 
 if [ "$answer" = n ] ; then
