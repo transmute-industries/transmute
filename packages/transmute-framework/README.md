@@ -33,7 +33,7 @@ TRANSMUTE_ENV='localhost' npm run test
 If you are using the minikube environment, you will need to ensure that the framework is configured to connect to the correct ipfs and ethereum rpc interface.
 
 
-Once you have setup the minikube cluster:
+Follow the instructions in the root level [readme](https://github.com/transmute-industries/transmute/blob/master/README.md).
 
 ```
 
@@ -69,6 +69,8 @@ npm run test
 ```
 
 #### Usage
+
+The examples below are pulled from the `__tests__` directories, that are run by travis ci.
 
 The `EventStoreFactory` contract can be used to create `EventStore` contracts.
 
@@ -163,4 +165,6 @@ await streamModel.sync();
 ```
 
 Stream models filter events, and then use a reducer function to build up state, just like Redux!
+
+See `./src/__tests__` for more example usage.
 
