@@ -94,6 +94,14 @@ class Register extends Component {
         </Grid>
 
         <Grid item xs={12}>
+          <p>
+            Please upload your ed25519 and secp256k1 keys - note, these keys need to have certified one
+            another and must have the same email and name associated with each.
+            If you are unfamiliar with generating and certifying keys, <a href="https://github.com/eolszewski/sec-ed-cert">this repository</a> can take care of that for you:
+          </p>
+        </Grid>
+
+        <Grid item xs={12}>
           <FormControl
             className={classNames(classes.margin, classes.textField)}
           >
@@ -176,9 +184,7 @@ class Register extends Component {
           </p>}
         </Grid>}
       </Grid>
-    );
-
-    
+    );    
 
     const registrationSuccess = (
       <Grid container className={classNames(classes.root)}>
