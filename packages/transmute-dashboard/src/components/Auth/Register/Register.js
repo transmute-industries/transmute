@@ -166,6 +166,15 @@ class Register extends Component {
             {error}
           </p>
         </Grid>}
+
+        {user.error !== null && <Grid item xs={12}>
+          {user.error.error !== null && <p>
+            {user.error.error}
+          </p>}
+          {user.error.message !== null && <p>
+            {user.error.message}
+          </p>}
+        </Grid>}
       </Grid>
     );
 
