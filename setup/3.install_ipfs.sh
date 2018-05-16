@@ -1,26 +1,10 @@
 #!/bin/sh
-kubectl create -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-operator.yaml
-kubectl create -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-storageclasses.yaml
-kubectl create -f ./components/ipfs/openebs-ipfs.yaml
 
-# while loop
-countone=1
-# timeout for 15 minutes
-while [ $countone -lt 151 ]
-do
-  echo -n '.'
-  RESULT=$(kubectl get po --namespace=kube-system | grep openebs-provisioner | grep Running)
-  if [ "$RESULT" ]; then
-      echo '.'
-      echo "$RESULT"
-      break
-  fi
-  countone=`expr $countone + 1`
-  sleep 3
-done
+export KONG_PROXY_URL=$(minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
 
-echo "openebs is now up and running"
+# TODO: pull this out into its own script...
 
+. ./setup/2.1.install_openebs.sh
 
 helm install stable/ipfs --name decentralized-storage
 
@@ -62,14 +46,7 @@ curl -k -X POST \
 
 #export ACCESS_TOKEN=$(node ./scripts/okta/get-okta-token.js)
 
-export KONG_NGROK_PROXY_URL=$(minikube service gateway-kong-proxy --url | sed 's,http://'$MINIKUBE_IP',https://'$KONG_NGROK_HOST',g')
-
-sleep 3
-
-#curl -k -X GET \
-  #--url $KONG_NGROK_PROXY_URL/ipfs/api/v0/id \
-  #--header 'Authorization: Bearer '$ACCESS_TOKEN \
-  #| jq -r '.'
+sleep 50
 
 echo 'Enabling CORS for IPFS'
 

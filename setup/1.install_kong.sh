@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 : ${USE_VOX:=y}
 helm install stable/kong --name gateway
 
@@ -18,37 +18,12 @@ speaker () {
   fi
 }
 
-speaker 'waiting for kong to wake up, come back '
+speaker 'Waiting for kong to wake up, come back '
 
-#sleep $SECONDS_FOR_KONG
-# while loop
-countone=1
-# timeout for 15 minutes
-while [ $countone -lt 151 ]
-do
-  echo -n '.'
-  RESULT=$(kubectl get po --namespace=default | grep gateway-kong | grep Running)
-  if [ "$RESULT" ]; then
-      sleep 3
-      echo '.'
-      echo "$RESULT"
-      break
-  fi
-  countone=`expr $countone + 1`
-  sleep 3
-done
-sleep 1
-
-echo "Kong is now up and running.."
+# required because kubectl will lie about kong being ready.
+sleep 500
 
 export KONG_ADMIN_URL=$(minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
-export KONG_PROXY_URL=$(minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
-
-speaker 'kong is now ready...'
-
-export KONG_NGROK_PROXY_URL=$(minikube service gateway-kong-proxy --url | sed 's,http://'$MINIKUBE_IP',https://'$KONG_NGROK_HOST',g')
-
-echo "KONG_NGROK_PROXY_URL "$KONG_NGROK_PROXY_URL
 
 curl -k -X GET \
   --url $KONG_ADMIN_URL/apis \
