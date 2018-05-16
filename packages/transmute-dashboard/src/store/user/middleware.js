@@ -5,21 +5,17 @@ const ENVS = {
   TEST: '???',
   PROD: 'https://transmute-api.herokuapp.com'
 };
-export const register = async ({ firstName, lastName, email }) => {
+export const register = async ({ edArmorPub, secArmorPub }) => {
   return axios
     .create({
-      baseURL: ENVS.PROD,
+      baseURL: ENVS.LOCAL,
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json'
       }
     })
     .post('/api/v0/users', {
-      profile: {
-        firstName,
-        lastName,
-        email: email,
-        login: email
-      }
+      edArmorPub,
+      secArmorPub
     });
 };
