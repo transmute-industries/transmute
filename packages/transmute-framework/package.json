@@ -10,7 +10,6 @@
   ],
   "scripts": {
     "start": "npm test",
-    "build": "./node_modules/bili/dist/cli.js --format cjs ./src/index.js",
     "test": "NODE_TLS_REJECT_UNAUTHORIZED=0 react-scripts test --coverage --forceExit",
     "test:report": "codecov && rm -rf ./coverage",
     "test:smoke": "node ./smoke_tests/module.test.js",
