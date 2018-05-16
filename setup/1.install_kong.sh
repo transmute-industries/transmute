@@ -21,7 +21,7 @@ speaker () {
 speaker 'Waiting for kong to wake up, come back '
 
 # required because kubectl will lie about kong being ready.
-sleep 200
+sleep 500
 
 export KONG_ADMIN_URL=$(minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
 
