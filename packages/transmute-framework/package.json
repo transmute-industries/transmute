@@ -1,12 +1,11 @@
 {
   "name": "transmute-framework",
   "version": "0.2.0-alpha.4",
-  "description": "EventStore Middleware",
+  "description": "Event Sourced Decentralized Application Development Framework.",
   "main": "src/index.js",
   "files": [
     "contracts",
-    "src",
-    "docs"
+    "src"
   ],
   "scripts": {
     "start": "npm test",
