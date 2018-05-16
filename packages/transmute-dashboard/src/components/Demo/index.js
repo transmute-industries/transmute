@@ -65,7 +65,7 @@ class Demo extends Component {
 
     let eventStoreAddresses = await eventStoreFactory.getEventStores();
 
-    if (!currentEventStoreAddress) {
+    if (!currentEventStoreAddress || currentEventStoreAddress === 'undefined') {
       let factoryAddress =
         eventStoreFactory.eventStoreFactoryContractInstance.address;
       let reciept = await eventStoreFactory.createEventStore(accounts[0]);
