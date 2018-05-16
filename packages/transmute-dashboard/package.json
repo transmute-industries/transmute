@@ -64,7 +64,7 @@
     "soltsice": "^0.10.11",
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
-    "transmute-framework": "0.2.0-alpha.2",
+    "transmute-framework": "0.2.0-alpha.3",
     "url-loader": "0.6.2",
     "web3": "^0.19.1",
     "webpack": "3.8.1",
@@ -73,7 +73,6 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "transmute": "node ./cli/index.js",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js && cp ./build/index.html ./build/404.html",
     "test": "node scripts/test.js --env=jsdom",
