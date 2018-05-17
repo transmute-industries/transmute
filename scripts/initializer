@@ -73,9 +73,6 @@ helm install \
  --set \
  persistence.storageClass=openebs-ipfs,persistence.size=4Gi,persistence.enabled=true
 
-# Kong
-helm install stable/kong --name king-kong
-
 # OpenFaaS
 ## create namespaces
 kubectl create ns openfaas
