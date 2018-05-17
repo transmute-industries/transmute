@@ -20,6 +20,9 @@ const styles = theme => ({
   margin: {
     margin: theme.spacing.unit,
   },
+  formControl: {
+    minWidth: '600px'
+  }
 });
 
 class ProfilePage extends Component {
@@ -67,7 +70,7 @@ class ProfilePage extends Component {
         <div>
 
           <Grid item md={12}>
-            <FormControl className={classNames(classes.margin)}>
+            <FormControl className={classNames(classes.margin, classes.formControl)}>
               <InputLabel>First Name</InputLabel>
               <Input
                 className={classNames(classes.textInput)}
@@ -80,7 +83,7 @@ class ProfilePage extends Component {
           </Grid>
 
           <Grid item md={12}>
-            <FormControl className={classNames(classes.margin)}>
+            <FormControl className={classNames(classes.margin, classes.formControl)}>
               <InputLabel>Last Name</InputLabel>
               <Input
                 className={classNames(classes.textInput)}
@@ -93,7 +96,7 @@ class ProfilePage extends Component {
           </Grid>
 
           <Grid item md={12}>
-            <FormControl className={classNames(classes.margin)}>
+            <FormControl className={classNames(classes.margin, classes.formControl)}>
               <InputLabel>Email</InputLabel>
               <Input
                 className={classNames(classes.textInput)}
@@ -107,7 +110,7 @@ class ProfilePage extends Component {
           </Grid>
 
           <Grid item md={12}>
-            <FormControl className={classNames(classes.margin)}>
+            <FormControl className={classNames(classes.margin, classes.formControl)}>
               <InputLabel>ED25519 Public Key</InputLabel>
               <Input
                 id="ed-public-key"
@@ -121,7 +124,7 @@ class ProfilePage extends Component {
           </Grid>
 
           <Grid item md={12}>
-            <FormControl className={classNames(classes.margin)}>
+            <FormControl className={classNames(classes.margin, classes.formControl)}>
               <InputLabel>SECP256K1 Public Key</InputLabel>
               <Input
                 id="sec-public-key"
