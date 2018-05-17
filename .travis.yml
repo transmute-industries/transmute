@@ -43,7 +43,7 @@ before_script:
 # Download kubectl, which is a requirement for using minikube.
 # Download minikube.
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh .ci/linux_before_install.sh; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sh .ci/mac_before_script.sh; fi
+  #- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sh .ci/mac_before_script.sh; fi
 - bash -l -c "echo PATH=$HOME/.transmute/bin:$PATH >> $HOME/.bashrc"
 - bash -l -c "echo PATH=$HOME/.local/bin:$PATH >> $HOME/.bashrc"
 - if [[ ! -e "/usr/local/bin/kubectl" ]]; then curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/$KUBE_VERSION/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/; fi
@@ -61,31 +61,12 @@ before_script:
 - bash -l -c "npm i"
 - bash -l -c "npm run build"
 - bash -l -c "npm i -g"
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "transmute help"; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "transmute k8s provision --minikube --vmdriver none"; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "yes y|transmute k8s init --minikube"; fi
 - cd $TRAVIS_BUILD_DIR
 
 script:
-  # Debugs - this next block should be left commented as it just eats up time on regular builds
-  # However, if builds are failing and you don't know why uncomment this block and ensure everything appears to be sane
-  #- PATH=$HOME/.transmute/bin:$PATH which kubectl
-  #- PATH=$HOME/.transmute/bin:$PATH which minikube
-  #- bash -l -c "which npm"
-  #- bash -l -c "which node"
-  #- bash -l -c "node -v"
-  #- bash -l -c "npm -v"
-  #- bash -l -c "node -v"
-  #- bash -l -c "which ngrok"
-  #- bash -l -c "which helm"
-  #- bash -l -c "which nsenter"
-  # END Debugs
-# Wait for Kubernetes to be up and ready.
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "transmute k8s provision --minikube --vmdriver none"; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "yes y|transmute k8s init --minikube"; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l .ci/linux_script; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sh .ci/mac_script.sh; fi
 - bash -l -c "npm i"
 - cd $TRAVIS_BUILD_DIR
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l ./scripts/spin-up-minikube.sh; fi
-# Verbosity
-  #- bash -l -c "kubectl get services"
-  #- bash -l -c "kubectl get pods"
