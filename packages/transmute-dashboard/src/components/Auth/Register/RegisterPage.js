@@ -32,7 +32,7 @@ const styles = theme => ({
   textInput: {}
 });
 
-class Register extends Component {
+class RegisterPage extends Component {
   state = {
     error: null,
     ed25519: null,
@@ -227,5 +227,5 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default withStyles(styles)(
-  connect(mapStateToProps, mapDispatchToProps)(Register)
+  connect(mapStateToProps, mapDispatchToProps)(RegisterPage)
 );
