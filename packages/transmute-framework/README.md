@@ -77,7 +77,7 @@ The `EventStoreFactory` contract can be used to create `EventStore` contracts.
 ```
 const eventStoreFactoryArtifact = require('../../../build/contracts/EventStoreFactory.json');
 const transmuteConfig = {
-  "keenConfig": {
+  "mixpanelConfig": {
     ...
   },
   "ipfsConfig": {

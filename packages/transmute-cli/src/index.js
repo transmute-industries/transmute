@@ -2,7 +2,7 @@
 /** @module TransmuteCLI */
 
 // Process env vars
-const  MY_ENV = process.env.USE_KUBASH ||  'true';
+const MY_ENV = process.env.USE_KUBASH ||  'true';
 
 // Vorpal
 const vorpal = require('vorpal')();
@@ -20,6 +20,10 @@ const { writeFile } = require('./utils');
 // Commands
 const aks = require('./commands/aks');
 const minikube = require('./commands/minikube');
+
+// Mixpanel
+const Mixpanel = require('mixpanel');
+const mixpanel = process.env.MIXPANEL_PROJECT_ID ? Mixpanel.init(process.env.MIXPANEL_PROJECT_ID) : null;
 
 auth(vorpal);
 

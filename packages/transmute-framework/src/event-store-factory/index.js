@@ -1,6 +1,6 @@
 const Web3 = require('web3');
 const contract = require('truffle-contract');
-const KeenTracking = require('keen-tracking');
+const Mixpanel = require('mixpanel');
 
 const TransmuteIpfsAdapter = require('../decentralized-storage/ipfs');
 const pack = require('../../package.json');
@@ -11,11 +11,11 @@ module.exports = class EventStoreFactory {
   constructor(config) {
     if (!config) {
       throw new Error(
-        'a config of form { eventStoreFactoryArtifact, web3, keen } is required.'
+        'a config of form { eventStoreFactoryArtifact, web3 } is required.'
       );
     }
 
-    let { eventStoreFactoryArtifact, web3Config, keenConfig } = config;
+    let { eventStoreFactoryArtifact, web3Config, mixpanelConfig } = config;
 
     if (!eventStoreFactoryArtifact) {
       throw new Error(
@@ -27,9 +27,11 @@ module.exports = class EventStoreFactory {
       throw new Error('a web3 property is required in constructor argument.');
     }
 
-    if (!keenConfig) {
-      throw new Error(
-        'a keenConfig property is required in constructor argument.'
+    if (mixpanelConfig && mixpanelConfig.token && mixpanelConfig.token !== '') {
+      this.mixpanel = Mixpanel.init(mixpanelConfig.token, 
+        { 
+          opt_out_tracking_by_default: mixpanelConfig.optOutOfTracking ? mixpanelConfig.optOutOfTracking : false
+        }
       );
     }
 
@@ -42,8 +44,6 @@ module.exports = class EventStoreFactory {
     this.eventStoreFactoryArtifact = eventStoreFactoryArtifact;
     this.eventStoreFactoryContract = contract(this.eventStoreFactoryArtifact);
     this.eventStoreFactoryContract.setProvider(this.web3.currentProvider);
-
-    this.keen = new KeenTracking(keenConfig);
   }
 
   async getWeb3Accounts() {
