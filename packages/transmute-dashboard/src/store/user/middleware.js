@@ -47,5 +47,14 @@ export const setUserProfile = async (auth, profile) => {
         'Authorization': `Bearer ${access_token}`
       }
     })
-    .post(`/api/v0/users/${user.sub}/profile`, profile);
+    .post(`/api/v0/users/${user.sub}/profile`, {
+      firstName: profile.firstName,
+      lastName: profile.lastName
+    })
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      return error.response;
+    });
 };

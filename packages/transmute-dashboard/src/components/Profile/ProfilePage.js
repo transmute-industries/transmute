@@ -29,7 +29,8 @@ class ProfilePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      profile: null
+      profile: null,
+      error: null
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -37,7 +38,17 @@ class ProfilePage extends Component {
 
   async handleSubmit(e) {
     e.preventDefault();
-    let updatedUser = await setUserProfile(this.props.auth, this.state.profile);
+    let response = await setUserProfile(this.props.auth, this.state.profile);
+    if (response.data.error) {
+      this.setState({
+        error: response.data.error
+      });
+    } else {
+      this.setState({
+        error: null,
+        profile: response.data.profile
+      });
+    }
   }
 
   handleChange = name => event => {
@@ -62,7 +73,7 @@ class ProfilePage extends Component {
     if (!this.state.profile) return null;
     
     const { classes } = this.props;
-    const { profile } = this.state;
+    const { profile, error } = this.state;
 
     return (
       <AppBar>
@@ -136,6 +147,12 @@ class ProfilePage extends Component {
               />
             </FormControl>
           </Grid>
+
+          {error !== null && <Grid item xs={12}>
+            <p>
+              {error}
+            </p>
+          </Grid>}
 
           <Grid item md={12}>
             <Button
