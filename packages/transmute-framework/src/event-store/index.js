@@ -35,7 +35,11 @@ module.exports = class EventStore {
     }
 
     if (mixpanelConfig && mixpanelConfig.token && mixpanelConfig.token !== '') {
-      this.mixpanel = Mixpanel.init(mixpanelConfig.token);
+      this.mixpanel = Mixpanel.init(mixpanelConfig.token,
+        {
+          opt_out_tracking_by_default: mixpanelConfig.optOutOfTracking ? mixpanelConfig.optOutOfTracking : false
+        }
+      );
     }
 
     if (!ipfsConfig) {
