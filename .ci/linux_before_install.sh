@@ -1,5 +1,8 @@
 #!/bin/sh
 export CWD=$(pwd)
+: ${TRANSMUTE_DIR:=$HOME/.transmute}
+: ${TRANSMUTE_BIN:=$TRANSMUTE_DIR/bin}
+: ${TRANSMUTE_REPO:=$TRANSMUTE_DIR/git/transmute}
 
 chkdir () {
   if [ ! -w $1 ] ; then
@@ -30,3 +33,18 @@ sudo apt-get install -yqq \
   jq build-essential libncurses5-dev libslang2-dev gettext zlib1g-dev \
   libselinux1-dev debhelper lsb-release pkg-config po-debconf \
   autoconf automake autopoint libtool python2.7-dev
+
+if [[ "$TRAVIS_OS_NAME" == "linux" && ! -e "$HOME/.local/bin/nsenter" ]]; then
+  .ci/ubuntu-compile-nsenter.sh
+fi
+if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+  sudo cp $HOME/.local/bin/nsenter /usr/bin/nsenter
+fi
+if [[ ! -e "$HOME/.local/bin/helm" ]]; then 
+  sh $TRANSMUTE_REPO/.ci/gethelm
+fi
+if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
+  echo "$HELM_SHA256 $HOME/.local/bin/helm" > /tmp/testhelm 
+  sha256sum -c /tmp/testhelm 
+  rm /tmp/testhelm
+fi
