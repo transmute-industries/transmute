@@ -36,7 +36,6 @@ class LoginPage extends Component {
         </Grid>
         <Grid item xs={12}>
           <LoginForm baseUrl={this.props.baseUrl} />
-          {/* <OktaAuthButton /> */}
         </Grid>
       </Grid>
     );
