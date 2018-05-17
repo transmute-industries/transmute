@@ -12,14 +12,6 @@ export KONG_PROXY_PORT=$(PATH=$HOME/.transmute/bin:$PATH kubectl get service gat
 
 echo 'configure hosts'
 ./scripts/configure-hosts.sh
-echo 'configure ganache'
-./scripts/configure-kong-ganache.sh
-echo 'configure ipfs'
-./scripts/configure-kong-ipfs.sh
-if [[ "$DO_JWT_DL" == 'y' ]]; then
-  echo 'configure okta'
-  ./scripts/configure-kong-okta-ipfs.sh
-fi
 ./scripts/configure-framework-kong.sh
 
 lerna bootstrap
@@ -31,5 +23,3 @@ lerna run --scope transmute-framework truffle:test
 lerna run --scope transmute-framework truffle:migrate
 lerna run --scope transmute-framework test
 lerna run --scope transmute-framework test:report
-
-

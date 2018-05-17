@@ -8,6 +8,13 @@ orig_pwd=$(pwd)
 : ${TRANSMUTE_BIN:=$TRANSMUTE_DIR/bin}
 : ${TRANSMUTE_REPO:=$TRANSMUTE_DIR/git/transmute}
 
+export PATH=$HOME/.transmute/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 # Grab the config file and make it default
 #cp ~/.kubash/clusters/$this_cluster_name/config ~/.kube/
 
@@ -59,12 +66,12 @@ kubectl create secret generic acme-account --from-literal=ACME_EMAIL=$ACME_EMAIL
 # Ganache-cli
 helm install \
  --name=transmute-testrpc \
- $TRANSMUTE_REPO/tutorials/minikube-setup/ganache-cli/ganache-cli
+ $TRANSMUTE_REPO/components/ganache/charts/ganache-cli/
 
 # ipfs
 ## Storage class for ipfs
 kubectl apply -f \
- $TRANSMUTE_REPO/tutorials/minikube-setup/ipfs/openebs-ipfs.yaml
+ $TRANSMUTE_REPO/components/ipfs/openebs-ipfs.yaml
 
 ### Helm install ipfs
 helm install \
@@ -72,9 +79,6 @@ helm install \
  --name transmute-ipfs \
  --set \
  persistence.storageClass=openebs-ipfs,persistence.size=4Gi,persistence.enabled=true
-
-# Kong
-helm install stable/kong --name king-kong
 
 # OpenFaaS
 ## create namespaces
@@ -91,4 +95,46 @@ helm upgrade --install openfaas openfaas/ \
 cd $orig_pwd
 
 # Ingress
-kubectl apply -f transmute-gke-$this_cluster_name-ing.yaml
+# kubectl apply -f transmute-gke-$this_cluster_name-ing.yaml
+
+
+w8s/kubectl.w8
+w8s/kube-dns.w8
+kubectl create -f ./components/helm/rbac-tiller-config.yaml
+#helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
+helm init --upgrade
+kubectl run nginx --image=nginx:alpine
+w8s/tiller.w8
+ls -lh ~/.kube/config
+sleep 10
+kubectl get pods -n kube-system
+kubectl get nodes
+kubectl get pods
+#export KUBECONFIG=$HOME/.kube/config
+#KUBECONFIG=$HOME/.kube/config \
+#echo "do helm install with $KUBECONFIG"
+#kubectl get nodes
+#w8s/generic.w8 nginx default
+which nsenter
+helm version --debug
+helm install stable/kong --name gateway
+helm install stable/ipfs --name decentralized-storage
+helm install ./components/ganache/charts/ganache-cli --name=ganache
+
+node -v
+npm -v
+lerna -v
+truffle version
+
+kubectl cluster-info
+nsenter --version
+minikube addons enable ingress
+
+echo 'configure ganache'
+./scripts/configure-kong-ganache.sh
+echo 'configure ipfs'
+./scripts/configure-kong-ipfs.sh
+if [[ "$DO_JWT_DL" == 'y' ]]; then
+  echo 'configure okta'
+  ./scripts/configure-kong-okta-ipfs.sh
+fi
