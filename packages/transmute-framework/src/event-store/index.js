@@ -34,6 +34,10 @@ module.exports = class EventStore {
       throw new Error('a web3 property is required in constructor argument.');
     }
 
+    if (mixpanelConfig && mixpanelConfig.framework) {
+      mixpanelConfig = mixpanelConfig.framework;
+    }
+
     if (mixpanelConfig && mixpanelConfig.token && mixpanelConfig.token !== '') {
       this.mixpanel = Mixpanel.init(mixpanelConfig.token,
         {
