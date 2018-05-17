@@ -22,7 +22,7 @@ module.exports = class EventStore {
       );
     }
 
-    let { eventStoreArtifact, web3Config, mixpanel, ipfsConfig, eventStoreAddress } = config;
+    let { eventStoreArtifact, web3Config, mixpanelConfig, ipfsConfig, eventStoreAddress } = config;
 
     if (!eventStoreArtifact) {
       throw new Error(
