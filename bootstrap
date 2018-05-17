@@ -101,18 +101,24 @@ add_line_to()
 }
 
 macminikube () {
+	set +e
 	echo 'Installing minikube'
 	brew cask install minikube
+	set -e
 }
 
 mackubectl () {
+	set +e
 	echo 'Installing kubectl'
 	brew install kubectl
+	set -e
 }
 
 machelm () {
+	set +e
 	echo 'Installing helm'
 	brew install kubernetes-helm
+	set -e
 }
 
 macnsenter () {
@@ -122,9 +128,11 @@ macnsenter () {
 
 
 macreadlink () {
+	set +e
 	echo 'Installing coreutils'
 	#Installs 'greadlink' tool
-	brew install coreutils
+	brew upgrade coreutils
+	set -e
 }
 
 windowsminikube () {
@@ -497,11 +505,17 @@ linuxreqs () {
 initializer () {
   ls  $TRANSMUTE_DIR/git
   ls $TRANSMUTE_DIR/git/transmute
+  set +e
   cd $TRANSMUTE_DIR/git/transmute/transmute-config
+  set -e
   cp .example.env .env
+  set +e
   cd $TRANSMUTE_DIR/git/transmute
+  set -e
   npm i
+  set +e
   cd $CWD
+  set -e
 }
 
 run_it () {
@@ -571,12 +585,14 @@ fi
 
 if [ -e "$TRANSMUTE_DIR/git/transmute" ]; then
   echo "$TRANSMUTE_DIR/git/transmute exists already, proceeding"
+  set +e
   cd $TRANSMUTE_DIR/git
   echo 'Updating the transmute repo'
   cd $TRANSMUTE_DIR/git/transmute
   git fetch --tags
   git checkout $TRANSMUTE_RELEASE
   cd $CWD
+  set -e
 else
   cd $TRANSMUTE_DIR/git
   pwd
@@ -604,11 +620,15 @@ elif [ "$PLATFORM" = "os.windows.x86_64" ] ; then
   windowsreqs
 fi
 
+echo 'check helm'
 check_cmd helm
+echo 'check kubectl'
 check_cmd kubectl
+echo 'check minikube'
 check_cmd minikube
 #check_cmd nsenter
 
+echo 'Initializer'
 initializer
 
 speaker 'The bootstrap has finished'

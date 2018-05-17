@@ -2,9 +2,9 @@
   "name": "transmute-cli",
   "version": "1.0.0",
   "description": "transmute cli",
-  "main": "src/main.js",
   "scripts": {
     "build": "babel src -d lib",
+    "transmute": "node ./lib/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json"
   },
@@ -20,6 +20,7 @@
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-root-slash-import": "^1.1.0",
     "form-urlencoded": "^2.0.4",
+    "fs-extra": "^6.0.1",
     "lodash": "^4.17.10",
     "request": "^2.85.0",
     "shelljs": "^0.8.1",
