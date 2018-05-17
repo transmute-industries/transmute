@@ -64,8 +64,11 @@ before_script:
 - cd $TRAVIS_BUILD_DIR
 
 script:
+- bash -l -c "npm i"
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "transmute k8s provision --minikube --vmdriver none"; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "yes y|transmute k8s init --minikube"; fi
-- bash -l -c "npm i"
-- cd $TRAVIS_BUILD_DIR
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l ./scripts/spin-up-minikube.sh; fi
+- lerna bootstrap
+- lerna run --scope transmute-framework truffle:test
+- lerna run --scope transmute-framework truffle:migrate
+- lerna run --scope transmute-framework test
+- lerna run --scope transmute-framework test:report

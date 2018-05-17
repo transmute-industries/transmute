@@ -14,6 +14,18 @@ export PATH=$HOME/.local/bin:$PATH
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+: ${DO_JWT_DL:=y}
+
+TRANSMUTE_ENV=minikube
+set -e
+
+export MINIKUBE_IP=$(minikube ip)
+export KONG_ADMIN_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
+export KONG_PROXY_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
+export KONG_PROXY_PORT=$(PATH=$HOME/.transmute/bin:$PATH kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
+export KONG_HOST=$(echo $KONG_ADMIN_URL | sed 's!https://!!g' | cut -f1 -d:)
+export KONG_PORT=$(echo $KONG_ADMIN_URL | sed 's!https://!!g' | cut -f2 -d:)
+
 
 # Grab the config file and make it default
 #cp ~/.kubash/clusters/$this_cluster_name/config ~/.kube/
@@ -74,6 +86,7 @@ kubectl create secret generic acme-account --from-literal=ACME_EMAIL=$ACME_EMAIL
 helm install \
  --name=ganache \
  $TRANSMUTE_REPO/components/ganche/charts/ganache-cli/
+w8s/generic.w8 ganache default
 
 # ipfs
 ## Storage class for ipfs
@@ -104,3 +117,160 @@ cd $orig_pwd
 #sleep 10
 
 helm install stable/kong --name gateway
+
+# spin up
+
+echo 'configure hosts'
+# configure-hosts.sh
+echo "" | sudo tee -a /etc/hosts
+echo "$(minikube ip)  transmute.minikube" | sudo tee -a /etc/hosts
+echo "$(minikube ip)  ipfs.transmute.minikube" | sudo tee -a /etc/hosts
+echo "$(minikube ip)  ganache.transmute.minikube" | sudo tee -a /etc/hosts
+echo "" | sudo tee -a /etc/hosts
+
+echo 'configure ganache'
+#configure-kong-ganache.sh
+
+echo 'SETTING UP GANACHE'
+
+# Get the service clusterIp for Kong to use.
+export GANACHE_CLUSTER_IP=$(PATH=$HOME/.transmute/bin:$PATH kubectl get service ganache-ganache-cli -o json | jq -r '.spec.clusterIP');
+echo "GANACHE_CLUSTER_IP $GANACHE_CLUSTER_IP"
+
+countzero=0
+echo "Waiting for ganache to launch on $KONG_ADMIN_URL..."
+while ! nc -z $KONG_HOST $KONG_PORT; do
+    if [[ "$countzero" -gt 200 ]]; then
+      echo 'timeout'
+      exit 1
+    fi
+    ((++countzero))
+    sleep 1
+done
+echo "ganache launched"
+
+echo "# Add Ganache API to Kong
+curl -k -X POST \
+  --url $KONG_ADMIN_URL/apis/ \
+  --data 'name=ganache' \
+  --data 'hosts=ganache.transmute.minikube' \
+  --data 'upstream_url=http://'$GANACHE_CLUSTER_IP':8545/'"
+# Add Ganache API to Kong
+curl -k -X POST \
+  --url $KONG_ADMIN_URL/apis/ \
+  --data 'name=ganache' \
+  --data 'hosts=ganache.transmute.minikube' \
+  --data 'upstream_url=http://'$GANACHE_CLUSTER_IP':8545/' \
+  | jq -r '.'
+
+echo 'GANACHE HEALTHCHECK'
+echo "https://ganache.transmute.minikube:$KONG_PROXY_PORT"
+
+curl -k -X POST \
+  --url "https://ganache.transmute.minikube:$KONG_PROXY_PORT/ganache" \
+  --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":68}' \
+  | jq -r '.'
+
+#####
+echo 'configure ipfs'
+#configure-kong-ipfs.sh
+
+echo 'SETTING UP IPFS'
+
+# Get the service clusterIp for Kong to use.
+export IPFS_CLUSTER_IP=$(PATH=$HOME/.transmute/bin:$PATH kubectl get service decentralized-storage-ipfs -o json | jq -r '.spec.clusterIP');
+
+# Add IPFS API to Kong
+curl -k -X POST \
+  --url $KONG_ADMIN_URL/apis/ \
+  --data 'name=ipfs' \
+  --data 'hosts=ipfs.transmute.minikube' \
+  --data "https_only=true" \
+  --data 'upstream_url=http://'$IPFS_CLUSTER_IP':5001/' \
+  | jq '.'
+
+# Configure CORS for IPFS via Kong
+curl -k -X POST \
+  --url $KONG_ADMIN_URL/apis/ipfs/plugins \
+  --data "name=cors" \
+  --data "config.origins=*" \
+  --data "config.methods=GET, PUT, POST" \
+  | jq '.'
+
+echo 'IPFS HEALTHCHECK'
+echo 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT
+
+curl -k -X GET \
+  --url 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT'/api/v0/id' \
+  | jq '.'
+
+#####
+if [[ "$DO_JWT_DL" == 'y' ]]; then
+  echo 'configure okta'
+  #$TRANSMUTE_REPO/scripts/configure-kong-okta-ipfs.sh
+  
+  echo 'Configure Kong to use Okta to secure IPFS'
+  
+  curl -k -X POST $KONG_ADMIN_URL/apis/ipfs/plugins \
+      --data "name=jwt"
+  
+  # How to delete a plugin.
+  # Get the plugin id from the api
+  # curl -k -X GET $KONG_ADMIN_URL/apis/ipfs/plugins 
+  # Delete it from the api
+  # curl -k -X DELETE $KONG_ADMIN_URL/apis/ipfs/plugins/e9522844-ef05-45b1-b3fa-09f380d4c0ec
+  
+  echo 'Export CONSUMER_ID'
+  export CONSUMER_ID=$(curl -k -X POST $KONG_ADMIN_URL/consumers \
+      --data "username=bob@example.com" \
+      --data "custom_id=0" \
+      | jq -r '.id')
+  
+  # Download JWT Signing Key
+  echo  'Download JWT Signing Key'
+  echo 'Using vox'
+  node ./scripts/okta/write-okta-pem.js
+  
+  # Connect the API Consumer to okta
+  echo 'Connect the API Consumer to okta'
+  curl -k -X POST $KONG_ADMIN_URL/consumers/$CONSUMER_ID/jwt \
+      -F "algorithm=RS256" \
+      -F "rsa_public_key=@./scripts/okta/okta.pem" \
+      -F "key=https://"$OKTA_HOSTNAME"/oauth2/default"
+  
+  # Get an okta jwt
+  echo 'Get an okta jwt'
+  export ACCESS_TOKEN=$(node ./scripts/okta/get-okta-token.js)
+  
+  echo 'Get api v0 id'
+  curl -k -X GET \
+      --url 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT/api/v0/id \
+      --header 'Authorization: Bearer '$ACCESS_TOKEN
+fi
+
+#####
+#configure-framework-kong.sh
+echo 'UPDATE PACKAGES transmute-config/env.json'
+
+
+# TESTING
+
+# export OLD_KONG_PROXY_PORT=32443
+# export NEW_KONG_PROXY_PORT=11111
+
+# export OLD_KONG_PROXY_PORT=11111
+# export NEW_KONG_PROXY_PORT=32443
+
+# REAL
+export OLD_KONG_PROXY_PORT=32443
+export NEW_KONG_PROXY_PORT=$KONG_PROXY_PORT
+
+export FRAMEWORK_CONFIG=`pwd`/packages/transmute-framework/src/transmute-config/env.json
+export DASHBOARD_CONFIG=`pwd`/packages/transmute-dashboard/src/transmute-config/env.json
+
+find $FRAMEWORK_CONFIG -type f | xargs sed -i 's/'$OLD_KONG_PROXY_PORT'/'$NEW_KONG_PROXY_PORT'/g'
+find $DASHBOARD_CONFIG -type f | xargs sed -i 's/'$OLD_KONG_PROXY_PORT'/'$NEW_KONG_PROXY_PORT'/g'
+
+curl -k -X GET \
+    --url $KONG_ADMIN_URL/apis \
+    | jq '.'
