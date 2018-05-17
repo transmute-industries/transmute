@@ -1,5 +1,8 @@
 #!/bin/sh
 : ${USE_VOX:=y}
+: ${TRANSMUTE_DIR:=$HOME/.transmute}
+: ${TRANSMUTE_BIN:=$TRANSMUTE_DIR/bin}
+: ${TRANSMUTE_REPO:=$TRANSMUTE_DIR/git/transmute}
 
 # http://patorjk.com/software/taag/#p=display&f=ANSI%20Shadow
 
@@ -51,15 +54,15 @@ speaker 'Let me check your transmute-config.'
 # ╚══════╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝          ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝ 
                                                                                              
 
-if [ -e "./transmute-config/.env" ]; then
-  speaker 'Transmute Config has been found here ./transmute-config/.env'
+if [ -e "$TRANSMUTE_REPO/transmute-config/.env" ]; then
+  speaker "Transmute Config has been found here $TRANSMUTE_REPO/transmute-config/.env"
 else
   speaker "Would you like me to copy the example environment file?"
   read -p '[yn]' answer
   if [ "$answer" = y ] ; then
     # run the command
-    speaker "ok, I will copy the example environment file to transmute-config/.env"
-    cp ./transmute-config/.example.env  ./transmute-config/.env
+    speaker "ok, I will copy the example environment file to $TRANSMUTE_REPO/transmute-config/.env"
+    cp $TRANSMUTE_REPO/transmute-config/.example.env  $TRANSMUTE_REPO/transmute-config/.env
   else
     bail
   fi
@@ -69,21 +72,21 @@ speaker "Would you like to edit the environment file?"
 read -p '[yn]' answer
 if [ "$answer" = y ] ; then
   if [ ! -z "$EDITOR" ] ; then
-    $EDITOR ./transmute-config/.env
+    $EDITOR $TRANSMUTE_REPO/transmute-config/.env
   else
     speaker "You will need to set your EDITOR environment variable"
     exit 1
   fi
 fi
 
-if [ -e "./transmute-config/.env" ]; then
+if [ -e "$TRANSMUTE_REPO/transmute-config/.env" ]; then
   speaker "Press enter to continue if you are satisfied with transmute-config/.env" &
   read -p ' ' answer
 else
   bail
 fi
 
-. ./transmute-config/.env
+. $TRANSMUTE_REPO/transmute-config/.env
 
 # ██╗███╗   ██╗███████╗████████╗ █████╗ ██╗     ██╗         ██╗  ██╗ ██████╗ ███╗   ██╗ ██████╗ 
 # ██║████╗  ██║██╔════╝╚══██╔══╝██╔══██╗██║     ██║         ██║ ██╔╝██╔═══██╗████╗  ██║██╔════╝ 
@@ -98,7 +101,7 @@ echo "MINIKUBE_IP $MINIKUBE_IP"
 
 echo ''
 
-. ./setup/1.install_kong.sh
+. $TRANSMUTE_REPO/setup/1.install_kong.sh
 
 echo 'Now ready to configure SSL...'
 
@@ -124,7 +127,7 @@ read -p "Press enter to continue" answer
 # ██║██║ ╚████║███████║   ██║   ██║  ██║███████╗███████╗    ██║██║     ██║     ███████║
 # ╚═╝╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝    ╚═╝╚═╝     ╚═╝     ╚══════╝
                                                                                      
-. ./setup/3.install_ipfs.sh
+. $TRANSMUTE_REPO/setup/3.install_ipfs.sh
 
 
 # ██╗███╗   ██╗███████╗████████╗ █████╗ ██╗     ██╗          ██████╗  █████╗ ███╗   ██╗ █████╗  ██████╗██╗  ██╗███████╗
@@ -134,7 +137,7 @@ read -p "Press enter to continue" answer
 # ██║██║ ╚████║███████║   ██║   ██║  ██║███████╗███████╗    ╚██████╔╝██║  ██║██║ ╚████║██║  ██║╚██████╗██║  ██║███████╗
 # ╚═╝╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝     ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝
                                                                                                                      
-. ./setup/4.install_ganache.sh
+. $TRANSMUTE_REPO/setup/4.install_ganache.sh
 
 speaker "Would you like to update your hosts file automatically?"
 read -p '[yn]' answer

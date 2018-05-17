@@ -1,0 +1,140 @@
+#!/bin/bash
+set -eu
+this_cluster_name=$1
+orig_pwd=$(pwd)
+
+: ${VOYAGER_PROVIDER:='baremetal'}
+: ${TRANSMUTE_DIR:=$HOME/.transmute}
+: ${TRANSMUTE_BIN:=$TRANSMUTE_DIR/bin}
+: ${TRANSMUTE_REPO:=$TRANSMUTE_DIR/git/transmute}
+
+export PATH=$HOME/.transmute/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Grab the config file and make it default
+#cp ~/.kubash/clusters/$this_cluster_name/config ~/.kube/
+
+# Install transmute components into k8s
+# Grab the transmute dir
+if [ -e "$TRANSMUTE_REPO" ]; then
+  echo "$TRANSMUTE_REPO exists already, proceeding" 
+else
+  cd $TRANSMUTE_REPO
+  git clone --depth=1 \
+   https://github.com/transmute-industries/transmute.git
+  cd $orig_pwd
+fi
+
+# Apply rbac for tiller
+kubectl create serviceaccount tiller --namespace kube-system
+kubectl apply -f $TRANSMUTE_REPO/components/helm/rbac-tiller-config.yaml
+
+# Install openebs for generic storage
+#kubash -n $this_cluster_name openebs
+kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-operator.yaml
+
+# Spin up nginx web test
+kubectl run webtest --image=nginx:alpine
+kubectl expose deployment webtest --name=web --port=80 --target-port=80
+sleep 5 
+kubectl get pods
+
+# Install helm
+helm init --service-account tiller
+$TRANSMUTE_REPO/git/transmute/w8s/tiller.w8
+
+# Apply storage classes for openebs
+kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-storageclasses.yaml
+
+# This taints the last node so it is unschedulable to normal k8s pods
+# and then will be populated solely by ingress to ensure ingress is not blocked by any other process
+#this_ingress_node=$(kubectl get nodes|awk '{print $1}'|tail -1)
+#kubash -n $this_cluster_name taint_ingress $this_ingress_node
+
+# voyager for ingress
+#kubash -n $this_cluster_name voyager
+curl -fsSL \
+  https://raw.githubusercontent.com/appscode/voyager/6.0.0/hack/deploy/voyager.sh \
+  | bash -s -- --provider=$VOYAGER_PROVIDER
+kubectl create secret generic acme-account --from-literal=ACME_EMAIL=$ACME_EMAIL
+
+
+# Ganache-cli
+helm install \
+ --name=transmute-testrpc \
+ $TRANSMUTE_REPO/components/ganache/charts/ganache-cli/
+
+# ipfs
+## Storage class for ipfs
+kubectl apply -f \
+ $TRANSMUTE_REPO/components/ipfs/openebs-ipfs.yaml
+
+### Helm install ipfs
+helm install \
+ stable/ipfs \
+ --name transmute-ipfs \
+ --set \
+ persistence.storageClass=openebs-ipfs,persistence.size=4Gi,persistence.enabled=true
+
+# OpenFaaS
+## create namespaces
+kubectl create ns openfaas
+kubectl create ns openfaas-fn
+# OpenFaas Helmchart
+cd faas-netes/chart
+#helm install openfaas openfaas/ \
+#helm install openfaas/ \
+  #--name faaster-blaster \
+helm upgrade --install openfaas openfaas/ \
+  --namespace openfaas \
+  --set functionNamespace=openfaas-fn
+cd $orig_pwd
+
+# Ingress
+# kubectl apply -f transmute-gke-$this_cluster_name-ing.yaml
+
+
+w8s/kubectl.w8
+w8s/kube-dns.w8
+kubectl create -f ./components/helm/rbac-tiller-config.yaml
+#helm init --force-upgrade --tiller-image powerhome/tiller:git-3b22ecd
+helm init --upgrade
+kubectl run nginx --image=nginx:alpine
+w8s/tiller.w8
+ls -lh ~/.kube/config
+sleep 10
+kubectl get pods -n kube-system
+kubectl get nodes
+kubectl get pods
+#export KUBECONFIG=$HOME/.kube/config
+#KUBECONFIG=$HOME/.kube/config \
+#echo "do helm install with $KUBECONFIG"
+#kubectl get nodes
+#w8s/generic.w8 nginx default
+which nsenter
+helm version --debug
+helm install stable/kong --name gateway
+helm install stable/ipfs --name decentralized-storage
+helm install ./components/ganache/charts/ganache-cli --name=ganache
+
+node -v
+npm -v
+lerna -v
+truffle version
+
+kubectl cluster-info
+nsenter --version
+minikube addons enable ingress
+
+echo 'configure ganache'
+./scripts/configure-kong-ganache.sh
+echo 'configure ipfs'
+./scripts/configure-kong-ipfs.sh
+if [[ "$DO_JWT_DL" == 'y' ]]; then
+  echo 'configure okta'
+  ./scripts/configure-kong-okta-ipfs.sh
+fi
