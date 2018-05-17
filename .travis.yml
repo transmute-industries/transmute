@@ -86,6 +86,6 @@ script:
 - bash -l -c "npm i"
 - cd $TRAVIS_BUILD_DIR
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l ./scripts/spin-up-minikube.sh; fi
-# Verbosity 
+# Verbosity
   #- bash -l -c "kubectl get services"
   #- bash -l -c "kubectl get pods"
