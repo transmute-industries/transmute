@@ -61,12 +61,13 @@ before_script:
 - bash -l -c "npm i"
 - bash -l -c "npm run build"
 - bash -l -c "npm i -g"
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "transmute help"; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "transmute k8s provision --minikube --vmdriver none"; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "yes y|transmute k8s init --minikube"; fi
 - cd $TRAVIS_BUILD_DIR
 
 script:
+- bash -l -c "npm i"
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "transmute help"; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "transmute k8s provision --minikube --vmdriver none"; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "yes y|transmute k8s init --minikube"; fi
   # Debugs - this next block should be left commented as it just eats up time on regular builds
   # However, if builds are failing and you don't know why uncomment this block and ensure everything appears to be sane
   #- PATH=$HOME/.transmute/bin:$PATH which kubectl
