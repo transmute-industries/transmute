@@ -11,7 +11,7 @@ module.exports = class EventStoreFactory {
   constructor(config) {
     if (!config) {
       throw new Error(
-        'a config of form { eventStoreFactoryArtifact, web3, mixpanel } is required.'
+        'a config of form { eventStoreFactoryArtifact, web3 } is required.'
       );
     }
 

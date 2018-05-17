@@ -18,7 +18,7 @@ module.exports = class EventStore {
   constructor(config) {
     if (!config) {
       throw new Error(
-        'a config of form { eventStoreArtifact, web3, mixpanel, ipfs } is required.'
+        'a config of form { eventStoreArtifact, web3, ipfs } is required.'
       );
     }
 
