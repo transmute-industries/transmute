@@ -44,6 +44,32 @@ export const loginApiCall = (oktaAuth, email, password) => {
   };
 };
 
+export const getUser = async (auth) => {
+  try {
+    let response = await middleware.getUser(auth);
+    return actionCreators.getUserSuccess({
+      ...response.data
+    });
+  } catch (e) {
+    return actionCreators.getUserError({
+      ...e
+    });
+  }
+};
+
+export const setUserProfile = async (auth, info) => {
+  try {
+    let response = await middleware.setUserProfile(auth, info);
+    return actionCreators.setUserProfileSuccess({
+      ...response.data
+    });
+  } catch (e) {
+    return actionCreators.setUserProfileError({
+      ...e
+    });
+  }
+};
+
 export const setWeb3Account = (web3Account) => {
   return dispatch => {
     dispatch(actionCreators.setWeb3Account(web3Account));

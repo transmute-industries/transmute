@@ -150,12 +150,6 @@ class MiniDrawer extends React.Component {
     const authenticated = await this.props.auth.isAuthenticated();
     if (authenticated !== this.state.authenticated) {
       this.setState({ authenticated });
-      // if (!this.props.user.info && authenticated) {
-      //   const user = await this.props.auth.getUser();
-      //   this.props.setUserInfo(user);
-      // } else {
-      //   this.props.setUserInfo(null);
-      // }
     }
   }
 
@@ -250,8 +244,13 @@ class MiniDrawer extends React.Component {
                     open={isMenuOpen}
                     onClose={this.handleClose}
                   >
-                    {/* <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={this.handleClose}>My account</MenuItem> */}
+                    <MenuItem
+                      onClick={() => {
+                        history.push('/profile');
+                      }}
+                    >
+                      Profile
+                    </MenuItem>
                     <MenuItem
                       onClick={() => {
                         this.props.logoutUser();

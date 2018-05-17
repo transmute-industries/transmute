@@ -14,23 +14,14 @@ export const registerError = error => {
   };
 };
 
-export const logout = () => ({
-  type: Constants.LOGOUT
+export const getUserSuccess = data => ({
+  type: Constants.GET_USER_SUCCESS,
+  payload: data
 });
 
-export const loginError = error => ({
-  type: Constants.LOGIN_ERROR,
+export const getUserError = error => ({
+  type: Constants.GET_USER_ERROR,
   payload: error
-});
-
-export const setUserInfo = userInfo => ({
-  type: Constants.USER_INFO,
-  payload: userInfo
-});
-
-export const setWeb3Account = web3Account => ({
-  type: Constants.SET_WEB3_ACCOUNT,
-  payload: web3Account
 });
 
 export const loginSuccess = data => ({
@@ -38,12 +29,36 @@ export const loginSuccess = data => ({
   payload: data
 });
 
-export const changePasswordError = error => ({
-  type: Constants.CHANGE_PASSWORD_ERROR,
+export const loginError = error => ({
+  type: Constants.LOGIN_ERROR,
   payload: error
+});
+
+export const setUserProfileSuccess = data => ({
+  type: Constants.SET_USER_PROFILE_SUCCESS,
+  payload: data
+});
+
+export const setUserProfileError = error => ({
+  type: Constants.SET_USER_PROFILE_ERROR,
+  payload: error
+});
+
+export const logout = () => ({
+  type: Constants.LOGOUT
+});
+
+export const setWeb3Account = web3Account => ({
+  type: Constants.SET_WEB3_ACCOUNT,
+  payload: web3Account
 });
 
 export const changePasswordSuccess = data => ({
   type: Constants.CHANGE_PASSWORD_SUCCESS,
   payload: data
+});
+
+export const changePasswordError = error => ({
+  type: Constants.CHANGE_PASSWORD_ERROR,
+  payload: error
 });
