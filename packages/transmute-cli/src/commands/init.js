@@ -6,6 +6,6 @@ export function minikube( clusterName ) {
   let cmd2run =  '/bin/bash';
   let arg1 =  "-c";
   let arg2 =  "$HOME/.transmute/git/transmute/setup/0.init.sh";
-  run.spawn( cmd2run, arg1, arg2 );
+  //run.spawn( cmd2run, arg1, arg2 );
 }
 
