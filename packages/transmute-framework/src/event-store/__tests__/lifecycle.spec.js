@@ -23,7 +23,7 @@ describe('transmute-framework', () => {
         eventStoreArtifact,
         ...transmuteConfig
       });
-      expect(eventStore.version).toBe('0.2.0-alpha.4');
+      expect(eventStore.version).toBe('0.2.0-alpha.5');
     });
   });
 
