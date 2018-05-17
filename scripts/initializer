@@ -59,12 +59,12 @@ kubectl create secret generic acme-account --from-literal=ACME_EMAIL=$ACME_EMAIL
 # Ganache-cli
 helm install \
  --name=transmute-testrpc \
- $TRANSMUTE_REPO/tutorials/minikube-setup/ganache-cli/ganache-cli
+ $TRANSMUTE_REPO/components/ganche/charts/ganache-cli/
 
 # ipfs
 ## Storage class for ipfs
 kubectl apply -f \
- $TRANSMUTE_REPO/tutorials/minikube-setup/ipfs/openebs-ipfs.yaml
+ $TRANSMUTE_REPO/components/ipfs/openebs-ipfs.yaml
 
 ### Helm install ipfs
 helm install \
