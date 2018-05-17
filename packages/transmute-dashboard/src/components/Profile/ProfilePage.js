@@ -10,11 +10,11 @@ import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
 import Grid from 'material-ui/Grid';
+import Button from 'material-ui/Button';
 
 import AppBar from '../AppBar';
-import * as actionsCreators from '../../store/user/actionCreators';
+import { getUser, setUserProfile } from '../../store/user/middleware';
 import * as actions from '../../store/user/actions';
-import { getUser } from '../../store/user/middleware';
 
 const styles = theme => ({
   margin: {
@@ -22,7 +22,7 @@ const styles = theme => ({
   },
 });
 
-class AccountPage extends Component {
+class ProfilePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,15 +32,17 @@ class AccountPage extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault();
-    this.props.setUserInfo(this.state.profile);
+    let updatedUser = await setUserProfile(this.props.auth, this.state.profile);
   }
 
   handleChange = name => event => {
-    // TODO: need to set user state here
     this.state.profile[name] = event.target.value;
-    console.log('this.state.profile: ', this.state.profile);
+
+    this.setState({
+      profile: { ...this.state.profile, [name]: event.target.value }
+    });
   };
 
   async componentWillMount() {
@@ -61,29 +63,45 @@ class AccountPage extends Component {
 
     return (
       <AppBar>
-        <h1>Account</h1>
+        <h1>Profile</h1>
         <pre>{JSON.stringify(profile, null, 2)}</pre>
         <div>
-          <FormControl className={classNames(classes.margin)}>
-            <InputLabel>First Name</InputLabel>
-            <Input
-              className={classNames(classes.textInput)}
-              id="given-name"
-              type="text"
-              value={profile.firstName}
-              onChange={this.handleChange('firstName')}
-            />
-          </FormControl>
-          <FormControl className={classNames(classes.margin)}>
-            <InputLabel>Last Name</InputLabel>
-            <Input
-              className={classNames(classes.textInput)}
-              id="given-name"
-              type="text"
-              value={profile.lastName}
-              onChange={this.handleChange('lastName')}
-            />
-          </FormControl>
+
+          <Grid item xs={12}>
+            <FormControl className={classNames(classes.margin)}>
+              <InputLabel>First Name</InputLabel>
+              <Input
+                className={classNames(classes.textInput)}
+                id="given-name"
+                type="text"
+                value={profile.firstName}
+                onChange={this.handleChange('firstName')}
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12}>
+            <FormControl className={classNames(classes.margin)}>
+              <InputLabel>Last Name</InputLabel>
+              <Input
+                className={classNames(classes.textInput)}
+                id="given-name"
+                type="text"
+                value={profile.lastName}
+                onChange={this.handleChange('lastName')}
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Button
+              variant="raised"
+              color="secondary"
+              onClick={this.handleSubmit}
+            >
+              Save
+            </Button>
+          </Grid>
         </div>
       </AppBar>
     );
@@ -93,8 +111,8 @@ class AccountPage extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     go: () => dispatch(push('/protected')),
-    setUserInfo: async oktaUser => {
-      dispatch(actionsCreators.setUserInfo(oktaUser));
+    setUserProfile: async (auth, profile) => {
+      dispatch(actions.setUserProfile(auth, profile));
     },
     getUser: async auth => {
       dispatch(actions.getUser(auth));
@@ -105,6 +123,6 @@ const mapDispatchToProps = dispatch => {
 
 export default withStyles(styles)(
   connect(null, mapDispatchToProps)(
-    withAuth(AccountPage)
+    withAuth(ProfilePage)
   )
 );

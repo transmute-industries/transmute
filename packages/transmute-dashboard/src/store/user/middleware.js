@@ -8,7 +8,7 @@ const ENVS = {
 export const register = async ({ edArmorPub, secArmorPub }) => {
   return axios
     .create({
-      baseURL: ENVS.LOCAL,
+      baseURL: ENVS.PROD,
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json'
@@ -33,4 +33,19 @@ export const getUser = async (auth) => {
       }
     })
     .get(`/api/v0/users/${user.sub}`);
+};
+
+export const setUserProfile = async (auth, profile) => {
+  let access_token = await auth.getAccessToken();
+  let user = await auth.getUser();
+  return axios
+    .create({
+      baseURL: ENVS.PROD,
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'Authorization': `Bearer ${access_token}`
+      }
+    })
+    .post(`/api/v0/users/${user.sub}/profile`, ...profile);
 };

@@ -246,10 +246,10 @@ class MiniDrawer extends React.Component {
                   >
                     <MenuItem
                       onClick={() => {
-                        history.push('/account');
+                        history.push('/profile');
                       }}
                     >
-                      Account
+                      Profile
                     </MenuItem>
                     <MenuItem
                       onClick={() => {

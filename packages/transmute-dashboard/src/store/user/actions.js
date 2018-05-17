@@ -57,6 +57,19 @@ export const getUser = async (auth) => {
   }
 };
 
+export const setUserProfile = async (auth, info) => {
+  try {
+    let response = await middleware.setUserProfile(auth, info);
+    return actionCreators.setUserProfileSuccess({
+      ...response.data
+    });
+  } catch (e) {
+    return actionCreators.setUserProfileError({
+      ...e
+    });
+  }
+};
+
 export const setWeb3Account = (web3Account) => {
   return dispatch => {
     dispatch(actionCreators.setWeb3Account(web3Account));

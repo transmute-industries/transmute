@@ -34,9 +34,14 @@ export const loginError = error => ({
   payload: error
 });
 
-export const setUserInfo = data => ({
-  type: Constants.USER_INFO,
+export const setUserProfileSuccess = data => ({
+  type: Constants.SET_USER_PROFILE_SUCCESS,
   payload: data
+});
+
+export const setUserProfileError = error => ({
+  type: Constants.SET_USER_PROFILE_ERROR,
+  payload: error
 });
 
 export const logout = () => ({

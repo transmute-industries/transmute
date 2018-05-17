@@ -16,7 +16,7 @@ import Home from '../Home';
 import Demo from '../Demo';
 import Login from '../Auth/Login';
 import Register from '../Auth/Register';
-import Account from '../Account';
+import Profile from '../Profile';
 import EventStoreFactoryPage from '../EventStoreFactoryPage';
 import EventStorePage from '../EventStorePage';
 import StreamModelPage from '../StreamModelPage';
@@ -62,9 +62,9 @@ class Routes extends React.Component {
             component={ImplicitCallback}
           />
           <SecureRoute
-            path="/account"
+            path="/profile"
             exact
-            render={() => <Account />}
+            render={() => <Profile />}
           />
           <SecureRoute
             path="/eventstorefactory/:address"
