@@ -5,7 +5,8 @@
   "main": "src/main.js",
   "scripts": {
     "build": "babel src -d lib",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json"
   },
   "keywords": [
     "transmute"
@@ -31,6 +32,8 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1"
+    "babel-preset-env": "^1.6.1",
+    "docdash": "^0.4.0",
+    "jsdoc": "^3.5.5"
   }
 }
