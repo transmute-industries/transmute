@@ -64,15 +64,14 @@ class ProfilePage extends Component {
     return (
       <AppBar>
         <h1>Profile</h1>
-        <pre>{JSON.stringify(profile, null, 2)}</pre>
         <div>
 
-          <Grid item xs={12}>
+          <Grid item md={12}>
             <FormControl className={classNames(classes.margin)}>
               <InputLabel>First Name</InputLabel>
               <Input
                 className={classNames(classes.textInput)}
-                id="given-name"
+                id="first-name"
                 type="text"
                 value={profile.firstName}
                 onChange={this.handleChange('firstName')}
@@ -80,12 +79,12 @@ class ProfilePage extends Component {
             </FormControl>
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item md={12}>
             <FormControl className={classNames(classes.margin)}>
               <InputLabel>Last Name</InputLabel>
               <Input
                 className={classNames(classes.textInput)}
-                id="given-name"
+                id="last-name"
                 type="text"
                 value={profile.lastName}
                 onChange={this.handleChange('lastName')}
@@ -93,7 +92,49 @@ class ProfilePage extends Component {
             </FormControl>
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item md={12}>
+            <FormControl className={classNames(classes.margin)}>
+              <InputLabel>Email</InputLabel>
+              <Input
+                className={classNames(classes.textInput)}
+                id="email"
+                type="email"
+                disabled={true}
+                value={profile.email}
+                onChange={this.handleChange('email')}
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item md={12}>
+            <FormControl className={classNames(classes.margin)}>
+              <InputLabel>ED25519 Public Key</InputLabel>
+              <Input
+                id="ed-public-key"
+                type="text"
+                disabled={true}
+                multiline={true}
+                value={profile.edPubKey}
+                onChange={this.handleChange('edPubKey')}
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item md={12}>
+            <FormControl className={classNames(classes.margin)}>
+              <InputLabel>SECP256K1 Public Key</InputLabel>
+              <Input
+                id="sec-public-key"
+                type="text"
+                disabled={true}
+                multiline={true}
+                value={profile.secPubKey}
+                onChange={this.handleChange('secPubKey')}
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item md={12}>
             <Button
               variant="raised"
               color="secondary"
