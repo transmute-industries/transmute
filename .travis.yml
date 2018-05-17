@@ -63,8 +63,8 @@ script:
 - bash -l -c "npm i"
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "transmute k8s provision --minikube --vmdriver none"; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "yes y|transmute k8s init --minikube"; fi
-- lerna bootstrap
-- lerna run --scope transmute-framework truffle:test
-- lerna run --scope transmute-framework truffle:migrate
-- lerna run --scope transmute-framework test
-- lerna run --scope transmute-framework test:report
+- bash -l -c "lerna bootstrap"
+- bash -l -c "lerna run --scope transmute-framework truffle:test"
+- bash -l -c "lerna run --scope transmute-framework truffle:migrate"
+- bash -l -c "lerna run --scope transmute-framework test"
+- bash -l -c "lerna run --scope transmute-framework test:report"
