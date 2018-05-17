@@ -66,7 +66,6 @@ before_script:
 script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "transmute k8s provision --minikube --vmdriver none"; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "yes y|transmute k8s init --minikube"; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l .ci/linux_script; fi
 - bash -l -c "npm i"
 - cd $TRAVIS_BUILD_DIR
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l ./scripts/spin-up-minikube.sh; fi
