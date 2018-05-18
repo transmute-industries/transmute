@@ -3,6 +3,7 @@
 : ${TRANSMUTE_RELEASE:='master'}
 : ${TRANSMUTE_DIR:=$HOME/.transmute}
 : ${TRANSMUTE_BIN:=$TRANSMUTE_DIR/bin}
+: ${TRANSMUTE_REPO:=$TRANSMUTE_DIR/git/transmute}
 : ${VERBOSITY:=0}
 : ${HELM_INSTALL_DIR:=$TRANSMUTE_BIN}
 : ${MY_KUBE_VERSION:=v1.9.6}
@@ -583,23 +584,26 @@ else
   set -e
 fi
 
-if [ -e "$TRANSMUTE_DIR/git/transmute" ]; then
-  echo "$TRANSMUTE_DIR/git/transmute exists already, proceeding"
+# Install transmute components into k8s
+# Grab the transmute dir
+# Note in CI this has already been symlinked and does not run there
+# however this will
+if [ -e "$TRANSMUTE_REPO" ]; then
+  echo "$TRANSMUTE_REPO exists already, proceeding"
   set +e
   cd $TRANSMUTE_DIR/git
   echo 'Updating the transmute repo'
-  cd $TRANSMUTE_DIR/git/transmute
+  cd $TRANSMUTE_REPO
   git fetch --tags
   git checkout $TRANSMUTE_RELEASE
   cd $CWD
   set -e
 else
-  cd $TRANSMUTE_DIR/git
-  pwd
+  cd $TRANSMUTE_REPO
   echo 'Cloning the latest transmute repo'
-  git clone --depth 1 https://github.com/transmute-industries/transmute.git
+  git clone --depth=1 \
+   https://github.com/transmute-industries/transmute.git
   cd $TRANSMUTE_DIR/git/transmute
-  pwd
   git fetch --tags
   git checkout $TRANSMUTE_RELEASE
   cd $CWD

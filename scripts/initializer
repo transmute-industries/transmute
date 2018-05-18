@@ -10,30 +10,17 @@ orig_pwd=$(pwd)
 
 export PATH=$HOME/.transmute/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
-
+export TRANSMUTE_ENV=minikube
 export NVM_DIR="$HOME/.nvm"
+
+# Force NVM to load
+# This is needed
+# if the user has not reloaded their environment
+# after installing nvm for the first time
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 : ${DO_JWT_DL:=y}
-
-TRANSMUTE_ENV=minikube
-set -e
-
-# Grab the config file and make it default
-#cp ~/.kubash/clusters/$this_cluster_name/config ~/.kube/
-
-# Install transmute components into k8s
-# Grab the transmute dir
-# Note in CI this has already been symlinked and does not run there
-# however this will
-if [ -e "$TRANSMUTE_REPO" ]; then
-  echo "$TRANSMUTE_REPO exists already, proceeding"
-else
-  cd $TRANSMUTE_REPO
-  git clone --depth=1 \
-   https://github.com/transmute-industries/transmute.git
-  cd $orig_pwd
-fi
 
 # Wait for kubectl and kube-dns to be initialized
 w8s/kubectl.w8
