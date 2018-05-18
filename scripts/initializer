@@ -19,12 +19,6 @@ export NVM_DIR="$HOME/.nvm"
 TRANSMUTE_ENV=minikube
 set -e
 
-export MINIKUBE_IP=$(minikube ip)
-export KONG_ADMIN_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
-export KONG_PROXY_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
-export KONG_PROXY_PORT=$(PATH=$HOME/.transmute/bin:$PATH kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
-export KONG_HOST=$(echo $KONG_ADMIN_URL | sed 's!https://!!g' | cut -f1 -d:)
-export KONG_PORT=$(echo $KONG_ADMIN_URL | sed 's!https://!!g' | cut -f2 -d:)
 
 
 # Grab the config file and make it default
@@ -119,6 +113,12 @@ cd $orig_pwd
 helm install stable/kong --name gateway
 
 # spin up
+export MINIKUBE_IP=$(minikube ip)
+export KONG_ADMIN_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
+export KONG_PROXY_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
+export KONG_PROXY_PORT=$(PATH=$HOME/.transmute/bin:$PATH kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
+export KONG_HOST=$(echo $KONG_ADMIN_URL | sed 's!https://!!g' | cut -f1 -d:)
+export KONG_PORT=$(echo $KONG_ADMIN_URL | sed 's!https://!!g' | cut -f2 -d:)
 
 echo 'configure hosts'
 # configure-hosts.sh

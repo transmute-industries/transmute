@@ -26,6 +26,7 @@ matrix:
         - $HOME/.kube
         - /usr/local
         - .git
+        - $HOME/.transmute/bin
 #    - os: osx
 #      osx_image: xcode8.3
 #      language: bash
@@ -46,8 +47,9 @@ before_script:
   #- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sh .ci/mac_before_script.sh; fi
 - bash -l -c "echo PATH=$HOME/.transmute/bin:$PATH >> $HOME/.bashrc"
 - bash -l -c "echo PATH=$HOME/.local/bin:$PATH >> $HOME/.bashrc"
-- if [[ ! -e "/usr/local/bin/kubectl" ]]; then curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/$KUBE_VERSION/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/; fi
-- if [[ ! -e "/usr/local/bin/minikube" ]]; then curl -Lo minikube https://storage.googleapis.com/minikube/releases/$MINIKUBE_VERSION/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/; fi
+  # 5-17-2018 this stuff should be deleted very within the next week or so
+  #- if [[ ! -e "/usr/local/bin/kubectl" ]]; then curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/$KUBE_VERSION/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/; fi
+  #- if [[ ! -e "/usr/local/bin/minikube" ]]; then curl -Lo minikube https://storage.googleapis.com/minikube/releases/$MINIKUBE_VERSION/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/; fi
 - mkdir -p $HOME/.local/bin
 - cd $HOME; rm -Rf .transmute; mkdir -p .transmute/git; cd .transmute/git; ln -s $TRAVIS_BUILD_DIR transmute 
 - cd $TRAVIS_BUILD_DIR
