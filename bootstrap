@@ -3,6 +3,7 @@
 : ${TRANSMUTE_RELEASE:='master'}
 : ${TRANSMUTE_DIR:=$HOME/.transmute}
 : ${TRANSMUTE_BIN:=$TRANSMUTE_DIR/bin}
+: ${TRANSMUTE_REPO:=$TRANSMUTE_DIR/git/transmute}
 : ${VERBOSITY:=0}
 : ${HELM_INSTALL_DIR:=$TRANSMUTE_BIN}
 : ${MY_KUBE_VERSION:=v1.9.6}
@@ -101,18 +102,24 @@ add_line_to()
 }
 
 macminikube () {
+	set +e
 	echo 'Installing minikube'
 	brew cask install minikube
+	set -e
 }
 
 mackubectl () {
+	set +e
 	echo 'Installing kubectl'
 	brew install kubectl
+	set -e
 }
 
 machelm () {
+	set +e
 	echo 'Installing helm'
 	brew install kubernetes-helm
+	set -e
 }
 
 macnsenter () {
@@ -122,9 +129,11 @@ macnsenter () {
 
 
 macreadlink () {
+	set +e
 	echo 'Installing coreutils'
 	#Installs 'greadlink' tool
-	brew install coreutils
+	brew upgrade coreutils
+	set -e
 }
 
 windowsminikube () {
@@ -497,11 +506,17 @@ linuxreqs () {
 initializer () {
   ls  $TRANSMUTE_DIR/git
   ls $TRANSMUTE_DIR/git/transmute
+  set +e
   cd $TRANSMUTE_DIR/git/transmute/transmute-config
+  set -e
   cp .example.env .env
+  set +e
   cd $TRANSMUTE_DIR/git/transmute
+  set -e
   npm i
+  set +e
   cd $CWD
+  set -e
 }
 
 run_it () {
@@ -569,21 +584,26 @@ else
   set -e
 fi
 
-if [ -e "$TRANSMUTE_DIR/git/transmute" ]; then
-  echo "$TRANSMUTE_DIR/git/transmute exists already, proceeding"
+# Install transmute components into k8s
+# Grab the transmute dir
+# Note in CI this has already been symlinked and does not run there
+# however this will
+if [ -e "$TRANSMUTE_REPO" ]; then
+  echo "$TRANSMUTE_REPO exists already, proceeding"
+  set +e
   cd $TRANSMUTE_DIR/git
   echo 'Updating the transmute repo'
-  cd $TRANSMUTE_DIR/git/transmute
+  cd $TRANSMUTE_REPO
   git fetch --tags
   git checkout $TRANSMUTE_RELEASE
   cd $CWD
+  set -e
 else
-  cd $TRANSMUTE_DIR/git
-  pwd
+  cd $TRANSMUTE_REPO
   echo 'Cloning the latest transmute repo'
-  git clone --depth 1 https://github.com/transmute-industries/transmute.git
+  git clone --depth=1 \
+   https://github.com/transmute-industries/transmute.git
   cd $TRANSMUTE_DIR/git/transmute
-  pwd
   git fetch --tags
   git checkout $TRANSMUTE_RELEASE
   cd $CWD
@@ -604,11 +624,15 @@ elif [ "$PLATFORM" = "os.windows.x86_64" ] ; then
   windowsreqs
 fi
 
+echo 'check helm'
 check_cmd helm
+echo 'check kubectl'
 check_cmd kubectl
+echo 'check minikube'
 check_cmd minikube
 #check_cmd nsenter
 
+echo 'Initializer'
 initializer
 
 speaker 'The bootstrap has finished'
