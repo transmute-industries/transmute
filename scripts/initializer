@@ -19,17 +19,15 @@ export NVM_DIR="$HOME/.nvm"
 TRANSMUTE_ENV=minikube
 set -e
 
-
-
 # Grab the config file and make it default
 #cp ~/.kubash/clusters/$this_cluster_name/config ~/.kube/
 
 # Install transmute components into k8s
 # Grab the transmute dir
 # Note in CI this has already been symlinked and does not run there
-# however this will 
+# however this will
 if [ -e "$TRANSMUTE_REPO" ]; then
-  echo "$TRANSMUTE_REPO exists already, proceeding" 
+  echo "$TRANSMUTE_REPO exists already, proceeding"
 else
   cd $TRANSMUTE_REPO
   git clone --depth=1 \
@@ -49,7 +47,7 @@ kubectl apply -f $TRANSMUTE_REPO/components/helm/rbac-tiller-config.yaml
 #kubash -n $this_cluster_name openebs
 kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-operator.yaml
 
-sleep 5 
+sleep 5
 kubectl get pods
 
 # Install helm
