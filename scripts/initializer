@@ -49,16 +49,12 @@ kubectl apply -f $TRANSMUTE_REPO/components/helm/rbac-tiller-config.yaml
 #kubash -n $this_cluster_name openebs
 kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-operator.yaml
 
-# Spin up nginx web test
-kubectl run webtest --image=nginx:alpine
-kubectl expose deployment webtest --name=web --port=80 --target-port=80
 sleep 5 
 kubectl get pods
 
 # Install helm
 helm init --service-account tiller
 $TRANSMUTE_REPO/w8s/tiller.w8
-w8s/tiller.w8
 
 # Apply storage classes for openebs
 kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-storageclasses.yaml
