@@ -59,38 +59,34 @@ class Demo extends Component {
   async init() {
     await eventStoreFactory.init();
     const accounts = await eventStoreFactory.getWeb3Accounts();
-    let currentEventStoreAddress = localStorage.getItem(
-      'currentEventStoreAddress'
-    );
-
     let eventStoreAddresses = await eventStoreFactory.getEventStores();
 
-    if (!currentEventStoreAddress || currentEventStoreAddress === 'undefined') {
-      let factoryAddress =
-        eventStoreFactory.eventStoreFactoryContractInstance.address;
-      let reciept = await eventStoreFactory.createEventStore(accounts[0]);
-
-      currentEventStoreAddress =
-        eventStoreAddresses[eventStoreAddresses.length - 1];
-      localStorage.setItem(
-        'currentEventStoreAddress',
-        currentEventStoreAddress
-      );
-    } else {
-      console.log('currentEventStoreAddress: ', currentEventStoreAddress);
+    if (eventStoreAddresses.length == 0) {
+      await eventStoreFactory.createEventStore(accounts[0]);
     }
 
-    let currentUserAddress = localStorage.getItem('currentUserAddress');
-
-    if (!currentUserAddress) {
-      localStorage.setItem('currentUserAddress', accounts[0]);
-    }
+    let currentEventStoreAddress = eventStoreAddresses[0];
+    let currentUserAddress = accounts[0];
 
     const eventStore = new EventStore({
       eventStoreArtifact,
       ...transmuteConfig
     });
 
+    await this.setState({
+      eventStoreFactory,
+      eventStore,
+      accounts,
+      eventStoreAddresses,
+      currentUserAddress,
+      currentEventStoreAddress
+    });
+
+    await this.update();
+  }
+
+  async update() {
+    let { eventStore, currentEventStoreAddress, currentUserAddress } = this.state;
     eventStore.eventStoreContractInstance = await eventStore.eventStoreContract.at(
       currentEventStoreAddress
     );
@@ -120,25 +116,18 @@ class Demo extends Component {
     streamModel.applyEvents(events);
     let signature = null,
       account = currentUserAddress;
-    _.forOwn(streamModel.state.model.signatures, function(value, key) {
+    _.forOwn(streamModel.state.model.signatures, function (value, key) {
       if (key === account) {
         signature = value.hash;
       }
     });
 
-    this.setState({
-      eventStoreFactory,
-      eventStore,
+    await this.setState({
       events,
-      accounts,
-      eventStoreAddresses,
       documents: streamModel.state.model.documents || [],
-      // user: await this.props.auth.getUser(),
-      currentUserAddress,
-      currentEventStoreAddress,
       signature,
       loading: false
-    });
+    })
   }
 
   onUploadDocument = event => {
@@ -208,28 +197,21 @@ class Demo extends Component {
   };
 
   onResetDemo = async event => {
-    console.log('reset demo...');
-
-    localStorage.removeItem('currentUserAddress');
-    localStorage.removeItem('currentEventStoreAddress');
-
-    // let { eventStoreFactory } = this.state;
-    // await eventStoreFactory.createEventStore(this.state.currentUserAddress);
-    // let eventStoreAddresses = await eventStoreFactory.getEventStores();
-    // let lastItem = eventStoreAddresses.pop();
-    // this.props.history.push('/eventstore/' + lastItem + '/documents');
     window.location.reload();
-    // await this.init();
   };
 
   selectAccount = async event => {
-    localStorage.setItem('currentUserAddress', event.target.value);
-    await this.init();
+    await this.setState({
+      currentUserAddress: event.target.value
+    });
+    await this.update();
   };
 
   selectEventStore = async event => {
-    localStorage.setItem('currentEventStoreAddress', event.target.value);
-    window.location.reload();
+    await this.setState({
+      currentEventStoreAddress: event.target.value
+    });
+    await this.update();
   };
 
   render() {
