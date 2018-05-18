@@ -57,7 +57,7 @@ kubectl get pods
 
 # Install helm
 helm init --service-account tiller
-$TRANSMUTE_REPO/git/transmute/w8s/tiller.w8
+$TRANSMUTE_REPO/w8s/tiller.w8
 w8s/tiller.w8
 
 # Apply storage classes for openebs
