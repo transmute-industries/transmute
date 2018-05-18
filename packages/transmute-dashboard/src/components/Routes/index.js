@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import {
   Security,
@@ -14,22 +14,18 @@ import config from '../../okta_config';
 
 import Home from '../Home';
 import Demo from '../Demo';
-import Login from '../Auth/Login';
 import Register from '../Auth/Register';
 import Profile from '../Profile';
 import EventStoreFactoryPage from '../EventStoreFactoryPage';
 import EventStorePage from '../EventStorePage';
 import StreamModelPage from '../StreamModelPage';
 
-function onAuthRequired({ history }) {
-  history.push('/login');
-}
+
 
 const auth = new Auth({
   issuer: config.issuer,
   client_id: config.client_id,
   redirect_uri: config.redirect_uri,
-  onAuthRequired: onAuthRequired,
   history
 });
 
@@ -47,11 +43,7 @@ class Routes extends React.Component {
             exact
             component={Home}
           />
-          <Route
-            path="/login"
-            exact
-            render={() => <Login baseUrl={config.url} />}
-          />
+        
           <Route 
             path="/register"
             exact
