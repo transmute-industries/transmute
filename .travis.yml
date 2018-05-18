@@ -5,6 +5,7 @@ matrix:
       sudo: required
       env:
         - DO_JWT_DL=n
+        - VERBOSITY=100
         - CHANGE_MINIKUBE_NONE_USER=true
         - MINIKUBE_VERSION=v0.25.2
         - USE_VOX=n
