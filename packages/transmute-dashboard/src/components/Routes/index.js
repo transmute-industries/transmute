@@ -17,6 +17,8 @@ import Demo from '../Demo';
 import Login from '../Auth/Login';
 import Register from '../Auth/Register';
 import Profile from '../Profile';
+import Directory from '../Directory';
+import DirectoryProfilePage from '../Directory/Profile';
 import EventStoreFactoryPage from '../EventStoreFactoryPage';
 import EventStorePage from '../EventStorePage';
 import StreamModelPage from '../StreamModelPage';
@@ -38,34 +40,24 @@ class Routes extends React.Component {
     return (
       <Security auth={auth}>
         <Switch>
-          <Route
-            path="/demo"
-            component={Demo}
-          />
-          <Route
-            path="/"
-            exact
-            component={Home}
-          />
+          <Route path="/demo" component={Demo} />
+          <Route path="/" exact component={Home} />
           <Route
             path="/login"
             exact
             render={() => <Login baseUrl={config.url} />}
           />
-          <Route 
-            path="/register"
-            exact
-            render={() => <Register />}
-          />
-          <Route
-            path="/implicit/callback"
-            component={ImplicitCallback}
-          />
+          <Route path="/register" exact render={() => <Register />} />
+          <Route path="/implicit/callback" component={ImplicitCallback} />
+          <SecureRoute path="/profile" exact render={() => <Profile />} />
+          <SecureRoute path="/directory" exact render={() => <Directory />} />
+
           <SecureRoute
-            path="/profile"
+            path="/directory/:id"
             exact
-            render={() => <Profile />}
+            render={() => <DirectoryProfilePage />}
           />
+
           <SecureRoute
             path="/eventstorefactory/:address"
             exact
