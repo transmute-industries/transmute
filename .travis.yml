@@ -20,14 +20,15 @@ matrix:
         - KUBE_VERSION=v1.9.0
         - HELM_SHA256=0521956fa22be33189cc825bb27b3f4178c5ce9a448368b5c81508d446472715
       language: bash
-      cache:
-        directories:
-        - $HOME/.local/bin
-        - $HOME/.minikube
-        - $HOME/.kube
-        - /usr/local
-        - .git
-        - $HOME/.transmute/bin
+      #cache:
+        #directories:
+          #- $HOME/.local/bin
+          #- $HOME/.minikube
+          #- $HOME/.kube
+          #- $HOME/.nvm
+          #- /usr/local
+          #- .git
+          #- $HOME/.transmute/bin
 #    - os: osx
 #      osx_image: xcode8.3
 #      language: bash
