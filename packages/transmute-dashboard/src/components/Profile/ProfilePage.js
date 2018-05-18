@@ -171,7 +171,6 @@ class ProfilePage extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    go: () => dispatch(push('/protected')),
     setUserProfile: async (auth, profile) => {
       dispatch(actions.setUserProfile(auth, profile));
     },
