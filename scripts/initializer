@@ -76,12 +76,12 @@ kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/op
 #this_ingress_node=$(kubectl get nodes|awk '{print $1}'|tail -1)
 #kubash -n $this_cluster_name taint_ingress $this_ingress_node
 
-squawk 5 "voyager for ingress"
+#squawk 5 "voyager for ingress"
 #kubash -n $this_cluster_name voyager
-curl -fsSL \
-  https://raw.githubusercontent.com/appscode/voyager/6.0.0/hack/deploy/voyager.sh \
-  | bash -s -- --provider=$VOYAGER_PROVIDER
-kubectl create secret generic acme-account --from-literal=ACME_EMAIL=$ACME_EMAIL
+#curl -fsSL \
+#  https://raw.githubusercontent.com/appscode/voyager/6.0.0/hack/deploy/voyager.sh \
+#  | bash -s -- --provider=$VOYAGER_PROVIDER
+#kubectl create secret generic acme-account --from-literal=ACME_EMAIL=$ACME_EMAIL
 
 
 squawk 5 "Ganache-cli"
