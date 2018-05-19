@@ -207,16 +207,7 @@ class MiniDrawer extends React.Component {
                   >
                     Register
                   </Button>
-                  <Button
-                    variant="raised"
-                    color="primary"
-                    onClick={() => {
-                      history.push('/login');
-                    }}
-                    className={classes.loginButton}
-                  >
-                    Login
-                  </Button>
+                  <OktaAuthButton />
                 </div>
               )}
 
