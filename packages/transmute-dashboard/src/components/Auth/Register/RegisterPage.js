@@ -17,8 +17,11 @@ const openpgp = require('openpgp');
 const styles = theme => ({
   root: {
     flexWrap: 'wrap',
-    padding: '40px',
-    textAlign: 'center'
+    padding: '40px'
+  },
+  logoContainer: {
+    textAlign: 'center',
+    marginBottom: '40px'
   },
   logo: {
     maxWidth: '300px'
@@ -26,10 +29,9 @@ const styles = theme => ({
   margin: {
     margin: theme.spacing.unit
   },
-  textField: {
-    minWidth: '400px'
-  },
-  textInput: {}
+  section: {
+    padding: '0 40px'
+  }
 });
 
 class RegisterPage extends Component {
@@ -58,10 +60,8 @@ class RegisterPage extends Component {
     reader.onload = () => {
       let pub;
       try {
-        pub = openpgp.key.readArmored(
-          reader.result
-        ).keys[0];
-        
+        pub = openpgp.key.readArmored(reader.result).keys[0];
+
         if (pub.primaryKey.params[0].getName() !== key) {
           this.setState({
             error: `Uploaded key is ${pub.primaryKey.params[0].getName()}, please upload a ${key} key`
@@ -90,10 +90,16 @@ class RegisterPage extends Component {
 
   render() {
     const { classes, user } = this.props;
-    const { ed25519, ed25519_filename, secp256k1, secp256k1_filename, error } = this.state;
+    const {
+      ed25519,
+      ed25519_filename,
+      secp256k1,
+      secp256k1_filename,
+      error
+    } = this.state;
     const registerForm = (
       <Grid container className={classNames(classes.root)}>
-        <Grid item xs={12}>
+        <Grid item xs={12} className={classNames(classes.logoContainer)}>
           <img
             alt={'transmute logo'}
             src={logo}
@@ -101,15 +107,30 @@ class RegisterPage extends Component {
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} md={6} className={classNames(classes.section)}>
           <p>
-            Please upload your ed25519 and secp256k1 keys - note, these keys need to have certified one
-            another and must have the same email and name associated with each.
-            If you are unfamiliar with generating and certifying keys, <a href="https://github.com/eolszewski/sec-ed-cert">this repository</a> can take care of that for you:
+            Please upload your ed25519 and secp256k1 keys. These keys need to
+            have certified one another and must have the same email and name
+            associated with each. If you are unfamiliar with generating and
+            certifying keys,{' '}
+            <a href="https://github.com/eolszewski/sec-ed-cert">
+              this repository
+            </a>{' '}
+            can take care of that for you:
           </p>
+
+          <h4>
+            A registered account has a public profile, which contains the
+            following fields: <br /> <br /> ID, EMAIL, FIRST_NAME, LAST_NAME,
+            ED25519_PUB, SECP256K1_PUB.
+          </h4>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} md={6} className={classNames(classes.section)}>
+          <p>
+            The name is collected via email confirmation. The email is collected
+            from the public keys.
+          </p>
           <FormControl
             className={classNames(classes.margin, classes.textField)}
           >
@@ -123,20 +144,21 @@ class RegisterPage extends Component {
                 opacity: 0,
                 overflow: 'hidden',
                 position: 'absolute',
-                zIndex: 1,
+                zIndex: 1
               }}
             />
             <Button
               color="secondary"
+              variant="raised"
               component="label"
               htmlFor="edKeyFile"
             >
-              {ed25519 == null ? 'Upload ED25519 Armored Public Key' : ed25519_filename}
+              {ed25519 == null
+                ? 'Upload ED25519 Armored Public Key'
+                : ed25519_filename}
             </Button>
           </FormControl>
-        </Grid>
-
-        <Grid item xs={12}>
+          <br />
           <FormControl
             className={classNames(classes.margin, classes.textField)}
           >
@@ -150,49 +172,51 @@ class RegisterPage extends Component {
                 opacity: 0,
                 overflow: 'hidden',
                 position: 'absolute',
-                zIndex: 1,
+                zIndex: 1
               }}
             />
             <Button
               color="secondary"
+              variant="raised"
               component="label"
               htmlFor="secKeyFile"
             >
-              {secp256k1 == null ? 'Upload SECP256K1 Armored Public Key' : secp256k1_filename}
+              {secp256k1 == null
+                ? 'Upload SECP256K1 Armored Public Key'
+                : secp256k1_filename}
+            </Button>
+          </FormControl>
+          <br />
+          <FormControl
+            className={classNames(classes.margin, classes.textField)}
+          >
+            <Button
+              variant="raised"
+              color="secondary"
+              disabled={
+                this.state.ed25519 == null || this.state.secp256k1 == null
+              }
+              onClick={this.handleSubmit}
+            >
+              Register
             </Button>
           </FormControl>
         </Grid>
 
-        <Grid item xs={12}>
-          <Button
-            variant="raised"
-            color="secondary"
-            disabled={
-              this.state.ed25519 == null ||
-              this.state.secp256k1 == null
-            }
-            onClick={this.handleSubmit}
-          >
-            Register
-          </Button>
-        </Grid>
+        {error !== null && (
+          <Grid item xs={12}>
+            <p>{error}</p>
+          </Grid>
+        )}
 
-        {error !== null && <Grid item xs={12}>
-          <p>
-            {error}
-          </p>
-        </Grid>}
-
-        {user.error !== null && <Grid item xs={12}>
-          {user.error.error !== null && <p>
-            {user.error.error}
-          </p>}
-          {user.error.message !== null && <p>
-            {user.error.message}
-          </p>}
-        </Grid>}
+        {user.error !== null && (
+          <Grid item xs={12}>
+            {user.error.error !== null && <p>{user.error.error}</p>}
+            {user.error.message !== null && <p>{user.error.message}</p>}
+          </Grid>
+        )}
       </Grid>
-    );    
+    );
 
     const registrationSuccess = (
       <Grid container className={classNames(classes.root)}>
