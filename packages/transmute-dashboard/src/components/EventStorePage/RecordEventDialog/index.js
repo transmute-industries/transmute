@@ -4,20 +4,15 @@ import Button from 'material-ui/Button';
 import Dialog, {
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   withMobileDialog
 } from 'material-ui/Dialog';
 
-import brace from 'brace';
 import AceEditor from 'react-ace';
 
 import 'brace/mode/json';
 import 'brace/theme/github';
 
-function onChange(newValue) {
-  console.log('change', newValue);
-}
 
 class ResponsiveDialog extends React.Component {
   state = {

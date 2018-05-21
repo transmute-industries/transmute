@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Table, {
@@ -15,12 +14,7 @@ import Table, {
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
-import Checkbox from 'material-ui/Checkbox';
-import IconButton from 'material-ui/IconButton';
 import Tooltip from 'material-ui/Tooltip';
-import DeleteIcon from 'material-ui-icons/Delete';
-import FilterListIcon from 'material-ui-icons/FilterList';
-import { lighten } from 'material-ui/styles/colorManipulator';
 
 const columnData = [
   { id: 'index', numeric: true, disablePadding: false, label: 'Index' },
@@ -50,10 +44,8 @@ class EventsTableHead extends React.Component {
   };
   render() {
     const {
-      onSelectAllClick,
       order,
       orderBy,
-      rowCount
     } = this.props;
 
     return (
@@ -207,6 +199,7 @@ class EventsTable extends React.Component {
                       <TableRow
                         hover
                         role="checkbox"
+                        aria-checked
                         tabIndex={-1}
                         key={n.id}
                       >
@@ -224,6 +217,7 @@ class EventsTable extends React.Component {
                       <TableRow
                         hover
                         role="checkbox"
+                        aria-checked
                         tabIndex={-1}
                         key={n.id}
                       >

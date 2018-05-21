@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
@@ -17,8 +16,6 @@ import AccountCircle from 'material-ui-icons/AccountCircle';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import OktaAuthButton from '../Auth/OktaAuthButton';
 import * as actionCreators from '../../store/user/actionCreators';
-
-import { push } from 'react-router-redux';
 
 import Button from 'material-ui/Button';
 

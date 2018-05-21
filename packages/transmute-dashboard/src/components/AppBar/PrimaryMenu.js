@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Link } from 'react-router-dom';
-
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
 
 import { withAuth } from '@okta/okta-react';
 
-import { Fingerprint, Dashboard, Settings } from 'material-ui-icons';
+import {  Dashboard } from 'material-ui-icons';
 
 import { history } from '../../store';
 

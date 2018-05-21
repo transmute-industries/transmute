@@ -203,6 +203,7 @@ class DirectoryTable extends React.Component {
                       hover
                       onClick={() => history.push('/directory/' + n.id)}
                       role="checkbox"
+                      aria-checked
                       tabIndex={-1}
                       key={n.id}
                     >

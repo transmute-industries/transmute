@@ -21,16 +21,14 @@ const composeEnhancers =
       })
     : compose;
 
-const enhancer = composeEnhancers(
-  applyMiddleware(...middleware)
-  // other store enhancers if any
-);
-
 export const store = createStore(
   combineReducers({
     directory: directory.reducer,
     user: user,
     router: routerReducer
   }),
-  applyMiddleware(...middleware)
+  composeEnhancers(
+    applyMiddleware(...middleware)
+    // other store enhancers if any
+  )
 );

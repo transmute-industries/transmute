@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withAuth } from '@okta/okta-react';
 
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import Button from 'material-ui/Button';
 

@@ -1,14 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from 'material-ui/Button';
-import Paper from 'material-ui/Paper';
-import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
+import GridList, { GridListTile } from 'material-ui/GridList';
+import Card, { CardActions, CardContent } from 'material-ui/Card';
 import ExpansionPanel, {
   ExpansionPanelSummary,
   ExpansionPanelDetails,
