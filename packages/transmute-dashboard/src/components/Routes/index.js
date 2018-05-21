@@ -41,7 +41,11 @@ class Routes extends React.Component {
           <Route path="/register" exact render={() => <Register />} />
           <Route path="/implicit/callback" component={ImplicitCallback} />
           <SecureRoute path="/profile" exact render={() => <ProfilePage />} />
-          <SecureRoute path="/directory" exact render={() => <DirectoryPage />} />
+          <SecureRoute
+            path="/directory"
+            exact
+            render={() => <DirectoryPage />}
+          />
           <SecureRoute
             path="/directory/:id"
             exact
