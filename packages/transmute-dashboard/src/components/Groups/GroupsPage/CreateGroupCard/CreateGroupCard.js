@@ -36,10 +36,12 @@ class GroupCard extends React.Component {
     e.preventDefault();
     let response = await createGroup(this.props.auth, this.state);
     if (response.data.error) {
+      // TODO: Handle error states in UI
       this.setState({
         error: response.data.error
       });
     } else {
+      // TODO: Call back to parent component and refresh groups
       this.setState({
         error: null,
         name: '',
@@ -55,7 +57,8 @@ class GroupCard extends React.Component {
   };
 
   render() {
-    const { classes, name, description } = this.props;
+    const { classes } = this.props;
+    const { name, description } = this.state;
 
     return (
       <Card>
@@ -97,6 +100,7 @@ class GroupCard extends React.Component {
               variant="raised"
               color="secondary"
               onClick={this.handleSubmit}
+              disabled={name.trim().length == 0 || description.trim().length == 0}
             >
               Create
             </Button>
