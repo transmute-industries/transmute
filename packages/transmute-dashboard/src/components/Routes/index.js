@@ -15,9 +15,9 @@ import config from '../../okta_config';
 import Home from '../Home';
 import Demo from '../Demo';
 import Register from '../Auth/Register';
-import Profile from '../Profile';
-import Directory from '../Directory';
-import DirectoryProfilePage from '../Directory/Profile';
+import ProfilePage from '../ProfilePage';
+import DirectoryPage from '../DirectoryPage';
+import DirectoryProfilePage from '../DirectoryPage/DirectoryProfilePage';
 import GroupsPage from '../Groups/GroupsPage';
 import GroupPage from '../Groups/GroupPage';
 import EventStoreFactoryPage from '../EventStoreFactoryPage';
@@ -40,8 +40,8 @@ class Routes extends React.Component {
           <Route path="/demo" component={Demo} />
           <Route path="/register" exact render={() => <Register />} />
           <Route path="/implicit/callback" component={ImplicitCallback} />
-          <SecureRoute path="/profile" exact render={() => <Profile />} />
-          <SecureRoute path="/directory" exact render={() => <Directory />} />
+          <SecureRoute path="/profile" exact render={() => <ProfilePage />} />
+          <SecureRoute path="/directory" exact render={() => <DirectoryPage />} />
           <SecureRoute
             path="/directory/:id"
             exact
