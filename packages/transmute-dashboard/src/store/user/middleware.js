@@ -5,6 +5,7 @@ const ENVS = {
   TEST: '???',
   PROD: 'https://transmute-api.herokuapp.com'
 };
+
 export const register = async ({ edArmorPub, secArmorPub }) => {
   return axios
     .create({
