@@ -18,6 +18,8 @@ import Register from '../Auth/Register';
 import Profile from '../Profile';
 import Directory from '../Directory';
 import DirectoryProfilePage from '../Directory/Profile';
+import GroupsPage from '../Groups/GroupsPage';
+import GroupPage from '../Groups/GroupPage';
 import EventStoreFactoryPage from '../EventStoreFactoryPage';
 import EventStorePage from '../EventStorePage';
 import StreamModelPage from '../StreamModelPage';
@@ -60,6 +62,12 @@ class Routes extends React.Component {
             path="/eventstore/:address"
             exact
             component={EventStorePage}
+          />
+          <SecureRoute path="/groups" exact render={() => <GroupsPage />} />
+          <SecureRoute
+            path="/groups/:id"
+            exact
+            render={() => <GroupPage />}
           />
         </Switch>
       </Security>
