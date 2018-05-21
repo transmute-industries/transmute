@@ -101,7 +101,7 @@ const toolbarStyles = theme => ({
   }
 });
 
-let EventStoresTableToolbar = props => {
+let DirectoryTableToolbar = props => {
   const { classes } = props;
 
   return (
@@ -113,11 +113,11 @@ let EventStoresTableToolbar = props => {
   );
 };
 
-EventStoresTableToolbar.propTypes = {
+DirectoryTableToolbar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-EventStoresTableToolbar = withStyles(toolbarStyles)(EventStoresTableToolbar);
+DirectoryTableToolbar = withStyles(toolbarStyles)(DirectoryTableToolbar);
 
 const styles = theme => ({
   root: {
@@ -185,7 +185,7 @@ class DirectoryTable extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        <EventStoresTableToolbar />
+        <DirectoryTableToolbar />
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <DirectoryTableHead
