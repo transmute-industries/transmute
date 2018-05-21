@@ -1,10 +1,8 @@
 import React from 'react';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
+import Card, { CardActions, CardContent } from 'material-ui/Card';
 
 const styles = theme => ({
   image: {
@@ -18,23 +16,6 @@ const styles = theme => ({
 });
 
 class ProfileCard extends React.Component {
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.signature && nextProps.user) {
-  //     this.setState({
-  //       signature: nextProps.signature,
-  //       user: nextProps.user
-  //     });
-  //   }
-  // }
-
-  // constructor(props, context) {
-  //   super(props, context);
-
-  //   this.state = {
-  //     signature: props.signature,
-  //     user: props.user
-  //   };
-  // }
 
   handleSignatureUpload = event => {
     this.props.onSignatureUpload(event);
@@ -42,13 +23,9 @@ class ProfileCard extends React.Component {
 
   render() {
     const { classes, signature } = this.props;
-    // console.log('what profile props:', this.props);
     return (
       <Card>
         <CardContent className={classes.root}>
-          <Typography gutterBottom variant="headline" component="h2">
-            {/* {user.name} ({user.email}) */}
-          </Typography>
           {signature !== null ? (
             <div>
               <p>My Signature</p>

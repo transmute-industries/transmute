@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { withAuth } from '@okta/okta-react';
 
 import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
-import TextField from 'material-ui/TextField';
 import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
 
@@ -52,8 +49,6 @@ class ProfilePage extends Component {
   }
 
   handleChange = name => event => {
-    this.state.profile[name] = event.target.value;
-
     this.setState({
       profile: { ...this.state.profile, [name]: event.target.value }
     });
@@ -171,7 +166,6 @@ class ProfilePage extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    go: () => dispatch(push('/protected')),
     setUserProfile: async (auth, profile) => {
       dispatch(actions.setUserProfile(auth, profile));
     },

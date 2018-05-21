@@ -1,7 +1,5 @@
 import React from 'react';
 import _ from 'lodash';
-import { Redirect } from 'react-router-dom';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Table, {
@@ -11,17 +9,11 @@ import Table, {
   TableHead,
   TablePagination,
   TableRow,
-  TableSortLabel
 } from 'material-ui/Table';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
-import Checkbox from 'material-ui/Checkbox';
-import IconButton from 'material-ui/IconButton';
-import Tooltip from 'material-ui/Tooltip';
-import DeleteIcon from 'material-ui-icons/Delete';
-import FilterListIcon from 'material-ui-icons/FilterList';
-import { lighten } from 'material-ui/styles/colorManipulator';
+
 
 const columnData = [
   {
@@ -34,7 +26,7 @@ const columnData = [
 
 class StreamModelTableHead extends React.Component {
   render() {
-    const { order, orderBy, rowCount } = this.props;
+    const { order, orderBy } = this.props;
 
     return (
       <TableHead>
@@ -151,7 +143,7 @@ class StreamModelTable extends React.Component {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => {
                   return (
-                    <TableRow key={n} hover role="checkbox" tabIndex={-1}>
+                    <TableRow key={n} hover role="checkbox" aria-checked tabIndex={-1}>
                       <TableCell>
                         <pre>{JSON.stringify(n, null, 2)}</pre>
                       </TableCell>

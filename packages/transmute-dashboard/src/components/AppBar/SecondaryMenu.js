@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 
 import { withAuth } from '@okta/okta-react';
-
-import { history } from '../../store';
-
-import { Send, Slack, BugReport, Code } from 'material-ui-icons';
+import { Send, BugReport, Code } from 'material-ui-icons';
 
 class SecondaryMenu extends Component {
   constructor(props) {

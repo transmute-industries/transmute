@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Table, {
@@ -14,39 +13,44 @@ import Table, {
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
+
 import Tooltip from 'material-ui/Tooltip';
 
+import { history } from '../../../store';
+
 const columnData = [
-  { id: 'index', numeric: true, disablePadding: false, label: 'Index' },
   {
-    id: 'sender',
+    id: 'id',
     numeric: false,
     disablePadding: false,
-    label: 'Sender'
+    label: 'ID'
   },
   {
-    id: 'key',
+    id: 'email',
     numeric: false,
     disablePadding: false,
-    label: 'Key'
+    label: 'Email'
   },
   {
-    id: 'value',
+    id: 'firstName',
     numeric: false,
     disablePadding: false,
-    label: 'Value'
+    label: 'First Name'
+  },
+  {
+    id: 'lastName',
+    numeric: false,
+    disablePadding: false,
+    label: 'LastName'
   }
 ];
 
-class EventsTableHead extends React.Component {
+class DirectoryTableHead extends React.Component {
   createSortHandler = property => event => {
     this.props.onRequestSort(event, property);
   };
   render() {
-    const {
-      order,
-      orderBy,
-    } = this.props;
+    const { order, orderBy } = this.props;
 
     return (
       <TableHead>
@@ -81,38 +85,39 @@ class EventsTableHead extends React.Component {
   }
 }
 
+DirectoryTableHead.propTypes = {
+  onRequestSort: PropTypes.func.isRequired,
+  order: PropTypes.string.isRequired,
+  orderBy: PropTypes.string.isRequired,
+  rowCount: PropTypes.number.isRequired
+};
+
 const toolbarStyles = theme => ({
   root: {
     paddingRight: theme.spacing.unit
-  },
-  spacer: {
-    flex: '1 1 100%'
-  },
-  actions: {
-    color: theme.palette.text.secondary
   },
   title: {
     flex: '0 0 auto'
   }
 });
 
-let EventsTableToolbar = props => {
+let DirectoryTableToolbar = props => {
   const { classes } = props;
 
   return (
     <Toolbar className={classes.root}>
       <div className={classes.title}>
-        <Typography variant="title">Events</Typography>
+        <Typography variant="title">People</Typography>
       </div>
     </Toolbar>
   );
 };
 
-EventsTableToolbar.propTypes = {
-  classes: PropTypes.object.isRequired,
+DirectoryTableToolbar.propTypes = {
+  classes: PropTypes.object.isRequired
 };
 
-EventsTableToolbar = withStyles(toolbarStyles)(EventsTableToolbar);
+DirectoryTableToolbar = withStyles(toolbarStyles)(DirectoryTableToolbar);
 
 const styles = theme => ({
   root: {
@@ -127,11 +132,11 @@ const styles = theme => ({
   }
 });
 
-class EventsTable extends React.Component {
+class DirectoryTable extends React.Component {
   componentWillReceiveProps(nextProps) {
-    if (nextProps.events) {
+    if (nextProps.people) {
       this.setState({
-        data: nextProps.events
+        data: nextProps.people
       });
     }
   }
@@ -142,9 +147,9 @@ class EventsTable extends React.Component {
     this.state = {
       order: 'desc',
       orderBy: 'index',
-      data: props.events == null ? [] : props.events,
+      data: [],
       page: 0,
-      rowsPerPage: 10
+      rowsPerPage: 8
     };
   }
 
@@ -172,19 +177,18 @@ class EventsTable extends React.Component {
     this.setState({ rowsPerPage: event.target.value });
   };
 
-  isSelected = id => this.state.selected.indexOf(id) !== -1;
-
   render() {
-    const { classes, currentUserAddress } = this.props;
+    const { classes } = this.props;
     const { data, order, orderBy, rowsPerPage, page } = this.state;
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+
     return (
       <Paper className={classes.root}>
-        <EventsTableToolbar />
+        <DirectoryTableToolbar />
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
-            <EventsTableHead
+            <DirectoryTableHead
               order={order}
               orderBy={orderBy}
               onRequestSort={this.handleRequestSort}
@@ -193,40 +197,22 @@ class EventsTable extends React.Component {
             <TableBody>
               {data
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(n => { 
-                  return n.sender === currentUserAddress ?
-                     (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        aria-checked
-                        tabIndex={-1}
-                        key={n.id}
-                      >
-                        <TableCell numeric>{n.index}</TableCell>
-                        <TableCell>{n.sender.substring(0, 16) + '...'}</TableCell>
-                        <TableCell>
-                          <pre>{JSON.stringify(n.key, null, 2)}</pre>
-                        </TableCell>
-                        <TableCell>
-                          <pre>{JSON.stringify(n.value, null, 2)}</pre>
-                        </TableCell>
-                      </TableRow>
-                    ) :
-                    (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        aria-checked
-                        tabIndex={-1}
-                        key={n.id}
-                      >
-                        <TableCell numeric>{n.index}</TableCell>
-                        <TableCell>{n.sender.substring(0, 16) + '...'}</TableCell>
-                        <TableCell>[ENCRYPTED]</TableCell>
-                        <TableCell>[ENCRYPTED]</TableCell>
-                      </TableRow>
-                    )
+                .map(n => {
+                  return (
+                    <TableRow
+                      hover
+                      onClick={() => history.push('/directory/' + n.id)}
+                      role="checkbox"
+                      aria-checked
+                      tabIndex={-1}
+                      key={n.id}
+                    >
+                      <TableCell>{n.id}</TableCell>
+                      <TableCell>{n.email}</TableCell>
+                      <TableCell>{n.firstName}</TableCell>
+                      <TableCell>{n.lastName}</TableCell>
+                    </TableRow>
+                  );
                 })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 49 * emptyRows }}>
@@ -259,15 +245,8 @@ class EventsTable extends React.Component {
   }
 }
 
-EventsTable.propTypes = {
+DirectoryTable.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-
-const mapStateToProps = state => {
-  return {
-    user: state.user
-  };
-};
-
-export default withStyles(styles)(connect(mapStateToProps, null)(EventsTable));
+export default withStyles(styles)(DirectoryTable);

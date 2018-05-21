@@ -1,5 +1,3 @@
-import * as Constants from './constants';
-import axios from 'axios';
 
 import * as actionCreators from './actionCreators';
 import * as middleware from './middleware';

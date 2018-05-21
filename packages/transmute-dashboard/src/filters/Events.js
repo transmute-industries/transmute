@@ -9,7 +9,7 @@ export const attributeFilter = (event, filter) => {
     case Types.NUMERIC:
       switch (comparison) {
         case Comparisons.EQUAL_TO:
-          return _.get(event, attribute) == value
+          return _.get(event, attribute) === value
         case Comparisons.LESS_THAN:
           return _.get(event, attribute) < value
         case Comparisons.GREATER_THAN:

@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import { withAuth } from '@okta/okta-react';
 
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Link } from 'react-router-dom';
 
-import Button from 'material-ui/Button';
 
 import EventsTable from './EventsTable';
 import RecordEventDialog from './RecordEventDialog';
