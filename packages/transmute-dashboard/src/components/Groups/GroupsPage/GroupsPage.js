@@ -4,6 +4,7 @@ import { withStyles } from 'material-ui/styles';
 
 import AppBar from '../../AppBar';
 import GroupsTable from './GroupsTable';
+import CreateGroupCard from './CreateGroupCard';
 
 import { getGroups } from '../../../store/transmute/middleware';
 
@@ -38,10 +39,11 @@ class GroupsPage extends Component {
   render() {
     return (
       <AppBar>
+        <CreateGroupCard />
         <GroupsTable groups={this.state.groups} />
       </AppBar>
     );
   }
 }
 
-export default withStyles(styles)((withAuth(GroupsPage)));
+export default withStyles(styles)(withAuth(GroupsPage));

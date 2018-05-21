@@ -45,7 +45,10 @@ export const createGroup = async (auth, profile) => {
         'Authorization': `Bearer ${access_token}`
       }
     })
-    .post(`/api/v0/groups/`);
+    .post(`/api/v0/groups/`, {
+      name: profile.name,
+      description: profile.description
+    });
 };
 
 export const deleteGroup = async (auth, groupId) => {

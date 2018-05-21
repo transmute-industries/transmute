@@ -46,6 +46,33 @@ class GroupPage extends Component {
   render() {
     return (
       <AppBar>
+        {/* <Grid item xs={5}>
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="uncontrolled-native">Account</InputLabel>
+            <Select
+              value={this.state.account}
+              native
+              defaultValue={30}
+              onChange={this.selectAccount}
+              input={<Input id="uncontrolled-native" />}
+            >
+              {this.state.accounts.map(account => (
+                <option
+                  key={account}
+                  value={account}
+                  style={{
+                    fontWeight:
+                      currentUserAddress !== account
+                        ? theme.typography.fontWeightRegular
+                        : theme.typography.fontWeightMedium
+                  }}
+                >
+                  {account}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid> */}
         { this.state.group && <GroupTable group={this.state.group} /> }
       </AppBar>
     );
