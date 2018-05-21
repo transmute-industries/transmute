@@ -7,6 +7,8 @@ import AppBar from '../../AppBar';
 
 import { getDirectoryProfile } from '../../../store/transmute/middleware';
 
+import PublicDirectoryProfileCard from './PublicDirectoryProfileCard';
+
 const styles = theme => ({
   margin: {
     margin: theme.spacing.unit
@@ -40,10 +42,11 @@ class DirectoryProfilePage extends Component {
 
   render() {
     const { profile } = this.state;
+
+    if (!profile) return null;
     return (
       <AppBar>
-        <h1>Profile</h1>
-        <pre>{JSON.stringify(profile, null, 2)}</pre>
+        <PublicDirectoryProfileCard profile={profile} />
       </AppBar>
     );
   }
