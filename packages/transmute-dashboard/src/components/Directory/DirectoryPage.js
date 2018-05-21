@@ -36,28 +36,13 @@ class DirectoryPage extends Component {
   }
 
   render() {
-    // const { classes } = this.props;
-    // const { profiles, error } = this.state;
-
+    const { profiles } = this.state;
     return (
       <AppBar>
-        <DirectoryTable people={this.state.profiles} />
+        <DirectoryTable people={profiles} />
       </AppBar>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    // setUserProfile: async (auth, profile) => {
-    //   dispatch(actions.setUserProfile(auth, profile));
-    // },
-    // getUser: async auth => {
-    //   dispatch(actions.getUser(auth));
-    // }
-  };
-};
-
-export default withStyles(styles)(
-  connect(null, mapDispatchToProps)(withAuth(DirectoryPage))
-);
+export default withStyles(styles)(connect(null, null)(withAuth(DirectoryPage)));

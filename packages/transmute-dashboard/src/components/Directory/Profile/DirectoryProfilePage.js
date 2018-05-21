@@ -39,8 +39,7 @@ class DirectoryProfilePage extends Component {
   }
 
   render() {
-    // const { classes } = this.props;
-    const { profile, error } = this.state;
+    const { profile } = this.state;
     return (
       <AppBar>
         <h1>Profile</h1>
@@ -50,17 +49,6 @@ class DirectoryProfilePage extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    // setUserProfile: async (auth, profile) => {
-    //   dispatch(actions.setUserProfile(auth, profile));
-    // },
-    // getUser: async auth => {
-    //   dispatch(actions.getUser(auth));
-    // }
-  };
-};
-
 export default withStyles(styles)(
-  connect(null, mapDispatchToProps)(withAuth(DirectoryProfilePage))
+  connect(null, null)(withAuth(DirectoryProfilePage))
 );

@@ -24,8 +24,6 @@ import EventStoreFactoryPage from '../EventStoreFactoryPage';
 import EventStorePage from '../EventStorePage';
 import StreamModelPage from '../StreamModelPage';
 
-
-
 const auth = new Auth({
   issuer: config.issuer,
   client_id: config.client_id,
@@ -64,11 +62,7 @@ class Routes extends React.Component {
             component={EventStorePage}
           />
           <SecureRoute path="/groups" exact render={() => <GroupsPage />} />
-          <SecureRoute
-            path="/groups/:id"
-            exact
-            render={() => <GroupPage />}
-          />
+          <SecureRoute path="/groups/:id" exact render={() => <GroupPage />} />
         </Switch>
       </Security>
     );

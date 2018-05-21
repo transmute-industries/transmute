@@ -1,5 +1,5 @@
 import axios from 'axios';
-import _ from 'lodash'
+import _ from 'lodash';
 
 const ENVS = {
   LOCAL: 'http://localhost:5000',
@@ -23,21 +23,6 @@ export const getDirectoryProfiles = async auth => {
 };
 
 export const getDirectoryProfile = async (auth, id) => {
-    let access_token = await auth.getAccessToken();
-  let { data } = await axios
-    .create({
-      baseURL: ENVS.PROD,
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Authorization: `Bearer ${access_token}`
-      }
-    })
-    .get(`/api/v0/groups`);
-  return data.groups;
-}
-
-export const getGroups = async (auth) => {
   let access_token = await auth.getAccessToken();
   let { data } = await axios
     .create({
@@ -49,8 +34,18 @@ export const getGroups = async (auth) => {
       }
     })
     .get(`/api/v0/profiles/${id}`);
-      return data.profile;
-        'Authorization': `Bearer ${access_token}`
+  return data.profile;
+};
+
+export const getGroups = async auth => {
+  let access_token = await auth.getAccessToken();
+  let { data } = await axios
+    .create({
+      baseURL: ENVS.PROD,
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${access_token}`
       }
     })
     .get(`/api/v0/groups`);
@@ -65,7 +60,7 @@ export const getGroup = async (auth, groupId) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        'Authorization': `Bearer ${access_token}`
+        Authorization: `Bearer ${access_token}`
       }
     })
     .get(`/api/v0/groups/${groupId}`);
@@ -80,7 +75,7 @@ export const createGroup = async (auth, profile) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        'Authorization': `Bearer ${access_token}`
+        Authorization: `Bearer ${access_token}`
       }
     })
     .post(`/api/v0/groups/`, {
@@ -97,7 +92,7 @@ export const deleteGroup = async (auth, groupId) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        'Authorization': `Bearer ${access_token}`
+        Authorization: `Bearer ${access_token}`
       }
     })
     .delete(`/api/v0/groups/${groupId}`);
@@ -105,13 +100,13 @@ export const deleteGroup = async (auth, groupId) => {
 
 export const getGroupMembers = async (auth, groupId) => {
   let access_token = await auth.getAccessToken();
-  let { data } = await axios
+  let { data } = await axios
     .create({
       baseURL: ENVS.PROD,
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        'Authorization': `Bearer ${access_token}`
+        Authorization: `Bearer ${access_token}`
       }
     })
     .get(`/api/v0/groups/${groupId}/users`);
@@ -126,7 +121,7 @@ export const addGroupMember = async (auth, groupId, userId) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        'Authorization': `Bearer ${access_token}`
+        Authorization: `Bearer ${access_token}`
       }
     })
     .put(`/api/v0/groups/${groupId}/users/${userId}`);
@@ -140,7 +135,7 @@ export const removeGroupMember = async (auth, groupId, userId) => {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        'Authorization': `Bearer ${access_token}`
+        Authorization: `Bearer ${access_token}`
       }
     })
     .delete(`/api/v0/groups/${groupId}/users/${userId}`);
