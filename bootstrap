@@ -4,33 +4,16 @@
 : ${TRANSMUTE_DIR:=$HOME/.transmute}
 : ${TRANSMUTE_BIN:=$TRANSMUTE_DIR/bin}
 : ${TRANSMUTE_REPO:=$TRANSMUTE_DIR/git/transmute}
-: ${VERBOSITY:=0}
+: ${VERBOSITY:=10}
 : ${HELM_INSTALL_DIR:=$TRANSMUTE_BIN}
 : ${MY_KUBE_VERSION:=v1.9.6}
 : ${FIX_DOTFILES:="true"}
 : ${NVM_DIR_ADDS:="true"}
 : ${NVM_VERSION:='0.33.9'}
-: ${USE_VOX:=y}
 : ${USE_WARN:=y}
 
 export CWD=$(pwd)
 export PATH=$TRANSMUTE_BIN:$PATH
-
-speaker () {
-  WELCOME=$1
-  echo $WELCOME
-  if [[ "$USE_VOX" == 'y' ]]; then
-    if type "say"        > /dev/null 2> /dev/null; then
-      say "$WELCOME"
-    elif type "espeak"   > /dev/null 2> /dev/null; then
-      espeak "$WELCOME"
-    elif type "spd-say"  > /dev/null 2> /dev/null; then
-      spd-say "$WELCOME"
-    elif type "festival" > /dev/null 2> /dev/null; then
-      echo "$WELCOME" | festival --tts
-    fi
-  fi
-}
 
 squawk () {
   # This function simplifies error reporting and verbosity
@@ -54,10 +37,6 @@ squawk () {
     echo " $squawk"
   fi
 }
-
-if [[ "$USE_VOX" == 'y' ]]; then
-  squawk 3 'Using vox'
-fi
 
 # Check for config env file
 if [ -e $TRANSMUTE_DIR/env ]; then
@@ -267,6 +246,7 @@ install_certbot () {
     else
       echo 'gpg not found'
     fi
+    rm certbot-auto.asc
     sudo chmod +x certbot-auto
     sudo mv certbot-auto $TRANSMUTE_BIN/
     set +e
@@ -274,7 +254,6 @@ install_certbot () {
     set -e
     cd
     rm -Rf $TMP
-    rm certbot-auto.asc
   else
     squawk 3 'certbot-auto already installed skipping'
   fi
@@ -468,6 +447,13 @@ install_jq () {
   fi
 }
 
+transmute-cli_install () {
+  cd $TRANSMUTE_REPO/packages/transmute-cli
+  npm i
+  npm run build
+  npm i -g
+}
+
 windowsreqs () {
   check_cmd chocolatey
   install_curl
@@ -486,6 +472,7 @@ windowsreqs () {
   install_certbot
   install_jq
   dotfiles_install
+  transmute-cli_install
 }
 
 macreqs () {
@@ -510,6 +497,7 @@ macreqs () {
   install_certbot
   install_jq
   dotfiles_install
+  transmute-cli_install
 }
 
 linuxreqs () {
@@ -529,6 +517,7 @@ linuxreqs () {
   install_certbot
   install_jq
   dotfiles_install
+  transmute-cli_install
 }
 
 initializer () {
@@ -592,24 +581,24 @@ elif [ "$UNAME" = "CYGWIN_NT-10.0" ] ; then
   PLATFORM="os.cygwin.x86_64"
 fi
 
-speaker "Warning!"
+echo "Warning!"
 sleep 1
-speaker "This script will install minikube, kubectl and helm,
+echo "This script will install minikube, kubectl and helm,
 and then install transmute."
 if [[ "$USE_WARN" == 'y' ]]; then
   warrrn
 fi
 
-echo "Checking $TRANSMUTE_DIR"
+squawk 3 "Checking $TRANSMUTE_DIR"
+mkdir -p $TRANSMUTE_DIR/git
+mkdir -p $TRANSMUTE_BIN
 
 if [ -e "$TRANSMUTE_DIR/git" ]; then
-  echo "$TRANSMUTE_DIR/git exists already, proceeding"
+  squawk 3 "$TRANSMUTE_DIR/git exists already, proceeding"
 else
-  echo "$TRANSMUTE_DIR/git does not exist already, proceeding"
-  set +e
+  squawk 3 "$TRANSMUTE_DIR/git does not exist already, proceeding"
   cd $TRANSMUTE_DIR
   mkdir -p $TRANSMUTE_DIR/git
-  set -e
 fi
 
 # Install transmute components into k8s
@@ -618,7 +607,6 @@ fi
 # however this will
 if [ -e "$TRANSMUTE_REPO" ]; then
   squawk 3 "$TRANSMUTE_REPO exists already, proceeding"
-  cd $TRANSMUTE_DIR/git
   squawk 3 'Updating the transmute repo'
   cd $TRANSMUTE_REPO
   git fetch --tags
@@ -626,11 +614,11 @@ if [ -e "$TRANSMUTE_REPO" ]; then
   git submodule update --init
   cd $CWD
 else
-  cd $TRANSMUTE_REPO
+  cd $TRANSMUTE_DIR/git
   squawk 3 'Cloning the latest transmute repo'
   git clone --depth=1 \
    https://github.com/transmute-industries/transmute.git
-  cd $TRANSMUTE_DIR/git/transmute
+  cd $TRANSMUTE_REPO
   git fetch --tags
   git checkout $TRANSMUTE_RELEASE
   git submodule update --init
@@ -641,9 +629,7 @@ if [ "$FIX_DOTFILES" = "true" ]; then
   dotfiles_install
 fi
 
-# make reqs
-mkdir -p $TRANSMUTE_DIR
-mkdir -p $TRANSMUTE_BIN
+squawk 5 ' make reqs'
 if [ "$PLATFORM" = "os.linux.x86_64" ] ; then
   linuxreqs
 elif [ "$PLATFORM" = "os.osx.x86_64" ] ; then
@@ -663,15 +649,16 @@ check_cmd minikube
 squawk 3 'Initializer'
 initializer
 
-speaker 'The bootstrap has finished'
-speaker 'you have completed all the way to "npm run setup" here:'
+echo 'The bootstrap has finished'
+echo 'you have completed all the way to "npm run setup" here:'
 echo 'https://github.com/transmute-industries/transmute#environment-scripts-and-updating'
 if [ "$PLATFORM" = "os.osx.x86_64" ] ; then
   SETUP_DIR=$(greadlink -f $TRANSMUTE_DIR)
 else
   SETUP_DIR=$(readlink -f $TRANSMUTE_DIR)
 fi
-speaker "You should now run 'npm run setup' inside '$SETUP_DIR'"
+echo "First you will need to source your ~/.bashrc or ~/.zshrc file"
+echo "Then you should be able run 'npm run setup' inside '$SETUP_DIR'"
 
 trap - EXIT
 # End run it wrapper
