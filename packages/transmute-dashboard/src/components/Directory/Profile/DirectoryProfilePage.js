@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { withAuth } from '@okta/okta-react';
 import { withStyles } from 'material-ui/styles';
 
-import AppBar from '../../AppBar';
+import withDirectory from '../../../containers/withDirectory';
 
-import { getDirectoryProfile } from '../../../store/transmute/middleware';
+import AppBar from '../../AppBar';
 
 import PublicDirectoryProfileCard from './PublicDirectoryProfileCard';
 
@@ -19,39 +19,25 @@ const styles = theme => ({
 });
 
 class DirectoryProfilePage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      profile: null,
-      error: null
-    };
-  }
-
-  async componentWillMount() {
+  componentWillMount() {
     const profile_id = window.location.href
       .split('directory/')[1]
       .split('?')[0];
 
-    if (!this.state.profile) {
-      const profile = await getDirectoryProfile(this.props.auth, profile_id);
-      this.setState({
-        profile
-      });
-    }
+    this.props.actions.directory.loadDirectoryProfile(profile_id);
   }
 
   render() {
-    const { profile } = this.state;
-
-    if (!profile) return null;
+    const { directory } = this.props;
+    if (!directory.profile) return null;
     return (
       <AppBar>
-        <PublicDirectoryProfileCard profile={profile} />
+        <PublicDirectoryProfileCard profile={directory.profile} />
       </AppBar>
     );
   }
 }
 
 export default withStyles(styles)(
-  connect(null, null)(withAuth(DirectoryProfilePage))
+  connect(null, null)(withAuth(withDirectory(DirectoryProfilePage)))
 );

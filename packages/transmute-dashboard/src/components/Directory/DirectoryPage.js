@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { withAuth } from '@okta/okta-react';
 import { withStyles } from 'material-ui/styles';
 
+import withDirectory from '../../containers/withDirectory';
+
 import AppBar from '../AppBar';
 import DirectoryTable from './DirectoryTable';
-
-import { getDirectoryProfiles } from '../../store/transmute/middleware';
 
 const styles = theme => ({
   margin: {
@@ -18,31 +18,21 @@ const styles = theme => ({
 });
 
 class DirectoryPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      profiles: null,
-      error: null
-    };
-  }
-
-  async componentWillMount() {
-    if (!this.state.profiles) {
-      const profiles = await getDirectoryProfiles(this.props.auth);
-      this.setState({
-        profiles
-      });
-    }
+  componentWillMount() {
+    // provided by the withDirectory
+    this.props.actions.directory.loadDirectory();
   }
 
   render() {
-    const { profiles } = this.state;
+    const { directory } = this.props;
     return (
       <AppBar>
-        <DirectoryTable people={profiles} />
+        <DirectoryTable people={directory.profiles} />
       </AppBar>
     );
   }
 }
 
-export default withStyles(styles)(connect(null, null)(withAuth(DirectoryPage)));
+export default withStyles(styles)(
+  connect(null, null)(withAuth(withDirectory(DirectoryPage)))
+);

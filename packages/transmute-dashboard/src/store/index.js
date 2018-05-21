@@ -6,6 +6,8 @@ import thunk from 'redux-thunk';
 import { combineReducers } from 'redux';
 import { reducer as user } from './user/reducer';
 
+import directory from './transmute/directory';
+
 import { routerReducer, routerMiddleware } from 'react-router-redux';
 
 export const history = createHistory();
@@ -26,7 +28,9 @@ const enhancer = composeEnhancers(
 
 export const store = createStore(
   combineReducers({
+    directory: directory.reducer,
     user: user,
     router: routerReducer
   }),
-  applyMiddleware(...middleware));
+  applyMiddleware(...middleware)
+);
