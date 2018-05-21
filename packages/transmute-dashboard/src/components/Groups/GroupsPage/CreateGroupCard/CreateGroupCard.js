@@ -67,44 +67,43 @@ class GroupCard extends React.Component {
             Create Group
           </Typography>
 
-          <Grid item md={12}>
-            <FormControl className={classNames(classes.margin, classes.formControl)}>
-              <InputLabel>Name</InputLabel>
-              <Input
-                className={classNames(classes.textInput)}
-                id="name"
-                type="text"
-                value={name}
-                onChange={this.handleChange('name')}
-              />
-            </FormControl>
-          </Grid>
+          <Grid container style={{ marginBottom: '20px' }}>
+            <Grid item md={12}>
+              <FormControl className={classNames(classes.margin, classes.formControl)}>
+                <InputLabel>Name</InputLabel>
+                <Input
+                  className={classNames(classes.textInput)}
+                  id="name"
+                  type="text"
+                  value={name}
+                  onChange={this.handleChange('name')}
+                />
+              </FormControl>
+            </Grid>
 
-          <Grid item md={12}>
-            <FormControl className={classNames(classes.margin, classes.formControl)}>
-              <InputLabel>Description</InputLabel>
-              <Input
-                className={classNames(classes.textInput)}
-                id="description"
-                type="text"
-                value={description}
-                onChange={this.handleChange('description')}
-              />
-            </FormControl>
+            <Grid item md={12}>
+              <FormControl className={classNames(classes.margin, classes.formControl)}>
+                <InputLabel>Description</InputLabel>
+                <Input
+                  className={classNames(classes.textInput)}
+                  id="description"
+                  type="text"
+                  value={description}
+                  onChange={this.handleChange('description')}
+                />
+              </FormControl>
+            </Grid>
           </Grid>
-          
         </CardContent>
         <CardActions>
-          <Grid item md={12}>
-            <Button
-              variant="raised"
-              color="secondary"
-              onClick={this.handleSubmit}
-              disabled={name.trim().length == 0 || description.trim().length == 0}
-            >
-              Create
-            </Button>
-          </Grid>
+          <Button
+            variant="raised"
+            color="secondary"
+            onClick={this.handleSubmit}
+            disabled={name.trim().length == 0 || description.trim().length == 0}
+          >
+            Create
+          </Button>
         </CardActions>
       </Card>
     );

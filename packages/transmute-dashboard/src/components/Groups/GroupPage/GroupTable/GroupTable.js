@@ -141,7 +141,6 @@ const styles = theme => ({
 
 class GroupTable extends React.Component {
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps: ', nextProps);
     if (nextProps.group) {
       this.setState({
         data: nextProps.group.members
@@ -151,7 +150,6 @@ class GroupTable extends React.Component {
 
   constructor(props, context) {
     super(props, context);
-    console.log('props: ', props);
 
     this.state = {
       order: 'desc',

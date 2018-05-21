@@ -5,8 +5,10 @@ import { withStyles } from 'material-ui/styles';
 
 import AppBar from '../../AppBar';
 import GroupTable from './GroupTable';
+import EditGroupCard from './EditGroupCard';
 
-import { getGroup, getGroupMembers } from '../../../store/transmute/middleware';
+import { getGroup, getGroupMembers, deleteGroup } from '../../../store/transmute/middleware';
+import { history } from '../../../store';
 
 const styles = theme => ({
   margin: {
@@ -43,36 +45,26 @@ class GroupPage extends Component {
     }
   }
 
+  onDelete = async () => {
+    let response = await deleteGroup(this.props.auth, this.state.group.id);
+    if (response.data.error) {
+      // TODO: Handle error states in UI
+      this.setState({
+        error: response.data.error
+      });
+    } else {
+      this.setState({
+        error: null,
+        selectedUser: null
+      });
+      history.push('/groups');
+    }
+  };
+
   render() {
     return (
       <AppBar>
-        {/* <Grid item xs={5}>
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="uncontrolled-native">Account</InputLabel>
-            <Select
-              value={this.state.account}
-              native
-              defaultValue={30}
-              onChange={this.selectAccount}
-              input={<Input id="uncontrolled-native" />}
-            >
-              {this.state.accounts.map(account => (
-                <option
-                  key={account}
-                  value={account}
-                  style={{
-                    fontWeight:
-                      currentUserAddress !== account
-                        ? theme.typography.fontWeightRegular
-                        : theme.typography.fontWeightMedium
-                  }}
-                >
-                  {account}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid> */}
+        <EditGroupCard onDelete={this.onDelete} />
         { this.state.group && <GroupTable group={this.state.group} /> }
       </AppBar>
     );
