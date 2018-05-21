@@ -7,7 +7,7 @@ import AppBar from '../../AppBar';
 import GroupTable from './GroupTable';
 import EditGroupCard from './EditGroupCard';
 
-import { getGroup, getGroupMembers, deleteGroup } from '../../../store/transmute/middleware';
+import { getGroup, deleteGroup, getGroupMembers, addGroupMember, removeGroupMember, getDirectoryProfiles } from '../../../store/transmute/middleware';
 import { history } from '../../../store';
 
 const styles = theme => ({
@@ -24,26 +24,34 @@ class GroupPage extends Component {
     super(props);
     this.state = {
       group: null,
+      users: null,
       error: null
     };
   }
 
   async componentWillMount() {
-    const group_id = window.location.href
-      .split('groups/')[1]
-      .split('?')[0];
-
     if (!this.state.group) {
-      let { data } = await getGroup(this.props.auth, group_id);
-      let group = data;
-      const members = await getGroupMembers(this.props.auth, group_id);
-      // TODO: Update API to return the data (and as an array)
-      group.members = _.values(members.data);
+      await this.updateGroup();
+      const users = await getDirectoryProfiles(this.props.auth);
       this.setState({
-        group: group
+        ...this.state,
+        users
       });
     }
   }
+
+  updateGroup = async () => {
+    const group_id = window.location.href
+      .split('groups/')[1]
+      .split('?')[0];
+    let group = await getGroup(this.props.auth, group_id);
+    const members = await getGroupMembers(this.props.auth, group_id);
+    group.members = members;
+    this.setState({
+      ...this.state,
+      group
+    });
+  };
 
   onDelete = async () => {
     let response = await deleteGroup(this.props.auth, this.state.group.id);
@@ -54,17 +62,60 @@ class GroupPage extends Component {
       });
     } else {
       this.setState({
-        error: null,
-        selectedUser: null
+        error: null
       });
       history.push('/groups');
     }
   };
 
+  onAddMember = async (userId) => {
+    let response = await addGroupMember(this.props.auth, this.state.group.id, userId);
+    if (response.data.error) {
+      // TODO: Handle error states in UI
+      this.setState({
+        ...this.state,
+        error: response.data.error
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        error: null
+      });
+      // TODO: Update Group Members in UI
+    }
+    await this.updateGroup();
+  };
+
+  onRemoveMember = async (userId) => {
+    let response = await removeGroupMember(this.props.auth, this.state.group.id, userId);
+    if (response.data.error) {
+      // TODO: Handle error states in UI
+      this.setState({
+        ...this.state,
+        error: response.data.error
+      });
+    } else {
+      // TODO: Update Add / Remove Button in UI
+      this.setState({
+        ...this.state,
+        error: null
+      });
+    }
+    await this.updateGroup();
+  };
+
   render() {
     return (
       <AppBar>
-        <EditGroupCard onDelete={this.onDelete} />
+        { this.state.group && this.state.users &&
+          <EditGroupCard
+            onDelete={this.onDelete}
+            onAddMember={this.onAddMember}
+            onRemoveMember={this.onRemoveMember}
+            group={this.state.group}
+            users={this.state.users}
+          />
+        }
         { this.state.group && <GroupTable group={this.state.group} /> }
       </AppBar>
     );

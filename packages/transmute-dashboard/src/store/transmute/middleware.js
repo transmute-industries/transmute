@@ -1,4 +1,5 @@
 import axios from 'axios';
+import _ from 'lodash'
 
 const ENVS = {
   LOCAL: 'http://localhost:5000',
@@ -6,9 +7,24 @@ const ENVS = {
   PROD: 'https://transmute-api.herokuapp.com'
 };
 
+export const getDirectoryProfiles = async auth => {
+  let access_token = await auth.getAccessToken();
+  let { data } = await axios
+    .create({
+      baseURL: ENVS.PROD,
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${access_token}`
+      }
+    })
+    .get(`/api/v0/profiles`);
+  return data.profiles;
+};
+
 export const getGroups = async (auth) => {
   let access_token = await auth.getAccessToken();
-  return axios
+  let { data } = await axios
     .create({
       baseURL: ENVS.PROD,
       headers: {
@@ -18,11 +34,12 @@ export const getGroups = async (auth) => {
       }
     })
     .get(`/api/v0/groups`);
+  return data.groups;
 };
 
 export const getGroup = async (auth, groupId) => {
   let access_token = await auth.getAccessToken();
-  return axios
+  let { data } = await axios
     .create({
       baseURL: ENVS.PROD,
       headers: {
@@ -32,6 +49,7 @@ export const getGroup = async (auth, groupId) => {
       }
     })
     .get(`/api/v0/groups/${groupId}`);
+  return data;
 };
 
 export const createGroup = async (auth, profile) => {
@@ -67,7 +85,7 @@ export const deleteGroup = async (auth, groupId) => {
 
 export const getGroupMembers = async (auth, groupId) => {
   let access_token = await auth.getAccessToken();
-  return axios
+  let { data } = await axios
     .create({
       baseURL: ENVS.PROD,
       headers: {
@@ -77,6 +95,7 @@ export const getGroupMembers = async (auth, groupId) => {
       }
     })
     .get(`/api/v0/groups/${groupId}/users`);
+  return _.values(data);
 };
 
 export const addGroupMember = async (auth, groupId, userId) => {

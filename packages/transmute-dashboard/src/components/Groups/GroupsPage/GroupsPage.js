@@ -29,9 +29,8 @@ class GroupsPage extends Component {
   async componentWillMount() {
     if (!this.state.groups) {
       const groups = await getGroups(this.props.auth);
-      // TODO: Update API to return data.groups
       this.setState({
-        groups: groups.data.groups
+        groups
       });
     }
   }
