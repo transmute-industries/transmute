@@ -3,6 +3,7 @@
 : ${TRANSMUTE_RELEASE:='master'}
 : ${TRANSMUTE_DIR:=$HOME/.transmute}
 : ${TRANSMUTE_BIN:=$TRANSMUTE_DIR/bin}
+: ${TRANSMUTE_REPO:=$TRANSMUTE_DIR/git/transmute}
 : ${VERBOSITY:=0}
 : ${HELM_INSTALL_DIR:=$TRANSMUTE_BIN}
 : ${MY_KUBE_VERSION:=v1.9.6}
@@ -32,6 +33,29 @@ speaker () {
     elif type "festival" > /dev/null 2> /dev/null; then
       echo "$WELCOME" | festival --tts
     fi
+  fi
+}
+
+squawk () {
+  # This function simplifies error reporting and verbosity
+  # call it by preceding your message with a verbosity level
+  # e.g. `squawk 3 "This is a squawk"`
+  # if the current verbosity level is greater than or equal to
+  # the number given then this function will echo out your message
+  # and pad it with # to let you now how verbose that message was
+  squawk_lvl=$1
+  shift
+  squawk=$1
+  shift
+  squawk_opt=$@
+
+  if [[ "$VERBOSITY" -ge "$squawk_lvl" ]] ; then
+  count_squawk=0
+    while [[ "$count_squawk" -lt "$squawk_lvl" ]]; do
+      echo -n "#"
+      count_squawk=`expr $count_squawk + 1`
+    done
+    echo " $squawk"
   fi
 }
 
@@ -101,18 +125,24 @@ add_line_to()
 }
 
 macminikube () {
+	set +e
 	echo 'Installing minikube'
 	brew cask install minikube
+	set -e
 }
 
 mackubectl () {
+	set +e
 	echo 'Installing kubectl'
 	brew install kubectl
+	set -e
 }
 
 machelm () {
+	set +e
 	echo 'Installing helm'
 	brew install kubernetes-helm
+	set -e
 }
 
 macnsenter () {
@@ -122,9 +152,11 @@ macnsenter () {
 
 
 macreadlink () {
+	set +e
 	echo 'Installing coreutils'
 	#Installs 'greadlink' tool
-	brew install coreutils
+	brew upgrade coreutils
+	set -e
 }
 
 windowsminikube () {
@@ -222,6 +254,7 @@ dotfiles_install () {
 install_certbot () {
   if ! type "certbot-auto" >/dev/null 2>/dev/null; then
     TMP=$(mktemp -d)
+    cd $TMP
     wget https://dl.eff.org/certbot-auto
     chmod a+x ./certbot-auto
     wget -N https://dl.eff.org/certbot-auto.asc
@@ -242,10 +275,12 @@ install_certbot () {
     else
       echo 'gpg not found'
     fi
+    sudo chmod +x certbot-auto
     sudo mv certbot-auto $TRANSMUTE_BIN/
     set +e
     certbot-auto
     set -e
+    cd
     rm -Rf $TMP
     rm certbot-auto.asc
   else
@@ -254,11 +289,13 @@ install_certbot () {
 }
 
 install_nvm () {
+  squawk 5 "install_nvm"
   set +e
   export NVM_DIR="$HOME/.nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-  this_output=$(nvm  --version)
+  # test if nvm is present if not, throw away the error
+  this_output=$(nvm  --version 2>/dev/null)
   set -e
 
   if [ "$this_output" = "$NVM_VERSION" ]; then
@@ -267,6 +304,7 @@ install_nvm () {
     touch ~/.profile
 
     set +e
+    mkdir $HOME/.nvm
     curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v$NVM_VERSION/install.sh | bash
     set -e
 
@@ -274,6 +312,9 @@ install_nvm () {
       nvm_dir_adds
     fi
   fi
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 }
 
 announce_prefix_fail () {
@@ -497,11 +538,17 @@ linuxreqs () {
 initializer () {
   ls  $TRANSMUTE_DIR/git
   ls $TRANSMUTE_DIR/git/transmute
+  set +e
   cd $TRANSMUTE_DIR/git/transmute/transmute-config
+  set -e
   cp .example.env .env
+  set +e
   cd $TRANSMUTE_DIR/git/transmute
+  set -e
   npm i
+  set +e
   cd $CWD
+  set -e
 }
 
 run_it () {
@@ -569,23 +616,28 @@ else
   set -e
 fi
 
-if [ -e "$TRANSMUTE_DIR/git/transmute" ]; then
-  echo "$TRANSMUTE_DIR/git/transmute exists already, proceeding"
+# Install transmute components into k8s
+# Grab the transmute dir
+# Note in CI this has already been symlinked and does not run there
+# however this will
+if [ -e "$TRANSMUTE_REPO" ]; then
+  echo "$TRANSMUTE_REPO exists already, proceeding"
   cd $TRANSMUTE_DIR/git
   echo 'Updating the transmute repo'
-  cd $TRANSMUTE_DIR/git/transmute
+  cd $TRANSMUTE_REPO
   git fetch --tags
   git checkout $TRANSMUTE_RELEASE
+  git submodule update --init
   cd $CWD
 else
-  cd $TRANSMUTE_DIR/git
-  pwd
+  cd $TRANSMUTE_REPO
   echo 'Cloning the latest transmute repo'
-  git clone --depth 1 https://github.com/transmute-industries/transmute.git
+  git clone --depth=1 \
+   https://github.com/transmute-industries/transmute.git
   cd $TRANSMUTE_DIR/git/transmute
-  pwd
   git fetch --tags
   git checkout $TRANSMUTE_RELEASE
+  git submodule update --init
   cd $CWD
 fi
 
@@ -604,11 +656,15 @@ elif [ "$PLATFORM" = "os.windows.x86_64" ] ; then
   windowsreqs
 fi
 
+echo 'check helm'
 check_cmd helm
+echo 'check kubectl'
 check_cmd kubectl
+echo 'check minikube'
 check_cmd minikube
 #check_cmd nsenter
 
+echo 'Initializer'
 initializer
 
 speaker 'The bootstrap has finished'
