@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>index.js - Documentation</title>
+    <title>stream-model/index.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">index.js</h1>
+    <h1 class="page-title">stream-model/index.js</h1>
     
 
     
@@ -37,18 +37,78 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/** @module TransmuteFramework */
+            <pre class="prettyprint source linenums"><code>/**
+ * A module for applying events to reducers and creating stream models
+ * @module src/stream-model
+ */
 
-const EventStoreFactory = require('./event-store-factory');
-const EventStore = require('./event-store');
-const StreamModel = require('./stream-model');
-const IpfsAdapter = require('./decentralized-storage/ipfs');
+/** @class StreamModel */
+module.exports = class StreamModel {
+  /**
+   * Creates a new StreamModel.
+   * @constructor
+   * @memberof StreamModel
+   * @param {EventStore} eventStore - EventStore where events will originate from.
+   * @param {function} filter - Filter function for filtering events.
+   * @param {function} reducer - Reducer function for reducing events to a model.
+   * @param {Object} state - State object that is used with the reducer.
+   */
+  constructor(eventStore, filter, reducer, state) {
+    eventStore.requireInstance();
+    this.eventStore = eventStore;
+    this.filter = filter;
+    this.reducer = reducer;
+    this.state = state || {
+      contractAddress: this.eventStore.eventStoreContractInstance.address,
+      model: {},
+      lastIndex: null
+    };
+  }
 
-module.exports = {
-  EventStoreFactory,
-  EventStore,
-  StreamModel,
-  IpfsAdapter
+  /**
+   * Applies an event to this StreamModel's reducer
+   * @function
+   * @memberof StreamModel
+   * @name applyEvent
+   * @param {Object} event - An event object.
+   */
+  applyEvent(event) {
+    this.state.model = this.reducer(this.state.model, event);
+    this.state.lastIndex = event.index;
+  };
+
+  /**
+   * Applies an array of events to this StreamModel's reducer
+   * @function
+   * @memberof StreamModel
+   * @name applyEvents
+   * @param {Array.&lt;Object>} events - An array event objects.
+   */
+  applyEvents(events) {
+    events.filter(this.filter).map(this.applyEvent.bind(this));
+  };
+
+
+  /**
+   * Checks EventStore for events which have not been applied to the StreamModel and applies them.
+   * @function
+   * @memberof StreamModel
+   * @name sync
+   */
+  async sync() {
+    const web3 = this.eventStore.web3;
+    const eventCount = (await this.eventStore.eventStoreContractInstance.count.call()).toNumber();
+    if (eventCount === 0) {
+      return;
+    }
+    if (this.state.lastIndex == null || this.state.lastIndex &lt; eventCount) {
+      const updates = await this.eventStore.getSlice(
+        this.state.lastIndex || 0,
+        eventCount - 1
+      );
+      this.applyEvents(updates);
+    }
+  };
 };
 </code></pre>
         </article>
