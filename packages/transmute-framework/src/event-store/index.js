@@ -1,8 +1,7 @@
 /**
- * A module for reading and writing objects to ipfs and ethereum.
+ * A module for reading and writing objects to ipfs and ethereum
  * @module src/event-store
  */
-
 
 const Web3 = require('web3');
 const contract = require('truffle-contract');
@@ -15,6 +14,12 @@ const GAS = require('../gas')
 
 /** @class EventStore */
 module.exports = class EventStore {
+  /**
+   * Creates a new EventStore
+   * @constructor
+   * @memberof EventStore
+   * @param {Object} config Config object requiring eventStoreArtifact, web3Config, and ipfsConfig with optional mixpanelConfig
+   */
   constructor(config) {
     if (!config) {
       throw new Error(
@@ -22,7 +27,7 @@ module.exports = class EventStore {
       );
     }
 
-    let { eventStoreArtifact, web3Config, mixpanelConfig, ipfsConfig, eventStoreAddress } = config;
+    let { eventStoreArtifact, web3Config, mixpanelConfig, ipfsConfig } = config;
 
     if (!eventStoreArtifact) {
       throw new Error(
@@ -61,6 +66,13 @@ module.exports = class EventStore {
     this.ipfs = new TransmuteIpfsAdapter(ipfsConfig);
   }
 
+  /**
+   * Returns Web3 accounts
+   * @function
+   * @memberof EventStore
+   * @name getWeb3Accounts
+   * @returns {Array.<String>} Array of Web3 account addresses
+   */
   async getWeb3Accounts() {
     return new Promise((resolve, reject) => {
       this.web3.eth.getAccounts((err, accounts) => {
@@ -72,12 +84,24 @@ module.exports = class EventStore {
     });
   }
 
+  /**
+   * Deploys eventStoreContract if it has not already been deployed
+   * @function
+   * @memberof EventStore
+   * @name init
+   */
   async init() {
     if (!this.eventStoreContractInstance) {
       this.eventStoreContractInstance = await this.eventStoreContract.deployed();
     }
   }
 
+  /**
+   * Throws error if init() has not been called
+   * @function
+   * @memberof EventStoreFactory
+   * @name requireInstance
+   */
   requireInstance() {
     if (!this.eventStoreContractInstance) {
       throw new Error(
@@ -86,6 +110,14 @@ module.exports = class EventStore {
     }
   }
 
+  /**
+   * Creates EventStore instance and assigns it a new EventStoreContract
+   * @function
+   * @memberof EventStore
+   * @name clone
+   * @param {String} fromAddress Address used to create new EventStoreContract
+   * @returns {Object} EventStore instance
+   */
   async clone(fromAddress) {
     const newContract = await this.eventStoreContract.new({
       from: fromAddress,
@@ -99,6 +131,16 @@ module.exports = class EventStore {
     return instance;
   }
 
+  /**
+   * Writes a key and value to IPFS, converts the returned Multihash to Bytes32, and writes these values to the eventStoreContractInstance
+   * @function
+   * @memberof EventStore
+   * @name write
+   * @param {String} fromAddress Address used to write event to eventStoreContractInstance
+   * @param {Object} key Event key
+   * @param {Object} value Event value
+   * @returns {Object} Event object with original key, value as well as meta from IPFS and Ethereum
+   */
   async write(fromAddress, key, value) {
     this.requireInstance();
     const { web3, ipfs, eventStoreContractInstance } = this;
@@ -144,6 +186,14 @@ module.exports = class EventStore {
     };
   }
 
+  /**
+   * Reads specified indexed event from eventStoreContractInstance, retrieves its data from IPFS, and returns the original key, value, index, and sender
+   * @function
+   * @memberof EventStore
+   * @name read
+   * @param {number} index Index of specified event in eventStoreContractInstance
+   * @returns {Object} Event object with original key, value, sender, and index
+   */
   async read(index) {
     this.requireInstance();
     const { web3, ipfs, eventStoreContractInstance } = this;
@@ -176,6 +226,15 @@ module.exports = class EventStore {
     };
   }
 
+  /**
+   * Reads events between specified indices from eventStoreContractInstance
+   * @function
+   * @memberof EventStore
+   * @name read
+   * @param {number} startIndex Index of first event for reading
+   * @param {number} endIndex Index of last event for reading
+   * @returns {Array.<Object>} Array of event objects
+   */
   async getSlice(startIndex, endIndex) {
     if (!(endIndex >= startIndex)) {
       throw new Error('startIndex must be less than or equal to endIndex.');
@@ -189,6 +248,13 @@ module.exports = class EventStore {
     return events;
   }
 
+  /**
+   * Returns health status of IPFS and eventStoreContractInstance address
+   * @function
+   * @memberof EventStore
+   * @name healthy
+   * @returns {Object} Health status of IPFS and eventStoreContractInstance address
+   */
   async healthy() {
     this.requireInstance();
     return {
@@ -197,6 +263,14 @@ module.exports = class EventStore {
     };
   }
 
+  /**
+   * Destroys eventStoreContractInstance
+   * @function
+   * @memberof EventStore
+   * @name destroy
+   * @param {String} address Address used to destroy eventStoreContractInstance
+   * @returns {Object} Ethereum transaction from EventStore destruction
+   */
   destroy(address) {
     return this.eventStoreContractInstance.destroy(address);
   }
