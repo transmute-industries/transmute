@@ -212,6 +212,7 @@ before_script:
 # Download minikube.
 -  sha256sum packages/transmute-cli/src/index.js
 -  grep 'init' packages/transmute-cli/src/index.js
+-  pwd
 - |
     if [[ "$TRAVIS_COMMIT" != "$(git rev-parse HEAD)" ]]; then
       echo "Commit $(git rev-parse HEAD) doesn't match expected commit $TRAVIS_COMMIT"
@@ -243,6 +244,7 @@ script:
   # Travis is acting funny again and minikube is not spinning up
 -  sha256sum packages/transmute-cli/src/index.js
 -  grep 'init' packages/transmute-cli/src/index.js
+-  pwd
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "transmute k8s provision --minikube --vmdriver none"; fi
   # These lines are for testing against minikube raw when the above line acts up
   # These will pass
