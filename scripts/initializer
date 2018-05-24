@@ -61,7 +61,7 @@ add_line_to()
   squawk 3 "Adding '$LINE_TO_ADD'  to $TARGET_FILE_FOR_ADD"
   TARGET_FILE=$TARGET_FILE_FOR_ADD
     [ -w "$TARGET_FILE" ] || TARGET_FILE=$TARGET_FILE_FOR_ADD
-    printf "%s\n" "$LINE_TO_ADD" >> "$TARGET_FILE"
+    printf "%s\n" "$LINE_TO_ADD" | sudo tee -a "$TARGET_FILE"
 }
 
 # Force NVM to load
@@ -176,6 +176,23 @@ check_if_line_exists || add_line_to
 LINE_TO_ADD="$(minikube ip)  ganache.transmute.minikube"
 check_if_line_exists || add_line_to
 
+  #- printenv
+  #- bash -l -c "printenv"
+- bash -l -c "npm i"
+  # Spin up minikube
+  # Travis is acting funny again and minikube is not spinning up
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "transmute k8s provision --minikube --vmdriver none"; fi
+  # These lines are for testing against minikube raw when the above line acts up
+  # These will pass
+#- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "minikube start --vm-driver=none"; fi
+#- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "minikube start  --kubernetes-version v1.10.0 --disk-size 50g --cpus 4 --memory 7777 --vm-driver=none"; fi
+# This one represents the problem
+#- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "minikube start  --kubernetes-version v1.10.0 --disk-size 50g --bootstrapper kubeadm --cpus 4 --memory 7777 --vm-driver=none"; fi
+- sleep 8
+- minikube update-context
+  # End minikube section
+  # Initialization section begins
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "yes y|transmute k8s init --minikube"; fi
 squawk 3 "configure-kong-ganache"
 
 squawk 5 'SETTING UP GANACHE'
