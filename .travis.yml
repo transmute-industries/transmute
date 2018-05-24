@@ -210,15 +210,6 @@ matrix:
 before_script:
 # Download kubectl, which is a requirement for using minikube.
 # Download minikube.
--  sha256sum packages/transmute-cli/src/index.js
--  grep 'init' packages/transmute-cli/src/index.js
--  pwd
-- |
-    if [[ "$TRAVIS_COMMIT" != "$(git rev-parse HEAD)" ]]; then
-      echo "Commit $(git rev-parse HEAD) doesn't match expected commit $TRAVIS_COMMIT"
-    fi
-- git log -n1
-- git status
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash .ci/linux_before_install.sh; fi
   #- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sh .ci/mac_before_script.sh; fi
 - bash -l -c "echo PATH=$HOME/.transmute/bin:$PATH >> $HOME/.bashrc"
@@ -235,16 +226,13 @@ before_script:
 - bash -l -c "npm run build"
 - bash -l -c "npm i -g"
 - cd $TRAVIS_BUILD_DIR
+
+script:
   #- printenv
   #- bash -l -c "printenv"
 - bash -l -c "npm i"
   # Spin up minikube
   # Travis is acting funny again and minikube is not spinning up
--  sha256sum packages/transmute-cli/src/index.js
--  grep 'init' packages/transmute-cli/src/index.js
--  pwd
-- git log -n1
-- git status
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "transmute k8s provision --minikube --vmdriver none"; fi
   # These lines are for testing against minikube raw when the above line acts up
   # These will pass
@@ -257,8 +245,6 @@ before_script:
   # End minikube section
   # Initialization section begins
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "yes y|transmute k8s init --minikube"; fi
-
-script:
 - bash -l -c "lerna bootstrap"
 - sleep 8
 - bash -l -c "kubectl get pods --all-namespaces"
