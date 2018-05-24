@@ -2,17 +2,13 @@
 /** @module TransmuteCLI */
 
 // Process env vars
-const MY_ENV = process.env.USE_KUBASH ||  'true';
+const MY_ENV = process.env.USE_KUBASH || 'true';
 
 // Vorpal
 const vorpal = require('vorpal')();
 const vorpalLog = require('vorpal-log');
 const vorpalTour = require('vorpal-tour');
 vorpal.use(vorpalLog);
-
-// Okta
-// import auth from './auth0/index';
-const auth = require('./okta/index');
 
 // Utils
 const { writeFile } = require('./utils');
@@ -25,10 +21,14 @@ const provision = require('./commands/provision');
 
 // Mixpanel
 const Mixpanel = require('mixpanel');
-const mixpanel = process.env.MIXPANEL_PROJECT_ID ? Mixpanel.init(process.env.MIXPANEL_PROJECT_ID) : null;
+const mixpanel = process.env.MIXPANEL_PROJECT_ID
+  ? Mixpanel.init(process.env.MIXPANEL_PROJECT_ID)
+  : null;
 
-auth(vorpal);
-
+/** The login command is used to save an okta JWT for api access to ~/.transmute/cli-secrets/session.json
+    @name login
+    @function
+*/
 vorpal
   .command('test')
   .description('Login to service')
@@ -46,8 +46,9 @@ vorpal
   .option('--oauth2', 'Use oauth2 login service')
   .option('--pixie', 'Use pixie login service')
   .alias('l')
-  .action(function(args, callback) {
-    this.log('login has not been implemented yet');
+  .action(async (args, callback) => {
+    const response = await login.default.withOkta();
+    console.log('\n', response, '\n');
     callback();
   });
 
@@ -96,7 +97,10 @@ vorpal
   .description('Provision k8s cluster')
   .option('--gke', 'Use gcloud GKE')
   .option('--nodes <nodes>', 'How many nodes to create the cluster with')
-  .option('--clustername <clustername>', 'The cluster name to create the cluster with')
+  .option(
+    '--clustername <clustername>',
+    'The cluster name to create the cluster with'
+  )
   .option('--group <group>', 'The group to create the cluster with')
   .option('--gensshkeys', 'Generate SSH keys')
   .option('--vmdriver <vmdriver>', 'The cluster name to create the cluster with')
@@ -117,8 +121,7 @@ vorpal
       }
       if (args.options.gensshkeys) {
         var GenSSHKeys = true;
-      }
-      else {
+      } else {
         var GenSSHKeys = false;
       }
       provision.aks( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys );
