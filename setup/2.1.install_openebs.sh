@@ -1,8 +1,11 @@
 #!/bin/sh
+: ${TRANSMUTE_DIR:=$HOME/.transmute}
+: ${TRANSMUTE_BIN:=$TRANSMUTE_DIR/bin}
+: ${TRANSMUTE_REPO:=$TRANSMUTE_DIR/git/transmute}
 
 kubectl create -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-operator.yaml
 kubectl create -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-storageclasses.yaml
-kubectl create -f ./components/ipfs/openebs-ipfs.yaml
+kubectl create -f $TRANSMUTE_REPO/components/ipfs/openebs-ipfs.yaml
 
 # while loop
 countone=1
