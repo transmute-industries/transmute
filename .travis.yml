@@ -51,13 +51,6 @@ matrix:
         - NVM_DIR="$HOME/.nvm"
         - HELM_SHA256=0521956fa22be33189cc825bb27b3f4178c5ce9a448368b5c81508d446472715
       language: bash
-      cache:
-        directories:
-          - $HOME/.transmute/bin
-          - $HOME/.local/bin
-          - $HOME/.minikube
-          - $HOME/.nvm
-          - /usr/local
     #- os: linux
       #name: v1.9.4-nocache
       #dist: trusty
