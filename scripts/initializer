@@ -83,11 +83,6 @@ kubectl create --save-config serviceaccount tiller --namespace kube-system
 squawk 5 'create tiller rbac config'
 kubectl apply -f $TRANSMUTE_REPO/components/helm/rbac-tiller-config.yaml
 
-# Install openebs for generic storage
-#kubash -n $this_cluster_name openebs
-squawk 5 'create openebs operator'
-kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
-
 sleep 5
 if [[ "$VERBOSITY" -ge "111" ]] ; then
   kubectl get pods --all-namespaces
@@ -100,10 +95,6 @@ kubectl get pods
 squawk 5 "Install helm"
 helm init --service-account tiller
 $TRANSMUTE_REPO/w8s/tiller.w8
-
-squawk 5 "Apply storage classes for openebs"
-kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-storageclasses.yaml
-
 
 # This taints the last node so it is unschedulable to normal k8s pods
 # and then will be populated solely by ingress to ensure ingress is not blocked by any other process
@@ -129,16 +120,14 @@ helm install \
 $TRANSMUTE_REPO/w8s/generic.w8 ganache default
 
 squawk 5 "ipfs"
-squawk 6 "Storage class for ipfs"
-kubectl apply -f \
- $TRANSMUTE_REPO/components/ipfs/openebs-ipfs.yaml
+#squawk 6 "Storage class for ipfs"
 
 squawk 5 "Helm install ipfs"
 helm install \
  stable/ipfs \
  --name decentralized-storage \
  --set \
- persistence.storageClass=openebs-ipfs,persistence.size=4Gi,persistence.enabled=true
+ persistence.size=4Gi,persistence.enabled=true
 
 squawk 5 "OpenFaaS"
 squawk 6 "Create namespaces"
