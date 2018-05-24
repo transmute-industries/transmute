@@ -210,6 +210,10 @@ matrix:
 before_script:
 # Download kubectl, which is a requirement for using minikube.
 # Download minikube.
+- |
+    if [[ "$TRAVIS_COMMIT" != "$(git rev-parse HEAD)" ]]; then
+      echo "Commit $(git rev-parse HEAD) doesn't match expected commit $TRAVIS_COMMIT"
+    fi
 - git log -n1
 - git status
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash .ci/linux_before_install.sh; fi
