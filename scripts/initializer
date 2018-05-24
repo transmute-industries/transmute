@@ -46,6 +46,24 @@ squawk () {
   fi
 }
 
+# these vars are used by the following functions
+LINE_TO_ADD=''
+TARGET_FILE_FOR_ADD=~/.profile
+
+check_if_line_exists()
+{
+  squawk 3 "Checking for '$LINE_TO_ADD'  in $TARGET_FILE_FOR_ADD"
+  grep -qsFx "$LINE_TO_ADD" $TARGET_FILE_FOR_ADD
+}
+
+add_line_to()
+{
+  squawk 3 "Adding '$LINE_TO_ADD'  to $TARGET_FILE_FOR_ADD"
+  TARGET_FILE=$TARGET_FILE_FOR_ADD
+    [ -w "$TARGET_FILE" ] || TARGET_FILE=$TARGET_FILE_FOR_ADD
+    printf "%s\n" "$LINE_TO_ADD" >> "$TARGET_FILE"
+}
+
 # Force NVM to load
 # This is needed
 # if the user has not reloaded their environment
@@ -150,11 +168,13 @@ export KONG_HOST=$(echo $KONG_ADMIN_URL | sed 's!https://!!g' | cut -f1 -d:)
 export KONG_PORT=$(echo $KONG_ADMIN_URL | sed 's!https://!!g' | cut -f2 -d:)
 
 squawk 3 'configure hosts'
-squawk 3 "" | sudo tee -a /etc/hosts
-squawk 3 "$(minikube ip)  transmute.minikube" | sudo tee -a /etc/hosts
-squawk 3 "$(minikube ip)  ipfs.transmute.minikube" | sudo tee -a /etc/hosts
-squawk 3 "$(minikube ip)  ganache.transmute.minikube" | sudo tee -a /etc/hosts
-squawk 3 "" | sudo tee -a /etc/hosts
+TARGET_FILE_FOR_ADD=/etc/hosts
+LINE_TO_ADD="$(minikube ip)  transmute.minikube"
+check_if_line_exists || add_line_to
+LINE_TO_ADD="$(minikube ip)  ipfs.transmute.minikube"
+check_if_line_exists || add_line_to
+LINE_TO_ADD="$(minikube ip)  ganache.transmute.minikube"
+check_if_line_exists || add_line_to
 
 squawk 3 "configure-kong-ganache"
 
