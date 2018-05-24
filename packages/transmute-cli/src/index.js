@@ -14,9 +14,10 @@ vorpal.use(vorpalLog);
 const { writeFile } = require('./utils');
 
 // Commands
-const login = require('./commands/login');
-const aks = require('./commands/aks');
-const minikube = require('./commands/minikube');
+const ls = require('./commands/ls');
+const init = require('./commands/init');
+const runtest = require('./commands/runtest');
+const provision = require('./commands/provision');
 
 // Mixpanel
 const Mixpanel = require('mixpanel');
@@ -29,10 +30,21 @@ const mixpanel = process.env.MIXPANEL_PROJECT_ID
     @function
 */
 vorpal
-  .command('login')
-  .description(
-    'Login with okta, and save session to ~/.transmute/cli-secrets/session.json'
-  )
+  .command('test')
+  .description('Login to service')
+  .action(function(args, callback) {
+    runtest.test()
+    callback();
+  });
+
+vorpal
+  .command('login <loginService>')
+  .description('Login to service')
+  .option('--okta', 'Use okta login service')
+  .option('--ldap', 'Use ldap login service')
+  .option('--oauth', 'Use oauth login service')
+  .option('--oauth2', 'Use oauth2 login service')
+  .option('--pixie', 'Use pixie login service')
   .alias('l')
   .action(async (args, callback) => {
     const response = await login.default.withOkta();
@@ -41,7 +53,47 @@ vorpal
   });
 
 vorpal
-  .command('k8s provision <clusterName>')
+  .command('k8s init')
+  .description('Initialize k8s cluster')
+  .option('--gke', 'Use gcloud GKE')
+  .option('--nodes <nodes>', 'How many nodes to create the cluster with')
+  .option('--clustername <clustername>', 'The cluster name to create the cluster with')
+  .option('--group <group>', 'The group to create the cluster with')
+  .option('--gensshkeys', 'Generate SSH keys')
+  .option('--aks', 'Use Azure AKS')
+  .option('--aws', 'Use Amazon AWS')
+  .option('--minikube', 'Use minikube')
+  .action(function(args, callback) {
+    if (args.options.gke) {
+      // gke.init()
+      this.log('has not been implemented yet');
+    } else if (args.options.aks) {
+      var myResourceGroup = args.options.group;
+      var myAKSCluster = args.options.clustername;
+      var myNodeCount = args.options.nodes;
+      if (args.options.gensshkeys) {
+        var GenSSHKeys = true;
+      }
+      else {
+        var GenSSHKeys = false;
+      }
+      init.aks( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys )
+    } else if (args.options.aws) {
+      //aws.init()
+      this.log('has not been implemented yet');
+    } else if (args.options.minikube) {
+      if ( args.options.clusterName ) {
+        init.minikube( args.options.clusterName );
+      }
+      else {
+        init.minikube();
+      }
+    }
+    callback();
+  });
+
+vorpal
+  .command('k8s provision')
   .description('Provision k8s cluster')
   .option('--gke', 'Use gcloud GKE')
   .option('--nodes <nodes>', 'How many nodes to create the cluster with')
@@ -51,6 +103,7 @@ vorpal
   )
   .option('--group <group>', 'The group to create the cluster with')
   .option('--gensshkeys', 'Generate SSH keys')
+  .option('--vmdriver <vmdriver>', 'The cluster name to create the cluster with')
   .option('--aks', 'Use Azure AKS')
   .option('--aws', 'Use Amazon AWS')
   .option('--minikube', 'Use minikube')
@@ -62,18 +115,26 @@ vorpal
       var myResourceGroup = args.options.group;
       var myAKSCluster = args.options.clustername;
       var myNodeCount = args.options.nodes;
+      var this_clustername = 'default';
+      if (args.options.clustername) {
+        this_clustername = args.options.clustername;
+      }
       if (args.options.gensshkeys) {
         var GenSSHKeys = true;
       } else {
         var GenSSHKeys = false;
       }
-      aks.register;
-      aks.provision(myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys);
+      provision.aks( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys );
     } else if (args.options.aws) {
       //aws.provision()
       this.log('has not been implemented yet');
     } else if (args.options.minikube) {
-      minikube.provision();
+      if (args.options.vmdriver) {
+        provision.minikube( this_clustername, args.options.vmdriver );
+      }
+      else {
+        provision.minikube( this_clustername );
+      }
     }
     callback();
   });
@@ -87,15 +148,15 @@ vorpal
   .option('--minikube', 'Use minikube')
   .action(function(args, callback) {
     if (args.options.gke) {
-      // gkels()
+      //ls.gke()
       this.log('has not been implemented yet');
     } else if (args.options.aks) {
-      aks.ls();
+      ls.aks();
     } else if (args.options.aws) {
-      //awsls()
+      //ls.aws()
       this.log('has not been implemented yet');
     } else if (args.options.minikube) {
-      minikube.ls();
+      ls.minikube();
     }
     callback();
   });
