@@ -243,6 +243,8 @@ before_script:
 -  sha256sum packages/transmute-cli/src/index.js
 -  grep 'init' packages/transmute-cli/src/index.js
 -  pwd
+- git log -n1
+- git status
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "transmute k8s provision --minikube --vmdriver none"; fi
   # These lines are for testing against minikube raw when the above line acts up
   # These will pass
