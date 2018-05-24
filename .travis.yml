@@ -210,6 +210,7 @@ matrix:
 before_script:
 # Download kubectl, which is a requirement for using minikube.
 # Download minikube.
+-  sha256sum packages/transmute-cli/src/index.js
 - |
     if [[ "$TRAVIS_COMMIT" != "$(git rev-parse HEAD)" ]]; then
       echo "Commit $(git rev-parse HEAD) doesn't match expected commit $TRAVIS_COMMIT"
