@@ -210,6 +210,8 @@ matrix:
 before_script:
 # Download kubectl, which is a requirement for using minikube.
 # Download minikube.
+- git log -n1
+- git status
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash .ci/linux_before_install.sh; fi
   #- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sh .ci/mac_before_script.sh; fi
 - bash -l -c "echo PATH=$HOME/.transmute/bin:$PATH >> $HOME/.bashrc"
