@@ -34,6 +34,22 @@ function sha256(buffer) {
     .digest();
 }
 
+/**
+ * This session object is returned from the okta authentication process.
+ * @name okta_session_object
+ * @param {Object} session - returned from the okta auth process.
+ * @param {string} session.access_token - A signed but not encrypted JWT 
+ * @param {string} session.token_type - Usually 'Bearer'
+ * @param {string} session.expires_in - Expiration in seconds
+ * @param {string} session.scope - Usually 'openid'
+ * @param {string} session.id_token - A signed but not encrypted JWT
+ */
+
+/**
+ * login with okta
+ * @description This method crafts an authentication url, and then starts an http server to listen for the redirect from the authentication.
+ * @return {okta_session_object} A session object with access_token and id_token.
+ */
 export const login = async () => {
   const { okta_host, redirect_uri, client_id } = config;
 

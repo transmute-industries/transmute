@@ -10,10 +10,6 @@ const vorpalLog = require('vorpal-log');
 const vorpalTour = require('vorpal-tour');
 vorpal.use(vorpalLog);
 
-// Okta
-// import auth from './auth0/index';
-const auth = require('./okta/index');
-
 // Utils
 const { writeFile } = require('./utils');
 
@@ -28,8 +24,10 @@ const mixpanel = process.env.MIXPANEL_PROJECT_ID
   ? Mixpanel.init(process.env.MIXPANEL_PROJECT_ID)
   : null;
 
-auth(vorpal);
-
+/** The login command is used to save an okta JWT for api access to ~/.transmute/cli-secrets/session.json
+    @name login
+    @function
+*/
 vorpal
   .command('login')
   .description(
