@@ -9,7 +9,7 @@ countone=1
 while [ $countone -lt 151 ]
 do
   echo -n '.'
-  RESULT=$(kubectl get po --namespace kube-system |grep kube-dns|grep Running)
+  RESULT=$(kubectl get po --namespace kube-system 2>/dev/null |grep kube-dns|grep Running)
   if [ "$RESULT" ]; then
       sleep 3
       echo '.'
