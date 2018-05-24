@@ -235,8 +235,6 @@ before_script:
 - bash -l -c "npm run build"
 - bash -l -c "npm i -g"
 - cd $TRAVIS_BUILD_DIR
-
-script:
   #- printenv
   #- bash -l -c "printenv"
 - bash -l -c "npm i"
@@ -257,6 +255,8 @@ script:
   # End minikube section
   # Initialization section begins
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "yes y|transmute k8s init --minikube"; fi
+
+script:
 - bash -l -c "lerna bootstrap"
 - sleep 8
 - bash -l -c "kubectl get pods --all-namespaces"
