@@ -605,7 +605,9 @@ fi
 # Grab the transmute dir
 # Note in CI this has already been symlinked and does not run there
 # however this will
-if [ -e "$TRANSMUTE_REPO" ]; then
+if [ "$TRAVIS" = 'true' ]; then
+  echo 'travis ci skipping git actions'
+elif [ -e "$TRANSMUTE_REPO" ]; then
   squawk 3 "$TRANSMUTE_REPO exists already, proceeding"
   squawk 3 'Updating the transmute repo'
   cd $TRANSMUTE_REPO
