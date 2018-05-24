@@ -210,7 +210,6 @@ matrix:
 before_script:
 # Download kubectl, which is a requirement for using minikube.
 # Download minikube.
--  sha256sum packages/transmute-cli/src/index.js
 - |
     if [[ "$TRAVIS_COMMIT" != "$(git rev-parse HEAD)" ]]; then
       echo "Commit $(git rev-parse HEAD) doesn't match expected commit $TRAVIS_COMMIT"
@@ -240,6 +239,8 @@ script:
 - bash -l -c "npm i"
   # Spin up minikube
   # Travis is acting funny again and minikube is not spinning up
+-  sha256sum packages/transmute-cli/src/index.js
+-  grep 'k8s init' packages/transmute-cli/src/index.js
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "transmute k8s provision --minikube --vmdriver none"; fi
   # These lines are for testing against minikube raw when the above line acts up
   # These will pass
