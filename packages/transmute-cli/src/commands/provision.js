@@ -1,5 +1,5 @@
 const run = require('./runner');
-const KUBE_VERSION = process.env.KUBE_VERSION ||  'v1.10.0';
+const KUBE_VERSION = process.env.KUBE_VERSION ||  'v1.9.4';
 const MINIKUBE_CPU = process.env.MINIKUBE_CPU ||  '4';
 const MINIKUBE_MEMORY = process.env.MINIKUBE_MEMORY ||  '4096';
 const MINIKUBE_DISK = process.env.MINIKUBE_DISK ||  '100g';
