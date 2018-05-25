@@ -175,10 +175,9 @@ while [[ $wait_for_it -gt 0 ]]; do
     sleep 4
   fi
   DEBUG_MESSAGES="ganache loop $countzero"
-  #timeout 1 bash -c $NET_TEST 2>/dev/null
   set +e
-   # This command can fail
-    #cat < /dev/null > /dev/tcp/$KONG_HOST/$KONG_PORT 2>/dev/null
+   # This command will fail when ganache if ganache is not up
+   # set +e is required
     curl --connect-timeout 2 -s http://$KONG_HOST:$KONG_PORT &>/dev/null
     wait_for_it=$?
    # we'll test the condition afterward
