@@ -4,7 +4,6 @@ const MINIKUBE_CPU = process.env.MINIKUBE_CPU ||  '4';
 const MINIKUBE_MEMORY = process.env.MINIKUBE_MEMORY ||  '4096';
 const MINIKUBE_DISK = process.env.MINIKUBE_DISK ||  '100g';
 const MINIKUBE_PROFILE = process.env.MINIKUBE_PROFILE ||  'transmute-k8s';
-//const MINIKUBE_BOOTSTRAPPER = process.env.MINIKUBE_BOOTSTRAPPER ||  'kubeadm';
 
 export function minikube( clusterName, minikubeDriver ) {
   const minikube_start = 'minikube start '
@@ -13,8 +12,6 @@ export function minikube( clusterName, minikubeDriver ) {
     + ' --cpus ' +  MINIKUBE_CPU
     + ' --memory ' +  MINIKUBE_MEMORY;
     + ' --profile ' +  MINIKUBE_PROFILE;
-  // This appears to break travis builds
- //   + ' --bootstrapper ' +  MINIKUBE_BOOTSTRAPPER
   let prov_cmd = minikube_start + ' --vm-driver=virtualbox';
   if (minikubeDriver == undefined ) {
     prov_cmd = minikube_start + ' --vm-driver=virtualbox';
