@@ -29,28 +29,6 @@ const mixpanel = process.env.MIXPANEL_PROJECT_ID
     @name login
     @function
 */
-vorpal
-  .command('test')
-  .description('Login to service')
-  .action(function(args, callback) {
-    runtest.test()
-    callback();
-  });
-
-vorpal
-  .command('login <loginService>')
-  .description('Login to service')
-  .option('--okta', 'Use okta login service')
-  .option('--ldap', 'Use ldap login service')
-  .option('--oauth', 'Use oauth login service')
-  .option('--oauth2', 'Use oauth2 login service')
-  .option('--pixie', 'Use pixie login service')
-  .alias('l')
-  .action(async (args, callback) => {
-    const response = await login.default.withOkta();
-    console.log('\n', response, '\n');
-    callback();
-  });
 
 vorpal
   .command('k8s init')
@@ -136,83 +114,6 @@ vorpal
         provision.minikube( this_clustername );
       }
     }
-    callback();
-  });
-
-vorpal
-  .command('k8s ls <clusterName>')
-  .description('List k8s clusters')
-  .option('--gke', 'Use gcloud GKE')
-  .option('--aks', 'Use Azure AKS')
-  .option('--aws', 'Use Amazon AWS')
-  .option('--minikube', 'Use minikube')
-  .action(function(args, callback) {
-    if (args.options.gke) {
-      //ls.gke()
-      this.log('has not been implemented yet');
-    } else if (args.options.aks) {
-      ls.aks();
-    } else if (args.options.aws) {
-      //ls.aws()
-      this.log('has not been implemented yet');
-    } else if (args.options.minikube) {
-      ls.minikube();
-    }
-    callback();
-  });
-
-vorpal
-  .command('dapp create')
-  .description('create a new distributed app')
-  .alias('d')
-  .action(function(args, callback) {
-    this.log('dapp has not been implemented yet');
-    callback();
-  });
-
-vorpal
-  .command('generate gpgkey', 'Assists in the generation of an GPG key')
-  .alias('g')
-  .action(function(args, callback) {
-    this.log('generate gpgkey has not been implemented yet');
-    callback();
-  });
-
-vorpal
-  .command('generate sshkey', 'Assists in the generation of an SSH key')
-  .action(function(args, callback) {
-    this.log('generate sshkey has not been implemented yet');
-    callback();
-  });
-
-vorpal
-  .command('group add <member>', 'Adds member to group')
-  .action(function(args, callback) {
-    this.log('group add <member> has not been implemented yet');
-    callback();
-  });
-
-vorpal
-  .command('group delete <member>', 'Deletes member to group')
-  .action(function(args, callback) {
-    this.log('group delete <member> has not been implemented yet');
-    callback();
-  });
-
-vorpal
-  .command('push', 'Pushes objects into the cloud')
-  .alias('p')
-  .action(function(args, callback) {
-    this.log('push has not been implemented yet');
-    callback();
-  });
-
-vorpal
-  .command('tunnel <clusterName>')
-  .option('-p, --port', 'Tunnel port')
-  .option('-s, --svc', 'Tunnel service')
-  .action(function(args, callback) {
-    this.log('push has not been implemented yet');
     callback();
   });
 
