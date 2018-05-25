@@ -39,7 +39,7 @@ squawk () {
   if [[ "$VERBOSITY" -ge "$squawk_lvl" ]] ; then
   count_squawk=0
     while [[ "$count_squawk" -lt "$squawk_lvl" ]]; do
-      echo -n "#"
+      printf "#"
       count_squawk=`expr $count_squawk + 1`
     done
     echo " $squawk"
