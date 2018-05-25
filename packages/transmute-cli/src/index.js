@@ -31,63 +31,39 @@ const mixpanel = process.env.MIXPANEL_PROJECT_ID
 */
 
 vorpal
-  .command('k8s init')
-  .description('Initialize k8s cluster')
-  .option('--gke', 'Use gcloud GKE')
-  .option('--nodes <nodes>', 'How many nodes to create the cluster with')
-  .option('--clustername <clustername>', 'The cluster name to create the cluster with')
-  .option('--group <group>', 'The group to create the cluster with')
-  .option('--aks', 'Use Azure AKS')
-  .option('--minikube', 'Use minikube')
+  .command('k8s init-minikube <clustername>')
+  .description('Initialize k8s cluster on minikube')
   .action(function(args, callback) {
-    if (args.options.gke) {
-      // gke.init()
-      this.log('has not been implemented yet');
-    } else if (args.options.aks) {
-      var myResourceGroup = args.options.group;
-      var myAKSCluster = args.options.clustername;
-      var myNodeCount = args.options.nodes;
-      if (args.options.gensshkeys) {
-        var GenSSHKeys = true;
-      }
-      else {
-        var GenSSHKeys = false;
-      }
-      init.aks( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys )
-    } else if (args.options.aws) {
-      //aws.init()
-      this.log('has not been implemented yet');
-    } else if (args.options.minikube) {
-      if ( args.options.clusterName ) {
-        init.minikube( args.options.clusterName );
-      }
-      else {
-        init.minikube();
-      }
-    }
+    init.minikube( args.clustername )
+    callback();
+  });
+
+vorpal
+  .command('k8s init-azure <clustername>')
+  .description('Initialize k8s cluster in azure')
+  .action(function(args, callback) {
+    init.aks( args.clustername )
     callback();
   });
 
 vorpal
   .command('k8s provision-azure <clustername> <group>')
   .description('Provision k8s cluster in Azure')
-  .option('--aks', 'Use Azure AKS')
   .option('--gensshkeys', 'Generate SSH keys')
   .option('--nodes <nodes>', 'How many nodes to create the cluster with')
   .action(function(args, callback) {
+      let myNodeCount = 3;
       if (args.options.nodes) {
-        let myNodeCount = args.options.nodes;
-      } else {
-        let myNodeCount = 3;
+        myNodeCount = args.options.nodes;
       }
+      let GenSSHKeys = false;
       if (args.options.gensshkeys) {
-        let GenSSHKeys = true;
-      } else {
-        let GenSSHKeys = false;
+        GenSSHKeys = true;
       }
       provision.aks( args.group, args.clustername, myNodeCount, GenSSHKeys );
     callback();
   });
+
 vorpal
   .command('k8s provision-minikube <clustername>')
   .description('Provision k8s cluster')

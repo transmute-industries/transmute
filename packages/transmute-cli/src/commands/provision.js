@@ -42,11 +42,9 @@ export function aks( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys ) {
   run.ner('az provider register -n Microsoft.ContainerService');
   console.log('Registering Microsoft perms');
 
+  let gensshkeys_opt = ' ';
   if (GenSSHKeys) {
-    var gensshkeys_opt = ' --generate-ssh-keys';
-  }
-  else {
-    var gensshkeys_opt = ' ';
+    gensshkeys_opt = ' --generate-ssh-keys';
   }
   if (myAKSCluster == undefined ) {
     throw 'You need to define a clustername';
