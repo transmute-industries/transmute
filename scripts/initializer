@@ -115,6 +115,8 @@ helm install \
  stable/ipfs \
  --name decentralized-storage
 
+$TRANSMUTE_REPO/w8s/generic.w8 decentralized-storage-ipfs default
+
 squawk 5 "OpenFaaS"
 squawk 6 "Create namespaces"
 kubectl apply -f \
@@ -284,8 +286,8 @@ if [[ "$DO_JWT_DL" == 'y' ]]; then
       --header 'Authorization: Bearer '$ACCESS_TOKEN
 fi
 
-squawk 5 "TESTING"
-DEBUG_MESSAGES='TESTING'
+squawk 5 "Configuring the transmute framework to use the new kong proxy port in minikube"
+DEBUG_MESSAGES='FATAL ERROR ON TESTING'
 
 export OLD_KONG_PROXY_PORT=32443
 export NEW_KONG_PROXY_PORT=$KONG_PROXY_PORT
@@ -293,12 +295,9 @@ export NEW_KONG_PROXY_PORT=$KONG_PROXY_PORT
 export FRAMEWORK_CONFIG=$TRANSMUTE_REPO/packages/transmute-framework/src/transmute-config/env.json
 export DASHBOARD_CONFIG=$TRANSMUTE_REPO/packages/transmute-dashboard/src/transmute-config/env.json
 
-find $FRAMEWORK_CONFIG -type f | xargs sed -i 's/'$OLD_KONG_PROXY_PORT'/'$NEW_KONG_PROXY_PORT'/g'
-find $DASHBOARD_CONFIG -type f | xargs sed -i 's/'$OLD_KONG_PROXY_PORT'/'$NEW_KONG_PROXY_PORT'/g'
+DEBUG_MESSAGES='FATAL ERROR ON FRAMEWORK CONFIG SED'
+find $FRAMEWORK_CONFIG -type f | xargs sed -i '' -e 's/'$OLD_KONG_PROXY_PORT'/'$NEW_KONG_PROXY_PORT'/g'
+DEBUG_MESSAGES='FATAL ERROR ON DASHBOARD CONFIG SED'
+find $DASHBOARD_CONFIG -type f | xargs sed -i '' -e 's/'$OLD_KONG_PROXY_PORT'/'$NEW_KONG_PROXY_PORT'/g'
 
-curl -k -X GET \
-    --url $KONG_ADMIN_URL/apis \
-    | jq '.'
-
-$TRANSMUTE_REPO/w8s/generic.w8 decentralized-storage-ipfs default
 DEBUG_MESSAGES='The Initializer has completed successfully'
