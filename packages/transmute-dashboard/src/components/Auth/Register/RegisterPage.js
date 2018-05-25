@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 
 import logo from '../../../images/transmute.logo.png';
 
-import * as actions from '../../../store/user/actions';
+import * as actions from '../../../store/transmute/user/actions';
 const openpgp = require('openpgp');
 
 const styles = theme => ({

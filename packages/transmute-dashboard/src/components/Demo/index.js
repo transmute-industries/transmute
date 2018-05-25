@@ -23,7 +23,7 @@ import theme from '../../theme';
 
 import { filters } from '../../filters/Events';
 import { reducer as EventsReducer } from '../../store/documents/reducer';
-import * as actionsCreators from '../../store/user/actionCreators';
+import * as actionsCreators from '../../store/transmute/user/actionCreators';
 
 let eventStoreFactoryArtifact = require('../../contracts/EventStoreFactory.json');
 let eventStoreArtifact = require('../../contracts/EventStore.json');

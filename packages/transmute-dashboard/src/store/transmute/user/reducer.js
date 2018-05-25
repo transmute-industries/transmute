@@ -7,7 +7,7 @@ export const initialState = {
   web3Account: null
 };
 
-export const reducer = (state = initialState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case Constants.REGISTRATION_SUCCESS:
       return {

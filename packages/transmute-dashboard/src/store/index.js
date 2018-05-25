@@ -4,8 +4,7 @@ import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
 import { combineReducers } from 'redux';
-import { reducer as user } from './user/reducer';
-
+import user from './transmute/user';
 import directory from './transmute/directory';
 import groups from './transmute/groups';
 
@@ -26,7 +25,7 @@ export const store = createStore(
   combineReducers({
     directory: directory.reducer,
     groups: groups.reducer,
-    user: user,
+    user: user.reducer,
     router: routerReducer
   }),
   composeEnhancers(
