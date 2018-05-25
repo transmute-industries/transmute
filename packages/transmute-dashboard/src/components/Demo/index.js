@@ -23,7 +23,7 @@ import theme from '../../theme';
 
 import { filters } from '../../filters/Events';
 import { reducer as EventsReducer } from '../../store/documents/reducer';
-import * as actionsCreators from '../../store/user/actionCreators';
+import * as actionsCreators from '../../store/transmute/user/actionCreators';
 
 let eventStoreFactoryArtifact = require('../../contracts/EventStoreFactory.json');
 let eventStoreArtifact = require('../../contracts/EventStore.json');
@@ -235,7 +235,6 @@ class Demo extends Component {
                 <Select
                   value={this.state.currentEventStoreAddress}
                   native
-                  defaultValue={30}
                   onChange={this.selectEventStore}
                   input={<Input id="uncontrolled-native" />}
                 >
@@ -262,7 +261,6 @@ class Demo extends Component {
                 <Select
                   value={this.state.account}
                   native
-                  defaultValue={30}
                   onChange={this.selectAccount}
                   input={<Input id="uncontrolled-native" />}
                 >
