@@ -10,8 +10,8 @@ import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
 
 import AppBar from '../AppBar';
-import { getUser, setUserProfile } from '../../store/user/middleware';
-import * as actions from '../../store/user/actions';
+import { getUser, setUserProfile } from '../../store/transmute/user/middleware';
+import * as actions from '../../store/transmute/user/actions';
 
 const styles = theme => ({
   margin: {
