@@ -1,10 +1,11 @@
 #!/bin/sh
+: ${TRANSMUTE_DIR:=$HOME/.transmute}
+: ${TRANSMUTE_BIN:=$TRANSMUTE_DIR/bin}
+: ${TRANSMUTE_REPO:=$TRANSMUTE_DIR/git/transmute}
 
 export KONG_PROXY_URL=$(minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
 
 # TODO: pull this out into its own script...
-
-. ./setup/2.1.install_openebs.sh
 
 helm install stable/ipfs --name decentralized-storage
 
