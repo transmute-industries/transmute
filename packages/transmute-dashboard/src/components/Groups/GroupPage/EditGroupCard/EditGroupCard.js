@@ -85,7 +85,6 @@ class GroupCard extends React.Component {
               <Select
                 value={selectedUser.id}
                 native
-                defaultValue={30}
                 onChange={this.selectUser}
                 input={<Input id="uncontrolled-native" />}
               >

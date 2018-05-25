@@ -235,7 +235,6 @@ class Demo extends Component {
                 <Select
                   value={this.state.currentEventStoreAddress}
                   native
-                  defaultValue={30}
                   onChange={this.selectEventStore}
                   input={<Input id="uncontrolled-native" />}
                 >
@@ -262,7 +261,6 @@ class Demo extends Component {
                 <Select
                   value={this.state.account}
                   native
-                  defaultValue={30}
                   onChange={this.selectAccount}
                   input={<Input id="uncontrolled-native" />}
                 >
