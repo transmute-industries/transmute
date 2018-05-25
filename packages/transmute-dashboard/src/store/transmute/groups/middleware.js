@@ -1,8 +1,6 @@
 import axios from 'axios';
 import _ from 'lodash';
 
-export * from './directory/middleware'
-
 const ENVS = {
   LOCAL: 'http://localhost:5000',
   TEST: '???',

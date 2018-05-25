@@ -19,7 +19,6 @@ const styles = theme => ({
 
 class DirectoryPage extends Component {
   componentWillMount() {
-    // provided by the withDirectory
     this.props.actions.directory.loadDirectory();
   }
 

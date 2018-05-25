@@ -108,13 +108,14 @@ const toolbarStyles = theme => ({
 });
 
 let GroupTableToolbar = props => {
-  const { classes } = props;
+  const { classes, group } = props;
+  if (group == null) return null;
 
   return (
     <Toolbar className={classes.root}>
       <div className={classes.title}>
-        <Typography variant="title">{props.group.name}</Typography>
-        <Typography variant="subheading">{props.group.description}</Typography>
+        <Typography variant="title">{group.name}</Typography>
+        <Typography variant="subheading">{group.description}</Typography>
       </div>
     </Toolbar>
   );
@@ -141,7 +142,7 @@ const styles = theme => ({
 
 class GroupTable extends React.Component {
   componentWillReceiveProps(nextProps) {
-    if (nextProps.group) {
+    if (nextProps.group.members) {
       this.setState({
         data: nextProps.group.members
       });
@@ -154,7 +155,7 @@ class GroupTable extends React.Component {
     this.state = {
       order: 'desc',
       orderBy: 'index',
-      data: props.group.members,
+      data: [],
       page: 0,
       rowsPerPage: 8
     };
@@ -208,9 +209,7 @@ class GroupTable extends React.Component {
                   return (
                     <TableRow
                       hover
-                      onClick={() =>
-                        console.log('TODO: this should take you to the user\'s profile')
-                      }
+                      onClick={() => history.push('/directory/' + n.id)}
                       role="checkbox"
                       tabIndex={-1}
                       key={n.id}

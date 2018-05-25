@@ -28,9 +28,7 @@ class GroupCard extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      selectedUser: props.users[0],
-      users: props.users,
-      members: props.group.members,
+      selectedUser: null,
       error: null
     };
     this.handleDelete = this.handleDelete.bind(this);
@@ -39,10 +37,10 @@ class GroupCard extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.group) {
+    if (nextProps.users) {
       this.setState({
-        ...this.state,
-        members: nextProps.group.members
+        selectedUser: nextProps.users[0],
+        error: null
       });
     }
   }
@@ -61,14 +59,16 @@ class GroupCard extends React.Component {
 
   selectUser = async event => {
     await this.setState({
-      selectedUser: _.find(this.state.users, { 'id': event.target.value })
+      selectedUser: _.find(this.props.users, { 'id': event.target.value })
     });
   };
 
   render() {
-    const { classes } = this.props;
-    const { selectedUser, users, members } = this.state;
-    const memberIds = members.map(member => member.id);
+    const { classes, users, group } = this.props;
+    const { selectedUser } = this.state;
+
+    if (selectedUser == null || group.members == null) return null;
+    const memberIds = group.members.map(member => member.id);
 
     return (
       <Card>

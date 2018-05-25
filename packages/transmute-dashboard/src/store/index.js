@@ -7,6 +7,7 @@ import { combineReducers } from 'redux';
 import { reducer as user } from './user/reducer';
 
 import directory from './transmute/directory';
+import groups from './transmute/groups';
 
 import { routerReducer, routerMiddleware } from 'react-router-redux';
 
@@ -24,6 +25,7 @@ const composeEnhancers =
 export const store = createStore(
   combineReducers({
     directory: directory.reducer,
+    groups: groups.reducer,
     user: user,
     router: routerReducer
   }),
