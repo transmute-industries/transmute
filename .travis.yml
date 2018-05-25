@@ -62,7 +62,7 @@ before_script:
 
 script:
 - bash -l -c "npm i"
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "transmute k8s provision --minikube --vmdriver none"; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "transmute k8s provision-minikube travistest --vmdriver none"; fi
 - sleep 8
 - minikube update-context
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "yes y|transmute k8s init --minikube"; fi
