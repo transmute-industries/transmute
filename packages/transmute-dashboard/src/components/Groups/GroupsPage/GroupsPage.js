@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withAuth } from '@okta/okta-react';
 import { withStyles } from 'material-ui/styles';
 
+import withGroups from '../../../containers/withGroups';
 import AppBar from '../../AppBar';
 import GroupsTable from './GroupsTable';
 import CreateGroupCard from './CreateGroupCard';
-
-import { getGroups } from '../../../store/transmute/middleware';
 
 const styles = theme => ({
   margin: {
@@ -18,31 +18,21 @@ const styles = theme => ({
 });
 
 class GroupsPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      groups: null,
-      error: null
-    };
-  }
-
-  async componentWillMount() {
-    if (!this.state.groups) {
-      const groups = await getGroups(this.props.auth);
-      this.setState({
-        groups
-      });
-    }
+  componentWillMount() {
+    this.props.actions.groups.loadGroups(this.props.auth);
   }
 
   render() {
+    const { groups } = this.props;
     return (
       <AppBar>
         <CreateGroupCard />
-        <GroupsTable groups={this.state.groups} />
+        <GroupsTable groups={groups.groups} />
       </AppBar>
     );
   }
 }
 
-export default withStyles(styles)(withAuth(GroupsPage));
+export default withStyles(styles)(
+  connect(null, null)(withAuth(withGroups(GroupsPage)))
+);

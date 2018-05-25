@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withAuth } from '@okta/okta-react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -10,7 +11,7 @@ import Grid from 'material-ui/Grid';
 import { FormControl } from 'material-ui/Form';
 import Input, { InputLabel } from 'material-ui/Input';
 
-import { createGroup } from '../../../../store/transmute/middleware';
+import withGroups from '../../../../containers/withGroups';
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -25,8 +26,7 @@ class GroupCard extends React.Component {
     super(props, context);
     this.state = {
       name: '',
-      description: '',
-      error: null
+      description: ''
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -34,20 +34,7 @@ class GroupCard extends React.Component {
 
   async handleSubmit(e) {
     e.preventDefault();
-    let response = await createGroup(this.props.auth, this.state);
-    if (response.data.error) {
-      // TODO: Handle error states in UI
-      this.setState({
-        error: response.data.error
-      });
-    } else {
-      // TODO: Call back to parent component and refresh groups
-      this.setState({
-        error: null,
-        name: '',
-        description: ''
-      });
-    }
+    await this.props.actions.groups.createGroup(this.props.auth, this.state);
   }
 
   handleChange = name => event => {
@@ -110,4 +97,7 @@ class GroupCard extends React.Component {
   }
 }
 
-export default withStyles(styles)(withAuth(GroupCard));
+
+export default withStyles(styles)(
+  connect(null, null)(withAuth(withGroups(GroupCard)))
+);

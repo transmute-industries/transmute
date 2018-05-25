@@ -15,7 +15,7 @@ import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 import AccountCircle from 'material-ui-icons/AccountCircle';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import OktaAuthButton from '../Auth/OktaAuthButton';
-import * as actionCreators from '../../store/user/actionCreators';
+import * as actionCreators from '../../store/transmute/user/actionCreators';
 
 import Button from 'material-ui/Button';
 

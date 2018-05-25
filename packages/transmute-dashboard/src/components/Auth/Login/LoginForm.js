@@ -10,7 +10,7 @@ import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
 import Grid from 'material-ui/Grid';
 
-import { loginApiCall } from '../../../store/user/actions';
+import { loginApiCall } from '../../../store/transmute/user/actions';
 
 const styles = theme => ({
   root: {
