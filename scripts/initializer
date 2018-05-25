@@ -17,6 +17,9 @@ export PATH=$HOME/.local/bin:$PATH
 export TRANSMUTE_ENV=minikube
 export NVM_DIR="$HOME/.nvm"
 
+GLOBAL_INITIALIZER_TMP=$(mktemp -d 2>/dev/null || mktemp -d -t 'GLOBAL_INITIALIZER_TMP')
+
+
 exiter () {
   echo $DEBUG_MESSAGES
 }
@@ -289,15 +292,19 @@ fi
 squawk 5 "Configuring the transmute framework to use the new kong proxy port in minikube"
 DEBUG_MESSAGES='FATAL ERROR ON TESTING'
 
-export OLD_KONG_PROXY_PORT=32443
+export OLD_KONG_PROXY_PORT=TPL_KONG_PORT_TPL
 export NEW_KONG_PROXY_PORT=$KONG_PROXY_PORT
 
-export FRAMEWORK_CONFIG=$TRANSMUTE_REPO/packages/transmute-framework/src/transmute-config/env.json
-export DASHBOARD_CONFIG=$TRANSMUTE_REPO/packages/transmute-dashboard/src/transmute-config/env.json
+export FRAMEWORK_CONFIG=$TRANSMUTE_REPO/packages/transmute-framework/src/transmute-config/env.json.tpl
+export DASHBOARD_CONFIG=$TRANSMUTE_REPO/packages/transmute-dashboard/src/transmute-config/env.json.tpl
 
 DEBUG_MESSAGES='FATAL ERROR ON FRAMEWORK CONFIG SED'
-find $FRAMEWORK_CONFIG -type f | xargs sed -i '' -e 's/'$OLD_KONG_PROXY_PORT'/'$NEW_KONG_PROXY_PORT'/g'
+cat $FRAMEWORK_CONFIG \
+  | sed "s/$OLD_KONG_PROXY_PORT/$NEW_KONG_PROXY_PORT/g" > \
+  $TRANSMUTE_REPO/packages/transmute-framework/src/transmute-config/env.json
 DEBUG_MESSAGES='FATAL ERROR ON DASHBOARD CONFIG SED'
-find $DASHBOARD_CONFIG -type f | xargs sed -i '' -e 's/'$OLD_KONG_PROXY_PORT'/'$NEW_KONG_PROXY_PORT'/g'
+cat $DASHBOARD_CONFIG \
+  | sed "s/$OLD_KONG_PROXY_PORT/$NEW_KONG_PROXY_PORT/g" > \
+  $TRANSMUTE_REPO/packages/transmute-dashboard/src/transmute-config/env.json
 
 DEBUG_MESSAGES='The Initializer has completed successfully'
