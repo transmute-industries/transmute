@@ -37,9 +37,7 @@ vorpal
   .option('--nodes <nodes>', 'How many nodes to create the cluster with')
   .option('--clustername <clustername>', 'The cluster name to create the cluster with')
   .option('--group <group>', 'The group to create the cluster with')
-  .option('--gensshkeys', 'Generate SSH keys')
   .option('--aks', 'Use Azure AKS')
-  .option('--aws', 'Use Amazon AWS')
   .option('--minikube', 'Use minikube')
   .action(function(args, callback) {
     if (args.options.gke) {
@@ -71,49 +69,36 @@ vorpal
   });
 
 vorpal
-  .command('k8s provision')
-  .description('Provision k8s cluster')
-  .option('--gke', 'Use gcloud GKE')
-  .option('--nodes <nodes>', 'How many nodes to create the cluster with')
-  .option(
-    '--clustername <clustername>',
-    'The cluster name to create the cluster with'
-  )
-  .option('--group <group>', 'The group to create the cluster with')
-  .option('--gensshkeys', 'Generate SSH keys')
-  .option('--vmdriver <vmdriver>', 'The cluster name to create the cluster with')
+  .command('k8s provision-azure <clustername> <group>')
+  .description('Provision k8s cluster in Azure')
   .option('--aks', 'Use Azure AKS')
-  .option('--aws', 'Use Amazon AWS')
-  .option('--minikube', 'Use minikube')
+  .option('--gensshkeys', 'Generate SSH keys')
+  .option('--nodes <nodes>', 'How many nodes to create the cluster with')
   .action(function(args, callback) {
-    if (args.options.gke) {
-      // gke.provision()
-      this.log('has not been implemented yet');
-    } else if (args.options.aks) {
-      var myResourceGroup = args.options.group;
-      var myAKSCluster = args.options.clustername;
-      var myNodeCount = args.options.nodes;
-      var this_clustername = 'default';
-      if (args.options.clustername) {
-        this_clustername = args.options.clustername;
+      if (args.options.nodes) {
+        let myNodeCount = args.options.nodes;
+      } else {
+        let myNodeCount = 3;
       }
       if (args.options.gensshkeys) {
-        var GenSSHKeys = true;
+        let GenSSHKeys = true;
       } else {
-        var GenSSHKeys = false;
+        let GenSSHKeys = false;
       }
-      provision.aks( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys );
-    } else if (args.options.aws) {
-      //aws.provision()
-      this.log('has not been implemented yet');
-    } else if (args.options.minikube) {
+      provision.aks( args.group, args.clustername, myNodeCount, GenSSHKeys );
+    callback();
+  });
+vorpal
+  .command('k8s provision-minikube <clustername>')
+  .description('Provision k8s cluster')
+  .option('--nodes <nodes>', 'How many nodes to create the cluster with')
+  .option('--vmdriver <vmdriver>', 'The cluster name to create the cluster with')
+  .action(function(args, callback) {
       if (args.options.vmdriver) {
-        provision.minikube( this_clustername, args.options.vmdriver );
+        provision.minikube( args.clustername, args.options.vmdriver );
+      } else {
+        provision.minikube( args.clustername );
       }
-      else {
-        provision.minikube( this_clustername );
-      }
-    }
     callback();
   });
 
