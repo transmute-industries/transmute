@@ -65,7 +65,7 @@ script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "transmute k8s provision-minikube travistest --vmdriver none"; fi
 - sleep 8
 - minikube update-context
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "yes y|transmute k8s init-minikube travistest"; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "yes y|transmute k8s init travistest"; fi
 - bash -l -c "lerna bootstrap"
 - sleep 8
 - bash -l -c "kubectl get pods --all-namespaces"
