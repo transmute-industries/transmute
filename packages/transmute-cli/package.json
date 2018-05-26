@@ -4,9 +4,8 @@
   "description": "transmute cli",
   "scripts": {
     "build": "babel src -d lib",
-    "transmute": "node ./lib/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "transmute": "npm run build && ./lib/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json"
   },
   "keywords": [
