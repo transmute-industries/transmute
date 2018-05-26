@@ -126,3 +126,31 @@ Final steps - linking everything and migrating your smart contracts
 8. Run `npm run start`
 
 That's it! Login to the app and click on the dashbaord button in the side menu to begin recording events!
+
+### Command Line Interface
+
+Transmute includes a command line interfce (CLI) tool. This will assist
+in the provisioning and initialization of the cluster, and other
+maintenance tasks.
+
+## Provision
+
+### provision-minikube
+
+`transmute k8s provision-minikube mytransmutek8s`   <-- will create a
+k8s cluster using minikube by default it will use minikube, but you can
+choose the driver by passing a `--vmdriver=` option on the command line
+e.g.
+
+`transmute k8s provision-minikube mytransmutek8s --vmdriver=none`
+
+### provision-azure
+
+`transmute k8s provision-azure mytransmutek8s myGroup`   <-- will create a
+k8s cluster using azure by default.
+
+#### init
+
+`transmute k8s init mytransmutek8s`
+
+This will prepare your cluster with the base transmute k8s deployment.

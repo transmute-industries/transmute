@@ -31,18 +31,10 @@ const mixpanel = process.env.MIXPANEL_PROJECT_ID
 */
 
 vorpal
-  .command('k8s init-minikube <clustername>')
-  .description('Initialize k8s cluster on minikube')
+  .command('k8s init <clustername>')
+  .description('Initialize k8s cluster')
   .action(function(args, callback) {
-    init.minikube( args.clustername )
-    callback();
-  });
-
-vorpal
-  .command('k8s init-azure <clustername>')
-  .description('Initialize k8s cluster in azure')
-  .action(function(args, callback) {
-    init.aks( args.clustername )
+    init.k8s( args.clustername )
     callback();
   });
 
