@@ -2,11 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withAuth } from '@okta/okta-react';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
+import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Grid from 'material-ui/Grid';
 import { FormControl } from 'material-ui/Form';
 import Input, { InputLabel } from 'material-ui/Input';
@@ -87,7 +86,7 @@ class GroupCard extends React.Component {
             variant="raised"
             color="secondary"
             onClick={this.handleSubmit}
-            disabled={name.trim().length == 0 || description.trim().length == 0}
+            disabled={name.trim().length === 0 || description.trim().length === 0}
           >
             Create
           </Button>

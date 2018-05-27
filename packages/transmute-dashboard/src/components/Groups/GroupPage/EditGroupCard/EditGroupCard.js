@@ -2,11 +2,10 @@ import React from 'react';
 import _ from 'lodash';
 import { withAuth } from '@okta/okta-react';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
+import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Grid from 'material-ui/Grid';
 import { FormControl } from 'material-ui/Form';
 import Input, { InputLabel } from 'material-ui/Input';
@@ -29,24 +28,40 @@ class GroupCard extends React.Component {
     super(props, context);
     this.state = {
       selectedUser: null,
+      name: null,
+      description: null,
       error: null
     };
+    this.handleChange = this.handleChange.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleSave = this.handleSave.bind(this);
     this.handleAddMember = this.handleAddMember.bind(this);
     this.handleRemoveMember = this.handleRemoveMember.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.users) {
+    if (nextProps.users && nextProps.group) {
       this.setState({
         selectedUser: nextProps.users[0],
+        name: nextProps.group.name,
+        description: nextProps.group.description,
         error: null
       });
     }
   }
 
+  handleChange = name => event => {
+    this.setState({
+      name: event.target.value
+    });
+  };
+
   handleDelete = () => {
     this.props.onDelete();
+  };
+
+  handleSave = () => {
+    this.props.onSave({ name:this.state.name, description: this.state.description });
   };
 
   handleAddMember = () => {
@@ -65,7 +80,7 @@ class GroupCard extends React.Component {
 
   render() {
     const { classes, users, group } = this.props;
-    const { selectedUser } = this.state;
+    const { selectedUser, name, description } = this.state;
 
     if (selectedUser == null || group.members == null) return null;
     const memberIds = group.members.map(member => member.id);
@@ -76,6 +91,52 @@ class GroupCard extends React.Component {
           <Typography gutterBottom variant="headline" component="h2">
             Edit Group
           </Typography>
+
+          <Grid item xs={5} md={12}>
+            <FormControl className={classes.formControl}>
+              <InputLabel>Name</InputLabel>
+              <Input
+                className={classNames(classes.textInput)}
+                id="name"
+                type="text"
+                value={name}
+                onChange={this.handleChange(name)}
+              />
+            </FormControl>
+
+            <FormControl className={classes.formControl}>
+              <InputLabel>Description</InputLabel>
+              <Input
+                className={classNames(classes.textInput)}
+                id="description"
+                type="text"
+                value={description}
+                onChange={this.handleChange(description)}
+              />
+            </FormControl>
+          </Grid>
+
+        </CardContent>
+        <CardActions>
+          <Grid item xs={5} md={12}>
+            <Button
+              variant="raised"
+              color="secondary"
+              onClick={this.handleDelete}
+            >
+              Delete
+            </Button>
+          </Grid>
+
+          <Grid item xs={5} md={12}>
+            <Button
+              variant="raised"
+              color="secondary"
+              onClick={this.handleSave}
+            >
+              Save
+            </Button>
+          </Grid>
 
           <Grid item xs={5} md={12}>
             <FormControl className={classes.formControl}>
@@ -111,7 +172,7 @@ class GroupCard extends React.Component {
                 >
                   Remove Member
               </Button>}
-              {memberIds.indexOf(selectedUser.id) == -1 &&
+              {memberIds.indexOf(selectedUser.id) === -1 &&
                 <Button
                   variant="raised"
                   color="secondary"
@@ -122,8 +183,9 @@ class GroupCard extends React.Component {
             </FormControl>
           </Grid>
 
-        </CardContent>
-        <CardActions>
+
+        {/* </CardContent> */}
+        {/* <CardActions>
           <Grid item md={12}>
             <Button
               variant="raised"
@@ -132,7 +194,7 @@ class GroupCard extends React.Component {
             >
               Delete
             </Button>
-          </Grid>
+          </Grid> */}
         </CardActions>
       </Card>
     );

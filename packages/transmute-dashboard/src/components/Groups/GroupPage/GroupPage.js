@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 import { withAuth } from '@okta/okta-react';
 import { withStyles } from 'material-ui/styles';
 
@@ -23,10 +22,6 @@ const styles = theme => ({
 });
 
 class GroupPage extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentWillMount() {
     if (!this.props.groups.selectedGroup) {
       this.updateGroup();
@@ -47,6 +42,10 @@ class GroupPage extends Component {
     history.push('/groups');
   };
 
+  onSave = async (profile) => {
+    await this.props.actions.groups.setGroupProfile(this.props.auth, this.props.groups.selectedGroup.id, profile);
+  };
+
   onAddMember = async (userId) => {
     await this.props.actions.groups.addGroupMember(this.props.auth, this.props.groups.selectedGroup.id, userId);
   };
@@ -62,6 +61,7 @@ class GroupPage extends Component {
       <AppBar>
         <EditGroupCard
           onDelete={this.onDelete}
+          onSave={this.onSave}
           onAddMember={this.onAddMember}
           onRemoveMember={this.onRemoveMember}
           group={groups.selectedGroup}
