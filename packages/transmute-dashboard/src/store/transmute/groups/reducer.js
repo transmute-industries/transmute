@@ -9,6 +9,16 @@ const handlers = {
       selectedGroup: action.payload.group
     };
   },
+  [Constants.GROUP_PROFILE_LOADED]: (state, action) => {
+    return {
+      ...state,
+      selectedGroup: {
+        ...state.selectedGroup,
+        name: action.payload.group.profile.name,
+        description: action.payload.group.profile.description
+      }
+    };
+  },
   [Constants.GROUPS_LOADED]: (state, action) => {
     return {
       ...state,
