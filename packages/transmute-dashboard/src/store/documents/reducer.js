@@ -1,6 +1,6 @@
 import * as Constants from './constants';
 
-export const reducer = (state, event) => {
+export default (state, event) => {
   switch (event.value.type) {
     case Constants.SIGNATURE_CREATED: {
       return {
@@ -28,6 +28,9 @@ export const reducer = (state, event) => {
           }
         }
       }
+    }
+    default: {
+      return state;
     }
   }
 };

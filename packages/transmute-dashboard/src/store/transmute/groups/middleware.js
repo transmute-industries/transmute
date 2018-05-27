@@ -37,6 +37,24 @@ export const getGroup = async (auth, groupId) => {
   return data;
 };
 
+export const setGroupProfile = async (auth, groupId, profile) => {
+  let access_token = await auth.getAccessToken();
+  let { data } = await axios
+    .create({
+      baseURL: ENVS.PROD,
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${access_token}`
+      }
+    })
+    .put(`/api/v0/groups/${groupId}`, {
+      name: profile.name,
+      description: profile.description
+    });
+  return data;
+};
+
 export const createGroup = async (auth, profile) => {
   let access_token = await auth.getAccessToken();
   return axios

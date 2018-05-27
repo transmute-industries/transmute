@@ -6,11 +6,7 @@ import AppBar from '../AppBar';
 import { withAuth } from '@okta/okta-react';
 
 import { withStyles } from 'material-ui/styles';
-import Input, { InputLabel } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import Select from 'material-ui/Select';
-import { MenuItem } from 'material-ui/Menu';
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
+import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import theme from '../../theme';

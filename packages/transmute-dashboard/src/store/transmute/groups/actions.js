@@ -23,6 +23,13 @@ export const createGroup = (auth, profile) => {
   };
 };
 
+export const setGroupProfile = (auth, groupId, profile) => {
+  return async dispatch => {
+    const group = await middleware.setGroupProfile(auth, groupId, profile);
+    dispatch(actionCreators.loadGroupProfile(group));
+  };
+};
+
 export const deleteGroup = (auth, groupId) => {
   return async dispatch => {
     await middleware.deleteGroup(auth, groupId);

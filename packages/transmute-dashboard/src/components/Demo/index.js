@@ -22,7 +22,7 @@ import EventsTable from './DemoEventsTable';
 import theme from '../../theme';
 
 import { filters } from '../../filters/Events';
-import { reducer as EventsReducer } from '../../store/documents/reducer';
+import EventsReducer from '../../store/documents/reducer';
 import * as actionsCreators from '../../store/transmute/user/actionCreators';
 
 let eventStoreFactoryArtifact = require('../../contracts/EventStoreFactory.json');
@@ -61,7 +61,7 @@ class Demo extends Component {
     const accounts = await eventStoreFactory.getWeb3Accounts();
     let eventStoreAddresses = await eventStoreFactory.getEventStores();
 
-    if (eventStoreAddresses.length == 0) {
+    if (eventStoreAddresses.length === 0) {
       await eventStoreFactory.createEventStore(accounts[0]);
     }
 
@@ -149,7 +149,6 @@ class Demo extends Component {
   };
 
   writeFileFromReader = (reader, filename, type) => {
-    let ipfsId;
     const buffer = Buffer.from(reader.result);
     let { eventStore } = this.state;
     eventStore.ipfs.ipfs
@@ -188,7 +187,7 @@ class Demo extends Component {
 
   onSignDocument = async documentHash => {
     let { eventStore } = this.state;
-    let result = await eventStore.write(
+    await eventStore.write(
       this.state.currentUserAddress,
       { type: 'document', id: documentHash },
       { type: 'DOCUMENT_SIGNED', hash: this.state.signature }

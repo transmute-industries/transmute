@@ -64,7 +64,7 @@ class EventStorePage extends Component {
   onSaveEvent = async someEvent => {
     let parsedEvent = JSON.parse(someEvent);
     let { eventStore, accounts } = this.state;
-    let result = await eventStore.write(
+    await eventStore.write(
       accounts[0],
       parsedEvent.key,
       parsedEvent.value

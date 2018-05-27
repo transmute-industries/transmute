@@ -1,6 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Table, {
@@ -15,12 +13,7 @@ import Table, {
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
-import Checkbox from 'material-ui/Checkbox';
-import IconButton from 'material-ui/IconButton';
 import Tooltip from 'material-ui/Tooltip';
-import DeleteIcon from 'material-ui-icons/Delete';
-import FilterListIcon from 'material-ui-icons/FilterList';
-import { lighten } from 'material-ui/styles/colorManipulator';
 
 import { history } from '../../../../store';
 
@@ -56,7 +49,7 @@ class GroupsTableHead extends React.Component {
     this.props.onRequestSort(event, property);
   };
   render() {
-    const { order, orderBy, rowCount } = this.props;
+    const { order, orderBy } = this.props;
 
     return (
       <TableHead>
@@ -211,6 +204,7 @@ class GroupsTable extends React.Component {
                         history.push('/groups/' + n.id)
                       }
                       role="checkbox"
+                      aria-checked
                       tabIndex={-1}
                       key={n.id}
                     >
