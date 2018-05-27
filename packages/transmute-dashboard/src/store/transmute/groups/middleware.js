@@ -41,7 +41,7 @@ export const setGroupProfile = async (auth, groupId, profile) => {
   let access_token = await auth.getAccessToken();
   let { data } = await axios
     .create({
-      baseURL: ENVS.PROD,
+      baseURL: ENVS.LOCAL,
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',

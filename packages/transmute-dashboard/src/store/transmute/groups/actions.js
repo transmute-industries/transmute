@@ -26,7 +26,7 @@ export const createGroup = (auth, profile) => {
 export const setGroupProfile = (auth, groupId, profile) => {
   return async dispatch => {
     const group = await middleware.setGroupProfile(auth, groupId, profile);
-    dispatch(actionCreators.loadGroup(group));
+    dispatch(actionCreators.loadGroupProfile(group));
   };
 };
 

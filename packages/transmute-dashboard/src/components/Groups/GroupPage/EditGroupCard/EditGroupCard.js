@@ -40,6 +40,7 @@ class GroupCard extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('nextProps: ', nextProps);
     if (nextProps.users && nextProps.group) {
       this.setState({
         selectedUser: nextProps.users[0],
@@ -52,7 +53,7 @@ class GroupCard extends React.Component {
 
   handleChange = name => event => {
     this.setState({
-      name: event.target.value
+      [name]: event.target.value
     });
   };
 
@@ -61,7 +62,7 @@ class GroupCard extends React.Component {
   };
 
   handleSave = () => {
-    this.props.onSave({ name:this.state.name, description: this.state.description });
+    this.props.onSave({ name: this.state.name, description: this.state.description });
   };
 
   handleAddMember = () => {
@@ -92,57 +93,57 @@ class GroupCard extends React.Component {
             Edit Group
           </Typography>
 
-          <Grid item xs={5} md={12}>
-            <FormControl className={classes.formControl}>
-              <InputLabel>Name</InputLabel>
-              <Input
-                className={classNames(classes.textInput)}
-                id="name"
-                type="text"
-                value={name}
-                onChange={this.handleChange(name)}
-              />
-            </FormControl>
+          <Grid container style={{ marginBottom: '20px' }}>
 
-            <FormControl className={classes.formControl}>
-              <InputLabel>Description</InputLabel>
-              <Input
-                className={classNames(classes.textInput)}
-                id="description"
-                type="text"
-                value={description}
-                onChange={this.handleChange(description)}
-              />
-            </FormControl>
+            <Grid item xs={6} md={6}>
+              <FormControl className={classes.formControl}>
+                <InputLabel>Name</InputLabel>
+                <Input
+                  className={classNames(classes.textInput)}
+                  id="name"
+                  type="text"
+                  value={name}
+                  onChange={this.handleChange('name')}
+                />
+              </FormControl>
+
+              <FormControl className={classes.formControl}>
+                <InputLabel>Description</InputLabel>
+                <Input
+                  className={classNames(classes.textInput)}
+                  id="description"
+                  type="text"
+                  value={description}
+                  onChange={this.handleChange('description')}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={6} md={6}>
+            </Grid>
           </Grid>
 
         </CardContent>
         <CardActions>
-          <Grid item xs={5} md={12}>
-            <Button
-              variant="raised"
-              color="secondary"
-              onClick={this.handleDelete}
-            >
-              Delete
+          <Grid container style={{ marginBottom: '20px' }}>
+            <Grid item xs={6} md={6}>
+              <Button
+                variant="raised"
+                color="secondary"
+                onClick={this.handleDelete}
+              >
+                Delete
             </Button>
-          </Grid>
-
-          <Grid item xs={5} md={12}>
-            <Button
-              variant="raised"
-              color="secondary"
-              onClick={this.handleSave}
-            >
-              Save
+              <Button
+                variant="raised"
+                color="secondary"
+                onClick={this.handleSave}
+              >
+                Save
             </Button>
-          </Grid>
+            </Grid>
 
-          <Grid item xs={5} md={12}>
-            <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="uncontrolled-native">
-                Add / Remove Member
-                </InputLabel>
+            <Grid item xs={6} md={6}>
+
               <Select
                 value={selectedUser.id}
                 native
@@ -164,37 +165,26 @@ class GroupCard extends React.Component {
                   </option>
                 ))}
               </Select>
-              {memberIds.indexOf(selectedUser.id) !== -1 &&
-                <Button
-                  variant="raised"
-                  color="secondary"
-                  onClick={this.handleRemoveMember}
-                >
-                  Remove Member
+              <FormControl className={classes.formControl}>
+                {memberIds.indexOf(selectedUser.id) !== -1 &&
+                  <Button
+                    variant="raised"
+                    color="secondary"
+                    onClick={this.handleRemoveMember}
+                  >
+                    Remove Member
               </Button>}
-              {memberIds.indexOf(selectedUser.id) === -1 &&
-                <Button
-                  variant="raised"
-                  color="secondary"
-                  onClick={this.handleAddMember}
-                >
-                  Add Member
+                {memberIds.indexOf(selectedUser.id) === -1 &&
+                  <Button
+                    variant="raised"
+                    color="secondary"
+                    onClick={this.handleAddMember}
+                  >
+                    Add Member
               </Button>}
-            </FormControl>
+              </FormControl>
+            </Grid>
           </Grid>
-
-
-        {/* </CardContent> */}
-        {/* <CardActions>
-          <Grid item md={12}>
-            <Button
-              variant="raised"
-              color="secondary"
-              onClick={this.handleDelete}
-            >
-              Delete
-            </Button>
-          </Grid> */}
         </CardActions>
       </Card>
     );

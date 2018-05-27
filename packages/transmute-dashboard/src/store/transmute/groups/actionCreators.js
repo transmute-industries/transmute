@@ -9,9 +9,9 @@ export const loadGroup = group => {
   };
 };
 
-export const groupProfileSet = group => {
+export const loadGroupProfile = group => {
   return {
-    type: Constants.GROUP_PROFILE_SET,
+    type: Constants.GROUP_PROFILE_LOADED,
     payload: {
       group
     }
