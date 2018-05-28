@@ -7,7 +7,7 @@ if [ $# -ne 2 ]; then
   exit 1
 fi
 
-echo -n "wait on $1 to become available"
+printf "wait on $1 to become available"
 sleep 1
 
 # while loop
@@ -15,7 +15,7 @@ countone=1
 # timeout for 15 minutes
 while [ $countone -lt 151 ]
 do
-  echo -n '.'
+  printf '.'
   RESULT=$(kubectl get po --namespace=$2 | grep $1 | grep Running)
   if [ "$RESULT" ]; then
       echo '.'

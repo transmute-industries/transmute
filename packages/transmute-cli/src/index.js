@@ -14,9 +14,10 @@ vorpal.use(vorpalLog);
 const { writeFile } = require('./utils');
 
 // Commands
-const login = require('./commands/login');
-const aks = require('./commands/aks');
-const minikube = require('./commands/minikube');
+const ls = require('./commands/ls');
+const init = require('./commands/init');
+const runtest = require('./commands/runtest');
+const provision = require('./commands/provision');
 
 // Mixpanel
 const Mixpanel = require('mixpanel');
@@ -28,131 +29,53 @@ const mixpanel = process.env.MIXPANEL_PROJECT_ID
     @name login
     @function
 */
+
 vorpal
-  .command('login')
-  .description(
-    'Login with okta, and save session to ~/.transmute/cli-secrets/session.json'
-  )
-  .alias('l')
-  .action(async (args, callback) => {
-    const response = await login.default.withOkta();
-    console.log('\n', response, '\n');
+  .command('k8s init <clustername>')
+  .description('Initialize k8s cluster')
+  .action(function(args, callback) {
+    init.k8s( args.clustername )
     callback();
   });
 
 vorpal
-  .command('k8s provision <clusterName>')
-  .description('Provision k8s cluster')
-  .option('--gke', 'Use gcloud GKE')
-  .option('--nodes <nodes>', 'How many nodes to create the cluster with')
-  .option(
-    '--clustername <clustername>',
-    'The cluster name to create the cluster with'
-  )
-  .option('--group <group>', 'The group to create the cluster with')
+  .command('k8s provision-azure <clustername> <group>')
+  .description('Provision k8s cluster in Azure')
   .option('--gensshkeys', 'Generate SSH keys')
-  .option('--aks', 'Use Azure AKS')
-  .option('--aws', 'Use Amazon AWS')
-  .option('--minikube', 'Use minikube')
+  .option('--nodes <nodes>', 'How many nodes to create the cluster with')
   .action(function(args, callback) {
-    if (args.options.gke) {
-      // gke.provision()
-      this.log('has not been implemented yet');
-    } else if (args.options.aks) {
-      var myResourceGroup = args.options.group;
-      var myAKSCluster = args.options.clustername;
-      var myNodeCount = args.options.nodes;
-      if (args.options.gensshkeys) {
-        var GenSSHKeys = true;
-      } else {
-        var GenSSHKeys = false;
+      let myNodeCount = 3;
+      if (args.options.nodes) {
+        myNodeCount = args.options.nodes;
       }
-      aks.register;
-      aks.provision(myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys);
-    } else if (args.options.aws) {
-      //aws.provision()
-      this.log('has not been implemented yet');
-    } else if (args.options.minikube) {
-      minikube.provision();
-    }
+      let GenSSHKeys = false;
+      if (args.options.gensshkeys) {
+        GenSSHKeys = true;
+      }
+      provision.aks( args.group, args.clustername, myNodeCount, GenSSHKeys );
     callback();
   });
 
 vorpal
-  .command('k8s ls <clusterName>')
-  .description('List k8s clusters')
-  .option('--gke', 'Use gcloud GKE')
-  .option('--aks', 'Use Azure AKS')
-  .option('--aws', 'Use Amazon AWS')
-  .option('--minikube', 'Use minikube')
+  .command('k8s provision-minikube <clustername>')
+  .description('Provision k8s cluster')
+  .option('--nodes <nodes>', 'How many nodes to create the cluster with')
+  .option('--vmdriver <vmdriver>', 'The cluster name to create the cluster with')
   .action(function(args, callback) {
-    if (args.options.gke) {
-      // gkels()
-      this.log('has not been implemented yet');
-    } else if (args.options.aks) {
-      aks.ls();
-    } else if (args.options.aws) {
-      //awsls()
-      this.log('has not been implemented yet');
-    } else if (args.options.minikube) {
-      minikube.ls();
-    }
+      if (args.options.vmdriver) {
+        provision.minikube( args.clustername, args.options.vmdriver );
+      } else {
+        provision.minikube( args.clustername );
+      }
     callback();
   });
 
 vorpal
-  .command('dapp create')
-  .description('create a new distributed app')
-  .alias('d')
-  .action(function(args, callback) {
-    this.log('dapp has not been implemented yet');
-    callback();
-  });
-
-vorpal
-  .command('generate gpgkey', 'Assists in the generation of an GPG key')
-  .alias('g')
-  .action(function(args, callback) {
-    this.log('generate gpgkey has not been implemented yet');
-    callback();
-  });
-
-vorpal
-  .command('generate sshkey', 'Assists in the generation of an SSH key')
-  .action(function(args, callback) {
-    this.log('generate sshkey has not been implemented yet');
-    callback();
-  });
-
-vorpal
-  .command('group add <member>', 'Adds member to group')
-  .action(function(args, callback) {
-    this.log('group add <member> has not been implemented yet');
-    callback();
-  });
-
-vorpal
-  .command('group delete <member>', 'Deletes member to group')
-  .action(function(args, callback) {
-    this.log('group delete <member> has not been implemented yet');
-    callback();
-  });
-
-vorpal
-  .command('push', 'Pushes objects into the cloud')
-  .alias('p')
-  .action(function(args, callback) {
-    this.log('push has not been implemented yet');
-    callback();
-  });
-
-vorpal
-  .command('tunnel <clusterName>')
-  .option('-p, --port', 'Tunnel port')
-  .option('-s, --svc', 'Tunnel service')
-  .action(function(args, callback) {
-    this.log('push has not been implemented yet');
-    callback();
+  .command('version', 'display version information')
+  .action(async (args, callback) => {
+        const version = require('../package.json').version;
+        vorpal.logger.info('transmute: ' + version);
+        callback();
   });
 
 vorpal
