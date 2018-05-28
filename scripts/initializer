@@ -74,7 +74,8 @@ add_line_to()
 
 # Wait for kubectl and kube-dns to be initialized
 $TRANSMUTE_REPO/w8s/kubectl.w8
-$TRANSMUTE_REPO/w8s/kube-dns.w8
+$TRANSMUTE_REPO/w8s/running.w8 kube-dns kube-system
+$TRANSMUTE_REPO/w8s/ready.w8 kube-dns kube-system
 
 sleep 5
 
@@ -105,7 +106,8 @@ helm install \
  --name=ganache \
  $TRANSMUTE_REPO/components/ganache/charts/ganache-cli/
 
-$TRANSMUTE_REPO/w8s/generic.w8 ganache default
+$TRANSMUTE_REPO/w8s/running.w8 ganache default
+$TRANSMUTE_REPO/w8s/ready.w8 ganache default
 
 squawk 5 "ipfs"
 #squawk 6 "Storage class for ipfs"
@@ -115,7 +117,8 @@ helm install \
  stable/ipfs \
  --name decentralized-storage
 
-$TRANSMUTE_REPO/w8s/generic.w8 decentralized-storage-ipfs default
+$TRANSMUTE_REPO/w8s/running.w8 decentralized-storage-ipfs default
+$TRANSMUTE_REPO/w8s/ready.w8 decentralized-storage-ipfs default
 
 squawk 5 "OpenFaaS"
 squawk 6 "Create namespaces"
@@ -135,8 +138,10 @@ fi
 helm install stable/kong --name gateway
 
 squawk 5 "spin up"
-$TRANSMUTE_REPO/w8s/generic.w8 gateway-postgresql default
-$TRANSMUTE_REPO/w8s/generic.w8 gateway-kong default
+$TRANSMUTE_REPO/w8s/running.w8 gateway-postgresql default
+$TRANSMUTE_REPO/w8s/ready.w8 gateway-postgresql default
+$TRANSMUTE_REPO/w8s/running.w8 gateway-kong default
+$TRANSMUTE_REPO/w8s/ready.w8 gateway-kong default
 export MINIKUBE_IP=$(minikube ip)
 export KONG_ADMIN_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
 export KONG_PROXY_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')

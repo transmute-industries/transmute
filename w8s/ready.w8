@@ -3,12 +3,11 @@ if [ $# -ne 2 ]; then
   # Print usage
   echo 'Error! wrong number of arguments'
   echo 'usage:'
-  echo 'w8/generic.w8 what-to-wait-for in-what-namespace'
+  echo 'w8/ready.w8 what-to-wait-for in-what-namespace'
   exit 1
 fi
 
 printf "wait on $1 to become available"
-sleep 1
 
 # while loop
 countone=1
@@ -16,7 +15,8 @@ countone=1
 while [ $countone -lt 151 ]
 do
   printf '.'
-  RESULT=$(kubectl get po --namespace=$2 | grep $1 | grep Running)
+  RESULT=$(kubectl get --namespace=$2 pods/$1 -o json | jq -r \
+   '. | select(.status.phase = "Running" or ([ .status.conditions[] | select(.type == "Ready" and .state == true) ] | length ) == 1 ) | .metadata.namespace + "/" + .metadata.name' )
   if [ "$RESULT" ]; then
       echo '.'
       echo "$RESULT"
@@ -26,4 +26,4 @@ do
   sleep 3
 done
 
-echo "$1 is now up and running"
+echo "$1 is now ready"
