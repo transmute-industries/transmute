@@ -1,4 +1,29 @@
 #!/bin/sh
+: ${VERBOSITY:=0}
+
+squawk () {
+  # This function simplifies error reporting and verbosity
+  # call it by preceding your message with a verbosity level
+  # e.g. `squawk 3 "This is a squawk"`
+  # if the current verbosity level is greater than or equal to
+  # the number given then this function will echo out your message
+  # and pad it with # to let you now how verbose that message was
+  squawk_lvl=$1
+  shift
+  squawk=$1
+  shift
+  squawk_opt=$@
+
+  if [[ "$VERBOSITY" -ge "$squawk_lvl" ]] ; then
+  count_squawk=0
+    while [[ "$count_squawk" -lt "$squawk_lvl" ]]; do
+      printf "#"
+      count_squawk=`expr $count_squawk + 1`
+    done
+    echo " $squawk"
+  fi
+}
+
 if [ $# -ne 2 ]; then
   # Print usage
   echo 'Error! wrong number of arguments'
@@ -20,6 +45,10 @@ do
       echo '.'
       echo "$RESULT"
       break
+  fi
+  if [ "$VERBOSITY" -ge 14 ] ; then
+    echo "## $2"
+    kubectl get pods --namespace $2
   fi
   countone=`expr $countone + 1`
   sleep 3

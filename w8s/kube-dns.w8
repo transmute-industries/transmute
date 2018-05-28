@@ -40,7 +40,8 @@ do
     squawk 3 "$RESULT"
     break
   fi
-  if [[ "$VERBOSITY" -ge "14" ]] ; then
+  if [ "$VERBOSITY" -ge 14 ] ; then
+    echo kube-system
     kubectl get pods --namespace kube-system
   fi
   countone=`expr $countone + 1`
