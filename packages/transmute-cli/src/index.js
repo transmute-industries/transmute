@@ -71,6 +71,14 @@ vorpal
   });
 
 vorpal
+  .command('version', 'display version information')
+  .action(async (args, callback) => {
+        const version = require('../package.json').version;
+        vorpal.logger.info('dilithium: ' + version);
+        callback();
+  });
+
+vorpal
   .delimiter('T$')
   .parse(process.argv)
   .show();
