@@ -15,7 +15,7 @@ countone=1
 while [ $countone -lt 151 ]
 do
   printf '.'
-  RESULT=$(kubectl get --namespace=$2 pods/$1 -o json | jq -r \
+  RESULT=$(kubectl get --namespace=$2 pods/$1 -o json 2>/dev/null | jq -r \
    '. | select(.status.phase = "Running" or ([ .status.conditions[] | select(.type == "Ready" and .state == true) ] | length ) == 1 ) | .metadata.namespace + "/" + .metadata.name' )
   if [ "$RESULT" ]; then
       echo '.'

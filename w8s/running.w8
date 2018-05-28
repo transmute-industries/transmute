@@ -15,7 +15,7 @@ countone=1
 while [ $countone -lt 151 ]
 do
   printf '.'
-  RESULT=$(kubectl get --namespace=$2 -o template pod --template={{.status.phase}} $1 | grep Running)
+  RESULT=$(kubectl get --namespace=$2 -o template pod --template={{.status.phase}} $1 2>/dev/null | grep Running)
   if [ "$RESULT" ]; then
       echo '.'
       echo "$RESULT"
