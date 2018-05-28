@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo -n "wait on the K8S cluster to become available"
+printf "wait on the K8S cluster to become available"
 sleep 3
 
 # while loop
@@ -8,7 +8,7 @@ countone=1
 # timeout for 15 minutes
 while [ $countone -lt 151 ]
 do
-   echo -n '.'
+   printf '.'
    kubectl get po --namespace=kube-system &> /dev/null
    if [ $? -ne 1 ]; then
       sleep 6

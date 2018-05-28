@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo -n "wait on Kube-DNS to become available"
+printf "wait on Kube-DNS to become available"
 sleep 1
 
 # while loop
@@ -8,7 +8,7 @@ countone=1
 # timeout for 15 minutes
 while [ $countone -lt 151 ]
 do
-  echo -n '.'
+  printf '.'
   RESULT=$(kubectl get po --namespace kube-system 2>/dev/null |grep kube-dns|grep Running)
   if [ "$RESULT" ]; then
       sleep 3
