@@ -32,8 +32,30 @@ if [ $# -ne 2 ]; then
   exit 1
 fi
 
+qrunning () {
+  countone=1
+  squawk 15 "qrunning () while loop"
+  #timeout for 15 minutes"
+  while [ $countone -lt 151 ]
+  do
+    printf '.'
+    RESULT=$(kubectl get --namespace=$2 -o template pod --template={{.status.phase}} $1 2>/dev/null | grep Running)
+    if [ "$RESULT" ]; then
+        echo '.'
+        squawk 1 "$1 is now running"
+        break
+    fi
+    if [ "$VERBOSITY" -ge 14 ] ; then
+      squawk 3 "$2"
+      kubectl get pods --namespace $2
+    fi
+    countone=`expr $countone + 1`
+    sleep 3
+  done
+}
+
 qready () {
-  # while loop
+  squawk 15 "qready () while loop"
   countone=1
   # timeout for 15 minutes
   while [ $countone -lt 151 ]
@@ -43,7 +65,6 @@ qready () {
      '. | select(.status.phase = "Running" or ([ .status.conditions[] | select(.type == "Ready" and .state == true) ] | length ) == 1 ) | .metadata.namespace + "/" + .metadata.name' )
     if [ "$RESULT" ]; then
         echo '.'
-        squawk 9 "$RESULT"
         squawk 1 "$1 is now ready"
         break
     fi
@@ -58,7 +79,8 @@ main () {
   KUBE_SELECTED_PODS=$(kubectl get pods --namespace=$2 2>/dev/null |awk '{print $1}'|grep $1|tr '\n' ' ')
 
   for this_pod in $KUBE_SELECTED_PODS; do
-    squawk 9 "testing $this_pod  in the namespace $2 for readiness"
+    squawk 9 "testing $this_pod  in the namespace $2 for running and readiness"
+    qrunning $this_pod $2
     qready $this_pod $2
   done
 }
