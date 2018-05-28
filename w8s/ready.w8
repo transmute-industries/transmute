@@ -34,7 +34,6 @@ fi
 
 qrunning () {
   countone=1
-  squawk 15 "qrunning () while loop"
   #timeout for 15 minutes"
   while [ $countone -lt 151 ]
   do
@@ -55,7 +54,6 @@ qrunning () {
 }
 
 qready () {
-  squawk 15 "qready () while loop"
   countone=1
   # timeout for 15 minutes
   while [ $countone -lt 151 ]
@@ -75,9 +73,8 @@ qready () {
 }
 
 main () {
-  squawk 15 'ready.w8'
+  squawk 9 'Ready.w8'
   KUBE_SELECTED_PODS=$(kubectl get pods --namespace=$2 2>/dev/null |awk '{print $1}'|grep $1|tr '\n' ' ')
-
   for this_pod in $KUBE_SELECTED_PODS; do
     squawk 9 "testing $this_pod  in the namespace $2 for running and readiness"
     qrunning $this_pod $2
