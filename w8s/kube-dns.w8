@@ -1,4 +1,28 @@
 #!/bin/sh
+: ${VERBOSITY:=0}
+
+squawk () {
+  # This function simplifies error reporting and verbosity
+  # call it by preceding your message with a verbosity level
+  # e.g. `squawk 3 "This is a squawk"`
+  # if the current verbosity level is greater than or equal to
+  # the number given then this function will echo out your message
+  # and pad it with # to let you now how verbose that message was
+  squawk_lvl=$1
+  shift
+  squawk=$1
+  shift
+  squawk_opt=$@
+
+  if [[ "$VERBOSITY" -ge "$squawk_lvl" ]] ; then
+  count_squawk=0
+    while [[ "$count_squawk" -lt "$squawk_lvl" ]]; do
+      printf "#"
+      count_squawk=`expr $count_squawk + 1`
+    done
+    echo " $squawk"
+  fi
+}
 
 printf "wait on Kube-DNS to become available"
 sleep 1
@@ -11,13 +35,17 @@ do
   printf '.'
   RESULT=$(kubectl get po --namespace kube-system 2>/dev/null |grep kube-dns|grep Running)
   if [ "$RESULT" ]; then
-      sleep 3
-      echo '.'
-      echo "$RESULT"
-      break
+    sleep 3
+    echo '.'
+    squawk 3 "$RESULT"
+    break
+  fi
+  if [[ "$VERBOSITY" -ge "14" ]] ; then
+    kubectl get pods --namespace kube-system
   fi
   countone=`expr $countone + 1`
   sleep 3
+
 done
 
 echo "Kube-DNS is now up and running"
