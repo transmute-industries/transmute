@@ -1,4 +1,29 @@
-#!/bin/sh
+#!/bin/bash
+: ${VERBOSITY:=0}
+
+squawk () {
+  # This function simplifies error reporting and verbosity
+  # call it by preceding your message with a verbosity level
+  # e.g. `squawk 3 "This is a squawk"`
+  # if the current verbosity level is greater than or equal to
+  # the number given then this function will echo out your message
+  # and pad it with # to let you now how verbose that message was
+  squawk_lvl=$1
+  shift
+  squawk=$1
+  shift
+  squawk_opt=$@
+
+  if [[ "$VERBOSITY" -ge "$squawk_lvl" ]] ; then
+  count_squawk=0
+    while [[ "$count_squawk" -lt "$squawk_lvl" ]]; do
+      printf "#"
+      count_squawk=`expr $count_squawk + 1`
+    done
+    echo " $squawk"
+  fi
+}
+
 if [ $# -ne 2 ]; then
   # Print usage
   echo 'Error! wrong number of arguments'
@@ -7,23 +32,35 @@ if [ $# -ne 2 ]; then
   exit 1
 fi
 
-printf "wait on $1 to become available"
+qready () {
+  # while loop
+  countone=1
+  # timeout for 15 minutes
+  while [ $countone -lt 151 ]
+  do
+    printf '.'
+    RESULT=$(kubectl get --namespace=$2 pods/$1 -o json 2>/dev/null | jq -r \
+     '. | select(.status.phase = "Running" or ([ .status.conditions[] | select(.type == "Ready" and .state == true) ] | length ) == 1 ) | .metadata.namespace + "/" + .metadata.name' )
+    if [ "$RESULT" ]; then
+        echo '.'
+        squawk 9 "$RESULT"
+        squawk 1 "$1 is now ready"
+        break
+    fi
+    countone=`expr $countone + 1`
+    sleep 3
+  done
 
-# while loop
-countone=1
-# timeout for 15 minutes
-while [ $countone -lt 151 ]
-do
-  printf '.'
-  RESULT=$(kubectl get --namespace=$2 pods/$1 -o json 2>/dev/null | jq -r \
-   '. | select(.status.phase = "Running" or ([ .status.conditions[] | select(.type == "Ready" and .state == true) ] | length ) == 1 ) | .metadata.namespace + "/" + .metadata.name' )
-  if [ "$RESULT" ]; then
-      echo '.'
-      echo "$RESULT"
-      break
-  fi
-  countone=`expr $countone + 1`
-  sleep 3
-done
+}
 
-echo "$1 is now ready"
+main () {
+  squawk 15 'ready.w8'
+  KUBE_SELECTED_PODS=$(kubectl get pods --namespace=$2 2>/dev/null |awk '{print $1}'|grep $1|tr '\n' ' ')
+
+  for this_pod in $KUBE_SELECTED_PODS; do
+    squawk 9 "testing $this_pod  in the namespace $2 for readiness"
+    qready $this_pod $2
+  done
+}
+
+main $@

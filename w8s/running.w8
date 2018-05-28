@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 : ${VERBOSITY:=0}
 
 squawk () {
@@ -34,24 +34,36 @@ fi
 
 printf "wait on $1 to become available"
 
-# while loop
-countone=1
-# timeout for 15 minutes
-while [ $countone -lt 151 ]
-do
-  printf '.'
-  RESULT=$(kubectl get --namespace=$2 -o template pod --template={{.status.phase}} $1 2>/dev/null | grep Running)
-  if [ "$RESULT" ]; then
-      echo '.'
-      echo "$RESULT"
-      break
-  fi
-  if [ "$VERBOSITY" -ge 14 ] ; then
-    echo "## $2"
-    kubectl get pods --namespace $2
-  fi
-  countone=`expr $countone + 1`
-  sleep 3
-done
+qrunning () {
+  countone=1
+  squawk 5 "qrunning () while loop"
+  squawk 9 " timeout for 15 minutes"
+  while [ $countone -lt 151 ]
+  do
+    printf '.'
+    RESULT=$(kubectl get --namespace=$2 -o template pod --template={{.status.phase}} $1 2>/dev/null | grep Running)
+    if [ "$RESULT" ]; then
+        echo '.'
+        squawk 9 "$RESULT"
+        squawk 1 "$1 is now ready"
+        break
+    fi
+    if [ "$VERBOSITY" -ge 14 ] ; then
+      squawk 3 "$2"
+      kubectl get pods --namespace $2
+    fi
+    countone=`expr $countone + 1`
+    sleep 3
+  done
 
-echo "$1 is now up and running"
+}
+
+main () {
+  KUBE_SELECTED_PODS=$(kubectl get pods --namespace=$2 2>/dev/null |awk '{print $1}'|grep $1|tr '\n' ' ')
+
+  for this_pod in $KUBE_SELECTED_PODS; do
+    qrunning $this_pod $2
+  done
+}
+
+main $@
