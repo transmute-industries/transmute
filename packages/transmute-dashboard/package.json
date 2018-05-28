@@ -75,10 +75,12 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js && cp ./build/index.html ./build/404.html",
     "test": "node scripts/test.js --env=jsdom",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "build": "node scripts/build.js && cp ./build/index.html ./build/404.html",
+    "build:app": "npm run build && cp -r build/ ../../transmute-industries.github.io/ && cd ../../transmute-industries.github.io/ && git add -A && git commit -m",
+    "deploy:app": "cd ../../transmute-industries.github.io/ && git push origin",
+    "build:docs": "npm run build",
+    "deploy:docs": "gh-pages -d build",
     "truffle:migrate": "rm -rf ./build/contracts/ && rm -rf ./src/contracts/ && truffle migrate && cp -r ./build/contracts/ ./src/contracts"
   },
   "devDependencies": {

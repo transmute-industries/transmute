@@ -2,11 +2,12 @@ import React from 'react';
 import _ from 'lodash';
 import { withAuth } from '@okta/okta-react';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
+import IconButton from 'material-ui/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Card, { CardHeader, CardActions, CardContent } from 'material-ui/Card';
 import Grid from 'material-ui/Grid';
 import { FormControl } from 'material-ui/Form';
 import Input, { InputLabel } from 'material-ui/Input';
@@ -20,7 +21,10 @@ const styles = theme => ({
     paddingTop: 20
   }),
   formControl: {
-    minWidth: '600px'
+    minWidth: '100%'
+  },
+  gridPadding: {
+    paddingRight: 20
   }
 });
 
@@ -29,24 +33,40 @@ class GroupCard extends React.Component {
     super(props, context);
     this.state = {
       selectedUser: null,
+      name: null,
+      description: null,
       error: null
     };
+    this.handleChange = this.handleChange.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleSave = this.handleSave.bind(this);
     this.handleAddMember = this.handleAddMember.bind(this);
     this.handleRemoveMember = this.handleRemoveMember.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.users) {
+    if (nextProps.users && nextProps.group) {
       this.setState({
         selectedUser: nextProps.users[0],
+        name: nextProps.group.name,
+        description: nextProps.group.description,
         error: null
       });
     }
   }
 
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value
+    });
+  };
+
   handleDelete = () => {
     this.props.onDelete();
+  };
+
+  handleSave = () => {
+    this.props.onSave({ name: this.state.name, description: this.state.description });
   };
 
   handleAddMember = () => {
@@ -65,76 +85,115 @@ class GroupCard extends React.Component {
 
   render() {
     const { classes, users, group } = this.props;
-    const { selectedUser } = this.state;
+    const { selectedUser, name, description } = this.state;
 
     if (selectedUser == null || group.members == null) return null;
     const memberIds = group.members.map(member => member.id);
 
     return (
-      <Card>
-        <CardContent className={classes.root}>
-          <Typography gutterBottom variant="headline" component="h2">
-            Edit Group
-          </Typography>
+      <Grid container>
+        <Grid item xs={6} md={4} lg={3} className={classes.gridPadding}>
+          <Card>
+            <CardHeader
+              action={
+                <IconButton
+                  onClick={this.handleDelete}>
+                  <DeleteIcon />
+                </IconButton>
+              }
+              title="Edit Group"
+            />
+            <CardContent className={classes.root}>
 
-          <Grid item xs={5} md={12}>
-            <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="uncontrolled-native">
-                Add / Remove Member
-                </InputLabel>
-              <Select
-                value={selectedUser.id}
-                native
-                onChange={this.selectUser}
-                input={<Input id="uncontrolled-native" />}
+              <FormControl className={classes.formControl}>
+              <InputLabel>Name</InputLabel>
+              <Input
+                className={classNames(classes.textInput)}
+                id="name"
+                type="text"
+                value={name}
+                onChange={this.handleChange('name')}
+              />
+              </FormControl>
+
+              <FormControl className={classes.formControl}>
+                <InputLabel>Description</InputLabel>
+                <Input
+                  className={classNames(classes.textInput)}
+                  id="description"
+                  type="text"
+                  value={description}
+                  onChange={this.handleChange('description')}
+                />
+              </FormControl>
+
+            </CardContent>
+            <CardActions>
+              <Button
+                size="small"
+                color="primary"
+                onClick={this.handleSave}
               >
-                {users.map(user => (
-                  <option
-                    key={user.id}
-                    value={user.id}
-                    style={{
-                      fontWeight:
-                        selectedUser.id !== user.id
-                          ? theme.typography.fontWeightRegular
-                          : theme.typography.fontWeightMedium
-                    }}
-                  >
-                    {`${user.firstName} ${user.lastName}`}
-                  </option>
-                ))}
-              </Select>
+                Save
+            </Button>
+            </CardActions>
+          </Card>
+        </Grid>
+        <Grid item xs={6} md={4} lg={3} className={classes.gridPadding}>
+          <Card>
+            <CardContent className={classes.root}>
+              <Typography gutterBottom variant="headline" component="h2">
+                Add / Remove Members
+              </Typography>
+
+              <FormControl className={classes.formControl}>
+                <Select
+                  value={selectedUser.id}
+                  native
+                  onChange={this.selectUser}
+                  input={<Input id="uncontrolled-native" />}
+                >
+                  {users.map(user => (
+                    <option
+                      key={user.id}
+                      value={user.id}
+                      style={{
+                        fontWeight:
+                          selectedUser.id !== user.id
+                            ? theme.typography.fontWeightRegular
+                            : theme.typography.fontWeightMedium
+                      }}
+                    >
+                      {`${user.firstName} ${user.lastName}`}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
+
+            </CardContent>
+            <CardActions>
               {memberIds.indexOf(selectedUser.id) !== -1 &&
                 <Button
-                  variant="raised"
-                  color="secondary"
+                  size="small"
+                  color="primary"
                   onClick={this.handleRemoveMember}
                 >
                   Remove Member
               </Button>}
-              {memberIds.indexOf(selectedUser.id) == -1 &&
+              {memberIds.indexOf(selectedUser.id) === -1 &&
                 <Button
-                  variant="raised"
-                  color="secondary"
+                  size="small"
+                  color="primary"
                   onClick={this.handleAddMember}
                 >
                   Add Member
               </Button>}
-            </FormControl>
-          </Grid>
-
-        </CardContent>
-        <CardActions>
-          <Grid item md={12}>
-            <Button
-              variant="raised"
-              color="secondary"
-              onClick={this.handleDelete}
-            >
-              Delete
-            </Button>
-          </Grid>
-        </CardActions>
-      </Card>
+            </CardActions>
+          </Card>
+        </Grid>
+        <Grid item md={4} lg={3}>
+        </Grid>
+      </Grid>
     );
   }
 }

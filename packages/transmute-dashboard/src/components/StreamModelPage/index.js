@@ -2,14 +2,10 @@ import React, { Component } from 'react';
 import { withAuth } from '@okta/okta-react';
 
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Link } from 'react-router-dom';
-
-import Button from 'material-ui/Button';
 
 import StreamModelTable from './StreamModelTable';
 
-import { reducer as EventsReducer } from '../../store/documents/reducer';
+import EventsReducer from '../../store/documents/reducer';
 import { filters } from '../../filters/Events';
 
 import { StreamModel, EventStore } from 'transmute-framework';

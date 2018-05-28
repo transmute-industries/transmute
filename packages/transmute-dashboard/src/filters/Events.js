@@ -73,5 +73,7 @@ export const filters = (filterType) => {
       return userFilter
     case 'none':
       return noFilter
+    default:
+      return noFilter
   }
 };
