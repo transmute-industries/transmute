@@ -74,7 +74,7 @@ vorpal
   .command('version', 'display version information')
   .action(async (args, callback) => {
         const version = require('../package.json').version;
-        vorpal.logger.info('dilithium: ' + version);
+        vorpal.logger.info('transmute: ' + version);
         callback();
   });
 
