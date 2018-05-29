@@ -17,4 +17,9 @@ This is for contributors only.
 ```
 npm run build
 npm run deploy
+
+cd ./build
+git add -A 
+git commit -m `cat ../package.json | jq -r '.version'` 
+git push origin master
 ```
