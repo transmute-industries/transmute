@@ -27,7 +27,7 @@ const mixpanel = process.env.MIXPANEL_PROJECT_ID
 
 /** transmute k8s  init initializes a cluster with the transmute framework
   * @name transmute k8s init <clustername>
-  * @example transmute k8s init myClusterName --gensshkeys
+  * @example transmute k8s init myClusterName
   * */
 vorpal
   .command('k8s init <clustername>')
