@@ -22,7 +22,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-TransmuteCLI.html">TransmuteCLI</a><ul class='methods'><li data-type='method'><a href="module-TransmuteCLI.html#~login">login</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#login">login</a></li><li><a href="global.html#okta_session_object">okta_session_object</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-TransmuteCLI.html">TransmuteCLI</a></li></ul><h3>Global</h3><ul><li><a href="global.html#login">login</a></li><li><a href="global.html#okta_session_object">okta_session_object</a></li></ul>
 </nav>
 
 <div id="main">
@@ -53,9 +53,10 @@ vorpal.use(vorpalLog);
 const { writeFile } = require('./utils');
 
 // Commands
-const login = require('./commands/login');
-const aks = require('./commands/aks');
-const minikube = require('./commands/minikube');
+const ls = require('./commands/ls');
+const init = require('./commands/init');
+const runtest = require('./commands/runtest');
+const provision = require('./commands/provision');
 
 // Mixpanel
 const Mixpanel = require('mixpanel');
@@ -63,135 +64,69 @@ const mixpanel = process.env.MIXPANEL_PROJECT_ID
   ? Mixpanel.init(process.env.MIXPANEL_PROJECT_ID)
   : null;
 
-/** The login command is used to save an okta JWT for api access to ~/.transmute/cli-secrets/session.json
-    @name login
-    @function
-*/
+/** transmute k8s  init initializes a cluster with the transmute framework
+  * @name transmute k8s init &lt;clustername>
+  * @example transmute k8s init myClusterName --gensshkeys
+  * */
 vorpal
-  .command('login')
-  .description(
-    'Login with okta, and save session to ~/.transmute/cli-secrets/session.json'
-  )
-  .alias('l')
-  .action(async (args, callback) => {
-    const response = await login.default.withOkta();
-    console.log('\n', response, '\n');
+  .command('k8s init &lt;clustername>')
+  .description('Initialize k8s cluster')
+  .action(function(args, callback) {
+    init.k8s( args.clustername )
     callback();
   });
 
+/** transmute k8s provision-azure uses azure to provision a k8s cluster
+  * @name transmute k8s provision-azure &lt;clustername>
+  * @example transmute k8s provision-azure myClusterName --gensshkeys
+  * */
 vorpal
-  .command('k8s provision &lt;clusterName>')
-  .description('Provision k8s cluster')
-  .option('--gke', 'Use gcloud GKE')
-  .option('--nodes &lt;nodes>', 'How many nodes to create the cluster with')
-  .option(
-    '--clustername &lt;clustername>',
-    'The cluster name to create the cluster with'
-  )
-  .option('--group &lt;group>', 'The group to create the cluster with')
+  .command('k8s provision-azure &lt;clustername> &lt;group>')
+  .description('Provision k8s cluster in Azure')
   .option('--gensshkeys', 'Generate SSH keys')
-  .option('--aks', 'Use Azure AKS')
-  .option('--aws', 'Use Amazon AWS')
-  .option('--minikube', 'Use minikube')
+  .option('--nodes &lt;nodes>', 'How many nodes to create the cluster with')
   .action(function(args, callback) {
-    if (args.options.gke) {
-      // gke.provision()
-      this.log('has not been implemented yet');
-    } else if (args.options.aks) {
-      var myResourceGroup = args.options.group;
-      var myAKSCluster = args.options.clustername;
-      var myNodeCount = args.options.nodes;
-      if (args.options.gensshkeys) {
-        var GenSSHKeys = true;
-      } else {
-        var GenSSHKeys = false;
+      let myNodeCount = 3;
+      if (args.options.nodes) {
+        myNodeCount = args.options.nodes;
       }
-      aks.register;
-      aks.provision(myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys);
-    } else if (args.options.aws) {
-      //aws.provision()
-      this.log('has not been implemented yet');
-    } else if (args.options.minikube) {
-      minikube.provision();
-    }
+      let GenSSHKeys = false;
+      if (args.options.gensshkeys) {
+        GenSSHKeys = true;
+      }
+      provision.aks( args.group, args.clustername, myNodeCount, GenSSHKeys );
     callback();
   });
 
+/** transmute k8s provision-minikube uses minikube to provision a k8s cluster
+  * @name transmute k8s provision-minikube &lt;clustername>
+  * @example transmute k8s provision-minikube myClusterName
+  * @param {string} clustername
+  * */
 vorpal
-  .command('k8s ls &lt;clusterName>')
-  .description('List k8s clusters')
-  .option('--gke', 'Use gcloud GKE')
-  .option('--aks', 'Use Azure AKS')
-  .option('--aws', 'Use Amazon AWS')
-  .option('--minikube', 'Use minikube')
+  .command('k8s provision-minikube &lt;clustername>')
+  .description('Provision k8s cluster')
+  .option('--nodes &lt;nodes>', 'How many nodes to create the cluster with')
+  .option('--vmdriver &lt;vmdriver>', 'The cluster name to create the cluster with')
   .action(function(args, callback) {
-    if (args.options.gke) {
-      // gkels()
-      this.log('has not been implemented yet');
-    } else if (args.options.aks) {
-      aks.ls();
-    } else if (args.options.aws) {
-      //awsls()
-      this.log('has not been implemented yet');
-    } else if (args.options.minikube) {
-      minikube.ls();
-    }
+      if (args.options.vmdriver) {
+        provision.minikube( args.clustername, args.options.vmdriver );
+      } else {
+        provision.minikube( args.clustername );
+      }
     callback();
   });
 
+/** transmute version prints out version info
+  * @name transmute version
+  * @example transmute version
+  * */
 vorpal
-  .command('dapp create')
-  .description('create a new distributed app')
-  .alias('d')
-  .action(function(args, callback) {
-    this.log('dapp has not been implemented yet');
-    callback();
-  });
-
-vorpal
-  .command('generate gpgkey', 'Assists in the generation of an GPG key')
-  .alias('g')
-  .action(function(args, callback) {
-    this.log('generate gpgkey has not been implemented yet');
-    callback();
-  });
-
-vorpal
-  .command('generate sshkey', 'Assists in the generation of an SSH key')
-  .action(function(args, callback) {
-    this.log('generate sshkey has not been implemented yet');
-    callback();
-  });
-
-vorpal
-  .command('group add &lt;member>', 'Adds member to group')
-  .action(function(args, callback) {
-    this.log('group add &lt;member> has not been implemented yet');
-    callback();
-  });
-
-vorpal
-  .command('group delete &lt;member>', 'Deletes member to group')
-  .action(function(args, callback) {
-    this.log('group delete &lt;member> has not been implemented yet');
-    callback();
-  });
-
-vorpal
-  .command('push', 'Pushes objects into the cloud')
-  .alias('p')
-  .action(function(args, callback) {
-    this.log('push has not been implemented yet');
-    callback();
-  });
-
-vorpal
-  .command('tunnel &lt;clusterName>')
-  .option('-p, --port', 'Tunnel port')
-  .option('-s, --svc', 'Tunnel service')
-  .action(function(args, callback) {
-    this.log('push has not been implemented yet');
-    callback();
+  .command('version', 'display version information')
+  .action(async (args, callback) => {
+        const version = require('../package.json').version;
+        vorpal.logger.info('transmute: ' + version);
+        callback();
   });
 
 vorpal
@@ -210,7 +145,7 @@ vorpal
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu May 24 2018 10:49:59 GMT-0500 (CDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon May 28 2018 22:13:50 GMT-0500 (CDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

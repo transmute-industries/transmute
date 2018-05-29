@@ -14,3 +14,6 @@ test: build
 	transmute test
 	transmute k8s provision --minikube
 	transmute k8s init --minikube
+
+docs:
+	npm run docs
