@@ -1,6 +1,6 @@
 {
   "name": "transmute-cli",
-  "version": "0.2.0-pre-release.0",
+  "version": "0.2.0-pre-release.1",
   "description": "transmute cli",
   "scripts": {
     "build": "babel src -d lib",
@@ -13,6 +13,9 @@
   ],
   "author": "Transmute",
   "license": "ISC",
+  "files": [
+    "lib"
+  ],
   "bin": {
     "transmute": "./lib/index.js"
   },
