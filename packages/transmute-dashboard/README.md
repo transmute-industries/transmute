@@ -9,3 +9,12 @@ lerna bootstrap
 npm run truffle:migrate
 npm run start
 ```
+
+### Deployment
+
+This is for contributors only.
+
+```
+npm run build
+npm run deploy
+```
