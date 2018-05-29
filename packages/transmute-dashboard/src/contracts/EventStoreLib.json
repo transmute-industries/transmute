@@ -602,7 +602,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 299,
+                        "referencedDeclaration": 356,
                         "src": "614:3:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -2124,7 +2124,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 299,
+                        "referencedDeclaration": 356,
                         "src": "614:3:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -3542,6 +3542,108 @@
       "address": "0xd83fc26f607efb9f80798c05dd7f6ab864159270",
       "transactionHash": "0x521c0e5730f7878ebdca17073c7fd0147f2f8188668e5a4ff02fcf9e74825c53"
     },
+    "1526399908826": {
+      "events": {
+        "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "index",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "sender",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "key",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "value",
+              "type": "bytes32"
+            }
+          ],
+          "name": "TransmuteEvent",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xe3d29e5ee3fc513ee91fcab441ca9f21d08ac7aa",
+      "transactionHash": "0x903fbe92327a9ef31110b17e7dcf710d9a2b0f24e9607de848c008f733e26ba6"
+    },
+    "1526400401685": {
+      "events": {
+        "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "index",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "sender",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "key",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "value",
+              "type": "bytes32"
+            }
+          ],
+          "name": "TransmuteEvent",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x709b3e2a301284df77be83524cb826d6efb27635",
+      "transactionHash": "0x9a37bdd24f47ce1932f1c34edad9e968d0fd1081bbc9bf23d26f333af04cb00d"
+    },
+    "1526402770529": {
+      "events": {
+        "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "index",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "sender",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "key",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "value",
+              "type": "bytes32"
+            }
+          ],
+          "name": "TransmuteEvent",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x742dad029dd157e70ad2a2b2f15f59c443b0bbfe",
+      "transactionHash": "0x903fbe92327a9ef31110b17e7dcf710d9a2b0f24e9607de848c008f733e26ba6"
+    },
     "1525800439053": {
       "events": {
         "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
@@ -3573,10 +3675,10 @@
         }
       },
       "links": {},
-      "address": "0x05f9fe88b9432091c69f6a5efbb49a128def95b3",
-      "transactionHash": "0x903fbe92327a9ef31110b17e7dcf710d9a2b0f24e9607de848c008f733e26ba6"
+      "address": "0x1e0bcb2926b85513a10aecbeeb2e58926d35c4c9",
+      "transactionHash": "0x6ecaca50761b34a9ceb635d8c63a6251f8bc820e0bddcec53deefc306efffb7c"
     }
   },
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-05-08T21:20:42.291Z"
+  "updatedAt": "2018-05-29T21:58:47.306Z"
 }
