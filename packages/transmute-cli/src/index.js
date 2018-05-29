@@ -25,11 +25,10 @@ const mixpanel = process.env.MIXPANEL_PROJECT_ID
   ? Mixpanel.init(process.env.MIXPANEL_PROJECT_ID)
   : null;
 
-/** The login command is used to save an okta JWT for api access to ~/.transmute/cli-secrets/session.json
-    @name login
-    @function
-*/
-
+/** transmute k8s  init initializes a cluster with the transmute framework
+  * @name transmute k8s init <clustername>
+  * @example transmute k8s init myClusterName
+  * */
 vorpal
   .command('k8s init <clustername>')
   .description('Initialize k8s cluster')
@@ -38,6 +37,10 @@ vorpal
     callback();
   });
 
+/** transmute k8s provision-azure uses azure to provision a k8s cluster
+  * @name transmute k8s provision-azure <clustername>
+  * @example transmute k8s provision-azure myClusterName --gensshkeys
+  * */
 vorpal
   .command('k8s provision-azure <clustername> <group>')
   .description('Provision k8s cluster in Azure')
@@ -56,6 +59,11 @@ vorpal
     callback();
   });
 
+/** transmute k8s provision-minikube uses minikube to provision a k8s cluster
+  * @name transmute k8s provision-minikube <clustername>
+  * @example transmute k8s provision-minikube myClusterName
+  * @param {string} clustername
+  * */
 vorpal
   .command('k8s provision-minikube <clustername>')
   .description('Provision k8s cluster')
@@ -70,6 +78,10 @@ vorpal
     callback();
   });
 
+/** transmute version prints out version info
+  * @name transmute version
+  * @example transmute version
+  * */
 vorpal
   .command('version', 'display version information')
   .action(async (args, callback) => {
