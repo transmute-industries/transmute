@@ -44,7 +44,7 @@ qrunning () {
         squawk 1 "$1 is now running"
         break
     fi
-    if [ "$VERBOSITY" -ge 104 ] ; then
+    if [ "$VERBOSITY" -ge 14 ] ; then
       squawk 3 "$2"
       kubectl get pods --namespace $2
     fi
@@ -66,7 +66,7 @@ qready () {
         squawk 1 "$1 is now ready"
         break
     fi
-    if [ "$VERBOSITY" -ge 104 ] ; then
+    if [ "$VERBOSITY" -ge 14 ] ; then
       squawk 3 "$2"
       kubectl get pods --namespace $2
     fi
