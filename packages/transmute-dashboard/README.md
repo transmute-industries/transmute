@@ -14,9 +14,9 @@ npm run start
 
 This is for contributors only.
 
-`git submodule add git@github.com:transmute-industries/transmute-industries.github.io.git production`
+`git submodule add https://github.com/transmute-industries/dashboard.transmute.network.git production`
 
 ```
-npm run build:app
-npm run deploy:app
+npm run build
+npm run deploy
 ```
