@@ -6,5 +6,5 @@ A command line tool for managing transmute services in minikube, as soon azure, 
 npm i 
 npm run build
 npm run transmute
-npm run transmute -- login
+npm run transmute help
 ```
