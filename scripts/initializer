@@ -95,7 +95,7 @@ kubectl get pods
 
 squawk 5 "Install helm"
 helm init --service-account tiller
-$TRANSMUTE_REPO/w8s/tiller.w8
+$TRANSMUTE_REPO/w8s/ready.w8 tiller-deploy kube-system
 
 sleep 5
 kubectl get pods -n kube-system
