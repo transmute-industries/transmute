@@ -14,12 +14,9 @@ npm run start
 
 This is for contributors only.
 
-```
-npm run build
-npm run deploy
+`git submodule add git@github.com:transmute-industries/transmute-industries.github.io.git production`
 
-cd ./build
-git add -A 
-git commit -m `cat ../package.json | jq -r '.version'` 
-git push origin master
+```
+npm run build:app
+npm run deploy:app
 ```

@@ -7,13 +7,6 @@ import { store, history } from '../../store';
 import Routes from '../Routes';
 import theme from '../../theme';
 
-import { toast, ToastContainer } from 'react-toastify';
-
-setTimeout(() => {
-  toast.error(
-    'We are migrating... some things will be broken... come back soon!'
-  );
-}, 1 * 1000);
 
 class App extends Component {
   render() {
@@ -21,10 +14,7 @@ class App extends Component {
       <MuiThemeProvider theme={theme}>
         <Provider store={store}>
           <ConnectedRouter history={history}>
-            <div>
-              <ToastContainer />
-              <Routes />
-            </div>
+            <Routes />
           </ConnectedRouter>
         </Provider>
       </MuiThemeProvider>
