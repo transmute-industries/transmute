@@ -9,6 +9,8 @@ import {
   Auth
 } from '@okta/okta-react';
 
+
+
 import { history } from '../../store';
 import config from '../../okta_config';
 
@@ -24,6 +26,12 @@ import EventStoreFactoryPage from '../EventStoreFactoryPage';
 import EventStorePage from '../EventStorePage';
 import StreamModelPage from '../StreamModelPage';
 
+
+import {
+  ToastContainer
+  // toast
+} from 'react-toastify';
+
 const auth = new Auth({
   issuer: config.issuer,
   client_id: config.client_id,
@@ -31,10 +39,18 @@ const auth = new Auth({
   history
 });
 
+// Leave this migration warning for use when managing cluster failure.
+// setTimeout(() => {
+//   toast.error(
+//     'We are migrating... some things will be broken... come back soon!'
+//   );
+// }, 1 * 1000);
+
 class Routes extends React.Component {
   render() {
     return (
       <Security auth={auth}>
+        <ToastContainer />
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/demo" component={Demo} />

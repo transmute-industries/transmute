@@ -7,6 +7,7 @@ import { store, history } from '../../store';
 import Routes from '../Routes';
 import theme from '../../theme';
 
+
 class App extends Component {
   render() {
     return (
