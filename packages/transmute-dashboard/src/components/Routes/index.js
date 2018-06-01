@@ -24,6 +24,8 @@ import EventStoreFactoryPage from '../EventStoreFactoryPage';
 import EventStorePage from '../EventStorePage';
 import StreamModelPage from '../StreamModelPage';
 
+import { ToastContainer } from 'react-toastify';
+
 const auth = new Auth({
   issuer: config.issuer,
   client_id: config.client_id,
@@ -35,6 +37,7 @@ class Routes extends React.Component {
   render() {
     return (
       <Security auth={auth}>
+        <ToastContainer />
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/demo" component={Demo} />

@@ -2,6 +2,9 @@
 
 A command line tool for managing transmute services in minikube, as soon azure, and google. This will assist in the provisioning and initialization of the cluster, and other maintenance tasks.
 
+- [Docs](https://docs.transmute.industries/transmute-cli/1.0.0/)
+
+
 ```
 npm i
 npm run build
