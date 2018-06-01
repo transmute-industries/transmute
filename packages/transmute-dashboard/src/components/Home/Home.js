@@ -31,6 +31,12 @@ class Home extends Component {
     const { classes } = this.props;
     return (
       <AppBar>
+        <Typography gutterBottom variant="headline" component="h1">
+          This dashboard is for testing the integration of the transmute
+          framework and platform. It is currently pre-release/alpha level
+          software and subject to change / deletion.
+        </Typography>
+        <br />
         <Card className={classes.card}>
           <CardContent>
             <Typography gutterBottom variant="headline" component="h2">
