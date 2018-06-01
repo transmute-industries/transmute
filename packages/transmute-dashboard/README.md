@@ -20,3 +20,7 @@ This is for contributors only.
 npm run build
 npm run deploy
 ```
+
+If you have 2FA enabled: 
+
+https://help.github.com/articles/providing-your-2fa-authentication-code/#when-youll-be-asked-for-a-personal-access-token-as-a-password
