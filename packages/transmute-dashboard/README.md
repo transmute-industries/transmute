@@ -4,6 +4,9 @@ This react dashboard provides a reference implementation for the transmute frame
 
 It is WIP, and subject to change.
 
+Currently, we are establishing an idenitity flow that is compatible with PGP, Ethereum and centralized directories, such as Auth0 and Okta.
+
+
 ```
 lerna bootstrap
 npm run truffle:migrate
