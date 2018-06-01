@@ -2,7 +2,7 @@
 
 import { createMuiTheme } from 'material-ui/styles';
 import {
-  purple,
+  deepPurple,
   red
   // colors
 } from 'material-ui/colors';
@@ -12,11 +12,15 @@ import spacing from 'material-ui/styles/spacing';
 
 export default createMuiTheme({
   spacing: spacing,
+  
+  typography: {
+    fontFamily: 'Lato',
+  },
   palette: {
     primary: {
-      light: purple['700'],
-      main: purple['800'],
-      dark: purple['900'],
+      light: deepPurple['700'],
+      main: deepPurple['700'],
+      dark: deepPurple['900'],
       contrastText: '#fff'
     },
     secondary: {
