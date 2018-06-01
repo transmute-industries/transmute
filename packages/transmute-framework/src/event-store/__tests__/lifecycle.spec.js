@@ -3,6 +3,7 @@ const EventStore = require('../index.js');
 const transmuteConfig = require('../../transmute-config');
 const eventStoreArtifact = require('../../../build/contracts/EventStore.json');
 
+const pack = require('../../package.json')
 
 describe('transmute-framework', () => {
   describe('constructor', () => {
@@ -18,12 +19,13 @@ describe('transmute-framework', () => {
         ...transmuteConfig
       });
     });
+
     it('sets version', async () => {
       const eventStore = new EventStore({
         eventStoreArtifact,
         ...transmuteConfig
       });
-      expect(eventStore.version).toBe('0.2.0-alpha.5');
+      expect(eventStore.version).toBe(pack.version);
     });
   });
 
