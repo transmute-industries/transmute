@@ -6,7 +6,7 @@ matrix:
       env:
         - KUBE_VERSION=v1.9.4
         - DO_JWT_DL=n
-        - VERBOSITY=100
+        - VERBOSITY=10
         - CHANGE_MINIKUBE_NONE_USER=true
         - MINIKUBE_VERSION=v0.25.2
         - USE_VOX=n
