@@ -8,6 +8,8 @@ import user from './transmute/user';
 import directory from './transmute/directory';
 import groups from './transmute/groups';
 
+import { init } from './transmute/helpers';
+
 import { routerReducer, routerMiddleware } from 'react-router-redux';
 
 export const history = createHistory();
@@ -33,3 +35,6 @@ export const store = createStore(
     // other store enhancers if any
   )
 );
+
+// check transmute dependencies...
+init(store)
