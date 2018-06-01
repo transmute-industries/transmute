@@ -127,7 +127,7 @@ macnsenter () {
 macreadlink () {
 	squawk 3 'Installing coreutils'
 	#Installs 'greadlink' tool
-	brew upgrade coreutils
+	brew install coreutils
 }
 
 windowsminikube () {
