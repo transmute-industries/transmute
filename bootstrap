@@ -113,6 +113,11 @@ mackubectl () {
 	brew install kubectl
 }
 
+install_mac_virtualbox () {
+  squawk 3 'Installing virtualbox'
+	brew cask install virtualbox
+}
+
 machelm () {
 	squawk 3 'Installing helm'
 	brew install kubernetes-helm
@@ -483,6 +488,7 @@ macreqs () {
   set +e
   brew install gnupg < /dev/null
   set -e
+  install_mac_virtualbox
   mackubectl
   macminikube
   machelm
