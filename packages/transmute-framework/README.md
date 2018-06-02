@@ -1,6 +1,6 @@
 # Transmute Framework
 
-- [Docs](https://docs.transmute.industries/transmute-framework/0.2.0-alpha.5/)
+- [Docs](https://docs.transmute.industries/transmute-framework/0.2.1/)
 
 The transmute framework converts javascript objects to ipfs hashes, and stores them on ethereum smart contracts.
 

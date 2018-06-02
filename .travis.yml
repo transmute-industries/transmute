@@ -20,49 +20,49 @@ matrix:
         - HELM_VERSION=v2.8.2
         - NVM_DIR="$HOME/.nvm"
         - HELM_SHA256=0521956fa22be33189cc825bb27b3f4178c5ce9a448368b5c81508d446472715
-      language: bash
-    - os: linux
-      dist: trusty
-      sudo: required
-      env:
-        - KUBE_VERSION=v1.9.0
-        - DO_JWT_DL=n
-        - VERBOSITY=100
-        - CHANGE_MINIKUBE_NONE_USER=true
-        - MINIKUBE_VERSION=v0.25.2
-        - USE_VOX=n
-        - USE_WARN=n
-        - EDITOR=cat
-        - MINIKUBE_MEMORY=7777
-        - MINIKUBE_CPU=4
-        - MINIKUBE_DISK=50g
-        - MINIKUBE_DRIVER=none
-        - HELM_INSTALL_DIR=$HOME/.local/bin
-        - HELM_VERSION=v2.8.2
-        - NVM_DIR="$HOME/.nvm"
-        - HELM_SHA256=0521956fa22be33189cc825bb27b3f4178c5ce9a448368b5c81508d446472715
-      language: bash
-    - os: linux
-      dist: trusty
-      sudo: required
-      env:
-        - KUBE_VERSION=v1.8.0
-        - DO_JWT_DL=n
-        - VERBOSITY=100
-        - CHANGE_MINIKUBE_NONE_USER=true
-        - MINIKUBE_VERSION=v0.25.2
-        - USE_VOX=n
-        - USE_WARN=n
-        - EDITOR=cat
-        - MINIKUBE_MEMORY=7777
-        - MINIKUBE_CPU=4
-        - MINIKUBE_DISK=50g
-        - MINIKUBE_DRIVER=none
-        - HELM_INSTALL_DIR=$HOME/.local/bin
-        - HELM_VERSION=v2.8.2
-        - NVM_DIR="$HOME/.nvm"
-        - HELM_SHA256=0521956fa22be33189cc825bb27b3f4178c5ce9a448368b5c81508d446472715
-      language: bash
+    #   language: bash
+    # - os: linux
+    #   dist: trusty
+    #   sudo: required
+    #   env:
+    #     - KUBE_VERSION=v1.9.0
+    #     - DO_JWT_DL=n
+    #     - VERBOSITY=100
+    #     - CHANGE_MINIKUBE_NONE_USER=true
+    #     - MINIKUBE_VERSION=v0.25.2
+    #     - USE_VOX=n
+    #     - USE_WARN=n
+    #     - EDITOR=cat
+    #     - MINIKUBE_MEMORY=7777
+    #     - MINIKUBE_CPU=4
+    #     - MINIKUBE_DISK=50g
+    #     - MINIKUBE_DRIVER=none
+    #     - HELM_INSTALL_DIR=$HOME/.local/bin
+    #     - HELM_VERSION=v2.8.2
+    #     - NVM_DIR="$HOME/.nvm"
+    #     - HELM_SHA256=0521956fa22be33189cc825bb27b3f4178c5ce9a448368b5c81508d446472715
+    #   language: bash
+    # - os: linux
+    #   dist: trusty
+    #   sudo: required
+    #   env:
+    #     - KUBE_VERSION=v1.8.0
+    #     - DO_JWT_DL=n
+    #     - VERBOSITY=100
+    #     - CHANGE_MINIKUBE_NONE_USER=true
+    #     - MINIKUBE_VERSION=v0.25.2
+    #     - USE_VOX=n
+    #     - USE_WARN=n
+    #     - EDITOR=cat
+    #     - MINIKUBE_MEMORY=7777
+    #     - MINIKUBE_CPU=4
+    #     - MINIKUBE_DISK=50g
+    #     - MINIKUBE_DRIVER=none
+    #     - HELM_INSTALL_DIR=$HOME/.local/bin
+    #     - HELM_VERSION=v2.8.2
+    #     - NVM_DIR="$HOME/.nvm"
+    #     - HELM_SHA256=0521956fa22be33189cc825bb27b3f4178c5ce9a448368b5c81508d446472715
+    #   language: bash
 
 before_script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash .ci/linux_before_install.sh; fi
@@ -93,7 +93,7 @@ script:
 - bash -l -c "kubectl get svc --all-namespaces"
 - bash -l -c "kubectl describe pod $(kubectl get pod --all-namespaces|grep gateway-kong-migrations|awk '{print $2}')"
 - bash -l -c "kubectl describe pod $(kubectl get pod --all-namespaces|grep -v gateway-kong-migrations|grep gateway-kong|awk '{print $2}')"
-- bash -l -c "lerna run --scope transmute-framework truffle:test"
-- bash -l -c "lerna run --scope transmute-framework truffle:migrate"
-- bash -l -c "lerna run --scope transmute-framework test"
-- bash -l -c "lerna run --scope transmute-framework test:report"
+- bash -l -c "TRANSMUTE_ENV='minikube' lerna run --scope transmute-framework truffle:test"
+- bash -l -c "TRANSMUTE_ENV='minikube' lerna run --scope transmute-framework truffle:migrate"
+- bash -l -c "TRANSMUTE_ENV='minikube' lerna run --scope transmute-framework test"
+- bash -l -c "TRANSMUTE_ENV='minikube' lerna run --scope transmute-framework test:report"
