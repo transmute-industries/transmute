@@ -64,13 +64,13 @@ In order to connect to services running in your cluster, you will need to update
 Final steps - linking everything and migrating your smart contracts
 
 1. Navigate to the root directory
-2. Run `lerna bootstrap`
-3. Run `lerna run --scope transmute-framework truffle:test`
-4. Run `lerna run --scope transmute-framework truffle:migrate`
-5. Run `lerna run --scope ipfs-api build`
-6. Navigate to the `/packages/transmute-dashboard/` directory
-7. Run `npm run truffle:migrate`
-8. Run `npm run start`
+1. Run `lerna bootstrap`
+1. Run `lerna run --scope transmute-framework truffle:test`
+1. Run `lerna run --scope transmute-framework truffle:migrate`
+1. Run `lerna run --scope transmute-framework test`
+1. Navigate to the `/packages/transmute-dashboard/` directory
+1. Run `npm run truffle:migrate`
+1. Run `npm run start`
 
 That's it! [Login to the app](http://localhost:3000) and click on the dashboard button in the side menu to begin recording events!
 
