@@ -8,7 +8,7 @@ import { withStyles } from 'material-ui/styles';
 
 import { connect } from 'react-redux';
 
-import logo from '../../../images/transmute.logo.png';
+import logo from '../../../images/logo-icon-purple.svg';
 
 import * as actions from '../../../store/transmute/user/actions';
 const openpgp = require('openpgp');
