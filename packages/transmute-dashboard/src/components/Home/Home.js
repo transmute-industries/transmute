@@ -32,14 +32,33 @@ class Home extends Component {
     return (
       <AppBar>
         <Typography gutterBottom variant="headline" component="h1">
-          The Transmute Dashboard is for testing the integration of the Transmute
-          Framework and the Transmute Platform.
+          The Transmute Dashboard is for testing the integration of the
+          Transmute Framework and the Transmute Platform.
         </Typography>
 
         <Typography gutterBottom component="p">
           It is currently pre-release, alpha level software and subject to
           change or deletion.
         </Typography>
+
+        <br />
+        <div>
+          <a
+            href="https://app.termly.io/document/privacy-policy/303f0500-cbf0-4dd4-a864-31c548aa635f"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Privacy
+          </a>{' '}
+          |{' '}
+          <a
+            href="https://app.termly.io/document/terms-of-use-for-website/8db62488-1d0c-448f-aea3-c54695d79615"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Terms
+          </a>
+        </div>
 
         <br />
         <Card className={classes.card}>

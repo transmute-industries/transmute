@@ -4,7 +4,7 @@ import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
 import { withAuth } from '@okta/okta-react';
-import logo from '../../../images/transmute.logo.png';
+import logo from '../../../images/logo-icon-purple.svg';
 import OktaAuthButton from '../OktaAuthButton';
 
 const styles = theme => ({
