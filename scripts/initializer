@@ -95,9 +95,10 @@ kubectl get pods
 
 squawk 5 "Install helm"
 helm init --service-account tiller
-$TRANSMUTE_REPO/w8s/ready.w8 tiller-deploy kube-system
 
-sleep 5
+USE_STRICT_W8=true $TRANSMUTE_REPO/w8s/ready.w8 tiller-deploy kube-system
+
+sleep 1
 kubectl get pods -n kube-system
 
 squawk 5 "Ganache-cli"
@@ -117,14 +118,14 @@ helm install \
 
 $TRANSMUTE_REPO/w8s/ready.w8 decentralized-storage-ipfs default
 
-squawk 5 "OpenFaaS"
-squawk 6 "Create namespaces"
-kubectl apply -f \
-  https://raw.githubusercontent.com/openfaas/faas-netes/master/namespaces.yml
-#squawk 5 "OpenFaas RBAC"
-#kubectl apply -f https://raw.githubusercontent.com/openfaas/faas-netes/master/yaml/rbac.yml
-squawk 5 "OpenFaas Helmchart"
 if [[ "$DO_FAAS" == 'y' ]]; then
+  squawk 5 "OpenFaaS"
+  squawk 6 "Create namespaces"
+  kubectl apply -f \
+    https://raw.githubusercontent.com/openfaas/faas-netes/master/namespaces.yml
+  #squawk 5 "OpenFaas RBAC"
+  #kubectl apply -f https://raw.githubusercontent.com/openfaas/faas-netes/master/yaml/rbac.yml
+  squawk 5 "OpenFaas Helmchart"
   cd $TRANSMUTE_REPO/components/openfaas/faas-netes/chart
   helm upgrade --install openfaas openfaas/ \
     --namespace openfaas \
@@ -136,7 +137,7 @@ helm install stable/kong --name gateway
 
 squawk 5 "spin up"
 $TRANSMUTE_REPO/w8s/ready.w8 gateway-postgresql default
-$TRANSMUTE_REPO/w8s/ready.w8 gateway-kong default
+EXCLUDE_POD=gateway-kong-migration $TRANSMUTE_REPO/w8s/ready.w8 gateway-kong default
 export MINIKUBE_IP=$(minikube ip)
 export KONG_ADMIN_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
 export KONG_PROXY_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
