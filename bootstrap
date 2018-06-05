@@ -461,8 +461,7 @@ transmute-cli_install () {
 
 transmute_env_install () {
   # Check for config env file
-  if [ ! -e $TRANSMUTE_DIR/.env ]; then
-    ls -al $TRANSMUTE_DIR/.env
+  if [ -e $TRANSMUTE_DIR/.env ]; then
     echo 'env file found not overwriting'
   else
     echo '#!/bin/bash' > $TRANSMUTE_DIR/.env
