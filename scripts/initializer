@@ -3,13 +3,12 @@ set -eu
 this_cluster_name=$1
 orig_pwd=$(pwd)
 
-: ${VOYAGER_PROVIDER:='baremetal'}
 : ${TRANSMUTE_DIR:=$HOME/.transmute}
-: ${TRANSMUTE_BIN:=$TRANSMUTE_DIR/bin}
-: ${TRANSMUTE_REPO:=$TRANSMUTE_DIR/git/transmute}
+source $TRANSMUTE_DIR/.env
+
+: ${VOYAGER_PROVIDER:='baremetal'}
 : ${DO_JWT_DL:=n}
 : ${DO_FAAS:=n}
-: ${VERBOSITY:=0}
 : ${DEBUG_MESSAGES:='Received problem bailing out!'}
 
 export PATH=$HOME/.transmute/bin:$PATH
@@ -36,7 +35,7 @@ squawk () {
   shift
   squawk_opt=$@
 
-  if [[ "$VERBOSITY" -ge "$squawk_lvl" ]] ; then
+  if [[ "$TRANSMUTE_VERBOSITY" -ge "$squawk_lvl" ]] ; then
   count_squawk=0
     while [[ "$count_squawk" -lt "$squawk_lvl" ]]; do
       printf "#"
@@ -85,10 +84,10 @@ squawk 5 'create tiller rbac config'
 kubectl apply -f $TRANSMUTE_REPO/components/helm/rbac-tiller-config.yaml
 
 sleep 5
-if [[ "$VERBOSITY" -ge "111" ]] ; then
+if [[ "$TRANSMUTE_VERBOSITY" -ge "111" ]] ; then
   kubectl get pods --all-namespaces
 fi
-if [[ "$VERBOSITY" -ge "101" ]] ; then
+if [[ "$TRANSMUTE_VERBOSITY" -ge "101" ]] ; then
   kubectl get pods -n kube-system
 fi
 kubectl get pods

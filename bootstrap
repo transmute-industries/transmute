@@ -4,9 +4,9 @@
 : ${TRANSMUTE_DIR:=$HOME/.transmute}
 : ${TRANSMUTE_BIN:=$TRANSMUTE_DIR/bin}
 : ${TRANSMUTE_REPO:=$TRANSMUTE_DIR/git/transmute}
-: ${VERBOSITY:=10}
+: ${TRANSMUTE_VERBOSITY:=10}
 : ${HELM_INSTALL_DIR:=$TRANSMUTE_BIN}
-: ${MY_KUBE_VERSION:=v1.9.6}
+: ${KUBE_VERSION:=v1.9.4}
 : ${FIX_DOTFILES:="true"}
 : ${NVM_DIR_ADDS:="true"}
 : ${NVM_VERSION:='0.33.9'}
@@ -28,7 +28,7 @@ squawk () {
   shift
   squawk_opt=$@
 
-  if [[ "$VERBOSITY" -ge "$squawk_lvl" ]] ; then
+  if [[ "$TRANSMUTE_VERBOSITY" -ge "$squawk_lvl" ]] ; then
   count_squawk=0
     while [[ "$count_squawk" -lt "$squawk_lvl" ]]; do
       printf "#"
@@ -39,10 +39,10 @@ squawk () {
 }
 
 # Check for config env file
-if [ -e $TRANSMUTE_DIR/env ]; then
-  source $TRANSMUTE_DIR/env
-  if [ $VERBOSITY -gt '0' ]; then
-    ls -al $TRANSMUTE_DIR/env
+if [ -e $TRANSMUTE_DIR/.env ]; then
+  source $TRANSMUTE_DIR/.env
+  if [ $TRANSMUTE_VERBOSITY -gt '0' ]; then
+    ls -al $TRANSMUTE_DIR/.env
     env file found and sourced
   fi
 fi
@@ -160,7 +160,7 @@ install_kubectl_linux () {
     squawk 3 'Installing kubectl'
     TMP=$(mktemp -d --suffix=KUBECTLTMP)
     cd $TMP
-    curl -LO https://storage.googleapis.com/kubernetes-release/release/$MY_KUBE_VERSION/bin/linux/amd64/kubectl
+    curl -LO https://storage.googleapis.com/kubernetes-release/release/$KUBE_VERSION/bin/linux/amd64/kubectl
     chmod +x kubectl
     sudo mv -v kubectl $TRANSMUTE_BIN
     cd
@@ -213,7 +213,7 @@ nvm_dir_adds () {
 }
 
 dotfiles_install () {
-  if [[ $VERBOSITY -gt '1' ]]; then
+  if [[ $TRANSMUTE_VERBOSITY -gt '1' ]]; then
     squawk 3 'Adjusting dotfiles'
   fi
   touch $HOME/.zshrc
@@ -336,7 +336,7 @@ install_ngrok_npm () {
 
 lts_install () {
   if ! type "npm" >/dev/null 2>/dev/null; then
-    if [[ $VERBOSITY -gt '2' ]]; then
+    if [[ $TRANSMUTE_VERBOSITY -gt '2' ]]; then
       squawk 3 'Installing Node 8 LTS/carbon'
     fi
 
@@ -346,11 +346,11 @@ lts_install () {
 
     set +e
     nvm ls-remote --lts=carbon
-    if [[ $VERBOSITY -gt '2' ]]; then
+    if [[ $TRANSMUTE_VERBOSITY -gt '2' ]]; then
       squawk 3 "Engage nvm to install lts/carbon"
     fi
     nvm install --lts=carbon
-    if [[ $VERBOSITY -gt '2' ]]; then
+    if [[ $TRANSMUTE_VERBOSITY -gt '2' ]]; then
       squawk 3 "Engage nvm to alias lts/carbon to default"
     fi
     nvm alias default lts/carbon
@@ -459,6 +459,21 @@ transmute-cli_install () {
   npm i -g
 }
 
+transmute_env_install () {
+  # Check for config env file
+  if [ ! -e $TRANSMUTE_DIR/.env ]; then
+    ls -al $TRANSMUTE_DIR/.env
+    echo 'env file found not overwriting'
+  else
+    echo '#!/bin/bash' > $TRANSMUTE_DIR/.env
+    echo 'TRANSMUTE_VERBOSITY=10' >> $TRANSMUTE_DIR/.env
+    echo "TRANSMUTE_DIR=$TRANSMUTE_DIR" >> $TRANSMUTE_DIR/.env
+    echo "TRANSMUTE_BIN=$TRANSMUTE_BIN" >> $TRANSMUTE_DIR/.env
+    echo "TRANSMUTE_REPO=$TRANSMUTE_REPO" >> $TRANSMUTE_DIR/.env
+    echo "KUBE_VERSION=$KUBE_VERSION" >> $TRANSMUTE_DIR/.env
+  fi
+}
+
 windowsreqs () {
   check_cmd chocolatey
   install_curl
@@ -477,6 +492,7 @@ windowsreqs () {
   install_certbot
   install_jq
   dotfiles_install
+  transmute_env_install
   transmute-cli_install
 }
 
@@ -503,6 +519,7 @@ macreqs () {
   install_certbot
   install_jq
   dotfiles_install
+  transmute_env_install
   transmute-cli_install
 }
 
@@ -523,6 +540,7 @@ linuxreqs () {
   install_certbot
   install_jq
   dotfiles_install
+  transmute_env_install
   transmute-cli_install
 }
 
