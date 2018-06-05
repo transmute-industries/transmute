@@ -62,15 +62,14 @@ qready () {
     RESULT=$(kubectl get --namespace=$2 pods/$1 -o json 2>/dev/null | jq -r \
      '. | select(.status.phase = ([ .status.conditions[] | select(.type == "Ready" and .state == true) ] | length ) == 1 ) | .metadata.namespace + "/" + .metadata.name' )
     if [ "$RESULT" ]; then
-    # Calculate the number of pods not ready
-    # by awking out the ready column which usually looks like '1/1'
-    # but is sometimes '0/1' or '1/3', etc
-    # Then use cut to split that field using '/' as a delimiter
-    # Next use awk again to transpose the two numbers and stick a ' - ' in between them
-    # And feed the whole string to `bc` which can do some basic caclulcations on the cli
-    # If the answer is zero and the above has passed then I am fairly certain this pod is up and ready
       if [[ $USE_STRICT_W8 == 'true' ]]; then
-          echo strict
+        # Calculate the number of pods not ready
+        # by awking out the ready column which usually looks like '1/1'
+        # but is sometimes '0/1' or '1/3', etc
+        # Then use cut to split that field using '/' as a delimiter
+        # Next use awk again to transpose the two numbers and stick a ' - ' in between them
+        # And feed the whole string to `bc` which can do some basic caclulcations on the cli
+        # If the answer is zero and the above has passed then I am fairly certain this pod is up and ready
         NOT_READY_PODS=$(kubectl get pods -n $2 |grep $1|awk '{print $2}'|cut -f1,2 -d'/' --output-delimiter=' '|awk '{print $2 " - " $1}'|bc)
         if [[ $NOT_READY_PODS -eq 0 ]]; then
           echo '.'
@@ -95,16 +94,6 @@ qready () {
   done
 }
 
-showpod () {
-  countone=1
-  while [ $countone -lt 2 ]
-  do
-    kubectl get pods --namespace $2
-    countone=`expr $countone + 1`
-    sleep 1
-  done
-}
-
 main () {
   squawk 9 'Ready.w8'
   if [[ $EXCLUDE_POD ]]; then
@@ -117,7 +106,7 @@ main () {
     qrunning $this_pod $2
     qready $this_pod $2
     if [ "$VERBOSITY" -ge 15 ] ; then
-      showpod $this_pod $2
+      kubectl get pods --namespace $2
     fi
   done
 }
