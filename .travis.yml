@@ -46,6 +46,7 @@ matrix:
         directories:
           - /home/travis/.minikube
           - /home/travis/.local
+          - /home/travis/.nvm
     - os: linux
       dist: trusty
       sudo: required
@@ -71,6 +72,8 @@ matrix:
         directories:
           - /home/travis/.minikube
           - /home/travis/.local
+          - /home/travis/.nvm
+          - /home/travis/.transmute
 
 
 before_script:
