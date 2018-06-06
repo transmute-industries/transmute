@@ -3,7 +3,8 @@ stages:
 
 transmute_build:
   stage: build
-  tags: bionicbeaver
+  tags:
+    - bionicbeaver
   image: travisci/ci-connie:packer-1512502287-986baf0
   script:
     - bash .ci/linux_before_install.sh
