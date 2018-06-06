@@ -1,5 +1,5 @@
 #!/bin/bash -l
-TRAVIS='true'
+export TRAVIS='true'
 PATH=$HOME/.transmute/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
 KUBE_VERSION=v1.8.0
