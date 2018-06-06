@@ -623,7 +623,10 @@ elif [ -e "$TRANSMUTE_REPO" ]; then
   cd $CWD
 else
   cd $TRANSMUTE_DIR/git
+  squawk 3 "$TRANSMUTE_REPO does not exist already, proceeding"
+  ls -alh $TRANSMUTE_REPO
   squawk 3 'Cloning the latest transmute repo'
+  ls -alh
   git clone --depth=1 \
    https://github.com/transmute-industries/transmute.git
   cd $TRANSMUTE_REPO
