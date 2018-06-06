@@ -25,7 +25,10 @@ if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
   bash .ci/linux_before_install.sh
 fi
 cd $CWD
+echo pwd pwd
 pwd
+echo whoami
+whoami
 
 echo PATH=$HOME/.transmute/bin:$PATH >> $HOME/.bashrc
 echo PATH=$HOME/.local/bin:$PATH >> $HOME/.bashrc
