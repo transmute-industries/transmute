@@ -8,4 +8,5 @@ transmute_build:
     - bash .ci/linux_before_install.sh
     - bash -l -c "echo PATH=$HOME/.transmute/bin:$PATH >> $HOME/.bashrc"
     - bash -l -c "echo PATH=$HOME/.local/bin:$PATH >> $HOME/.bashrc"
+    - rm -Rf $HOME/.transmute
     - bash .ci/ci.sh
