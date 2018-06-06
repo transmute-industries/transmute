@@ -17,17 +17,14 @@ HELM_INSTALL_DIR=$HOME/.local/bin
 HELM_VERSION=v2.8.2
 NVM_DIR="$HOME/.nvm"
 HELM_SHA256=0521956fa22be33189cc825bb27b3f4178c5ce9a448368b5c81508d446472715
+CWD=$(pwd)
 
-# go back to the root of transmute
-pwd
-ls
-cd ..
-pwd
-ls
 
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
   bash .ci/linux_before_install.sh
 fi
+cd $CWD
+pwd
 
 echo PATH=$HOME/.transmute/bin:$PATH >> $HOME/.bashrc
 echo PATH=$HOME/.local/bin:$PATH >> $HOME/.bashrc
@@ -38,7 +35,9 @@ fi
 mkdir -p $HOME/.local/bin
 cd $HOME; rm -Rf .transmute; mkdir -p .transmute/git; cd .transmute/git; ln -s $TRAVIS_BUILD_DIR transmute
 cd $TRAVIS_BUILD_DIR
-TRANSMUTE_RELEASE=$TRAVIS_BRANCH bash -l ./bootstrap
+cd $CWD
+pwd
+TRANSMUTE_RELEASE=$TRAVIS_BRANCH bash ./bootstrap
 export PATH=$HOME/.transmute/bin:$PATH
 cd $TRAVIS_BUILD_DIR/packages/transmute-cli
 npm i
@@ -46,7 +45,7 @@ npm run build
 npm i -g
 cd $TRAVIS_BUILD_DIR
 npm i
-if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
+if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
   transmute k8s provision-minikube travistest --vmdriver none
 fi
 sleep 8
