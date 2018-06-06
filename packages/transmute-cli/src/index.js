@@ -46,16 +46,20 @@ vorpal
   .description('Provision k8s cluster in Azure')
   .option('--gensshkeys', 'Generate SSH keys')
   .option('--nodes <nodes>', 'How many nodes to create the cluster with')
+  .option('--nodesize <nodesize>', 'Specify the size of nodes to create the cluster with')
   .action(function(args, callback) {
       let myNodeCount = 3;
       if (args.options.nodes) {
         myNodeCount = args.options.nodes;
       }
+      if (args.options.nodesize) {
+        myNodeSize = args.options.nodesize;
+      }
       let GenSSHKeys = false;
       if (args.options.gensshkeys) {
         GenSSHKeys = true;
       }
-      provision.aks( args.group, args.clustername, myNodeCount, GenSSHKeys );
+      provision.aks( args.group, args.clustername, myNodeCount, myNodeSize, GenSSHKeys );
     callback();
   });
 
