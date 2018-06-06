@@ -18,6 +18,10 @@ HELM_VERSION=v2.8.2
 NVM_DIR="$HOME/.nvm"
 HELM_SHA256=0521956fa22be33189cc825bb27b3f4178c5ce9a448368b5c81508d446472715
 
+# go back to the root of transmute
+cd ..
+pwd
+
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
   bash .ci/linux_before_install.sh
 fi
