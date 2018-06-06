@@ -1,5 +1,13 @@
 stages:
+  - env
   - build
+
+transmute_env:
+  stage: env
+  image: travisci/ci-connie:packer-1512502287-986baf0
+  script:
+    - bash -l -c "echo PATH=$HOME/.transmute/bin:$PATH >> $HOME/.bashrc"
+    - bash -l -c "echo PATH=$HOME/.local/bin:$PATH >> $HOME/.bashrc"
 
 transmute_build:
   stage: build
