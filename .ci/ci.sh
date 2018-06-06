@@ -29,6 +29,8 @@ echo pwd pwd
 pwd
 echo whoami
 whoami
+ls -alh /home
+ls -alh /build
 
 echo PATH=$HOME/.transmute/bin:$PATH >> $HOME/.bashrc
 echo PATH=$HOME/.local/bin:$PATH >> $HOME/.bashrc
