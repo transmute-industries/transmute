@@ -52,8 +52,9 @@ vorpal
       if (args.options.nodes) {
         myNodeCount = args.options.nodes;
       }
+      let myNodeSize = 'Standard_D2_v2';
       if (args.options.nodesize) {
-        const myNodeSize = args.options.nodesize;
+        myNodeSize = args.options.nodesize;
       }
       let GenSSHKeys = false;
       if (args.options.gensshkeys) {
