@@ -623,7 +623,6 @@ elif [ -e "$TRANSMUTE_REPO" ]; then
   cd $CWD
 else
   cd $TRANSMUTE_DIR/git
-  ls -alh
   squawk 3 'Cloning the latest transmute repo'
   git clone --depth=1 \
    https://github.com/transmute-industries/transmute.git
