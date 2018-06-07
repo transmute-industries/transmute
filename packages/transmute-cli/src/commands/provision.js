@@ -35,7 +35,7 @@ export function minikube( clusterName, minikubeDriver ) {
   run.ner( prov_cmd );
 }
 
-export function aks( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys ) {
+export function aks( myResourceGroup, myAKSCluster, myNodeCount, myNodeSize, GenSSHKeys ) {
   run.ner('az provider register -n Microsoft.Network');
   run.ner('az provider register -n Microsoft.Storage');
   run.ner('az provider register -n Microsoft.Compute');
@@ -58,6 +58,13 @@ export function aks( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys ) {
   else {
     var nodes_opt = ' --node-count ' + myNodeCount;
   }
+  if (myNodeSize == undefined ) {
+    console.log('no size given using default')
+    var nodesize_opt = ' ';
+  }
+  else {
+    var nodesize_opt = ' --node-vm-size ' + myNodeSize;
+  }
   if (myResourceGroup == undefined ) {
     throw 'You need to define a group';
   }
@@ -67,6 +74,7 @@ export function aks( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys ) {
   var prov_cmd = 'az aks create '
     + group_opt
     + nodes_opt
+    + nodesize_opt
     + akscluster_opt
     + gensshkeys_opt;
   run.ner(prov_cmd);
