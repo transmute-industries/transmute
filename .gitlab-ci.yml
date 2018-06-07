@@ -8,7 +8,7 @@ transmute_build:
   image: travisci/ci-connie:packer-1512502287-986baf0
   script:
     - bash .ci/linux_before_install.sh
-    - sudo -u travis -i bash -l -c "echo PATH=/home/travis/.transmute/bin:$PATH >> /home/travis/.bashrc"
-    - sudo -u travis -i bash -l -c "echo PATH=/home/travis/.local/bin:$PATH >> /home/travis/.bashrc"
+    - su -c "echo PATH=/home/travis/.transmute/bin:$PATH >> /home/travis/.bashrc" - travis
+    - su -c "echo PATH=/home/travis/.local/bin:$PATH >> /home/travis/.bashrc" - travis
     - rm -Rf /home/travis/.transmute
-    - sudo -u travis -i bash -l .ci/ci.sh
+    - su -c 'bash -l .ci/ci.sh' - travis
