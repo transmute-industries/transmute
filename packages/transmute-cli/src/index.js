@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /** @module TransmuteCLI */
 
+// Performance
+const {performance} = require('perf_hooks');
+
 // Process env vars
 const MY_ENV = process.env.USE_KUBASH || 'true';
 
@@ -38,12 +41,12 @@ vorpal
     // begin performance test
       let dryrun = 'false';
       if (args.options.dryrun) {
-        let dryrun = 'true';
+        dryrun = 'true';
       }
       init.k8s( dryrun, args.clustername )
     // end performance test
     var t1 = performance.now();
-    console.log("Call to transmute init took " + (t1 - t0) + " milliseconds.");
+    vorpal.logger.info("Call to transmute init took " + ((t1 - t0) / 1000).toPrecision(4) + " seconds.");
     callback();
   });
 
@@ -63,7 +66,7 @@ vorpal
     // begin performance test
       let dryrun = 'false';
       if (args.options.dryrun) {
-        let dryrun = 'true';
+        dryrun = 'true';
       }
       let myNodeCount = 3;
       if (args.options.nodes) {
@@ -80,7 +83,7 @@ vorpal
       provision.aks( dryrun, args.group, args.clustername, myNodeCount, myNodeSize, GenSSHKeys );
     // end performance test
     var t1 = performance.now();
-    console.log("Call to transmute init took " + (t1 - t0) + " milliseconds.");
+    vorpal.logger.info("Call to transmute provision took " + ((t1 - t0) / 1000).toPrecision(4) + " seconds.");
     callback();
   });
 
@@ -100,16 +103,17 @@ vorpal
     // begin performance test
       let dryrun = 'false';
       if (args.options.dryrun) {
-        let dryrun = 'true';
+        console.log('dry run');
+        dryrun = 'true';
       }
       if (args.options.vmdriver) {
-        provision.minikube( args.clustername, args.options.vmdriver );
+        provision.minikube( dryrun, args.clustername, args.options.vmdriver );
       } else {
         provision.minikube( dryrun, args.clustername );
       }
     // end performance test
     var t1 = performance.now();
-    console.log("Call to transmute init took " + (t1 - t0) + " milliseconds.");
+    vorpal.logger.info("Call to transmute provision took " + ((t1 - t0) / 1000).toPrecision(4) + " seconds.");
     callback();
   });
 

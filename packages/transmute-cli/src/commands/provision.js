@@ -32,8 +32,8 @@ export function minikube( dryrun, clusterName, minikubeDriver ) {
     prov_cmd = minikube_start + ' --vm-driver=virtualbox';
   }
   console.log( prov_cmd );
-  if (dryrun == true ) {
-    console.log( 'dry run' );
+  if (dryrun === 'true' ) {
+    console.log( '<--dry run-->' );
   }
   else {
     run.ner( prov_cmd );
@@ -88,8 +88,8 @@ export function aks( dryrun, myResourceGroup, myAKSCluster, myNodeCount, myNodeS
     + akscluster_opt
     + group_opt
   console.log( prov_cmd );
-  if (dryrun == true ) {
-    console.log( 'dry run' );
+  if (dryrun == 'true' ) {
+    console.log( '<--dry run-->' );
   }
   else {
     run.ner( prov_cmd );
