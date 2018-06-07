@@ -1,5 +1,7 @@
 #!/bin/bash
-: ${VERBOSITY:=0}
+
+: ${TRANSMUTE_DIR:=$HOME/.transmute}
+source $TRANSMUTE_DIR/.env
 
 squawk () {
   # This function simplifies error reporting and verbosity
@@ -14,7 +16,7 @@ squawk () {
   shift
   squawk_opt=$@
 
-  if [[ "$VERBOSITY" -ge "$squawk_lvl" ]] ; then
+  if [[ "$TRANSMUTE_VERBOSITY" -ge "$squawk_lvl" ]] ; then
   count_squawk=0
     while [[ "$count_squawk" -lt "$squawk_lvl" ]]; do
       printf "#"
@@ -44,7 +46,7 @@ qrunning () {
         squawk 1 "$1 is now running"
         break
     fi
-    if [ "$VERBOSITY" -ge 14 ] ; then
+    if [ "$TRANSMUTE_VERBOSITY" -ge 14 ] ; then
       squawk 3 "$2"
       kubectl get pods --namespace $2
     fi
@@ -85,7 +87,7 @@ qready () {
         fi
       fi
     fi
-    if [ "$VERBOSITY" -ge 14 ] ; then
+    if [ "$TRANSMUTE_VERBOSITY" -ge 14 ] ; then
       squawk 3 "$2"
       kubectl get pods --namespace $2
     fi
@@ -105,7 +107,7 @@ main () {
     squawk 9 "testing $this_pod  in the namespace $2 for running and readiness"
     qrunning $this_pod $2
     qready $this_pod $2
-    if [ "$VERBOSITY" -ge 15 ] ; then
+    if [ "$TRANSMUTE_VERBOSITY" -ge 15 ] ; then
       kubectl get pods --namespace $2
     fi
   done
