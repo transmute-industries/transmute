@@ -34,11 +34,16 @@ vorpal
   .description('Initialize k8s cluster')
   .option('--dryrun', 'Print out what would be done without executing anything')
   .action(function(args, callback) {
-    let dryrun = 'false';
-    if (args.options.dryrun) {
-      let dryrun = 'true';
-    }
-    init.k8s( dryrun, args.clustername )
+    var t0 = performance.now();
+    // begin performance test
+      let dryrun = 'false';
+      if (args.options.dryrun) {
+        let dryrun = 'true';
+      }
+      init.k8s( dryrun, args.clustername )
+    // end performance test
+    var t1 = performance.now();
+    console.log("Call to transmute init took " + (t1 - t0) + " milliseconds.");
     callback();
   });
 
@@ -54,6 +59,8 @@ vorpal
   .option('--nodes <nodes>', 'How many nodes to create the cluster with')
   .option('--nodesize <nodesize>', 'Specify the size of nodes to create the cluster with')
   .action(function(args, callback) {
+    var t0 = performance.now();
+    // begin performance test
       let dryrun = 'false';
       if (args.options.dryrun) {
         let dryrun = 'true';
@@ -71,6 +78,9 @@ vorpal
         GenSSHKeys = true;
       }
       provision.aks( dryrun, args.group, args.clustername, myNodeCount, myNodeSize, GenSSHKeys );
+    // end performance test
+    var t1 = performance.now();
+    console.log("Call to transmute init took " + (t1 - t0) + " milliseconds.");
     callback();
   });
 
@@ -86,6 +96,8 @@ vorpal
   .option('--vmdriver <vmdriver>', 'The cluster name to create the cluster with')
   .option('--dryrun', 'Print out what would be done without executing anything')
   .action(function(args, callback) {
+    var t0 = performance.now();
+    // begin performance test
       let dryrun = 'false';
       if (args.options.dryrun) {
         let dryrun = 'true';
@@ -95,6 +107,9 @@ vorpal
       } else {
         provision.minikube( dryrun, args.clustername );
       }
+    // end performance test
+    var t1 = performance.now();
+    console.log("Call to transmute init took " + (t1 - t0) + " milliseconds.");
     callback();
   });
 
