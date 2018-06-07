@@ -47,6 +47,7 @@ cd $CWD
 pwd
 TRANSMUTE_RELEASE=$TRAVIS_BRANCH bash ./bootstrap
 export PATH=$HOME/.transmute/bin:$PATH
+source $HOME/.bashrc
 cd $TRAVIS_BUILD_DIR/packages/transmute-cli
 npm i
 npm run build
