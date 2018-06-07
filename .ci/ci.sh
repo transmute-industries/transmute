@@ -27,6 +27,7 @@ fi
 cd $CWD
 echo pwd pwd
 pwd
+ls -alh
 echo whoami
 whoami
 ls -alh /home

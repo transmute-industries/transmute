@@ -12,4 +12,3 @@ transmute_build:
     - bash -l -c "echo PATH=$HOME/.local/bin:$PATH >> $HOME/.bashrc"
     - rm -Rf $HOME/.transmute
     - bash .ci/ci.sh
-
