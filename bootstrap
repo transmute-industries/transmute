@@ -6,7 +6,7 @@
 : ${TRANSMUTE_REPO:=$TRANSMUTE_DIR/git/transmute}
 : ${TRANSMUTE_VERBOSITY:=10}
 : ${HELM_INSTALL_DIR:=$TRANSMUTE_BIN}
-: ${KUBE_VERSION:=v1.9.4}
+: ${TRANSMUTE_KUBE_VERSION:=v1.9.4}
 : ${FIX_DOTFILES:="true"}
 : ${NVM_DIR_ADDS:="true"}
 : ${NVM_VERSION:='0.33.9'}
@@ -160,7 +160,7 @@ install_kubectl_linux () {
     squawk 3 'Installing kubectl'
     TMP=$(mktemp -d --suffix=KUBECTLTMP)
     cd $TMP
-    curl -LO https://storage.googleapis.com/kubernetes-release/release/$KUBE_VERSION/bin/linux/amd64/kubectl
+    curl -LO https://storage.googleapis.com/kubernetes-release/release/$TRANSMUTE_KUBE_VERSION/bin/linux/amd64/kubectl
     chmod +x kubectl
     sudo mv -v kubectl $TRANSMUTE_BIN
     cd
@@ -469,7 +469,7 @@ transmute_env_install () {
     echo "TRANSMUTE_DIR=$TRANSMUTE_DIR" >> $TRANSMUTE_DIR/.env
     echo "TRANSMUTE_BIN=$TRANSMUTE_BIN" >> $TRANSMUTE_DIR/.env
     echo "TRANSMUTE_REPO=$TRANSMUTE_REPO" >> $TRANSMUTE_DIR/.env
-    echo "KUBE_VERSION=$KUBE_VERSION" >> $TRANSMUTE_DIR/.env
+    echo "TRANSMUTE_KUBE_VERSION=$TRANSMUTE_KUBE_VERSION" >> $TRANSMUTE_DIR/.env
   fi
 }
 
