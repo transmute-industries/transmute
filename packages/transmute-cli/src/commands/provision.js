@@ -1,5 +1,5 @@
 const run = require('./runner');
-const KUBE_VERSION = process.env.KUBE_VERSION ||  'v1.9.0';
+const TRANSMUTE_KUBE_VERSION = process.env.TRANSMUTE_KUBE_VERSION ||  'v1.9.0';
 const MINIKUBE_CPU = process.env.MINIKUBE_CPU ||  '4';
 const MINIKUBE_MEMORY = process.env.MINIKUBE_MEMORY ||  '4096';
 const MINIKUBE_DISK = process.env.MINIKUBE_DISK ||  '100g';
@@ -7,7 +7,7 @@ const MINIKUBE_PROFILE = process.env.MINIKUBE_PROFILE ||  'transmute-k8s';
 
 export function minikube( dryrun, clusterName, minikubeDriver ) {
   const minikube_start = 'minikube start '
-    + ' --kubernetes-version ' +  KUBE_VERSION
+    + ' --kubernetes-version ' +  TRANSMUTE_KUBE_VERSION
     + ' --disk-size ' +  MINIKUBE_DISK
     + ' --cpus ' +  MINIKUBE_CPU
     + ' --memory ' +  MINIKUBE_MEMORY;
