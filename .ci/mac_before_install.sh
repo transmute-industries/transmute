@@ -46,19 +46,6 @@ gethelm () {
   sudo mv helm $HELM_PREFIX/helm
 }
 
-mknsenter () {
-  set -e
-
-  sudo apt-get update
-  sudo apt-get install libncurses5-dev libslang2-dev gettext zlib1g-dev libselinux1-dev debhelper lsb-release pkg-config po-debconf autoconf automake autopoint libtool
-
-  wget https://www.kernel.org/pub/linux/utils/util-linux/v2.30/util-linux-2.30.2.tar.gz -qO - | tar -xz -C $TMP/
-  cd $TMP/util-linux-2.30.2 && ./autogen.sh && ./configure && make nsenter
-  mkdir -p $HOME/.local/bin
-  sudo cp -v $TMP/util-linux-2.30.2/nsenter $HOME/.local/bin/nsenter
-  sudo chmod +x $HOME/.local/bin/nsenter
-}
-
 chkdir /etc/kubernetes
 chkdir /etc/kubernetes/addons
 chkdir /etc/systemd
