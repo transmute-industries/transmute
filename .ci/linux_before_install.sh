@@ -11,6 +11,7 @@ TMP=$(mktemp -d)
 cleanup_tmp () {
   rm -Rf $TMP
 }
+
 trap cleanup_tmp EXIT
 cd $TMP
 
@@ -23,7 +24,7 @@ errror () {
 chkdir () {
   if [ ! -w $1 ] ; then
     sudo mkdir -p $1
-    sudo chown $USER. $1
+    sudo chown $USER $1
   fi
   if [ ! -w $1 ] ; then
     errror
