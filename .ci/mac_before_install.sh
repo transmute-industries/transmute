@@ -55,12 +55,6 @@ chkdir /var/lib/localkube/certs
 chkdir /lib/systemd/system
 
 
-if [[ ! -e "$HOME/.local/bin/nsenter" ]]; then
-  mknsenter
-fi
-if [[ ! -e "/usr/bin/nsenter" ]]; then
-  sudo cp -v $HOME/.local/bin/nsenter /usr/bin/nsenter
-fi
 if [[ ! -e "$HOME/.local/bin/helm" ]]; then
   gethelm
 fi
