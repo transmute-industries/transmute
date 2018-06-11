@@ -66,7 +66,7 @@ chkdir /var/lib
 chkdir /var/lib/localkube
 chkdir /var/lib/localkube/certs
 chkdir /lib/systemd/system
-chkdir /usr/bin
+#chkdir /usr/bin
 chkdir /usr/local/bin
 
 sudo apt-get update
