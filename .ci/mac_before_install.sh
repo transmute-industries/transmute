@@ -58,8 +58,3 @@ chkdir /lib/systemd/system
 if [[ ! -e "$HOME/.local/bin/helm" ]]; then
   gethelm
 fi
-if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-  echo "$HELM_SHA256 $HOME/.local/bin/helm" > /tmp/testhelm
-  sha256sum -c /tmp/testhelm
-  rm /tmp/testhelm
-fi
