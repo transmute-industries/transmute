@@ -14,6 +14,12 @@ cleanup_tmp () {
 trap cleanup_tmp EXIT
 cd $TMP
 
+errror () {
+  echo "-------------------------------------------------------------"
+  printf "\n \n  "
+  echo "ERROR!!!  --  "
+}
+
 chkdir () {
   if [ ! -w $1 ] ; then
     sudo mkdir -p $1
