@@ -59,3 +59,4 @@ chkdir /lib/systemd/system
 if [[ ! -e "$HOME/.local/bin/helm" ]]; then
   gethelm
 fi
+
