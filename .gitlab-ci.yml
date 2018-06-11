@@ -20,6 +20,6 @@ transmute_build_osx:
   image: travisci/ci-connie:packer-1512502287-986baf0
   script:
     - bash .ci/mac_before_install.sh
-    - sudo bash -c "echo PATH=/home/travis/.transmute/bin:$PATH >> /home/travis/.bashrc" - travis
-    - sudo bash -c "echo PATH=/home/travis/.local/bin:$PATH >> /home/travis/.bashrc" - travis
-    - PWD=$(pwd) sudo bash -c "cd $PWD; bash -l .ci/ci.sh" - travis
+    - sudo bash -c "echo PATH=$HOME/.transmute/bin:$PATH >> $HOME/.bashrc" - $USER
+    - sudo bash -c "echo PATH=$HOME/.local/bin:$PATH >> $HOME/.bashrc" - $USER
+    - PWD=$(pwd) sudo bash -c "cd $PWD; bash -l .ci/ci.sh" - $USER
