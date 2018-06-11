@@ -24,6 +24,7 @@ errror () {
 chkdir () {
   if [ ! -w $1 ] ; then
     sudo mkdir -p $1
+    echo "sudo chown $USER $1"
     sudo chown $USER $1
   fi
   if [ ! -w $1 ] ; then
