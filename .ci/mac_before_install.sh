@@ -43,7 +43,7 @@ gethelm () {
 
   cd darwin-amd64
   chmod +x helm
-  mkdir $HELM_PREFIX
+  mkdir -p $HELM_PREFIX
   sudo mv helm $HELM_PREFIX/helm
 }
 
