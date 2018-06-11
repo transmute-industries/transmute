@@ -5,7 +5,7 @@ export CWD=$(pwd)
 : ${TRANSMUTE_REPO:=$TRANSMUTE_DIR/git/transmute}
 : ${HELM_VERSION:='v2.8.2'}
 : ${HELM_PREFIX:="$HOME/.local/bin"}
-: ${HELM_URL:="https://storage.googleapis.com/kubernetes-helm/helm-$HELM_VERSION-linux-amd64.tar.gz"}
+: ${HELM_URL:="https://storage.googleapis.com/kubernetes-helm/helm-v2.9.1-darwin-amd64.tar.gz"}
 
 TMP=$(mktemp -d)
 cleanup_tmp () {
@@ -41,8 +41,9 @@ gethelm () {
   echo $TMP
   tar zxvf helm.tgz
 
-  cd linux-amd64
+  cd darwin-amd64
   chmod +x helm
+  mkdir $HELM_PREFIX
   sudo mv helm $HELM_PREFIX/helm
 }
 
