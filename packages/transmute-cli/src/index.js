@@ -21,12 +21,14 @@ const ls = require('./commands/ls');
 const init = require('./commands/init');
 const runtest = require('./commands/runtest');
 const provision = require('./commands/provision');
+const telemetry = require('./commands/telemetry');
+
 
 // Mixpanel
 const Mixpanel = require('mixpanel');
-const mixpanel = process.env.MIXPANEL_PROJECT_ID
-  ? Mixpanel.init(process.env.MIXPANEL_PROJECT_ID)
-  : null;
+const mixpanelToken = process.env.MIXPANEL_PROJECT_ID || '535f9b3a8daba1dfe4777a7343e6e0f5'
+const mixpanel = Mixpanel.init(mixpanelToken)
+vorpal.telemetrySend = telemetry.send(mixpanel);
 
 /** transmute k8s  init initializes a cluster with the transmute framework
   * @name transmute k8s init <clustername>
@@ -126,8 +128,47 @@ vorpal
   .action(async (args, callback) => {
         const version = require('../package.json').version;
         vorpal.logger.info('transmute: ' + version);
+        await vorpal.telemetrySend({
+         event: 'command',
+         properties: {
+           command: 'version',
+           args: args,
+           result: {
+            version
+           }
+         }
+        })
         callback();
   });
+
+
+/** transmute telemetry toggles telemetry on or off
+  * @name transmute telemetry
+  * @example transmute telemetry on
+  * */
+ vorpal
+ .command('telemetry <state>', 'toggles telemetry on or off')
+ .autocompletion(function(text, iteration, cb) {
+  var states = ["on", "off"];
+  if (iteration > 1) {
+    cb(void 0, states);
+  } else {
+    var match = this.match(text, states);
+    if (match) {
+      cb(void 0, states);
+    } else {
+      cb(void 0, void 0);
+    }
+  }
+})
+ .action(async (args, callback) => {
+  var states = ["on", "off"];
+    if (states.indexOf(args.state) === -1){
+      return vorpal.logger.error(`state must be 'on' or 'off'. ${args.state} is not valid.`);
+    }
+    telemetry.toggle(vorpal, args)
+    callback()
+ });
 
 vorpal
   .delimiter('T$')
