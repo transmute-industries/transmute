@@ -7,6 +7,34 @@ export const registerSuccess = data => {
   };
 };
 
+export const revocationError = error => {
+  return {
+    type: Constants.REVOCATION_ERROR,
+    payload: error
+  };
+};
+
+export const revocationSuccess = data => {
+  return {
+    type: Constants.REVOCATION_SUCCESS,
+    payload: data
+  };
+};
+
+export const recoveryError = error => {
+  return {
+    type: Constants.RECOVERY_ERROR,
+    payload: error
+  };
+};
+
+export const recoverySuccess = data => {
+  return {
+    type: Constants.RECOVERY_SUCCESS,
+    payload: data
+  };
+};
+
 export const registerError = error => {
   return {
     type: Constants.REGISTRATION_ERROR,
