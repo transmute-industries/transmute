@@ -320,7 +320,7 @@ install_lerna_npm () {
 
 install_truffle_npm () {
   if ! type "truffle" >/dev/null 2>/dev/null; then
-    npm i -g truffle@4.1.7
+    npm i -g truffle@4.1.8
   else
     squawk 3 'truffle already installed skipping'
   fi
