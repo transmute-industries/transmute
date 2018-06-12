@@ -20,11 +20,15 @@ NVM_DIR="$HOME/.nvm"
 HELM_SHA256=0521956fa22be33189cc825bb27b3f4178c5ce9a448368b5c81508d446472715
 CWD=$(pwd)
 TRAVIS_BUILD_DIR=$CWD
-
-
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-  bash .ci/linux_before_install.sh
+  OS_NAME=linux
 elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+  OS_NAME=osx
+fi
+
+if [[ "$OS_NAME" == "linux" ]]; then
+  bash .ci/linux_before_install.sh
+elif [[ "$OS_NAME" == "osx" ]]; then
   bash .ci/mac_before_install.sh
 fi
 cd $CWD
@@ -56,12 +60,16 @@ npm run build
 npm i -g
 cd $TRAVIS_BUILD_DIR
 npm i
-if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+if [[ "$OS_NAME" == "linux" ]]; then
   transmute k8s provision-minikube travistest --vmdriver none
+elif [[ "$OS_NAME" == "osx" ]]; then
+  transmute k8s provision-minikube travistest --vmdriver virtualbox
 fi
 sleep 8
 minikube update-context
-if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+if [[ "$OS_NAME" == "linux" ]]; then
+  yes y|transmute k8s init travistest
+elif [[ "$OS_NAME" == "osx" ]]; then
   yes y|transmute k8s init travistest
 fi
 lerna bootstrap
