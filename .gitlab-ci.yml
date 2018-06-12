@@ -10,7 +10,7 @@ transmute_build_osx:
   script:
     - sudo bash -c "echo PATH=$HOME/.transmute/bin:$PATH >> $HOME/.bashrc" - $USER
     - sudo bash -c "echo PATH=$HOME/.local/bin:$PATH >> $HOME/.bashrc" - $USER
-    - TRAVIS_OS_NAME=osx PWD=$(pwd) sudo bash -c "cd $PWD; bash -l .ci/ci.sh" - $USER
+    - TRAVIS_OS_NAME=osx PWD=$(pwd) bash -c "cd $PWD; bash -l .ci/ci.sh" - $USER
 
 transmute_clean_osx:
   stage: clean
@@ -28,7 +28,7 @@ transmute_build_virtualbox:
     - bionicbeaver
     - virtualbox
   script:
-    - TRAVIS_OS_NAME=linux PWD=$(pwd) su -c "cd $PWD; bash -l .ci/ci.sh" - travis
+    - TRAVIS_OS_NAME=linux PWD=$(pwd) bash -c "cd $PWD; bash -l .ci/ci.sh"
 
 transmute_clean_virtualbox:
   stage: clean
