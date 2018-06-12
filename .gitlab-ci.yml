@@ -15,13 +15,13 @@ transmute_build_osx:
 
 transmute_clean_osx:
   stage: clean
+  when: always
   tags:
     - osx-shell
   image: travisci/ci-connie:packer-1512502287-986baf0
   script:
-    - minikube delete
     - rm -Rf $HOME/.transmute
-    - rm -Rf $HOME/.kube
+    - minikube delete
 
 transmute_build_virtualbox:
   stage: build
