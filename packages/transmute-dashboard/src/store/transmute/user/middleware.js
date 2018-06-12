@@ -21,6 +21,42 @@ export const register = async ({ edArmorPub, secArmorPub }) => {
     });
 };
 
+export const revoke = async ({ auth, edRevArmorPub, secRevArmorPub }) => {
+  let access_token = await auth.getAccessToken();
+  let user = await auth.getUser();
+  return axios
+    .create({
+      baseURL: ENVS.PROD,
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'Authorization': `Bearer ${access_token}`
+      }
+    })
+    .post(`/api/v0/users/${user.sub}/revoke`, {
+      edRevArmorPub,
+      secRevArmorPub
+    });
+};
+
+export const recover = async ({ auth, edRecArmorPub, secRecArmorPub }) => {
+  let access_token = await auth.getAccessToken();
+  let user = await auth.getUser();
+  return axios
+    .create({
+      baseURL: ENVS.PROD,
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'Authorization': `Bearer ${access_token}`
+      }
+    })
+    .post(`/api/v0/users/${user.sub}/recover`, {
+      edRecArmorPub,
+      secRecArmorPub
+    });
+};
+
 export const getUser = async (auth) => {
   let access_token = await auth.getAccessToken();
   let user = await auth.getUser();

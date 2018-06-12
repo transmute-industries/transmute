@@ -12,6 +12,7 @@ import Button from 'material-ui/Button';
 import AppBar from '../AppBar';
 import { getUser, setUserProfile } from '../../store/transmute/user/middleware';
 import * as actions from '../../store/transmute/user/actions';
+import { history } from '../../store';
 
 const styles = theme => ({
   margin: {
@@ -29,6 +30,8 @@ class ProfilePage extends Component {
       profile: null,
       error: null
     };
+    this.handleRevocationUpload = this.handleRevocationUpload.bind(this);
+    this.handleOpenRevocationModal = this.handleOpenRevocationModal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -54,6 +57,12 @@ class ProfilePage extends Component {
     });
   };
 
+  async handleRevocationUpload(e) {
+  };
+
+  async handleOpenRevocationModal(e) {
+  };
+
   async componentWillMount() {
     if (!this.state.profile) {
       let response = await getUser(this.props.auth);
@@ -73,7 +82,7 @@ class ProfilePage extends Component {
     return (
       <AppBar>
         <h1>Profile</h1>
-        <div>
+        <Grid container style={{ paddingBottom: 40 }}>
 
           <Grid item md={12}>
             <FormControl className={classNames(classes.margin, classes.formControl)}>
@@ -131,6 +140,20 @@ class ProfilePage extends Component {
 
           <Grid item md={12}>
             <FormControl className={classNames(classes.margin, classes.formControl)}>
+              <InputLabel>ED25519 Revocation Key</InputLabel>
+              <Input
+                id="ed-rev-key"
+                type="text"
+                disabled={true}
+                multiline={true}
+                value={profile.edRevPubKey}
+                onChange={this.handleChange('edRevPubKey')}
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item md={12}>
+            <FormControl className={classNames(classes.margin, classes.formControl)}>
               <InputLabel>SECP256K1 Public Key</InputLabel>
               <Input
                 id="sec-public-key"
@@ -139,6 +162,20 @@ class ProfilePage extends Component {
                 multiline={true}
                 value={profile.secPubKey}
                 onChange={this.handleChange('secPubKey')}
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item md={12}>
+            <FormControl className={classNames(classes.margin, classes.formControl)}>
+              <InputLabel>SECP256K1 Revocation Key</InputLabel>
+              <Input
+                id="sec-rev-key"
+                type="text"
+                disabled={true}
+                multiline={true}
+                value={profile.secRevPubKey}
+                onChange={this.handleChange('secRevPubKey')}
               />
             </FormControl>
           </Grid>
@@ -152,13 +189,23 @@ class ProfilePage extends Component {
           <Grid item md={12}>
             <Button
               variant="raised"
+              color="primary"
+              onClick={() => {
+                history.push('/profile/revoke');
+              }}
+            >
+              Upload Revocation Keys
+            </Button>
+
+            <Button
+              variant="raised"
               color="secondary"
               onClick={this.handleSubmit}
             >
               Save
             </Button>
           </Grid>
-        </div>
+        </Grid>
       </AppBar>
     );
   }
