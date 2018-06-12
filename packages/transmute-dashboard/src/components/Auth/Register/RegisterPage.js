@@ -52,7 +52,7 @@ class RegisterPage extends Component {
 
           <Grid container item xs={9} alignItems='center' justify='center' alignContent='center'>
             <h4 className={classNames(classes.text)}>
-              <a href="https://github.com/eolszewski/sec-ed-cert">
+              <a href="https://github.com/transmute-industries/transmute/wiki/Registration">
                 Key Generation Instructions
               </a>{' '}
             </h4>
