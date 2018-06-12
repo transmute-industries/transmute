@@ -41,3 +41,4 @@ transmute_clean_osx:
   script:
     - minikube delete
     - rm -Rf $HOME/.transmute
+    - rm -Rf $HOME/.kube
