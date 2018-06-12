@@ -47,15 +47,19 @@ gethelm () {
   sudo mv helm $HELM_PREFIX/helm
 }
 
-chkdir /etc/kubernetes
-chkdir /etc/kubernetes/addons
-chkdir /etc/systemd
-chkdir /var/lib
-chkdir /var/lib/localkube
-chkdir /var/lib/localkube/certs
-chkdir /lib/systemd/system
+main () {
+  chkdir /etc/kubernetes
+  chkdir /etc/kubernetes/addons
+  chkdir /etc/systemd
+  chkdir /var/lib
+  chkdir /var/lib/localkube
+  chkdir /var/lib/localkube/certs
+  chkdir /lib/systemd/system
 
 
-if [[ ! -e "$HOME/.local/bin/helm" ]]; then
-  gethelm
-fi
+  if [[ ! -e "$HOME/.local/bin/helm" ]]; then
+    gethelm
+  fi
+}
+
+main $@
