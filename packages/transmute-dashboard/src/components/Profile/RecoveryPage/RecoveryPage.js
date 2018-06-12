@@ -26,15 +26,15 @@ const styles = theme => ({
   }
 });
 
-class RevocationPage extends Component {
+class RecoveryPage extends Component {
 
   handleSubmit = (formData) => {
-    this.props.revokeWithPublicKeys(this.props.auth, formData);
+    this.props.recoverWithPublicKeys(this.props.auth, formData);
   };
 
   componentWillReceiveProps = (nextProps) => {
-    if (nextProps.user.revocation) {
-      history.push('/profile/recover');
+    if (nextProps.user.recovery) {
+      history.push('/profile');
     }
   }
 
@@ -59,7 +59,7 @@ class RevocationPage extends Component {
 
           <KeyUploadForm
             onSubmit={this.handleSubmit}
-            action={'Upload Revocation Keys'}
+            action={'Upload Recovery Keys'}
             user={user}
           />
 
@@ -85,9 +85,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    revokeWithPublicKeys: async (auth, formData) => {
+    recoverWithPublicKeys: async (auth, formData) => {
       const { ed25519, secp256k1 } = formData;
-      const action = await actions.revoke(auth, {
+      const action = await actions.recover(auth, {
         ed25519,
         secp256k1
       });
@@ -98,6 +98,6 @@ const mapDispatchToProps = dispatch => {
 
 export default withStyles(styles)(
   connect(mapStateToProps, mapDispatchToProps)(
-    withAuth(RevocationPage)
+    withAuth(RecoveryPage)
   )
 );

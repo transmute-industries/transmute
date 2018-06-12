@@ -21,7 +21,7 @@ export const register = async ({ edArmorPub, secArmorPub }) => {
     });
 };
 
-export const revoke = async ({ auth, edRevArmorPub, secRevArmorPub }) => {
+export const revoke = async (auth, { edArmorPub, secArmorPub }) => {
   let access_token = await auth.getAccessToken();
   let user = await auth.getUser();
   return axios
@@ -34,12 +34,12 @@ export const revoke = async ({ auth, edRevArmorPub, secRevArmorPub }) => {
       }
     })
     .post(`/api/v0/users/${user.sub}/revoke`, {
-      edRevArmorPub,
-      secRevArmorPub
+      edArmorPub,
+      secArmorPub
     });
 };
 
-export const recover = async ({ auth, edRecArmorPub, secRecArmorPub }) => {
+export const recover = async (auth, { edArmorPub, secArmorPub }) => {
   let access_token = await auth.getAccessToken();
   let user = await auth.getUser();
   return axios
@@ -52,8 +52,8 @@ export const recover = async ({ auth, edRecArmorPub, secRecArmorPub }) => {
       }
     })
     .post(`/api/v0/users/${user.sub}/recover`, {
-      edRecArmorPub,
-      secRecArmorPub
+      edArmorPub,
+      secArmorPub
     });
 };
 

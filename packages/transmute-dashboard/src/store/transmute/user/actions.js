@@ -24,11 +24,11 @@ export const register = async ({ ed25519, secp256k1 }) => {
   }
 };
 
-export const revoke = async ({ ed25519, secp256k1 }) => {
+export const revoke = async(auth, { ed25519, secp256k1 }) => {
   try {
-    let response = await middleware.revoke({
-      edRevArmorPub: ed25519,
-      secRevArmorPub: secp256k1
+    let response = await middleware.revoke(auth, {
+      edArmorPub: ed25519,
+      secArmorPub: secp256k1
     });
     return actionCreators.revocationSuccess({
       ...response.data
@@ -46,11 +46,12 @@ export const revoke = async ({ ed25519, secp256k1 }) => {
   }
 };
 
-export const recover = async ({ ed25519, secp256k1 }) => {
+export const recover = async(auth, { ed25519, secp256k1 }) => {
+  console.log('recover');
   try {
-    let response = await middleware.recover({
-      edRecArmorPub: ed25519,
-      secRecArmorPub: secp256k1
+    let response = await middleware.recover(auth, {
+      edArmorPub: ed25519,
+      secArmorPub: secp256k1
     });
     return actionCreators.recoverySuccess({
       ...response.data
@@ -68,9 +69,9 @@ export const recover = async ({ ed25519, secp256k1 }) => {
   }
 };
 
-export const loginApiCall = (oktaAuth, email, password) => {
+export const loginApiCall = (auth, email, password) => {
   return dispatch => {
-    return oktaAuth
+    return auth
       .signIn({
         username: email,
         password: password

@@ -187,15 +187,26 @@ class ProfilePage extends Component {
           </Grid>}
 
           <Grid item md={12}>
-            <Button
-              variant="raised"
-              color="primary"
-              onClick={() => {
-                history.push('/profile/revoke');
-              }}
-            >
-              Upload Revocation Keys
+            {profile.secRevPubKey && profile.edRevPubKey ?
+              <Button
+                variant="raised"
+                color="primary"
+                onClick={() => {
+                  history.push('/profile/recover');
+                }}
+              >
+                Upload Recovery Keys
+              </Button> :
+              <Button
+                variant="raised"
+                color="primary"
+                onClick={() => {
+                  history.push('/profile/revoke');
+                }}
+              >
+                Upload Revocation Keys
             </Button>
+            }
 
             <Button
               variant="raised"
