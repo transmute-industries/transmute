@@ -1,5 +1,6 @@
 stages:
   - build
+  - clean
 
 transmute_build:
   stage: build
@@ -13,6 +14,14 @@ transmute_build:
     - rm -Rf /home/travis/.transmute
     - PWD=$(pwd) su -c "cd $PWD; bash -l .ci/ci.sh" - travis
 
+transmute_clean_linux:
+  stage: clean
+  tags:
+    - bionicbeaver
+  image: travisci/ci-connie:packer-1512502287-986baf0
+  script:
+    - echo clean
+
 transmute_build_osx:
   stage: build
   tags:
@@ -23,3 +32,12 @@ transmute_build_osx:
     - sudo bash -c "echo PATH=$HOME/.transmute/bin:$PATH >> $HOME/.bashrc" - $USER
     - sudo bash -c "echo PATH=$HOME/.local/bin:$PATH >> $HOME/.bashrc" - $USER
     - PWD=$(pwd) sudo bash -c "cd $PWD; bash -l .ci/ci.sh" - $USER
+
+transmute_clean_osx:
+  stage: clean
+  tags:
+    - osx-shell
+  image: travisci/ci-connie:packer-1512502287-986baf0
+  script:
+    - minikube delete
+    - rm -Rf $HOME/.transmute
