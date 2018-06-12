@@ -1,13 +1,13 @@
 const run = require('./runner');
-const KUBE_VERSION = process.env.KUBE_VERSION ||  'v1.9.0';
+const TRANSMUTE_KUBE_VERSION = process.env.TRANSMUTE_KUBE_VERSION ||  'v1.9.0';
 const MINIKUBE_CPU = process.env.MINIKUBE_CPU ||  '4';
 const MINIKUBE_MEMORY = process.env.MINIKUBE_MEMORY ||  '4096';
 const MINIKUBE_DISK = process.env.MINIKUBE_DISK ||  '100g';
 const MINIKUBE_PROFILE = process.env.MINIKUBE_PROFILE ||  'transmute-k8s';
 
-export function minikube( clusterName, minikubeDriver ) {
+export function minikube( dryrun, clusterName, minikubeDriver ) {
   const minikube_start = 'minikube start '
-    + ' --kubernetes-version ' +  KUBE_VERSION
+    + ' --kubernetes-version ' +  TRANSMUTE_KUBE_VERSION
     + ' --disk-size ' +  MINIKUBE_DISK
     + ' --cpus ' +  MINIKUBE_CPU
     + ' --memory ' +  MINIKUBE_MEMORY;
@@ -32,10 +32,15 @@ export function minikube( clusterName, minikubeDriver ) {
     prov_cmd = minikube_start + ' --vm-driver=virtualbox';
   }
   console.log( prov_cmd );
-  run.ner( prov_cmd );
+  if (dryrun === 'true' ) {
+    console.log( '<--dry run-->' );
+  }
+  else {
+    run.ner( prov_cmd );
+  }
 }
 
-export function aks( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys ) {
+export function aks( dryrun, myResourceGroup, myAKSCluster, myNodeCount, myNodeSize, GenSSHKeys ) {
   run.ner('az provider register -n Microsoft.Network');
   run.ner('az provider register -n Microsoft.Storage');
   run.ner('az provider register -n Microsoft.Compute');
@@ -58,6 +63,13 @@ export function aks( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys ) {
   else {
     var nodes_opt = ' --node-count ' + myNodeCount;
   }
+  if (myNodeSize == undefined ) {
+    console.log('no size given using default')
+    var nodesize_opt = ' ';
+  }
+  else {
+    var nodesize_opt = ' --node-vm-size ' + myNodeSize;
+  }
   if (myResourceGroup == undefined ) {
     throw 'You need to define a group';
   }
@@ -67,6 +79,7 @@ export function aks( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys ) {
   var prov_cmd = 'az aks create '
     + group_opt
     + nodes_opt
+    + nodesize_opt
     + akscluster_opt
     + gensshkeys_opt;
   run.ner(prov_cmd);
@@ -74,6 +87,11 @@ export function aks( myResourceGroup, myAKSCluster, myNodeCount, GenSSHKeys ) {
   var prov_cmd = 'az aks get-credentials '
     + akscluster_opt
     + group_opt
-  run.ner(prov_cmd);
-  console.log(prov_cmd);
+  console.log( prov_cmd );
+  if (dryrun == 'true' ) {
+    console.log( '<--dry run-->' );
+  }
+  else {
+    run.ner( prov_cmd );
+  }
 }

@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /** @module TransmuteCLI */
 
+// Performance
+const {performance} = require('perf_hooks');
+
 // Process env vars
 const MY_ENV = process.env.USE_KUBASH || 'true';
 
@@ -32,8 +35,18 @@ const mixpanel = process.env.MIXPANEL_PROJECT_ID
 vorpal
   .command('k8s init <clustername>')
   .description('Initialize k8s cluster')
+  .option('--dryrun', 'Print out what would be done without executing anything')
   .action(function(args, callback) {
-    init.k8s( args.clustername )
+    var t0 = performance.now();
+    // begin performance test
+      let dryrun = 'false';
+      if (args.options.dryrun) {
+        dryrun = 'true';
+      }
+      init.k8s( dryrun, args.clustername )
+    // end performance test
+    var t1 = performance.now();
+    vorpal.logger.info("Call to transmute init took " + ((t1 - t0) / 1000).toPrecision(4) + " seconds.");
     callback();
   });
 
@@ -45,17 +58,32 @@ vorpal
   .command('k8s provision-azure <clustername> <group>')
   .description('Provision k8s cluster in Azure')
   .option('--gensshkeys', 'Generate SSH keys')
+  .option('--dryrun', 'Print out what would be done without executing anything')
   .option('--nodes <nodes>', 'How many nodes to create the cluster with')
+  .option('--nodesize <nodesize>', 'Specify the size of nodes to create the cluster with')
   .action(function(args, callback) {
+    var t0 = performance.now();
+    // begin performance test
+      let dryrun = 'false';
+      if (args.options.dryrun) {
+        dryrun = 'true';
+      }
       let myNodeCount = 3;
       if (args.options.nodes) {
         myNodeCount = args.options.nodes;
+      }
+      let myNodeSize = 'Standard_D2_v2';
+      if (args.options.nodesize) {
+        myNodeSize = args.options.nodesize;
       }
       let GenSSHKeys = false;
       if (args.options.gensshkeys) {
         GenSSHKeys = true;
       }
-      provision.aks( args.group, args.clustername, myNodeCount, GenSSHKeys );
+      provision.aks( dryrun, args.group, args.clustername, myNodeCount, myNodeSize, GenSSHKeys );
+    // end performance test
+    var t1 = performance.now();
+    vorpal.logger.info("Call to transmute provision took " + ((t1 - t0) / 1000).toPrecision(4) + " seconds.");
     callback();
   });
 
@@ -69,12 +97,23 @@ vorpal
   .description('Provision k8s cluster')
   .option('--nodes <nodes>', 'How many nodes to create the cluster with')
   .option('--vmdriver <vmdriver>', 'The cluster name to create the cluster with')
+  .option('--dryrun', 'Print out what would be done without executing anything')
   .action(function(args, callback) {
-      if (args.options.vmdriver) {
-        provision.minikube( args.clustername, args.options.vmdriver );
-      } else {
-        provision.minikube( args.clustername );
+    var t0 = performance.now();
+    // begin performance test
+      let dryrun = 'false';
+      if (args.options.dryrun) {
+        console.log('dry run');
+        dryrun = 'true';
       }
+      if (args.options.vmdriver) {
+        provision.minikube( dryrun, args.clustername, args.options.vmdriver );
+      } else {
+        provision.minikube( dryrun, args.clustername );
+      }
+    // end performance test
+    var t1 = performance.now();
+    vorpal.logger.info("Call to transmute provision took " + ((t1 - t0) / 1000).toPrecision(4) + " seconds.");
     callback();
   });
 
