@@ -24,6 +24,8 @@ TRAVIS_BUILD_DIR=$CWD
 
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
   bash .ci/linux_before_install.sh
+elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+  bash .ci/mac_before_install.sh
 fi
 cd $CWD
 echo pwd pwd
