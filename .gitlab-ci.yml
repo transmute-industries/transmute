@@ -57,4 +57,4 @@ transmute_clean_docker:
     - docker
   image: travisci/ci-connie:packer-1512502287-986baf0
   script:
-    - echo clean
+    - echo cleaner
