@@ -630,24 +630,29 @@ fi
 # however this will
 if [ "$TRAVIS" = 'true' ]; then
   echo 'travis ci skipping git actions'
-elif [ -e "$TRANSMUTE_REPO" ]; then
-  squawk 3 "$TRANSMUTE_REPO exists already, proceeding"
-  squawk 3 'Updating the transmute repo'
-  cd $TRANSMUTE_REPO
-  git fetch --tags
-  git checkout $TRANSMUTE_RELEASE
-  git submodule update --init
-  cd $CWD
 else
-  cd $TRANSMUTE_DIR/git
-  squawk 3 'Cloning the latest transmute repo'
-  git clone --depth=1 \
-   https://github.com/transmute-industries/transmute.git
-  cd $TRANSMUTE_REPO
-  git fetch --tags
-  git checkout $TRANSMUTE_RELEASE
-  git submodule update --init
-  cd $CWD
+  if [ -e "$TRANSMUTE_REPO" ]; then
+    squawk 3 "$TRANSMUTE_REPO exists already, proceeding"
+    squawk 3 'Updating the transmute repo'
+    cd $TRANSMUTE_REPO
+    git fetch --tags
+    git checkout $TRANSMUTE_RELEASE
+    git submodule update --init
+    cd $CWD
+  else
+    cd $TRANSMUTE_DIR/git
+    squawk 3 "$TRANSMUTE_REPO does not exist already, proceeding"
+    ls -alh $TRANSMUTE_REPO
+    squawk 3 'Cloning the latest transmute repo'
+    ls -alh
+    git clone --depth=1 \
+     https://github.com/transmute-industries/transmute.git
+    cd $TRANSMUTE_REPO
+    git fetch --tags
+    git checkout $TRANSMUTE_RELEASE
+    git submodule update --init
+    cd $CWD
+  fi
 fi
 
 if [ "$FIX_DOTFILES" = "true" ]; then
