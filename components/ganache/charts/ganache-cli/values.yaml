@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: trufflesuite/ganache-cli
-  tag: latest
+  tag: v6.1.0
   pullPolicy: IfNotPresent
 
 service:

@@ -3,12 +3,14 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
+import { withAuth } from '@okta/okta-react';
 
 import { connect } from 'react-redux';
 
 import logo from '../../../images/logo-icon-purple.svg';
 import * as actions from '../../../store/transmute/user/actions';
 import KeyUploadForm from '../../KeyUploadForm';
+import { history } from '../../../store';
 
 const styles = theme => ({
   root: {
@@ -24,11 +26,22 @@ const styles = theme => ({
   }
 });
 
-class RegisterPage extends Component {
+class RecoveryPage extends Component {
+
+  handleSubmit = (formData) => {
+    this.props.recoverWithPublicKeys(this.props.auth, formData);
+  };
+
+  componentWillReceiveProps = (nextProps) => {
+    if (nextProps.user.recovery) {
+      history.push('/profile');
+    }
+  }
 
   render() {
-    const { classes, user, registerWithActivationEmail } = this.props;
-    const registerForm = (
+    const { classes, user } = this.props;
+
+    return (
       <Grid
         container
         spacing={16}
@@ -45,14 +58,14 @@ class RegisterPage extends Component {
           </Grid>
 
           <KeyUploadForm
-            onSubmit={registerWithActivationEmail}
-            action={'Register'}
+            onSubmit={this.handleSubmit}
+            action={'Upload Recovery Keys'}
             user={user}
           />
 
           <Grid container item xs={9} alignItems='center' justify='center' alignContent='center'>
             <h4 className={classNames(classes.text)}>
-              <a href="https://github.com/transmute-industries/transmute/wiki/Registration">
+              <a href="https://github.com/transmute-industries/transmute/wiki/Recovery">
                 Key Generation Instructions
               </a>{' '}
             </h4>
@@ -60,16 +73,6 @@ class RegisterPage extends Component {
         </Grid>
       </Grid>
     );
-
-    const registrationSuccess = (
-      <Grid container className={classNames(classes.root)}>
-        <Grid item xs={12}>
-          <h1>We have sent you an email!</h1>
-          <h2>Follow the instructions to activate your account.</h2>
-        </Grid>
-      </Grid>
-    );
-    return !user.registration ? registerForm : registrationSuccess;
   }
 }
 
@@ -82,9 +85,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    registerWithActivationEmail: async formData => {
+    recoverWithPublicKeys: async (auth, formData) => {
       const { ed25519, secp256k1 } = formData;
-      const action = await actions.register({
+      const action = await actions.recover(auth, {
         ed25519,
         secp256k1
       });
@@ -94,5 +97,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default withStyles(styles)(
-  connect(mapStateToProps, mapDispatchToProps)(RegisterPage)
+  connect(mapStateToProps, mapDispatchToProps)(
+    withAuth(RecoveryPage)
+  )
 );

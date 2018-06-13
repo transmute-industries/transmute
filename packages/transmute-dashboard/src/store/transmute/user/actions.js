@@ -24,9 +24,54 @@ export const register = async ({ ed25519, secp256k1 }) => {
   }
 };
 
-export const loginApiCall = (oktaAuth, email, password) => {
+export const revoke = async(auth, { ed25519, secp256k1 }) => {
+  try {
+    let response = await middleware.revoke(auth, {
+      edArmorPub: ed25519,
+      secArmorPub: secp256k1
+    });
+    return actionCreators.revocationSuccess({
+      ...response.data
+    });
+  } catch (e) {
+    if (e.response && e.response.data) {
+      return actionCreators.revocationError({
+        ...e.response.data
+      });
+    } else {
+      return actionCreators.revocationError({
+        ...e
+      });
+    }
+  }
+};
+
+export const recover = async(auth, { ed25519, secp256k1 }) => {
+  console.log('recover');
+  try {
+    let response = await middleware.recover(auth, {
+      edArmorPub: ed25519,
+      secArmorPub: secp256k1
+    });
+    return actionCreators.recoverySuccess({
+      ...response.data
+    });
+  } catch (e) {
+    if (e.response && e.response.data) {
+      return actionCreators.recoveryError({
+        ...e.response.data
+      });
+    } else {
+      return actionCreators.recoveryError({
+        ...e
+      });
+    }
+  }
+};
+
+export const loginApiCall = (auth, email, password) => {
   return dispatch => {
-    return oktaAuth
+    return auth
       .signIn({
         username: email,
         password: password
