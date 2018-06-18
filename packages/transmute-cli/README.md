@@ -12,7 +12,28 @@ npm run transmute
 npm run transmute help
 ```
 
-## Provision
+
+### login
+
+`transmute login`
+
+This will use PKCE to login witj okta. A JWT will be stored here:
+
+`~/.transmute/cli-secrets/session.json`
+
+This is for use with the centralized transmute API.
+
+
+### telemetry
+
+`transmute telemetry <on|off>`
+
+This will turn on or off telemetry sending to mixpanel.
+
+To override the mixpanel project id, you can set the env variable `MIXPANEL_PROJECT_ID`.
+
+
+## Cluster Support
 
 ### provision-minikube
 
@@ -33,12 +54,3 @@ k8s cluster using azure by default.
 `transmute k8s init mytransmutek8s`
 
 This will prepare your cluster with the base transmute k8s deployment.
-
-
-### telemetry
-
-`transmute telemetry <on|off>`
-
-This will turn on or off telemetry sending to mixpanel.
-
-To override the mixpanel project id, you can set the env variable `MIXPANEL_PROJECT_ID`.

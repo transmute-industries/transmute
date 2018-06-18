@@ -1,6 +1,6 @@
 const http = require('http');
 const URL = require('url-parse');
-const formurlencoded = require('form-urlencoded');
+const formurlencoded = require('form-urlencoded').default;
 const request = require('request');
 const port = 3001;
 
@@ -40,7 +40,9 @@ module.exports = code_verifier => {
       };
 
       request(options, function(error, resp, body) {
-        if (error) throw new Error(error);
+        if (error) {
+          reject(error);
+        }
 
         res.end(`
         <!DOCTYPE html>
