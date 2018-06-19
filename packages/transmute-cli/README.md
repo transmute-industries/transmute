@@ -17,7 +17,7 @@ npm run transmute help
 
 `transmute login`
 
-This will use PKCE to login witj okta. A JWT will be stored here:
+This will use PKCE to login with okta. A JWT will be stored here:
 
 `~/.transmute/cli-secrets/session.json`
 
