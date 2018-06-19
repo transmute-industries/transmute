@@ -38,7 +38,7 @@ function sha256(buffer) {
  * This session object is returned from the okta authentication process.
  * @name okta_session_object
  * @param {Object} session - returned from the okta auth process.
- * @param {string} session.access_token - A signed but not encrypted JWT 
+ * @param {string} session.access_token - A signed but not encrypted JWT
  * @param {string} session.token_type - Usually 'Bearer'
  * @param {string} session.expires_in - Expiration in seconds
  * @param {string} session.scope - Usually 'openid'
@@ -66,10 +66,10 @@ export const login = async () => {
 
   let home = require('os').homedir();
 
-  await writeFile(
-    path.join(home, '.transmute/cli-secrets/session.json'),
-    JSON.stringify(response, null, 2)
-  );
+  let sessionPath = path.join(home, '.transmute/cli-secrets/session.json');
+  await writeFile(sessionPath, JSON.stringify(response, null, 2));
+
+  console.log('session saved: ', sessionPath);
 
   return response;
 };

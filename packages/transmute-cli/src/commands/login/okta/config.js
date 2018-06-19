@@ -1,6 +1,6 @@
 module.exports = {
-  client_id: '0oaeswnoqkshNCx0G0h7',
-  okta_host: 'dev-665774.oktapreview.com',
-  audience: 'api://default',
+  client_id: '0oa2plk4LwtZl3vom355',
+  okta_host: 'transmute-api.okta.com',
+  audience: '0oa2plk4LwtZl3vom355',
   redirect_uri: 'http://localhost:3001/callback'
 };
