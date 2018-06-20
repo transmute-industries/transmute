@@ -1,6 +1,6 @@
 export default {
-  url: 'https://dev-665774.oktapreview.com',
-  issuer: 'https://dev-665774.oktapreview.com/oauth2/default',
+  url: 'https://transmute-api.okta.com',
+  issuer: 'https://transmute-api.okta.com/oauth2/default',
   redirect_uri: window.location.origin + '/implicit/callback',
-  client_id: '0oaeszrkwvP4Z4SHL0h7'
+  client_id: '0oa2q6aamks2S0Ai3355'
 };

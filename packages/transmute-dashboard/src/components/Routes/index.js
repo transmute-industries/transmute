@@ -16,7 +16,6 @@ import Home from '../Home';
 import Demo from '../Demo';
 import Register from '../Auth/Register';
 import ProfilePage from '../Profile';
-import RevocationPage from '../Profile/RevocationPage';
 import RecoveryPage from '../Profile/RecoveryPage';
 import DirectoryPage from '../DirectoryPage';
 import DirectoryProfilePage from '../DirectoryPage/DirectoryProfilePage';
@@ -45,7 +44,6 @@ class Routes extends React.Component {
           <Route path="/demo" component={Demo} />
           <Route path="/register" exact render={() => <Register />} />
           <Route path="/implicit/callback" component={ImplicitCallback} />
-          <SecureRoute path="/profile/revoke" exact render={() => <RevocationPage />} />
           <SecureRoute path="/profile/recover" exact render={() => <RecoveryPage />} />
           <SecureRoute path="/profile" exact render={() => <ProfilePage />} />
           <SecureRoute

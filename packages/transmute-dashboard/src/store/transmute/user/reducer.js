@@ -16,13 +16,6 @@ export default (state = initialState, action) => {
       };
     case Constants.REGISTRATION_ERROR:
       return Object.assign({}, state, { error: action.payload });
-    case Constants.REVOCATION_SUCCESS:
-      return {
-        ...state,
-        revocation: action.payload
-      };
-    case Constants.REVOCATION_ERROR:
-      return Object.assign({}, state, { error: action.payload });
     case Constants.RECOVERY_SUCCESS:
       return {
         ...state,

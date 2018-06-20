@@ -83,10 +83,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     registerWithActivationEmail: async formData => {
-      const { ed25519, secp256k1 } = formData;
       const action = await actions.register({
-        ed25519,
-        secp256k1
+        primaryKey: formData.primary_key,
+        recoveryKey: formData.recovery_key
       });
       dispatch(action);
     }

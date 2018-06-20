@@ -30,8 +30,6 @@ class ProfilePage extends Component {
       profile: null,
       error: null
     };
-    this.handleRevocationUpload = this.handleRevocationUpload.bind(this);
-    this.handleOpenRevocationModal = this.handleOpenRevocationModal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -55,12 +53,6 @@ class ProfilePage extends Component {
     this.setState({
       profile: { ...this.state.profile, [name]: event.target.value }
     });
-  };
-
-  async handleRevocationUpload(e) {
-  };
-
-  async handleOpenRevocationModal(e) {
   };
 
   async componentWillMount() {
@@ -126,56 +118,13 @@ class ProfilePage extends Component {
 
           <Grid item md={12}>
             <FormControl className={classNames(classes.margin, classes.formControl)}>
-              <InputLabel>ED25519 Public Key</InputLabel>
+              <InputLabel>DID Document</InputLabel>
               <Input
                 id="ed-public-key"
                 type="text"
                 disabled={true}
                 multiline={true}
-                value={profile.edPubKey}
-                onChange={this.handleChange('edPubKey')}
-              />
-            </FormControl>
-          </Grid>
-
-          <Grid item md={12}>
-            <FormControl className={classNames(classes.margin, classes.formControl)}>
-              <InputLabel>ED25519 Revocation Key</InputLabel>
-              <Input
-                id="ed-rev-key"
-                type="text"
-                disabled={true}
-                multiline={true}
-                value={profile.edRevPubKey}
-                onChange={this.handleChange('edRevPubKey')}
-              />
-            </FormControl>
-          </Grid>
-
-          <Grid item md={12}>
-            <FormControl className={classNames(classes.margin, classes.formControl)}>
-              <InputLabel>SECP256K1 Public Key</InputLabel>
-              <Input
-                id="sec-public-key"
-                type="text"
-                disabled={true}
-                multiline={true}
-                value={profile.secPubKey}
-                onChange={this.handleChange('secPubKey')}
-              />
-            </FormControl>
-          </Grid>
-
-          <Grid item md={12}>
-            <FormControl className={classNames(classes.margin, classes.formControl)}>
-              <InputLabel>SECP256K1 Revocation Key</InputLabel>
-              <Input
-                id="sec-rev-key"
-                type="text"
-                disabled={true}
-                multiline={true}
-                value={profile.secRevPubKey}
-                onChange={this.handleChange('secRevPubKey')}
+                value={profile.didDocument}
               />
             </FormControl>
           </Grid>
@@ -187,26 +136,15 @@ class ProfilePage extends Component {
           </Grid>}
 
           <Grid item md={12}>
-            {profile.secRevPubKey && profile.edRevPubKey ?
-              <Button
-                variant="raised"
-                color="primary"
-                onClick={() => {
-                  history.push('/profile/recover');
-                }}
-              >
-                Upload Recovery Keys
-              </Button> :
-              <Button
-                variant="raised"
-                color="primary"
-                onClick={() => {
-                  history.push('/profile/revoke');
-                }}
-              >
-                Upload Revocation Keys
+            <Button
+              variant="raised"
+              color="primary"
+              onClick={() => {
+                history.push('/profile/recover');
+              }}
+            >
+              Upload Recovery Keys
             </Button>
-            }
 
             <Button
               variant="raised"
