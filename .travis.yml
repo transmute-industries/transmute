@@ -87,11 +87,11 @@ before_script:
   - cd $TRAVIS_BUILD_DIR
 
 script:
+  - if [[ ! -e "/usr/local/bin/minikube" ]]; then curl -Lo minikube https://storage.googleapis.com/minikube/releases/$MINIKUBE_VERSION/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/; fi
   - bash -l -c "transmute k8s provision-minikube travis_test_cluster --vmdriver none"
   - bash -l -c "transmute k8s init travis_test_cluster"
-  
+
 #   # This appears to be necessary for the time being otherwise minikube fails to start if it is only present in the ~/.transmute/bin directory
-# - if [[ ! -e "/usr/local/bin/minikube" ]]; then curl -Lo minikube https://storage.googleapis.com/minikube/releases/$MINIKUBE_VERSION/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/; fi
 # - mkdir -p $HOME/.local/bin
 # - cd $HOME; rm -Rf .transmute; mkdir -p .transmute/git; cd .transmute/git; ln -s $TRAVIS_BUILD_DIR transmute
 # - cd $TRAVIS_BUILD_DIR
