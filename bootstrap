@@ -262,9 +262,9 @@ install_certbot () {
   if ! type "certbot-auto" >/dev/null 2>/dev/null; then
     TMP=$(mktemp -d)
     cd $TMP
-    wget https://dl.eff.org/certbot-auto
+    curl -O https://dl.eff.org/certbot-auto
     chmod a+x ./certbot-auto
-    wget -N https://dl.eff.org/certbot-auto.asc
+    curl -O https://dl.eff.org/certbot-auto.asc
     if type "gpg2" >/dev/null 2>/dev/null; then
       set +e
       gpg2 --recv-key A2CFB51FA275A7286234E7B24D17C995CD9775F2
@@ -483,7 +483,7 @@ install_jq () {
   fi
 }
 
-transmute-cli_install () {
+transmute_cli_install () {
   cd $TRANSMUTE_REPO/packages/transmute-cli
   npm i
   npm run build
@@ -523,7 +523,7 @@ windowsreqs () {
   install_jq
   dotfiles_install
   transmute_env_install
-  transmute-cli_install
+  transmute_cli_install
 }
 
 macreqs () {
@@ -550,7 +550,7 @@ macreqs () {
   install_jq
   dotfiles_install
   transmute_env_install
-  transmute-cli_install
+  transmute_cli_install
 }
 
 linuxreqs () {
@@ -571,7 +571,7 @@ linuxreqs () {
   install_jq
   dotfiles_install
   transmute_env_install
-  transmute-cli_install
+  transmute_cli_install
 }
 
 initializer () {
