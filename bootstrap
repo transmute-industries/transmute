@@ -34,23 +34,23 @@ squawk () {
       printf "#"
       count_squawk=`expr $count_squawk + 1`
     done
-    echo " $squawk"
+    printf " $squawk \n"
   fi
 }
 
 # Check for config env file
+# THIS IS NOT USED, AND SHOULD BE REMOVED
 if [ -e $TRANSMUTE_DIR/.env ]; then
   source $TRANSMUTE_DIR/.env
   if [ $TRANSMUTE_VERBOSITY -gt '0' ]; then
-    ls -al $TRANSMUTE_DIR/.env
-    env file found and sourced
+    # ls -al $TRANSMUTE_DIR/.env
+    printf "env file found and sourced.\n"
   fi
 fi
 
 errror () {
-  echo "-------------------------------------------------------------"
-  echo -e "\n \n  "
-  echo "ERROR!!!  --  "
+  printf "-------------------------------------------------------------\n"
+  printf "ERROR!!!  --  "
 }
 
 # Check if a command exists
@@ -122,6 +122,7 @@ mackubectl () {
     # The package is not installed
     squawk 3 'Installing kubectl'
     brew install kubectl
+    brew link kubernetes-cli
   fi
 }
 
@@ -140,7 +141,7 @@ machelm () {
 	
   if brew ls --versions kubernetes-helm > /dev/null; then
     # The package is installed
-    printf "helm installed, skipping."
+    printf "helm installed, skipping.\n"
   else
     # The package is not installed
     squawk 3 'Installing helm'
@@ -324,22 +325,7 @@ install_nvm () {
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 }
 
-announce_prefix_fail () {
-  echo "failed to write to the npm prefix directory, you should set your npm prefix to a directory you can write to"
-  echo "The following documentation details this procedure: https://docs.npmjs.com/getting-started/fixing-npm-permissions"
-}
 
-check_prefix_npm () {
-
-  trap announce_prefix_fail EXIT
-  TMP_FILE=$(mktemp $(npm config get prefix)/tmp.XXXXXXXXXX)
-  if [ "$?" -ne 0 ]; then
-    announce_prefix_fail
-  else
-    rm $TMP_FILE
-  fi
-  trap - EXIT
-}
 
 install_lerna_npm () {
   if ! type "lerna" >/dev/null 2>/dev/null; then
@@ -484,10 +470,7 @@ install_jq () {
 }
 
 transmute_cli_install () {
-  cd $TRANSMUTE_REPO/packages/transmute-cli
-  npm i
-  npm run build
-  npm i -g
+  npm i -g transmute-cli
 }
 
 transmute_env_install () {
@@ -515,7 +498,6 @@ windowsreqs () {
   windowsnsenter
   install_nvm
   lts_install
-  check_prefix_npm
   install_ngrok_npm
   install_truffle_npm
   install_lerna_npm
@@ -542,7 +524,6 @@ macreqs () {
   macreadlink
   install_nvm
   lts_install
-  check_prefix_npm
   install_ngrok_npm
   install_truffle_npm
   install_lerna_npm
@@ -563,7 +544,6 @@ linuxreqs () {
   install_helm_linux
   install_nvm
   lts_install
-  check_prefix_npm
   install_ngrok_npm
   install_truffle_npm
   install_lerna_npm
@@ -574,21 +554,6 @@ linuxreqs () {
   transmute_cli_install
 }
 
-initializer () {
-  ls  $TRANSMUTE_DIR/git
-  ls $TRANSMUTE_DIR/git/transmute
-  set +e
-  cd $TRANSMUTE_DIR/git/transmute/transmute-config
-  set -e
-  cp .example.env .env
-  set +e
-  cd $TRANSMUTE_DIR/git/transmute
-  set -e
-  npm i
-  set +e
-  cd $CWD
-  set -e
-}
 
 run_it () {
 set -e
@@ -644,7 +609,7 @@ if [[ "$USE_WARN" == 'y' ]]; then
 fi
 
 squawk 3 "Checking $TRANSMUTE_DIR"
-mkdir -p $TRANSMUTE_DIR/git
+
 mkdir -p $TRANSMUTE_BIN
 
 if [ -e "$TRANSMUTE_DIR/git" ]; then
@@ -702,22 +667,19 @@ squawk 3 'check minikube'
 check_cmd minikube
 #check_cmd nsenter
 
-squawk 3 'Initializer'
-initializer
-
 echo 'The bootstrap has finished'
-echo 'you have completed all the way to "npm run setup" here:'
-echo 'https://github.com/transmute-industries/transmute#environment-scripts-and-updating'
+echo 'You can now use the transmute-cli to develop dapps!:'
+echo 'https://github.com/transmute-industries/transmute#setup'
 if [ "$PLATFORM" = "os.osx.x86_64" ] ; then
   SETUP_DIR=$(greadlink -f $TRANSMUTE_DIR)
 else
   SETUP_DIR=$(readlink -f $TRANSMUTE_DIR)
 fi
+
 echo "First you will need to source your ~/.bashrc or ~/.zshrc file"
-echo "Then you should be able run 'npm run setup' inside '$SETUP_DIR'"
 
 trap - EXIT
-# End run it wrapper
+# End run_it wrapper
 }
 
 check_cmd mktemp
