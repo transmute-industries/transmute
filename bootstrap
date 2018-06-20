@@ -219,7 +219,7 @@ install_helm_linux () {
   if ! type "helm" >/dev/null 2>/dev/null; then
     TMP=$(mktemp -d)
     HELM_VERSION='v2.8.2'
-    HELM_PREFIX="$HOME/.local/bin"
+    HELM_PREFIX="$HOME/.transmute/bin"
     HELM_URL="https://storage.googleapis.com/kubernetes-helm/helm-$HELM_VERSION-linux-amd64.tar.gz"
 
     echo "Installing $HELM_VERSION"

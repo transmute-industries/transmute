@@ -77,7 +77,6 @@ matrix:
 
 
 before_script:
-- bash -l -c "echo PATH=$HOME/.local/bin:$PATH >> $HOME/.bashrc"
 - TRANSMUTE_RELEASE=$TRAVIS_BRANCH bash -l ./bootstrap
 # - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash .ci/linux_before_install.sh; fi
 # - bash -l -c "echo PATH=$HOME/.transmute/bin:$PATH >> $HOME/.bashrc"
