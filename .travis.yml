@@ -68,12 +68,12 @@ matrix:
     #     - HELM_VERSION=v2.8.2
     #     - NVM_DIR="$HOME/.nvm"
     #     - HELM_SHA256=0521956fa22be33189cc825bb27b3f4178c5ce9a448368b5c81508d446472715
-      cache:
-        directories:
-          - /home/travis/.minikube
-          - /home/travis/.local
-          - /home/travis/.nvm
-          - /home/travis/.transmute
+      # cache:
+      #   directories:
+      #     - /home/travis/.minikube
+      #     - /home/travis/.local
+      #     - /home/travis/.nvm
+      #     - /home/travis/.transmute
 
 
 before_script:
