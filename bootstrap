@@ -536,6 +536,7 @@ macreqs () {
 
 linuxreqs () {
   #linuxreqs: $(TRANSMUTE_BIN) run_dotfiles minikube kubectl helm nsenter
+  sudo apt-get update
   install_curl
   install_git
   install_socat
