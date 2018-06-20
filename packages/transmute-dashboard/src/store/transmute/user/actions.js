@@ -2,11 +2,11 @@
 import * as actionCreators from './actionCreators';
 import * as middleware from './middleware';
 
-export const register = async ({ ed25519, secp256k1 }) => {
+export const register = async ({ primaryKey, recoveryKey }) => {
   try {
     let response = await middleware.register({
-      edArmorPub: ed25519,
-      secArmorPub: secp256k1
+      primaryKey,
+      recoveryKey
     });
     return actionCreators.registerSuccess({
       ...response.data
@@ -47,7 +47,6 @@ export const revoke = async(auth, { ed25519, secp256k1 }) => {
 };
 
 export const recover = async(auth, { ed25519, secp256k1 }) => {
-  console.log('recover');
   try {
     let response = await middleware.recover(auth, {
       edArmorPub: ed25519,

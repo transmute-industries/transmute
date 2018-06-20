@@ -9,10 +9,10 @@ const openpgp = require('openpgp');
 class KeyUploadForm extends React.Component {
   state = {
     error: null,
-    ed25519: null,
-    ed25519_filename: null,
-    secp256k1: null,
-    secp256k1_filename: null
+    primary_key: null,
+    primary_key_filename: null,
+    recovery_key: null,
+    recovery_key_filename: null
   };
 
   handleSubmit = e => {
@@ -33,9 +33,9 @@ class KeyUploadForm extends React.Component {
       try {
         pub = openpgp.key.readArmored(reader.result).keys[0];
 
-        if (pub.primaryKey.params[0].getName() !== key) {
+        if (pub.primaryKey.params[0].getName() !== 'secp256k1') {
           this.setState({
-            error: `Uploaded key is ${pub.primaryKey.params[0].getName()}, please upload a ${key} key`
+            error: `Uploaded key is ${pub.primaryKey.params[0].getName()}, please upload a secp256k1 key`
           });
         } else {
           this.setState({
@@ -56,10 +56,10 @@ class KeyUploadForm extends React.Component {
   render() {
     const { user, action } = this.props;
     const {
-      ed25519,
-      ed25519_filename,
-      secp256k1,
-      secp256k1_filename,
+      primary_key,
+      primary_key_filename,
+      recovery_key,
+      recovery_key_filename,
       error
     } = this.state;
 
@@ -68,37 +68,9 @@ class KeyUploadForm extends React.Component {
         <Grid container item xs={12} justify='center'>
           <FormControl>
             <input
-              id="edKeyFile"
-              type="file"
-              onChange={this.handleKeyUpload('ed25519').bind(this)}
-              style={{
-                width: 0,
-                height: 0,
-                opacity: 0,
-                overflow: 'hidden',
-                position: 'absolute',
-                zIndex: 1
-              }}
-            />
-            <Button
-              color="secondary"
-              variant="raised"
-              component="label"
-              htmlFor="edKeyFile"
-            >
-              {ed25519 == null
-                ? 'Upload ED25519 Armored Public Key'
-                : ed25519_filename}
-            </Button>
-          </FormControl>
-        </Grid>
-
-        <Grid container item xs={12} justify='center'>
-          <FormControl>
-            <input
               id="secKeyFile"
               type="file"
-              onChange={this.handleKeyUpload('secp256k1').bind(this)}
+              onChange={this.handleKeyUpload('primary_key').bind(this)}
               style={{
                 width: 0,
                 height: 0,
@@ -114,9 +86,37 @@ class KeyUploadForm extends React.Component {
               component="label"
               htmlFor="secKeyFile"
             >
-              {secp256k1 == null
-                ? 'Upload SECP256K1 Armored Public Key'
-                : secp256k1_filename}
+              {primary_key == null
+                ? 'Upload Armored SECP256K1 Primary Key'
+                : primary_key_filename}
+            </Button>
+          </FormControl>
+        </Grid>
+
+        <Grid container item xs={12} justify='center'>
+          <FormControl>
+            <input
+              id="secRecoveryKeyFile"
+              type="file"
+              onChange={this.handleKeyUpload('recovery_key').bind(this)}
+              style={{
+                width: 0,
+                height: 0,
+                opacity: 0,
+                overflow: 'hidden',
+                position: 'absolute',
+                zIndex: 1
+              }}
+            />
+            <Button
+              color="secondary"
+              variant="raised"
+              component="label"
+              htmlFor="secRecoveryKeyFile"
+            >
+              {recovery_key == null
+                ? 'Upload Armored SECP256K1 Recovery Key'
+                : recovery_key_filename}
             </Button>
           </FormControl>
         </Grid>
@@ -127,7 +127,7 @@ class KeyUploadForm extends React.Component {
               variant="raised"
               color="secondary"
               disabled={
-                this.state.ed25519 == null || this.state.secp256k1 == null
+                this.state.primary_key == null || this.state.recovery_key == null
               }
               onClick={this.handleSubmit}
             >
