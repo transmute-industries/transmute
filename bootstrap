@@ -104,23 +104,48 @@ add_line_to()
 }
 
 macminikube () {
-	squawk 3 'Installing minikube'
-	brew cask install minikube
+  if brew ls --versions minikube > /dev/null; then
+    # The package is installed
+    printf "minikube installed, skipping.\n"
+  else
+    # The package is not installed
+    squawk 3 'Installing minikube'
+    brew cask install minikube
+  fi
 }
 
 mackubectl () {
-	squawk 3 'Installing kubectl'
-	brew install kubectl
+  if brew ls --versions kubectl > /dev/null; then
+    # The package is installed
+    printf "kubectl installed, skipping.\n"
+  else
+    # The package is not installed
+    squawk 3 'Installing kubectl'
+    brew install kubectl
+  fi
 }
 
 install_mac_virtualbox () {
-  squawk 3 'Installing virtualbox'
-	brew cask install virtualbox
+  if brew cask ls --versions virtualbox > /dev/null; then
+    # The package is installed
+    printf "virtualbox installed, skipping.\n"
+  else
+    # The package is not installed
+    squawk 3 'Installing virtualbox'
+    brew cask install virtualbox
+  fi
 }
 
 machelm () {
-	squawk 3 'Installing helm'
-	brew install kubernetes-helm
+	
+  if brew ls --versions kubernetes-helm > /dev/null; then
+    # The package is installed
+    printf "helm installed, skipping."
+  else
+    # The package is not installed
+    squawk 3 'Installing helm'
+    brew install kubernetes-helm
+  fi
 }
 
 macnsenter () {
@@ -130,9 +155,15 @@ macnsenter () {
 
 
 macreadlink () {
-	squawk 3 'Installing coreutils'
-	#Installs 'greadlink' tool
-	brew install coreutils
+  if brew ls --versions coreutils > /dev/null; then
+    # The package is installed
+    printf "coreutils installed, skipping."
+  else
+    # The package is not installed
+    	#Installs 'greadlink' tool
+    squawk 3 'Installing coreutils'
+    brew install coreutils
+  fi
 }
 
 windowsminikube () {
