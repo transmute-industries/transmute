@@ -9,7 +9,7 @@ const ENVS = {
 export const register = async ({ primaryKey, recoveryKey }) => {
   return axios
     .create({
-      baseURL: ENVS.LOCAL,
+      baseURL: ENVS.PROD,
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json'
@@ -21,25 +21,7 @@ export const register = async ({ primaryKey, recoveryKey }) => {
     });
 };
 
-export const revoke = async (auth, { edArmorPub, secArmorPub }) => {
-  let access_token = await auth.getAccessToken();
-  let user = await auth.getUser();
-  return axios
-    .create({
-      baseURL: ENVS.PROD,
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'Authorization': `Bearer ${access_token}`
-      }
-    })
-    .post(`/api/v0/users/${user.sub}/revoke`, {
-      edArmorPub,
-      secArmorPub
-    });
-};
-
-export const recover = async (auth, { edArmorPub, secArmorPub }) => {
+export const recover = async (auth, { primaryKey, recoveryKey }) => {
   let access_token = await auth.getAccessToken();
   let user = await auth.getUser();
   return axios
@@ -52,8 +34,8 @@ export const recover = async (auth, { edArmorPub, secArmorPub }) => {
       }
     })
     .post(`/api/v0/users/${user.sub}/recover`, {
-      edArmorPub,
-      secArmorPub
+      newPrimaryKey: primaryKey,
+      newRecoveryKey: recoveryKey
     });
 };
 

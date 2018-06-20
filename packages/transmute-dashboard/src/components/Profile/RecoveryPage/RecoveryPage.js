@@ -86,10 +86,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     recoverWithPublicKeys: async (auth, formData) => {
-      const { ed25519, secp256k1 } = formData;
       const action = await actions.recover(auth, {
-        ed25519,
-        secp256k1
+        primaryKey: formData.primary_key,
+        recoveryKey: formData.recovery_key
       });
       dispatch(action);
     }
