@@ -217,16 +217,19 @@ install_minikube_linux () {
 
 install_helm_linux () {
   if ! type "helm" >/dev/null 2>/dev/null; then
-    TMP=$(mktemp -d --suffix=HELMTMP)
-    cd $TMP
-    squawk 3 'Getting helmget'
-    curl -Lo $TMP/helmget https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get
-    HELM_INSTALL_DIR=$HELM_INSTALL_DIR
-    squawk 3 'Installing helm'
-    sudo -E bash -l $TMP/helmget
-    rm $TMP/helmget
-    cd
-    rmdir $TMP
+    TMP=$(mktemp -d)
+    HELM_VERSION='v2.8.2'
+    HELM_PREFIX="$HOME/.local/bin"
+    HELM_URL="https://storage.googleapis.com/kubernetes-helm/helm-$HELM_VERSION-linux-amd64.tar.gz"
+
+    echo "Installing $HELM_VERSION"
+    curl -sL $HELM_URL -o helm.tgz
+    echo $TMP
+    tar zxvf helm.tgz
+
+    cd linux-amd64
+    chmod +x helm
+    sudo mv helm $HELM_PREFIX/helm
   fi
 }
 
