@@ -6,7 +6,7 @@ const MINIKUBE_DISK = process.env.MINIKUBE_DISK ||  '100g';
 const MINIKUBE_PROFILE = process.env.MINIKUBE_PROFILE ||  'transmute-k8s';
 
 export function minikube( dryrun, clusterName, minikubeDriver ) {
-  const minikube_start = 'minikube start '
+  const minikube_start = 'sudo minikube start '
     + ' --kubernetes-version ' +  TRANSMUTE_KUBE_VERSION
     + ' --disk-size ' +  MINIKUBE_DISK
     + ' --cpus ' +  MINIKUBE_CPU
