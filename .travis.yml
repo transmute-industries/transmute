@@ -79,8 +79,8 @@ matrix:
 before_script:
   # boostrap installs global dev dependencies, including the transmute-cli
   - TRANSMUTE_RELEASE=$TRAVIS_BRANCH ./bootstrap
-  # This seems wrong, why are we changing permissions here...
-  # - sudo chown $USER. /usr/local/bin 
+  - . $HOME/.nvm/nvm.sh
+
   # This setup overwrites the transmute-cli with a build from the current branch (so the cli is tested)
   - cd $TRAVIS_BUILD_DIR/packages/transmute-cli
   - npm i
