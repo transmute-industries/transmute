@@ -36,7 +36,8 @@ export function minikube( dryrun, clusterName, minikubeDriver ) {
     console.log( '<--dry run-->' );
   }
   else {
-    run.ner( prov_cmd );
+    let data = run.ner( prov_cmd );
+    console.log('run.ner: ', data)
   }
 }
 
