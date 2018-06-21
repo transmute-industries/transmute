@@ -207,7 +207,7 @@ install_minikube_linux () {
     mkdir -p $HOME/.kube || true
     touch $HOME/.kube/config
     cd $TMP
-    curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.25.2/minikube-linux-amd64
     chmod +x minikube
     sudo mv minikube $TRANSMUTE_BIN/
     cd
