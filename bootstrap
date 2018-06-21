@@ -203,15 +203,11 @@ install_kubectl_linux () {
 install_minikube_linux () {
   if ! type "minikube" >/dev/null 2>/dev/null; then
     squawk 3 'Installing minikube'
-    TMP=$(mktemp -d --suffix=MINIKUBETMP)
-    mkdir -p $HOME/.kube || true
-    touch $HOME/.kube/config
-    cd $TMP
+
     curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.25.2/minikube-linux-amd64
     chmod +x minikube
-    sudo mv minikube $TRANSMUTE_BIN/
-    cd
-    rmdir $TMP
+    sudo mv minikube /usr/local/bin/
+
   fi
 }
 
@@ -318,6 +314,7 @@ install_nvm () {
     set +e
     mkdir $HOME/.nvm
     curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v$NVM_VERSION/install.sh | bash
+    . $HOME/.nvm/nvm.sh
     set -e
 
     if [ "$NVM_DIR_ADDS" = "true" ]; then
