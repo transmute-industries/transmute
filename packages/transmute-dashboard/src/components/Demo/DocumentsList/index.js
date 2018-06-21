@@ -83,15 +83,15 @@ class DocumentsList extends React.Component {
               <ExpansionPanelDetails>
                 <GridList className={classes.gridList}>
                   {value.signatures.map(signature => (
-                    <GridListTile key={signature} href={'https://ipfs.transmute.network/api/v0/cat?arg=' + signature}>
-                      <img src={'https://ipfs.transmute.network/api/v0/cat?arg=' + signature} className={classes.image} alt={signature} />
+                    <GridListTile key={signature} href={'https://ipfs.infura.io/api/v0/cat?arg=' + signature}>
+                      <img src={'https://ipfs.infura.io/api/v0/cat?arg=' + signature} className={classes.image} alt={signature} />
                     </GridListTile>
                   ))}
                 </GridList>
               </ExpansionPanelDetails>
-              <Button color="primary" href={'https://ipfs.transmute.network/api/v0/cat?arg=' + key} target="_blank">
+              <Button color="primary" href={'https://ipfs.infura.io/api/v0/cat?arg=' + key} target="_blank">
                 View Document
-                </Button>
+              </Button>
               {signature !== null && value.signatures.indexOf(signature) === -1 &&
                 <Button
                   color="secondary"

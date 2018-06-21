@@ -1,4 +1,6 @@
+require('dotenv').config();
 const Web3 = require('web3');
+var HDWalletProvider = require("truffle-hdwallet-provider");
 const transmuteConfig = require('./src/transmute-config');
 
 module.exports = {
@@ -10,5 +12,9 @@ module.exports = {
       ),
       network_id: '*' // Match any network id
     },
+    ropsten: {
+      provider: new HDWalletProvider(process.env.REACT_APP_ROPSTEN_MNEMONIC, `https://ropsten.infura.io/${process.env.REACT_APP_INFURA_API_TOKEN}`),
+      network_id: 3
+    }
   }
 };

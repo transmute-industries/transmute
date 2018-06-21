@@ -55,9 +55,13 @@ module.exports = class EventStore {
 
     this.version = pack.version;
 
-    this.web3 = new Web3(
-      new Web3.providers.HttpProvider(web3Config.providerUrl)
-    );
+    if (window.web3) {
+      this.web3 = window.web3;
+    } else {
+      this.web3 = new Web3(
+        new Web3.providers.HttpProvider(web3Config.providerUrl)
+      );
+    }
 
     this.eventStoreArtifact = eventStoreArtifact;
     this.eventStoreContract = contract(this.eventStoreArtifact);
@@ -154,7 +158,7 @@ module.exports = class EventStore {
     const valueBytes32ID = ipfs.multihashToBytes32(valueMultihash);
 
 
-    const tx = await eventStoreContractInstance.write.sendTransaction(
+    const tx = await eventStoreContractInstance.write(
       keyBytes32ID,
       valueBytes32ID,
       {
@@ -163,7 +167,12 @@ module.exports = class EventStore {
       }
     );
 
-    const receipt = web3.eth.getTransactionReceipt(tx);
+    const receipt = web3.eth.getTransactionReceipt(tx, function (error, result) {
+      if (!error)
+        console.log(result)
+      else
+        console.error(error);
+    });
 
     return {
       event: {
