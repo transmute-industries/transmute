@@ -170,6 +170,6 @@ vorpal
  });
 
 vorpal
-  .delimiter('T$')
+  .delimiter('✨  $')
   .parse(process.argv)
   .show();
