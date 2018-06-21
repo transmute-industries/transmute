@@ -374,6 +374,7 @@ lts_install () {
       squawk 3 "Engage nvm to alias lts/carbon to default"
     fi
     nvm alias default lts/carbon
+    nvm use default
     set -e
   else
       squawk 3 'npm already installed skipping'
