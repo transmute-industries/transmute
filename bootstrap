@@ -611,7 +611,7 @@ if [[ "$USE_WARN" == 'y' ]]; then
 fi
 
 squawk 3 "Checking $TRANSMUTE_DIR"
-
+mkdir -p $TRANSMUTE_DIR/git
 mkdir -p $TRANSMUTE_BIN
 
 if [ -e "$TRANSMUTE_DIR/git" ]; then
@@ -628,6 +628,10 @@ fi
 # however this will
 if [ "$TRAVIS" = 'true' ]; then
   echo 'travis ci skipping git actions'
+   
+  cd $TRANSMUTE_DIR/git
+  ln -s $TRAVIS_BUILD_DIR transmute
+
 elif [ -e "$TRANSMUTE_REPO" ]; then
   squawk 3 "$TRANSMUTE_REPO exists already, proceeding"
   squawk 3 'Updating the transmute repo'
