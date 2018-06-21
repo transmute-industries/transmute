@@ -260,6 +260,7 @@ dotfiles_install () {
   check_if_line_exists || add_line_to
   TARGET_FILE_FOR_ADD=$HOME/.zshrc
   check_if_line_exists || add_line_to
+  export PATH=$HOME/.transmute/bin:$PATH
 }
 
 install_certbot () {
