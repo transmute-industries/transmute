@@ -206,7 +206,7 @@ install_kubectl_linux () {
     cd $TMP
     curl -LO https://storage.googleapis.com/kubernetes-release/release/$TRANSMUTE_KUBE_VERSION/bin/linux/amd64/kubectl
     chmod +x kubectl
-    sudo mv -v kubectl $TRANSMUTE_BIN
+    sudo mv -v kubectl /usr/local/bin/
     cd
     rmdir $TMP
   fi

@@ -51,6 +51,10 @@ curl -s -k -X GET \
   | jq '.'
 ```
 
+### Gotchas
+
+- [minikube requires root when running with vm-driver = none.](https://blog.travis-ci.com/2017-10-26-running-kubernetes-on-travis-ci-with-minikube) 
+
 ### Manual Installation
 
 See the [longer form docs](./docs/README.md), and [tutorials](./tutorials) section.

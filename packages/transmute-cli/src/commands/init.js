@@ -1,15 +1,17 @@
 const run = require('./runner');
 
-const path = require('path')
+const path = require('path');
 
-export function k8s( dryrun, clusterName ) {
-  let prov_cmd = path.join(__dirname, "../../scripts/initializer " + clusterName);
+module.exports.k8s = (dryrun, clusterName) => {
+  let prov_cmd = path.join(
+    __dirname,
+    '../../scripts/initializer ' + clusterName
+  );
 
   // console.log( prov_cmd );
-  if (dryrun == 'true' ) {
-    console.log( '<--dry run-->' );
+  if (dryrun == 'true') {
+    console.log('<--dry run-->');
+  } else {
+    run.ner(prov_cmd);
   }
-  else {
-    run.ner( prov_cmd );
-  }
-}
+};

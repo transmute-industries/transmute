@@ -19,7 +19,6 @@ const { writeFile } = require('./utils');
 // Commands
 const ls = require('./commands/ls');
 const init = require('./commands/init');
-const runtest = require('./commands/runtest');
 const provision = require('./commands/provision');
 const telemetry = require('./commands/telemetry');
 

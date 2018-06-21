@@ -83,8 +83,6 @@ before_script:
   - . $HOME/.nvm/nvm.sh
   # This setup overwrites the transmute-cli with a build from the current branch (so the cli is tested)
   - cd $TRAVIS_BUILD_DIR/packages/transmute-cli
-  - npm i
-  - npm run build
   - npm i -g
   - cd $TRAVIS_BUILD_DIR
   - transmute k8s provision-minikube travis_test_cluster --vmdriver none

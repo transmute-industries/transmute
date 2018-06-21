@@ -1,5 +1,5 @@
 import { login as withOkta } from './okta';
 
-export default {
+module.exports = {
   withOkta
 };
