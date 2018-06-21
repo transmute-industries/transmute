@@ -22,12 +22,25 @@ const init = require('./commands/init');
 const provision = require('./commands/provision');
 const telemetry = require('./commands/telemetry');
 
+const login = require('./commands/login')
 
 // Mixpanel
 const Mixpanel = require('mixpanel');
 const mixpanelToken = process.env.MIXPANEL_PROJECT_ID || '535f9b3a8daba1dfe4777a7343e6e0f5'
 const mixpanel = Mixpanel.init(mixpanelToken)
 vorpal.telemetrySend = telemetry.send(mixpanel);
+
+/** transmute login retrieves and stores a JWT for use with the Transmute API.
+ * @name transmute login
+ * @example transmute login
+ * */
+vorpal
+  .command('login')
+  .description('Login to the Transmute CLI')
+  .action(async (args, callback) => {
+    await login.okta.login();
+    callback();
+  });
 
 /** transmute k8s  init initializes a cluster with the transmute framework
   * @name transmute k8s init <clustername>

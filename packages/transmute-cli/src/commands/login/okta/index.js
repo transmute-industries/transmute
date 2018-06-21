@@ -66,10 +66,10 @@ module.exports.login = async () => {
 
   let home = require('os').homedir();
 
-  await writeFile(
-    path.join(home, '.transmute/cli-secrets/session.json'),
-    JSON.stringify(response, null, 2)
-  );
+  let sessionPath = path.join(home, '.transmute/cli-secrets/session.json');
+  await writeFile(sessionPath, JSON.stringify(response, null, 2));
+
+  console.log('session saved: ', sessionPath);
 
   return response;
 };

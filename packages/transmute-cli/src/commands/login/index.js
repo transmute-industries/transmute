@@ -1,5 +1,5 @@
-import { login as withOkta } from './okta';
+const okta = require('./okta')
 
 module.exports = {
-  withOkta
+  okta
 };
