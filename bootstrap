@@ -684,23 +684,24 @@ squawk 3 'check kubectl'
 check_cmd kubectl
 squawk 3 'check minikube'
 check_cmd minikube
-#check_cmd nsenter
 
 echo 'The bootstrap has finished'
 echo 'You can now use the transmute-cli to develop dapps!:'
 echo 'https://github.com/transmute-industries/transmute#setup'
+
 if [ "$PLATFORM" = "os.osx.x86_64" ] ; then
   SETUP_DIR=$(greadlink -f $TRANSMUTE_DIR)
 else
   SETUP_DIR=$(readlink -f $TRANSMUTE_DIR)
 fi
 
-echo "First you will need to source your ~/.bashrc or ~/.zshrc file"
+echo "If you did not source this script, you will need to source your ~/.bashrc or ~/.zshrc file"
+
 . $HOME/.nvm/nvm.sh
 
 trap - EXIT
-# End run_it wrapper
-}
+
+} # End run_it wrapper
 
 check_cmd mktemp
 check_cmd uname
