@@ -15,8 +15,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 4. You should sign your commits if possible with GPG.
 5. Commits should be atomic changes, with clear language and should not contain profanity.
 6. All builds must be passing, new functionality should be covered with tests.
-7. You may merge the Pull Request in once you have the sign-off of one other developer, or if you 
-   do not have permission to do that, you may request the reviewer to merge it for you.
+7. You may merge the Pull Request in once you have the sign-off of one other developer, or if you do not have permission to do that, you may request the reviewer to merge it for you.
 
 
 ## Code of Conduct

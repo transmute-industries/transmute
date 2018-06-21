@@ -50,7 +50,7 @@ function sha256(buffer) {
  * @description This method crafts an authentication url, and then starts an http server to listen for the redirect from the authentication.
  * @return {okta_session_object} A session object with access_token and id_token.
  */
-export const login = async () => {
+module.exports.login = async () => {
   const { okta_host, redirect_uri, client_id } = config;
 
   var code_verifier = base64URLEncode(crypto.randomBytes(32));

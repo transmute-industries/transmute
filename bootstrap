@@ -34,23 +34,23 @@ squawk () {
       printf "#"
       count_squawk=`expr $count_squawk + 1`
     done
-    echo " $squawk"
+    printf " $squawk \n"
   fi
 }
 
 # Check for config env file
+# THIS IS NOT USED, AND SHOULD BE REMOVED
 if [ -e $TRANSMUTE_DIR/.env ]; then
   source $TRANSMUTE_DIR/.env
   if [ $TRANSMUTE_VERBOSITY -gt '0' ]; then
-    ls -al $TRANSMUTE_DIR/.env
-    env file found and sourced
+    # ls -al $TRANSMUTE_DIR/.env
+    printf "env file found and sourced.\n"
   fi
 fi
 
 errror () {
-  echo "-------------------------------------------------------------"
-  echo -e "\n \n  "
-  echo "ERROR!!!  --  "
+  printf "-------------------------------------------------------------\n"
+  printf "ERROR!!!  --  "
 }
 
 # Check if a command exists
@@ -122,6 +122,7 @@ mackubectl () {
     # The package is not installed
     squawk 3 'Installing kubectl'
     brew install kubectl
+    brew link kubernetes-cli
   fi
 }
 
@@ -140,7 +141,7 @@ machelm () {
 	
   if brew ls --versions kubernetes-helm > /dev/null; then
     # The package is installed
-    printf "helm installed, skipping."
+    printf "helm installed, skipping.\n"
   else
     # The package is not installed
     squawk 3 'Installing helm'
@@ -186,6 +187,18 @@ windowsnsenter () {
 	choco install nsenter
 }
 
+install_nsenter_linux (){
+   
+  sudo apt-get install libncurses5-dev libslang2-dev gettext zlib1g-dev libselinux1-dev debhelper lsb-release pkg-config po-debconf autoconf automake autopoint libtool
+  TMP=$(mktemp -d --suffix=NSENTER_TMP)
+  wget https://www.kernel.org/pub/linux/utils/util-linux/v2.30/util-linux-2.30.2.tar.gz -qO - | tar -xz -C $TMP/
+  cd $TMP/util-linux-2.30.2 && ./autogen.sh && ./configure && make nsenter
+  mkdir -p $HOME/.local/bin
+  sudo cp -v $TMP/util-linux-2.30.2/nsenter $HOME/.local/bin/nsenter
+  sudo chmod +x $HOME/.local/bin/nsenter
+  sudo cp -v $HOME/.local/bin/nsenter /usr/bin/nsenter
+}
+
 install_kubectl_linux () {
   if ! type "kubectl" >/dev/null 2>/dev/null; then
     squawk 3 'Installing kubectl'
@@ -193,7 +206,7 @@ install_kubectl_linux () {
     cd $TMP
     curl -LO https://storage.googleapis.com/kubernetes-release/release/$TRANSMUTE_KUBE_VERSION/bin/linux/amd64/kubectl
     chmod +x kubectl
-    sudo mv -v kubectl $TRANSMUTE_BIN
+    sudo mv -v kubectl /usr/local/bin/
     cd
     rmdir $TMP
   fi
@@ -202,30 +215,29 @@ install_kubectl_linux () {
 install_minikube_linux () {
   if ! type "minikube" >/dev/null 2>/dev/null; then
     squawk 3 'Installing minikube'
-    TMP=$(mktemp -d --suffix=MINIKUBETMP)
-    mkdir -p $HOME/.kube || true
-    touch $HOME/.kube/config
-    cd $TMP
-    curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+
+    curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.25.2/minikube-linux-amd64
     chmod +x minikube
-    sudo mv minikube $TRANSMUTE_BIN/
-    cd
-    rmdir $TMP
+    sudo mv minikube /usr/local/bin/
+
   fi
 }
 
 install_helm_linux () {
   if ! type "helm" >/dev/null 2>/dev/null; then
-    TMP=$(mktemp -d --suffix=HELMTMP)
-    cd $TMP
-    squawk 3 'Getting helmget'
-    curl -Lo $TMP/helmget https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get
-    HELM_INSTALL_DIR=$HELM_INSTALL_DIR
-    squawk 3 'Installing helm'
-    sudo -E bash -l $TMP/helmget
-    rm $TMP/helmget
-    cd
-    rmdir $TMP
+    TMP=$(mktemp -d)
+    HELM_VERSION='v2.8.2'
+    HELM_PREFIX="$HOME/.transmute/bin"
+    HELM_URL="https://storage.googleapis.com/kubernetes-helm/helm-$HELM_VERSION-linux-amd64.tar.gz"
+
+    echo "Installing $HELM_VERSION"
+    curl -sL $HELM_URL -o helm.tgz
+    echo $TMP
+    tar zxvf helm.tgz
+
+    cd linux-amd64
+    chmod +x helm
+    sudo mv helm $HELM_PREFIX/helm
   fi
 }
 
@@ -256,6 +268,7 @@ dotfiles_install () {
   check_if_line_exists || add_line_to
   TARGET_FILE_FOR_ADD=$HOME/.zshrc
   check_if_line_exists || add_line_to
+  export PATH=$HOME/.transmute/bin:$PATH
 }
 
 install_certbot () {
@@ -324,22 +337,7 @@ install_nvm () {
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 }
 
-announce_prefix_fail () {
-  echo "failed to write to the npm prefix directory, you should set your npm prefix to a directory you can write to"
-  echo "The following documentation details this procedure: https://docs.npmjs.com/getting-started/fixing-npm-permissions"
-}
 
-check_prefix_npm () {
-
-  trap announce_prefix_fail EXIT
-  TMP_FILE=$(mktemp $(npm config get prefix)/tmp.XXXXXXXXXX)
-  if [ "$?" -ne 0 ]; then
-    announce_prefix_fail
-  else
-    rm $TMP_FILE
-  fi
-  trap - EXIT
-}
 
 install_lerna_npm () {
   if ! type "lerna" >/dev/null 2>/dev/null; then
@@ -385,6 +383,7 @@ lts_install () {
       squawk 3 "Engage nvm to alias lts/carbon to default"
     fi
     nvm alias default lts/carbon
+    nvm use default
     set -e
   else
       squawk 3 'npm already installed skipping'
@@ -484,10 +483,7 @@ install_jq () {
 }
 
 transmute_cli_install () {
-  cd $TRANSMUTE_REPO/packages/transmute-cli
-  npm i
-  npm run build
-  npm i -g
+  npm i -g transmute-cli
 }
 
 transmute_env_install () {
@@ -515,7 +511,6 @@ windowsreqs () {
   windowsnsenter
   install_nvm
   lts_install
-  check_prefix_npm
   install_ngrok_npm
   install_truffle_npm
   install_lerna_npm
@@ -542,7 +537,6 @@ macreqs () {
   macreadlink
   install_nvm
   lts_install
-  check_prefix_npm
   install_ngrok_npm
   install_truffle_npm
   install_lerna_npm
@@ -555,6 +549,8 @@ macreqs () {
 
 linuxreqs () {
   #linuxreqs: $(TRANSMUTE_BIN) run_dotfiles minikube kubectl helm nsenter
+  sudo apt-get update -y
+  install_nsenter_linux
   install_curl
   install_git
   install_socat
@@ -563,7 +559,6 @@ linuxreqs () {
   install_helm_linux
   install_nvm
   lts_install
-  check_prefix_npm
   install_ngrok_npm
   install_truffle_npm
   install_lerna_npm
@@ -574,21 +569,6 @@ linuxreqs () {
   transmute_cli_install
 }
 
-initializer () {
-  ls  $TRANSMUTE_DIR/git
-  ls $TRANSMUTE_DIR/git/transmute
-  set +e
-  cd $TRANSMUTE_DIR/git/transmute/transmute-config
-  set -e
-  cp .example.env .env
-  set +e
-  cd $TRANSMUTE_DIR/git/transmute
-  set -e
-  npm i
-  set +e
-  cd $CWD
-  set -e
-}
 
 run_it () {
 set -e
@@ -661,6 +641,10 @@ fi
 # however this will
 if [ "$TRAVIS" = 'true' ]; then
   echo 'travis ci skipping git actions'
+   
+  cd $TRANSMUTE_DIR/git
+  ln -s $TRAVIS_BUILD_DIR transmute
+
 elif [ -e "$TRANSMUTE_REPO" ]; then
   squawk 3 "$TRANSMUTE_REPO exists already, proceeding"
   squawk 3 'Updating the transmute repo'
@@ -702,22 +686,19 @@ squawk 3 'check minikube'
 check_cmd minikube
 #check_cmd nsenter
 
-squawk 3 'Initializer'
-initializer
-
 echo 'The bootstrap has finished'
-echo 'you have completed all the way to "npm run setup" here:'
-echo 'https://github.com/transmute-industries/transmute#environment-scripts-and-updating'
+echo 'You can now use the transmute-cli to develop dapps!:'
+echo 'https://github.com/transmute-industries/transmute#setup'
 if [ "$PLATFORM" = "os.osx.x86_64" ] ; then
   SETUP_DIR=$(greadlink -f $TRANSMUTE_DIR)
 else
   SETUP_DIR=$(readlink -f $TRANSMUTE_DIR)
 fi
+
 echo "First you will need to source your ~/.bashrc or ~/.zshrc file"
-echo "Then you should be able run 'npm run setup' inside '$SETUP_DIR'"
 
 trap - EXIT
-# End run it wrapper
+# End run_it wrapper
 }
 
 check_cmd mktemp
