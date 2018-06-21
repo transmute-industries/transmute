@@ -15,7 +15,7 @@ Setup
 First step is to install the development dependencies. Review this bootstrap script before running it:
 
 ```
-curl -Ls https://git.io/transmute_bootstrap | bash
+source <(curl -Ls https://git.io/transmute_bootstrap)
 ```
 
 Once the bootstrap has succeeded, you should have the transmute cli installed globally.

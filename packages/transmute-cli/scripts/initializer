@@ -7,7 +7,7 @@ orig_pwd=$(pwd)
 source $TRANSMUTE_DIR/.env
 
 : ${VOYAGER_PROVIDER:='baremetal'}
-: ${DO_JWT_DL:=n}
+: ${TRANSMUTE_DO_JWT_DL:=n}
 : ${DO_FAAS:=n}
 : ${DEBUG_MESSAGES:='Received problem bailing out!'}
 
@@ -242,7 +242,7 @@ curl -s -k -X GET \
   --url 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT'/api/v0/id' \
   | jq '.'
 
-if [[ "$DO_JWT_DL" == 'y' ]]; then
+if [[ "$TRANSMUTE_DO_JWT_DL" == 'y' ]]; then
   squawk 3 'configure okta'
   #$TRANSMUTE_REPO/scripts/configure-kong-okta-ipfs.sh
 

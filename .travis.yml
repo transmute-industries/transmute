@@ -5,17 +5,22 @@ matrix:
       sudo: required
       language: bash
       env:
-        - KUBE_VERSION=v1.9.4
-        - DO_JWT_DL=n
+        # This option is for testing JWT configuration with kong.
+        # It is not currently active.
+        - TRANSMUTE_DO_JWT_DL=n
         - TRANSMUTE_VERBOSITY=10
-        - CHANGE_MINIKUBE_NONE_USER=true
-        - MINIKUBE_VERSION=v0.25.2
-        - USE_WARN=n
-        - EDITOR=cat
+        # This option will warn the user that bootstrap will be installing lots of things...
+        # It is true normally, and set false for CI.
+        - TRANSMUTE_USE_WARN=n
+        
+        # These are used in the transmute CLI and should be removed from here.
         - MINIKUBE_MEMORY=7777
         - MINIKUBE_CPU=4
         - MINIKUBE_DISK=50g
-        - MINIKUBE_DRIVER=none
+
+        # These options are required for travis 
+        - CHANGE_MINIKUBE_NONE_USER=true
+        - EDITOR=cat
 
 before_script:
   # bootstrap installs global dev dependencies, including the transmute-cli
