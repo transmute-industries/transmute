@@ -19,7 +19,7 @@ matrix:
 
 before_script:
   # bootstrap installs global dev dependencies, including the transmute-cli
-  - TRANSMUTE_RELEASE=$TRAVIS_BRANCH ./bootstrap
+  - TRANSMUTE_RELEASE=$TRAVIS_BRANCH source ./bootstrap
   # This setup overwrites the transmute-cli with a build from the current branch (so the cli is tested)
   - cd $TRAVIS_BUILD_DIR/packages/transmute-cli
   - npm i
