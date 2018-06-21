@@ -696,6 +696,7 @@ else
 fi
 
 echo "First you will need to source your ~/.bashrc or ~/.zshrc file"
+. $HOME/.nvm/nvm.sh
 
 trap - EXIT
 # End run_it wrapper
