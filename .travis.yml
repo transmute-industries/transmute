@@ -87,24 +87,22 @@ before_script:
   - npm run build
   - npm i -g
   - cd $TRAVIS_BUILD_DIR
-
-script:
   - transmute k8s provision-minikube travis_test_cluster --vmdriver none
   - transmute k8s init travis_test_cluster
+  # potentially un needed, should be moved into cli
+  # - minikube update-context
+  - sleep 8
+  - kubectl get pods --all-namespaces
+  - kubectl get svc --all-namespaces
+  - kubectl describe pod $(kubectl get pod --all-namespaces|grep gateway-kong-migrations|awk '{print $2}')
+  - kubectl describe pod $(kubectl get pod --all-namespaces|grep -v gateway-kong-migrations|grep gateway-kong|awk '{print $2}')
 
-# script:
-# - bash -l -c "npm i"
-# - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "transmute k8s provision-minikube travistest --vmdriver none"; fi
-# - sleep 8
-# - minikube update-context
-# - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash -l -c "yes y|transmute k8s init travistest"; fi
-# - bash -l -c "lerna bootstrap"
-# - sleep 8
-# - bash -l -c "kubectl get pods --all-namespaces"
-# - bash -l -c "kubectl get svc --all-namespaces"
-# - bash -l -c "kubectl describe pod $(kubectl get pod --all-namespaces|grep gateway-kong-migrations|awk '{print $2}')"
-# - bash -l -c "kubectl describe pod $(kubectl get pod --all-namespaces|grep -v gateway-kong-migrations|grep gateway-kong|awk '{print $2}')"
-# - bash -l -c "TRANSMUTE_ENV='minikube' lerna run --scope transmute-framework truffle:test"
-# - bash -l -c "TRANSMUTE_ENV='minikube' lerna run --scope transmute-framework truffle:migrate"
-# - bash -l -c "TRANSMUTE_ENV='minikube' lerna run --scope transmute-framework test"
-# - bash -l -c "TRANSMUTE_ENV='minikube' lerna run --scope transmute-framework test:report"
+script:
+  - lerna bootstrap
+  - TRANSMUTE_ENV='minikube' lerna run --scope transmute-framework truffle:test
+  - TRANSMUTE_ENV='minikube' lerna run --scope transmute-framework truffle:migrate
+  - TRANSMUTE_ENV='minikube' lerna run --scope transmute-framework test
+  - TRANSMUTE_ENV='minikube' lerna run --scope transmute-framework test:report
+
+
+
