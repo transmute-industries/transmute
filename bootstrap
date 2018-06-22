@@ -215,14 +215,13 @@ install_minikube_linux () {
 
 install_helm_linux () {
   if ! type "helm" >/dev/null 2>/dev/null; then
-    TMP=$(mktemp -d)
+
     HELM_VERSION='v2.8.2'
     HELM_PREFIX="$HOME/.transmute/bin"
     HELM_URL="https://storage.googleapis.com/kubernetes-helm/helm-$HELM_VERSION-linux-amd64.tar.gz"
 
     echo "Installing $HELM_VERSION"
     curl -sL $HELM_URL -o helm.tgz
-    echo $TMP
     tar zxvf helm.tgz
 
     cd linux-amd64
@@ -263,8 +262,6 @@ dotfiles_install () {
 
 install_certbot () {
   if ! type "certbot-auto" >/dev/null 2>/dev/null; then
-    TMP=$(mktemp -d)
-    cd $TMP
     curl -O https://dl.eff.org/certbot-auto
     chmod a+x ./certbot-auto
     curl -O https://dl.eff.org/certbot-auto.asc
@@ -292,7 +289,6 @@ install_certbot () {
     certbot-auto
     set -e
     cd
-    rm -Rf $TMP
   else
     squawk 3 'certbot-auto already installed skipping'
   fi
@@ -322,9 +318,6 @@ install_nvm () {
       nvm_dir_adds
     fi
   fi
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 }
 
 

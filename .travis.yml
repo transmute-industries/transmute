@@ -6,7 +6,7 @@ matrix:
       language: bash
       env:
         
-        # These are used in the transmute CLI and should be removed from here.
+        # TODO: These are used in the transmute CLI and should be removed from here.
         - MINIKUBE_MEMORY=7777
         - MINIKUBE_CPU=4
         - MINIKUBE_DISK=50g
@@ -34,7 +34,7 @@ before_script:
   - cd $TRAVIS_BUILD_DIR
   - transmute k8s provision-minikube travis_test_cluster --vmdriver none
   - transmute k8s init travis_test_cluster
-  # These commands should be moved to the cli
+  # TODO: These commands should be moved to the cli
   - kubectl get pods --all-namespaces
   - kubectl get svc --all-namespaces
   - kubectl describe pod $(kubectl get pod --all-namespaces|grep gateway-kong-migrations|awk '{print $2}')
