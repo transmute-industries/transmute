@@ -72,7 +72,6 @@ add_line_to()
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Wait for kubectl and kube-dns to be initialized
-$TRANSMUTE_REPO/packages/transmute-cli/scripts/w8s/kubectl.w8
 $TRANSMUTE_REPO/packages/transmute-cli/scripts/w8s/ready.w8 kube-dns kube-system
 
 sleep 5
