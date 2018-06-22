@@ -291,3 +291,4 @@ module.exports = class EventStore {
     return this.eventStoreContractInstance.destroy(address);
   }
 };
+
