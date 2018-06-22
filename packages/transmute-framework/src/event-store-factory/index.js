@@ -49,7 +49,7 @@ module.exports = class EventStoreFactory {
 
     this.version = pack.version;
 
-    if (window.web3) {
+    if (typeof window !== 'undefined' && window.web3) {
       this.web3 = window.web3;
     } else {
       this.web3 = new Web3(

@@ -1,5 +1,5 @@
-const TransmuteEventStore = require('../dist/transmute-framework.cjs');
-const transmuteConfig = require('../../../transmute-config');
+const TransmuteEventStore = require('../src/event-store');
+const transmuteConfig = require('../src/transmute-config');
 const eventStoreArtifact = require('../build/contracts/EventStore.json');
 
 const eventStore = new TransmuteEventStore({
