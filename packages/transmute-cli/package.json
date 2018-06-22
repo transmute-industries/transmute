@@ -3,8 +3,7 @@
   "version": "0.2.2",
   "description": "transmute cli",
   "scripts": {
-    "build": "babel src -d lib",
-    "transmute": "npm run build && ./lib/index.js",
+    "transmute": "./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs": "jsdoc -c jsdoc.json"
   },
@@ -14,10 +13,11 @@
   "author": "Transmute",
   "license": "MIT",
   "files": [
-    "lib"
+    "src",
+    "scripts"
   ],
   "bin": {
-    "transmute": "./lib/index.js"
+    "transmute": "./src/index.js"
   },
   "dependencies": {
     "form-urlencoded": "^2.0.4",
@@ -32,8 +32,6 @@
     "vorpal-tour": "0.0.5"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
     "docdash": "^0.4.0",
     "jsdoc": "^3.5.5"
   }

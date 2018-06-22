@@ -15,7 +15,7 @@ Setup
 First step is to install the development dependencies. Review this bootstrap script before running it:
 
 ```
-curl -Ls https://git.io/transmute_bootstrap | bash
+source <(curl -Ls https://git.io/transmute_bootstrap)
 ```
 
 Once the bootstrap has succeeded, you should have the transmute cli installed globally.
@@ -50,6 +50,10 @@ curl -s -k -X GET \
   --url 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT'/api/v0/id' \
   | jq '.'
 ```
+
+### Gotchas
+
+- [minikube requires root when running with vm-driver = none.](https://blog.travis-ci.com/2017-10-26-running-kubernetes-on-travis-ci-with-minikube) 
 
 ### Manual Installation
 
