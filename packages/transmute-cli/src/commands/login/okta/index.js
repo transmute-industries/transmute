@@ -58,9 +58,9 @@ module.exports.login = async () => {
 
   const url = `https://${okta_host}/oauth2/default/v1/authorize?client_id=${client_id}&response_type=code&scope=openid&redirect_uri=${redirect_uri}&state=state-8600b31f-52d1-4dca-987c-386e3d8967e9&code_challenge_method=S256&code_challenge=${code_challenge}`;
 
-  console.log('open this url: \n');
-  console.log(url);
-  console.log();
+  console.info('open this url: \n');
+  console.info(url);
+  console.info();
 
   const response = await callbackServer(code_verifier);
 
@@ -69,7 +69,7 @@ module.exports.login = async () => {
   let sessionPath = path.join(home, '.transmute/cli-secrets/session.json');
   await writeFile(sessionPath, JSON.stringify(response, null, 2));
 
-  console.log('session saved: ', sessionPath);
+  console.info('session saved: ', sessionPath);
 
   return response;
 };

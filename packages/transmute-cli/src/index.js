@@ -117,7 +117,7 @@ vorpal
     // begin performance test
       let dryrun = 'false';
       if (args.options.dryrun) {
-        console.log('dry run');
+        console.info('dry run');
         dryrun = 'true';
       }
       if (args.options.vmdriver) {

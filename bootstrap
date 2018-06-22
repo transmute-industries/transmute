@@ -38,16 +38,6 @@ squawk () {
   fi
 }
 
-# Check for config env file
-# THIS IS NOT USED, AND SHOULD BE REMOVED
-if [ -e $TRANSMUTE_DIR/.env ]; then
-  source $TRANSMUTE_DIR/.env
-  if [ $TRANSMUTE_VERBOSITY -gt '0' ]; then
-    # ls -al $TRANSMUTE_DIR/.env
-    printf "env file found and sourced.\n"
-  fi
-fi
-
 errror () {
   printf "-------------------------------------------------------------\n"
   printf "ERROR!!!  --  "
@@ -161,7 +151,7 @@ macreadlink () {
     printf "coreutils installed, skipping."
   else
     # The package is not installed
-    	#Installs 'greadlink' tool
+    #Installs 'greadlink' tool
     squawk 3 'Installing coreutils'
     brew install coreutils
   fi
@@ -548,7 +538,6 @@ macreqs () {
 }
 
 linuxreqs () {
-  #linuxreqs: $(TRANSMUTE_BIN) run_dotfiles minikube kubectl helm nsenter
   sudo apt-get update -y
   install_nsenter_linux
   install_curl
@@ -572,7 +561,6 @@ linuxreqs () {
 
 run_it () {
 set -e
-#set -u
 
 # Let's display everything on stderr.
 exec 1>&2

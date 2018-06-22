@@ -31,9 +31,8 @@ module.exports.minikube = (dryrun, clusterName, minikubeDriver) => {
   } else {
     prov_cmd = minikube_start + ' --vm-driver=virtualbox';
   }
-  console.log(prov_cmd);
   if (dryrun === 'true') {
-    console.log('<--dry run-->');
+    console.info('<--dry run-->');
   } else {
     run.ner(prov_cmd);
   }
@@ -51,7 +50,6 @@ module.exports.aks = (
   run.ner('az provider register -n Microsoft.Storage');
   run.ner('az provider register -n Microsoft.Compute');
   run.ner('az provider register -n Microsoft.ContainerService');
-  console.log('Registering Microsoft perms');
 
   let gensshkeys_opt = ' ';
   if (GenSSHKeys) {
@@ -68,7 +66,7 @@ module.exports.aks = (
     var nodes_opt = ' --node-count ' + myNodeCount;
   }
   if (myNodeSize == undefined) {
-    console.log('no size given using default');
+    console.warn('no size given using default');
     var nodesize_opt = ' ';
   } else {
     var nodesize_opt = ' --node-vm-size ' + myNodeSize;
@@ -86,11 +84,11 @@ module.exports.aks = (
     akscluster_opt +
     gensshkeys_opt;
   run.ner(prov_cmd);
-  console.log(prov_cmd);
+
   var prov_cmd = 'az aks get-credentials ' + akscluster_opt + group_opt;
-  console.log(prov_cmd);
+
   if (dryrun == 'true') {
-    console.log('<--dry run-->');
+    console.info('<--dry run-->');
   } else {
     run.ner(prov_cmd);
   }

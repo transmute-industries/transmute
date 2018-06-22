@@ -8,9 +8,8 @@ module.exports.k8s = (dryrun, clusterName) => {
     '../../scripts/initializer ' + clusterName
   );
 
-  // console.log( prov_cmd );
   if (dryrun == 'true') {
-    console.log('<--dry run-->');
+    console.info('<--dry run-->');
   } else {
     run.ner(prov_cmd);
   }
