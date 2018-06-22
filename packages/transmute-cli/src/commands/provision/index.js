@@ -1,4 +1,4 @@
-const run = require('./runner');
+const run = require('../runner');
 const TRANSMUTE_KUBE_VERSION = process.env.TRANSMUTE_KUBE_VERSION || 'v1.9.0';
 const MINIKUBE_CPU = process.env.MINIKUBE_CPU || '4';
 const MINIKUBE_MEMORY = process.env.MINIKUBE_MEMORY || '4096';

@@ -1,4 +1,4 @@
-const run = require('./runner');
+const run = require('../runner');
 
 const path = require('path');
 
