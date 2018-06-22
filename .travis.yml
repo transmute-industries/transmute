@@ -45,7 +45,6 @@ script:
   - lerna run --scope transmute-framework truffle:test
   - lerna run --scope transmute-framework truffle:migrate
   - lerna run --scope transmute-framework test
-  - lerna run --scope transmute-framework test:smoke
   - lerna run --scope transmute-framework test:report
 
 
