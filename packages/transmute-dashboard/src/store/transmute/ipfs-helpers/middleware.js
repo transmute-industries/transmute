@@ -3,7 +3,7 @@ import axios from 'axios';
 const ENVS = {
   LOCAL: 'http://localhost:5001',
   TEST: '???',
-  PROD: 'https://ipfs.transmute.network'
+  PROD: 'https://ipfs.infura.io:5001'
 };
 
 export const getIpfsId = async () => {

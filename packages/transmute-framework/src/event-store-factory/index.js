@@ -49,9 +49,13 @@ module.exports = class EventStoreFactory {
 
     this.version = pack.version;
 
-    this.web3 = new Web3(
-      new Web3.providers.HttpProvider(web3Config.providerUrl)
-    );
+    if (typeof window !== 'undefined' && window.web3) {
+      this.web3 = window.web3;
+    } else {
+      this.web3 = new Web3(
+        new Web3.providers.HttpProvider(web3Config.providerUrl)
+      );
+    }
 
     this.eventStoreFactoryArtifact = eventStoreFactoryArtifact;
     this.eventStoreFactoryContract = contract(this.eventStoreFactoryArtifact);

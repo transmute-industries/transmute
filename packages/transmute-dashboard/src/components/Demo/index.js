@@ -141,6 +141,9 @@ class Demo extends Component {
   onUploadFile = (event, type) => {
     event.stopPropagation();
     event.preventDefault();
+    this.setState({
+      loading: true
+    });
     const file = event.target.files[0];
     const filename = event.target.value.split(/(\\|\/)/g).pop();
     let reader = new window.FileReader();
@@ -158,17 +161,19 @@ class Demo extends Component {
           console.log('file uploaded')
         );
         console.log(
-          'https://ipfs.transmute.network/api/v0/cat?arg=' + response[0].hash
+          'https://ipfs.infura.io/api/v0/cat?arg=' + response[0].hash
         );
       })
       .catch(err => {
         console.error(err);
+        this.setState({
+          loading: false
+        });
       });
   };
 
   onSaveDocument = async (fileHash, filename, eventType) => {
     let { eventStore } = this.state;
-
     if (eventType === 'DOCUMENT') {
       await eventStore.write(
         this.state.currentUserAddress,
@@ -187,6 +192,9 @@ class Demo extends Component {
 
   onSignDocument = async documentHash => {
     let { eventStore } = this.state;
+    await this.setState({
+      loading: true
+    });
     await eventStore.write(
       this.state.currentUserAddress,
       { type: 'document', id: documentHash },
@@ -201,6 +209,7 @@ class Demo extends Component {
 
   selectAccount = async event => {
     await this.setState({
+      loading: true,
       currentUserAddress: event.target.value
     });
     await this.update();
@@ -208,6 +217,7 @@ class Demo extends Component {
 
   selectEventStore = async event => {
     await this.setState({
+      loading: true,
       currentEventStoreAddress: event.target.value
     });
     await this.update();
@@ -215,11 +225,11 @@ class Demo extends Component {
 
   render() {
     const { classes } = this.props;
-    const { events, documents, user, signature, currentUserAddress } = this.state;
-    if (this.state.loading) return null;
+    const { events, documents, user, signature, currentUserAddress, currentEventStoreAddress, eventStoreAddresses, accounts, account, loading } = this.state;
+    if (!eventStoreAddresses || !accounts) return null;
 
     return (
-      <AppBar>
+      <AppBar loading={loading}>
         <div>
           <Grid container style={{ marginBottom: '20px' }}>
             <Grid item xs={12}>
@@ -232,18 +242,18 @@ class Demo extends Component {
                   EventStore
                 </InputLabel>
                 <Select
-                  value={this.state.currentEventStoreAddress}
+                  value={currentEventStoreAddress}
                   native
                   onChange={this.selectEventStore}
                   input={<Input id="uncontrolled-native" />}
                 >
-                  {this.state.eventStoreAddresses.map(eventStore => (
+                  {eventStoreAddresses.map(eventStore => (
                     <option
                       key={eventStore}
                       value={eventStore}
                       style={{
                         fontWeight:
-                          this.state.currentEventStoreAddress !== eventStore
+                          currentEventStoreAddress !== eventStore
                             ? theme.typography.fontWeightRegular
                             : theme.typography.fontWeightMedium
                       }}
@@ -258,12 +268,12 @@ class Demo extends Component {
               <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="uncontrolled-native">Account</InputLabel>
                 <Select
-                  value={this.state.account}
+                  value={account}
                   native
                   onChange={this.selectAccount}
                   input={<Input id="uncontrolled-native" />}
                 >
-                  {this.state.accounts.map(account => (
+                  {accounts.map(account => (
                     <option
                       key={account}
                       value={account}

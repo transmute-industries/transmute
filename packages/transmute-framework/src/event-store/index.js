@@ -55,9 +55,13 @@ module.exports = class EventStore {
 
     this.version = pack.version;
 
-    this.web3 = new Web3(
-      new Web3.providers.HttpProvider(web3Config.providerUrl)
-    );
+    if (typeof window !== 'undefined' && window.web3) {
+      this.web3 = window.web3;
+    } else {
+      this.web3 = new Web3(
+        new Web3.providers.HttpProvider(web3Config.providerUrl)
+      );
+    }
 
     this.eventStoreArtifact = eventStoreArtifact;
     this.eventStoreContract = contract(this.eventStoreArtifact);
@@ -154,7 +158,7 @@ module.exports = class EventStore {
     const valueBytes32ID = ipfs.multihashToBytes32(valueMultihash);
 
 
-    const tx = await eventStoreContractInstance.write.sendTransaction(
+    const tx = await eventStoreContractInstance.write(
       keyBytes32ID,
       valueBytes32ID,
       {
@@ -163,7 +167,19 @@ module.exports = class EventStore {
       }
     );
 
-    const receipt = web3.eth.getTransactionReceipt(tx);
+    let receipt;
+
+    // MetaMask's Web3 requires that callback be used here.
+    if (typeof window !== 'undefined' && window.web3) {
+      receipt = web3.eth.getTransactionReceipt(tx, function (error, result) {
+        if (!error)
+          console.info(result)
+        else
+          console.error(error);
+      });
+    } else {
+      receipt = web3.eth.getTransactionReceipt(tx);
+    }
 
     return {
       event: {
@@ -275,3 +291,4 @@ module.exports = class EventStore {
     return this.eventStoreContractInstance.destroy(address);
   }
 };
+

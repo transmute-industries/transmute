@@ -31,7 +31,7 @@ class ProfileCard extends React.Component {
               <p>My Signature</p>
               <img
                 src={
-                  'https://ipfs.transmute.network/api/v0/cat?arg=' +
+                  'https://ipfs.infura.io/api/v0/cat?arg=' +
                   this.props.signature
                 }
                 alt="My Signature"

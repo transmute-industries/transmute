@@ -104,14 +104,14 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x608060405234801561001057600080fd5b5032600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555061048b806100616000396000f30060806040526004361061006c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168062f55d9d1461007157806306661abd146100b45780638da5cb5b146100df578063e2e52ec114610136578063ed2e5a9714610175575b600080fd5b34801561007d57600080fd5b506100b2600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610207565b005b3480156100c057600080fd5b506100c961027c565b6040518082815260200191505060405180910390f35b3480156100eb57600080fd5b506100f461028b565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561014257600080fd5b50610173600480360381019080803560001916906020019092919080356000191690602001909291905050506102b1565b005b34801561018157600080fd5b506101a06004803603810190808035906020019092919050505061037d565b604051808581526020018473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018360001916600019168152602001826000191660001916815260200194505050505060405180910390f35b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561026357600080fd5b8073ffffffffffffffffffffffffffffffffffffffff16ff5b60008060000180549050905090565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b73__EventStoreLib_________________________630d93ee9c600084846040518463ffffffff167c01000000000000000000000000000000000000000000000000000000000281526004018084815260200183600019166000191681526020018260001916600019168152602001935050505060206040518083038186803b15801561033d57600080fd5b505af4158015610351573d6000803e3d6000fd5b505050506040513d602081101561036757600080fd5b8101908080519060200190929190505050505050565b60008060008073__EventStoreLib_________________________631b68f0916000876040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808381526020018281526020019250505060806040518083038186803b1580156103f757600080fd5b505af415801561040b573d6000803e3d6000fd5b505050506040513d608081101561042157600080fd5b8101908080519060200190929190805190602001909291908051906020019092919080519060200190929190505050935093509350935091935091935600a165627a7a72305820a4010d55986eb984105c2fcd4f4b31c1744874b56062c0cc71280b49640ae1220029",
-  "deployedBytecode": "0x60806040526004361061006c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168062f55d9d1461007157806306661abd146100b45780638da5cb5b146100df578063e2e52ec114610136578063ed2e5a9714610175575b600080fd5b34801561007d57600080fd5b506100b2600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610207565b005b3480156100c057600080fd5b506100c961027c565b6040518082815260200191505060405180910390f35b3480156100eb57600080fd5b506100f461028b565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561014257600080fd5b50610173600480360381019080803560001916906020019092919080356000191690602001909291905050506102b1565b005b34801561018157600080fd5b506101a06004803603810190808035906020019092919050505061037d565b604051808581526020018473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018360001916600019168152602001826000191660001916815260200194505050505060405180910390f35b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561026357600080fd5b8073ffffffffffffffffffffffffffffffffffffffff16ff5b60008060000180549050905090565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b73__EventStoreLib_________________________630d93ee9c600084846040518463ffffffff167c01000000000000000000000000000000000000000000000000000000000281526004018084815260200183600019166000191681526020018260001916600019168152602001935050505060206040518083038186803b15801561033d57600080fd5b505af4158015610351573d6000803e3d6000fd5b505050506040513d602081101561036757600080fd5b8101908080519060200190929190505050505050565b60008060008073__EventStoreLib_________________________631b68f0916000876040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808381526020018281526020019250505060806040518083038186803b1580156103f757600080fd5b505af415801561040b573d6000803e3d6000fd5b505050506040513d608081101561042157600080fd5b8101908080519060200190929190805190602001909291908051906020019092919080519060200190929190505050935093509350935091935091935600a165627a7a72305820a4010d55986eb984105c2fcd4f4b31c1744874b56062c0cc71280b49640ae1220029",
+  "bytecode": "0x608060405234801561001057600080fd5b5032600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555061048b806100616000396000f30060806040526004361061006c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168062f55d9d1461007157806306661abd146100b45780638da5cb5b146100df578063e2e52ec114610136578063ed2e5a9714610175575b600080fd5b34801561007d57600080fd5b506100b2600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610207565b005b3480156100c057600080fd5b506100c961027c565b6040518082815260200191505060405180910390f35b3480156100eb57600080fd5b506100f461028b565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561014257600080fd5b50610173600480360381019080803560001916906020019092919080356000191690602001909291905050506102b1565b005b34801561018157600080fd5b506101a06004803603810190808035906020019092919050505061037d565b604051808581526020018473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018360001916600019168152602001826000191660001916815260200194505050505060405180910390f35b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561026357600080fd5b8073ffffffffffffffffffffffffffffffffffffffff16ff5b60008060000180549050905090565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b73__EventStoreLib_________________________630d93ee9c600084846040518463ffffffff167c01000000000000000000000000000000000000000000000000000000000281526004018084815260200183600019166000191681526020018260001916600019168152602001935050505060206040518083038186803b15801561033d57600080fd5b505af4158015610351573d6000803e3d6000fd5b505050506040513d602081101561036757600080fd5b8101908080519060200190929190505050505050565b60008060008073__EventStoreLib_________________________631b68f0916000876040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808381526020018281526020019250505060806040518083038186803b1580156103f757600080fd5b505af415801561040b573d6000803e3d6000fd5b505050506040513d608081101561042157600080fd5b8101908080519060200190929190805190602001909291908051906020019092919080519060200190929190505050935093509350935091935091935600a165627a7a72305820faffbaf3078a6ba181f6596026403b64c3c01672e961a503ef821d5c7abef3350029",
+  "deployedBytecode": "0x60806040526004361061006c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168062f55d9d1461007157806306661abd146100b45780638da5cb5b146100df578063e2e52ec114610136578063ed2e5a9714610175575b600080fd5b34801561007d57600080fd5b506100b2600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610207565b005b3480156100c057600080fd5b506100c961027c565b6040518082815260200191505060405180910390f35b3480156100eb57600080fd5b506100f461028b565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561014257600080fd5b50610173600480360381019080803560001916906020019092919080356000191690602001909291905050506102b1565b005b34801561018157600080fd5b506101a06004803603810190808035906020019092919050505061037d565b604051808581526020018473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018360001916600019168152602001826000191660001916815260200194505050505060405180910390f35b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561026357600080fd5b8073ffffffffffffffffffffffffffffffffffffffff16ff5b60008060000180549050905090565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b73__EventStoreLib_________________________630d93ee9c600084846040518463ffffffff167c01000000000000000000000000000000000000000000000000000000000281526004018084815260200183600019166000191681526020018260001916600019168152602001935050505060206040518083038186803b15801561033d57600080fd5b505af4158015610351573d6000803e3d6000fd5b505050506040513d602081101561036757600080fd5b8101908080519060200190929190505050505050565b60008060008073__EventStoreLib_________________________631b68f0916000876040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808381526020018281526020019250505060806040518083038186803b1580156103f757600080fd5b505af415801561040b573d6000803e3d6000fd5b505050506040513d608081101561042157600080fd5b8101908080519060200190929190805190602001909291908051906020019092919080519060200190929190505050935093509350935091935091935600a165627a7a72305820faffbaf3078a6ba181f6596026403b64c3c01672e961a503ef821d5c7abef3350029",
   "sourceMap": "57:728:0:-;;;201:55;8:9:-1;5:2;;;30:1;27;20:12;5:2;201:55:0;240:9;232:5;;:17;;;;;;;;;;;;;;;;;;57:728;;;;;;",
   "deployedSourceMap": "57:728:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;183:8;;;668:115;;8:9:-1;5:2;;;30:1;27;20:12;5:2;668:115:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;262:92;;8:9:-1;5:2;;;30:1;27;20:12;5:2;262:92:0;;;;;;;;;;;;;;;;;;;;;;;127:20;;8:9:-1;5:2;;;30:1;27;20:12;5:2;127:20:0;;;;;;;;;;;;;;;;;;;;;;;;;;;360:151;;8:9:-1;5:2;;;30:1;27;20:12;5:2;360:151:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;521:141;;8:9:-1;5:2;;;30:1;27;20:12;5:2;521:141:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;668:115;740:5;;;;;;;;;;;726:19;;:10;:19;;;718:28;;;;;;;;769:6;756:20;;;262:92;305:4;328:5;:12;;:19;;;;321:26;;262:92;:::o;127:20::-;;;;;;;;;;;;;:::o;360:151::-;420:13;:19;453:5;472:3;489:5;420:84;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;420:84:0;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;420:84:0;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;420:84:0;;;;;;;;;;;;;;;;;360:151;;:::o;521:141::-;572:4;578:7;587;596;623:13;:18;642:5;649;623:32;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;623:32:0;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;623:32:0;;;;;;;13:3:-1;8;5:12;2:2;;;30:1;27;20:12;2:2;623:32:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;616:39;;;;;;;;521:141;;;;;:::o",
   "source": "pragma solidity ^0.4.19;\n\nimport \"./EventStoreLib.sol\";\n\ncontract EventStore {\n\n    EventStoreLib.TransmuteStorage store;\n\n    address public owner;\n\n    function () public payable { revert(); }\n \n    constructor() public {\n        owner = tx.origin;\n    }\n\n    function count() public view \n    returns (uint) {\n        return store.events.length;\n    }\n\n    function write(bytes32 key, bytes32 value) public {\n        EventStoreLib.write(\n            store,\n            key,\n            value\n        );\n    }\n    \n    function read(uint index) public view\n    returns (uint, address, bytes32, bytes32 ) {\n        return EventStoreLib.read(store, index);\n    }\n\n    function destroy(address target) public {\n        require(msg.sender == owner);\n        selfdestruct(target);\n    }\n}",
-  "sourcePath": "/Users/orie/Desktop/Transmute/transmute/packages/transmute-framework/contracts/EventStore.sol",
+  "sourcePath": "/Users/ericolszewski/Developer/Transmute/projects/transmute/packages/transmute-framework/contracts/EventStore.sol",
   "ast": {
-    "absolutePath": "/Users/orie/Desktop/Transmute/transmute/packages/transmute-framework/contracts/EventStore.sol",
+    "absolutePath": "/Users/ericolszewski/Developer/Transmute/projects/transmute/packages/transmute-framework/contracts/EventStore.sol",
     "exportedSymbols": {
       "EventStore": [
         86
@@ -132,7 +132,7 @@
         "src": "0:24:0"
       },
       {
-        "absolutePath": "/Users/orie/Desktop/Transmute/transmute/packages/transmute-framework/contracts/EventStoreLib.sol",
+        "absolutePath": "/Users/ericolszewski/Developer/Transmute/projects/transmute/packages/transmute-framework/contracts/EventStoreLib.sol",
         "file": "./EventStoreLib.sol",
         "id": 2,
         "nodeType": "ImportDirective",
@@ -225,10 +225,10 @@
                       "name": "revert",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        304,
-                        305
+                        361,
+                        362
                       ],
-                      "referencedDeclaration": 304,
+                      "referencedDeclaration": 361,
                       "src": "183:6:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_revert_pure$__$returns$__$",
@@ -319,7 +319,7 @@
                         "name": "tx",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 311,
+                        "referencedDeclaration": 368,
                         "src": "240:2:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_transaction",
@@ -968,7 +968,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 299,
+                            "referencedDeclaration": 356,
                             "src": "726:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -1022,10 +1022,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        302,
-                        303
+                        359,
+                        360
                       ],
-                      "referencedDeclaration": 302,
+                      "referencedDeclaration": 359,
                       "src": "718:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -1079,7 +1079,7 @@
                       "name": "selfdestruct",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 307,
+                      "referencedDeclaration": 364,
                       "src": "756:12:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_selfdestruct_nonpayable$_t_address_$returns$__$",
@@ -1168,7 +1168,7 @@
     "src": "0:785:0"
   },
   "legacyAST": {
-    "absolutePath": "/Users/orie/Desktop/Transmute/transmute/packages/transmute-framework/contracts/EventStore.sol",
+    "absolutePath": "/Users/ericolszewski/Developer/Transmute/projects/transmute/packages/transmute-framework/contracts/EventStore.sol",
     "exportedSymbols": {
       "EventStore": [
         86
@@ -1189,7 +1189,7 @@
         "src": "0:24:0"
       },
       {
-        "absolutePath": "/Users/orie/Desktop/Transmute/transmute/packages/transmute-framework/contracts/EventStoreLib.sol",
+        "absolutePath": "/Users/ericolszewski/Developer/Transmute/projects/transmute/packages/transmute-framework/contracts/EventStoreLib.sol",
         "file": "./EventStoreLib.sol",
         "id": 2,
         "nodeType": "ImportDirective",
@@ -1282,10 +1282,10 @@
                       "name": "revert",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        304,
-                        305
+                        361,
+                        362
                       ],
-                      "referencedDeclaration": 304,
+                      "referencedDeclaration": 361,
                       "src": "183:6:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_revert_pure$__$returns$__$",
@@ -1376,7 +1376,7 @@
                         "name": "tx",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 311,
+                        "referencedDeclaration": 368,
                         "src": "240:2:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_transaction",
@@ -2025,7 +2025,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 299,
+                            "referencedDeclaration": 356,
                             "src": "726:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -2079,10 +2079,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        302,
-                        303
+                        359,
+                        360
                       ],
-                      "referencedDeclaration": 302,
+                      "referencedDeclaration": 359,
                       "src": "718:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -2136,7 +2136,7 @@
                       "name": "selfdestruct",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 307,
+                      "referencedDeclaration": 364,
                       "src": "756:12:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_selfdestruct_nonpayable$_t_address_$returns$__$",
@@ -2229,65 +2229,7 @@
     "version": "0.4.23+commit.124ca40d.Emscripten.clang"
   },
   "networks": {
-    "1521729411811": {
-      "events": {
-        "0x4d08348077fe794dec3ab11e93085b66ad3819948d4ad99634821039b675c561": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "sender",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "key",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "value",
-              "type": "bytes32"
-            }
-          ],
-          "name": "TransmuteEvent",
-          "type": "event"
-        },
-        "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "index",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "sender",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "key",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "value",
-              "type": "bytes32"
-            }
-          ],
-          "name": "TransmuteEvent",
-          "type": "event"
-        }
-      },
-      "links": {
-        "EventStoreLib": "0xe5de7f7797300c4f28ec0f035b664c2157759cc8"
-      },
-      "address": "0x5c3ebf0fdb3176dfe8ffde603bcfccf7e33fad7e",
-      "transactionHash": "0x3f33af58fbe29016356b34c421feb7ca968be950a1924d6c765ceffff89d7c9e"
-    },
-    "1521922702142": {
+    "3": {
       "events": {
         "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
           "anonymous": false,
@@ -2318,372 +2260,12 @@
         }
       },
       "links": {
-        "EventStoreLib": "0x546a6aee5fadee5db69bc81489d68446809578ed"
+        "EventStoreLib": "0xce2736620dc5970cc80073ca64c056bc4974d8cf"
       },
-      "address": "0xbf54d40bbe15af70301b1d4d88999eadbc9c3fa7",
-      "transactionHash": "0x9558142f0338d3b4e0323ffaf41cdcb836302108e22c0da58da81e8357be5b49"
-    },
-    "1521922952543": {
-      "events": {
-        "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "index",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "sender",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "key",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "value",
-              "type": "bytes32"
-            }
-          ],
-          "name": "TransmuteEvent",
-          "type": "event"
-        }
-      },
-      "links": {
-        "EventStoreLib": "0x52a521e84a87bcaf1afc11ccb518d430ee7dfa46"
-      },
-      "address": "0x7335207ea567654708fb9fb8d68817f65690eca7",
-      "transactionHash": "0x4a384328506f49ee756f5effc20fe0cda4c74910123e88899b0e5344c46dfdc6"
-    },
-    "1521923019631": {
-      "events": {
-        "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "index",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "sender",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "key",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "value",
-              "type": "bytes32"
-            }
-          ],
-          "name": "TransmuteEvent",
-          "type": "event"
-        }
-      },
-      "links": {
-        "EventStoreLib": "0x235eb1f7d283c0eaf998bb7e55e206ae5224ad51"
-      },
-      "address": "0x0588ae6675734b6a96e0de7d1b0eeed1c83d76e4",
-      "transactionHash": "0x0fa40840c90b1b0abe8e5b0ff24d6fbd4ec63aa3680403cc6580e473edb2d9c4"
-    },
-    "1521923059073": {
-      "events": {
-        "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "index",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "sender",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "key",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "value",
-              "type": "bytes32"
-            }
-          ],
-          "name": "TransmuteEvent",
-          "type": "event"
-        }
-      },
-      "links": {
-        "EventStoreLib": "0x3421fb23759c51c56768597cd4aa063c75fb37c8"
-      },
-      "address": "0xf79bc977ae3b34b1c260c08b4de051865915d84e",
-      "transactionHash": "0xc633aa38c35577b0f18dd52bd9e9e1408882093cbb720b550419312331f05dc1"
-    },
-    "1521923095577": {
-      "events": {
-        "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "index",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "sender",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "key",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "value",
-              "type": "bytes32"
-            }
-          ],
-          "name": "TransmuteEvent",
-          "type": "event"
-        }
-      },
-      "links": {
-        "EventStoreLib": "0xa1e79d9f093548b0e3157e2047fe6d308c4d272f"
-      },
-      "address": "0x61e2114eec295a98cac0ee93c9b0c49aaa79361e",
-      "transactionHash": "0xa15d8f958129345c5e973a82c961152daae0d870c5a6f8cdc9a45abe80234f23"
-    },
-    "1521923228939": {
-      "events": {
-        "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "index",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "sender",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "key",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "value",
-              "type": "bytes32"
-            }
-          ],
-          "name": "TransmuteEvent",
-          "type": "event"
-        }
-      },
-      "links": {
-        "EventStoreLib": "0xccca7522ce880549aff83bf3f5542f218fb32ada"
-      },
-      "address": "0x3b72780f4c52d127ca6ff02ecc18f51429e8259e",
-      "transactionHash": "0x2438d794ef3c9907a4d5dc5351f537e60728af5f8b5cdd1cf3d83d9ed509ffd4"
-    },
-    "1521670260134": {
-      "events": {
-        "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "index",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "sender",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "key",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "value",
-              "type": "bytes32"
-            }
-          ],
-          "name": "TransmuteEvent",
-          "type": "event"
-        }
-      },
-      "links": {
-        "EventStoreLib": "0x371756a9fa9e5f2e16ebcf27be9cb0d6bb930b60"
-      },
-      "address": "0x12423c533bb1bd2b4ea72199e50605bd3705196a",
-      "transactionHash": "0xfe03008ee183c49e0f280a8e8b593248e39f26bdc57d542a4231f97a9fc01fff"
-    },
-    "1522183114697": {
-      "events": {
-        "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "index",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "sender",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "key",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "value",
-              "type": "bytes32"
-            }
-          ],
-          "name": "TransmuteEvent",
-          "type": "event"
-        }
-      },
-      "links": {
-        "EventStoreLib": "0x37adc646d6d1e3c76994b524658a7767514bbd9e"
-      },
-      "address": "0x0029b817079e61559ac8e328c81f93b6f8064dbe",
-      "transactionHash": "0xa1a830fd7bab32e38a16fd139bece87916e0ffe5702d0e831eaaf1a49122d461"
-    },
-    "1523655749164": {
-      "events": {
-        "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "index",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "sender",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "key",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "value",
-              "type": "bytes32"
-            }
-          ],
-          "name": "TransmuteEvent",
-          "type": "event"
-        }
-      },
-      "links": {
-        "EventStoreLib": "0x539ae5ae3327b04239caef62e1da7d4e578d0786"
-      },
-      "address": "0xb2ca495a31bfac31e78e6e4db53c9a9ff80a38a9",
-      "transactionHash": "0x6f9f8a079976607f47cc5b96a5cfa38a7762a5cca40a05f7a8dfa6aed56e7628"
-    },
-    "1525282514817": {
-      "events": {
-        "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "index",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "sender",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "key",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "value",
-              "type": "bytes32"
-            }
-          ],
-          "name": "TransmuteEvent",
-          "type": "event"
-        }
-      },
-      "links": {
-        "EventStoreLib": "0xd83fc26f607efb9f80798c05dd7f6ab864159270"
-      },
-      "address": "0xddbba5fa5102d8ebfc3b501944a3fa41eba101d7",
-      "transactionHash": "0x02632d02ef4054e4222c125fd117b2b92f73203df81d27d6f6bd2e3c8d255d3a"
-    },
-    "1525800439053": {
-      "events": {
-        "0x4c7900e30963aa4aed068e34036112a44f45ef40623e8892337b84316e5fcb64": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "index",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "sender",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "key",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "value",
-              "type": "bytes32"
-            }
-          ],
-          "name": "TransmuteEvent",
-          "type": "event"
-        }
-      },
-      "links": {
-        "EventStoreLib": "0x05f9fe88b9432091c69f6a5efbb49a128def95b3"
-      },
-      "address": "0x849b488c0afdf80ed415fe0248b97d3291cbf6d6",
-      "transactionHash": "0xe35e2217eedb5e7423e83e4cad130a92b900ca93f8c8443830a63c615e9bc53f"
+      "address": "0x0678ed7347f6410bc9e0ca25cd04a1385ff6a088",
+      "transactionHash": "0xd8829cb0502e7e2edda5b8f9ab0482c1fc967901de2c8c661d5836566163be93"
     }
   },
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-05-08T21:20:42.288Z"
+  "updatedAt": "2018-06-20T22:24:46.863Z"
 }

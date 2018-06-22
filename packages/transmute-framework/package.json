@@ -1,6 +1,6 @@
 {
   "name": "transmute-framework",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Event Sourced Decentralized Application Development Framework.",
   "main": "src/index.js",
   "files": [
@@ -11,9 +11,8 @@
     "start": "npm test",
     "test": "NODE_TLS_REJECT_UNAUTHORIZED=0 react-scripts test --coverage --forceExit",
     "test:report": "codecov && rm -rf ./coverage",
-    "test:smoke": "node ./smoke_tests/module.test.js",
     "truffle:test": "NODE_TLS_REJECT_UNAUTHORIZED=0 truffle test",
-    "truffle:migrate": "NODE_TLS_REJECT_UNAUTHORIZED=0 truffle migrate",
+    "truffle:migrate": "NODE_TLS_REJECT_UNAUTHORIZED=0 truffle migrate --network development",
     "truffle:coverage": "./node_modules/.bin/solidity-coverage",
     "truffle:coverage:report": "cat coverage/lcov.info | coveralls",
     "eject": "react-scripts eject",
@@ -45,9 +44,11 @@
   },
   "dependencies": {
     "bs58": "^4.0.1",
+    "dotenv": "^6.0.0",
     "ipfs-api": "^20.0.1",
     "mixpanel": "^0.9.1",
     "truffle-contract": "^3.0.4",
+    "truffle-hdwallet-provider": "0.0.5",
     "web3": "^0.19.1",
     "web3-provider-engine": "^13.6.6",
     "zeppelin-solidity": "^1.6.0"

@@ -6,7 +6,7 @@
     "include": ["src", "package.json", "README.md"],
     "includePattern": ".js$",
     "excludePattern":
-      "(node_modules/|docs|coverage|dist|build|contracts|migrations|smoke_tests)"
+      "(node_modules/|docs|coverage|build|contracts|migrations)"
   },
   "plugins": ["plugins/markdown"],
   "opts": {
