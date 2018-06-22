@@ -167,12 +167,19 @@ module.exports = class EventStore {
       }
     );
 
-    const receipt = web3.eth.getTransactionReceipt(tx, function (error, result) {
-      if (!error)
-        console.info(result)
-      else
-        console.error(error);
-    });
+    let receipt;
+
+    // MetaMask's Web3 requires that callback be used here.
+    if (typeof window !== 'undefined' && window.web3) {
+      receipt = web3.eth.getTransactionReceipt(tx, function (error, result) {
+        if (!error)
+          console.info(result)
+        else
+          console.error(error);
+      });
+    } else {
+      receipt = web3.eth.getTransactionReceipt(tx);
+    }
 
     return {
       event: {
