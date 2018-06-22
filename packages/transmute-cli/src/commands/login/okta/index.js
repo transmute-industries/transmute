@@ -50,7 +50,7 @@ function sha256(buffer) {
  * @description This method crafts an authentication url, and then starts an http server to listen for the redirect from the authentication.
  * @return {okta_session_object} A session object with access_token and id_token.
  */
-export const login = async () => {
+module.exports.login = async () => {
   const { okta_host, redirect_uri, client_id } = config;
 
   var code_verifier = base64URLEncode(crypto.randomBytes(32));
@@ -58,18 +58,18 @@ export const login = async () => {
 
   const url = `https://${okta_host}/oauth2/default/v1/authorize?client_id=${client_id}&response_type=code&scope=openid&redirect_uri=${redirect_uri}&state=state-8600b31f-52d1-4dca-987c-386e3d8967e9&code_challenge_method=S256&code_challenge=${code_challenge}`;
 
-  console.log('open this url: \n');
-  console.log(url);
-  console.log();
+  console.info('open this url: \n');
+  console.info(url);
+  console.info();
 
   const response = await callbackServer(code_verifier);
 
   let home = require('os').homedir();
 
-  await writeFile(
-    path.join(home, '.transmute/cli-secrets/session.json'),
-    JSON.stringify(response, null, 2)
-  );
+  let sessionPath = path.join(home, '.transmute/cli-secrets/session.json');
+  await writeFile(sessionPath, JSON.stringify(response, null, 2));
+
+  console.info('session saved: ', sessionPath);
 
   return response;
 };

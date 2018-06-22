@@ -7,7 +7,7 @@ orig_pwd=$(pwd)
 source $TRANSMUTE_DIR/.env
 
 : ${VOYAGER_PROVIDER:='baremetal'}
-: ${DO_JWT_DL:=n}
+: ${TRANSMUTE_DO_JWT_DL:=n}
 : ${DO_FAAS:=n}
 : ${DEBUG_MESSAGES:='Received problem bailing out!'}
 
@@ -72,8 +72,8 @@ add_line_to()
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Wait for kubectl and kube-dns to be initialized
-$TRANSMUTE_REPO/w8s/kubectl.w8
-$TRANSMUTE_REPO/w8s/ready.w8 kube-dns kube-system
+$TRANSMUTE_REPO/packages/transmute-cli/scripts/w8s/kubectl.w8
+$TRANSMUTE_REPO/packages/transmute-cli/scripts/w8s/ready.w8 kube-dns kube-system
 
 sleep 5
 
@@ -95,7 +95,7 @@ kubectl get pods
 squawk 5 "Install helm"
 helm init --service-account tiller
 
-USE_STRICT_W8=true $TRANSMUTE_REPO/w8s/ready.w8 tiller-deploy kube-system
+USE_STRICT_W8=true $TRANSMUTE_REPO/packages/transmute-cli/scripts/w8s/ready.w8 tiller-deploy kube-system
 
 sleep 1
 kubectl get pods -n kube-system
@@ -105,7 +105,7 @@ helm install \
  --name=ganache \
  $TRANSMUTE_REPO/components/ganache/charts/ganache-cli/
 
-$TRANSMUTE_REPO/w8s/ready.w8 ganache default
+$TRANSMUTE_REPO/packages/transmute-cli/scripts/w8s/ready.w8 ganache default
 
 squawk 5 "ipfs"
 #squawk 6 "Storage class for ipfs"
@@ -115,7 +115,7 @@ helm install \
  stable/ipfs \
  --name decentralized-storage
 
-$TRANSMUTE_REPO/w8s/ready.w8 decentralized-storage-ipfs default
+$TRANSMUTE_REPO/packages/transmute-cli/scripts/w8s/ready.w8 decentralized-storage-ipfs default
 
 if [[ "$DO_FAAS" == 'y' ]]; then
   squawk 5 "OpenFaaS"
@@ -135,8 +135,8 @@ fi
 helm install stable/kong --name gateway
 
 squawk 5 "spin up"
-$TRANSMUTE_REPO/w8s/ready.w8 gateway-postgresql default
-EXCLUDE_POD=gateway-kong-migration $TRANSMUTE_REPO/w8s/ready.w8 gateway-kong default
+$TRANSMUTE_REPO/packages/transmute-cli/scripts/w8s/ready.w8 gateway-postgresql default
+EXCLUDE_POD=gateway-kong-migration $TRANSMUTE_REPO/packages/transmute-cli/scripts/w8s/ready.w8 gateway-kong default
 export MINIKUBE_IP=$(minikube ip)
 export KONG_ADMIN_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
 export KONG_PROXY_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
@@ -242,7 +242,7 @@ curl -s -k -X GET \
   --url 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT'/api/v0/id' \
   | jq '.'
 
-if [[ "$DO_JWT_DL" == 'y' ]]; then
+if [[ "$TRANSMUTE_DO_JWT_DL" == 'y' ]]; then
   squawk 3 'configure okta'
   #$TRANSMUTE_REPO/scripts/configure-kong-okta-ipfs.sh
 

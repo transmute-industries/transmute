@@ -72,10 +72,10 @@ module.exports = code_verifier => {
 
     server.listen(port, err => {
       if (err) {
-        return console.log('something bad happened', err);
+         console.debug('something bad happened', err);
         reject(err);
       }
-      console.log(`server is listening on ${port}`);
+      console.debug(`server is listening on ${port}`);
     });
   });
 };

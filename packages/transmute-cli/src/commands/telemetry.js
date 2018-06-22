@@ -8,23 +8,23 @@ let telemetryAgreementPath = path.join(
   'telemetry-agreement.json'
 );
 
-export function isEnabled() {
+module.exports.isEnabled = () => {
   let currentlyAgrees = fs.existsSync(telemetryAgreementPath);
   return currentlyAgrees;
-}
+};
 
-export function send(mixpanel) {
+module.exports.send = mixpanel => {
   return async ({ event, properties }) => {
-    if (isEnabled()) {
+    if (module.exports.isEnabled()) {
       mixpanel.track(event, properties);
     } else {
       // no agreement, not sending telemetry
     }
   };
-}
+};
 
-export function toggle(vorpal, args) {
-  if (isEnabled() && args.state === 'off') {
+module.exports.toggle = (vorpal, args) => {
+  if (module.exports.isEnabled() && args.state === 'off') {
     fs.unlinkSync(telemetryAgreementPath);
     vorpal.logger.info(
       `transmute telemetry ${args.state}: deleted ${telemetryAgreementPath}`
@@ -32,7 +32,7 @@ export function toggle(vorpal, args) {
     return;
   }
 
-  if (!isEnabled() && args.state === 'on') {
+  if (!module.exports.isEnabled() && args.state === 'on') {
     fs.writeFileSync(telemetryAgreementPath);
     vorpal.logger.info(
       `transmute telemetry ${args.state}: added ${telemetryAgreementPath}`
@@ -43,4 +43,4 @@ export function toggle(vorpal, args) {
   vorpal.logger.info(`transmute telemetry ${args.state}`);
 
   return args.state;
-}
+};
