@@ -1,8 +1,6 @@
 require('dotenv').config();
 const Web3 = require('web3');
-// TODO: Update Truffle and HDWalletProvider once this issue is resolved
-// https://github.com/trufflesuite/truffle-migrate/issues/14
-// var HDWalletProvider = require("truffle-hdwallet-provider");
+var HDWalletProvider = require("truffle-hdwallet-provider");
 const transmuteConfig = require('./src/transmute-config');
 
 module.exports = {
@@ -14,11 +12,12 @@ module.exports = {
       ),
       network_id: '*' // Match any network id
     },
-    // TODO: Uncomment this once this issue has been fixed and merged.
-    // https://github.com/trufflesuite/truffle-migrate/issues/14
-    // ropsten: {
-    //   provider: new HDWalletProvider(process.env.ROPSTEN_MNEMONIC, 'https://ropsten.infura.io/'),
-    //   network_id: 3
-    // }
+    // Providers using HDWallet need to be wrapped in a function: https://truffleframework.com/docs/advanced/configuration#providers
+    ropsten: {
+      provider: function() {
+        return new HDWalletProvider(process.env.REACT_APP_ROPSTEN_MNEMONIC, `https://ropsten.infura.io/${process.env.REACT_APP_INFURA_API_TOKEN}`);
+      },
+      network_id: 3
+    }
   }
 };
