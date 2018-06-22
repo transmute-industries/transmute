@@ -81,7 +81,7 @@ sleep 5
 squawk 5 'create tiller service account'
 kubectl create --save-config serviceaccount tiller --namespace kube-system
 squawk 5 'create tiller rbac config'
-kubectl apply -f $TRANSMUTE_REPO/components/helm/rbac-tiller-config.yaml
+kubectl apply -f $TRANSMUTE_REPO/packages/transmute-cli/components/helm/rbac-tiller-config.yaml
 
 sleep 5
 if [[ "$TRANSMUTE_VERBOSITY" -ge "111" ]] ; then
@@ -125,7 +125,7 @@ if [[ "$DO_FAAS" == 'y' ]]; then
   #squawk 5 "OpenFaas RBAC"
   #kubectl apply -f https://raw.githubusercontent.com/openfaas/faas-netes/master/yaml/rbac.yml
   squawk 5 "OpenFaas Helmchart"
-  cd $TRANSMUTE_REPO/components/openfaas/faas-netes/chart
+  cd $TRANSMUTE_REPO/packages/transmute-cli/components/openfaas/faas-netes/chart
   helm upgrade --install openfaas openfaas/ \
     --namespace openfaas \
     --set functionNamespace=openfaas-fn

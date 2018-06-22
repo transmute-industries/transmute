@@ -4,12 +4,12 @@ services:
   testrpc:
     environment:
       - RPC_HOST=testrpc
-    build: ./components/ganache/docker/ganache-cli
+    build: ./packages/transmute-cli/components/ganache/docker/ganache-cli
     ports:
       - "8545:8545"
 
   ipfs:
-    build: ./components/ipfs/docker/ipfs
+    build: ./packages/transmute-cli/components/ipfs/docker/ipfs
     ports:
      - "8080:8080"
      - "5001:5001"
