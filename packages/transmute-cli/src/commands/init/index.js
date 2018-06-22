@@ -5,12 +5,12 @@ const path = require('path');
 module.exports.k8s = (dryrun, clusterName) => {
   let prov_cmd = path.join(
     __dirname,
-    '../../scripts/initializer ' + clusterName
+    '../../../scripts/initializer ' + clusterName
   );
 
   if (dryrun == 'true') {
     console.info('<--dry run-->');
   } else {
-    run.ner(prov_cmd);
+    run.shellExec(prov_cmd);
   }
 };

@@ -1,11 +1,11 @@
 const shell = require('shelljs');
 const ps = require('child_process');
 
-module.exports.ner = command2run => {
+module.exports.shellExec = command2run => {
   let result = shell.exec(command2run);
 
   if (result.code !== 0) {
-    throw new Error('Command FAILED, tell use what happned so we can fix it: https://github.com/transmute-industries/transmute/issues/new');
+    throw new Error('Command FAILED, tell us what happened so we can fix it: https://github.com/transmute-industries/transmute/issues/new');
   }
   return result;
 };

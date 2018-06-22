@@ -34,7 +34,7 @@ module.exports.minikube = (dryrun, clusterName, minikubeDriver) => {
   if (dryrun === 'true') {
     console.info('<--dry run-->');
   } else {
-    run.ner(prov_cmd);
+    run.shellExec(prov_cmd);
   }
 };
 
@@ -46,10 +46,10 @@ module.exports.aks = (
   myNodeSize,
   GenSSHKeys
 ) => {
-  run.ner('az provider register -n Microsoft.Network');
-  run.ner('az provider register -n Microsoft.Storage');
-  run.ner('az provider register -n Microsoft.Compute');
-  run.ner('az provider register -n Microsoft.ContainerService');
+  run.shellExec('az provider register -n Microsoft.Network');
+  run.shellExec('az provider register -n Microsoft.Storage');
+  run.shellExec('az provider register -n Microsoft.Compute');
+  run.shellExec('az provider register -n Microsoft.ContainerService');
 
   let gensshkeys_opt = ' ';
   if (GenSSHKeys) {
@@ -83,13 +83,13 @@ module.exports.aks = (
     nodesize_opt +
     akscluster_opt +
     gensshkeys_opt;
-  run.ner(prov_cmd);
+  run.shellExec(prov_cmd);
 
   var prov_cmd = 'az aks get-credentials ' + akscluster_opt + group_opt;
 
   if (dryrun == 'true') {
     console.info('<--dry run-->');
   } else {
-    run.ner(prov_cmd);
+    run.shellExec(prov_cmd);
   }
 };
