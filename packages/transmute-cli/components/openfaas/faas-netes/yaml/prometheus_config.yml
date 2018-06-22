@@ -1,0 +1,51 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  labels:
+    app: prometheus
+  name: prometheus-config
+  namespace: openfaas
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval:     15s
+      evaluation_interval: 15s
+      external_labels:
+          monitor: 'faas-monitor'
+    rule_files:
+        - 'alert.rules.yml'
+    scrape_configs:
+      - job_name: 'prometheus'
+        scrape_interval: 5s
+        static_configs:
+          - targets: ['localhost:9090']
+      - job_name: "gateway"
+        scrape_interval: 5s
+        dns_sd_configs:
+          - names: ['gateway.openfaas']
+            port: 8080
+            type: A
+            refresh_interval: 5s
+    alerting:
+      alertmanagers:
+      - static_configs:
+        - targets:
+          - alertmanager.openfaas:9093
+  alert.rules.yml: |
+    groups:
+    - name: openfaas
+      rules:
+      - alert: service_down
+        expr: up == 0
+      - alert: APIHighInvocationRate
+        expr: sum(rate(gateway_function_invocation_total{code="200"}[10s])) BY (function_name)
+          > 5
+        for: 5s
+        labels:
+          service: gateway
+          severity: major
+          value: '{{$value}}'
+        annotations:
+          description: High invocation total on {{ $labels.instance }}
+          summary: High invocation total on {{ $labels.instance }}
+---

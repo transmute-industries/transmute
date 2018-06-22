@@ -1,0 +1,305 @@
+#!/usr/bin/env bash
+set -eu
+this_cluster_name=$1
+orig_pwd=$(pwd)
+
+: ${TRANSMUTE_DIR:=$HOME/.transmute}
+source $TRANSMUTE_DIR/.env
+
+: ${VOYAGER_PROVIDER:='baremetal'}
+: ${TRANSMUTE_DO_JWT_DL:=n}
+: ${DO_FAAS:=n}
+: ${DEBUG_MESSAGES:='Received problem bailing out!'}
+
+export PATH=$HOME/.transmute/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
+export TRANSMUTE_ENV=minikube
+export NVM_DIR="$HOME/.nvm"
+
+exiter () {
+  echo $DEBUG_MESSAGES
+}
+
+trap exiter EXIT
+
+squawk () {
+  # This function simplifies error reporting and verbosity
+  # call it by preceding your message with a verbosity level
+  # e.g. `squawk 3 "This is a squawk"`
+  # if the current verbosity level is greater than or equal to
+  # the number given then this function will echo out your message
+  # and pad it with # to let you now how verbose that message was
+  squawk_lvl=$1
+  shift
+  squawk=$1
+  shift
+  squawk_opt=$@
+
+  if [[ "$TRANSMUTE_VERBOSITY" -ge "$squawk_lvl" ]] ; then
+  count_squawk=0
+    while [[ "$count_squawk" -lt "$squawk_lvl" ]]; do
+      printf "#"
+      count_squawk=`expr $count_squawk + 1`
+    done
+    echo " $squawk"
+  fi
+}
+
+# these vars are used by the following functions
+# which idempotently addlines to a file
+LINE_TO_ADD=''
+TARGET_FILE_FOR_ADD=~/.profile
+
+check_if_line_exists()
+{
+  squawk 3 "Checking for '$LINE_TO_ADD'  in $TARGET_FILE_FOR_ADD"
+  grep -qsFx "$LINE_TO_ADD" $TARGET_FILE_FOR_ADD
+}
+
+add_line_to()
+{
+  squawk 3 "Adding '$LINE_TO_ADD'  to $TARGET_FILE_FOR_ADD"
+  TARGET_FILE=$TARGET_FILE_FOR_ADD
+    [ -w "$TARGET_FILE" ] || TARGET_FILE=$TARGET_FILE_FOR_ADD
+    printf "%s\n" "$LINE_TO_ADD" | sudo tee -a "$TARGET_FILE"
+}
+
+# Force NVM to load
+# This is needed
+# if the user has not reloaded their environment
+# after installing nvm for the first time
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Wait for kubectl and kube-dns to be initialized
+$TRANSMUTE_REPO/packages/transmute-cli/scripts/w8s/ready.w8 kube-dns kube-system
+
+sleep 5
+
+# Apply rbac for tiller
+squawk 5 'create tiller service account'
+kubectl create --save-config serviceaccount tiller --namespace kube-system
+squawk 5 'create tiller rbac config'
+kubectl apply -f $TRANSMUTE_REPO/packages/transmute-cli/components/helm/rbac-tiller-config.yaml
+
+sleep 5
+if [[ "$TRANSMUTE_VERBOSITY" -ge "111" ]] ; then
+  kubectl get pods --all-namespaces
+fi
+if [[ "$TRANSMUTE_VERBOSITY" -ge "101" ]] ; then
+  kubectl get pods -n kube-system
+fi
+kubectl get pods
+
+squawk 5 "Install helm"
+helm init --service-account tiller
+
+USE_STRICT_W8=true $TRANSMUTE_REPO/packages/transmute-cli/scripts/w8s/ready.w8 tiller-deploy kube-system
+
+sleep 1
+kubectl get pods -n kube-system
+
+squawk 5 "Ganache-cli"
+helm install \
+ --name=ganache \
+ $TRANSMUTE_REPO/packages/transmute-cli/components/ganache/charts/ganache-cli/
+
+$TRANSMUTE_REPO/packages/transmute-cli/scripts/w8s/ready.w8 ganache default
+
+squawk 5 "ipfs"
+#squawk 6 "Storage class for ipfs"
+
+squawk 5 "Helm install ipfs"
+helm install \
+ stable/ipfs \
+ --name decentralized-storage
+
+$TRANSMUTE_REPO/packages/transmute-cli/scripts/w8s/ready.w8 decentralized-storage-ipfs default
+
+if [[ "$DO_FAAS" == 'y' ]]; then
+  squawk 5 "OpenFaaS"
+  squawk 6 "Create namespaces"
+  kubectl apply -f \
+    https://raw.githubusercontent.com/openfaas/faas-netes/master/namespaces.yml
+  #squawk 5 "OpenFaas RBAC"
+  #kubectl apply -f https://raw.githubusercontent.com/openfaas/faas-netes/master/yaml/rbac.yml
+  squawk 5 "OpenFaas Helmchart"
+  cd $TRANSMUTE_REPO/packages/transmute-cli/components/openfaas/faas-netes/chart
+  helm upgrade --install openfaas openfaas/ \
+    --namespace openfaas \
+    --set functionNamespace=openfaas-fn
+  cd $orig_pwd
+fi
+
+helm install stable/kong --name gateway
+
+squawk 5 "spin up"
+$TRANSMUTE_REPO/packages/transmute-cli/scripts/w8s/ready.w8 gateway-postgresql default
+EXCLUDE_POD=gateway-kong-migration $TRANSMUTE_REPO/packages/transmute-cli/scripts/w8s/ready.w8 gateway-kong default
+export MINIKUBE_IP=$(minikube ip)
+export KONG_ADMIN_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
+export KONG_PROXY_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
+export KONG_PROXY_PORT=$(PATH=$HOME/.transmute/bin:$PATH kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
+export KONG_HOST=$(echo $KONG_ADMIN_URL | sed 's!https://!!g' | cut -f1 -d:)
+export KONG_PORT=$(echo $KONG_ADMIN_URL | sed 's!https://!!g' | cut -f2 -d:)
+
+squawk 3 'configure hosts'
+TARGET_FILE_FOR_ADD=/etc/hosts
+LINE_TO_ADD="$(minikube ip)  transmute.minikube"
+check_if_line_exists || add_line_to
+LINE_TO_ADD="$(minikube ip)  ipfs.transmute.minikube"
+check_if_line_exists || add_line_to
+LINE_TO_ADD="$(minikube ip)  ganache.transmute.minikube"
+check_if_line_exists || add_line_to
+
+squawk 3 "configure-kong-ganache"
+
+squawk 5 'SETTING UP GANACHE'
+
+squawk 5 "Get the service clusterIp for Kong to use."
+export GANACHE_CLUSTER_IP=$(PATH=$HOME/.transmute/bin:$PATH kubectl get service ganache-ganache-cli -o json | jq -r '.spec.clusterIP');
+squawk 1 "GANACHE_CLUSTER_IP $GANACHE_CLUSTER_IP"
+
+countzero=0
+echo "Waiting for ganache to launch on $KONG_ADMIN_URL..."
+wait_for_it=100
+DEBUG_MESSAGES='ganache loop'
+while [[ $wait_for_it -gt 0 ]]; do
+  ((++countzero))
+  if [[ "$countzero" -gt 200 ]]; then
+    echo 'timeout waiting for ganache to launch'
+    exit 1
+  fi
+  if [[ "$countzero" -gt 5 ]]; then
+    sleep 4
+  fi
+  DEBUG_MESSAGES="ganache loop $countzero"
+  set +e
+   # This command will fail when ganache if ganache is not up
+   # set +e is required
+    curl --connect-timeout 2 -s http://$KONG_HOST:$KONG_PORT &>/dev/null
+    wait_for_it=$?
+   # we'll test the condition afterward
+  set -e
+  printf '.'
+  sleep 1
+done
+squawk 3 "ganache launched"
+
+DEBUG_MESSAGES='kong'
+squawk 9 "# Add Ganache API to Kong
+curl -s -k -X POST \
+  --url $KONG_ADMIN_URL/apis/ \
+  --data 'name=ganache' \
+  --data 'hosts=ganache.transmute.minikube' \
+  --data 'upstream_url=http://'$GANACHE_CLUSTER_IP':8545/'"
+squawk 5 "Add Ganache API to Kong"
+curl -s -k -X POST \
+  --url $KONG_ADMIN_URL/apis/ \
+  --data 'name=ganache' \
+  --data 'hosts=ganache.transmute.minikube' \
+  --data 'upstream_url=http://'$GANACHE_CLUSTER_IP':8545/' \
+  | jq -r '.'
+
+squawk 3 'GANACHE HEALTHCHECK'
+squawk 3 "https://ganache.transmute.minikube:$KONG_PROXY_PORT"
+
+curl -s -k -X POST \
+  --url "https://ganache.transmute.minikube:$KONG_PROXY_PORT/ganache" \
+  --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":68}' \
+  | jq -r '.'
+
+squawk 3 'configure ipfs'
+squawk 5 "configure-kong-ipfs.sh"
+
+squawk 3 'SETTING UP IPFS'
+
+squawk 5 "Get the service clusterIp for Kong to use."
+export IPFS_CLUSTER_IP=$(PATH=$HOME/.transmute/bin:$PATH kubectl get service decentralized-storage-ipfs -o json | jq -r '.spec.clusterIP');
+
+squawk 5 "Add IPFS API to Kong"
+curl -s -k -X POST \
+  --url $KONG_ADMIN_URL/apis/ \
+  --data 'name=ipfs' \
+  --data 'hosts=ipfs.transmute.minikube' \
+  --data "https_only=true" \
+  --data 'upstream_url=http://'$IPFS_CLUSTER_IP':5001/' \
+  | jq '.'
+
+squawk 5 "Configure CORS for IPFS via Kong"
+curl -s -k -X POST \
+  --url $KONG_ADMIN_URL/apis/ipfs/plugins \
+  --data "name=cors" \
+  --data "config.origins=*" \
+  --data "config.methods=GET, PUT, POST" \
+  | jq '.'
+
+squawk 3 'IPFS HEALTHCHECK'
+squawk 3 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT
+
+curl -s -k -X GET \
+  --url 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT'/api/v0/id' \
+  | jq '.'
+
+if [[ "$TRANSMUTE_DO_JWT_DL" == 'y' ]]; then
+  squawk 3 'configure okta'
+  #$TRANSMUTE_REPO/scripts/configure-kong-okta-ipfs.sh
+
+  squawk 3 'Configure Kong to use Okta to secure IPFS'
+
+  curl -s -k -X POST $KONG_ADMIN_URL/apis/ipfs/plugins \
+      --data "name=jwt"
+
+  # How to delete a plugin.
+  # Get the plugin id from the api
+  # curl -s -k -X GET $KONG_ADMIN_URL/apis/ipfs/plugins
+  # Delete it from the api
+  # curl -k -X DELETE $KONG_ADMIN_URL/apis/ipfs/plugins/e9522844-ef05-45b1-b3fa-09f380d4c0ec
+
+  squawk 3 'Export CONSUMER_ID'
+  export CONSUMER_ID=$(curl -k -X POST $KONG_ADMIN_URL/consumers \
+      --data "username=bob@example.com" \
+      --data "custom_id=0" \
+      | jq -r '.id')
+
+  squawk 5 "Download JWT Signing Key"
+  squawk 3 'Download JWT Signing Key'
+  squawk 3 'Using vox'
+  node ./scripts/okta/write-okta-pem.js
+
+  squawk 5 "Connect the API Consumer to okta"
+  squawk 3 'Connect the API Consumer to okta'
+  curl -k -X POST $KONG_ADMIN_URL/consumers/$CONSUMER_ID/jwt \
+      -F "algorithm=RS256" \
+      -F "rsa_public_key=@./scripts/okta/okta.pem" \
+      -F "key=https://"$OKTA_HOSTNAME"/oauth2/default"
+
+  squawk 5 "Get an okta jwt"
+  squawk 3 'Get an okta jwt'
+  export ACCESS_TOKEN=$(node ./scripts/okta/get-okta-token.js)
+
+  squawk 3 'Get api v0 id'
+  curl -k -X GET \
+      --url 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT/api/v0/id \
+      --header 'Authorization: Bearer '$ACCESS_TOKEN
+fi
+
+squawk 5 "Configuring the transmute framework to use the new kong proxy port in minikube"
+DEBUG_MESSAGES='FATAL ERROR ON TESTING'
+
+export OLD_KONG_PROXY_PORT=TPL_KONG_PORT_TPL
+export NEW_KONG_PROXY_PORT=$KONG_PROXY_PORT
+
+export FRAMEWORK_CONFIG=$TRANSMUTE_REPO/packages/transmute-framework/src/transmute-config/env.json.tpl
+export DASHBOARD_CONFIG=$TRANSMUTE_REPO/packages/transmute-dashboard/src/transmute-config/env.json.tpl
+
+DEBUG_MESSAGES='FATAL ERROR ON FRAMEWORK CONFIG SED'
+cat $FRAMEWORK_CONFIG \
+  | sed "s/$OLD_KONG_PROXY_PORT/$NEW_KONG_PROXY_PORT/g" > \
+  $TRANSMUTE_REPO/packages/transmute-framework/src/transmute-config/env.json
+DEBUG_MESSAGES='FATAL ERROR ON DASHBOARD CONFIG SED'
+cat $DASHBOARD_CONFIG \
+  | sed "s/$OLD_KONG_PROXY_PORT/$NEW_KONG_PROXY_PORT/g" > \
+  $TRANSMUTE_REPO/packages/transmute-dashboard/src/transmute-config/env.json
+
+DEBUG_MESSAGES='The Initializer has completed successfully'
