@@ -1,1 +1,1 @@
-TRANSMUTE_ENV=transmute.network npm run truffle:migrate
+TRANSMUTE_ENV=infura npm run truffle:migrate

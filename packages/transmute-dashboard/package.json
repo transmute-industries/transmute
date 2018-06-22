@@ -1,6 +1,6 @@
 {
   "name": "transmute-dashboard",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "private": true,
   "homepage": "https://dashboard.transmute.network",
   "scripts": {
@@ -10,7 +10,8 @@
     "deploy": "cd ./production && git add -A && git commit -m `cat ../package.json | jq -r '.version'` && git push origin master",
     "build:docs": "npm run build",
     "deploy:docs": "gh-pages -d build",
-    "truffle:migrate": "rm -rf ./build/contracts/ && rm -rf ./src/contracts/ && truffle migrate && cp -r ./build/contracts/ ./src/contracts"
+    "truffle:migrate": "rm -rf ./build/contracts/ && rm -rf ./src/contracts/ && truffle migrate --network development && cp -r ./build/contracts/ ./src/contracts",
+    "truffle:migrate:ropsten": "rm -rf ./build/contracts/ && rm -rf ./src/contracts/ && truffle migrate --network ropsten && cp -r ./build/contracts/ ./src/contracts"
   },
   "dependencies": {
     "@material-ui/icons": "^1.0.0-beta.42",
@@ -74,7 +75,8 @@
     "soltsice": "^0.10.11",
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
-    "transmute-framework": "0.2.1",
+    "transmute-framework": "0.2.2",
+    "truffle-hdwallet-provider": "0.0.5",
     "url-loader": "0.6.2",
     "web3": "^0.19.1",
     "webpack": "3.8.1",

@@ -16,6 +16,7 @@ import AccountCircle from 'material-ui-icons/AccountCircle';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import OktaAuthButton from '../Auth/OktaAuthButton';
 import * as actionCreators from '../../store/transmute/user/actionCreators';
+import { LinearProgress } from 'material-ui/Progress';
 
 import Button from 'material-ui/Button';
 
@@ -158,6 +159,7 @@ class MiniDrawer extends React.Component {
     const { classes, theme } = this.props;
     const { authenticated, anchorEl } = this.state;
     const isMenuOpen = Boolean(anchorEl);
+    const isLoading = !!this.props.loading;
 
     return (
       <div className={classes.root}>
@@ -251,6 +253,7 @@ class MiniDrawer extends React.Component {
                 </div>
               )}
             </Toolbar>
+            { isLoading && <LinearProgress color="primary" /> }
           </AppBar>
           <Drawer
             variant="permanent"
