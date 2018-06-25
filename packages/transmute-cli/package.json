@@ -1,6 +1,6 @@
 {
   "name": "transmute-cli",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "transmute cli",
   "scripts": {
     "transmute": "./src/index.js",
@@ -14,7 +14,8 @@
   "license": "MIT",
   "files": [
     "src",
-    "scripts"
+    "scripts",
+    "components"
   ],
   "bin": {
     "transmute": "./src/index.js"
