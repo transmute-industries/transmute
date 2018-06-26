@@ -16,7 +16,7 @@ import AccountCircle from 'material-ui-icons/AccountCircle';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import OktaAuthButton from '../Auth/OktaAuthButton';
 import * as actionCreators from '../../store/transmute/user/actionCreators';
-import { LinearProgress } from 'material-ui/Progress';
+import { LinearProgress  } from 'material-ui/Progress';
 
 import Button from 'material-ui/Button';
 
@@ -276,7 +276,12 @@ class MiniDrawer extends React.Component {
                 </IconButton>
               </div>
               <Divider />
-              {this.state.authenticated && <PrimaryMenu />}
+              {this.state.authenticated && 
+                <div>
+                  <PrimaryMenu />
+                  <Divider />
+                </div>
+              }
               <SecondaryMenu />
             </div>
           </Drawer>
@@ -294,7 +299,6 @@ MiniDrawer.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    // sessionToken: state.user.sessionToken,
     error: state.user.error
   };
 };

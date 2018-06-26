@@ -19,6 +19,7 @@ import ProfilePage from '../Profile';
 import RecoveryPage from '../Profile/RecoveryPage';
 import DirectoryPage from '../DirectoryPage';
 import DirectoryProfilePage from '../DirectoryPage/DirectoryProfilePage';
+import MessagesPage from '../Messages';
 import GroupsPage from '../Groups/GroupsPage';
 import GroupPage from '../Groups/GroupPage';
 import EventStoreFactoryPage from '../EventStoreFactoryPage';
@@ -72,6 +73,7 @@ class Routes extends React.Component {
           />
           <SecureRoute path="/groups" exact render={() => <GroupsPage />} />
           <SecureRoute path="/groups/:id" exact render={() => <GroupPage />} />
+          <SecureRoute path="/messages" exact render={() => <MessagesPage />} />
         </Switch>
       </Security>
     );
