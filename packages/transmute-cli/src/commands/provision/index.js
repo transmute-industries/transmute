@@ -6,7 +6,7 @@ const MINIKUBE_DISK = process.env.MINIKUBE_DISK || '100g';
 const MINIKUBE_PROFILE = process.env.MINIKUBE_PROFILE || 'transmute-k8s';
 
 module.exports.minikube = (dryrun, clusterName, minikubeDriver) => {
-  const minikube_start =
+  let minikube_start =
     'minikube start ' +
     ' --kubernetes-version ' +
     TRANSMUTE_KUBE_VERSION +
@@ -17,7 +17,13 @@ module.exports.minikube = (dryrun, clusterName, minikubeDriver) => {
     ' --memory ' +
     MINIKUBE_MEMORY;
   +' --profile ' + MINIKUBE_PROFILE;
-  let prov_cmd = minikube_start + ' --vm-driver=virtualbox';
+
+  if (minikubeDriver == 'none') {
+    minikube_start = 'sudo ' + minikube_start;
+  }
+
+  let prov_cmd
+
   if (minikubeDriver == undefined) {
     prov_cmd = minikube_start + ' --vm-driver=virtualbox';
   } else if (minikubeDriver == 'virtualbox') {

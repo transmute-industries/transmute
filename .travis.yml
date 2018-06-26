@@ -33,7 +33,7 @@ before_script:
   - npm i -g
   - cd $TRAVIS_BUILD_DIR
   # sudo is required for --vmdriver none
-  - sudo transmute k8s provision-minikube travis_test_cluster --vmdriver none
+  - transmute k8s provision-minikube travis_test_cluster --vmdriver none
   - transmute k8s init travis_test_cluster
   # TODO: These commands should be moved to the cli
   - kubectl get pods --all-namespaces
