@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import AppBar from '../AppBar';
 
 import IPFS from 'ipfs';
@@ -16,6 +15,9 @@ import { FormControl } from 'material-ui/Form';
 import Select from 'material-ui/Select';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 
+import { withAuth } from '@okta/okta-react';
+import config from '../../ipfs_pubsub_config';
+
 import theme from '../../theme';
 
 const styles = theme => ({
@@ -27,72 +29,82 @@ const styles = theme => ({
   }
 });
 
-const ipfsOptions = {
-  EXPERIMENTAL: {
-    pubsub: true
-  },
-  config: {
-    Addresses: {
-      Swarm: [
-        "/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star"
-      ]
-    }
-  }
-};
-
 class Messages extends Component {
   constructor(props) {
     super(props);
-    this.ipfs = new IPFS(ipfsOptions);
+    this.ipfs = new IPFS(config);
     this.state = {
       info: null,
       address: '',
       message: '',
       messages: [],
-      selectedPeer: '',
-      peers: []
+      selectedPeer: {},
+      peers: {}
     }
 
     this.handleMessage = this.handleMessage.bind(this);
     this.handleBroadcast = this.handleBroadcast.bind(this);
     this.selectPeer = this.selectPeer.bind(this);
+    this.isMessageJSON = this.isMessageJSON.bind(this);
+    this.updatePeerStatus = this.updatePeerStatus.bind(this);
   }
 
-  componentWillMount() {
+  async componentWillMount() {
+    const user = await this.props.auth.getUser();
     this.ipfs.once('ready', () => this.ipfs.id((err, info) => {
       if (err) { throw err }
       this.setState({ info });
+      
+      const map = {
+        id: info.id,
+        name: user.name,
+        pk: JSON.parse(user.did_document).id.split(':')[2],
+        online: true
+      };
 
-      this.room = Room(this.ipfs, 'ipfs-pubsub-demo');
+      this.room = Room(this.ipfs, 'transmute-pubsub-demo');
+
       this.room.on('peer joined', (peer) => {
-        // Notify Peer has Joined
-        console.log(peer + ' has joined');
-        this.room.sendTo(peer, 'Hello ' + peer + '!');
-
-        // Update Peers
-        let updatedPeers = this.state.peers;
-        updatedPeers.push(peer);
-        this.setState({ peers: _.uniq(updatedPeers) });
-        if (this.state.peers.length === 1) {
-          this.setState({ selectedPeer: peer });
-        }
+        // Send introductory message to peer
+        this.room.sendTo(peer, JSON.stringify(map));
       });
 
       this.room.on('peer left', (peer) => {
-        // Notify Peer has Left
-        console.log(peer + ' has left');
+        this.updatePeerStatus(peer, false);
       });
+
       this.room.on('message', (message) => {
-        // Update Messages
-        let updatedMessages = this.state.messages;
-        updatedMessages.push(message);
-        this.setState({ messages: _.uniq(updatedMessages) });
+        // Check if this is an introductory message
+        if (this.isMessageJSON(message.data.toString()) && _.difference(['name', 'pk', 'id', 'online'], _.keys(JSON.parse(message.data.toString()))).length === 0) {
+          // Check if peer is already known
+          if (_.includes(_.keys(this.state.peers), message.from)) {
+            // Known peer, update online status
+            this.updatePeerStatus(message.from, true);
+          } else {
+            // Introductory message, update peers
+            let newPeer = JSON.parse(message.data.toString());
+            let updatedPeers = this.state.peers;
+            updatedPeers[message.from] = newPeer;
+            this.setState({ peers: updatedPeers });
+            if (_.keys(this.state.peers).length === 1) {
+              this.setState({ selectedPeer: newPeer });
+            }
+          }
+        } else {
+          // We don't want to broadcast to ourself
+          if (message.from !== info.id) {
+            // Update Messages
+            let updatedMessages = this.state.messages;
+            updatedMessages.push(message);
+            this.setState({ messages: _.uniq(updatedMessages) });
+          }
+        }
       });
     }))
   }
 
   handleMessage = event => {
-    this.room.sendTo(this.state.selectedPeer, this.state.message);
+    this.room.sendTo(this.state.selectedPeer.id, this.state.message);
   }
 
   handleBroadcast = event => {
@@ -105,8 +117,25 @@ class Messages extends Component {
     });
   };
 
+  updatePeerStatus = (peer, status) => {
+    let updatedPeers = this.state.peers;
+    let updatedPeer = updatedPeers[peer];
+    // Update peer's online status
+    updatedPeer.online = status;
+    updatedPeers[peer] = updatedPeer;
+    this.setState({ peers: updatedPeers });
+  };
+
+  isMessageJSON = msg => {
+    try {
+      JSON.parse(msg);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+
   render() {
-    const { classes } = this.props;
     const { info, message, messages, selectedPeer, peers } = this.state;
 
     return (
@@ -141,7 +170,7 @@ class Messages extends Component {
                           disableGutters
                         >
                           <ListItemText
-                            primary={message.from}
+                            primary={peers[message.from].name}
                             secondary={message.data.toString()}
                           />
                         </ListItem>
@@ -155,25 +184,25 @@ class Messages extends Component {
               <Card>
                 <CardHeader title="Compose Message" />
                 <CardContent>
-                  {peers.length > 0 &&
+                  {_.keys(peers).length > 0 &&
                     <FormControl fullWidth style={{ marginBottom: '16px' }}>
                       <Select
                         native
                         onChange={this.selectPeer}
                         input={<Input id="uncontrolled-native" />}
                       >
-                        {peers.map(peer => (
+                      {_.map(peers, (peer, id) => (
                           <option
-                            key={peer}
-                            value={peer}
+                            key={id}
+                            value={peer.name}
                             style={{
                               fontWeight:
-                                selectedPeer !== peer
+                                selectedPeer.id !== peer.id
                                   ? theme.typography.fontWeightRegular
                                   : theme.typography.fontWeightMedium
                             }}
                           >
-                            {peer}
+                            {`${peer.name} (${peer.online ? 'Online' : 'Offline'})`}
                           </option>
                         ))}
                       </Select>
@@ -185,10 +214,10 @@ class Messages extends Component {
                   </FormControl>
                 </CardContent>
                 <CardActions>
-                  <Button size="small" color="primary" disabled={peers.length === 0 || selectedPeer === '' || message.trim().length === 0} onClick={(e) => this.handleMessage(e)}>
+                  <Button size="small" color="primary" disabled={_.keys(peers).length === 0 || selectedPeer === null || !selectedPeer.online || message.trim().length === 0} onClick={(e) => this.handleMessage(e)}>
                     Send Message
                   </Button>
-                  <Button size="small" color="primary" disabled={peers.length === 0 || message.trim().length === 0} onClick={(e) => this.handleBroadcast(e)}>
+                  <Button size="small" color="primary" disabled={_.keys(peers).length === 0 || message.trim().length === 0} onClick={(e) => this.handleBroadcast(e)}>
                     Send Broadcast
                   </Button>
                 </CardActions>
@@ -202,8 +231,4 @@ class Messages extends Component {
   }
 }
 
-Messages.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(Messages);
+export default withStyles(styles)(withAuth(Messages));

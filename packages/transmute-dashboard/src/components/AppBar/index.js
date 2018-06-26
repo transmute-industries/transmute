@@ -299,7 +299,6 @@ MiniDrawer.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    // sessionToken: state.user.sessionToken,
     error: state.user.error
   };
 };
