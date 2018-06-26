@@ -4,7 +4,7 @@ import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 
 import { withAuth } from '@okta/okta-react';
 
-import {  Dashboard } from 'material-ui-icons';
+import { Dashboard, AccountCircle, ImportContacts, Chat } from 'material-ui-icons';
 
 import { history } from '../../store';
 
@@ -37,23 +37,36 @@ class PrimaryMenu extends Component {
           </ListItemIcon>
           <ListItemText primary="Dashboard" />
         </ListItem>
-        {/* <ListItem button key={'account'}>
-          <Link to="/account">
-            <ListItemIcon>
-              <Fingerprint />
-            </ListItemIcon>
-          </Link>
-          <ListItemText primary="Account" />
+        
+        <ListItem
+          button
+          onClick={() => history.push('/profile')}
+        >
+          <ListItemIcon>
+            <AccountCircle />
+          </ListItemIcon>
+          <ListItemText primary="Profile" />
         </ListItem>
-        <ListItem button key={'settings'}>
-          <Link to="/settings">
-            <ListItemIcon>
-              <Settings />
-            </ListItemIcon>
-          </Link>
-          <ListItemText primary="Settings" />
+
+        <ListItem
+          button
+          onClick={() => history.push('/directory')}
+        >
+          <ListItemIcon>
+            <ImportContacts />
+          </ListItemIcon>
+          <ListItemText primary="Directory" />
         </ListItem>
-        <Divider /> */}
+
+        <ListItem
+          button
+          onClick={() => history.push('/messages')}
+        >
+          <ListItemIcon>
+            <Chat />
+          </ListItemIcon>
+          <ListItemText primary="Message" />
+        </ListItem>
       </List>
     );
   }

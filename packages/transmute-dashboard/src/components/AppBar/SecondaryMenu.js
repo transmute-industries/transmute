@@ -1,27 +1,9 @@
 import React, { Component } from 'react';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 
-import { withAuth } from '@okta/okta-react';
 import { Send, BugReport, Code } from 'material-ui-icons';
 
 class SecondaryMenu extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { authenticated: null };
-    this.checkAuthentication = this.checkAuthentication.bind(this);
-    this.checkAuthentication();
-  }
-
-  async checkAuthentication() {
-    const authenticated = await this.props.auth.isAuthenticated();
-    if (authenticated !== this.state.authenticated) {
-      this.setState({ authenticated });
-    }
-  }
-
-  componentDidUpdate() {
-    this.checkAuthentication();
-  }
 
   render() {
     return (
@@ -39,7 +21,7 @@ class SecondaryMenu extends Component {
           <ListItemText primary="Telegram" />
         </ListItem>
 
-           <ListItem
+        <ListItem
           button
           onClick={() => {
             window.location.href =
@@ -52,7 +34,7 @@ class SecondaryMenu extends Component {
           <ListItemText primary="Slack" />
         </ListItem>
 
-        
+
         <ListItem
           button
           onClick={() => {
@@ -83,4 +65,4 @@ class SecondaryMenu extends Component {
   }
 }
 
-export default withAuth(SecondaryMenu);
+export default SecondaryMenu;
