@@ -231,6 +231,7 @@ dotfiles_install () {
 }
 
 install_certbot () {
+  echo 'Install certbot for Lets Encrypt. This may hang for a bit.'
   if ! type "certbot-auto" >/dev/null 2>/dev/null; then
     curl -O https://dl.eff.org/certbot-auto
     chmod a+x ./certbot-auto
