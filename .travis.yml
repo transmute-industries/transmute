@@ -34,11 +34,7 @@ before_script:
   - cd $TRAVIS_BUILD_DIR
   - transmute k8s provision-minikube travis_test_cluster --vmdriver none
   - transmute k8s init travis_test_cluster
-  # TODO: These commands should be moved to the cli
-  - kubectl get pods --all-namespaces
-  - kubectl get svc --all-namespaces
-  - kubectl describe pod $(kubectl get pod --all-namespaces|grep gateway-kong-migrations|awk '{print $2}')
-  - kubectl describe pod $(kubectl get pod --all-namespaces|grep -v gateway-kong-migrations|grep gateway-kong|awk '{print $2}')
+  - transmute debug
 
 script:
   - lerna bootstrap

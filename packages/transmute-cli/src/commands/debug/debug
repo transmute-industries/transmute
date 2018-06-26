@@ -1,0 +1,8 @@
+echo 'DEBUG: CLI Details'
+
+# These are example commands that can run in bash
+echo $(whoami)
+echo $PWD
+
+# Here is now to call another bash script, relative to this global npm package
+$(npm root -g)/transmute-cli/src/commands/debug/debug_1

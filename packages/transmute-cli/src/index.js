@@ -24,6 +24,8 @@ const telemetry = require('./commands/telemetry');
 
 const login = require('./commands/login');
 
+const debug = require('./commands/debug');
+
 const logger = require('./logger');
 
 // Mixpanel
@@ -213,6 +215,19 @@ vorpal
     }
     telemetry.toggle(vorpal, args);
     callback();
+  });
+
+/** transmute debug
+ * @name transmute debug
+ * @example transmute debug
+ * */
+vorpal
+  .command(
+    'debug',
+    'used for debugging the cli and cluster configuration via js / bash.'
+  )
+  .action(async (args, callback) => {
+    debug.debug();
   });
 
 vorpal

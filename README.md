@@ -15,6 +15,16 @@ Setup
 First step is to install the development dependencies. Review this bootstrap script before running it:
 
 ```
+curl -Ls https://git.io/transmute_bootstrap > transmute_bootstrap
+chmod +x transmute_bootstrap
+./transmute_bootstrap
+# cleanup 
+rm -rf ./transmute_bootstrap
+```
+
+Or if you like to live dangerously...
+
+```
 source <(curl -Ls https://git.io/transmute_bootstrap)
 ```
 

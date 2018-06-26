@@ -1,31 +1,5 @@
 #!/bin/bash
 
-: ${TRANSMUTE_DIR:=$HOME/.transmute}
-source $TRANSMUTE_DIR/.env
-
-squawk () {
-  # This function simplifies error reporting and verbosity
-  # call it by preceding your message with a verbosity level
-  # e.g. `squawk 3 "This is a squawk"`
-  # if the current verbosity level is greater than or equal to
-  # the number given then this function will echo out your message
-  # and pad it with # to let you now how verbose that message was
-  squawk_lvl=$1
-  shift
-  squawk=$1
-  shift
-  squawk_opt=$@
-
-  if [[ "$TRANSMUTE_VERBOSITY" -ge "$squawk_lvl" ]] ; then
-  count_squawk=0
-    while [[ "$count_squawk" -lt "$squawk_lvl" ]]; do
-      printf "#"
-      count_squawk=`expr $count_squawk + 1`
-    done
-    echo " $squawk"
-  fi
-}
-
 if [ $# -ne 2 ]; then
   # Print usage
   echo 'Error! wrong number of arguments'
@@ -43,12 +17,7 @@ qrunning () {
     RESULT=$(kubectl get --namespace=$2 -o template pod --template={{.status.phase}} $1 2>/dev/null | grep Running)
     if [ "$RESULT" ]; then
         echo '.'
-        squawk 1 "$1 is now running"
         break
-    fi
-    if [ "$TRANSMUTE_VERBOSITY" -ge 14 ] ; then
-      squawk 3 "$2"
-      kubectl get pods --namespace $2
     fi
     countone=`expr $countone + 1`
     sleep 3
@@ -65,31 +34,19 @@ qready () {
      '. | select(.status.phase = ([ .status.conditions[] | select(.type == "Ready" and .state == true) ] | length ) == 1 ) | .metadata.namespace + "/" + .metadata.name' )
     if [ "$RESULT" ]; then
       if [[ $USE_STRICT_W8 == 'true' ]]; then
-        # Calculate the number of pods not ready
-        # by awking out the ready column which usually looks like '1/1'
-        # but is sometimes '0/1' or '1/3', etc
-        # Then use cut to split that field using '/' as a delimiter
-        # Next use awk again to transpose the two numbers and stick a ' - ' in between them
-        # And feed the whole string to `bc` which can do some basic caclulcations on the cli
-        # If the answer is zero and the above has passed then I am fairly certain this pod is up and ready
-        NOT_READY_PODS=$(kubectl get pods -n $2 |grep $1|awk '{print $2}'|cut -f1,2 -d'/' --output-delimiter=' '|awk '{print $2 " - " $1}'|bc)
+        # Ready column can look like '0/1' or '1/3', this hacky bash checks if the fraction = 1
+        NOT_READY_PODS=$(kubectl get pods -n $2 | grep $1| awk '{print $2}'| sed 's,/, ,g' | awk '{print $2 " - " $1}'| bc)
         if [[ $NOT_READY_PODS -eq 0 ]]; then
           echo '.'
-          squawk 1 "$1 is now ready"
           break
         fi
       else
-        READY_PODS=$(kubectl get pods -n $2 |grep $1|awk '{print $2}'|cut -f1,2 -d'/' --output-delimiter=' '|awk '{print $1}')
+        READY_PODS=$(kubectl get pods -n $2 | grep $1 | awk '{print $2}' | sed 's,/, ,g' | awk '{print $1}')
         if [[ $READY_PODS -gt 0 ]]; then
           echo '.'
-          squawk 1 "$1 is now ready"
           break
         fi
       fi
-    fi
-    if [ "$TRANSMUTE_VERBOSITY" -ge 14 ] ; then
-      squawk 3 "$2"
-      kubectl get pods --namespace $2
     fi
     countone=`expr $countone + 1`
     sleep 3
@@ -97,19 +54,16 @@ qready () {
 }
 
 main () {
-  squawk 9 'Ready.w8'
+  echo 'Ready.w8'
   if [[ $EXCLUDE_POD ]]; then
     KUBE_SELECTED_PODS=$(kubectl get pods --namespace=$2 2>/dev/null |awk '{print $1}'|grep $1 |grep -v $EXCLUDE_POD  |tr '\n' ' ')
   else
     KUBE_SELECTED_PODS=$(kubectl get pods --namespace=$2 2>/dev/null |awk '{print $1}'|grep $1 |tr '\n' ' ')
   fi
   for this_pod in $KUBE_SELECTED_PODS; do
-    squawk 9 "testing $this_pod  in the namespace $2 for running and readiness"
+    echo "testing $this_pod  in the namespace $2 for running and readiness"
     qrunning $this_pod $2
     qready $this_pod $2
-    if [ "$TRANSMUTE_VERBOSITY" -ge 15 ] ; then
-      kubectl get pods --namespace $2
-    fi
   done
 }
 
