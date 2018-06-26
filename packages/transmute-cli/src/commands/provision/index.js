@@ -1,4 +1,5 @@
 const run = require('../runner');
+const logger = require('../../logger');
 const TRANSMUTE_KUBE_VERSION = process.env.TRANSMUTE_KUBE_VERSION || 'v1.9.0';
 const MINIKUBE_CPU = process.env.MINIKUBE_CPU || '4';
 const MINIKUBE_MEMORY = process.env.MINIKUBE_MEMORY || '4096';
@@ -19,10 +20,14 @@ module.exports.minikube = (dryrun, clusterName, minikubeDriver) => {
   +' --profile ' + MINIKUBE_PROFILE;
 
   if (minikubeDriver == 'none') {
+    logger.log({
+      level: 'info',
+      message: `VMDriver=None requires minikube to run as root!`
+    });
     minikube_start = 'sudo ' + minikube_start;
   }
 
-  let prov_cmd
+  let prov_cmd;
 
   if (minikubeDriver == undefined) {
     prov_cmd = minikube_start + ' --vm-driver=virtualbox';
