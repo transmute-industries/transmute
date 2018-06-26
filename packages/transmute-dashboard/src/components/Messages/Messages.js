@@ -19,6 +19,7 @@ import { withAuth } from '@okta/okta-react';
 import config from '../../ipfs_pubsub_config';
 
 import theme from '../../theme';
+const openpgp = require('openpgp');
 
 const styles = theme => ({
   root: {
@@ -45,7 +46,7 @@ class Messages extends Component {
     this.handleMessage = this.handleMessage.bind(this);
     this.handleBroadcast = this.handleBroadcast.bind(this);
     this.selectPeer = this.selectPeer.bind(this);
-    this.isMessageJSON = this.isMessageJSON.bind(this);
+    this.isIntroductoryMessage = this.isIntroductoryMessage.bind(this);
     this.updatePeerStatus = this.updatePeerStatus.bind(this);
   }
 
@@ -54,11 +55,14 @@ class Messages extends Component {
     this.ipfs.once('ready', () => this.ipfs.id((err, info) => {
       if (err) { throw err }
       this.setState({ info });
+
+      const secPub = openpgp.key.readArmored(JSON.parse(user.did_document).publicKey[0].publicKeyPem).keys[0];
+      const publicKey = Buffer.from(secPub.primaryKey.params[1].data).toString('hex');
       
-      const map = {
+      const currentPeerInfo = {
         id: info.id,
         name: user.name,
-        pk: JSON.parse(user.did_document).id.split(':')[2],
+        pk: publicKey,
         online: true
       };
 
@@ -66,7 +70,7 @@ class Messages extends Component {
 
       this.room.on('peer joined', (peer) => {
         // Send introductory message to peer
-        this.room.sendTo(peer, JSON.stringify(map));
+        this.room.sendTo(peer, JSON.stringify(currentPeerInfo));
       });
 
       this.room.on('peer left', (peer) => {
@@ -75,13 +79,13 @@ class Messages extends Component {
 
       this.room.on('message', (message) => {
         // Check if this is an introductory message
-        if (this.isMessageJSON(message.data.toString()) && _.difference(['name', 'pk', 'id', 'online'], _.keys(JSON.parse(message.data.toString()))).length === 0) {
+        if (this.isIntroductoryMessage(message.data.toString())) {
           // Check if peer is already known
           if (_.includes(_.keys(this.state.peers), message.from)) {
             // Known peer, update online status
             this.updatePeerStatus(message.from, true);
           } else {
-            // Introductory message, update peers
+            // Unknown peer, update peers map
             let newPeer = JSON.parse(message.data.toString());
             let updatedPeers = this.state.peers;
             updatedPeers[message.from] = newPeer;
@@ -126,13 +130,13 @@ class Messages extends Component {
     this.setState({ peers: updatedPeers });
   };
 
-  isMessageJSON = msg => {
+  isIntroductoryMessage = msg => {
     try {
-      JSON.parse(msg);
+      let parsedMsg = JSON.parse(msg);
+      return _.difference(['name', 'pk', 'id', 'online'], _.keys(parsedMsg)).length === 0
     } catch (e) {
       return false;
     }
-    return true;
   }
 
   render() {
