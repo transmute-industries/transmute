@@ -15,45 +15,16 @@
 export CWD=$(pwd)
 export PATH=$TRANSMUTE_BIN:$PATH
 
-squawk () {
-  # This function simplifies error reporting and verbosity
-  # call it by preceding your message with a verbosity level
-  # e.g. `squawk 3 "This is a squawk"`
-  # if the current verbosity level is greater than or equal to
-  # the number given then this function will echo out your message
-  # and pad it with # to let you now how verbose that message was
-  squawk_lvl=$1
-  shift
-  squawk=$1
-  shift
-  squawk_opt=$@
-
-  if [[ "$TRANSMUTE_VERBOSITY" -ge "$squawk_lvl" ]] ; then
-  count_squawk=0
-    while [[ "$count_squawk" -lt "$squawk_lvl" ]]; do
-      printf "#"
-      count_squawk=`expr $count_squawk + 1`
-    done
-    printf " $squawk \n"
-  fi
-}
-
-errror () {
-  printf "-------------------------------------------------------------\n"
-  printf "ERROR!!!  --  "
-}
-
 # Check if a command exists
 check_cmd () {
   if ! type "$1" > /dev/null; then
-    errror
     echo "$1 was not found in your path!"
     echo "To proceed please install $1 to your path and try again!"
     exit 1
   fi
 }
 
-warrrn () {
+warn_user_of_global_install () {
   sleep 1
   printf "(ctrl-c now to stop if this is not what you intend)!"
   sleep 1; printf "!"; sleep 1; printf "!"
@@ -69,7 +40,6 @@ chkdir () {
     sudo chown $USER $1
   fi
   if [ ! -w $1 ] ; then
-    errror
     echo "Cannot write to $1, please check your permissions"
     exit 2
   fi
@@ -81,13 +51,13 @@ TARGET_FILE_FOR_ADD=~/.profile
 
 check_if_line_exists()
 {
-  squawk 3 "Checking for '$LINE_TO_ADD'  in $TARGET_FILE_FOR_ADD"
+  echo "Checking for '$LINE_TO_ADD'  in $TARGET_FILE_FOR_ADD"
   grep -qsFx "$LINE_TO_ADD" $TARGET_FILE_FOR_ADD
 }
 
 add_line_to()
 {
-  squawk 3 "Adding '$LINE_TO_ADD'  to $TARGET_FILE_FOR_ADD"
+  echo "Adding '$LINE_TO_ADD'  to $TARGET_FILE_FOR_ADD"
   TARGET_FILE=$TARGET_FILE_FOR_ADD
     [ -w "$TARGET_FILE" ] || TARGET_FILE=$TARGET_FILE_FOR_ADD
     printf "%s\n" "$LINE_TO_ADD" >> "$TARGET_FILE"
@@ -99,7 +69,7 @@ macminikube () {
     printf "minikube installed, skipping.\n"
   else
     # The package is not installed
-    squawk 3 'Installing minikube'
+    echo 'Installing minikube'
     brew cask install minikube
   fi
 }
@@ -110,7 +80,7 @@ mackubectl () {
     printf "kubectl installed, skipping.\n"
   else
     # The package is not installed
-    squawk 3 'Installing kubectl'
+    echo 'Installing kubectl'
     brew install kubectl
     brew link kubernetes-cli
   fi
@@ -122,7 +92,7 @@ install_mac_virtualbox () {
     printf "virtualbox installed, skipping.\n"
   else
     # The package is not installed
-    squawk 3 'Installing virtualbox'
+    echo 'Installing virtualbox'
     brew cask install virtualbox
   fi
 }
@@ -134,13 +104,13 @@ machelm () {
     printf "helm installed, skipping.\n"
   else
     # The package is not installed
-    squawk 3 'Installing helm'
+    echo 'Installing helm'
     brew install kubernetes-helm
   fi
 }
 
 macnsenter () {
-	squawk 3 'NOT Installing nsenter'
+	echo 'NOT Installing nsenter'
 	#brew install kubernetes-nsenter
 }
 
@@ -152,28 +122,28 @@ macreadlink () {
   else
     # The package is not installed
     #Installs 'greadlink' tool
-    squawk 3 'Installing coreutils'
+    echo 'Installing coreutils'
     brew install coreutils
   fi
 }
 
 windowsminikube () {
-	squawk 3 'Installing minikube'
+	echo 'Installing minikube'
 	choco install minikube
 }
 
 windowskubectl () {
-	squawk 3 'Installing kubectl'
+	echo 'Installing kubectl'
 	choco install kubernetes-cli
 }
 
 windowshelm () {
-	squawk 3 'Installing helm'
+	echo 'Installing helm'
 	choco install helm
 }
 
 windowsnsenter () {
-	squawk 3 'Installing nsenter'
+	echo 'Installing nsenter'
 	choco install nsenter
 }
 
@@ -191,7 +161,7 @@ install_nsenter_linux (){
 
 install_kubectl_linux () {
   if ! type "kubectl" >/dev/null 2>/dev/null; then
-    squawk 3 'Installing kubectl'
+    echo 'Installing kubectl'
     TMP=$(mktemp -d --suffix=KUBECTLTMP)
     cd $TMP
     curl -LO https://storage.googleapis.com/kubernetes-release/release/$TRANSMUTE_KUBE_VERSION/bin/linux/amd64/kubectl
@@ -204,7 +174,7 @@ install_kubectl_linux () {
 
 install_minikube_linux () {
   if ! type "minikube" >/dev/null 2>/dev/null; then
-    squawk 3 'Installing minikube'
+    echo 'Installing minikube'
 
     curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.25.2/minikube-linux-amd64
     chmod +x minikube
@@ -246,7 +216,7 @@ nvm_dir_adds () {
 
 dotfiles_install () {
   if [[ $TRANSMUTE_VERBOSITY -gt '1' ]]; then
-    squawk 3 'Adjusting dotfiles'
+    echo 'Adjusting dotfiles'
   fi
   touch $HOME/.zshrc
   touch $HOME/.bashrc
@@ -290,12 +260,12 @@ install_certbot () {
     set -e
     cd
   else
-    squawk 3 'certbot-auto already installed skipping'
+    echo 'certbot-auto already installed skipping'
   fi
 }
 
 install_nvm () {
-  squawk 5 "install_nvm"
+  echo  "Install NVM"
   set +e
   export NVM_DIR="$HOME/.nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -305,7 +275,7 @@ install_nvm () {
   set -e
 
   if [ "$this_output" = "$NVM_VERSION" ]; then
-    squawk 3 "NVM $NVM_VERSION is already installed skipping"
+    echo "NVM $NVM_VERSION is already installed skipping"
   else
     touch ~/.profile
 
@@ -326,7 +296,7 @@ install_lerna_npm () {
   if ! type "lerna" >/dev/null 2>/dev/null; then
     npm i -g lerna@2.9.0
   else
-    squawk 3 'lerna already installed skipping'
+    echo 'lerna already installed skipping'
   fi
 }
 
@@ -334,7 +304,7 @@ install_truffle_npm () {
   if ! type "truffle" >/dev/null 2>/dev/null; then
     npm i -g truffle@4.1.8
   else
-    squawk 3 'truffle already installed skipping'
+    echo 'truffle already installed skipping'
   fi
 }
 
@@ -342,14 +312,14 @@ install_ngrok_npm () {
   if ! type "ngrok" >/dev/null 2>/dev/null; then
     npm i -g ngrok
   else
-    squawk 3 'ngrok already installed skipping'
+    echo 'ngrok already installed skipping'
   fi
 }
 
 lts_install () {
   if ! type "npm" >/dev/null 2>/dev/null; then
     if [[ $TRANSMUTE_VERBOSITY -gt '2' ]]; then
-      squawk 3 'Installing Node 8 LTS/carbon'
+      echo 'Installing Node 8 LTS/carbon'
     fi
 
     export NVM_DIR="$HOME/.nvm"
@@ -359,17 +329,17 @@ lts_install () {
     set +e
     nvm ls-remote --lts=carbon
     if [[ $TRANSMUTE_VERBOSITY -gt '2' ]]; then
-      squawk 3 "Engage nvm to install lts/carbon"
+      echo "Engage nvm to install lts/carbon"
     fi
     nvm install --lts=carbon
     if [[ $TRANSMUTE_VERBOSITY -gt '2' ]]; then
-      squawk 3 "Engage nvm to alias lts/carbon to default"
+      echo "Engage nvm to alias lts/carbon to default"
     fi
     nvm alias default lts/carbon
     nvm use default
     set -e
   else
-      squawk 3 'npm already installed skipping'
+      echo 'npm already installed skipping'
   fi
 }
 
@@ -392,7 +362,7 @@ install_socat () {
       exit 1
     fi
   else
-    squawk 3 'socat already installed skipping'
+    echo 'socat already installed skipping'
   fi
 }
 
@@ -415,7 +385,7 @@ install_curl () {
       exit 1
     fi
   else
-    squawk 3 'curl already installed skipping'
+    echo 'curl already installed skipping'
   fi
 }
 
@@ -438,7 +408,7 @@ install_git () {
       exit 1
     fi
   else
-    squawk 3 'git already installed skipping'
+    echo 'git already installed skipping'
   fi
 }
 
@@ -461,7 +431,7 @@ install_jq () {
       exit 1
     fi
   else
-    squawk 3 'jq already installed skipping'
+    echo 'jq already installed skipping'
   fi
 }
 
@@ -560,7 +530,7 @@ exec 1>&2
 
 UNAME=$(uname)
 if [ "$UNAME" = "Linux" -o "$UNAME" = "Darwin" ] ; then
-  squawk 3 " $UNAME is a Supported OS"
+  echo " $UNAME is a Supported OS"
 elif [ "$UNAME" ">" "MINGW" -a "$UNAME" "<" "MINGX" ] ; then
   echo " $UNAME is not a Supported OS"
   exit 1
@@ -573,7 +543,7 @@ fi
 if [ "$UNAME" = "Darwin" ] ; then
   check_cmd brew
   ### OSX ###
-  squawk 3 'Checking arch'
+  echo 'Checking arch'
   if [ "i386" != "$(uname -p)" -o "1" != "$(sysctl -n hw.cpu64bit_capable 2>/dev/null || echo 0)" ] ; then
     # Can't just test uname -m = x86_64, because Snow Leopard can
     # return other values.
@@ -601,18 +571,16 @@ sleep 1
 echo "This script will install minikube, kubectl and helm,
 and then install transmute."
 if [[ "$TRANSMUTE_USE_WARN" == 'y' ]]; then
-  warrrn
+  warn_user_of_global_install
 fi
 
-squawk 3 "Checking $TRANSMUTE_DIR"
-mkdir -p $TRANSMUTE_DIR/git
+echo "Checking $TRANSMUTE_DIR"
 mkdir -p $TRANSMUTE_BIN
 
 if [ -e "$TRANSMUTE_DIR/git" ]; then
-  squawk 3 "$TRANSMUTE_DIR/git exists already, proceeding"
+  echo "$TRANSMUTE_DIR/git exists already, proceeding"
 else
-  squawk 3 "$TRANSMUTE_DIR/git does not exist already, proceeding"
-  cd $TRANSMUTE_DIR
+  echo "$TRANSMUTE_DIR/git does not exist already, proceeding"
   mkdir -p $TRANSMUTE_DIR/git
 fi
 
@@ -627,8 +595,7 @@ if [ "$TRAVIS" = 'true' ]; then
   ln -s $TRAVIS_BUILD_DIR transmute
 
 elif [ -e "$TRANSMUTE_REPO" ]; then
-  squawk 3 "$TRANSMUTE_REPO exists already, proceeding"
-  squawk 3 'Updating the transmute repo'
+  echo 'Updating the transmute repo'
   cd $TRANSMUTE_REPO
   git fetch --tags
   git checkout $TRANSMUTE_RELEASE
@@ -636,7 +603,7 @@ elif [ -e "$TRANSMUTE_REPO" ]; then
   cd $CWD
 else
   cd $TRANSMUTE_DIR/git
-  squawk 3 'Cloning the latest transmute repo'
+  echo 'Cloning the latest transmute repo'
   git clone --depth=1 \
    https://github.com/transmute-industries/transmute.git
   cd $TRANSMUTE_REPO
@@ -650,7 +617,6 @@ if [ "$FIX_DOTFILES" = "true" ]; then
   dotfiles_install
 fi
 
-squawk 5 ' make reqs'
 if [ "$PLATFORM" = "os.linux.x86_64" ] ; then
   linuxreqs
 elif [ "$PLATFORM" = "os.osx.x86_64" ] ; then
@@ -659,11 +625,11 @@ elif [ "$PLATFORM" = "os.windows.x86_64" ] ; then
   windowsreqs
 fi
 
-squawk 3 'check helm'
+echo 'check helm'
 check_cmd helm
-squawk 3 'check kubectl'
+echo 'check kubectl'
 check_cmd kubectl
-squawk 3 'check minikube'
+echo 'check minikube'
 check_cmd minikube
 
 echo 'The bootstrap has finished'
