@@ -20,8 +20,6 @@ exiter () {
   echo $DEBUG_MESSAGES
 }
 
-trap exiter EXIT
-
 squawk () {
   # This function simplifies error reporting and verbosity
   # call it by preceding your message with a verbosity level
@@ -72,7 +70,7 @@ add_line_to()
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Wait for kubectl and kube-dns to be initialized
-$TRANSMUTE_REPO/packages/transmute-cli/scripts/w8s/ready.w8 kube-dns kube-system
+$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 kube-dns kube-system
 
 sleep 5
 
@@ -80,7 +78,7 @@ sleep 5
 squawk 5 'create tiller service account'
 kubectl create --save-config serviceaccount tiller --namespace kube-system
 squawk 5 'create tiller rbac config'
-kubectl apply -f $TRANSMUTE_REPO/packages/transmute-cli/components/helm/rbac-tiller-config.yaml
+kubectl apply -f $(npm root -g)/transmute-cli/components/helm/rbac-tiller-config.yaml
 
 sleep 5
 if [[ "$TRANSMUTE_VERBOSITY" -ge "111" ]] ; then
@@ -94,7 +92,7 @@ kubectl get pods
 squawk 5 "Install helm"
 helm init --service-account tiller
 
-USE_STRICT_W8=true $TRANSMUTE_REPO/packages/transmute-cli/scripts/w8s/ready.w8 tiller-deploy kube-system
+USE_STRICT_W8=true $(npm root -g)/transmute-cli/scripts/w8s/ready.w8 tiller-deploy kube-system
 
 sleep 1
 kubectl get pods -n kube-system
@@ -102,9 +100,9 @@ kubectl get pods -n kube-system
 squawk 5 "Ganache-cli"
 helm install \
  --name=ganache \
- $TRANSMUTE_REPO/packages/transmute-cli/components/ganache/charts/ganache-cli/
+ $(npm root -g)/transmute-cli/components/ganache/charts/ganache-cli/
 
-$TRANSMUTE_REPO/packages/transmute-cli/scripts/w8s/ready.w8 ganache default
+$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 ganache default
 
 squawk 5 "ipfs"
 #squawk 6 "Storage class for ipfs"
@@ -114,7 +112,7 @@ helm install \
  stable/ipfs \
  --name decentralized-storage
 
-$TRANSMUTE_REPO/packages/transmute-cli/scripts/w8s/ready.w8 decentralized-storage-ipfs default
+$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 decentralized-storage-ipfs default
 
 if [[ "$DO_FAAS" == 'y' ]]; then
   squawk 5 "OpenFaaS"
@@ -124,7 +122,7 @@ if [[ "$DO_FAAS" == 'y' ]]; then
   #squawk 5 "OpenFaas RBAC"
   #kubectl apply -f https://raw.githubusercontent.com/openfaas/faas-netes/master/yaml/rbac.yml
   squawk 5 "OpenFaas Helmchart"
-  cd $TRANSMUTE_REPO/packages/transmute-cli/components/openfaas/faas-netes/chart
+  cd $(npm root -g)/transmute-cli/components/openfaas/faas-netes/chart
   helm upgrade --install openfaas openfaas/ \
     --namespace openfaas \
     --set functionNamespace=openfaas-fn
@@ -134,8 +132,8 @@ fi
 helm install stable/kong --name gateway
 
 squawk 5 "spin up"
-$TRANSMUTE_REPO/packages/transmute-cli/scripts/w8s/ready.w8 gateway-postgresql default
-EXCLUDE_POD=gateway-kong-migration $TRANSMUTE_REPO/packages/transmute-cli/scripts/w8s/ready.w8 gateway-kong default
+$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 gateway-postgresql default
+EXCLUDE_POD=gateway-kong-migration $(npm root -g)/transmute-cli/scripts/w8s/ready.w8 gateway-kong default
 export MINIKUBE_IP=$(minikube ip)
 export KONG_ADMIN_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
 export KONG_PROXY_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
