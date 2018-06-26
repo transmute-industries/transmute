@@ -222,7 +222,10 @@ vorpal
  * @example transmute debug
  * */
 vorpal
-  .command('debug', 'used for debugging bash - javascript')
+  .command(
+    'debug',
+    'used for debugging the cli and cluster configuration via js / bash.'
+  )
   .action(async (args, callback) => {
     debug.debug();
   });

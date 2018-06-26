@@ -1,2 +1,5 @@
-echo 'testing debug'
+echo 'DEBUG: CLI Details'
+echo $(whoami)
+echo $PWD
+
 $(npm root -g)/transmute-cli/src/commands/debug/debug_1
