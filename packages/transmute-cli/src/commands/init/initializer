@@ -20,29 +20,6 @@ exiter () {
   echo $DEBUG_MESSAGES
 }
 
-squawk () {
-  # This function simplifies error reporting and verbosity
-  # call it by preceding your message with a verbosity level
-  # e.g. `squawk 3 "This is a squawk"`
-  # if the current verbosity level is greater than or equal to
-  # the number given then this function will echo out your message
-  # and pad it with # to let you now how verbose that message was
-  squawk_lvl=$1
-  shift
-  squawk=$1
-  shift
-  squawk_opt=$@
-
-  if [[ "$TRANSMUTE_VERBOSITY" -ge "$squawk_lvl" ]] ; then
-  count_squawk=0
-    while [[ "$count_squawk" -lt "$squawk_lvl" ]]; do
-      printf "#"
-      count_squawk=`expr $count_squawk + 1`
-    done
-    echo " $squawk"
-  fi
-}
-
 # these vars are used by the following functions
 # which idempotently addlines to a file
 LINE_TO_ADD=''
@@ -50,13 +27,13 @@ TARGET_FILE_FOR_ADD=~/.profile
 
 check_if_line_exists()
 {
-  squawk 3 "Checking for '$LINE_TO_ADD'  in $TARGET_FILE_FOR_ADD"
+  echo "Checking for '$LINE_TO_ADD'  in $TARGET_FILE_FOR_ADD"
   grep -qsFx "$LINE_TO_ADD" $TARGET_FILE_FOR_ADD
 }
 
 add_line_to()
 {
-  squawk 3 "Adding '$LINE_TO_ADD'  to $TARGET_FILE_FOR_ADD"
+  echo "Adding '$LINE_TO_ADD'  to $TARGET_FILE_FOR_ADD"
   TARGET_FILE=$TARGET_FILE_FOR_ADD
     [ -w "$TARGET_FILE" ] || TARGET_FILE=$TARGET_FILE_FOR_ADD
     printf "%s\n" "$LINE_TO_ADD" | sudo tee -a "$TARGET_FILE"
@@ -74,13 +51,21 @@ $(npm root -g)/transmute-cli/scripts/w8s/ready.w8 kube-dns kube-system
 
 sleep 5
 
+# DISABLED RBAC FOR NOW
 # Apply rbac for tiller
-squawk 5 'create tiller service account'
-kubectl create --save-config serviceaccount tiller --namespace kube-system
-squawk 5 'create tiller rbac config'
-kubectl apply -f $(npm root -g)/transmute-cli/components/helm/rbac-tiller-config.yaml
+# echo 'create tiller service account'
+
+# if [ -e "kubectl get serviceaccounts tiller -n kube-system" ]; then
+#   echo 'tiller installed, skipping.'
+# else
+#   # echo 'no'
+#   kubectl create --save-config serviceaccount tiller --namespace kube-system
+#   echo 'create tiller rbac config'
+#   kubectl apply -f $(npm root -g)/transmute-cli/components/helm/rbac-tiller-config.yaml
+# fi
 
 sleep 5
+
 if [[ "$TRANSMUTE_VERBOSITY" -ge "111" ]] ; then
   kubectl get pods --all-namespaces
 fi
@@ -89,25 +74,26 @@ if [[ "$TRANSMUTE_VERBOSITY" -ge "101" ]] ; then
 fi
 kubectl get pods
 
-squawk 5 "Install helm"
-helm init --service-account tiller
+echo "Install helm"
+helm init 
+# --service-account tiller
 
 USE_STRICT_W8=true $(npm root -g)/transmute-cli/scripts/w8s/ready.w8 tiller-deploy kube-system
 
 sleep 1
 kubectl get pods -n kube-system
 
-squawk 5 "Ganache-cli"
+echo "Ganache-cli"
 helm install \
  --name=ganache \
  $(npm root -g)/transmute-cli/components/ganache/charts/ganache-cli/
 
 $(npm root -g)/transmute-cli/scripts/w8s/ready.w8 ganache default
 
-squawk 5 "ipfs"
-#squawk 6 "Storage class for ipfs"
+echo "ipfs"
 
-squawk 5 "Helm install ipfs"
+
+echo "Helm install ipfs"
 helm install \
  stable/ipfs \
  --name decentralized-storage
@@ -115,13 +101,13 @@ helm install \
 $(npm root -g)/transmute-cli/scripts/w8s/ready.w8 decentralized-storage-ipfs default
 
 if [[ "$DO_FAAS" == 'y' ]]; then
-  squawk 5 "OpenFaaS"
-  squawk 6 "Create namespaces"
+  echo "OpenFaaS"
+  echo "Create namespaces"
   kubectl apply -f \
     https://raw.githubusercontent.com/openfaas/faas-netes/master/namespaces.yml
-  #squawk 5 "OpenFaas RBAC"
+  #echo "OpenFaas RBAC"
   #kubectl apply -f https://raw.githubusercontent.com/openfaas/faas-netes/master/yaml/rbac.yml
-  squawk 5 "OpenFaas Helmchart"
+  echo "OpenFaas Helmchart"
   cd $(npm root -g)/transmute-cli/components/openfaas/faas-netes/chart
   helm upgrade --install openfaas openfaas/ \
     --namespace openfaas \
@@ -131,7 +117,7 @@ fi
 
 helm install stable/kong --name gateway
 
-squawk 5 "spin up"
+echo "spin up"
 $(npm root -g)/transmute-cli/scripts/w8s/ready.w8 gateway-postgresql default
 EXCLUDE_POD=gateway-kong-migration $(npm root -g)/transmute-cli/scripts/w8s/ready.w8 gateway-kong default
 export MINIKUBE_IP=$(minikube ip)
@@ -141,7 +127,7 @@ export KONG_PROXY_PORT=$(PATH=$HOME/.transmute/bin:$PATH kubectl get service gat
 export KONG_HOST=$(echo $KONG_ADMIN_URL | sed 's!https://!!g' | cut -f1 -d:)
 export KONG_PORT=$(echo $KONG_ADMIN_URL | sed 's!https://!!g' | cut -f2 -d:)
 
-squawk 3 'configure hosts'
+echo 'configure hosts'
 TARGET_FILE_FOR_ADD=/etc/hosts
 LINE_TO_ADD="$(minikube ip)  transmute.minikube"
 check_if_line_exists || add_line_to
@@ -150,11 +136,11 @@ check_if_line_exists || add_line_to
 LINE_TO_ADD="$(minikube ip)  ganache.transmute.minikube"
 check_if_line_exists || add_line_to
 
-squawk 3 "configure-kong-ganache"
+echo "configure-kong-ganache"
 
-squawk 5 'SETTING UP GANACHE'
+echo 'SETTING UP GANACHE'
 
-squawk 5 "Get the service clusterIp for Kong to use."
+echo "Get the service clusterIp for Kong to use."
 export GANACHE_CLUSTER_IP=$(PATH=$HOME/.transmute/bin:$PATH kubectl get service ganache-ganache-cli -o json | jq -r '.spec.clusterIP');
 squawk 1 "GANACHE_CLUSTER_IP $GANACHE_CLUSTER_IP"
 
@@ -182,7 +168,7 @@ while [[ $wait_for_it -gt 0 ]]; do
   printf '.'
   sleep 1
 done
-squawk 3 "ganache launched"
+echo "ganache launched"
 
 DEBUG_MESSAGES='kong'
 squawk 9 "# Add Ganache API to Kong
@@ -191,7 +177,7 @@ curl -s -k -X POST \
   --data 'name=ganache' \
   --data 'hosts=ganache.transmute.minikube' \
   --data 'upstream_url=http://'$GANACHE_CLUSTER_IP':8545/'"
-squawk 5 "Add Ganache API to Kong"
+echo "Add Ganache API to Kong"
 curl -s -k -X POST \
   --url $KONG_ADMIN_URL/apis/ \
   --data 'name=ganache' \
@@ -199,23 +185,23 @@ curl -s -k -X POST \
   --data 'upstream_url=http://'$GANACHE_CLUSTER_IP':8545/' \
   | jq -r '.'
 
-squawk 3 'GANACHE HEALTHCHECK'
-squawk 3 "https://ganache.transmute.minikube:$KONG_PROXY_PORT"
+echo 'GANACHE HEALTHCHECK'
+echo "https://ganache.transmute.minikube:$KONG_PROXY_PORT"
 
 curl -s -k -X POST \
   --url "https://ganache.transmute.minikube:$KONG_PROXY_PORT/ganache" \
   --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":68}' \
   | jq -r '.'
 
-squawk 3 'configure ipfs'
-squawk 5 "configure-kong-ipfs.sh"
+echo 'configure ipfs'
+echo "configure-kong-ipfs.sh"
 
-squawk 3 'SETTING UP IPFS'
+echo 'SETTING UP IPFS'
 
-squawk 5 "Get the service clusterIp for Kong to use."
+echo "Get the service clusterIp for Kong to use."
 export IPFS_CLUSTER_IP=$(PATH=$HOME/.transmute/bin:$PATH kubectl get service decentralized-storage-ipfs -o json | jq -r '.spec.clusterIP');
 
-squawk 5 "Add IPFS API to Kong"
+echo "Add IPFS API to Kong"
 curl -s -k -X POST \
   --url $KONG_ADMIN_URL/apis/ \
   --data 'name=ipfs' \
@@ -224,7 +210,7 @@ curl -s -k -X POST \
   --data 'upstream_url=http://'$IPFS_CLUSTER_IP':5001/' \
   | jq '.'
 
-squawk 5 "Configure CORS for IPFS via Kong"
+echo "Configure CORS for IPFS via Kong"
 curl -s -k -X POST \
   --url $KONG_ADMIN_URL/apis/ipfs/plugins \
   --data "name=cors" \
@@ -232,18 +218,18 @@ curl -s -k -X POST \
   --data "config.methods=GET, PUT, POST" \
   | jq '.'
 
-squawk 3 'IPFS HEALTHCHECK'
-squawk 3 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT
+echo 'IPFS HEALTHCHECK'
+echo 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT
 
 curl -s -k -X GET \
   --url 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT'/api/v0/id' \
   | jq '.'
 
 if [[ "$TRANSMUTE_DO_JWT_DL" == 'y' ]]; then
-  squawk 3 'configure okta'
+  echo 'configure okta'
   #$TRANSMUTE_REPO/scripts/configure-kong-okta-ipfs.sh
 
-  squawk 3 'Configure Kong to use Okta to secure IPFS'
+  echo 'Configure Kong to use Okta to secure IPFS'
 
   curl -s -k -X POST $KONG_ADMIN_URL/apis/ipfs/plugins \
       --data "name=jwt"
@@ -254,35 +240,35 @@ if [[ "$TRANSMUTE_DO_JWT_DL" == 'y' ]]; then
   # Delete it from the api
   # curl -k -X DELETE $KONG_ADMIN_URL/apis/ipfs/plugins/e9522844-ef05-45b1-b3fa-09f380d4c0ec
 
-  squawk 3 'Export CONSUMER_ID'
+  echo 'Export CONSUMER_ID'
   export CONSUMER_ID=$(curl -k -X POST $KONG_ADMIN_URL/consumers \
       --data "username=bob@example.com" \
       --data "custom_id=0" \
       | jq -r '.id')
 
-  squawk 5 "Download JWT Signing Key"
-  squawk 3 'Download JWT Signing Key'
-  squawk 3 'Using vox'
+  echo "Download JWT Signing Key"
+  echo 'Download JWT Signing Key'
+  echo 'Using vox'
   node ./scripts/okta/write-okta-pem.js
 
-  squawk 5 "Connect the API Consumer to okta"
-  squawk 3 'Connect the API Consumer to okta'
+  echo "Connect the API Consumer to okta"
+  echo 'Connect the API Consumer to okta'
   curl -k -X POST $KONG_ADMIN_URL/consumers/$CONSUMER_ID/jwt \
       -F "algorithm=RS256" \
       -F "rsa_public_key=@./scripts/okta/okta.pem" \
       -F "key=https://"$OKTA_HOSTNAME"/oauth2/default"
 
-  squawk 5 "Get an okta jwt"
-  squawk 3 'Get an okta jwt'
+  echo "Get an okta jwt"
+  echo 'Get an okta jwt'
   export ACCESS_TOKEN=$(node ./scripts/okta/get-okta-token.js)
 
-  squawk 3 'Get api v0 id'
+  echo 'Get api v0 id'
   curl -k -X GET \
       --url 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT/api/v0/id \
       --header 'Authorization: Bearer '$ACCESS_TOKEN
 fi
 
-squawk 5 "Configuring the transmute framework to use the new kong proxy port in minikube"
+echo "Configuring the transmute framework to use the new kong proxy port in minikube"
 DEBUG_MESSAGES='FATAL ERROR ON TESTING'
 
 export OLD_KONG_PROXY_PORT=TPL_KONG_PORT_TPL
