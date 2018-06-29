@@ -124,7 +124,7 @@ class ProfilePage extends Component {
                 type="text"
                 disabled={true}
                 multiline={true}
-                value={profile.didDocument}
+                value={JSON.stringify(JSON.parse(profile.didDocument), null, 2)}
               />
             </FormControl>
           </Grid>

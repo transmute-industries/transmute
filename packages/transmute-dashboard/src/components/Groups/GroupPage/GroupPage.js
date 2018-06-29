@@ -23,16 +23,17 @@ const styles = theme => ({
 
 class GroupPage extends Component {
   componentWillMount() {
-    if (!this.props.groups.selectedGroup) {
-      this.updateGroup();
+    const group_id = window.location.href
+      .split('groups/')[1]
+      .split('?')[0];
+
+    if (!this.props.groups.selectedGroup || this.props.groups.selectedGroup.id !== group_id) {
+      this.updateGroup(group_id);
       this.props.actions.directory.loadDirectory();
     }
   }
 
-  updateGroup = async () => {
-    const group_id = window.location.href
-      .split('groups/')[1]
-      .split('?')[0];
+  updateGroup = async (group_id) => {
     this.props.actions.groups.loadGroup(this.props.auth, group_id);
     this.props.actions.groups.loadGroupMembers(this.props.auth, group_id);
   };
