@@ -57,17 +57,20 @@ class GroupPage extends Component {
 
   render() {
     const { groups, directory } = this.props;
+    if (!groups.selectedGroup) return null;
 
     return (
       <AppBar>
-        <EditGroupCard
-          onDelete={this.onDelete}
-          onSave={this.onSave}
-          onAddMember={this.onAddMember}
-          onRemoveMember={this.onRemoveMember}
-          group={groups.selectedGroup}
-          users={directory.profiles}
-        />
+        { groups.selectedGroup.name !== 'Everyone' && 
+          <EditGroupCard
+            onDelete={this.onDelete}
+            onSave={this.onSave}
+            onAddMember={this.onAddMember}
+            onRemoveMember={this.onRemoveMember}
+            group={groups.selectedGroup}
+            users={directory.profiles}
+          />
+        }
         <GroupTable group={groups.selectedGroup} />
       </AppBar>
     );
