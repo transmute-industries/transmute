@@ -13,6 +13,20 @@ npm run truffle:migrate
 npm run start
 ```
 
+### Testing With Transmute CLI
+
+The transmute CLI helps manage a local minikube environment which is more similar to production environments such as GKE, Azure or AWS.
+
+In order to develop against services hosted in this environment, some changes are necessary:
+
+Migrate contracts to ganahce hosted in minikube:
+
+```
+NODE_TLS_REJECT_UNAUTHORIZED='0' TRANSMUTE_ENV='minikube' npm run truffle:migrate   
+```
+
+Edit `./src/transmute-config/index.js` make set `transmute.network` to `minikube`
+
 ### Deployment
 
 This is for contributors only.
