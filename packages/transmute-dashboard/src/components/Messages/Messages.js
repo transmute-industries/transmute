@@ -55,7 +55,7 @@ class Messages extends Component {
     this.ipfs.once('ready', () => this.ipfs.id((err, info) => {
       if (err) { throw err }
       this.setState({ info });
-
+      
       const secPub = openpgp.key.readArmored(JSON.parse(user.did_document).publicKey[0].publicKeyPem).keys[0];
       const publicKey = Buffer.from(secPub.primaryKey.params[1].data).toString('hex');
       

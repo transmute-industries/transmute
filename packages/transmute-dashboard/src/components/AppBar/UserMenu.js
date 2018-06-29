@@ -14,7 +14,7 @@ let eventStoreFactoryArtifact = require('../../contracts/EventStoreFactory.json'
 
 let transmuteConfig = require('../../transmute-config');
 
-class PrimaryMenu extends Component {
+class UserMenu extends Component {
   render() {
     return (
       <List>
@@ -72,4 +72,4 @@ class PrimaryMenu extends Component {
   }
 }
 
-export default withAuth(PrimaryMenu);
+export default withAuth(UserMenu);

@@ -22,8 +22,9 @@ import Button from 'material-ui/Button';
 
 import { withAuth } from '@okta/okta-react';
 
-import PrimaryMenu from './PrimaryMenu';
-import SecondaryMenu from './SecondaryMenu';
+import UserMenu from './UserMenu';
+import AdminMenu from './AdminMenu';
+import TransmuteMenu from './TransmuteMenu';
 
 import { history } from '../../store';
 
@@ -118,6 +119,7 @@ const styles = theme => ({
 class MiniDrawer extends React.Component {
   state = {
     authenticated: false,
+    isAdmin: false,
     isDrawerOpen: false
   };
 
@@ -142,12 +144,22 @@ class MiniDrawer extends React.Component {
     this.state = { authenticated: null };
     this.checkAuthentication = this.checkAuthentication.bind(this);
     this.checkAuthentication();
+    this.checkAdmin = this.checkAdmin.bind(this);
+    this.checkAdmin();
   }
 
   async checkAuthentication() {
     const authenticated = await this.props.auth.isAuthenticated();
     if (authenticated !== this.state.authenticated) {
       this.setState({ authenticated });
+    }
+  }
+
+  async checkAdmin() {
+    const user = await this.props.auth.getUser();
+    const isAdmin = user.user_groups && user.user_groups.indexOf('Transmute Admins') !== -1;
+    if (isAdmin !== this.state.isAdmin) {
+      this.setState({ isAdmin });
     }
   }
 
@@ -276,13 +288,19 @@ class MiniDrawer extends React.Component {
                 </IconButton>
               </div>
               <Divider />
-              {this.state.authenticated && 
+              {this.state.authenticated &&
                 <div>
-                  <PrimaryMenu />
+                  <UserMenu />
                   <Divider />
                 </div>
               }
-              <SecondaryMenu />
+              {this.state.isAdmin &&
+                <div>
+                  <AdminMenu />
+                  <Divider />
+                </div>
+              }
+              <TransmuteMenu />
             </div>
           </Drawer>
           <main className={classes.content}>{this.props.children}</main>
