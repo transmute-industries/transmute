@@ -87,10 +87,6 @@ sleep 1
 kubectl get pods -n kube-system
 
 echo "Ganache-cli"
-# helm install \
-#  --name=ganache \
-#  $(npm root -g)/transmute-cli/components/ganache/charts/ganache-cli/
-
 helm install --name ganache transmute-charts/ganache
 
 $(npm root -g)/transmute-cli/scripts/w8s/ready.w8 ganache default
@@ -192,6 +188,9 @@ curl -s -k -X POST \
 
 echo 'GANACHE HEALTHCHECK'
 echo "https://ganache.transmute.minikube:$KONG_PROXY_PORT"
+
+# wait for kong to configure
+sleep 5
 
 curl -s -k -X POST \
   --url "https://ganache.transmute.minikube:$KONG_PROXY_PORT" \
