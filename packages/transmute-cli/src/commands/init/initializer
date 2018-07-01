@@ -146,7 +146,7 @@ echo "configure-kong-ganache"
 echo 'SETTING UP GANACHE'
 
 echo "Get the service clusterIp for Kong to use."
-export GANACHE_CLUSTER_IP=$(PATH=$HOME/.transmute/bin:$PATH kubectl get service ganache-ganache-cli -o json | jq -r '.spec.clusterIP');
+export GANACHE_CLUSTER_IP=$(PATH=$HOME/.transmute/bin:$PATH kubectl get service ganache-ganache -o json | jq -r '.spec.clusterIP');
 echo "GANACHE_CLUSTER_IP $GANACHE_CLUSTER_IP"
 
 countzero=0
