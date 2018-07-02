@@ -4,7 +4,7 @@ services:
   testrpc:
     environment:
       - RPC_HOST=testrpc
-    build: ./packages/transmute-cli/components/ganache/docker/ganache-cli
+    image: trufflesuite/ganache-cli
     ports:
       - "8545:8545"
 

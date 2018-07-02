@@ -78,15 +78,16 @@ echo "Install helm"
 helm init 
 # --service-account tiller
 
+# Add transmute charts repo
+helm repo add transmute-charts http://charts.transmute.network
+
 USE_STRICT_W8=true $(npm root -g)/transmute-cli/scripts/w8s/ready.w8 tiller-deploy kube-system
 
 sleep 1
 kubectl get pods -n kube-system
 
 echo "Ganache-cli"
-helm install \
- --name=ganache \
- $(npm root -g)/transmute-cli/components/ganache/charts/ganache-cli/
+helm install --name ganache transmute-charts/ganache
 
 $(npm root -g)/transmute-cli/scripts/w8s/ready.w8 ganache default
 
@@ -141,7 +142,7 @@ echo "configure-kong-ganache"
 echo 'SETTING UP GANACHE'
 
 echo "Get the service clusterIp for Kong to use."
-export GANACHE_CLUSTER_IP=$(PATH=$HOME/.transmute/bin:$PATH kubectl get service ganache-ganache-cli -o json | jq -r '.spec.clusterIP');
+export GANACHE_CLUSTER_IP=$(PATH=$HOME/.transmute/bin:$PATH kubectl get service ganache -o json | jq -r '.spec.clusterIP');
 echo "GANACHE_CLUSTER_IP $GANACHE_CLUSTER_IP"
 
 countzero=0
@@ -187,6 +188,9 @@ curl -s -k -X POST \
 
 echo 'GANACHE HEALTHCHECK'
 echo "https://ganache.transmute.minikube:$KONG_PROXY_PORT"
+
+# wait for kong to configure
+sleep 5
 
 curl -s -k -X POST \
   --url "https://ganache.transmute.minikube:$KONG_PROXY_PORT" \
