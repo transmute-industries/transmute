@@ -4,6 +4,8 @@ import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 
+let transmuteConfig = require('../../../transmute-config');
+
 const styles = theme => ({
   image: {
     width: '100%'
@@ -30,10 +32,7 @@ class ProfileCard extends React.Component {
             <div>
               <p>My Signature</p>
               <img
-                src={
-                  'https://ipfs.infura.io/api/v0/cat?arg=' +
-                  this.props.signature
-                }
+                src={ `${transmuteConfig.ipfsConfig.protocol}://${transmuteConfig.ipfsConfig.host}/api/v0/cat?arg=${signature}` }
                 alt="My Signature"
                 className={classes.image}
               />
