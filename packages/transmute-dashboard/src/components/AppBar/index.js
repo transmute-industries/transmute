@@ -157,7 +157,7 @@ class MiniDrawer extends React.Component {
 
   async checkAdmin() {
     const user = await this.props.auth.getUser();
-    const isAdmin = user.user_groups && user.user_groups.indexOf('Transmute Admins') !== -1;
+    const isAdmin = user && user.user_groups && user.user_groups.indexOf('Transmute Admins') !== -1;
     if (isAdmin !== this.state.isAdmin) {
       this.setState({ isAdmin });
     }
