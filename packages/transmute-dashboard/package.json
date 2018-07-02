@@ -1,6 +1,6 @@
 {
   "name": "transmute-dashboard",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": true,
   "homepage": "https://dashboard.transmute.network",
   "scripts": {
@@ -11,7 +11,7 @@
     "build:docs": "npm run build",
     "deploy:docs": "gh-pages -d build",
     "truffle:migrate": "rm -rf ./build/contracts/ && rm -rf ./src/contracts/ && truffle migrate --network development && cp -r ./build/contracts/ ./src/contracts",
-    "truffle:migrate:ropsten": "rm -rf ./build/contracts/ && rm -rf ./src/contracts/ && truffle migrate --network ropsten && cp -r ./build/contracts/ ./src/contracts"
+    "truffle:migrate:rinkeby": "rm -rf ./build/contracts/ && rm -rf ./src/contracts/ && truffle migrate --network rinkeby && cp -r ./build/contracts/ ./src/contracts"
   },
   "dependencies": {
     "@material-ui/icons": "^1.0.0-beta.42",

@@ -3,7 +3,7 @@ import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 
 import { Send, BugReport, Code } from 'material-ui-icons';
 
-class SecondaryMenu extends Component {
+class TransmuteMenu extends Component {
 
   render() {
     return (
@@ -65,4 +65,4 @@ class SecondaryMenu extends Component {
   }
 }
 
-export default SecondaryMenu;
+export default TransmuteMenu;

@@ -1,9 +1,12 @@
 import React from 'react';
 
+import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 
 import Card, { CardContent } from 'material-ui/Card';
+import Input, { InputLabel } from 'material-ui/Input';
+import { FormControl } from 'material-ui/Form';
 import Grid from 'material-ui/Grid';
 
 const styles = theme => ({
@@ -12,8 +15,11 @@ const styles = theme => ({
     paddingLeft: 8,
     paddingTop: 20
   }),
+  margin: {
+    margin: theme.spacing.unit,
+  },
   formControl: {
-    minWidth: '600px'
+    minWidth: '800px'
   }
 });
 
@@ -32,12 +38,19 @@ class PublicDirectoryProfileCard extends React.Component {
             {profile.email}
           </Typography>
 
-          <Grid item xs={12} md={6}>
-            <pre>{profile.secPubKey}</pre>
+          <Grid item md={12}>
+            <FormControl className={classNames(classes.margin, classes.formControl)}>
+              <InputLabel>DID Document</InputLabel>
+              <Input
+                id="ed-public-key"
+                type="text"
+                disabled={true}
+                multiline={true}
+                value={JSON.stringify(JSON.parse(profile.didDocument), null, 2)}
+              />
+            </FormControl>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <pre>{profile.edPubKey}</pre>
-          </Grid>
+          
         </CardContent>
       </Card>
     );

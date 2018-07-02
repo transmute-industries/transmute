@@ -13,11 +13,11 @@ module.exports = {
       network_id: '*' // Match any network id
     },
     // Providers using HDWallet need to be wrapped in a function: https://truffleframework.com/docs/advanced/configuration#providers
-    ropsten: {
-      provider: function() {
-        return new HDWalletProvider(process.env.REACT_APP_ROPSTEN_MNEMONIC, `https://ropsten.infura.io/${process.env.REACT_APP_INFURA_API_TOKEN}`);
+    rinkeby: {
+      provider: function () {
+        return new HDWalletProvider(process.env.REACT_APP_TESTNET_MNEMONIC, `https://rinkeby.infura.io/${process.env.REACT_APP_INFURA_API_TOKEN}`);
       },
-      network_id: 3
+      network_id: 4
     }
   }
 };
