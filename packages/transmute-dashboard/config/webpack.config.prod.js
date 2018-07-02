@@ -264,7 +264,7 @@ module.exports = {
       uglifyOptions: {
         beautify: false,
         ecma: 6,
-        compress: true,
+        compress: { unused: false },
         comments: false
       }
     }),
