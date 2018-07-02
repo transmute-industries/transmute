@@ -12,6 +12,8 @@ import ExpansionPanel, {
   ExpansionPanelDetails,
 } from 'material-ui/ExpansionPanel';
 
+let transmuteConfig = require('../../../transmute-config');
+
 const styles = theme => ({
   image: {
     width: '100%'
@@ -83,13 +85,13 @@ class DocumentsList extends React.Component {
               <ExpansionPanelDetails>
                 <GridList className={classes.gridList}>
                   {value.signatures.map(signature => (
-                    <GridListTile key={signature} href={'https://ipfs.infura.io/api/v0/cat?arg=' + signature}>
-                      <img src={'https://ipfs.infura.io/api/v0/cat?arg=' + signature} className={classes.image} alt={signature} />
+                    <GridListTile key={signature} href={ `${transmuteConfig.ipfsConfig.protocol}://${transmuteConfig.ipfsConfig.host}/api/v0/cat?arg=${signature}` }>
+                      <img src={`${transmuteConfig.ipfsConfig.protocol}://${transmuteConfig.ipfsConfig.host}/api/v0/cat?arg=${signature}`} className={classes.image} alt={signature} />
                     </GridListTile>
                   ))}
                 </GridList>
               </ExpansionPanelDetails>
-              <Button color="primary" href={'https://ipfs.infura.io/api/v0/cat?arg=' + key} target="_blank">
+              <Button color="primary" href={`${transmuteConfig.ipfsConfig.protocol}://${transmuteConfig.ipfsConfig.host}/api/v0/cat?arg=${key}`} target="_blank">
                 View Document
               </Button>
               {signature !== null && value.signatures.indexOf(signature) === -1 &&

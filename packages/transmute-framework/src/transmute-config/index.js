@@ -1,6 +1,6 @@
 const defaultEnv = require('./env.json');
 
-const TRANSMUTE_ENV = process.env.TRANSMUTE_ENV || 'localhost';
+const TRANSMUTE_ENV = process.env.TRANSMUTE_ENV || 'infura';
 
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 

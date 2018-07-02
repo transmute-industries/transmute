@@ -161,7 +161,7 @@ class Demo extends Component {
           console.log('file uploaded')
         );
         console.log(
-          'https://ipfs.infura.io/api/v0/cat?arg=' + response[0].hash
+          `${transmuteConfig.ipfsConfig.protocol}://${transmuteConfig.ipfsConfig.host}/api/v0/cat?arg=${response[0].hash}`
         );
       })
       .catch(err => {
