@@ -36,8 +36,8 @@ warn_user_of_global_install () {
 
 chkdir () {
   if [ ! -w $1 ] ; then
-    sudo mkdir -p $1
-    sudo chown $USER $1
+    mkdir -p $1
+    #sudo chown $USER $1
   fi
   if [ ! -w $1 ] ; then
     echo "Cannot write to $1, please check your permissions"
@@ -149,13 +149,13 @@ windowsnsenter () {
 
 install_nsenter_linux (){
    
-  sudo apt-get install libncurses5-dev libslang2-dev gettext zlib1g-dev libselinux1-dev debhelper lsb-release pkg-config po-debconf autoconf automake autopoint libtool
+  sudo apt-get -y install libncurses5-dev libslang2-dev gettext zlib1g-dev libselinux1-dev debhelper lsb-release pkg-config po-debconf autoconf automake autopoint libtool bison
   TMP=$(mktemp -d --suffix=NSENTER_TMP)
-  wget https://www.kernel.org/pub/linux/utils/util-linux/v2.30/util-linux-2.30.2.tar.gz -qO - | tar -xz -C $TMP/
+  curl -sL https://www.kernel.org/pub/linux/utils/util-linux/v2.30/util-linux-2.30.2.tar.gz | tar -xz -C $TMP/
   cd $TMP/util-linux-2.30.2 && ./autogen.sh && ./configure && make nsenter
   mkdir -p $HOME/.local/bin
-  sudo cp -v $TMP/util-linux-2.30.2/nsenter $HOME/.local/bin/nsenter
-  sudo chmod +x $HOME/.local/bin/nsenter
+  cp -v $TMP/util-linux-2.30.2/nsenter $HOME/.local/bin/nsenter
+  chmod +x $HOME/.local/bin/nsenter
   sudo cp -v $HOME/.local/bin/nsenter /usr/bin/nsenter
 }
 
@@ -166,6 +166,7 @@ install_kubectl_linux () {
     cd $TMP
     curl -LO https://storage.googleapis.com/kubernetes-release/release/$TRANSMUTE_KUBE_VERSION/bin/linux/amd64/kubectl
     chmod +x kubectl
+    sudo chown 0:0 kubectl
     sudo mv -v kubectl /usr/local/bin/
     cd
     rmdir $TMP
@@ -178,6 +179,7 @@ install_minikube_linux () {
 
     curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.25.2/minikube-linux-amd64
     chmod +x minikube
+    sudo chown 0:0 minikube
     sudo mv minikube /usr/local/bin/
 
   fi
@@ -196,7 +198,7 @@ install_helm_linux () {
 
     cd linux-amd64
     chmod +x helm
-    sudo mv helm $HELM_PREFIX/helm
+    mv helm $HELM_PREFIX/helm
   fi
 }
 
@@ -254,10 +256,10 @@ install_certbot () {
       echo 'gpg not found'
     fi
     rm certbot-auto.asc
-    sudo chmod +x certbot-auto
-    sudo mv certbot-auto $TRANSMUTE_BIN/
+    chmod +x certbot-auto
+    mv certbot-auto $TRANSMUTE_BIN/
     set +e
-    certbot-auto
+    certbot-auto --noninteractive
     set -e
     cd
   else
@@ -585,6 +587,7 @@ else
   mkdir -p $TRANSMUTE_DIR/git
 fi
 
+install_git
 # Install transmute components into k8s
 # Grab the transmute dir
 # Note in CI this has already been symlinked and does not run there
