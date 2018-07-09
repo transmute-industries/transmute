@@ -116,14 +116,14 @@ if [[ "$DO_FAAS" == 'y' ]]; then
   cd $orig_pwd
 fi
 
-helm install stable/kong --name gateway
+helm install stable/kong --name gateway --set proxy.useTLS=false
 
 echo "spin up"
 $(npm root -g)/transmute-cli/scripts/w8s/ready.w8 gateway-postgresql default
 EXCLUDE_POD=gateway-kong-migration $(npm root -g)/transmute-cli/scripts/w8s/ready.w8 gateway-kong default
 export MINIKUBE_IP=$(minikube ip)
 export KONG_ADMIN_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
-export KONG_PROXY_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
+export KONG_PROXY_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-proxy --url)
 export KONG_PROXY_PORT=$(PATH=$HOME/.transmute/bin:$PATH kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')
 export KONG_HOST=$(echo $KONG_ADMIN_URL | sed 's!https://!!g' | cut -f1 -d:)
 export KONG_PORT=$(echo $KONG_ADMIN_URL | sed 's!https://!!g' | cut -f2 -d:)
@@ -210,7 +210,6 @@ curl -s -k -X POST \
   --url $KONG_ADMIN_URL/apis/ \
   --data 'name=ipfs' \
   --data 'hosts=ipfs.transmute.minikube' \
-  --data "https_only=true" \
   --data 'upstream_url=http://'$IPFS_CLUSTER_IP':5001/' \
   | jq '.'
 
@@ -223,10 +222,10 @@ curl -s -k -X POST \
   | jq '.'
 
 echo 'IPFS HEALTHCHECK'
-echo 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT
+echo 'http://ipfs.transmute.minikube:'$KONG_PROXY_PORT
 
 curl -s -k -X GET \
-  --url 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT'/api/v0/id' \
+  --url 'http://ipfs.transmute.minikube:'$KONG_PROXY_PORT'/api/v0/id' \
   | jq '.'
 
 if [[ "$TRANSMUTE_DO_JWT_DL" == 'y' ]]; then
@@ -268,7 +267,7 @@ if [[ "$TRANSMUTE_DO_JWT_DL" == 'y' ]]; then
 
   echo 'Get api v0 id'
   curl -k -X GET \
-      --url 'https://ipfs.transmute.minikube:'$KONG_PROXY_PORT/api/v0/id \
+      --url 'http://ipfs.transmute.minikube:'$KONG_PROXY_PORT/api/v0/id \
       --header 'Authorization: Bearer '$ACCESS_TOKEN
 fi
 
