@@ -1,15 +1,17 @@
 import axios from 'axios';
 
+import transmuteConfig from '../../../transmute-config'
+
 const ENVS = {
   LOCAL: 'http://localhost:5001',
-  TEST: '???',
+  TEST: `${transmuteConfig.ipfsConfig.protocol}://${transmuteConfig.ipfsConfig.host}:${transmuteConfig.ipfsConfig.port}`,
   PROD: 'https://ipfs.infura.io:5001'
 };
 
 export const getIpfsId = async () => {
   return axios
     .create({
-      baseURL: ENVS.PROD,
+      baseURL: ENVS.TEST,
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json'
