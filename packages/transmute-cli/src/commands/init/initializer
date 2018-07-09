@@ -101,6 +101,12 @@ helm install \
 
 $(npm root -g)/transmute-cli/scripts/w8s/ready.w8 decentralized-storage-ipfs default
 
+export IPFS_POD_NAME=$(kubectl get pods --namespace default -l "app=ipfs,release=decentralized-storage"  -o jsonpath="{.items[0].metadata.name}")
+kubectl exec $IPFS_POD_NAME ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001
+kubectl exec $IPFS_POD_NAME ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
+kubectl exec $IPFS_POD_NAME ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST"]'
+kubectl exec $IPFS_POD_NAME reboot
+
 if [[ "$DO_FAAS" == 'y' ]]; then
   echo "OpenFaaS"
   echo "Create namespaces"
