@@ -4,6 +4,8 @@ const fse = require('fs-extra');
 
 const openpgp = require('openpgp');
 
+const run = require('../runner');
+
 const writeFile = async (filePath, fileData) => {
   return new Promise((resolve, reject) => {
     fse.outputFile(filePath, fileData, err => {
@@ -54,7 +56,16 @@ module.exports.generateKeys = async (args) => {
   await writeFile(path.join(transmuteDir, 'primary_sk.key'), primarySk.armor());
   await writeFile(path.join(transmuteDir, 'recovery_sk.key'), recoverySk.armor());
 
+  console.info('\n');
   console.info('Keys saved.');
-  console.info('Primary key path: ', path.join(transmuteDir, 'primary_pk.asc'));
+  console.info();
+  console.info('Primary public key path: ', path.join(transmuteDir, 'primary_pk.asc'));
+  console.info('Primary private key path: ', path.join(transmuteDir, 'primary_sk.key'));
+  console.info();
   console.info('Recovery key path: ', path.join(transmuteDir, 'recovery_pk.asc'));
-}
+  console.info('Recovery private path: ', path.join(transmuteDir, 'recovery_sk.key'));
+  console.info('\n');
+
+  let command = path.join(__dirname, './gpg_import ');
+  run.shellExec(command);
+} 
