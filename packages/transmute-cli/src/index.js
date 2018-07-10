@@ -61,16 +61,6 @@ vorpal
 
     var promise = this.prompt([
       {
-        type: 'input',
-        name: 'name',
-        message: 'Full Name: '
-      },
-      {
-        type: 'input',
-        name: 'email',
-        message: 'Email: '
-      },
-      {
         type: 'password',
         name: 'passphrase',
         message: 'Password: '

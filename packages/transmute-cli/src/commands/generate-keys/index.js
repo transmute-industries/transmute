@@ -12,8 +12,6 @@ module.exports.generateKeys = async (args) => {
   const secOptions = {
     userIds: [
       {
-        name: args.name,
-        email: args.email
       }
     ],
     curve: 'secp256k1',
