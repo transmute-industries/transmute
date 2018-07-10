@@ -21,10 +21,10 @@
     "ipfsConfig": {
       "host": "ipfs.transmute.minikube",
       "port": TPL_KONG_PORT_TPL,
-      "protocol": "https"
+      "protocol": "http"
     },
     "web3Config": {
-      "providerUrl": "https://ganache.transmute.minikube:TPL_KONG_PORT_TPL"
+      "providerUrl": "http://ganache.transmute.minikube:TPL_KONG_PORT_TPL"
     }
   },
   "transmute.network": {
