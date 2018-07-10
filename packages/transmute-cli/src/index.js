@@ -78,7 +78,7 @@ vorpal
     ]);
 
     promise.then(async (res) => {
-      await generateKeys.generateKeys({ 'name': 'Eric Olszewski', 'email': 'eolszewski@gmail.com', 'passphrase': 'pickles' });
+      await generateKeys.generateKeys(res);
       callback();
     });
   });
