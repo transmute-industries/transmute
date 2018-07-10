@@ -32,7 +32,7 @@ class ProfileCard extends React.Component {
             <div>
               <p>My Signature</p>
               <img
-                src={ `${transmuteConfig.ipfsConfig.protocol}://${transmuteConfig.ipfsConfig.host}/api/v0/cat?arg=${signature}` }
+                src={ `${transmuteConfig.ipfsConfig.protocol}://${transmuteConfig.ipfsConfig.host}:${transmuteConfig.ipfsConfig.port}/api/v0/cat?arg=${signature}` }
                 alt="My Signature"
                 className={classes.image}
               />
