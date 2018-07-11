@@ -1,28 +1,45 @@
 const fse = require('fs-extra');
 
 const writeFile = async (filePath, fileData) => {
-  return new Promise((resolve, reject) => {
-    fse.outputFile(filePath, fileData, err => {
-      if (err) {
-        reject(err);
-      }
-      resolve(true);
-    });
-  });
+  try {
+    await fse.outputFile(filePath, fileData)
+  } catch (err) {
+    console.error(err)
+  }
 };
 
 const readFile = async filePath => {
-  return new Promise((resolve, reject) => {
-    fse.readFile(filePath, (err, fileData) => {
-      if (err) {
-        reject(err);
-      }
-      resolve(fileData);
-    });
-  });
+  try {
+    await fse.readFile(filePath)
+  } catch (err) {
+    console.error(err)
+  }
 };
+
+const moveFile = async (src, dest) => {
+  try {
+    await fse.move(src, dest)
+  } catch (err) {
+    console.error(err)
+  }
+};
+
+const removeFile = async (path) => {
+  try {
+    await fse.remove(path)
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+const exists = async (path) => {
+  return await fse.pathExists(f)
+}
 
 module.exports = {
   writeFile,
-  readFile
+  readFile,
+  moveFile,
+  removeFile,
+  exists
 };
