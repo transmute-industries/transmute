@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if type "gpg2" > /dev/null 2 > /dev/null; then
+  set + e
+  gpg2 --list-keys
+  set - e
+elif type "gpg" > /dev/null 2 > /dev/null; then
+  set + e
+  gpg --list-keys
+  set - e
+else
+  echo 'GPG not detected.'
+  echo 'Go to this url to install GPG: https://gnupg.org/download/'
+  echo 'After installing GPG, please re-run the `generate-keys` command.'
+fi
