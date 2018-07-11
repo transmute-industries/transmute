@@ -1,0 +1,19 @@
+#!/bin/bash
+
+: ${SECRETS_DIR:=$HOME/.transmute/cli-secrets}
+
+if type "gpg2" > /dev/null 2 > /dev/null; then
+  echo 'gpg2 detected'
+  set + e
+  gpg2 --export-secret-keys -a $PRIMARY_KEY_FINGERPRINT > $SECRETS_DIR/primary_sk.key
+  set - e
+elif type "gpg" > /dev/null 2 > /dev/null; then
+  echo 'gpg detected'
+  set + e
+  gpg --export-secret-keys -a $PRIMARY_KEY_FINGERPRINT > $SECRETS_DIR/primary_sk.key
+  set - e
+else
+  echo 'GPG not detected.'
+  echo 'Go to this url to install GPG: https://gnupg.org/download/'
+  echo 'After installing GPG, please re-run the `generate-keys` command.'
+fi

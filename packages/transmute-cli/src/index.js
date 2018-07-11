@@ -24,6 +24,8 @@ const telemetry = require('./commands/telemetry');
 
 const generateKeys = require('./commands/generate-keys');
 
+const exportPrivateKey = require('./commands/export-private-key');
+
 const login = require('./commands/login');
 
 const debug = require('./commands/debug');
@@ -70,6 +72,51 @@ vorpal
     promise.then(async (res) => {
       await generateKeys.generateKeys(res);
       callback();
+    });
+  });
+
+/** transmute export-private-key exports the private key for a specified GPG key
+ * @name transmute export-private-key
+ * @example transmute export-private-key
+ * */
+vorpal
+  .command('export-private-key')
+  .description('Export private key for a primary keypair')
+  .action(function (args, callback) {
+    var hasFingerprintPromise = this.prompt([
+      {
+        type: 'input',
+        name: 'hasFingerprint',
+        message: 'Before proceeding, you will need to have your primary key fingerprint copied to your clipboard.\nYou can find this by running the `list-keys` command and copying the 40 character string below `pub` on the second-to-last entry.\n Do you have this value copied? (y/n): '
+      }
+    ]);
+
+    hasFingerprintPromise.then(async (res) => {
+      if (res.hasFingerprint.toLowerCase() === 'y') {
+        var promise = this.prompt([
+          {
+            type: 'input',
+            name: 'fingerprint',
+            message: 'Primary key fingerprint: '
+          },
+          {
+            type: 'password',
+            name: 'passphrase',
+            message: 'Passphrase for primary key: '
+          }
+        ]);
+
+        promise.then(async (res) => {
+          await exportPrivateKey.exportPrivateKey(res);
+          callback();
+        });
+      } else if (res.hasFingerprint.toLowerCase() === 'n') {
+        console.error('Re-run this command after copying your recovery key fingerprint.');
+        callback();
+      } else {
+        console.error('Invalid input, exiting...');
+        callback();
+      }
     });
   });
 
