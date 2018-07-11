@@ -11,9 +11,8 @@ const { writeFile, readFile, removeFile } = require('../../utils');
 module.exports.generateRecoveryKey = async (args) => {
 
   let transmuteDir = path.join(require('os').homedir(), '.transmute/cli-secrets');
-  shell.env.RECOVERY_KEY_FINGERPRINT = args.fingerprint;
 
-  let command = path.join(__dirname, './gpg_export ');
+  let command = `${path.join(__dirname, './gpg_export ')} ${args.fingerprint}`;
   run.shellExec(command);
 
   // fetch existing recovery key as new primary key

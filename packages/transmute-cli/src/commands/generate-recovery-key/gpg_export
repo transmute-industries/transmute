@@ -1,16 +1,17 @@
 #!/bin/bash
 
+args=("$@")
 : ${SECRETS_DIR:=$HOME/.transmute/cli-secrets}
 
 if type "gpg2" > /dev/null 2 > /dev/null; then
   echo 'gpg2 detected'
   set + e
-  gpg2 --export -a $RECOVERY_KEY_FINGERPRINT > $SECRETS_DIR/primary_pk.asc
+  gpg2 --export -a ${args[0]} > $SECRETS_DIR/primary_pk.asc
   set - e
 elif type "gpg" > /dev/null 2 > /dev/null; then
   echo 'gpg detected'
   set + e
-  gpg --export -a $RECOVERY_KEY_FINGERPRINT > $SECRETS_DIR/primary_pk.asc
+  gpg --export -a ${args[0]} > $SECRETS_DIR/primary_pk.asc
   set - e
 else
   echo 'GPG not detected.'
