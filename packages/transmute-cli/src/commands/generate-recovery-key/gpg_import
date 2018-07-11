@@ -5,6 +5,8 @@
 if type "gpg2" > /dev/null 2 > /dev/null; then
   echo 'gpg2 detected'
   set + e
+  echo 'Input your passphrase to import your updated primary key into your GPG keyring.'
+  gpg2 --import $SECRETS_DIR/primary_sk.key
   echo 'Input your passphrase to import your recovery key into your GPG keyring.'
   gpg2 --import $SECRETS_DIR/recovery_sk.key
   set - e
@@ -12,6 +14,8 @@ if type "gpg2" > /dev/null 2 > /dev/null; then
 elif type "gpg" > /dev/null 2 > /dev/null; then
   echo 'gpg detected'
   set + e
+  echo 'Input your passphrase to import your updated primary key into your GPG keyring.'
+  gpg2 --import $SECRETS_DIR/primary_sk.key
   echo 'Input your passphrase to import your recovery key into your GPG keyring.'
   gpg --import $SECRETS_DIR/recovery_sk.key
   set - e

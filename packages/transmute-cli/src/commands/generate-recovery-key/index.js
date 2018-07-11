@@ -17,11 +17,11 @@ module.exports.generateRecoveryKey = async (args) => {
 
   // fetch existing recovery key as new primary key
   const data = await readFile(
-    path.join(transmuteDir, 'primary_pk.asc')
+    path.join(transmuteDir, 'primary_sk.key')
   );
-  const armoredPrimaryPk = data.toString();
-  const primaryPk = openpgp.key.readArmored(
-    armoredPrimaryPk
+  const armoredPrimarySk = data.toString();
+  let primarySk = openpgp.key.readArmored(
+    armoredPrimarySk
   ).keys[0];
 
   // create new recovery key
@@ -40,12 +40,14 @@ module.exports.generateRecoveryKey = async (args) => {
   await recoverySk.decrypt(args.passphrase);
 
   // new recovery key trusts trusts new primary key
-  const trustedSec = await primaryPk.signPrimaryUser([recoverySk]);
+  primarySk = await primarySk.signPrimaryUser([recoverySk]);
 
   // lock the private keys before exporting them
+  await primarySk.encrypt(args.passphrase);
   await recoverySk.encrypt(args.passphrase);
 
   // write private keys temporarily to secrets directory
+  await writeFile(path.join(transmuteDir, 'primary_sk.key'), primarySk.armor());
   await writeFile(path.join(transmuteDir, 'recovery_sk.key'), recoverySk.armor());
 
   console.info('\nImporting new recovery key into local GPG keyring...\n')
@@ -57,7 +59,7 @@ module.exports.generateRecoveryKey = async (args) => {
   console.info('\nCleaning up...\n')
 
   // remove temporary files from secrets directory
-  await removeFile(path.join(transmuteDir, 'primary_pk.asc'))
+  await removeFile(path.join(transmuteDir, 'primary_sk.key'))
   await removeFile(path.join(transmuteDir, 'recovery_sk.key'))
 
   console.info('\nSuccess!\n')

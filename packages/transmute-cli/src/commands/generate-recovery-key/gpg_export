@@ -6,12 +6,12 @@ args=("$@")
 if type "gpg2" > /dev/null 2 > /dev/null; then
   echo 'gpg2 detected'
   set + e
-  gpg2 --export -a ${args[0]} > $SECRETS_DIR/primary_pk.asc
+  gpg2 --export-secret-keys -a ${args[0]} > $SECRETS_DIR/primary_sk.key
   set - e
 elif type "gpg" > /dev/null 2 > /dev/null; then
   echo 'gpg detected'
   set + e
-  gpg --export -a ${args[0]} > $SECRETS_DIR/primary_pk.asc
+  gpg --export-secret-keys -a ${args[0]} > $SECRETS_DIR/primary_sk.key
   set - e
 else
   echo 'GPG not detected.'
