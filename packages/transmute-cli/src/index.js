@@ -22,7 +22,9 @@ const init = require('./commands/init');
 const provision = require('./commands/provision');
 const telemetry = require('./commands/telemetry');
 
+const listKeys = require('./commands/list-keys');
 const generateKeys = require('./commands/generate-keys');
+const generateRecoveryKey = require('./commands/generate-recovery-key');
 
 const login = require('./commands/login');
 
@@ -57,8 +59,6 @@ vorpal
   .command('generate-keys')
   .description('Generate primary and recovery keys with the Transmute CLI')
   .action(function (args, callback) {
-    var self = this;
-
     var promise = this.prompt([
       {
         type: 'password',
@@ -72,6 +72,64 @@ vorpal
       callback();
     });
   });
+
+/** transmute generate-recovery-key creates and stores new recovery secp256k1 key.
+ * @name transmute generate-recovery-key
+ * @example transmute generate-recovery-key
+ * */
+vorpal
+  .command('generate-recovery-key')
+  .description('Generate new recovery key with the Transmute CLI')
+  .action(function (args, callback) {
+    var hasFingerprintPromise = this.prompt([
+      {
+        type: 'input',
+        name: 'hasFingerprint',
+        message: 'Before proceeding, you will need to have your recovery key fingerprint copied to your clipboard.\nYou can find this by running the `list-keys` command and copying the 40 character string below `pub` on the last entry.\n Do you have this value copied? (y/n): '
+      }
+    ]);
+
+    hasFingerprintPromise.then(async (res) => {
+      if (res.hasFingerprint.toLowerCase() === 'y') {
+        var promise = this.prompt([
+          {
+            type: 'input',
+            name: 'fingerprint',
+            message: 'Recovery key fingerprint: '
+          },
+          {
+            type: 'password',
+            name: 'passphrase',
+            message: 'New recovery key passphrase: '
+          }
+        ]);
+
+        promise.then(async (res) => {
+          await generateRecoveryKey.generateRecoveryKey(res);
+          callback();
+        });
+      } else if (res.hasFingerprint.toLowerCase() === 'n') {
+        console.error('Re-run this command after copying your recovery key fingerprint.');
+        callback();
+      } else {
+        console.error('Invalid input, exiting...');
+        callback();
+      }
+    });
+  });
+
+/** transmute list-keys lists all user GPG keys
+ * @name transmute list-keys
+ * @example transmute list-keys
+ * */
+vorpal
+  .command('list-keys')
+  .description('List all GPG keys')
+  .action(async (args, callback) => {
+    await listKeys.listKeys();
+    callback();
+  });
+
 
 /** transmute k8s  init initializes a cluster with the transmute framework
  * @name transmute k8s init <clustername>

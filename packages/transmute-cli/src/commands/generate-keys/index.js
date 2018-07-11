@@ -1,7 +1,5 @@
 const path = require('path')
 
-const fse = require('fs-extra')
-
 const openpgp = require('openpgp')
 
 const run = require('../runner')

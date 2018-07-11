@@ -10,7 +10,8 @@ const writeFile = async (filePath, fileData) => {
 
 const readFile = async filePath => {
   try {
-    await fse.readFile(filePath)
+    const data = await fse.readFile(filePath)
+    return data;
   } catch (err) {
     console.error(err)
   }
