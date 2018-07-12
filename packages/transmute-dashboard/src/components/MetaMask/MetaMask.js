@@ -94,19 +94,23 @@ const fundMetaMaskFromDefaultAccounts = async (amountETH, providerUrl) => {
 class MetaMask extends Component {
   async componentWillMount() {
     if (window.web3) {
-      let mmAccounts = await getAccounts(window.web3);
-      let mmBalance = await getBalance(window.web3, mmAccounts[0]);
-      if (mmBalance === 0) {
-        await fundMetaMaskFromDefaultAccounts(
-          1,
-          transmuteConfig.web3Config.providerUrl
-        );
-      }
+      try {
+        let mmAccounts = await getAccounts(window.web3);
+        let mmBalance = await getBalance(window.web3, mmAccounts[0]);
+        if (mmBalance === 0) {
+          await fundMetaMaskFromDefaultAccounts(
+            1,
+            transmuteConfig.web3Config.providerUrl
+          );
+        }
 
-      this.setState({
-        account: mmAccounts[0],
-        balance: mmBalance
-      });
+        this.setState({
+          account: mmAccounts[0],
+          balance: mmBalance
+        });
+      } catch (e) {
+        alert('You must unlock your metamask account, and refresh.');
+      }
     }
   }
 
@@ -114,20 +118,33 @@ class MetaMask extends Component {
     return (
       <AppBar>
         <Typography gutterBottom variant="headline" component="h1">
-          This page helps fund your MetaMask wallet from the default accounts
-          used in ganache.
+          This page helps fund your MetaMask wallet.
         </Typography>
+        <br />
 
         {!window.web3 && (
-          <Typography gutterBottom component="p">
+          <Typography gutterBottom variant="headline" component="h2">
             Please install and unlock metamask.
+            <br />
+            <br />
+            <a href=" https://metamask.io/">https://metamask.io/</a>
           </Typography>
         )}
         {window.web3 && (
           <div>
             {' '}
+            <br />
             Your metamask account details,{' '}
             <pre>{JSON.stringify(this.state, null, 2)}</pre>{' '}
+            <Typography gutterBottom variant="headline" component="h1">
+              If you are not connected to ganache, and need testnet ether for
+              MetaMask, you can use this faucet:
+              <br />
+              <br />
+              <a href="https://faucet.metamask.io/">
+                https://faucet.metamask.io/
+              </a>
+            </Typography>
           </div>
         )}
       </AppBar>
