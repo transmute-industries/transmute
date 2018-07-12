@@ -3,7 +3,7 @@ import axios from 'axios';
 const ENVS = {
   LOCAL: 'http://localhost:5000',
   TEST: '???',
-  PROD: 'http://localhost:5000',
+  PROD: 'https://transmute-api.herokuapp.com'
 };
 
 export const register = async ({ primaryKey, recoveryKey, profile }) => {
