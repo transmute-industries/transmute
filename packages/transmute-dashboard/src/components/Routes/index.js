@@ -14,6 +14,7 @@ import config from '../../okta_config';
 
 import Home from '../Home';
 import Demo from '../Demo';
+import MetaMask from '../MetaMask';
 import Register from '../Auth/Register';
 import ProfilePage from '../Profile';
 import RecoveryPage from '../Profile/RecoveryPage';
@@ -43,6 +44,7 @@ class Routes extends React.Component {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/demo" component={Demo} />
+          <Route path="/metamask" component={MetaMask} />
           <Route path="/register" exact render={() => <Register />} />
           <Route path="/implicit/callback" component={ImplicitCallback} />
           <SecureRoute path="/profile/recover" exact render={() => <RecoveryPage />} />
