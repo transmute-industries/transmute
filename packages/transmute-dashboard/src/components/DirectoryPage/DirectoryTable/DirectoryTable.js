@@ -24,24 +24,6 @@ const columnData = [
     numeric: false,
     disablePadding: false,
     label: 'ID'
-  },
-  {
-    id: 'email',
-    numeric: false,
-    disablePadding: false,
-    label: 'Email'
-  },
-  {
-    id: 'firstName',
-    numeric: false,
-    disablePadding: false,
-    label: 'First Name'
-  },
-  {
-    id: 'lastName',
-    numeric: false,
-    disablePadding: false,
-    label: 'LastName'
   }
 ];
 
@@ -208,9 +190,6 @@ class DirectoryTable extends React.Component {
                       key={n.id}
                     >
                       <TableCell>{n.id}</TableCell>
-                      <TableCell>{n.email}</TableCell>
-                      <TableCell>{n.firstName}</TableCell>
-                      <TableCell>{n.lastName}</TableCell>
                     </TableRow>
                   );
                 })}

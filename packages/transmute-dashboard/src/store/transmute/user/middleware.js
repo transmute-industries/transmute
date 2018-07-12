@@ -3,10 +3,10 @@ import axios from 'axios';
 const ENVS = {
   LOCAL: 'http://localhost:5000',
   TEST: '???',
-  PROD: 'https://transmute-api.herokuapp.com'
+  PROD: 'http://localhost:5000',
 };
 
-export const register = async ({ primaryKey, recoveryKey }) => {
+export const register = async ({ primaryKey, recoveryKey, profile }) => {
   return axios
     .create({
       baseURL: ENVS.PROD,
@@ -17,7 +17,8 @@ export const register = async ({ primaryKey, recoveryKey }) => {
     })
     .post('/api/v0/users', {
       primaryKey,
-      recoveryKey
+      recoveryKey,
+      profile
     });
 };
 
