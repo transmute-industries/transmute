@@ -3,11 +3,26 @@ import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 
 import { Send, BugReport, Code } from 'material-ui-icons';
 
-class TransmuteMenu extends Component {
+import { history } from '../../store';
 
+class TransmuteMenu extends Component {
   render() {
     return (
       <List>
+        <ListItem button onClick={() => history.push('/metamask')}>
+          <ListItemIcon>
+            <Code />
+          </ListItemIcon>
+          <ListItemText primary="Fund MetaMask" />
+        </ListItem>
+
+        <ListItem button onClick={() => history.push('/demo')}>
+          <ListItemIcon>
+            <Code />
+          </ListItemIcon>
+          <ListItemText primary="E-Signer Demo" />
+        </ListItem>
+
         <ListItem
           button
           onClick={() => {
@@ -25,7 +40,7 @@ class TransmuteMenu extends Component {
           button
           onClick={() => {
             window.location.href =
-              'https://transmute-industries.slack.com/join/shared_invite/enQtMzE1MDYwNTQ4MDAzLTFhNGQ1OWVhYzEwMGQ3YTVkOTVmMDk1NDY1NGNmZGMwMmMyMjE5YTZlMjE2NzE1ZTYwYTEyNzU5MjgxM2RiYzE';
+              'https://join.slack.com/t/transmute-industries/shared_invite/enQtMzkwOTA0MzU3Mzk3LTMyYTk2NmFkY2I2OTNkNjNiMzZjNTFmY2U0OWM0NDlmZjI4Y2YyNTIzMDhmNDYyNzRkYTJmMGUyNTY4MDg1M2U';
           }}
         >
           <ListItemIcon>
@@ -33,7 +48,6 @@ class TransmuteMenu extends Component {
           </ListItemIcon>
           <ListItemText primary="Slack" />
         </ListItem>
-
 
         <ListItem
           button
