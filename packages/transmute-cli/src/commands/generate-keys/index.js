@@ -18,7 +18,7 @@ module.exports.generateKeys = async (args) => {
 
   // create primary key
   const primaryKeyPair = await openpgp.generateKey(secOptions)
-  const primarySk = openpgp.key.readArmored(primaryKeyPair.privateKeyArmored)
+  let primarySk = openpgp.key.readArmored(primaryKeyPair.privateKeyArmored)
     .keys[0]
   await primarySk.decrypt(args.passphrase)
 
@@ -29,7 +29,7 @@ module.exports.generateKeys = async (args) => {
   await recoverySk.decrypt(args.passphrase)
 
   // sign primary key with recovery key
-  const trustedSec = await primarySk.toPublic().signPrimaryUser([recoverySk])
+  primarySk = await primarySk.signPrimaryUser([recoverySk])
 
   // lock private keys before exporting them
   await primarySk.encrypt(args.passphrase)
