@@ -18,7 +18,6 @@ const styles = theme => ({
 });
 
 class ProfileCard extends React.Component {
-
   handleSignatureUpload = event => {
     this.props.onSignatureUpload(event);
   };
@@ -31,11 +30,17 @@ class ProfileCard extends React.Component {
           {signature !== null ? (
             <div>
               <p>My Signature</p>
-              <img
-                src={ `${transmuteConfig.ipfsConfig.protocol}://${transmuteConfig.ipfsConfig.host}/api/v0/cat?arg=${signature}` }
-                alt="My Signature"
-                className={classes.image}
-              />
+              {signature && (
+                <img
+                  src={`${transmuteConfig.ipfsConfig.protocol}://${
+                    transmuteConfig.ipfsConfig.host
+                  }:${
+                    transmuteConfig.ipfsConfig.port
+                  }/api/v0/cat?arg=${signature}`}
+                  alt="My Signature"
+                  className={classes.image}
+                />
+              )}
             </div>
           ) : (
             <p>No signatures found for your account, please upload one.</p>

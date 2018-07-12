@@ -14,6 +14,7 @@ import config from '../../okta_config';
 
 import Home from '../Home';
 import Demo from '../Demo';
+import MetaMask from '../MetaMask';
 import Register from '../Auth/Register';
 import ProfilePage from '../Profile';
 import RecoveryPage from '../Profile/RecoveryPage';
@@ -43,9 +44,25 @@ class Routes extends React.Component {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/demo" component={Demo} />
+          <Route path="/metamask" component={MetaMask} />
+          <Route
+            path="/eventstorefactory/:address"
+            exact
+            component={EventStoreFactoryPage}
+          />
+          <Route
+            path="/eventstore/:address/model"
+            component={StreamModelPage}
+          />
+          <Route path="/eventstore/:address" exact component={EventStorePage} />
+          
           <Route path="/register" exact render={() => <Register />} />
           <Route path="/implicit/callback" component={ImplicitCallback} />
-          <SecureRoute path="/profile/recover" exact render={() => <RecoveryPage />} />
+          <SecureRoute
+            path="/profile/recover"
+            exact
+            render={() => <RecoveryPage />}
+          />
           <SecureRoute path="/profile" exact render={() => <ProfilePage />} />
           <SecureRoute
             path="/directory"
@@ -57,20 +74,7 @@ class Routes extends React.Component {
             exact
             render={() => <DirectoryProfilePage />}
           />
-          <SecureRoute
-            path="/eventstorefactory/:address"
-            exact
-            component={EventStoreFactoryPage}
-          />
-          <SecureRoute
-            path="/eventstore/:address/model"
-            component={StreamModelPage}
-          />
-          <SecureRoute
-            path="/eventstore/:address"
-            exact
-            component={EventStorePage}
-          />
+
           <SecureRoute path="/groups" exact render={() => <GroupsPage />} />
           <SecureRoute path="/groups/:id" exact render={() => <GroupPage />} />
           <SecureRoute path="/messages" exact render={() => <MessagesPage />} />
