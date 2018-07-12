@@ -22,6 +22,8 @@ const init = require('./commands/init');
 const provision = require('./commands/provision');
 const telemetry = require('./commands/telemetry');
 
+const generateKeys = require('./commands/generate-keys');
+
 const login = require('./commands/login');
 
 const debug = require('./commands/debug');
@@ -45,6 +47,30 @@ vorpal
   .action(async (args, callback) => {
     await login.okta.login();
     callback();
+  });
+
+/** transmute generate-keys creates and stores a primary and recovery secp256k1 key.
+ * @name transmute generate-keys
+ * @example transmute generate-keys
+ * */
+vorpal
+  .command('generate-keys')
+  .description('Generate primary and recovery keys with the Transmute CLI')
+  .action(function (args, callback) {
+    var self = this;
+
+    var promise = this.prompt([
+      {
+        type: 'password',
+        name: 'passphrase',
+        message: 'Password: '
+      }
+    ]);
+
+    promise.then(async (res) => {
+      await generateKeys.generateKeys(res);
+      callback();
+    });
   });
 
 /** transmute k8s  init initializes a cluster with the transmute framework
