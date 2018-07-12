@@ -1,11 +1,28 @@
 import React, { Component } from 'react';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 
-import { Send, BugReport, Code } from 'material-ui-icons';
+import { Send, BugReport, Code, Games } from 'material-ui-icons';
 
 import { history } from '../../store';
 
+import { EventStoreFactory } from 'transmute-framework';
+
+import eventStoreFactoryArtifact from '../../contracts/EventStoreFactory.json';
+
+let transmuteConfig = require('../../transmute-config');
+
 class TransmuteMenu extends Component {
+  async componentWillMount() {
+    const eventStoreFactory = new EventStoreFactory({
+      eventStoreFactoryArtifact,
+      ...transmuteConfig
+    });
+    await eventStoreFactory.init();
+    this.setState({
+      factoryAddress:
+        eventStoreFactory.eventStoreFactoryContractInstance.address
+    });
+  }
   render() {
     return (
       <List>
@@ -14,6 +31,18 @@ class TransmuteMenu extends Component {
             <Code />
           </ListItemIcon>
           <ListItemText primary="Fund MetaMask" />
+        </ListItem>
+
+        <ListItem
+          button
+          onClick={() =>
+            history.push('/eventstorefactory/' + this.state.factoryAddress)
+          }
+        >
+          <ListItemIcon>
+            <Games />
+          </ListItemIcon>
+          <ListItemText primary="EventStore" />
         </ListItem>
 
         <ListItem button onClick={() => history.push('/demo')}>
