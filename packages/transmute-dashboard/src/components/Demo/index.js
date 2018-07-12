@@ -63,6 +63,7 @@ class Demo extends Component {
 
     if (eventStoreAddresses.length === 0) {
       await eventStoreFactory.createEventStore(accounts[0]);
+      eventStoreAddresses = await eventStoreFactory.getEventStores();
     }
 
     let currentEventStoreAddress = eventStoreAddresses[0];
