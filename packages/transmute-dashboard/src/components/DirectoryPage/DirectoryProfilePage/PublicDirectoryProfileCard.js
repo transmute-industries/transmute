@@ -2,7 +2,6 @@ import React from 'react';
 
 import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
 
 import Card, { CardContent } from 'material-ui/Card';
 import Input, { InputLabel } from 'material-ui/Input';
@@ -30,14 +29,6 @@ class PublicDirectoryProfileCard extends React.Component {
     return (
       <Card>
         <CardContent className={classes.root}>
-          <Typography gutterBottom variant="headline" component="h2">
-            {profile.firstName} {profile.lastName}
-          </Typography>
-
-          <Typography gutterBottom variant="headline" component="h3">
-            {profile.email}
-          </Typography>
-
           <Grid item md={12}>
             <FormControl className={classNames(classes.margin, classes.formControl)}>
               <InputLabel>DID Document</InputLabel>
@@ -49,8 +40,7 @@ class PublicDirectoryProfileCard extends React.Component {
                 value={JSON.stringify(JSON.parse(profile.didDocument), null, 2)}
               />
             </FormControl>
-          </Grid>
-          
+          </Grid> 
         </CardContent>
       </Card>
     );

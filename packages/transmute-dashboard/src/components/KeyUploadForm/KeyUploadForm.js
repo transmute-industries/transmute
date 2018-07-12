@@ -1,10 +1,19 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import { FormControl } from 'material-ui/Form';
+import Input, { InputLabel } from 'material-ui/Input';
 import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
+import { withStyles } from 'material-ui/styles';
 
 const openpgp = require('openpgp');
+
+const styles = theme => ({
+  formControl: {
+    minWidth: '100%'
+  }
+});
 
 class KeyUploadForm extends React.Component {
   state = {
@@ -12,7 +21,16 @@ class KeyUploadForm extends React.Component {
     primary_key: null,
     primary_key_filename: null,
     recovery_key: null,
-    recovery_key_filename: null
+    recovery_key_filename: null,
+    email: null,
+    firstName: null,
+    lastName: null
+  };
+
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value
+    });
   };
 
   handleSubmit = e => {
@@ -54,17 +72,63 @@ class KeyUploadForm extends React.Component {
   };
 
   render() {
-    const { user, action } = this.props;
+    const { user, action, classes } = this.props;
     const {
+      error,
       primary_key,
       primary_key_filename,
       recovery_key,
       recovery_key_filename,
-      error
+      email,
+      firstName,
+      lastName
     } = this.state;
 
     return (
       <Grid container spacing={16} justify='center'>
+        {
+          action === 'Register' && <div>
+            <Grid item xs={12}>
+              <FormControl
+                className={classNames(classes.formControl)}
+              >
+                <InputLabel>First Name</InputLabel>
+                <Input
+                  id="firstName"
+                  type="text"
+                  value={firstName}
+                  onChange={this.handleChange('firstName').bind(this)}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl
+                className={classNames(classes.formControl)}
+              >
+                <InputLabel>Last Name</InputLabel>
+                <Input
+                  id="lastName"
+                  type="text"
+                  value={lastName}
+                  onChange={this.handleChange('lastName').bind(this)}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl
+                className={classNames(classes.formControl)}
+              >
+                <InputLabel>Email</InputLabel>
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={this.handleChange('email').bind(this)}
+                />
+              </FormControl>
+            </Grid>
+          </div>
+        }
         <Grid container item xs={12} justify='center'>
           <FormControl>
             <input
@@ -127,7 +191,7 @@ class KeyUploadForm extends React.Component {
               variant="raised"
               color="secondary"
               disabled={
-                this.state.primary_key == null || this.state.recovery_key == null
+                (primary_key == null || recovery_key == null) && (action === 'Register' && (email == null || firstName == null || lastName == null))
               }
               onClick={this.handleSubmit}
             >
@@ -153,4 +217,4 @@ class KeyUploadForm extends React.Component {
   }
 }
 
-export default KeyUploadForm;
+export default withStyles(styles)(KeyUploadForm);

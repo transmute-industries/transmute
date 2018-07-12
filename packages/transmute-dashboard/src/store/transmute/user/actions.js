@@ -2,11 +2,12 @@
 import * as actionCreators from './actionCreators';
 import * as middleware from './middleware';
 
-export const register = async ({ primaryKey, recoveryKey }) => {
+export const register = async ({ primaryKey, recoveryKey, profile }) => {
   try {
     let response = await middleware.register({
       primaryKey,
-      recoveryKey
+      recoveryKey,
+      profile
     });
     return actionCreators.registerSuccess({
       ...response.data

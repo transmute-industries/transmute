@@ -6,7 +6,7 @@ const ENVS = {
   PROD: 'https://transmute-api.herokuapp.com'
 };
 
-export const register = async ({ primaryKey, recoveryKey }) => {
+export const register = async ({ primaryKey, recoveryKey, profile }) => {
   return axios
     .create({
       baseURL: ENVS.PROD,
@@ -17,7 +17,8 @@ export const register = async ({ primaryKey, recoveryKey }) => {
     })
     .post('/api/v0/users', {
       primaryKey,
-      recoveryKey
+      recoveryKey,
+      profile
     });
 };
 

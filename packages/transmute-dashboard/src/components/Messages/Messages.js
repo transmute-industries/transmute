@@ -61,7 +61,6 @@ class Messages extends Component {
       
       const currentPeerInfo = {
         id: info.id,
-        name: user.name,
         pk: publicKey,
         online: true
       };
@@ -133,7 +132,7 @@ class Messages extends Component {
   isIntroductoryMessage = msg => {
     try {
       let parsedMsg = JSON.parse(msg);
-      return _.difference(['name', 'pk', 'id', 'online'], _.keys(parsedMsg)).length === 0
+      return _.difference(['pk', 'id', 'online'], _.keys(parsedMsg)).length === 0
     } catch (e) {
       return false;
     }
@@ -174,7 +173,7 @@ class Messages extends Component {
                           disableGutters
                         >
                           <ListItemText
-                            primary={peers[message.from].name}
+                            primary={peers[message.from].pk}
                             secondary={message.data.toString()}
                           />
                         </ListItem>
@@ -198,7 +197,7 @@ class Messages extends Component {
                       {_.map(peers, (peer, id) => (
                           <option
                             key={id}
-                            value={peer.name}
+                            value={peer.pk}
                             style={{
                               fontWeight:
                                 selectedPeer.id !== peer.id
@@ -206,7 +205,7 @@ class Messages extends Component {
                                   : theme.typography.fontWeightMedium
                             }}
                           >
-                            {`${peer.name} (${peer.online ? 'Online' : 'Offline'})`}
+                            {`${peer.pk} (${peer.online ? 'Online' : 'Offline'})`}
                           </option>
                         ))}
                       </Select>
