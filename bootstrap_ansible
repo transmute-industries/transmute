@@ -1,0 +1,386 @@
+#!/bin/bash
+# Installs minikube, kubectl, and transmute into a minikube cluster
+: ${TRANSMUTE_RELEASE:='master'}
+: ${TRANSMUTE_DIR:=$HOME/.transmute}
+: ${TRANSMUTE_BIN:=$TRANSMUTE_DIR/bin}
+: ${TRANSMUTE_REPO:=$TRANSMUTE_DIR/git/transmute}
+: ${TRANSMUTE_VERBOSITY:=10}
+: ${HELM_INSTALL_DIR:=$TRANSMUTE_BIN}
+: ${NVM_DIR_ADDS:="true"}
+: ${NVM_VERSION:='0.33.9'}
+: ${TRANSMUTE_USE_WARN:=y}
+: ${TRAVIS:='true'}
+
+export CWD=$(pwd)
+export PATH=$TRANSMUTE_BIN:$PATH
+
+# Check if a command exists
+check_cmd () {
+  if ! type "$1" > /dev/null; then
+    echo "$1 was not found in your path!"
+    echo "To proceed please install $1 to your path and try again!"
+    exit 1
+  fi
+}
+
+warn_user_of_global_install () {
+  sleep 1
+  printf "(ctrl-c now to stop if this is not what you intend)!"
+  sleep 1; printf "!"; sleep 1; printf "!"
+  sleep 1; printf "!"
+  sleep 1; echo "!"
+  sleep 1; echo "--"
+  sleep 1
+}
+
+chkdir () {
+  if [ ! -w $1 ] ; then
+    mkdir -p $1
+    #sudo chown $USER $1
+  fi
+  if [ ! -w $1 ] ; then
+    echo "Cannot write to $1, please check your permissions"
+    exit 2
+  fi
+}
+
+# these vars are used by the following functions
+LINE_TO_ADD=''
+TARGET_FILE_FOR_ADD=~/.profile
+
+check_if_line_exists()
+{
+  echo "Checking for '$LINE_TO_ADD'  in $TARGET_FILE_FOR_ADD"
+  grep -qsFx "$LINE_TO_ADD" $TARGET_FILE_FOR_ADD
+}
+
+add_line_to()
+{
+  echo "Adding '$LINE_TO_ADD'  to $TARGET_FILE_FOR_ADD"
+  TARGET_FILE=$TARGET_FILE_FOR_ADD
+    [ -w "$TARGET_FILE" ] || TARGET_FILE=$TARGET_FILE_FOR_ADD
+    printf "%s\n" "$LINE_TO_ADD" >> "$TARGET_FILE"
+}
+
+macminikube () {
+  if brew ls --versions minikube > /dev/null; then
+    # The package is installed
+    printf "minikube installed, skipping.\n"
+  else
+    # The package is not installed
+    echo 'Installing minikube'
+    brew cask install minikube
+  fi
+}
+
+mackubectl () {
+  if brew ls --versions kubectl > /dev/null; then
+    # The package is installed
+    printf "kubectl installed, skipping.\n"
+  else
+    # The package is not installed
+    echo 'Installing kubectl'
+    brew install kubectl
+    brew link kubernetes-cli
+  fi
+}
+
+install_mac_virtualbox () {
+  if brew cask ls --versions virtualbox > /dev/null; then
+    # The package is installed
+    printf "virtualbox installed, skipping.\n"
+  else
+    # The package is not installed
+    echo 'Installing virtualbox'
+    brew cask install virtualbox
+  fi
+}
+
+machelm () {
+	
+  if brew ls --versions kubernetes-helm > /dev/null; then
+    # The package is installed
+    printf "helm installed, skipping.\n"
+  else
+    # The package is not installed
+    echo 'Installing helm'
+    brew install kubernetes-helm
+  fi
+}
+
+macnsenter () {
+	echo 'NOT Installing nsenter'
+	#brew install kubernetes-nsenter
+}
+
+
+macreadlink () {
+  if brew ls --versions coreutils > /dev/null; then
+    # The package is installed
+    printf "coreutils installed, skipping."
+  else
+    # The package is not installed
+    #Installs 'greadlink' tool
+    echo 'Installing coreutils'
+    brew install coreutils
+  fi
+}
+
+
+
+dotfiles_install () {
+  if [[ $TRANSMUTE_VERBOSITY -gt '1' ]]; then
+    echo 'Adjusting dotfiles'
+  fi
+  touch $HOME/.zshrc
+  touch $HOME/.bashrc
+  # here we'll make a bin dir in $HOME and add it to path
+  chkdir $TRANSMUTE_BIN
+  LINE_TO_ADD="$(printf "export PATH=%s:\$PATH" $TRANSMUTE_BIN)"
+  TARGET_FILE_FOR_ADD=$HOME/.bashrc
+  check_if_line_exists || add_line_to
+  TARGET_FILE_FOR_ADD=$HOME/.zshrc
+  check_if_line_exists || add_line_to
+  environment: PATH=$HOME/.transmute/bin:$PATH
+}
+
+install_socat () {
+  if ! type "socat" >/dev/null 2>/dev/null; then
+    if type "apt-get" >/dev/null 2>/dev/null; then
+      sudo apt-get install -y socat
+    elif type "dnf" >/dev/null 2>/dev/null; then
+      sudo dnf install -y socat
+    elif type "zypper" >/dev/null 2>/dev/null; then
+      sudo zypper --non-interactive install -y socat
+    elif type "pacman" >/dev/null 2>/dev/null; then
+      sudo pacman -Sy --noconfirm socat
+    elif type "brew" >/dev/null 2>/dev/null; then
+      brew install socat < /dev/null
+    elif type "chocolatey" >/dev/null 2>/dev/null; then
+      chocolatey install socat
+    else
+      echo 'No appropriate installer found for socat, install socat and run this script again'
+      exit 1
+    fi
+  else
+    echo 'socat already installed skipping'
+  fi
+}
+
+install_curl () {
+  if ! type "curl" >/dev/null 2>/dev/null; then
+    if type "apt-get" >/dev/null 2>/dev/null; then
+      sudo apt-get install -y curl
+    elif type "dnf" >/dev/null 2>/dev/null; then
+      sudo dnf install -y curl
+    elif type "zypper" >/dev/null 2>/dev/null; then
+      sudo zypper --non-interactive install -y curl
+    elif type "pacman" >/dev/null 2>/dev/null; then
+      sudo pacman -Sy --noconfirm curl
+    elif type "brew" >/dev/null 2>/dev/null; then
+      brew install curl < /dev/null
+    elif type "chocolatey" >/dev/null 2>/dev/null; then
+      chocolatey install curl
+    else
+      echo 'No appropriate installer found for curl, install curl and run this script again'
+      exit 1
+    fi
+  else
+    echo 'curl already installed skipping'
+  fi
+}
+
+install_ansible () {
+  if ! type "ansible" >/dev/null 2>/dev/null; then
+    if type "apt-get" >/dev/null 2>/dev/null; then
+      sudo apt-get install -y software-properties-common
+      sudo apt-add-repository ppa:ansible/ansible && \
+      sudo apt-key fingerprint 0EBFCD88 && \
+      sudo apt-get update && \
+      sudo apt-get install -y ansible
+    elif type "dnf" >/dev/null 2>/dev/null; then
+      sudo dnf install -y ansible
+    elif type "zypper" >/dev/null 2>/dev/null; then
+      sudo zypper --non-interactive install -y ansible
+    elif type "pacman" >/dev/null 2>/dev/null; then
+      sudo pacman -Sy --noconfirm ansible
+    elif type "brew" >/dev/null 2>/dev/null; then
+      brew install ansible < /dev/null
+    elif type "chocolatey" >/dev/null 2>/dev/null; then
+      chocolatey install ansible
+    else
+      echo 'No appropriate installer found for ansible, install ansible and run this script again'
+      exit 1
+    fi
+  else
+    echo 'ansible already installed skipping'
+  fi
+}
+
+install_git () {
+  if ! type "git" >/dev/null 2>/dev/null; then
+    if type "apt-get" >/dev/null 2>/dev/null; then
+      sudo apt-get install -y git
+    elif type "dnf" >/dev/null 2>/dev/null; then
+      sudo dnf install -y git
+    elif type "zypper" >/dev/null 2>/dev/null; then
+      sudo zypper --non-interactive install -y git
+    elif type "pacman" >/dev/null 2>/dev/null; then
+      sudo pacman -Sy --noconfirm git
+    elif type "brew" >/dev/null 2>/dev/null; then
+      brew install git < /dev/null
+    elif type "chocolatey" >/dev/null 2>/dev/null; then
+      chocolatey install git
+    else
+      echo 'No appropriate installer found for git, install git and run this script again'
+      exit 1
+    fi
+  else
+    echo 'git already installed skipping'
+  fi
+}
+
+install_jq () {
+  if ! type "jq" >/dev/null 2>/dev/null; then
+    if type "apt-get" >/dev/null 2>/dev/null; then
+      sudo apt-get install -y jq
+    elif type "dnf" >/dev/null 2>/dev/null; then
+      sudo dnf install -y jq
+    elif type "zypper" >/dev/null 2>/dev/null; then
+      sudo zypper --non-interactive install -y jq
+    elif type "pacman" >/dev/null 2>/dev/null; then
+      sudo pacman -Sy --noconfirm jq
+    elif type "brew" >/dev/null 2>/dev/null; then
+      brew install jq < /dev/null
+    elif type "chocolatey" >/dev/null 2>/dev/null; then
+      chocolatey install jq
+    else
+      echo 'No appropriate installer found for jq, install jq and run this script again'
+      exit 1
+    fi
+  else
+    echo 'jq already installed skipping'
+  fi
+}
+
+transmute_cli_install () {
+  npm i -g transmute-cli
+}
+
+transmute_env_install () {
+  # Check for config env file
+  if [ -e $TRANSMUTE_DIR/.env ]; then
+    echo 'env file found not overwriting'
+  else
+    echo '#!/bin/bash' > $TRANSMUTE_DIR/.env
+    echo 'TRANSMUTE_VERBOSITY=10' >> $TRANSMUTE_DIR/.env
+    echo "TRANSMUTE_DIR=$TRANSMUTE_DIR" >> $TRANSMUTE_DIR/.env
+    echo "TRANSMUTE_BIN=$TRANSMUTE_BIN" >> $TRANSMUTE_DIR/.env
+    echo "TRANSMUTE_REPO=$TRANSMUTE_REPO" >> $TRANSMUTE_DIR/.env
+    echo "TRANSMUTE_KUBE_VERSION=$TRANSMUTE_KUBE_VERSION" >> $TRANSMUTE_DIR/.env
+  fi
+}
+
+run_it () {
+set -e
+
+# Let's display everything on stderr.
+exec 1>&2
+
+UNAME=$(uname)
+if [ "$UNAME" = "Linux" -o "$UNAME" = "Darwin" ] ; then
+  echo " $UNAME is a Supported OS"
+elif [ "$UNAME" ">" "MINGW" -a "$UNAME" "<" "MINGX" ] ; then
+  echo " $UNAME is not a Supported OS"
+  exit 1
+else
+  echo " $UNAME is not a Supported OS"
+  echo "Sorry, this OS is not supported yet via this installer."
+  exit 1
+fi
+
+if [ "$UNAME" = "Darwin" ] ; then
+  check_cmd brew
+  ### OSX ###
+  echo 'Checking arch'
+  if [ "i386" != "$(uname -p)" -o "1" != "$(sysctl -n hw.cpu64bit_capable 2>/dev/null || echo 0)" ] ; then
+    # Can't just test uname -m = x86_64, because Snow Leopard can
+    # return other values.
+    echo "Only 64-bit Intel processors are supported at this time in OSX."
+    exit 1
+  fi
+
+  PLATFORM="os.osx.x86_64"
+elif [ "$UNAME" = "Linux" ] ; then
+  ### Linux ###
+  LINUX_ARCH=$(uname -m)
+  if [ "${LINUX_ARCH}" = "x86_64" ] ; then
+    PLATFORM="os.linux.x86_64"
+  else
+    echo "Unusable architecture: ${LINUX_ARCH}"
+    echo "transmute only supports x86_64 for now."
+    exit 1
+  fi
+elif [ "$UNAME" = "CYGWIN_NT-10.0" ] ; then
+  PLATFORM="os.cygwin.x86_64"
+fi
+
+#echo "Warning!"
+#sleep 1
+#echo "This script will install minikube, kubectl and helm,
+#and then install transmute."
+#if [[ "$TRANSMUTE_USE_WARN" == 'y' ]]; then
+#  warn_user_of_global_install
+#fi
+
+install_ansible
+
+echo "Checking $TRANSMUTE_DIR"
+mkdir -p $TRANSMUTE_BIN
+
+if [ -e "$TRANSMUTE_DIR/git" ]; then
+  echo "$TRANSMUTE_DIR/git exists already, proceeding"
+else
+  echo "$TRANSMUTE_DIR/git does not exist already, proceeding"
+  mkdir -p $TRANSMUTE_DIR/git
+fi
+
+install_git
+# Install transmute components into k8s
+# Grab the transmute dir
+# Note in CI this has already been symlinked and does not run there
+# however this will
+if [ "$TRAVIS" = 'true' ]; then
+  echo 'travis ci skipping git actions'
+   
+#  cd $TRANSMUTE_DIR/git
+#  ln -s $TRAVIS_BUILD_DIR transmute
+
+elif [ -e "$TRANSMUTE_REPO" ]; then
+  echo 'Updating the transmute repo'
+  cd $TRANSMUTE_REPO
+  git fetch --tags
+  git checkout $TRANSMUTE_RELEASE
+  git submodule update --init
+  cd $CWD
+else
+  cd $TRANSMUTE_DIR/git
+  echo 'Cloning the latest transmute repo'
+  git clone --depth=1 \
+   https://github.com/transmute-industries/transmute.git
+  cd $TRANSMUTE_REPO
+  git fetch --tags
+  git checkout $TRANSMUTE_RELEASE
+  git submodule update --init
+  cd $CWD
+fi
+
+ansible-playbook --diff -l "localhost" $TRANSMUTE_REPO/ansible-playbook/transmute.yml
+exit 1;
+
+} # End run_it wrapper
+
+check_cmd mktemp
+check_cmd uname
+
+run_it
