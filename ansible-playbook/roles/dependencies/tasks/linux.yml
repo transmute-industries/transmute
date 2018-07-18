@@ -100,7 +100,3 @@
     dest: "{{ ansible_env.HOME }}/.transmute/bin/helm"
     remote_src: yes
     mode: 0750
-
-#  install_certbot
-#  transmute_env_install
-#  transmute_cli_install

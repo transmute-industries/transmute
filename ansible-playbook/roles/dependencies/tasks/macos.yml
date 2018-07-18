@@ -1,17 +1,39 @@
 ---
-#
-#  check_cmd brew
+- name: install homebrews
+  homebrew:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - kubectl
+    - virtualbox
+    - helm
+    - coreutils
+    - curl
+    - git
+    - socat
+    - jq
 
-#  install_socat
-#  set +e
-#  brew install gnupg < /dev/null
-#  set -e
-#  install_mac_virtualbox
-#  mackubectl
-#  macminikube
-#  machelm
-#  macnsenter
-#  install_certbot
-#  install_jq
-#  transmute_env_install
-#  transmute_cli_install
+- name: install kubernetes-cli
+  homebrew:
+    name: "kubernetes-cli"
+    state: link
+
+- name: install gnupg
+  homebrew:
+    name: "gnupg"
+    state: present
+  ignore_errors: yes
+
+- name: install minikube
+  homebrew:
+    name: "minikube"
+    state: present
+    options: cask
+
+- name: install virtualbox
+  homebrew:
+    name: "virtualbox"
+    state: present
+    options: cask
+
+

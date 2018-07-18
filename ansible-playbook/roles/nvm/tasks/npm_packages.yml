@@ -1,9 +1,14 @@
 ---
 
+- name: user before become
+  set_fact:
+    home_befor_become: "{{ ansible_env.HOME }}"
+
 - name: Install npm packages globally
-  shell: 'bash -c "source {{ ansible_env.HOME }}/.nvm/nvm.sh  && npm i -g {{ item }}"'
+  shell: 'bash -c "source {{ home_befor_become }}/.nvm/nvm.sh  && npm i -g {{ item }}"'
+  become: yes
   with_items:
-    - 'ngrok'
+    - '--unsafe-perm ngrok'
     - 'truffle@4.1.8'
     - 'lerna@2.9.0'
     - 'transmute-cli'

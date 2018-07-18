@@ -1,29 +1,13 @@
 ---
+- name: install certbot
+  get_url:
+    url: "https://dl.eff.org/certbot-auto"
+    dest: "{{ transmute_bin }}/certbot-auto"
+    remote_src: yes
+    mode: 0755
 
-#    curl -O https://dl.eff.org/certbot-auto
-#    chmod a+x ./certbot-auto
-#    curl -O https://dl.eff.org/certbot-auto.asc
-#    if type "gpg2" >/dev/null 2>/dev/null; then
-#      set +e
-#      gpg2 --recv-key A2CFB51FA275A7286234E7B24D17C995CD9775F2
-#      gpg2 --keyserver hkp://pool.sks-keyservers.net --recv-key A2CFB51FA275A7286234E7B24D17C995CD9775F2
-#      gpg2 --keyserver hkp://ipv4.pool.sks-keyservers.net --recv-key A2CFB51FA275A7286234E7B24D17C995CD9775F2
-#      set -e
-#      gpg2 --trusted-key 4D17C995CD9775F2 --verify certbot-auto.asc certbot-auto
-#    elif type "gpg" >/dev/null 2>/dev/null; then
-#      set +e
-#      gpg --recv-key A2CFB51FA275A7286234E7B24D17C995CD9775F2
-#      gpg --keyserver hkp://pool.sks-keyservers.net --verbose --recv-key A2CFB51FA275A7286234E7B24D17C995CD9775F2
-#      gpg --keyserver hkp://ipv4.pool.sks-keyservers.net --verbose --recv-key A2CFB51FA275A7286234E7B24D17C995CD9775F2
-#      set -e
-#      gpg --trusted-key 4D17C995CD9775F2 --verify certbot-auto.asc certbot-auto
-#    else
-#      echo 'gpg not found'
-#    fi
-#    rm certbot-auto.asc
-#    chmod +x certbot-auto
-#    mv certbot-auto $TRANSMUTE_BIN/
-#    set +e
-#    certbot-auto --noninteractive
-#    set -e
-#    cd
+- name: certbot-auto --noninteractive
+  shell: "certbot-auto --noninteractive"
+  args:
+    chdir: "{{ transmute_bin }}"
+  ignore_errors: yes
