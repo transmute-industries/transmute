@@ -5,7 +5,6 @@
     state: present
   with_items:
     - kubectl
-    - virtualbox
     - helm
     - coreutils
     - curl
