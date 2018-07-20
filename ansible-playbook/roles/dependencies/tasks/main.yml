@@ -1,0 +1,8 @@
+---
+
+- include: linux.yml
+  when: "ansible_system == 'Linux' and ansible_machine == 'x86_64'"
+
+- include: macos.yml
+  when: "ansible_system == 'Darwin' and ansible_machine == 'x86_64'"
+

@@ -1,0 +1,39 @@
+---
+- name: install homebrews
+  homebrew:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - kubectl
+    - kubernetes-helm
+    - kubernetes-cli
+    - coreutils
+    - curl
+    - git
+    - socat
+    - jq
+
+- name: link kubernetes-cli
+  homebrew:
+    name: "kubernetes-cli"
+    state: linked
+  ignore_errors: yes
+
+- name: install gnupg
+  homebrew:
+    name: "gnupg"
+    state: present
+  ignore_errors: yes
+
+- name: install minikube
+  homebrew_cask:
+    name: "minikube"
+    state: present
+
+
+- name: install virtualbox
+  homebrew_cask:
+    name: "virtualbox"
+    state: present
+
+
