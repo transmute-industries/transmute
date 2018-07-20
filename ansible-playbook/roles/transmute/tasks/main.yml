@@ -1,3 +1,8 @@
 ---
 - name: Install npm packages globally
   shell: 'bash -c "source {{ ansible_env.HOME }}/.nvm/nvm.sh  && npm i -g transmute-cli"'
+
+- name: create .env file
+  template:
+    src: ".env.j2"
+    dest: "{{ ansible_env.HOME }}/.transmute/.env"
