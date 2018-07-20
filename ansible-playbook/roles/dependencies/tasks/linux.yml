@@ -24,6 +24,8 @@
     - socat
     - jq
     - virtualbox
+    - certbot
+    - docker.io
 
 - name: create temporary directory NSENTER_TMP
   tempfile:
