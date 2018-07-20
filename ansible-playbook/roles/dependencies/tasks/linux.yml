@@ -24,8 +24,6 @@
     - socat
     - jq
     - virtualbox
-    - docker.io
-    - npm
 
 - name: create temporary directory NSENTER_TMP
   tempfile:
