@@ -24,15 +24,14 @@
   ignore_errors: yes
 
 - name: install minikube
-  homebrew:
+  homebrew_cask:
     name: "minikube"
     state: present
-    options: cask
+
 
 - name: install virtualbox
-  homebrew:
+  homebrew_cask:
     name: "virtualbox"
     state: present
-    options: cask
 
 

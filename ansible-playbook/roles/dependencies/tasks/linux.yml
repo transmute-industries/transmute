@@ -23,6 +23,7 @@
     - git
     - socat
     - jq
+    - virtualbox
 
 - name: create temporary directory NSENTER_TMP
   tempfile:
