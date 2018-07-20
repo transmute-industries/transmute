@@ -24,10 +24,10 @@
   when: nvm_stat.stat.isreg is not defined or not nvm_stat.stat.isreg
 
 - name: Source nvm in {{ ansible_env.HOME }}/.profile
-  lineinfile:
-    dest: "{{ ansible_env.HOME }}/.profile"
-    line: "source ~/.nvm/nvm.sh"
-    create: yes
+  lineinfile: dest="{{ ansible_env.HOME }}/{{ item }}" line="source ~/.nvm/nvm.sh" create=yes
+  with_items: 
+    - .profile
+    - .bashrc
 
 - name: Install node
   shell: 'bash -c "source {{ ansible_env.HOME }}/.profile && nvm ls-remote --lts=carbon && nvm install --lts=carbon"'
