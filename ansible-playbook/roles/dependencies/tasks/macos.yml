@@ -17,6 +17,7 @@
   homebrew:
     name: "kubernetes-cli"
     state: linked
+  ignore_errors: yes
 
 - name: install gnupg
   homebrew:
