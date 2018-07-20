@@ -177,3 +177,5 @@ ansible-playbook --diff -l "localhost" $TRANSMUTE_REPO/ansible-playbook/transmut
 } # End run_it wrapper
 
 run_it
+
+echo "Please source ~/.bashrc or restart your shell to apply .bashrc changes"
