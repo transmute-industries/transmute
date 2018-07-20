@@ -5,17 +5,18 @@
     state: present
   with_items:
     - kubectl
-    - helm
+    - kubernetes-helm
+    - kubernetes-cli
     - coreutils
     - curl
     - git
     - socat
     - jq
 
-- name: install kubernetes-cli
+- name: link kubernetes-cli
   homebrew:
     name: "kubernetes-cli"
-    state: link
+    state: linked
 
 - name: install gnupg
   homebrew:
