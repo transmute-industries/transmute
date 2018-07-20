@@ -6,4 +6,4 @@
 
 - name: Install npm packages globally
   shell: 'bash -c "source {{ home_befor_become }}/.nvm/nvm.sh  && npm i -g transmute-cli"'
-  become: yes
+  become: no
