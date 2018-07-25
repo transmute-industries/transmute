@@ -3,6 +3,7 @@
 Transmute is an enterprise-grade framework for building secure and scalable decentralized applications.
 
 Main Features:
+
 * Public or private decentralized services hosted in Kubernetes and secured behind Kong with JWTs issued by trusted identity providers (Okta)
 * Seamless persistence of redux state to secured and private resources and an event-sourced smart contract system.
 * Easy environment management and configuration for public and private networks.
@@ -21,10 +22,10 @@ Here is a [video](https://drive.google.com/open?id=1ETHBCGyHYahiK-97fRE4-MAebbcp
 curl -Ls https://git.io/transmute_bootstrap | bash
 ```
 
-Notice that will install kubectl, minikube, helm, and ngrok for you, if
+Notice that will install kubectl, minikube, helm, ansible, and ngrok for you, if
 any of these things are already present on your path then they will be
 skipped.  If you find one of these components are out of date, delete it
-from your path and rerun the oneliner.
+from your path and rerun the oneliner. Check [Oneliner internals](https://github.com/transmute-industries/transmute/docs/ansible.md) for details and setup troubleshooting.
 
 Now you can proceed to the
 [Environment scripts and updating](https://github.com/transmute-industries/transmute#environment-scripts-and-updating)
