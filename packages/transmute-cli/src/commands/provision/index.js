@@ -9,19 +9,19 @@ const MINIKUBE_DRIVERS = ['virtualbox', 'kvm', 'kvm2', 'none']
 
 module.exports.minikube = (dryrun, clusterName, minikubeDriver) => {
   let minikube_param =
-    ' -e kubernetes-version=' +
+    ' -e kubernetes_version=' +
     TRANSMUTE_KUBE_VERSION +
-    ' -e disk-size=' +
+    ' -e minikube_disk-size=' +
     MINIKUBE_DISK +
-    ' -e cpus=' +
+    ' -e minikube_cpus=' +
     MINIKUBE_CPU +
-    ' -e memory=' +
+    ' -e minikube_memory=' +
     MINIKUBE_MEMORY;
-  +' -e profile=' + MINIKUBE_PROFILE;
+  +' -e minikube_profile=' + MINIKUBE_PROFILE;
 
   let prov_cmd = 'ansible-playbook -l "localhost" ' + __dirname + '/../../../components/ansible/provision-minikube.yml'
   if (minikubeDriver != undefined || MINIKUBE_DRIVERS.indexOf(minikubeDriver) != -1) {
-    prov_cmd = prov_cmd + ' -e minikubeDriver=' + minikubeDriver;
+    prov_cmd = prov_cmd + ' -e minikube_vm_driver=' + minikubeDriver;
   }
   else if (minikubeDriver == 'none') {
     logger.log({
