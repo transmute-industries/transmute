@@ -5,43 +5,31 @@ const MINIKUBE_CPU = process.env.MINIKUBE_CPU || '4';
 const MINIKUBE_MEMORY = process.env.MINIKUBE_MEMORY || '4096';
 const MINIKUBE_DISK = process.env.MINIKUBE_DISK || '100g';
 const MINIKUBE_PROFILE = process.env.MINIKUBE_PROFILE || 'transmute-k8s';
+const MINIKUBE_DRIVERS = ['virtualbox', 'kvm', 'kvm2', 'none']
 
 module.exports.minikube = (dryrun, clusterName, minikubeDriver) => {
-  let minikube_start =
-    'minikube start ' +
-    ' --kubernetes-version ' +
+  let minikube_param =
+    ' -e kubernetes-version=' +
     TRANSMUTE_KUBE_VERSION +
-    ' --disk-size ' +
+    ' -e disk-size=' +
     MINIKUBE_DISK +
-    ' --cpus ' +
+    ' -e cpus=' +
     MINIKUBE_CPU +
-    ' --memory ' +
+    ' -e memory=' +
     MINIKUBE_MEMORY;
-  +' --profile ' + MINIKUBE_PROFILE;
+  +' -e profile=' + MINIKUBE_PROFILE;
 
-  if (minikubeDriver == 'none') {
+  let prov_cmd = 'ansible-playbook -l "localhost" ' + __dirname + '/../../../components/ansible/provision-minikube.yml'
+  if (minikubeDriver != undefined || MINIKUBE_DRIVERS.indexOf(minikubeDriver) != -1) {
+    prov_cmd = ansible_start + ' -e minikubeDriver=' + minikubeDriver;
+  }
+  else if (minikubeDriver == 'none') {
     logger.log({
       level: 'info',
       message: `VMDriver=None requires minikube to run as root!`
     });
-    minikube_start = 'sudo ' + minikube_start;
   }
-
-  let prov_cmd;
-
-  if (minikubeDriver == undefined) {
-    prov_cmd = minikube_start + ' --vm-driver=virtualbox';
-  } else if (minikubeDriver == 'virtualbox') {
-    prov_cmd = minikube_start + ' --vm-driver=virtualbox';
-  } else if (minikubeDriver == 'kvm') {
-    prov_cmd = minikube_start + ' --vm-driver=kvm';
-  } else if (minikubeDriver == 'kvm2') {
-    prov_cmd = minikube_start + ' --vm-driver=kvm2';
-  } else if (minikubeDriver == 'none') {
-    prov_cmd = minikube_start + ' --vm-driver=none';
-  } else {
-    prov_cmd = minikube_start + ' --vm-driver=virtualbox';
-  }
+  prov_cmd = prov_cmd + minikube_param;
   if (dryrun === 'true') {
     console.info('<--dry run-->');
   } else {

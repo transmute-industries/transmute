@@ -1,0 +1,6 @@
+- name: provision-minikube
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  roles:
+    - role: minikube
