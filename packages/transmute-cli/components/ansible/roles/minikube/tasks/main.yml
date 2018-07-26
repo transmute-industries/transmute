@@ -1,9 +1,9 @@
 ---
-- name: check is need become
-  set_fact:
-    minikube_as_root: "yes"
+
+- name: start minikube
+  shell: "sudo minikube start  --kubernetes-version {{ kubernetes_version }} --disk-size {{ minikube_disk_size }} --cpus {{ minikube_cpus }} --memory {{ minikube_memory }} --vm-driver={{ minikube_vm_driver }}"
   when: minikube_vm_driver == "none"
 
 - name: start minikube
   shell: "minikube start  --kubernetes-version {{ kubernetes_version }} --disk-size {{ minikube_disk_size }} --cpus {{ minikube_cpus }} --memory {{ minikube_memory }} --vm-driver={{ minikube_vm_driver }}"
-  become: "{{ minikube_as_root }}"
+  when: minikube_vm_driver != "none"
