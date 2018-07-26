@@ -34,7 +34,6 @@ before_script:
   - npm i -g
   - cd $TRAVIS_BUILD_DIR
   - transmute k8s provision-minikube travis_test_cluster --vmdriver none
-  - sudo chown -R `whoami`:`id -gn` ~/.minikube ~/.kube
   - transmute k8s init travis_test_cluster
   - transmute debug
 
