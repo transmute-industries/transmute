@@ -34,7 +34,6 @@ module.exports.minikube = (dryrun, clusterName, minikubeDriver) => {
   if (dryrun === 'true') {
     console.info('<--dry run-->');
   } else {
-    run.shellExec('sudo rm -f /usr/local/bin/localkube');
     run.shellExec('echo ' + prov_cmd);
     run.shellExec(prov_cmd);
   }
