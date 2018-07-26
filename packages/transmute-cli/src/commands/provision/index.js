@@ -19,7 +19,7 @@ module.exports.minikube = (dryrun, clusterName, minikubeDriver) => {
     MINIKUBE_MEMORY;
   +' -e minikube_profile=' + MINIKUBE_PROFILE;
 
-  let prov_cmd = 'ansible-playbook -l --diff -vvv "localhost" ' + __dirname + '/../../../components/ansible/provision-minikube.yml'
+  let prov_cmd = 'ansible-playbook --diff -vvv -l "localhost" ' + __dirname + '/../../../components/ansible/provision-minikube.yml'
   if (minikubeDriver != undefined || MINIKUBE_DRIVERS.indexOf(minikubeDriver) != -1) {
     prov_cmd = prov_cmd + ' -e minikube_vm_driver=' + minikubeDriver;
   }
