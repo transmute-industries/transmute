@@ -11,7 +11,7 @@ module.exports.minikube = (dryrun, clusterName, minikubeDriver) => {
   let minikube_param =
     ' -e kubernetes_version=' +
     TRANSMUTE_KUBE_VERSION +
-    ' -e minikube_disk-size=' +
+    ' -e minikube_disk_size=' +
     MINIKUBE_DISK +
     ' -e minikube_cpus=' +
     MINIKUBE_CPU +
