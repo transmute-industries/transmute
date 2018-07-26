@@ -28,13 +28,11 @@ module.exports.minikube = (dryrun, clusterName, minikubeDriver) => {
       level: 'info',
       message: `VMDriver=None requires minikube to run as root!`
     });
-    prov_cmd = 'sudo ' + prov_cmd;
   }
   prov_cmd = prov_cmd + minikube_param;
   if (dryrun === 'true') {
     console.info('<--dry run-->');
   } else {
-    run.shellExec('echo ' + prov_cmd);
     run.shellExec(prov_cmd);
   }
 };
