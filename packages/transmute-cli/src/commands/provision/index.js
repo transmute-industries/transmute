@@ -24,7 +24,10 @@ module.exports.minikube = (dryrun, clusterName, minikubeDriver) => {
         __dirname +
         '/../../../components/ansible/provision-minikube.yml';
 
-    if (minikubeDriver != undefined) {
+    if (
+        minikubeDriver == undefined ||
+        MINIKUBE_DRIVERS.indexOf(minikubeDriver) != -1
+    ) {
         minikubeDriver == 'virtualbox';
     }
 
