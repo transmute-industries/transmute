@@ -26,7 +26,7 @@ module.exports.minikube = (dryrun, clusterName, minikubeDriver) => {
 
     if (
         minikubeDriver == undefined ||
-        MINIKUBE_DRIVERS.indexOf(minikubeDriver) != -1
+        MINIKUBE_DRIVERS.indexOf(minikubeDriver) == -1
     ) {
         minikubeDriver == 'virtualbox';
     }
