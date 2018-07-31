@@ -61,30 +61,30 @@ module.exports.aks = (
         __dirname +
         '/../../../components/ansible/provision-azure.yml';
 
-    let gensshkeys_opt = ' ';
+    let gensshkeys_opt = '';
     if (GenSSHKeys) {
-        gensshkeys_opt = ' --generate-ssh-keys';
+        gensshkeys_opt = '"--generate-ssh-keys"';
     }
     if (myAKSCluster == undefined) {
         throw 'You need to define a clustername';
     } else {
-        var akscluster_opt = ' --name ' + myAKSCluster;
+        var akscluster_opt = '"--name ' + myAKSCluster + '"';
     }
     if (myNodeCount == undefined) {
         throw 'You need to define a number of nodes';
     } else {
-        var nodes_opt = ' --node-count ' + myNodeCount;
+        var nodes_opt = '"--node-count ' + myNodeCount + '"';
     }
     if (myNodeSize == undefined) {
         console.warn('no size given using default');
-        var nodesize_opt = ' ';
+        var nodesize_opt = '';
     } else {
-        var nodesize_opt = ' --node-vm-size ' + myNodeSize;
+        var nodesize_opt = '"--node-vm-size ' + myNodeSize + '"';
     }
     if (myResourceGroup == undefined) {
         throw 'You need to define a group';
     } else {
-        var group_opt = ' --resource-group ' + myResourceGroup;
+        var group_opt = '"--resource-group ' + myResourceGroup + '"';
     }
 
     let aksParams =
