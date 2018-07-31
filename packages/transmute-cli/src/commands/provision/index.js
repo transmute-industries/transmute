@@ -56,10 +56,10 @@ module.exports.aks = (
     myNodeSize,
     GenSSHKeys,
 ) => {
-    run.shellExec('az provider register -n Microsoft.Network');
-    run.shellExec('az provider register -n Microsoft.Storage');
-    run.shellExec('az provider register -n Microsoft.Compute');
-    run.shellExec('az provider register -n Microsoft.ContainerService');
+    let prov_cmd_asible =
+        'ansible-playbook --diff -vvv -l "localhost" ' +
+        __dirname +
+        '/../../../components/ansible/provision-azure.yml';
 
     let gensshkeys_opt = ' ';
     if (GenSSHKeys) {
@@ -86,16 +86,30 @@ module.exports.aks = (
     } else {
         var group_opt = ' --resource-group ' + myResourceGroup;
     }
-    var prov_cmd =
-        'az aks create ' +
-        group_opt +
-        nodes_opt +
-        nodesize_opt +
-        akscluster_opt +
-        gensshkeys_opt;
-    run.shellExec(prov_cmd);
 
-    var prov_cmd = 'az aks get-credentials ' + akscluster_opt + group_opt;
+    let aksParams =
+        ' -e dryrun=' +
+        dryrun +
+        ' -e group_opt=' +
+        group_opt +
+        ' -e akscluster_opt=' +
+        akscluster_opt +
+        ' -e nodes_opt=' +
+        nodes_opt +
+        ' -e nodesize_opt=' +
+        nodesize_opt +
+        ' -e gensshkeys_opt=' +
+        gensshkeys_opt;
+
+    let prov_cmd_azure = prov_cmd_asible + aksParams;
+    run.shellExec(prov_cmd_azure);
+
+    let prov_cmd =
+        prov_cmd_asible +
+        ' - e akscluster_opt=' +
+        akscluster_opt +
+        ' -e group_opt=' +
+        group_opt;
 
     if (dryrun == 'true') {
         console.info('<--dry run-->');
