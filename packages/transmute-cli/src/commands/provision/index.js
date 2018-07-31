@@ -20,7 +20,7 @@ module.exports.minikube = (dryrun, clusterName, minikubeDriver) => {
     +' -e minikube_profile=' + MINIKUBE_PROFILE;
 
     let prov_cmd =
-        'ansible-playbook --diff -vvv -l "localhost" ' +
+        'ansible-playbook --diff -l "localhost" ' +
         __dirname +
         '/../../../components/ansible/provision-minikube.yml';
 
@@ -57,7 +57,7 @@ module.exports.aks = (
     GenSSHKeys,
 ) => {
     let prov_cmd_asible =
-        'ansible-playbook --diff -vvv -l "localhost" ' +
+        'ansible-playbook --diff -l "localhost" ' +
         __dirname +
         '/../../../components/ansible/provision-azure.yml';
 
@@ -103,17 +103,4 @@ module.exports.aks = (
 
     let prov_cmd_azure = prov_cmd_asible + aksParams;
     run.shellExec(prov_cmd_azure);
-
-    let prov_cmd =
-        prov_cmd_asible +
-        ' - e akscluster_opt=' +
-        akscluster_opt +
-        ' -e group_opt=' +
-        group_opt;
-
-    if (dryrun == 'true') {
-        console.info('<--dry run-->');
-    } else {
-        run.shellExec(prov_cmd);
-    }
 };

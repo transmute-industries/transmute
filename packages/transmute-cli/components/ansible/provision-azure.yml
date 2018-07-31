@@ -1,7 +1,7 @@
 ---
-- name: provision-minikube
+- name: provision-azure
   hosts: localhost
   connection: local
   gather_facts: no
   roles:
-    - role: minikube
+    - role: azure
