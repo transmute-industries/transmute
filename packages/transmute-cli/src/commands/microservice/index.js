@@ -10,14 +10,16 @@ module.exports =  function install(dryrun, appname) {
       level: 'error',
       message: `Required set <appname>, valid <appname> is one of: `+ APPS_NAMES.toString(),
     });
-  }
-  let deploy_cmd =
+  } else {
+    let deploy_cmd =
     'ansible-playbook --diff -l "localhost" ' +
     __dirname +
     '/../../../components/ansible/provision-' + appname + '.yml';
-  if (dryrun === 'true') {
+
+    if (dryrun === 'true') {
     console.info('<--dry run-->');
     deploy_cmd = deploy_cmd + ' --check';
+    }
+    run.shellExec( deploy_cmd );
   }
-  run.shellExec( deploy_cmd );
 }
