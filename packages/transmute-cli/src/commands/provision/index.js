@@ -43,9 +43,9 @@ module.exports.minikube = (dryrun, clusterName, minikubeDriver) => {
     prov_cmd = prov_cmd + minikube_param;
     if (dryrun === 'true') {
         console.info('<--dry run-->');
-    } else {
-        run.shellExec(prov_cmd);
+        prov_cmd = prov_cmd + ' --check';
     }
+    run.shellExec(prov_cmd);
 };
 
 module.exports.aks = (
@@ -102,5 +102,9 @@ module.exports.aks = (
         gensshkeys_opt;
 
     let prov_cmd_azure = prov_cmd_asible + aksParams;
+    if (dryrun === 'true') {
+        console.info('<--dry run-->');
+        prov_cmd_azure = prov_cmd_azure + ' --check';
+    }
     run.shellExec(prov_cmd_azure);
 };
