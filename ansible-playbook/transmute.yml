@@ -1,0 +1,16 @@
+---
+- name: transmute
+  vars:
+    fix_dotfiles: true
+    transmute_kube_version: "v1.9.4"
+    nvm_version: "v0.33.11"
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  roles:
+    - role: dotfiles_install
+      when: fix_dotfiles
+    - role: dependencies
+    - role: nvm
+    - role: certbot
+    - role: transmute
