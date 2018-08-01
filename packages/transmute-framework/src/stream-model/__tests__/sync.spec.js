@@ -100,4 +100,28 @@ describe('sync', () => {
     expect(streamModel2.state.lastIndex).toBe(1);
     // console.log(JSON.stringify(streamModel2.state, null, 2));
   });
+
+  it('calling sync repeatedly returns the same state', async () => {
+    let newEventStore = await eventStore.clone(accounts[0]);
+    const filter = event => {
+      return true;
+    };
+    const reducer = (state, event) => {
+      return {
+        ...state,
+        eventsProcessed: (state.eventsProcessed | 0) + 1
+      };
+    };
+    const streamModel = new StreamModel(newEventStore, filter, reducer);
+    await newEventStore.write(
+      accounts[0],
+      mockEvents[0].key,
+      mockEvents[0].value
+    );
+    await streamModel.sync();
+    await streamModel.sync();
+    await streamModel.sync();
+    await streamModel.sync();
+    expect(streamModel.state.model.eventsProcessed).toBe(1)
+  });
 });

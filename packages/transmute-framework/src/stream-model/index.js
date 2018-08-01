@@ -62,7 +62,7 @@ module.exports = class StreamModel {
     if (eventCount === 0) {
       return;
     }
-    if (this.state.lastIndex == null || this.state.lastIndex < eventCount) {
+    if (this.state.lastIndex == null || this.state.lastIndex < eventCount - 1) {
       const updates = await this.eventStore.getSlice(
         this.state.lastIndex || 0,
         eventCount - 1
