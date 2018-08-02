@@ -167,7 +167,7 @@ else
    https://github.com/arilot/transmute.git
   cd $TRANSMUTE_REPO
   git fetch --tags
-  git checkout $TRANSMUTE_RELEASE
+  git checkout -b $TRANSMUTE_RELEASE
   git submodule update --init
   cd $CWD
 fi
