@@ -1,7 +1,7 @@
 const run = require('../runner');
 const APPS_NAMES = ['kong', 'ipfs', 'ganache'];
 
-module.exports =  function install(dryrun, appname) {
+module.exports.install = (dryrun, appname) => {
   if (
     appname == undefined ||
     APPS_NAMES.indexOf(appname) == -1

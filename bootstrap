@@ -163,7 +163,7 @@ elif [ -e "$TRANSMUTE_REPO" ]; then
 else
   cd $TRANSMUTE_DIR/git
   echo 'Cloning the latest transmute repo'
-  git clone --depth=1 \
+  git clone \
    https://github.com/arilot/transmute.git
   cd $TRANSMUTE_REPO
   git fetch --tags
