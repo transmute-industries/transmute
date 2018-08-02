@@ -36,6 +36,10 @@ before_script:
   - transmute k8s provision-minikube travis_test_cluster --vmdriver none
   - transmute k8s init travis_test_cluster
   - transmute debug
+  - transmute k8s init travis_test_cluster
+  - transmute k8s microservice install kong
+  - transmute k8s microservice install ipfs
+  - transmute k8s microservice install ganache
 
 script:
   - lerna bootstrap
