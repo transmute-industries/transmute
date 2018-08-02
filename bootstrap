@@ -1,6 +1,6 @@
 #!/bin/bash
 # Installs minikube, kubectl, and transmute into a minikube cluster
-: ${TRANSMUTE_RELEASE:='transmute_k8s_microservice_install?'}
+: ${TRANSMUTE_RELEASE:='transmute_k8s_microservice_install'}
 : ${TRANSMUTE_DIR:=$HOME/.transmute}
 : ${TRANSMUTE_BIN:=$TRANSMUTE_DIR/bin}
 : ${TRANSMUTE_REPO:=$TRANSMUTE_DIR/git/transmute}
