@@ -293,6 +293,34 @@ vorpal
     callback();
   });
 
+/** transmute k8s microservice install <appname> deploy <appname> to k8s cluster
+ * @name transmute k8s microservice install <appname>
+ * @example transmute k8s microservice install kong
+ * @param {string} appname
+ * */
+vorpal
+  .command('k8s microservice install <appname>')
+  .description('Deploy <appname> to k8s cluster')
+  .option('--dryrun', 'Print out what would be done without executing anything')
+  .action(function(args, callback) {
+    var t0 = performance.now();
+    // begin performance test
+    let dryrun = 'false';
+    if (args.options.dryrun) {
+      console.info('dry run');
+      dryrun = 'true';
+    }
+    microservice.install(dryrun, args.appname);
+    // end performance test
+    var t1 = performance.now();
+    vorpal.logger.info(
+      'Call to k8s microservice install took ' +
+        ((t1 - t0) / 1000).toPrecision(4) +
+        ' seconds.'
+    );
+    callback();
+  });
+
 /** transmute version prints out version info
  * @name transmute version
  * @example transmute version
@@ -366,31 +394,3 @@ vorpal
   .delimiter('✨  $')
   .parse(process.argv)
   .show();
-
-/** transmute k8s microservice install <appname> deploy <appname> to k8s cluster
- * @name transmute k8s microservice install <appname>
- * @example transmute k8s microservice install kong
- * @param {string} appname
- * */
-vorpal
-  .command('k8s microservice install <appname>')
-  .description('Deploy <appname> to k8s cluster')
-  .option('--dryrun', 'Print out what would be done without executing anything')
-  .action(function(args, callback) {
-    var t0 = performance.now();
-    // begin performance test
-    let dryrun = 'false';
-    if (args.options.dryrun) {
-      console.info('dry run');
-      dryrun = 'true';
-    }
-    microservice.install(dryrun, args.appname);
-    // end performance test
-    var t1 = performance.now();
-    vorpal.logger.info(
-      'Call to k8s microservice install took ' +
-        ((t1 - t0) / 1000).toPrecision(4) +
-        ' seconds.'
-    );
-    callback();
-  });
