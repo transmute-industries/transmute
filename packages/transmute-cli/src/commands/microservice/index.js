@@ -14,7 +14,7 @@ module.exports.install = (dryrun, appname) => {
     let deploy_cmd =
     'ansible-playbook --diff -l "localhost" ' +
     __dirname +
-    '/../../../components/ansible/provision-' + appname + '.yml';
+    '/../../../components/ansible/k8s-install-' + appname + '.yml';
 
     if (dryrun === 'true') {
     console.info('<--dry run-->');
