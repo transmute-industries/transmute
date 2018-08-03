@@ -1,0 +1,5 @@
+---
+- name: helm init
+  shell: "helm init"
+- name: install ipfs
+  shell: "helm install stable/ipfs --name decentralized-storage"

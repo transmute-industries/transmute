@@ -1,7 +1,7 @@
 ---
-- name: provision-minikube
+- name: k8s-install-ganache
   hosts: localhost
   connection: local
   gather_facts: no
   roles:
-    - role: minikube
+    - role: ganache

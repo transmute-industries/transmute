@@ -20,15 +20,12 @@ module.exports.minikube = (dryrun, clusterName, minikubeDriver) => {
     +' -e minikube_profile=' + MINIKUBE_PROFILE;
 
     let prov_cmd =
-        'ansible-playbook --diff -vvv -l "localhost" ' +
+        'ansible-playbook --diff -l "localhost" ' +
         __dirname +
         '/../../../components/ansible/provision-minikube.yml';
 
-    if (
-        minikubeDriver == undefined ||
-        MINIKUBE_DRIVERS.indexOf(minikubeDriver) == -1
-    ) {
-        minikubeDriver == 'virtualbox';
+    if (MINIKUBE_DRIVERS.indexOf(minikubeDriver) == -1) {
+        minikubeDriver = 'virtualbox';
     }
 
     if (minikubeDriver == 'none') {
@@ -43,9 +40,9 @@ module.exports.minikube = (dryrun, clusterName, minikubeDriver) => {
     prov_cmd = prov_cmd + minikube_param;
     if (dryrun === 'true') {
         console.info('<--dry run-->');
-    } else {
-        run.shellExec(prov_cmd);
+        prov_cmd = prov_cmd + ' --check';
     }
+    run.shellExec(prov_cmd);
 };
 
 module.exports.aks = (
@@ -57,34 +54,34 @@ module.exports.aks = (
     GenSSHKeys,
 ) => {
     let prov_cmd_asible =
-        'ansible-playbook --diff -vvv -l "localhost" ' +
+        'ansible-playbook --diff -l "localhost" ' +
         __dirname +
         '/../../../components/ansible/provision-azure.yml';
 
-    let gensshkeys_opt = ' ';
+    let gensshkeys_opt = '';
     if (GenSSHKeys) {
-        gensshkeys_opt = ' --generate-ssh-keys';
+        gensshkeys_opt = '"--generate-ssh-keys"';
     }
     if (myAKSCluster == undefined) {
         throw 'You need to define a clustername';
     } else {
-        var akscluster_opt = ' --name ' + myAKSCluster;
+        var akscluster_opt = '"--name ' + myAKSCluster + '"';
     }
     if (myNodeCount == undefined) {
         throw 'You need to define a number of nodes';
     } else {
-        var nodes_opt = ' --node-count ' + myNodeCount;
+        var nodes_opt = '"--node-count ' + myNodeCount + '"';
     }
     if (myNodeSize == undefined) {
         console.warn('no size given using default');
-        var nodesize_opt = ' ';
+        var nodesize_opt = '';
     } else {
-        var nodesize_opt = ' --node-vm-size ' + myNodeSize;
+        var nodesize_opt = '"--node-vm-size ' + myNodeSize + '"';
     }
     if (myResourceGroup == undefined) {
         throw 'You need to define a group';
     } else {
-        var group_opt = ' --resource-group ' + myResourceGroup;
+        var group_opt = '"--resource-group ' + myResourceGroup + '"';
     }
 
     let aksParams =
@@ -102,18 +99,9 @@ module.exports.aks = (
         gensshkeys_opt;
 
     let prov_cmd_azure = prov_cmd_asible + aksParams;
-    run.shellExec(prov_cmd_azure);
-
-    let prov_cmd =
-        prov_cmd_asible +
-        ' - e akscluster_opt=' +
-        akscluster_opt +
-        ' -e group_opt=' +
-        group_opt;
-
-    if (dryrun == 'true') {
+    if (dryrun === 'true') {
         console.info('<--dry run-->');
-    } else {
-        run.shellExec(prov_cmd);
+        prov_cmd_azure = prov_cmd_azure + ' --check';
     }
+    run.shellExec(prov_cmd_azure);
 };
