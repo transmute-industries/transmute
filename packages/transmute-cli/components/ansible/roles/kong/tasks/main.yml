@@ -1,3 +1,6 @@
 ---
+- name: helm init
+  shell: "helm init"
+
 - name: install kong
   shell: "helm install stable/kong --name gateway --set proxy.useTLS=false"

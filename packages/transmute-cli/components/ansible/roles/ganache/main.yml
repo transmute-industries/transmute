@@ -1,3 +1,3 @@
 ---
-- name: register Microsoft.Network
+- name: Start ganache
   shell: "kubectl apply -f {{ playbook_dir }}/../ganache"

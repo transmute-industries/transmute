@@ -1,6 +1,5 @@
 ---
+- name: helm init
+  shell: "helm init"
 - name: install ipfs
-  shell: "helm install stable/ipfs --name decentralized-storage --namespace alpha"
-
-- name: install transmute-ipfs
-  shell: "helm install ./transmute-ipfs --name transmute-ipfs-dev"
+  shell: "helm install stable/ipfs --name decentralized-storage"
