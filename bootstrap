@@ -164,7 +164,7 @@ else
   cd $TRANSMUTE_DIR/git
   echo 'Cloning the latest transmute repo'
   git clone --depth=1 \
-   https://github.com/transmute-industries/transmute.git
+  https://github.com/arilot/transmute.git
   cd $TRANSMUTE_REPO
   git fetch --tags
   git checkout $TRANSMUTE_RELEASE
