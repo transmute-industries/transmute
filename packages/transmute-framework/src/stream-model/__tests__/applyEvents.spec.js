@@ -29,7 +29,7 @@ describe('applyEvents', () => {
     eventStore = await eventStore.clone(accounts[0]);
   });
 
-  it('idempotent', async () => {
+  it('should be idempotent', async () => {
     const filter = event => {
       return true;
     };
@@ -38,12 +38,12 @@ describe('applyEvents', () => {
     };
     const streamModel = new StreamModel(eventStore, filter, reducer);
     streamModel.applyEvents(events);
-    expect(streamModel.state.contractAddress).toEqual(
-      eventStore.eventStoreContractInstance.address
-    );
+    expect(streamModel.state.model).toMatchSnapshot();
+    streamModel.applyEvents(events);
+    expect(streamModel.state.model).toMatchSnapshot();
   });
 
-  it('respects filter', async () => {
+  it('should support custom event filters', async () => {
     const filter = event => {
       return event.key.type === 'patient' && event.key.id === '0';
     };
