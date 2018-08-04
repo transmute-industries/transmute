@@ -67,9 +67,7 @@ module.exports = class StreamModel {
     ) {
       let start = this.state.lastIndex === null ? 0 : this.state.lastIndex + 1;
       let end = eventCount - 1;
-      // console.log('getSlice: ', start, end);
       const updates = await this.eventStore.getSlice(start, end);
-      // console.log('updatesLength: ', updates.length);
       this.applyEvents(updates);
     }
   }

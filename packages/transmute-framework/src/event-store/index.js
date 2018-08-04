@@ -252,9 +252,6 @@ module.exports = class EventStore {
    * @returns {Array.<Object>} Array of event objects
    */
   async getSlice(startIndex, endIndex) {
-
-    // console.log(startIndex, endIndex)
-
     if (!(endIndex >= startIndex)) {
       throw new Error('startIndex must be less than or equal to endIndex.');
     }
