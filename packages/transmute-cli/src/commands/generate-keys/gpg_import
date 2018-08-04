@@ -1,0 +1,27 @@
+#!/bin/bash
+
+: ${SECRETS_DIR:=$HOME/.transmute/cli-secrets}
+
+if type "gpg2" > /dev/null 2 > /dev/null; then
+  echo 'gpg2 detected'
+  set + e
+  echo 'Input your passphrase to import your primary key into your GPG keyring.'
+  gpg2 --import $SECRETS_DIR/primary_sk.key
+  echo 'Input your passphrase to import your recovery key into your GPG keyring.'
+  gpg2 --import $SECRETS_DIR/recovery_sk.key
+  set - e
+  echo 'Success! Run `list-keys` to view them.'
+elif type "gpg" > /dev/null 2 > /dev/null; then
+  echo 'gpg detected'
+  set + e
+  echo 'Input your passphrase to import your primary key into your GPG keyring.'
+  gpg --import $SECRETS_DIR/primary_sk.key
+  echo 'Input your passphrase to import your recovery key into your GPG keyring.'
+  gpg --import $SECRETS_DIR/recovery_sk.key
+  set - e
+  echo 'Success! Run `list-keys` to view them.'
+else
+  echo 'GPG not detected.'
+  echo 'Go to this url to install GPG: https://gnupg.org/download/'
+  echo 'After installing GPG, please re-run the `generate-keys` command.'
+fi

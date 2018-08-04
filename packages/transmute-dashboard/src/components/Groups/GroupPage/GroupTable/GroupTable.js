@@ -23,24 +23,6 @@ const columnData = [
     numeric: false,
     disablePadding: false,
     label: 'ID'
-  },
-  {
-    id: 'firstName',
-    numeric: false,
-    disablePadding: false,
-    label: 'Given Name'
-  },
-  {
-    id: 'lastName',
-    numeric: false,
-    disablePadding: false,
-    label: 'Family Name'
-  },
-  {
-    id: 'email',
-    numeric: false,
-    disablePadding: false,
-    label: 'Email'
   }
 ];
 
@@ -209,9 +191,6 @@ class GroupTable extends React.Component {
                       key={n.id}
                     >
                       <TableCell>{n.id}</TableCell>
-                      <TableCell>{n.profile.firstName}</TableCell>
-                      <TableCell>{n.profile.lastName}</TableCell>
-                      <TableCell>{n.profile.email}</TableCell>
                     </TableRow>
                   );
                 })}

@@ -1,0 +1,13 @@
+---
+- name: install certbot
+  get_url:
+    url: "https://dl.eff.org/certbot-auto"
+    dest: "{{ transmute_bin }}/certbot-auto"
+    remote_src: yes
+    mode: 0755
+
+- name: certbot-auto --noninteractive
+  shell: "certbot-auto --noninteractive"
+  args:
+    chdir: "{{ transmute_bin }}"
+  ignore_errors: yes

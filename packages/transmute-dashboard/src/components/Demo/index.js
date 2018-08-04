@@ -63,6 +63,7 @@ class Demo extends Component {
 
     if (eventStoreAddresses.length === 0) {
       await eventStoreFactory.createEventStore(accounts[0]);
+      eventStoreAddresses = await eventStoreFactory.getEventStores();
     }
 
     let currentEventStoreAddress = eventStoreAddresses[0];
@@ -161,7 +162,7 @@ class Demo extends Component {
           console.log('file uploaded')
         );
         console.log(
-          `${transmuteConfig.ipfsConfig.protocol}://${transmuteConfig.ipfsConfig.host}/api/v0/cat?arg=${response[0].hash}`
+          `${transmuteConfig.ipfsConfig.protocol}://${transmuteConfig.ipfsConfig.host}:${transmuteConfig.ipfsConfig.port}/api/v0/cat?arg=${response[0].hash}`
         );
       })
       .catch(err => {

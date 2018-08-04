@@ -85,7 +85,13 @@ const mapDispatchToProps = dispatch => {
     registerWithActivationEmail: async formData => {
       const action = await actions.register({
         primaryKey: formData.primary_key,
-        recoveryKey: formData.recovery_key
+        recoveryKey: formData.recovery_key,
+        profile: {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          login: formData.email
+        }
       });
       dispatch(action);
     }
