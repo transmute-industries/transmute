@@ -11,6 +11,7 @@
     - role: dotfiles_install
       when: fix_dotfiles
     - role: dependencies
+    - role: docker
     - role: nvm
     - role: certbot
     - role: transmute

@@ -1,0 +1,7 @@
+---
+- name: k8s-install-kong
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  roles:
+    - role: kong
