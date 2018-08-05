@@ -79,7 +79,6 @@ install_git () {
 }
 
 run_it () {
-sudo apt list --installed
 set -e
 
 # Let's display everything on stderr.
