@@ -9,9 +9,10 @@ const mockEvents = require('../../__mock__/events.json');
 describe('sync', () => {
   let accounts;
   let eventStore;
+  let streamModel;
 
   const filter = event => {
-    return true;
+    return event;
   };
 
   // here we accumulate events and count them as they are processed.
@@ -41,17 +42,18 @@ describe('sync', () => {
   // new event store per test
   beforeEach(async () => {
     eventStore = await eventStore.clone(accounts[0]);
+    streamModel = new StreamModel(eventStore, filter, reducer);
   });
 
   it('should handle the empty case, where lastIndex is always null', async () => {
-    const streamModel = new StreamModel(eventStore, filter, reducer);
     // sync with no events in contract
     await streamModel.sync();
     expect(streamModel.state.lastIndex).toBe(null);
   });
 
   it('should handle new events, where lastIndex is the id of the last event', async () => {
-    const streamModel = new StreamModel(eventStore, filter, reducer);
+    await streamModel.sync();
+    expect(streamModel.state.lastIndex).toBe(null);
 
     await eventStore.write(accounts[0], mockEvents[0].key, mockEvents[0].value);
 
@@ -71,7 +73,6 @@ describe('sync', () => {
   });
 
   it('should handle persisted state', async () => {
-    const streamModel = new StreamModel(eventStore, filter, reducer);
     await eventStore.write(accounts[0], mockEvents[0].key, mockEvents[0].value);
     await streamModel.sync();
     expect(streamModel.state.lastIndex).toBe(0);
@@ -90,11 +91,6 @@ describe('sync', () => {
   });
 
   it('should handle multiple calls to sync correctly', async () => {
-    const filter = event => {
-      return true;
-    };
-
-    const streamModel = new StreamModel(eventStore, filter, reducer);
     await eventStore.write(accounts[0], mockEvents[0].key, mockEvents[0].value);
 
     let eventCount = (await eventStore.eventStoreContractInstance.count.call()).toNumber();

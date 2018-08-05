@@ -1,45 +1,97 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`applyEvents should be idempotent 1`] = `Object {}`;
+exports[`applyEvents should be idempotent 1`] = `
+Object {
+  "events": Array [
+    Object {
+      "type": "USER_UPDATED",
+      "username": "bob2@example.com",
+    },
+    Object {
+      "guid": "0x0...",
+      "type": "DEVICE_LINKED",
+    },
+    Object {
+      "type": "USER_REGISTERED",
+      "username": "alice@example.com",
+    },
+    Object {
+      "type": "USER_REGISTERED",
+      "username": "bob@example.com",
+    },
+    Object {
+      "guid": "0x0...",
+      "type": "DEVICE_REGISTERED",
+    },
+  ],
+  "eventsProcessed": 5,
+}
+`;
 
-exports[`applyEvents should be idempotent 2`] = `Object {}`;
+exports[`applyEvents should be idempotent 2`] = `
+Object {
+  "events": Array [
+    Object {
+      "type": "USER_UPDATED",
+      "username": "bob2@example.com",
+    },
+    Object {
+      "guid": "0x0...",
+      "type": "DEVICE_LINKED",
+    },
+    Object {
+      "type": "USER_REGISTERED",
+      "username": "alice@example.com",
+    },
+    Object {
+      "type": "USER_REGISTERED",
+      "username": "bob@example.com",
+    },
+    Object {
+      "guid": "0x0...",
+      "type": "DEVICE_REGISTERED",
+    },
+    Object {
+      "type": "USER_UPDATED",
+      "username": "bob2@example.com",
+    },
+    Object {
+      "guid": "0x0...",
+      "type": "DEVICE_LINKED",
+    },
+    Object {
+      "type": "USER_REGISTERED",
+      "username": "alice@example.com",
+    },
+    Object {
+      "type": "USER_REGISTERED",
+      "username": "bob@example.com",
+    },
+    Object {
+      "guid": "0x0...",
+      "type": "DEVICE_REGISTERED",
+    },
+  ],
+  "eventsProcessed": 10,
+}
+`;
 
 exports[`applyEvents should support custom event filters 1`] = `
 Object {
   "events": Array [
     Object {
-      "index": "1",
-      "key": Object {
-        "id": "0",
-        "type": "patient",
-      },
-      "value": Object {
-        "type": "USER_REGISTERED",
-        "username": "bob@example.com",
-      },
+      "type": "USER_UPDATED",
+      "username": "bob2@example.com",
     },
     Object {
-      "index": "3",
-      "key": Object {
-        "id": "0",
-        "type": "patient",
-      },
-      "value": Object {
-        "guid": "0x0...",
-        "type": "DEVICE_LINKED",
-      },
+      "guid": "0x0...",
+      "type": "DEVICE_LINKED",
     },
     Object {
-      "index": "4",
-      "key": Object {
-        "id": "0",
-        "type": "patient",
-      },
-      "value": Object {
-        "type": "USER_UPDATED",
-        "username": "bob2@example.com",
-      },
+      "type": "USER_REGISTERED",
+      "username": "bob@example.com",
     },
   ],
+  "eventsProcessed": 3,
 }
 `;
