@@ -9,7 +9,7 @@ module.exports.install = (dryrun, appname) => {
     });
   } else {
     let deploy_cmd =
-      'ansible-playbook --diff -l "localhost" ' +
+      'ansible-playbook --diff -vvv -l "localhost" ' +
       __dirname +
       '/../../../components/ansible/k8s-install-' + appname + '.yml';
 

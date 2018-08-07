@@ -17,6 +17,7 @@
   register: out
 
 - debug: var=out.stdout_lines
+  when: TRANSMUTE_VERBOSITY|int  >= 111
 
 - name:   kubectl get pods -n kube-system
   shell: "kubectl get pods -n kube-system"
@@ -24,6 +25,7 @@
   register: out
 
 - debug: var=out.stdout_lines
+  when: TRANSMUTE_VERBOSITY|int  >= 101
 
 - name:   kubectl get pods
   shell: "kubectl get pods"
