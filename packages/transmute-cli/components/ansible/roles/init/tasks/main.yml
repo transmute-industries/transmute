@@ -11,8 +11,6 @@
 - name: ready.w8 kube-dns kube-system
   shell: "$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 kube-dns kube-system"
 
-- debug: var=TRANSMUTE_VERBOSITY
-
 - name: kubectl get pods --all-namespaces
   shell: "kubectl get pods --all-namespaces"
   when: TRANSMUTE_VERBOSITY|int  >= 111
@@ -34,7 +32,7 @@
 - debug: var=out.stdout_lines
 
 - name: Install helm
-  shell: "helm init"
+  shell: "helm init --wait"
 
 - name: helm repo add transmute-charts
   shell: "helm repo add transmute-charts http://charts.transmute.network"
