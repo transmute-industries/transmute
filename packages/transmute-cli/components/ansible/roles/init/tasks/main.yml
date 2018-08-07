@@ -11,6 +11,8 @@
 - name: ready.w8 kube-dns kube-system
   shell: "$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 kube-dns kube-system"
 
+- debug: var=TRANSMUTE_VERBOSITY
+
 - name: kubectl get pods --all-namespaces
   shell: "kubectl get pods --all-namespaces"
   when: TRANSMUTE_VERBOSITY >= 111
