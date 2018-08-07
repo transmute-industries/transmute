@@ -1,0 +1,92 @@
+---
+- name: KONG_ADMIN_URL
+  shell: "$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-admin --url | sed 's,http://,https://,g')"
+  register: KONG_ADMIN_URL
+
+- name: KONG_PROXY_URL
+  shell: "$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-proxy --url)"
+  register: KONG_PROXY_URL
+
+- name: KONG_PROXY_PORT
+  shell: "$(PATH=$HOME/.transmute/bin:$PATH kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')"
+  register: KONG_PROXY_PORT
+
+- name: KONG_HOST
+  shell: "$(echo $KONG_ADMIN_URL | sed 's!https://!!g' | cut -f1 -d:)"
+  register: KONG_HOST
+
+- name: KONG_PORT
+  shell: "$(echo $KONG_ADMIN_URL | sed 's!https://!!g' | cut -f2 -d:)"
+  register: KONG_PORT
+
+- name: minikube_ip
+  shell: "minikube ip"
+  register: minikube_ip
+
+- name: add ganache.transmute.minikube to /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    line: '{{ minikube_ip.stdout }} ganache.transmute.minikube'
+
+- name: "wait for kong to come up"
+  uri:
+   url: "http://{{ KONG_HOST }}:{{ KONG_PORT }}"
+   status_code: 200
+  register: result
+  until: result.status == 200
+  retries: 200
+  delay: 1
+
+- name: Curl ganache cluster to kong
+  uri:
+    url: "{{ KONG_ADMIN_URL }}/apis/"
+    method: POST
+    body: "name=ganache&hosts=ganache.transmute.minikube&upstream_url=http://{{ GANACHE_CLUSTER_IP }}:8545/"
+  register: out
+
+- debug: var=out.stdout_lines
+
+- name: Curl ganache cluster to kong
+  uri:
+    url: "https://ganache.transmute.minikube:{{ KONG_PROXY_PORT }}"
+    method: POST
+    body: '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":68}'
+  register: out
+
+- debug: var=out.stdout_lines
+
+- name: IPFS_CLUSTER_IP
+  shell: "PATH=$HOME/.transmute/bin:$PATH kubectl get service decentralized-storage-ipfs -o json | jq -r '.spec.clusterIP'"
+  register: IPFS_CLUSTER_IP
+
+- name: Curl ganache cluster to kong
+  uri:
+    url: "{{ KONG_ADMIN_URL }}/apis/"
+    method: POST
+    body: "name=ipfs&hosts=ipfs.transmute.minikube&upstream_url=http://{{ IPFS_CLUSTER_IP }}:5001/"
+  register: out
+
+- debug: var=out.stdout_lines
+
+- name: Curl ganache cluster to kong
+  uri:
+    url: "{{ KONG_ADMIN_URL }}/apis/ipfs/plugins"
+    method: POST
+    body: 'name=cors&config.origins=*&config.methods=GET, PUT, POST'
+  register: out
+
+- name: Curl ganache cluster to kong
+  uri:
+    url: "http://ipfs.transmute.minikube:{{ KONG_PROXY_PORT }}/api/v0/id"
+    method: GET
+  register: out
+
+- name: FRAMEWORK_CONFIG
+  template:
+    src: framework.env.json.j2
+    dest: "{{ TRANSMUTE_REPO }}/packages/transmute-framework/src/transmute-config/env.json"
+
+- name: DASHBOARD_CONFIG
+  template:
+    src: dashboard.env.json.j2
+    dest: "TRANSMUTE_REPO/packages/transmute-dashboard/src/transmute-config/env.json"

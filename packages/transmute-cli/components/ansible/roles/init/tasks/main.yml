@@ -1,0 +1,54 @@
+---
+
+- name: source {{ ansible_env.HOME }}/.transmute/.env
+  shell: "source {{ ansible_env.HOME }}/.transmute/.env"
+  args:
+    executable: /bin/bash
+
+- set_fact:
+     TRANSMUTE_VERBOSITY: "{{ lookup('env', 'TRANSMUTE_VERBOSITY') }}"
+
+- name: ready.w8 kube-dns kube-system
+  shell: "$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 kube-dns kube-system"
+
+- name: kubectl get pods --all-namespaces
+  shell: "kubectl get pods --all-namespaces"
+  when: TRANSMUTE_VERBOSITY >= 111
+  register: out
+
+- debug: var=out.stdout_lines
+
+- name:   kubectl get pods -n kube-system
+  shell: "kubectl get pods -n kube-system"
+  when: TRANSMUTE_VERBOSITY >= 101
+  register: out
+
+- debug: var=out.stdout_lines
+
+- name:   kubectl get pods
+  shell: "kubectl get pods"
+  register: out
+
+- debug: var=out.stdout_lines
+
+- name: Install helm
+  shell: "helm init"
+
+- name: helm repo add transmute-charts
+  shell: "helm repo add transmute-charts http://charts.transmute.network"
+
+- name: USE_STRICT_W8
+  shell: "$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 tiller-deploy kube-system"
+
+- name: kubectl get pods -n kube-system
+  shell: "kubectl get pods -n kube-system"
+
+- name: minikube_ip
+  shell: "minikube ip"
+  register: minikube_ip
+
+- name: add transmute.minikube to /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    line: '{{ minikube_ip.stdout }} transmute.minikube'
+  become: yes

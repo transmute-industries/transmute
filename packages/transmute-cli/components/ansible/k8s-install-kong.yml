@@ -5,3 +5,5 @@
   gather_facts: no
   roles:
     - role: kong
+    - role: ganache-kong-ipfs
+      when: ganache_started.changed and ipfs_started

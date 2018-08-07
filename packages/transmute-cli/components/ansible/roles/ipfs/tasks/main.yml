@@ -1,5 +1,24 @@
 ---
-- name: helm init
-  shell: "helm init"
 - name: install ipfs
   shell: "helm install stable/ipfs --name decentralized-storage"
+
+- name: ready.w8 decentralized-storage-ipfs
+  shell: "$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 decentralized-storage-ipfs default"
+
+# wait a bit longer for ipfs repo lock
+
+- name: IPFS_POD_NAME
+  shell: "kubectl get pods --namespace default -l \"app=ipfs,release=decentralized-storage\"  -o jsonpath=\"{.items[0].metadata.name}\""
+  register: IPFS_POD_NAME
+
+- name: ipfs config Addresses
+  shell: "kubectl exec {{ IPFS_POD_NAME.stdout }}-- ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001"
+
+- name: ipfs config Access-Control-Allow-Origin
+  shell: "kubectl exec {{ IPFS_POD_NAME.stdout }} -- ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '[\"*\"]'"
+
+- name: ipfs config Access-Control-Allow-Methods
+  shell: "kubectl exec {{ IPFS_POD_NAME.stdout }} -- ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '[\"PUT\", \"GET\", \"POST\"]'"
+
+- name: delete pod {{ IPFS_POD_NAME.stdout }}
+  shell: "kubectl delete pod {{ IPFS_POD_NAME.stdout }}"
