@@ -6,7 +6,7 @@
   shell: "$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 gateway-postgresql default"
 
 - name: gateway-kong-migration
-  shell: "$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 gateway-kong default"
+  shell: "EXCLUDE_POD=gateway-kong-migration $(npm root -g)/transmute-cli/scripts/w8s/ready.w8 gateway-kong default"
 
 - name: EXCLUDE_POD
   shell: "$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 gateway-kong default"
