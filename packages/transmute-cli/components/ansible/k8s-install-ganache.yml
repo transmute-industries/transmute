@@ -2,6 +2,9 @@
 - name: k8s-install-ganache
   hosts: localhost
   connection: local
+  vars:
+    kong_started: no
+    ipfs_started: no
   gather_facts: no
   roles:
     - role: ganache

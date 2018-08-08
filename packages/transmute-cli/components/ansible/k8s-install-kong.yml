@@ -2,8 +2,11 @@
 - name: k8s-install-kong
   hosts: localhost
   connection: local
+  vars:
+    ipfs_started: no
+    ganache_started: no
   gather_facts: no
   roles:
     - role: kong
     - role: ganache-kong-ipfs
-      when: ganache_started.changed and ipfs_started
+      when: ganache_started and ipfs_started
