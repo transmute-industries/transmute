@@ -1,6 +1,4 @@
 ---
-
-
 - name: KONG_ADMIN_URL
   shell: "minikube service gateway-kong-admin --url | sed 's,http://,https://,g'"
   register: KONG_ADMIN_URL
@@ -86,11 +84,17 @@
     validate_certs: no
   register: out
 
+- debug: var=out
+
 - name: Curl ipfs get api id
   uri:
     url: "http://ipfs.transmute.minikube:{{ KONG_PROXY_PORT.stdout }}/api/v0/id"
     method: GET
   register: out
+  retries: 200
+  delay: 1
+
+- debug: var=out
 
 - name: TRANSMUTE_REPO
   shell: "npm root -g"
