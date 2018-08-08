@@ -27,7 +27,7 @@
 
 - name: "wait for kong to come up"
   uri:
-    url: "http://{{ KONG_HOST.stdout }}:{{ KONG_PORT.stdout }}"
+    url: "https://{{ KONG_HOST.stdout }}:{{ KONG_PORT.stdout }}"
     status_code: 200
   register: result
   retries: 200
