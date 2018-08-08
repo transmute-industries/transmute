@@ -47,12 +47,11 @@
 
 - name: Curl ganache cluster to kong
   uri:
-    url: "https://ganache.transmute.minikube:{{ KONG_PROXY_PORT.stdout }}"
+    url: "http://ganache.transmute.minikube:{{ KONG_PROXY_PORT.stdout }}"
     method: POST
     body: '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":68}'
     body_format: json
     status_code: 201
-    validate_certs: no
   register: out
 
 - debug: var=out.stdout_lines
