@@ -1,6 +1,6 @@
 ---
 - name: Start ganache
-  shell: "helm install --name ganache transmute-charts/ganache"
+  shell: "helm upgrade --install ganache transmute-charts/ganache"
 
 - name: ready.w8 ganache
   shell: "$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 ganache default"
@@ -26,5 +26,4 @@
   shell: "helm status decentralized-storage | grep STATUS: | awk  '{print $2}' | sed 's/DEPLOYED/yes/g'"
   register: output
 
-- set_fact:
     ipfs_started: "{{ output.stdout }}"
