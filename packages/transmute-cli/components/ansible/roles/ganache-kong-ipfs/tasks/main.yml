@@ -90,8 +90,11 @@
   uri:
     url: "http://ipfs.transmute.minikube:{{ KONG_PROXY_PORT.stdout }}/api/v0/id"
     method: GET
-    validate_certs: no
   register: out
+
+- name: TRANSMUTE_REPO
+  shell: "npm root -g"
+  register: TRANSMUTE_REPO
 
 - name: FRAMEWORK_CONFIG
   template:

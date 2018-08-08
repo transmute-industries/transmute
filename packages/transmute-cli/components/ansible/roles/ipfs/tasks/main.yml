@@ -28,6 +28,16 @@
 - name: delete pod {{ IPFS_POD_NAME.stdout }}
   shell: "kubectl delete pod {{ IPFS_POD_NAME.stdout }}"
 
+- name: minikube_ip
+  shell: "minikube ip"
+  register: minikube_ip
+
+- name: add ganache.transmute.minikube to /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    line: '{{ minikube_ip.stdout }} ipfs.transmute.minikube'
+  become: yes
+
 - name: helm status ganache
   shell: "helm status ganache | grep STATUS: | awk  '{print $2}' | sed 's/DEPLOYED/yes/g'"
   register: output
