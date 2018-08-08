@@ -29,6 +29,7 @@
   uri:
     url: "https://{{ KONG_HOST.stdout }}:{{ KONG_PORT.stdout }}"
     status_code: 200
+    validate_certs: no
   register: result
   retries: 200
   delay: 1
@@ -48,6 +49,7 @@
     url: "https://ganache.transmute.minikube:{{ KONG_PROXY_PORT.stdout }}"
     method: POST
     body: '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":68}'
+    validate_certs: no
   register: out
 
 - debug: var=out.stdout_lines
@@ -61,6 +63,7 @@
     url: "{{ KONG_ADMIN_URL.stdout }}/apis/"
     method: POST
     body: "name=ipfs&hosts=ipfs.transmute.minikube&upstream_url=http://{{ IPFS_CLUSTER_IP }}:5001/"
+    validate_certs: no
   register: out
 
 - debug: var=out.stdout_lines
@@ -70,12 +73,14 @@
     url: "{{ KONG_ADMIN_URL.stdout }}/apis/ipfs/plugins"
     method: POST
     body: 'name=cors&config.origins=*&config.methods=GET, PUT, POST'
+    validate_certs: no
   register: out
 
 - name: Curl ganache cluster to kong
   uri:
     url: "http://ipfs.transmute.minikube:{{ KONG_PROXY_PORT.stdout }}/api/v0/id"
     method: GET
+    validate_certs: no
   register: out
 
 - name: FRAMEWORK_CONFIG
