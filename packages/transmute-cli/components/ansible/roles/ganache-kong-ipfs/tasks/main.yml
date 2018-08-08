@@ -57,7 +57,7 @@
     method: POST
     body: '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":68}'
     body_format: json
-    status_code: 201
+    status_code: 200
   register: out
 
 - debug: var=out.stdout
@@ -72,7 +72,7 @@
     method: POST
     body: "name=ipfs&hosts=ipfs.transmute.minikube&upstream_url=http://{{ IPFS_CLUSTER_IP }}:5001/"
     validate_certs: no
-    status_code: 201
+    status_code: 200
   register: out
 
 - debug: var=out.stdout
@@ -82,7 +82,7 @@
     url: "{{ KONG_ADMIN_URL.stdout }}/apis/ipfs/plugins"
     method: POST
     body: 'name=cors&config.origins=*&config.methods=GET, PUT, POST'
-    status_code: 201
+    status_code: 200
     validate_certs: no
   register: out
 
