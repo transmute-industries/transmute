@@ -21,17 +21,9 @@
   shell: "$(echo {{ KONG_ADMIN_URL }} | sed 's!https://!!g' | cut -f2 -d:)"
   register: KONG_PORT
 
-
-
-
-- name: minikube_ip
-  shell: "minikube ip"
-  register: minikube_ip
-
-- name: add ganache.transmute.minikube to /etc/hosts
-  lineinfile:
-    path: /etc/hosts
-    line: '{{ minikube_ip.stdout }} ganache.transmute.minikube'
+- name: GANACHE_CLUSTER_IP
+  shell: "kubectl get service ganache -o json | jq -r '.spec.clusterIP'"
+  register: GANACHE_CLUSTER_IP
 
 - name: "wait for kong to come up"
   uri:
