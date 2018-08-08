@@ -8,7 +8,7 @@
 # wait a bit longer for ipfs repo lock
 
 - name: IPFS_POD_NAME
-  shell: "kubectl get pods --namespace default -l \"app=ipfs,release=decentralized-storage\"  -o jsonpath=\"{.items[0].metadata.name}\""
+  shell: 'kubectl get pods --namespace default -l "app=ipfs,release=decentralized-storage" -o jsonpath="{.items[0].metadata.name}"'
   register: IPFS_POD_NAME
 
 - name: ipfs config Addresses
