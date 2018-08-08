@@ -82,7 +82,7 @@
     url: "{{ KONG_ADMIN_URL.stdout }}/apis/ipfs/plugins"
     method: POST
     body: 'name=cors&config.origins=*&config.methods=GET, PUT, POST'
-    status_code: 200
+    status_code: 201
     validate_certs: no
   register: out
 
