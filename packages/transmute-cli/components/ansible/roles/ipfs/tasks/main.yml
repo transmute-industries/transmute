@@ -27,12 +27,12 @@
   shell: "helm status ganache | grep STATUS: | awk  '{print $2}' | sed 's/DEPLOYED/yes/g'"
   register: output
 
-- set_facts:
+- set_fact:
     ganache_started: "{{ output.stdout }}"
 
 - name: helm status kong
   shell: "helm status gateway | grep STATUS: | awk  '{print $2}' | sed 's/DEPLOYED/yes/g'"
   register: output
 
-- set_facts:
+- set_fact:
     kong_started: "{{ output.stdout }}"

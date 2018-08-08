@@ -12,12 +12,12 @@
   shell: "helm status ganache | grep STATUS: | awk  '{print $2}' | sed 's/DEPLOYED/yes/g'"
   register: output
 
-- set_facts:
+- set_fact:
     ganache_started: "{{ output.stdout }}"
 
 - name: helm status ipfs
   shell: "helm status decentralized-storage | grep STATUS: | awk  '{print $2}' | sed 's/DEPLOYED/yes/g'"
   register: output
 
-- set_facts:
+- set_fact:
     ipfs_started: "{{ output.stdout }}"
