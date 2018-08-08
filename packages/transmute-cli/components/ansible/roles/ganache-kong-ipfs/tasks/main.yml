@@ -27,25 +27,24 @@
 
 - name: "wait for kong to come up"
   uri:
-   url: "http://{{ KONG_HOST }}:{{ KONG_PORT }}"
-   status_code: 200
+    url: "http://{{ KONG_HOST.stdout }}:{{ KONG_PORT.stdout }}"
+    status_code: 200
   register: result
   retries: 200
   delay: 1
-  changed_when: false
 
 - name: Curl ganache cluster to kong
   uri:
-    url: "{{ KONG_ADMIN_URL }}/apis/"
+    url: "{{ KONG_ADMIN_URL.stdout }}/apis/"
     method: POST
-    body: "name=ganache&hosts=ganache.transmute.minikube&upstream_url=http://{{ GANACHE_CLUSTER_IP }}:8545/"
+    body: "name=ganache&hosts=ganache.transmute.minikube&upstream_url=http://{{ GANACHE_CLUSTER_IP.stdout }}:8545/"
   register: out
 
 - debug: var=out.stdout_lines
 
 - name: Curl ganache cluster to kong
   uri:
-    url: "https://ganache.transmute.minikube:{{ KONG_PROXY_PORT }}"
+    url: "https://ganache.transmute.minikube:{{ KONG_PROXY_PORT.stdout }}"
     method: POST
     body: '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":68}'
   register: out
@@ -58,7 +57,7 @@
 
 - name: Curl ganache cluster to kong
   uri:
-    url: "{{ KONG_ADMIN_URL }}/apis/"
+    url: "{{ KONG_ADMIN_URL.stdout }}/apis/"
     method: POST
     body: "name=ipfs&hosts=ipfs.transmute.minikube&upstream_url=http://{{ IPFS_CLUSTER_IP }}:5001/"
   register: out
@@ -67,23 +66,23 @@
 
 - name: Curl ganache cluster to kong
   uri:
-    url: "{{ KONG_ADMIN_URL }}/apis/ipfs/plugins"
+    url: "{{ KONG_ADMIN_URL.stdout }}/apis/ipfs/plugins"
     method: POST
     body: 'name=cors&config.origins=*&config.methods=GET, PUT, POST'
   register: out
 
 - name: Curl ganache cluster to kong
   uri:
-    url: "http://ipfs.transmute.minikube:{{ KONG_PROXY_PORT }}/api/v0/id"
+    url: "http://ipfs.transmute.minikube:{{ KONG_PROXY_PORT.stdout }}/api/v0/id"
     method: GET
   register: out
 
 - name: FRAMEWORK_CONFIG
   template:
     src: framework.env.json.j2
-    dest: "{{ TRANSMUTE_REPO }}/packages/transmute-framework/src/transmute-config/env.json"
+    dest: "{{ TRANSMUTE_REPO.stdout }}/packages/transmute-framework/src/transmute-config/env.json"
 
 - name: DASHBOARD_CONFIG
   template:
     src: dashboard.env.json.j2
-    dest: "TRANSMUTE_REPO/packages/transmute-dashboard/src/transmute-config/env.json"
+    dest: "{{ TRANSMUTE_REPO.stdout }}/packages/transmute-dashboard/src/transmute-config/env.json"
