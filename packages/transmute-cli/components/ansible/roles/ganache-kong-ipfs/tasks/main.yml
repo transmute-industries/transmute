@@ -39,6 +39,7 @@
     url: "{{ KONG_ADMIN_URL.stdout }}/apis/"
     method: POST
     body: "name=ganache&hosts=ganache.transmute.minikube&upstream_url=http://{{ GANACHE_CLUSTER_IP.stdout }}:8545/"
+    status_code: 201
     validate_certs: no
   register: out
 
@@ -49,6 +50,7 @@
     url: "https://ganache.transmute.minikube:{{ KONG_PROXY_PORT.stdout }}"
     method: POST
     body: '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":68}'
+    status_code: 201
     validate_certs: no
   register: out
 
@@ -64,6 +66,7 @@
     method: POST
     body: "name=ipfs&hosts=ipfs.transmute.minikube&upstream_url=http://{{ IPFS_CLUSTER_IP }}:5001/"
     validate_certs: no
+    status_code: 201
   register: out
 
 - debug: var=out.stdout_lines
@@ -73,6 +76,7 @@
     url: "{{ KONG_ADMIN_URL.stdout }}/apis/ipfs/plugins"
     method: POST
     body: 'name=cors&config.origins=*&config.methods=GET, PUT, POST'
+    status_code: 201
     validate_certs: no
   register: out
 
