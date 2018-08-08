@@ -38,6 +38,7 @@
     url: "{{ KONG_ADMIN_URL.stdout }}/apis/"
     method: POST
     body: "name=ganache&hosts=ganache.transmute.minikube&upstream_url=http://{{ GANACHE_CLUSTER_IP.stdout }}:8545/"
+    validate_certs: no
   register: out
 
 - debug: var=out.stdout_lines
