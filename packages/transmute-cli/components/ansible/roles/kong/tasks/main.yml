@@ -5,28 +5,6 @@
 - name: spin up
   shell: "$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 gateway-postgresql default"
 
-- name: gateway-kong-migration
+- name: EXCLUDE_POD
   shell: "EXCLUDE_POD=gateway-kong-migration $(npm root -g)/transmute-cli/scripts/w8s/ready.w8 gateway-kong default"
 
-- name: EXCLUDE_POD
-  shell: "$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 gateway-kong default"
-
-- name: KONG_ADMIN_URL
-  shell: "minikube service gateway-kong-admin --url | sed 's,http://,https://,g'"
-  register: KONG_ADMIN_URL
-
-- name: KONG_PROXY_URL
-  shell: "minikube service gateway-kong-proxy --url"
-  register: KONG_PROXY_URL
-
-- name: KONG_PROXY_PORT
-  shell: "kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort'"
-  register: KONG_PROXY_PORT
-
-- name: KONG_HOST
-  shell: "$(echo {{ KONG_ADMIN_URL }} | sed 's!https://!!g' | cut -f1 -d:)"
-  register: KONG_HOST
-
-- name: KONG_PORT
-  shell: "$(echo {{ KONG_ADMIN_URL }} | sed 's!https://!!g' | cut -f2 -d:)"
-  register: KONG_PORT

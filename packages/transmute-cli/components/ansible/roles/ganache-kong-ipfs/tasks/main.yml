@@ -1,23 +1,28 @@
 ---
+
+
 - name: KONG_ADMIN_URL
-  shell: "$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-admin --url | sed 's,http://,https://,g')"
+  shell: "minikube service gateway-kong-admin --url | sed 's,http://,https://,g'"
   register: KONG_ADMIN_URL
 
 - name: KONG_PROXY_URL
-  shell: "$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-proxy --url)"
+  shell: "minikube service gateway-kong-proxy --url"
   register: KONG_PROXY_URL
 
 - name: KONG_PROXY_PORT
-  shell: "$(PATH=$HOME/.transmute/bin:$PATH kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort')"
+  shell: "kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort'"
   register: KONG_PROXY_PORT
 
 - name: KONG_HOST
-  shell: "$(echo $KONG_ADMIN_URL | sed 's!https://!!g' | cut -f1 -d:)"
+  shell: "$(echo {{ KONG_ADMIN_URL }} | sed 's!https://!!g' | cut -f1 -d:)"
   register: KONG_HOST
 
 - name: KONG_PORT
-  shell: "$(echo $KONG_ADMIN_URL | sed 's!https://!!g' | cut -f2 -d:)"
+  shell: "$(echo {{ KONG_ADMIN_URL }} | sed 's!https://!!g' | cut -f2 -d:)"
   register: KONG_PORT
+
+
+
 
 - name: minikube_ip
   shell: "minikube ip"
