@@ -46,7 +46,7 @@
     validate_certs: no
   register: out
 
-- debug: var=out.stdout
+- debug: var=out
 
 - name: sleep for 30 seconds and continue with play
   wait_for: timeout=30
@@ -60,7 +60,7 @@
     status_code: 200
   register: out
 
-- debug: var=out.stdout
+- debug: var=out
 
 - name: IPFS_CLUSTER_IP
   shell: "PATH=$HOME/.transmute/bin:$PATH kubectl get service decentralized-storage-ipfs -o json | jq -r '.spec.clusterIP'"
@@ -72,10 +72,10 @@
     method: POST
     body: "name=ipfs&hosts=ipfs.transmute.minikube&upstream_url=http://{{ IPFS_CLUSTER_IP }}:5001/"
     validate_certs: no
-    status_code: 200
+    status_code: 201
   register: out
 
-- debug: var=out.stdout
+- debug: var=out
 
 - name: Curl ipfs to kong
   uri:
