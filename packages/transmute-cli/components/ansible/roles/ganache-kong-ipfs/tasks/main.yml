@@ -48,7 +48,8 @@
 
 - debug: var=out.stdout
 
-
+- name: sleep for 30 seconds and continue with play
+  wait_for: timeout=30
 
 - name: GANACHE HEALTHCHECK
   uri:
