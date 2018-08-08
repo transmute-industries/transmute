@@ -14,11 +14,11 @@
   register: KONG_PROXY_PORT
 
 - name: KONG_HOST
-  shell: "$(echo {{ KONG_ADMIN_URL }} | sed 's!https://!!g' | cut -f1 -d:)"
+  shell: "echo {{ KONG_ADMIN_URL }} | sed 's!https://!!g' | cut -f1 -d:"
   register: KONG_HOST
 
 - name: KONG_PORT
-  shell: "$(echo {{ KONG_ADMIN_URL }} | sed 's!https://!!g' | cut -f2 -d:)"
+  shell: "echo {{ KONG_ADMIN_URL }} | sed 's!https://!!g' | cut -f2 -d:"
   register: KONG_PORT
 
 - name: GANACHE_CLUSTER_IP
