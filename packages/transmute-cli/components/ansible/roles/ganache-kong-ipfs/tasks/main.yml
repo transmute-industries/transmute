@@ -21,6 +21,9 @@
   shell: "echo {{ KONG_ADMIN_URL.stdout }} | sed 's!https://!!g' | cut -f2 -d:"
   register: KONG_PORT
 
+- name: sleep for 30 seconds and continue with play
+  wait_for: timeout=30
+
 - name: GANACHE_CLUSTER_IP
   shell: "kubectl get service ganache -o json | jq -r '.spec.clusterIP'"
   register: GANACHE_CLUSTER_IP
@@ -43,9 +46,11 @@
     validate_certs: no
   register: out
 
-- debug: var=out.stdout_lines
+- debug: var=out.stdout
 
-- name: Curl ganache cluster to kong
+
+
+- name: GANACHE HEALTHCHECK
   uri:
     url: "http://ganache.transmute.minikube:{{ KONG_PROXY_PORT.stdout }}"
     method: POST
@@ -54,7 +59,7 @@
     status_code: 201
   register: out
 
-- debug: var=out.stdout_lines
+- debug: var=out.stdout
 
 - name: IPFS_CLUSTER_IP
   shell: "PATH=$HOME/.transmute/bin:$PATH kubectl get service decentralized-storage-ipfs -o json | jq -r '.spec.clusterIP'"
@@ -69,7 +74,7 @@
     status_code: 201
   register: out
 
-- debug: var=out.stdout_lines
+- debug: var=out.stdout
 
 - name: Curl ipfs to kong
   uri:
