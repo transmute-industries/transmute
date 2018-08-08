@@ -8,3 +8,16 @@
 - name: EXCLUDE_POD
   shell: "EXCLUDE_POD=gateway-kong-migration $(npm root -g)/transmute-cli/scripts/w8s/ready.w8 gateway-kong default"
 
+- name: helm status ganache
+  shell: "helm status ganache | grep STATUS: | awk  '{print $2}' | sed 's/DEPLOYED/yes/g'"
+  register: output
+
+- set_facts:
+    ganache_started: {{ output.stdout }}
+
+- name: helm status ipfs
+  shell: "helm status decentralized-storage | grep STATUS: | awk  '{print $2}' | sed 's/DEPLOYED/yes/g'"
+  register: output
+
+- set_facts:
+    ipfs_started: {{ output.stdout }}
