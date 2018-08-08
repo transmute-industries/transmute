@@ -15,14 +15,6 @@
     line: '{{ minikube_ip.stdout }} ganache.transmute.minikube'
   become: yes
 
-- name: minikube_ip
-  shell: "minikube ip"
-  register: minikube_ip
-
-- name: GANACHE_CLUSTER_IP
-  shell: "kubectl get service ganache -o json | jq -r '.spec.clusterIP'"
-  register: GANACHE_CLUSTER_IP
-
 - name: helm status kong
   shell: "helm status gateway | grep STATUS: | awk  '{print $2}' | sed 's/DEPLOYED/yes/g'"
   register: output
