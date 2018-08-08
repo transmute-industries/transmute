@@ -30,9 +30,9 @@
    url: "http://{{ KONG_HOST }}:{{ KONG_PORT }}"
    status_code: 200
   register: result
-  until: result.status == 200
   retries: 200
   delay: 1
+  changed_when: false
 
 - name: Curl ganache cluster to kong
   uri:
