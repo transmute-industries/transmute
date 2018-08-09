@@ -12,7 +12,7 @@ describe('sync', () => {
   let streamModel;
 
   const filter = event => {
-    return event;
+    return event !== undefined;
   };
 
   // here we accumulate events and count them as they are processed.
