@@ -158,14 +158,14 @@ module.exports = class EventStore {
     const valueBytes32ID = ipfs.multihashToBytes32(valueMultihash);
 
 
-    const tx = await eventStoreContractInstance.write(
+    const tx = (await eventStoreContractInstance.write(
       keyBytes32ID,
       valueBytes32ID,
       {
         from: fromAddress,
         gas: GAS.EVENT_GAS_COST
       }
-    );
+    ))['tx'];
 
     let receipt;
 
