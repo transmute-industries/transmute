@@ -109,6 +109,10 @@
     - "{{ TRANSMUTE_REPO.stdout }}/packages/transmute-framework/src/transmute-config/"
     - "{{ TRANSMUTE_REPO.stdout }}/packages/transmute-dashboard/src/transmute-config/"
 
+- name: KONG_PROXY_PORT
+  shell: "kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort'"
+  register: KONG_PROXY_PORT
+
 - name: FRAMEWORK_CONFIG
   template:
     src: framework.env.json.j2
