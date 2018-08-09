@@ -36,7 +36,7 @@ module.exports = class StreamModel {
   applyEvent(event) {
     this.state.model = this.reducer(this.state.model, event);
     this.state.lastIndex = event.index;
-  };
+  }
 
   /**
    * Applies an array of events to this StreamModel's reducer
@@ -47,8 +47,7 @@ module.exports = class StreamModel {
    */
   applyEvents(events) {
     events.filter(this.filter).map(this.applyEvent.bind(this));
-  };
-
+  }
 
   /**
    * Checks EventStore for events which have not been applied to the StreamModel and applies them.
@@ -62,12 +61,14 @@ module.exports = class StreamModel {
     if (eventCount === 0) {
       return;
     }
-    if (this.state.lastIndex == null || this.state.lastIndex < eventCount) {
-      const updates = await this.eventStore.getSlice(
-        this.state.lastIndex || 0,
-        eventCount - 1
-      );
+    if (
+      this.state.lastIndex === null ||
+      this.state.lastIndex + 1 < eventCount
+    ) {
+      let start = this.state.lastIndex === null ? 0 : this.state.lastIndex + 1;
+      let end = eventCount - 1;
+      const updates = await this.eventStore.getSlice(start, end);
       this.applyEvents(updates);
     }
-  };
+  }
 };
