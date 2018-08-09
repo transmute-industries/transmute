@@ -1,6 +1,14 @@
 ---
+- name: helm status ipfs
+  shell: "helm status decentralized-storage | grep STATUS: | awk  '{print $2}' | sed 's/DEPLOYED/yes/g'"
+  register: output
+
+- set_fact:
+    ipfs_started: "{{ output.stdout }}"
+
 - name: install ipfs
-  shell: "helm upgrade --install decentralized-storage stable/ipfs  --wait"
+  shell: "helm install stable/ipfs --name decentralized-storage"
+  when: not ipfs_started
 
 - name: ready.w8 decentralized-storage-ipfs
   shell: "$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 decentralized-storage-ipfs default"

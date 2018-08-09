@@ -1,6 +1,14 @@
 ---
+- name: helm status kong
+  shell: "helm status gateway | grep STATUS: | awk  '{print $2}' | sed 's/DEPLOYED/yes/g'"
+  register: output
+
+- set_fact:
+    kong_started: "{{ output.stdout }}"
+
 - name: Install kong
-  shell: "helm upgrade --install gateway stable/kong --set proxy.useTLS=false --wait"
+  shell: "helm install stable/kong --name gateway --set proxy.useTLS=false"
+  when: not kong_started
 
 - name: spin up
   shell: "$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 gateway-postgresql default"
