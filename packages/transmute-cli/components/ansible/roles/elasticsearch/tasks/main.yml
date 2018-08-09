@@ -3,7 +3,7 @@
   shell: "helm repo add fabric8 https://fabric8.io/helm"
 
 - name: helm install
-  shell: "helm upgrade --install fabric8/elasticsearch"
+  shell: "helm upgrade --install elasticsearch fabric8/elasticsearch"
 
 - name: remove default sc
   shell: "kubectl delete sc default"
