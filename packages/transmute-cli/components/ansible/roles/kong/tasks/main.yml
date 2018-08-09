@@ -1,6 +1,6 @@
 ---
 - name: Install kong
-  shell: "helm upgrade --install gateway stable/kong --set proxy.useTLS=false"
+  shell: "helm upgrade --install gateway stable/kong --set proxy.useTLS=false --wait"
 
 - name: spin up
   shell: "$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 gateway-postgresql default"

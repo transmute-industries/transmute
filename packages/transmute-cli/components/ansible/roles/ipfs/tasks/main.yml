@@ -1,6 +1,6 @@
 ---
 - name: install ipfs
-  shell: "helm upgrade --install decentralized-storage stable/ipfs"
+  shell: "helm upgrade --install decentralized-storage stable/ipfs  --wait"
 
 - name: ready.w8 decentralized-storage-ipfs
   shell: "$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 decentralized-storage-ipfs default"

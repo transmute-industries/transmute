@@ -1,6 +1,6 @@
 ---
 - name: Start ganache
-  shell: "helm upgrade --install ganache transmute-charts/ganache"
+  shell: "helm upgrade --install ganache transmute-charts/ganache --wait"
 
 - name: ready.w8 ganache
   shell: "$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 ganache default"
