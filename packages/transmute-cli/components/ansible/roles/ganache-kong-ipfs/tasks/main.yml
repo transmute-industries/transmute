@@ -34,6 +34,7 @@
   register: result
   retries: 60
   delay: 5
+  ignore_errors: yes
 
 - name: Curl ganache cluster to kong
   uri:
@@ -43,6 +44,7 @@
     status_code: 201
     validate_certs: no
   register: out
+  ignore_errors: yes
 
 - debug: var=out
 
@@ -57,6 +59,7 @@
     body_format: json
     status_code: 200
   register: out
+  ignore_errors: yes
 
 - debug: var=out
 
@@ -72,6 +75,7 @@
     validate_certs: no
     status_code: 201
   register: out
+  ignore_errors: yes
 
 - debug: var=out
 
@@ -83,6 +87,7 @@
     status_code: 201
     validate_certs: no
   register: out
+  ignore_errors: yes
 
 - debug: var=out
 
