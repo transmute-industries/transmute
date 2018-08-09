@@ -1,5 +1,5 @@
 const run = require('../runner');
-const APPS_NAMES = ['kong', 'ipfs', 'ganache'];
+const APPS_NAMES = ['kong', 'ipfs', 'ganache', 'elasticsearch'];
 
 module.exports.install = (dryrun, appname) => {
   if (APPS_NAMES.indexOf(appname) == -1) {
