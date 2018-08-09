@@ -1,6 +1,6 @@
 ---
 - name: helm status elasticsearch
-  shell: "helm status elasticsearch | grep STATUS: | awk  '{print $2}' | sed 's/DEPLOYED/yes/g'"
+  shell: "helm status elasticsearch | grep STATUS: | awk  '{print $2}'"
   register: output
 
 - set_fact:
@@ -11,7 +11,7 @@
 
 - name: helm install
   shell: "helm install fabric8/elasticsearch"
-  when: not elasticsearch_started
+  when: not elasticsearch_started != "DEPLOYED"
 
 - name: create storage
   shell:
@@ -25,3 +25,4 @@
       parameters:
         type: gp2
       EOF
+  ignore_errors: yes
