@@ -23,12 +23,15 @@
   shell: "kubectl exec {{ IPFS_POD_NAME.stdout }} -- ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001"
   retries: 60
   delay: 5
+  ignore_errors: yes
 
 - name: ipfs config Access-Control-Allow-Origin
   shell: "kubectl exec {{ IPFS_POD_NAME.stdout }} -- ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '[\"*\"]'"
+  ignore_errors: yes
 
 - name: ipfs config Access-Control-Allow-Methods
   shell: "kubectl exec {{ IPFS_POD_NAME.stdout }} -- ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '[\"PUT\", \"GET\", \"POST\"]'"
+  ignore_errors: yes
 
 - name: delete pod {{ IPFS_POD_NAME.stdout }}
   shell: "kubectl delete pod {{ IPFS_POD_NAME.stdout }}"

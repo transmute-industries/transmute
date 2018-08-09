@@ -93,6 +93,7 @@
   register: out
   retries: 200
   delay: 1
+  ignore_errors: yes
 
 - debug: var=out
 
