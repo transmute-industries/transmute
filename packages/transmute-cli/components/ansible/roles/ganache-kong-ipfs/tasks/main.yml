@@ -121,10 +121,19 @@
 
 - name: TRANSMUTE_ENV
   shell: "{{ item }}"
+  with_items:
     - "export TRANSMUTE_ENV='minikube'"
     - "export PATH=$HOME/.transmute/bin:$PATH"
     - "export PATH=$HOME/.local/bin:$PATH"
     - 'export NVM_DIR="$HOME/.nvm"'
     - 'export IPFS_POD_NAME=$(kubectl get pods --namespace default -l "app=ipfs,release=decentralized-storage"  -o jsonpath="{.items[0].metadata.name}")'
-    
-
+    - 'export MINIKUBE_IP=$(minikube ip)'
+    - "export KONG_ADMIN_URL={{ KONG_ADMIN_URL.stdout }}"
+    - "export KONG_PROXY_URL={{ KONG_PROXY_URL.stdout }}"
+    - "export KONG_PROXY_PORT={{ KONG_PROXY_PORT.stdout }}"
+    - "export KONG_HOST={{ KONG_HOST.stdout }}"
+    - "export KONG_PORT={{ KONG_PORT.stdout }}"
+    - "export GANACHE_CLUSTER_IP={{ GANACHE_CLUSTER_IP.stdout }}"
+    - "export IPFS_CLUSTER_IP={{ IPFS_CLUSTER_IP.stdout }}"
+    - "export CONSUMER_ID=$(curl -k -X POST {{ KONG_ADMIN_URL.stdout }}/consumers --data 'username=bob@example.com' --data 'custom_id=0' | jq -r '.id')"
+    - "export ACCESS_TOKEN=$(node ./scripts/okta/get-okta-token.js)"
