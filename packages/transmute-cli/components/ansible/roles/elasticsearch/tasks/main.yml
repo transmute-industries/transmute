@@ -6,12 +6,13 @@
   shell: "helm install fabric8/elasticsearch"
 
 - name: create storage
-  shell: |
-    cat <<EOF | kubectl create -f -
-    kind: StorageClass
-    apiVersion: storage.k8s.io/v1beta1
-    metadata:
-    name: standard
-    parameters:
-    type: gp2
-    EOF
+  shell:
+    cmd: |
+      cat <<EOF | kubectl create -f -
+      kind: StorageClass
+      apiVersion: storage.k8s.io/v1beta1
+      metadata:
+      name: standard
+      parameters:
+      type: gp2
+      EOF
