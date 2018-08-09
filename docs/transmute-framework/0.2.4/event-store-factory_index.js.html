@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>event-store-factory/index.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="EventStore.module.exports.html">module.exports</a></li><li><a href="EventStoreFactory.module.exports.html">module.exports</a></li><li><a href="module-src_decentralized-storage-TransmuteIpfsAdapter.html">TransmuteIpfsAdapter</a></li><li><a href="module-src_event-store-factory-EventStoreFactory.html">EventStoreFactory</a></li><li><a href="module-src_event-store-EventStore.html">EventStore</a></li><li><a href="module-src_stream-model-StreamModel.html">StreamModel</a></li><li><a href="StreamModel.module.exports.html">module.exports</a></li><li><a href="TransmuteIpfsAdapter.module.exports.html">module.exports</a></li></ul><h3>Modules</h3><ul><li><a href="module-src_decentralized-storage.html">src/decentralized-storage</a></li><li><a href="module-src_event-store.html">src/event-store</a></li><li><a href="module-src_event-store-factory.html">src/event-store-factory</a></li><li><a href="module-src_stream-model.html">src/stream-model</a></li><li><a href="module-TransmuteFramework.html">TransmuteFramework</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">event-store-factory/index.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * A module for creating and destroying EventStores
+ * @module src/event-store-factory
+ */
+
+const Web3 = require('web3');
+const contract = require('truffle-contract');
+const Mixpanel = require('mixpanel');
+
+const TransmuteIpfsAdapter = require('../decentralized-storage/ipfs');
+const pack = require('../../package.json');
+
+const GAS = require('../gas')
+
+/** @class EventStoreFactory */
+module.exports = class EventStoreFactory {
+  /**
+   * Creates a new EventStoreFactory.
+   * @constructor
+   * @memberof EventStoreFactory
+   * @param {Object} config Config object requiring eventStoreFactoryArtifact and web3Config with optional mixpanelConfig
+   */
+  constructor(config) {
+    if (!config) {
+      throw new Error(
+        'a config of form { eventStoreFactoryArtifact, web3 } is required.'
+      );
+    }
+
+    let { eventStoreFactoryArtifact, web3Config, mixpanelConfig } = config;
+
+    if (!eventStoreFactoryArtifact) {
+      throw new Error(
+        'a truffle-contract eventStoreFactoryArtifact property is required in constructor argument.'
+      );
+    }
+
+    if (!web3Config) {
+      throw new Error('a web3 property is required in constructor argument.');
+    }
+
+    if (mixpanelConfig &amp;&amp; mixpanelConfig.token &amp;&amp; mixpanelConfig.token !== '') {
+      this.mixpanel = Mixpanel.init(mixpanelConfig.token, 
+        { 
+          opt_out_tracking_by_default: mixpanelConfig.optOutOfTracking ? mixpanelConfig.optOutOfTracking : false
+        }
+      );
+    }
+
+    this.version = pack.version;
+
+    if (typeof window !== 'undefined' &amp;&amp; window.web3) {
+      this.web3 = window.web3;
+    } else {
+      this.web3 = new Web3(
+        new Web3.providers.HttpProvider(web3Config.providerUrl)
+      );
+    }
+
+    this.eventStoreFactoryArtifact = eventStoreFactoryArtifact;
+    this.eventStoreFactoryContract = contract(this.eventStoreFactoryArtifact);
+    this.eventStoreFactoryContract.setProvider(this.web3.currentProvider);
+  }
+
+  /**
+   * Returns Web3 accounts
+   * @function
+   * @memberof EventStoreFactory
+   * @name getWeb3Accounts
+   * @returns {Array.&lt;String>} Array of Web3 account addresses
+   */
+  async getWeb3Accounts() {
+    return new Promise((resolve, reject) => {
+      this.web3.eth.getAccounts((err, accounts) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(accounts);
+      });
+    });
+  }
+
+  /**
+   * Deploys eventStoreFactoryContract if it has not already been deployed
+   * @function
+   * @memberof EventStoreFactory
+   * @name init
+   */
+  async init() {
+    if (!this.eventStoreFactoryContractInstance) {
+      this.eventStoreFactoryContractInstance = await this.eventStoreFactoryContract.deployed();
+    }
+  }
+
+  /**
+   * Throws error if init() has not been called
+   * @function
+   * @memberof EventStoreFactory
+   * @name requireInstance
+   */
+  requireInstance() {
+    if (!this.eventStoreFactoryContractInstance) {
+      throw new Error(
+        'You must call init() before accessing eventStoreFactoryContractInstance.'
+      );
+    }
+  }
+
+  /**
+   * Creates EventStoreFactory instance and assigns it a new EventStoreFactoryContract
+   * @function
+   * @memberof EventStoreFactory
+   * @name clone
+   * @param {String} fromAddress Address used to create new EventStoreFactoryContract
+   * @returns {Object} EventStoreFactory instance
+   */
+  async clone(fromAddress) {
+    const newContract = await this.eventStoreFactoryContract.new({
+      from: fromAddress,
+      gas: GAS.MAX_GAS
+    });
+    let instance = Object.assign(
+      Object.create(Object.getPrototypeOf(this)),
+      this
+    );
+    instance.eventStoreFactoryContractInstance = newContract;
+    return instance;
+  }
+
+  /**
+   * Creates EventStore with eventStoreFactoryContractInstance
+   * @function
+   * @memberof EventStoreFactory
+   * @name createEventStore
+   * @param {String} fromAddress Address used to create new EventStore
+   * @returns {Object} Ethereum transaction from EventStore creation
+   */
+  async createEventStore(fromAddress) {
+    this.requireInstance();
+    return await this.eventStoreFactoryContractInstance.createEventStore({ 
+      from: fromAddress,
+      gas: GAS.MAX_GAS
+    });
+  }
+
+  /**
+   * Returns Array of EventStore addresses that were created with eventStoreFactoryContractInstance
+   * @function
+   * @memberof EventStoreFactory
+   * @name getEventStores
+   * @returns {Array.&lt;String>} Array of EventStore addresses
+   */
+  async getEventStores() {
+    this.requireInstance();
+    return await this.eventStoreFactoryContractInstance.getEventStores();
+  }
+
+  /**
+   * Destroys eventStoreFactoryContractInstance and returns remaining ETH to address
+   * @function
+   * @memberof EventStoreFactory
+   * @name destroy
+   * @param {String} fromAddress Address used to destroy eventStoreFactoryContractInstance
+   * @param {String} address Address receiving remaining ETH from eventStoreFactoryContractInstance
+   * @returns {Object} Ethereum transaction from EventStore destruction
+   */
+  async destroy(fromAddress, address) {
+    this.requireInstance();
+    return await this.eventStoreFactoryContractInstance.destroy(address, {
+      from: fromAddress,
+      gas: GAS.MAX_GAS
+    });
+  }
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Aug 09 2018 10:35:38 GMT-0500 (CDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
