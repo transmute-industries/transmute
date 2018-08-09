@@ -42,6 +42,7 @@ before_script:
   - transmute k8s microservice install kong
   - transmute k8s microservice install ipfs
   - transmute debug
+  - env
 
 script:
   - lerna bootstrap
