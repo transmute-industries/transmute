@@ -12,7 +12,7 @@
       kind: StorageClass
       apiVersion: storage.k8s.io/v1beta1
       metadata:
-      name: standard
+        name: standard
       parameters:
-      type: gp2
+        type: gp2
       EOF
