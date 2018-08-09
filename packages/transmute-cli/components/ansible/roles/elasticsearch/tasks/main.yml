@@ -13,6 +13,7 @@
       apiVersion: storage.k8s.io/v1beta1
       metadata:
         name: standard
+      provisioner: kubernetes.io/no-provisioner
       parameters:
         type: gp2
       EOF
