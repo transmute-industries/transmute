@@ -107,6 +107,15 @@
   shell: "npm root -g"
   register: TRANSMUTE_REPO
 
+- name: create dirs
+  file:
+    path: "{{ item }}"
+    state: directory
+    recurse: yes
+  with_items:
+    - "{{ TRANSMUTE_REPO.stdout }}/packages/transmute-framework/src/transmute-config/"
+    - "{{ TRANSMUTE_REPO.stdout }}/packages/transmute-dashboard/src/transmute-config/"
+
 - name: FRAMEWORK_CONFIG
   template:
     src: framework.env.json.j2
