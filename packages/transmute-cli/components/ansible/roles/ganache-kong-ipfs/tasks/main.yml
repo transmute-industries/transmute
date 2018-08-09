@@ -6,6 +6,7 @@
 - name: KONG_PROXY_URL
   shell: "minikube service gateway-kong-proxy --url"
   register: KONG_PROXY_URL
+  ignore_errors: yes
 
 - name: KONG_PROXY_PORT
   shell: "kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort'"
