@@ -110,8 +110,10 @@
   template:
     src: framework.env.json.j2
     dest: "{{ TRANSMUTE_REPO.stdout }}/packages/transmute-framework/src/transmute-config/env.json"
+  ignore_errors: yes
 
 - name: DASHBOARD_CONFIG
   template:
     src: dashboard.env.json.j2
     dest: "{{ TRANSMUTE_REPO.stdout }}/packages/transmute-dashboard/src/transmute-config/env.json"
+  ignore_errors: yes
