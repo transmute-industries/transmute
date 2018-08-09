@@ -72,7 +72,7 @@
   uri:
     url: "{{ KONG_ADMIN_URL.stdout }}/apis/"
     method: POST
-    body: "name=ipfs&hosts=ipfs.transmute.minikube&upstream_url=http://{{ IPFS_CLUSTER_IP }}:5001/"
+    body: "name=ipfs&hosts=ipfs.transmute.minikube&upstream_url=http://{{ IPFS_CLUSTER_IP.stdout }}:5001/"
     validate_certs: no
     status_code: 201
   register: out
