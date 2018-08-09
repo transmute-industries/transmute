@@ -25,5 +25,4 @@
 - name: helm status ipfs
   shell: "helm status decentralized-storage | grep STATUS: | awk  '{print $2}' | sed 's/DEPLOYED/yes/g'"
   register: output
-
-    ipfs_started: "{{ output.stdout }}"
+  ipfs_started: "{{ output.stdout }}"
