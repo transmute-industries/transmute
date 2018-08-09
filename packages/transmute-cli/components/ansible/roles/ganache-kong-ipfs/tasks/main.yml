@@ -6,7 +6,6 @@
 - name: KONG_PROXY_URL
   shell: "minikube service gateway-kong-proxy --url"
   register: KONG_PROXY_URL
-  ignore_errors: yes
 
 - name: KONG_PROXY_PORT
   shell: "kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort'"
@@ -35,7 +34,6 @@
   register: result
   retries: 60
   delay: 5
-  ignore_errors: yes
 
 - name: Curl ganache cluster to kong
   uri:
@@ -45,7 +43,6 @@
     status_code: 201
     validate_certs: no
   register: out
-  ignore_errors: yes
 
 - debug: var=out
 
@@ -60,7 +57,6 @@
     body_format: json
     status_code: 200
   register: out
-  ignore_errors: yes
 
 - debug: var=out
 
@@ -68,7 +64,7 @@
   shell: "PATH=$HOME/.transmute/bin:$PATH kubectl get service decentralized-storage-ipfs -o json | jq -r '.spec.clusterIP'"
   register: IPFS_CLUSTER_IP
 
-- name: Curl ganache cluster to kong
+- name: Curl ipfs cluster to kong
   uri:
     url: "{{ KONG_ADMIN_URL.stdout }}/apis/"
     method: POST
@@ -76,7 +72,6 @@
     validate_certs: no
     status_code: 201
   register: out
-  ignore_errors: yes
 
 - debug: var=out
 
@@ -88,7 +83,6 @@
     status_code: 201
     validate_certs: no
   register: out
-  ignore_errors: yes
 
 - debug: var=out
 
@@ -99,7 +93,6 @@
   register: out
   retries: 200
   delay: 1
-  ignore_errors: yes
 
 - debug: var=out
 
@@ -120,10 +113,8 @@
   template:
     src: framework.env.json.j2
     dest: "{{ TRANSMUTE_REPO.stdout }}/packages/transmute-framework/src/transmute-config/env.json"
-  ignore_errors: yes
 
 - name: DASHBOARD_CONFIG
   template:
     src: dashboard.env.json.j2
     dest: "{{ TRANSMUTE_REPO.stdout }}/packages/transmute-dashboard/src/transmute-config/env.json"
-  ignore_errors: yes
