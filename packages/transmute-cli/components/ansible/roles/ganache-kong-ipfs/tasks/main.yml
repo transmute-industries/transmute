@@ -32,8 +32,8 @@
     status_code: 200
     validate_certs: no
   register: result
-  retries: 200
-  delay: 1
+  retries: 60
+  delay: 5
 
 - name: Curl ganache cluster to kong
   uri:

@@ -11,12 +11,9 @@
   shell: 'kubectl get pods --namespace default -l "app=ipfs,release=decentralized-storage" -o jsonpath="{.items[0].metadata.name}"'
   register: IPFS_POD_NAME
 
-- name: sleep for 30 seconds and continue with play
-  wait_for: timeout=30
-
 - name: ipfs config Addresses
   shell: "kubectl exec {{ IPFS_POD_NAME.stdout }} -- ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001"
-  retries: 10
+  retries: 60
   delay: 5
 
 - name: ipfs config Access-Control-Allow-Origin
