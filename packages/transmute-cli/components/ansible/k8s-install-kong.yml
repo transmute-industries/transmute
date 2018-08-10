@@ -6,7 +6,7 @@
     ipfs_started: no
     ganache_started: no
     KONG_PROXY_PORT: 32455
-  gather_facts: no
+  gather_facts: yes
   roles:
     - role: kong
     - role: ganache-kong-ipfs
