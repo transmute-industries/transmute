@@ -96,28 +96,24 @@
 
 - debug: var=out
 
-- name: TRANSMUTE_REPO
-  shell: "npm root -g"
-  register: TRANSMUTE_REPO
-
 - name: create dirs
   file:
     path: "{{ item }}"
     state: directory
     recurse: yes
   with_items:
-    - "{{ TRANSMUTE_REPO.stdout }}/packages/transmute-framework/src/transmute-config/"
-    - "{{ TRANSMUTE_REPO.stdout }}/packages/transmute-dashboard/src/transmute-config/"
+    - "{{ ansible_env.HOME }}/.transmute/git/transmute/packages/transmute-framework/src/transmute-config/"
+    - "{{ ansible_env.HOME }}/.transmute/git/transmute/packages/transmute-dashboard/src/transmute-config/"
 
 - name: FRAMEWORK_CONFIG
   template:
     src: framework.env.json.j2
-    dest: "{{ TRANSMUTE_REPO.stdout }}/packages/transmute-framework/src/transmute-config/env.json"
+    dest: "{{ ansible_env.HOME }}/packages/transmute-framework/src/transmute-config/env.json"
 
 - name: DASHBOARD_CONFIG
   template:
     src: dashboard.env.json.j2
-    dest: "{{ TRANSMUTE_REPO.stdout }}/packages/transmute-dashboard/src/transmute-config/env.json"
+    dest: "{{ ansible_env.HOME }}/packages/transmute-dashboard/src/transmute-config/env.json"
 
 - name: TRANSMUTE_ENV
   lineinfile:
