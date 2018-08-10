@@ -23,6 +23,8 @@
   shell: "kubectl exec {{ IPFS_POD_NAME.stdout }} -- ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001"
   retries: 5
   delay: 60
+  register: result
+  until: result.rc == 0
 
 - name: ipfs config Access-Control-Allow-Origin
   shell: "kubectl exec {{ IPFS_POD_NAME.stdout }} -- ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '[\"*\"]'"
