@@ -108,12 +108,12 @@
 - name: FRAMEWORK_CONFIG
   template:
     src: framework.env.json.j2
-    dest: "{{ ansible_env.HOME }}/packages/transmute-framework/src/transmute-config/env.json"
+    dest: "{{ ansible_env.HOME }}/.transmute/git/transmute/packages/transmute-framework/src/transmute-config/env.json"
 
 - name: DASHBOARD_CONFIG
   template:
     src: dashboard.env.json.j2
-    dest: "{{ ansible_env.HOME }}/packages/transmute-dashboard/src/transmute-config/env.json"
+    dest: "{{ ansible_env.HOME }}/.transmute/git/transmute/packages/transmute-dashboard/src/transmute-config/env.json"
 
 - name: TRANSMUTE_ENV
   lineinfile:
