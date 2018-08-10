@@ -139,5 +139,4 @@
     - "export KONG_PORT={{ KONG_PORT.stdout }}"
     - "export GANACHE_CLUSTER_IP={{ GANACHE_CLUSTER_IP.stdout }}"
     - "export IPFS_CLUSTER_IP={{ IPFS_CLUSTER_IP.stdout }}"
-    - "export CONSUMER_ID=$(curl -k -X POST {{ KONG_ADMIN_URL.stdout }}/consumers --data 'username=bob@example.com' --data 'custom_id=0' | jq -r '.id')"
-    - "export ACCESS_TOKEN=$(node {{ TRANSMUTE_REPO.stdout }}/scripts/okta/get-okta-token.js)"
+
