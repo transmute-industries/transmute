@@ -109,10 +109,6 @@
     - "{{ TRANSMUTE_REPO.stdout }}/packages/transmute-framework/src/transmute-config/"
     - "{{ TRANSMUTE_REPO.stdout }}/packages/transmute-dashboard/src/transmute-config/"
 
-- name: KONG_PROXY_PORT
-  shell: "kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort'"
-  register: KONG_PROXY_PORT
-
 - name: FRAMEWORK_CONFIG
   template:
     src: framework.env.json.j2
@@ -124,20 +120,11 @@
     dest: "{{ TRANSMUTE_REPO.stdout }}/packages/transmute-dashboard/src/transmute-config/env.json"
 
 - name: TRANSMUTE_ENV
-  shell: "{{ item }}"
-  args:
-    executable: /bin/bash
+  lineinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    state: present
+    regexp: '^export {{ item.var }}\s'
+    line: 'export {{ item.var }}={{ item=value }}'
   with_items:
-    - "export TRANSMUTE_ENV='minikube'"
-    - "export PATH=$HOME/.transmute/bin:$PATH"
-    - "export PATH=$HOME/.local/bin:$PATH"
-    - 'export NVM_DIR="$HOME/.nvm"'
-    - 'export IPFS_POD_NAME=$(kubectl get pods --namespace default -l "app=ipfs,release=decentralized-storage"  -o jsonpath="{.items[0].metadata.name}")'
-    - 'export MINIKUBE_IP=$(minikube ip)'
-    - "export KONG_ADMIN_URL={{ KONG_ADMIN_URL.stdout }}"
-    - "export KONG_PROXY_URL={{ KONG_PROXY_URL.stdout }}"
-    - "export KONG_PROXY_PORT={{ KONG_PROXY_PORT.stdout }}"
-    - "export KONG_HOST={{ KONG_HOST.stdout }}"
-    - "export KONG_PORT={{ KONG_PORT.stdout }}"
-    - "export GANACHE_CLUSTER_IP={{ GANACHE_CLUSTER_IP.stdout }}"
-    - "export IPFS_CLUSTER_IP={{ IPFS_CLUSTER_IP.stdout }}"
+    - var: "TRANSMUTE_ENV"
+      value: 'minikube'
