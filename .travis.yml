@@ -8,7 +8,6 @@ matrix:
       sudo: required
       language: bash
       env:
-        
         # TODO: These are used in the transmute CLI and should be removed from here.
         - MINIKUBE_MEMORY=7777
         - MINIKUBE_CPU=4
