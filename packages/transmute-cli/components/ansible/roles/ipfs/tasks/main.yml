@@ -19,16 +19,10 @@
   shell: 'kubectl get pods --namespace default -l "app=ipfs,release=decentralized-storage" -o jsonpath="{.items[0].metadata.name}"'
   register: IPFS_POD_NAME
 
-- name: rm -f /data/ipfs/repo.lock
-  shell: "kubectl exec {{ IPFS_POD_NAME.stdout }} -- rm -f /data/ipfs/repo.lock"
-  retries: 60
-  delay: 10
-  ignore_errors: yes
-
 - name: ipfs config Addresses
   shell: "kubectl exec {{ IPFS_POD_NAME.stdout }} -- ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001"
-  retries: 60
-  delay: 10
+  retries: 5
+  delay: 60
 
 - name: ipfs config Access-Control-Allow-Origin
   shell: "kubectl exec {{ IPFS_POD_NAME.stdout }} -- ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '[\"*\"]'"
