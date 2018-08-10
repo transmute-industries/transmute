@@ -125,6 +125,8 @@
 
 - name: TRANSMUTE_ENV
   shell: "{{ item }}"
+  args:
+    executable: /bin/bash
   with_items:
     - "export TRANSMUTE_ENV='minikube'"
     - "export PATH=$HOME/.transmute/bin:$PATH"
@@ -139,4 +141,3 @@
     - "export KONG_PORT={{ KONG_PORT.stdout }}"
     - "export GANACHE_CLUSTER_IP={{ GANACHE_CLUSTER_IP.stdout }}"
     - "export IPFS_CLUSTER_IP={{ IPFS_CLUSTER_IP.stdout }}"
-
