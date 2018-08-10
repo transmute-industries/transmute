@@ -124,7 +124,7 @@
     path: "{{ ansible_env.HOME }}/.bashrc"
     state: present
     regexp: '^export {{ item.var }}\s'
-    line: 'export {{ item.var }}={{ item=value }}'
+    line: 'export {{ item.var }}={{ item.value }}'
   with_items:
     - var: "TRANSMUTE_ENV"
       value: 'minikube'
