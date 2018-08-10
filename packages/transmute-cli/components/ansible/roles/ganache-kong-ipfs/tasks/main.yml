@@ -46,9 +46,6 @@
 
 - debug: var=out
 
-- name: sleep for 30 seconds and continue with play
-  wait_for: timeout=30
-
 - name: GANACHE HEALTHCHECK
   uri:
     url: "http://ganache.transmute.minikube:{{ KONG_PROXY_PORT.stdout }}"
@@ -57,6 +54,10 @@
     body_format: json
     status_code: 200
   register: out
+  retries: 5
+  delay: 60
+  register: result
+  until: result.status == 0
 
 - debug: var=out
 
