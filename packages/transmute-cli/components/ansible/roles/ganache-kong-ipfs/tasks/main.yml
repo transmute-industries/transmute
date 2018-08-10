@@ -34,6 +34,8 @@
   register: result
   retries: 60
   delay: 5
+  register: result
+  until: result.status == 200
 
 - name: Curl ganache cluster to kong
   uri:
