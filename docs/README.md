@@ -139,11 +139,10 @@ maintenance tasks.
 ### provision-minikube
 
 `transmute k8s provision-minikube mytransmutek8s`   <-- will create a
-k8s cluster using minikube by default it will use minikube, but you can
+k8s cluster using minikube by default it will use --vmdriver=none(requires root), but you can
 choose the driver by passing a `--vmdriver=` option on the command line
 e.g.
-
-`transmute k8s provision-minikube mytransmutek8s --vmdriver=none`
+`transmute k8s provision-minikube mytransmutek8s --vmdriver=virtualbox`
 
 ### provision-azure
 

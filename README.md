@@ -39,6 +39,9 @@ You can use the transmute cli to provision and initialize a development cluster.
 ```
 transmute k8s provision-minikube my-cluster
 transmute k8s init my-cluster
+transmute k8s microservice install kong
+transmute k8s microservice install ganache
+transmute k8s microservice install ipfs
 ```
 
 Once this process has completed, you should be able to talk to ganache and ipfs through kong via curl (note the kong port will need to be updated, `kubectl get svc`):
@@ -87,5 +90,3 @@ Final steps - linking everything and migrating your smart contracts
 1. Run `npm run start`
 
 That's it! [Login to the app](http://localhost:3000) and click on the dashboard button in the side menu to begin recording events!
-
-
