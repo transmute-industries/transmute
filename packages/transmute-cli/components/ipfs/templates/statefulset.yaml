@@ -66,8 +66,7 @@ spec:
       volumes:
         - name: ipfs-storage
           emptyDir: {}
-      volumes:
-        - name: {{ template "ipfs.servicename" . }}
+        - name: config
           configMap:
             name: {{ template "ipfs.servicename" . }}
   {{- end }}
