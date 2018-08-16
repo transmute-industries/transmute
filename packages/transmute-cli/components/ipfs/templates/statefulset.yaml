@@ -39,7 +39,10 @@ spec:
             subPath: config
         resources:
 {{ toYaml .Values.resources | indent 10 }}
-
+  volumes:
+    - name: config
+      configMap:
+        name: {{ template "ipfs.servicename" . }}
   {{- if .Values.persistence.enabled }}
   volumeClaimTemplates:
     - metadata:
@@ -67,9 +70,3 @@ spec:
         - name: ipfs-storage
           emptyDir: {}
   {{- end }}
-    - metadata:
-        name: {{ template "ipfs.servicename" . }}
-      volumes:
-        - name: config
-          configMap:
-            name: {{ template "ipfs.servicename" . }}
