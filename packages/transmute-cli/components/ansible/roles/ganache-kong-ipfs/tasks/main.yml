@@ -46,8 +46,6 @@
     validate_certs: no
   register: out
 
-- debug: var=out
-
 - name: GANACHE HEALTHCHECK
   uri:
     url: "http://ganache.transmute.minikube:{{ KONG_PROXY_PORT.stdout }}"
@@ -59,9 +57,7 @@
   retries: 5
   delay: 60
   register: result
-  until: result.status == 0
-
-- debug: var=out
+  until: result.status == 200
 
 - name: IPFS_CLUSTER_IP
   shell: "PATH=$HOME/.transmute/bin:$PATH kubectl get service decentralized-storage-ipfs -o json | jq -r '.spec.clusterIP'"
@@ -74,9 +70,6 @@
     body: "name=ipfs&hosts=ipfs.transmute.minikube&upstream_url=http://{{ IPFS_CLUSTER_IP.stdout }}:5001/"
     validate_certs: no
     status_code: 201
-  register: out
-
-- debug: var=out
 
 - name: Curl ipfs to kong
   uri:
@@ -85,9 +78,6 @@
     body: 'name=cors&config.origins=*&config.methods=GET, PUT, POST'
     status_code: 201
     validate_certs: no
-  register: out
-
-- debug: var=out
 
 - name: Curl ipfs get api id
   uri:
@@ -96,8 +86,6 @@
   register: out
   retries: 200
   delay: 1
-
-- debug: var=out
 
 - name: create dirs
   file:
