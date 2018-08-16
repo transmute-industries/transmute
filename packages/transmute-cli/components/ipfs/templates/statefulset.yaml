@@ -39,10 +39,10 @@ spec:
             subPath: config
         resources:
 {{ toYaml .Values.resources | indent 10 }}
-  volumes:
-    - name: {{ template "ipfs.servicename" . }}
-      configMap:
-        name: {{ template "ipfs.servicename" . }}
+      volumes:
+        - name: {{ template "ipfs.servicename" . }}
+          configMap:
+            name: {{ template "ipfs.servicename" . }}
   {{- if .Values.persistence.enabled }}
   volumeClaimTemplates:
     - metadata:
