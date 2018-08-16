@@ -34,8 +34,9 @@ spec:
         volumeMounts:
           - name: ipfs-storage
             mountPath: /data/ipfs
-          - name: conf
-            mountPath: /data/ipfs/.ipfs
+          - name: config
+            mountPath: /data/ipfs/.ipfs/config
+            subPath: config
         resources:
 {{ toYaml .Values.resources | indent 10 }}
 
@@ -65,4 +66,8 @@ spec:
       volumes:
         - name: ipfs-storage
           emptyDir: {}
+      volumes:
+        - name: config
+          configMap:
+            name: config
   {{- end }}

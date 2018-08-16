@@ -26,8 +26,8 @@ config: |-
     "Swarm": [
       "/ip4/0.0.0.0/tcp/4001"
     ],
-    "API": "/ip4/127.0.0.1/tcp/5001",
-    "Gateway": "/ip4/127.0.0.1/tcp/8080"
+    "API": "/ip4/0.0.0.0/tcp/5001",
+    "Gateway": "/ip4/0.0.0.0/tcp/8080"
   },
   "API": {
     "HTTPHeaders": [
