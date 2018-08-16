@@ -64,6 +64,8 @@ spec:
       {{- end }}
   {{- else }}
       volumes:
+        - name: ipfs-storage
+          emptyDir: {}
     - metadata:
         name: {{ template "ipfs.servicename" . }}
         {{- range $key, $value := .Values.persistence.annotations }}
