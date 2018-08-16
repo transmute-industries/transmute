@@ -69,5 +69,5 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: configmap
+            name: config
   {{- end }}
