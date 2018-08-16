@@ -21,7 +21,7 @@ persistence:
   accessModes:
     - ReadWriteOnce
 
-config: |-
+configmap: |-
   "Addresses": {
     "Swarm": [
       "/ip4/0.0.0.0/tcp/4001"
