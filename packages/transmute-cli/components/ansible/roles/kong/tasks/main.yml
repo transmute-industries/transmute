@@ -7,7 +7,7 @@
     kong_started: "{{ output.stdout }}"
 
 - name: Install kong
-  shell: "helm install stable/kong --name gateway --set proxy.useTLS=false --set proxy.nodePort={{ KONG_PROXY_PORT }}"
+  shell: "helm install stable/kong --name gateway --set proxy.useTLS=false --set proxy.nodePort={{ KONG_PROXY_PORT }} --wait"
   when: kong_started != "DEPLOYED"
 
 - name: spin up
