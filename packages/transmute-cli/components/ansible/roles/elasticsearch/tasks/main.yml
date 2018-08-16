@@ -1,0 +1,28 @@
+---
+- name: helm status elasticsearch
+  shell: "helm status elasticsearch | grep STATUS: | awk  '{print $2}'"
+  register: output
+
+- set_fact:
+    elasticsearch_started: "{{ output.stdout }}"
+
+- name: helm repo add
+  shell: "helm repo add fabric8 https://fabric8.io/helm"
+
+- name: helm install
+  shell: "helm install fabric8/elasticsearch"
+  when: not elasticsearch_started != "DEPLOYED"
+
+- name: create storage
+  shell:
+    cmd: |
+      cat <<EOF | kubectl apply -f -
+      kind: StorageClass
+      apiVersion: storage.k8s.io/v1beta1
+      metadata:
+        name: standard
+      provisioner: kubernetes.io/no-provisioner
+      parameters:
+        type: gp2
+      EOF
+  ignore_errors: yes
