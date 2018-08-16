@@ -1,4 +1,4 @@
-## Ansibe
+## Ansible
 The core of oneliner bootstrap is [Ansible](https://www.ansible.com), nice tool to perform automation. 
 
 If you hit into some error during Ansible playbook - you can correct it and re-run playbook with 
