@@ -40,7 +40,7 @@ spec:
         resources:
 {{ toYaml .Values.resources | indent 10 }}
   volumes:
-    - name: config
+    - name: {{ template "ipfs.servicename" . }}
       configMap:
         name: {{ template "ipfs.servicename" . }}
   {{- if .Values.persistence.enabled }}
