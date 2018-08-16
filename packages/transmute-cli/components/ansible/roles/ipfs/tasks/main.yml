@@ -7,7 +7,7 @@
     ipfs_started: "{{ output.stdout }}"
 
 - name: install ipfs
-  shell: "helm install $(npm root -g)/transmute-cli/packages/ipfs --name decentralized-storage --wait"
+  shell: "helm install $(npm root -g)/transmute-cli/components/ipfs/ --name decentralized-storage --wait"
   when: ipfs_started != "DEPLOYED"
 
 - name: ready.w8 decentralized-storage-ipfs
