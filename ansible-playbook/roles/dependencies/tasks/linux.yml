@@ -23,9 +23,6 @@
     - git
     - socat
     - jq
-    - python-setuptools
-    - python-pip
-    - python-urllib3
 
 - name: create temporary directory NSENTER_TMP
   tempfile:
@@ -103,8 +100,3 @@
     dest: "{{ ansible_env.HOME }}/.transmute/bin/helm"
     remote_src: yes
     mode: 0750
-
-- name: installing pyhelm
-  pip:
-    name: pyhelm
-  become: yes
