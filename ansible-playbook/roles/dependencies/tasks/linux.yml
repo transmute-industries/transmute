@@ -115,4 +115,6 @@
 
 - name: installing pyhelm repo
   shell: "python {{ pyhelm_tmp.path }}/setup.py install"
+  args:
+    chdir: "{{ pyhelm_tmp.path }}"
   become: yes
