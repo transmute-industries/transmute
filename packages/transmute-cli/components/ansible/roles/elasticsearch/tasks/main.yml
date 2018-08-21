@@ -8,7 +8,7 @@
 
 - name: helm install
   shell: "helm install fabric8/elasticsearch"
-  when: output.stdout
+  when: not output.stdout
 
 - name: create storage
   shell:
