@@ -24,6 +24,7 @@
     - socat
     - jq
     - python-setuptools
+    - python-pip
 
 - name: create temporary directory NSENTER_TMP
   tempfile:
@@ -102,19 +103,7 @@
     remote_src: yes
     mode: 0750
 
-- name: create temporary directory pyhelm
-  tempfile:
-    state: directory
-    suffix: PYHELM_TMP
-  register: pyhelm_tmp
-
-- name: cloning pyhelm repo
-  git:
-    repo: https://github.com/flaper87/pyhelm.git
-    dest: "{{ pyhelm_tmp.path }}"
-
-- name: installing pyhelm repo
-  shell: "python {{ pyhelm_tmp.path }}/setup.py install"
-  args:
-    chdir: "{{ pyhelm_tmp.path }}"
+- name: installing pyhelm
+  pip:
+    name: pyhelm
   become: yes
