@@ -1,17 +1,12 @@
 ---
-- name: helm status elasticsearch
-  shell: "helm status elasticsearch | grep STATUS: | awk  '{print $2}'"
-  register: output
-
-- set_fact:
-    elasticsearch_started: "{{ output.stdout }}"
-
 - name: helm repo add
   shell: "helm repo add fabric8 https://fabric8.io/helm"
 
 - name: helm install
-  shell: "helm install fabric8/elasticsearch"
-  when: not elasticsearch_started != "DEPLOYED"
+  helm:
+    host: localhost
+    state: present
+    name: fabric8/elasticsearch
 
 - name: create storage
   shell:
@@ -22,7 +17,5 @@
       metadata:
         name: standard
       provisioner: kubernetes.io/no-provisioner
-      parameters:
-        type: gp2
       EOF
   ignore_errors: yes
