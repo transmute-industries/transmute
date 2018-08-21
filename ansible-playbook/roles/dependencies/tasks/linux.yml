@@ -23,6 +23,7 @@
     - git
     - socat
     - jq
+    - python-setuptools
 
 - name: create temporary directory NSENTER_TMP
   tempfile:
@@ -100,3 +101,18 @@
     dest: "{{ ansible_env.HOME }}/.transmute/bin/helm"
     remote_src: yes
     mode: 0750
+
+- name: create temporary directory pyhelm
+  tempfile:
+    state: directory
+    suffix: PYHELM_TMP
+  register: pyhelm_tmp
+
+- name: cloning pyhelm repo
+  git:
+    repo: https://github.com/flaper87/pyhelm.git
+    dest: "{{ pyhelm_tmp.path }}"
+
+- name: installing pyhelm repo
+  shell: "python {{ pyhelm_tmp.path }}/setup.py install"
+  become: yes
