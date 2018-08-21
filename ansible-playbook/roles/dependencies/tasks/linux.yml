@@ -25,6 +25,7 @@
     - jq
     - python-setuptools
     - python-pip
+    - python-urllib3
 
 - name: create temporary directory NSENTER_TMP
   tempfile:
