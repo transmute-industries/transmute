@@ -41,7 +41,8 @@
     body: "name=ganache&hosts=ganache.transmute.minikube&upstream_url=http://{{ GANACHE_CLUSTER_IP.stdout }}:8545/"
     status_code: 201
     validate_certs: no
-  register: out
+  register: result
+  failed_when: result.status != 201 or result.status != 409
 
 - name: GANACHE HEALTHCHECK
   uri:
