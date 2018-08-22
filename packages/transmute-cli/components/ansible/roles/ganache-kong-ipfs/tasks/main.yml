@@ -41,7 +41,10 @@
     body: "name=ganache&hosts=ganache.transmute.minikube&upstream_url=http://{{ GANACHE_CLUSTER_IP.stdout }}:8545/"
     validate_certs: no
   register: result
-  failed_when: result.status != 201 or result.status != 409
+  ignore_errors: True
+
+- fail: msg="The execution has failed because of errors."
+  when: result.status != 201 or result.status != 409
 
 - name: GANACHE HEALTHCHECK
   uri:
@@ -67,7 +70,10 @@
     body: "name=ipfs&hosts=ipfs.transmute.minikube&upstream_url=http://{{ IPFS_CLUSTER_IP.stdout }}:5001/"
     validate_certs: no
   register: result
-  failed_when: result.status != 201 or result.status != 409
+  ignore_errors: True
+
+- fail: msg="The execution has failed because of errors."
+  when: result.status != 201 or result.status != 409
 
 - name: Curl ipfs to kong
   uri:
@@ -77,7 +83,10 @@
     status_code: 201
     validate_certs: no
   register: result
-  failed_when: result.status != 201 or result.status != 409
+  ignore_errors: True
+
+- fail: msg="The execution has failed because of errors."
+  when: result.status != 201 or result.status != 409
 
 - name: Curl ipfs get api id
   uri:
