@@ -39,7 +39,6 @@
     url: "{{ KONG_ADMIN_URL.stdout }}/apis/"
     method: POST
     body: "name=ganache&hosts=ganache.transmute.minikube&upstream_url=http://{{ GANACHE_CLUSTER_IP.stdout }}:8545/"
-    status_code: 201
     validate_certs: no
   register: result
   failed_when: result.status != 201 or result.status != 409
@@ -67,7 +66,8 @@
     method: POST
     body: "name=ipfs&hosts=ipfs.transmute.minikube&upstream_url=http://{{ IPFS_CLUSTER_IP.stdout }}:5001/"
     validate_certs: no
-    status_code: 201
+  register: result
+  failed_when: result.status != 201 or result.status != 409
 
 - name: Curl ipfs to kong
   uri:
