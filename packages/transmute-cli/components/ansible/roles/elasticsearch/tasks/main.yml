@@ -7,7 +7,7 @@
   register: output
 
 - name: helm install
-  shell: "helm install fabric8/elasticsearch"
+  shell: "helm install fabric8/elasticsearch --name elasticsearch"
   when: not output.stdout
 
 - name: create storage
