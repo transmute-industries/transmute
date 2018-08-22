@@ -44,7 +44,7 @@
   ignore_errors: True
 
 - fail: msg="The execution has failed because of errors."
-  when: result.status != 201 or result.status != 409
+  when: result.status != 201 and result.status != 409
 
 - name: GANACHE HEALTHCHECK
   uri:
@@ -73,7 +73,7 @@
   ignore_errors: True
 
 - fail: msg="The execution has failed because of errors."
-  when: result.status != 201 or result.status != 409
+  when: result.status != 201 and result.status != 409
 
 - name: Curl ipfs to kong
   uri:
@@ -86,7 +86,7 @@
   ignore_errors: True
 
 - fail: msg="The execution has failed because of errors."
-  when: result.status != 201 or result.status != 409
+  when: result.status != 201 and result.status != 409
 
 - name: Curl ipfs get api id
   uri:
