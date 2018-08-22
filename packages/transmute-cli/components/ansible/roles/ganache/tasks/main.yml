@@ -4,7 +4,7 @@
   register: output
 
 - name: Start ganache
-  shell: "helm install --name ganache transmute-charts/ganache --wait"
+  shell: "helm install --name ganache transmute-charts/ganache c"
   when: not output.stdout
 
 - name: ready.w8 ganache
