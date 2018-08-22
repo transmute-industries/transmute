@@ -1,0 +1,7 @@
+---
+- name: init
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  roles:
+    - role: init

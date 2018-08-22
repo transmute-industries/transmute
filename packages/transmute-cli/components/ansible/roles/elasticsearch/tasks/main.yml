@@ -1,0 +1,23 @@
+---
+- name: helm repo add
+  shell: "helm repo add fabric8 https://fabric8.io/helm"
+
+- name: helm status elasticsearch
+  shell: "helm status elasticsearch | grep STATUS: | awk  '{print $2}' | sed 's/DEPLOYED/yes/g'"
+  register: output
+
+- name: helm install
+  shell: "helm install fabric8/elasticsearch --name elasticsearch --wait"
+  when: not output.stdout
+
+- name: create storage
+  shell:
+    cmd: |
+      cat <<EOF | kubectl apply -f -
+      kind: StorageClass
+      apiVersion: storage.k8s.io/v1
+      metadata:
+        name: local-storage
+      provisioner: kubernetes.io/no-provisioner
+      volumeBindingMode: WaitForFirstConsumer
+      EOF

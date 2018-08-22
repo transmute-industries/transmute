@@ -1,0 +1,13 @@
+---
+- name: k8s-install-kong
+  hosts: localhost
+  connection: local
+  vars:
+    ipfs_started: no
+    ganache_started: no
+    KONG_PROXY_PORT: 32443
+  gather_facts: yes
+  roles:
+    - role: kong
+    - role: ganache-kong-ipfs
+      when: ganache_started and ipfs_started

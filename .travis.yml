@@ -8,7 +8,6 @@ matrix:
       sudo: required
       language: bash
       env:
-        
         # TODO: These are used in the transmute CLI and should be removed from here.
         - MINIKUBE_MEMORY=7777
         - MINIKUBE_CPU=4
@@ -36,8 +35,12 @@ before_script:
   - npm i
   - npm i -g
   - cd $TRAVIS_BUILD_DIR
-  - transmute k8s provision-minikube travis_test_cluster --vmdriver none
+  - transmute k8s provision-minikube travis_test_cluster
   - transmute k8s init travis_test_cluster
+  - transmute k8s microservice install elasticsearch
+  - transmute k8s microservice install ganache
+  - transmute k8s microservice install kong
+  - transmute k8s microservice install ipfs
   - transmute debug
 
 script:
@@ -46,6 +49,3 @@ script:
   - lerna run --scope transmute-framework truffle:migrate
   - lerna run --scope transmute-framework test
   - lerna run --scope transmute-framework test:report
-
-
-
