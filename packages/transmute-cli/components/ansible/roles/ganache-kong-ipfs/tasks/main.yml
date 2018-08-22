@@ -19,9 +19,6 @@
   shell: "echo {{ KONG_ADMIN_URL.stdout }} | sed 's!https://!!g' | cut -f2 -d:"
   register: KONG_PORT
 
-- name: sleep for 30 seconds and continue with play
-  wait_for: timeout=30
-
 - name: GANACHE_CLUSTER_IP
   shell: "kubectl get service ganache -o json | jq -r '.spec.clusterIP'"
   register: GANACHE_CLUSTER_IP
@@ -78,6 +75,8 @@
     body: 'name=cors&config.origins=*&config.methods=GET, PUT, POST'
     status_code: 201
     validate_certs: no
+  register: result
+  failed_when: result.status != 201 or result.status != 409
 
 - name: Curl ipfs get api id
   uri:

@@ -21,4 +21,3 @@
       provisioner: kubernetes.io/no-provisioner
       volumeBindingMode: WaitForFirstConsumer
       EOF
-  ignore_errors: yes
