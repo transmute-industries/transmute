@@ -33,16 +33,17 @@
   become: yes
   when: ansible_system == "Linux"
 
-- name: Install docker
-  package: "name=docker state=present"
-  become: yes
+- name: Install docker (Darwin)
+  homebrew_cask:
+    name: "docker"
+    state: present
   when: ansible_system == "Darwin"
 
 - name: Start docker (Darwin)
   shell: open --background -a Docker
   when: ansible_system == "Darwin"
 
-- name: start docker
+- name: Start docker
   service: name=docker state=started enabled=yes
   become: yes
   when: ansible_system == "Linux"
