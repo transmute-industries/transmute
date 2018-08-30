@@ -105,3 +105,15 @@ module.exports.aks = (
     }
     run.shellExec(prov_cmd_azure);
 };
+
+module.exports.aws = (dryrun, clusterName) => {
+    let prov_cmd = 'ansible-playbook --diff -l "localhost" ' +
+      __dirname +
+      '/../../../components/ansible/provision-aws.yml -e ' + clusterName;
+
+  if (dryrun == 'true') {
+    console.info('<--dry run-->');
+    prov_cmd = prov_cmd + " --check";
+  }
+  run.shellExec(prov_cmd);
+};

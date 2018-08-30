@@ -293,6 +293,41 @@ vorpal
     callback();
   });
 
+/** transmute k8s provision-aws uses aws to provision a k8s cluster
+ * @name transmute k8s provision-aws <clustername> <aws_region> <aws_key> <aws_secret>
+ * @example transmute k8s provision-aws myClusterName us-east-1 key secret
+ * @param {string} clustername
+ * @param {string} aws_region
+ * @param {string} aws_key
+ * @param {string} aws_secret
+ * */
+vorpal
+  .command('k8s provision-aws <clustername> <aws_region> <aws_key> <aws_secret>')
+  .description('Provision k8s cluster in aws')
+  .option('--nodes <nodes>', 'How many nodes to create the cluster with')
+  .option(
+    'The cluster name to create the cluster with'
+  )
+  .option('--dryrun', 'Print out what would be done without executing anything')
+  .action(function(args, callback) {
+    var t0 = performance.now();
+    // begin performance test
+    let dryrun = 'false';
+    if (args.options.dryrun) {
+      console.info('dry run');
+      dryrun = 'true';
+    }
+    provision.minikube(dryrun, args.clustername, args.aws_region, args.aws_key, args.aws_secret);
+    // end performance test
+    var t1 = performance.now();
+    vorpal.logger.info(
+      'Call to transmute provision took ' +
+        ((t1 - t0) / 1000).toPrecision(4) +
+        ' seconds.'
+    );
+    callback();
+  });
+
 /** transmute k8s microservice install <appname> deploy <appname> to k8s cluster
  * @name transmute k8s microservice install <appname>
  * @example transmute k8s microservice install kong
