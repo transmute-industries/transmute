@@ -6,9 +6,7 @@ matrix:
     - os: linux
       dist: trusty
       sudo: required
-      language: nodejs
-      node_js:
-        - "8"
+      language: bash
       env:
         # TODO: These are used in the transmute CLI and should be removed from here.
         - MINIKUBE_MEMORY=7777
@@ -28,10 +26,10 @@ matrix:
         - CHANGE_MINIKUBE_NONE_USER=true
         - EDITOR=cat
 
-# before_script:
-#   # bootstrap installs global dev dependencies, including the transmute-cli
-#   - bash ./bootstrap
-#   - source ~/.bashrc
+before_script:
+  # bootstrap installs global dev dependencies, including the transmute-cli
+  - bash ./bootstrap
+  - source ~/.bashrc
 #   # This setup overwrites the transmute-cli with a build from the current branch (so the cli is tested)
 #   - cd $TRAVIS_BUILD_DIR/packages/transmute-cli
 #   - npm i
@@ -46,7 +44,6 @@ matrix:
 #   - transmute debug
 
 script:
-  - npm install -g lerna
   - lerna bootstrap
   - lerna run --scope transmute-adapter-firestore test
   # - lerna run --scope transmute-framework truffle:test
