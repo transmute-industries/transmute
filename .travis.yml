@@ -44,6 +44,7 @@ matrix:
 #   - transmute debug
 
 script:
+  - npm install -g lerna
   - lerna bootstrap
   - lerna run --scope transmute-adapter-firestore test
   # - lerna run --scope transmute-framework truffle:test
