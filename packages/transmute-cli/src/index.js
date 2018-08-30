@@ -317,7 +317,7 @@ vorpal
       console.info('dry run');
       dryrun = 'true';
     }
-    provision.minikube(dryrun, args.clustername, args.aws_region, args.aws_key, args.aws_secret);
+    provision.aws(dryrun, args.clustername, args.aws_region, args.aws_key, args.aws_secret);
     // end performance test
     var t1 = performance.now();
     vorpal.logger.info(
