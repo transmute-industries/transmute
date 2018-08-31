@@ -7,42 +7,52 @@ const MINIKUBE_DISK = process.env.MINIKUBE_DISK || '100g';
 const MINIKUBE_PROFILE = process.env.MINIKUBE_PROFILE || 'transmute-k8s';
 const MINIKUBE_DRIVERS = ['virtualbox', 'kvm', 'kvm2', 'none'];
 
-module.exports.minikube = (dryrun, clusterName, minikubeDriver) => {
-    let minikube_param =
-        ' -e kubernetes_version=' +
-        TRANSMUTE_KUBE_VERSION +
-        ' -e minikube_disk_size=' +
-        MINIKUBE_DISK +
-        ' -e minikube_cpus=' +
-        MINIKUBE_CPU +
-        ' -e minikube_memory=' +
-        MINIKUBE_MEMORY;
-    +' -e minikube_profile=' + MINIKUBE_PROFILE;
+module.exports.minikube = (
+  dryrun,
+  minikubeDriver,
+) => {
+  let minikube_param =
+    ' -e kubernetes_version=' +
+    TRANSMUTE_KUBE_VERSION +
+    ' -e minikube_disk_size=' +
+    MINIKUBE_DISK +
+    ' -e minikube_cpus=' +
+    MINIKUBE_CPU +
+    ' -e minikube_memory=' +
+    MINIKUBE_MEMORY +
+    ' -e minikube_profile=' +
+    MINIKUBE_PROFILE;
 
-    let prov_cmd =
-        'ansible-playbook --diff -l "localhost" ' +
-        __dirname +
-        '/../../../components/ansible/provision-minikube.yml';
+  if (MINIKUBE_DRIVERS.indexOf(minikubeDriver) == -1) {
+    let os_platform = process.env.platform;
 
-    if (MINIKUBE_DRIVERS.indexOf(minikubeDriver) == -1) {
-        minikubeDriver = 'none';
+    if (os_platform != 'linux') {
+      minikubeDriver = 'virtualbox';
+    } else {
+      minikubeDriver = 'none';
     }
+  }
 
-    if (minikubeDriver == 'none') {
-        logger.log({
-            level: 'info',
-            message: `VMDriver=None requires minikube to run as root!`,
-        });
-    }
+  if (minikubeDriver == 'none') {
+    logger.log({
+      level: 'info',
+      message: 'VMDriver=None requires minikube to run as root!',
+    });
+  }
 
-    prov_cmd = prov_cmd + ' -e minikube_vm_driver=' + minikubeDriver;
+  minikube_param = minikube_param + ' -e minikube_vm_driver=' + minikubeDriver;
 
-    prov_cmd = prov_cmd + minikube_param;
-    if (dryrun === 'true') {
-        console.info('<--dry run-->');
-        prov_cmd = prov_cmd + ' --check';
-    }
-    run.shellExec(prov_cmd);
+  let prov_cmd =
+    'ansible-playbook --diff -l "localhost" ' +
+    __dirname +
+    '/../../../components/ansible/provision-minikube.yml' +
+    minikube_param;
+
+  if (dryrun === 'true') {
+    console.info('<--dry run-->');
+    prov_cmd = prov_cmd + ' --check';
+  }
+  run.shellExec(prov_cmd);
 };
 
 module.exports.aks = (
