@@ -187,7 +187,7 @@ vorpal
   .command('k8s init <clustername>')
   .description('Initialize k8s cluster')
   .option('--dryrun', 'Print out what would be done without executing anything')
-  .action(function(args, callback) {
+  .action(function (args, callback) {
     var t0 = performance.now();
     // begin performance test
     let dryrun = 'false';
@@ -199,8 +199,8 @@ vorpal
     var t1 = performance.now();
     vorpal.logger.info(
       'Call to transmute init took ' +
-        ((t1 - t0) / 1000).toPrecision(4) +
-        ' seconds.'
+      ((t1 - t0) / 1000).toPrecision(4) +
+      ' seconds.'
     );
     callback();
   });
@@ -219,7 +219,7 @@ vorpal
     '--nodesize <nodesize>',
     'Specify the size of nodes to create the cluster with'
   )
-  .action(function(args, callback) {
+  .action(function (args, callback) {
     var t0 = performance.now();
     // begin performance test
     let dryrun = 'false';
@@ -250,8 +250,8 @@ vorpal
     var t1 = performance.now();
     vorpal.logger.info(
       'Call to transmute provision took ' +
-        ((t1 - t0) / 1000).toPrecision(4) +
-        ' seconds.'
+      ((t1 - t0) / 1000).toPrecision(4) +
+      ' seconds.'
     );
     callback();
   });
@@ -270,7 +270,7 @@ vorpal
     'The cluster name to create the cluster with'
   )
   .option('--dryrun', 'Print out what would be done without executing anything')
-  .action(function(args, callback) {
+  .action(function (args, callback) {
     var t0 = performance.now();
     // begin performance test
     let dryrun = 'false';
@@ -287,8 +287,8 @@ vorpal
     var t1 = performance.now();
     vorpal.logger.info(
       'Call to transmute provision took ' +
-        ((t1 - t0) / 1000).toPrecision(4) +
-        ' seconds.'
+      ((t1 - t0) / 1000).toPrecision(4) +
+      ' seconds.'
     );
     callback();
   });
@@ -309,7 +309,7 @@ vorpal
     'The cluster name to create the cluster with'
   )
   .option('--dryrun', 'Print out what would be done without executing anything')
-  .action(function(args, callback) {
+  .action(function (args, callback) {
     var t0 = performance.now();
     // begin performance test
     let dryrun = 'false';
@@ -322,8 +322,8 @@ vorpal
     var t1 = performance.now();
     vorpal.logger.info(
       'Call to transmute provision took ' +
-        ((t1 - t0) / 1000).toPrecision(4) +
-        ' seconds.'
+      ((t1 - t0) / 1000).toPrecision(4) +
+      ' seconds.'
     );
     callback();
   });
@@ -337,7 +337,7 @@ vorpal
   .command('k8s microservice install <appname>')
   .description('Deploy <appname> to k8s cluster')
   .option('--dryrun', 'Print out what would be done without executing anything')
-  .action(function(args, callback) {
+  .action(function (args, callback) {
     var t0 = performance.now();
     // begin performance test
     let dryrun = 'false';
@@ -350,8 +350,8 @@ vorpal
     var t1 = performance.now();
     vorpal.logger.info(
       'Call to k8s microservice install took ' +
-        ((t1 - t0) / 1000).toPrecision(4) +
-        ' seconds.'
+      ((t1 - t0) / 1000).toPrecision(4) +
+      ' seconds.'
     );
     callback();
   });
@@ -388,7 +388,7 @@ vorpal
  * */
 vorpal
   .command('telemetry <state>', 'toggles telemetry on or off')
-  .autocompletion(function(text, iteration, cb) {
+  .autocompletion(function (text, iteration, cb) {
     var states = ['on', 'off'];
     if (iteration > 1) {
       cb(void 0, states);
