@@ -6,3 +6,4 @@
 - include: macos.yml
   when: "ansible_system == 'Darwin' and ansible_machine == 'x86_64'"
 
+- include: terraform.yml
