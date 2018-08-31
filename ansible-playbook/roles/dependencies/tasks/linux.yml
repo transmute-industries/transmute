@@ -23,6 +23,7 @@
     - git
     - socat
     - jq
+    - unzip
 
 - name: create temporary directory NSENTER_TMP
   tempfile:

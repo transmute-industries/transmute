@@ -304,10 +304,7 @@ vorpal
 vorpal
   .command('k8s provision-aws <clustername> <aws_region> <aws_key> <aws_secret>')
   .description('Provision k8s cluster in aws')
-  .option('--nodes <nodes>', 'How many nodes to create the cluster with')
-  .option(
-    'The cluster name to create the cluster with'
-  )
+  .option('The cluster name to create the cluster with')
   .option('--dryrun', 'Print out what would be done without executing anything')
   .action(function (args, callback) {
     var t0 = performance.now();
