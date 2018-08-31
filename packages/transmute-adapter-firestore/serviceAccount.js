@@ -5,9 +5,6 @@ try {
   // console.log(JSON.stringify(serviceAccount));
 } catch (e) {
   let serviceAccountEnv = process.env.FIREBASE_SERVICE_ACCOUNT;
-
-  console.log('serviceAccountEnv: ', serviceAccountEnv)
-  
   serviceAccount = JSON.parse(serviceAccountEnv);
 }
 
