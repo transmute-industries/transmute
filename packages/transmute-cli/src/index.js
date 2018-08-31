@@ -36,6 +36,8 @@ const logger = require('./logger');
 
 const microservice = require('./commands/microservice');
 
+const configure = require('./commands/configure')
+
 // Mixpanel
 const Mixpanel = require('mixpanel');
 const mixpanelToken =
@@ -287,6 +289,32 @@ vorpal
     var t1 = performance.now();
     vorpal.logger.info(
       'Call to transmute provision took ' +
+        ((t1 - t0) / 1000).toPrecision(4) +
+        ' seconds.'
+    );
+    callback();
+  });
+
+/** transmute k8s configure hosts appends k8s cluster hostnames to /etc/hosts
+ * @name transmute k8s configure-minikube-hosts
+ * @example transmute k8s configure-minikube-hosts
+ * */
+vorpal
+  .command('k8s configure-minikube-hosts')
+  .description('Append k8s minikube cluster hostnames to /etc/hosts')
+  .option('--dryrun', 'Print out what would be done without executing anything')
+  .action(function(args, callback) {
+    var t0 = performance.now();
+    // begin performance test
+    let dryrun = 'false';
+    if (args.options.dryrun) {
+      dryrun = 'true';
+    }
+    configure.minikube_hosts(dryrun);
+    // end performance test
+    var t1 = performance.now();
+    vorpal.logger.info(
+      'Call to transmute k8s configure-minikube-hosts took ' +
         ((t1 - t0) / 1000).toPrecision(4) +
         ' seconds.'
     );
