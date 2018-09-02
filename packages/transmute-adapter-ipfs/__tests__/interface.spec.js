@@ -1,12 +1,8 @@
 const TransmuteAdapterIPFS = require("../index");
 
-const localIPFSConfig = {
-  host: "localhost",
-  port: 5001,
-  protocol: "http"
-};
+const ipfsConfig = require("../ipfsConfig");
 
-const adapter = new TransmuteAdapterIPFS(localIPFSConfig);
+const adapter = new TransmuteAdapterIPFS(ipfsConfig);
 
 const contentID =
   "0xcb2402ae09412ffb174e20aa741a7ec0b82338a9a471b4f848e2c9684fcd6a21";

@@ -1,7 +1,6 @@
-
 notifications:
   slack: transmute-industries:qsGJfymYKydjgEM89Q9tPXrv
-  
+
 matrix:
   include:
     - os: linux
@@ -9,19 +8,46 @@ matrix:
       sudo: required
       language: bash
       env:
+        # TODO: These are used in the transmute CLI and should be removed from here.
         - MINIKUBE_MEMORY=7777
         - MINIKUBE_CPU=4
         - MINIKUBE_DISK=50g
+       
+        # These options are required for travis 
         - TRANSMUTE_RELEASE=$TRAVIS_BRANCH
         - TRANSMUTE_ENV='minikube'
+        # This option is for testing JWT configuration with kong.
+        # It is not currently active.
         - TRANSMUTE_DO_JWT_DL=n
         - TRANSMUTE_VERBOSITY=10
+        # This option will warn the user that bootstrap will be installing lots of things...
+        # It is true normally, and set false for CI.
         - TRANSMUTE_USE_WARN=n
         - CHANGE_MINIKUBE_NONE_USER=true
         - EDITOR=cat
+
 before_script:
+  # bootstrap installs global dev dependencies, including the transmute-cli
   - bash ./bootstrap
   - source ~/.bashrc
+  # This setup overwrites the transmute-cli with a build from the current branch (so the cli is tested)
+  - cd $TRAVIS_BUILD_DIR/packages/transmute-cli
+  - npm i
+  - npm i -g
+  - cd $TRAVIS_BUILD_DIR
+  - transmute k8s provision-minikube travis_test_cluster
+  - transmute k8s init travis_test_cluster
+  - transmute k8s microservice install elasticsearch
+  - transmute k8s microservice install ganache
+  - transmute k8s microservice install kong
+  - transmute k8s microservice install ipfs
+  - transmute debug
+
 script:
   - lerna bootstrap
+  - lerna run --scope transmute-adapter-ipfs test
   - lerna run --scope transmute-adapter-firestore test
+  - lerna run --scope transmute-framework truffle:test
+  - lerna run --scope transmute-framework truffle:migrate
+  - lerna run --scope transmute-framework test
+  - lerna run --scope transmute-framework test:report
