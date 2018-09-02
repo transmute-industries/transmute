@@ -14,3 +14,10 @@
     remote_src: yes
   become: yes
   when: "ansible_system == 'Darwin' and ansible_machine == 'x86_64'"
+
+- name: install boto3 and botocore
+  pip:
+    name: "{{ item }}"
+  with_items:
+    - boto3
+    - botocore
