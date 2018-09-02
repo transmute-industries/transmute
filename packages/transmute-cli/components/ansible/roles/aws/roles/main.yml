@@ -1,1 +1,18 @@
 ---
+- name: create s3 bucket
+  s3_bucket:
+    name: "terraform.{{ clusterName }}"
+
+- name: create temporary directory TERRAFORM_TMP
+  tempfile:
+    state: directory
+    suffix: TERRAFORM_TMP
+  register: terraform_tmp
+
+- name: generate terraform config
+  template:
+    src: transmute-aws.tf.j2
+    dest: "{{ tmp.path }}/transmute-aws.tf"
+
+- name: terrafrom apply
+  shell: "terraform apply {{ tmp.path }}/transmute-aws.tf"
