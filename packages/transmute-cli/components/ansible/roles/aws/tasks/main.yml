@@ -25,4 +25,4 @@
     dest: "{{ terraform_tmp.path }}/transmute-aws.tf"
 
 - name: terrafrom apply
-  shell: "terraform apply {{ tmp.path }}/transmute-aws.tf"
+  shell: "terraform apply {{ terraform_tmp.path }}/transmute-aws.tf"
