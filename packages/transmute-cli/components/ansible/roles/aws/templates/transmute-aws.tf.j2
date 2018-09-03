@@ -1,6 +1,6 @@
 provider "aws" {
-    access_key = "{{ aws_access_key }}"
-    secret_key = "{{ aws_secrey_key }}"
+    access_key = "{{ aws_key }}"
+    secret_key = "{{ aws_secret }}"
     region = "{{ aws_region }}"
 }
 
@@ -9,8 +9,8 @@ terraform {
     bucket = "terraform.{{ clusterName }}"
     key    = "terraform.tfstate"
     region = "{{ aws_region }}"
-    access_key = "{{ aws_access_key }}"
-    secret_key = "{{ aws_secrey_key }}"
+    access_key = "{{ aws_key }}"
+    secret_key = "{{ aws_secret }}"
 
   }
 }
