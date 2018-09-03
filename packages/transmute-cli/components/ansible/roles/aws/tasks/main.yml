@@ -12,7 +12,6 @@
 - name: create s3 bucket
   s3_bucket:
     name: "terraform.{{ clusterName }}"
-    region: "{{ aws_region }}"
 
 - name: create temporary directory TERRAFORM_TMP
   tempfile:
