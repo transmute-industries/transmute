@@ -22,7 +22,7 @@
 - name: generate terraform config
   template:
     src: transmute-aws.tf.j2
-    dest: "{{ tmp.path }}/transmute-aws.tf"
+    dest: "{{ terraform_tmp.path }}/transmute-aws.tf"
 
 - name: terrafrom apply
   shell: "terraform apply {{ tmp.path }}/transmute-aws.tf"
