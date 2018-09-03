@@ -24,6 +24,7 @@
     - socat
     - jq
     - unzip
+    - python-pip
 
 - name: create temporary directory NSENTER_TMP
   tempfile:

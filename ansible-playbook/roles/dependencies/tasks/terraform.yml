@@ -21,3 +21,4 @@
   with_items:
     - boto3
     - botocore
+  become: yes
