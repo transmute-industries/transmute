@@ -1,4 +1,14 @@
 ---
+- name: create directory for boto
+  file:
+    path: "{{ ansible_env.HOME }}/.aws"
+    state: directory
+
+- name: generate config for boto
+  template:
+    src: credentials.j2
+    dest: "{{ ansible_env.HOME }}/.aws/credentials"
+
 - name: create s3 bucket
   s3_bucket:
     name: "terraform.{{ clusterName }}"
@@ -13,16 +23,6 @@
   template:
     src: transmute-aws.tf.j2
     dest: "{{ tmp.path }}/transmute-aws.tf"
-
-- name: create directory for boto
-  file:
-    path: "{{ ansible_env.HOME }}/.aws"
-    state: directory
-
-- name: generate config for boto
-  template:
-    src: credentials.j2
-    dest: "{{ ansible_env.HOME }}/.aws/credentials"
 
 - name: terrafrom apply
   shell: "terraform apply {{ tmp.path }}/transmute-aws.tf"
