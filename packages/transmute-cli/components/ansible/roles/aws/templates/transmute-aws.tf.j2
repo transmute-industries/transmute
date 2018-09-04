@@ -15,7 +15,54 @@ terraform {
   }
 }
 
-variable "cluster-name" {
-  default = "{{ clusterName }}"
-  type    = "string"
+data "aws_availability_zones" "available" {}
+
+resource "aws_vpc" "vpc_{{ clusterName }}" {
+  cidr_block = "10.0.0.0/16"
+
+  tags = "${
+    map(
+     "Name", "vpc_{{ clusterName }}",
+     "kubernetes.io/cluster/{{ clusterName }}", "shared",
+    )
+  }"
+}
+
+resource "aws_subnet" "subnet_{{ clusterName }}" {
+  count = 2
+
+  availability_zone = "${data.aws_availability_zones.available.names[count.index]}"
+  cidr_block        = "10.0.${count.index}.0/24"
+  vpc_id            = "${aws_vpc.vpc_{{ clusterName }}.id}"
+
+  tags = "${
+    map(
+     "Name", "{{ clusterName }}",
+     "kubernetes.io/cluster/{{ clusterName }}", "shared",
+    )
+  }"
+}
+
+resource "aws_internet_gateway" "internet_gateway_{{ clusterName }}" {
+  vpc_id = "${aws_vpc.vpc_{{ clusterName }}.id}"
+
+  tags {
+    Name = "{{ clusterName }}"
+  }
+}
+
+resource "aws_route_table" "route_table_{{ clusterName }}" {
+  vpc_id = "${aws_vpc.vpc_{{ clusterName }}.id}"
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.internet_gateway_{{ clusterName }}.id}"
+  }
+}
+
+resource "aws_route_table_association" "route_table_association_{{ clusterName }}" {
+  count = 2
+
+  subnet_id      = "${aws_subnet.subnet_{{ clusterName }}.*.id[count.index]}"
+  route_table_id = "${aws_route_table.route_table_{{ clusterName }}.id}"
 }
