@@ -19,7 +19,7 @@
 - debug: var=out.stdout_lines
   when: TRANSMUTE_VERBOSITY|int  >= 111
 
-- name:   kubectl get pods -n kube-system
+- name: kubectl get pods -n kube-system
   shell: "kubectl get pods -n kube-system"
   when: TRANSMUTE_VERBOSITY|int  >= 101
   register: out
@@ -27,13 +27,13 @@
 - debug: var=out.stdout_lines
   when: TRANSMUTE_VERBOSITY|int  >= 101
 
-- name:   kubectl get pods
+- name: kubectl get pods
   shell: "kubectl get pods"
   register: out
 
 - debug: var=out.stdout_lines
 
-- name: Install helm
+- name: Initialize helm and wait
   shell: "helm init --wait"
 
 - name: helm repo add transmute-charts
