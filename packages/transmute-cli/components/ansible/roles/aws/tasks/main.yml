@@ -31,7 +31,7 @@
     chdir: '{{ terraform_tmp.path }}'
 
 - name: terraform apply
-  shell: "terraform apply transmute-aws.tf"
+  shell: "terraform apply -no-color -input=false -auto-approve=true -lock=true"
   args:
     chdir: '{{ terraform_tmp.path }}'
 
