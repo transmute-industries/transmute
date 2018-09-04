@@ -9,9 +9,9 @@
     src: credentials.j2
     dest: "{{ ansible_env.HOME }}/.aws/credentials"
 
-#- name: create s3 bucket
-#  s3_bucket:
-#    name: "terraform.{{ clusterName }}"
+- name: create s3 bucket
+  s3_bucket:
+    name: "terraform.{{ clusterName }}"
 
 - name: create temporary directory TERRAFORM_TMP
   tempfile:
