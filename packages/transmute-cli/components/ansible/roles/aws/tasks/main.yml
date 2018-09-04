@@ -29,5 +29,5 @@
   shell: "terraform init {{ terraform_tmp.path }}"
 
 - name: terraform apply
-  shell: "{{ terraform_tmp.path }}/transmute-aws.tf"
+  shell: "terraform apply {{ terraform_tmp.path }}/transmute-aws.tf"
 
