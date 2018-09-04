@@ -25,11 +25,9 @@
     src: transmute-aws.tf.j2
     dest: "{{ terraform_tmp.path }}/transmute-aws.tf"
 
-- name: terraform init/apply
-  terraform:
-    project_path: '{{ terraform_tmp.path }}'
-    plan_file: "{{ terraform_tmp.path }}/transmute-aws.tf"
-    state: present
-  register: terraform_out
+- name: terraform init
+  shell: "terraform init {{ terraform_tmp.path }}"
 
-- debug: var=terraform_out
+- name: terraform apply
+  shell: "{{ terraform_tmp.path }}/transmute-aws.tf"
+
