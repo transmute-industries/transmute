@@ -113,11 +113,8 @@ resource "aws_security_group" "{{ clusterName }}-cluster" {
   }
 }
 
-# OPTIONAL: Allow inbound traffic from your local workstation external IP
-#           to the Kubernetes. You will need to replace A.B.C.D below with
-#           your real IP. Services like icanhazip.com can help you find this.
 resource "aws_security_group_rule" "demo-cluster-ingress-workstation-https" {
-  cidr_blocks       = ["A.B.C.D/32"]
+  cidr_blocks       = ["{{ lookup('url', 'http://icanhazip.com/') | join("") | map('trim') | ipv4 }}/32"]
   description       = "Allow workstation to communicate with the cluster API Server"
   from_port         = 443
   protocol          = "tcp"
