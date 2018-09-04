@@ -28,6 +28,7 @@
 - name: terraform init/apply
   terraform:
     project_path: '{{ terraform_tmp.path }}'
+    plan_file: "{{ terraform_tmp.path }}/transmute-aws.tf"
     state: present
   register: terraform_out
 
