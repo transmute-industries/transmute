@@ -19,6 +19,9 @@
     suffix: TERRAFORM_TMP
   register: terraform_tmp
 
+- name: terrafrom apply
+  shell: "terraform init {{ terraform_tmp.path }}/"
+
 - name: generate terraform config
   template:
     src: transmute-aws.tf.j2
