@@ -17,7 +17,7 @@ terraform {
 
 data "aws_availability_zones" "available" {}
 
-resource "aws_vpc" "vpc_{{ clusterName }}" {
+resource "aws_vpc" "{{ clusterName }}" {
   cidr_block = "10.0.0.0/16"
 
   tags = "${
@@ -28,12 +28,12 @@ resource "aws_vpc" "vpc_{{ clusterName }}" {
   }"
 }
 
-resource "aws_subnet" "subnet_{{ clusterName }}" {
+resource "aws_subnet" "{{ clusterName }}" {
   count = 2
 
   availability_zone = "${data.aws_availability_zones.available.names[count.index]}"
   cidr_block        = "10.0.${count.index}.0/24"
-  vpc_id            = "${aws_vpc.vpc_{{ clusterName }}.id}"
+  vpc_id            = "${aws_vpc.{{ clusterName }}.id}"
 
   tags = "${
     map(
@@ -43,26 +43,55 @@ resource "aws_subnet" "subnet_{{ clusterName }}" {
   }"
 }
 
-resource "aws_internet_gateway" "internet_gateway_{{ clusterName }}" {
-  vpc_id = "${aws_vpc.vpc_{{ clusterName }}.id}"
+resource "aws_internet_gateway" "{{ clusterName }}" {
+  vpc_id = "${aws_vpc.{{ clusterName }}.id}"
 
   tags {
     Name = "{{ clusterName }}"
   }
 }
 
-resource "aws_route_table" "route_table_{{ clusterName }}" {
-  vpc_id = "${aws_vpc.vpc_{{ clusterName }}.id}"
+resource "aws_route_table" "{{ clusterName }}" {
+  vpc_id = "${aws_vpc.{{ clusterName }}.id}"
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = "${aws_internet_gateway.internet_gateway_{{ clusterName }}.id}"
+    gateway_id = "${aws_internet_gateway.{{ clusterName }}.id}"
   }
 }
 
-resource "aws_route_table_association" "route_table_association_{{ clusterName }}" {
+resource "aws_route_table_association" "{{ clusterName }}" {
   count = 2
 
-  subnet_id      = "${aws_subnet.subnet_{{ clusterName }}.*.id[count.index]}"
-  route_table_id = "${aws_route_table.route_table_{{ clusterName }}.id}"
+  subnet_id      = "${aws_subnet.{{ clusterName }}.*.id[count.index]}"
+  route_table_id = "${aws_route_table.{{ clusterName }}.id}"
+}
+
+resource "aws_iam_role" "{{ clusterName }}-cluster" {
+  name = "{{ clusterName }}"
+
+  assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "eks.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role_policy_attachment" "{{ clusterName }}-cluster-AmazonEKSClusterPolicy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+  role       = "${aws_iam_role.demo-cluster.name}"
+}
+
+resource "aws_iam_role_policy_attachment" "{{ clusterName }}-cluster-AmazonEKSServicePolicy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
+  role       = "${aws_iam_role.demo-cluster.name}"
 }
