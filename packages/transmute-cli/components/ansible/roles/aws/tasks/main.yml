@@ -28,7 +28,6 @@
 - name: terraform init/apply
   terraform:
     project_path: '{{ terraform_tmp.path }}'
-    force_init: yes
     state: present
   register: terraform_out
 
