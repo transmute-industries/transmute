@@ -1,6 +1,6 @@
 const run = require('../runner');
 const logger = require('../../logger');
-const TRANSMUTE_KUBE_VERSION = process.env.TRANSMUTE_KUBE_VERSION || 'v1.9.0';
+const TRANSMUTE_KUBE_VERSION = process.env.TRANSMUTE_KUBE_VERSION || 'v1.10.0';
 const MINIKUBE_CPU = process.env.MINIKUBE_CPU || '4';
 const MINIKUBE_MEMORY = process.env.MINIKUBE_MEMORY || '4096';
 const MINIKUBE_DISK = process.env.MINIKUBE_DISK || '100g';
