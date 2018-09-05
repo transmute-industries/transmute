@@ -113,7 +113,7 @@ resource "aws_security_group" "{{ clusterName }}-cluster" {
   }
 }
 
-resource "aws_security_group_rule" "demo-cluster-ingress-workstation-https" {
+resource "aws_security_group_rule" "{{ clusterName }}-cluster-ingress-workstation-https" {
   cidr_blocks       = ["{{ lookup('url', 'http://icanhazip.com/') | join("") | map('trim') }}/32"]
   description       = "Allow workstation to communicate with the cluster API Server"
   from_port         = 443

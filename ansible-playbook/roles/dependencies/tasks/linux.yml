@@ -25,7 +25,6 @@
     - jq
     - unzip
     - python-pip
-    - python-netaddr
 
 - name: create temporary directory NSENTER_TMP
   tempfile:
