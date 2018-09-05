@@ -124,7 +124,7 @@ resource "aws_security_group_rule" "{{ clusterName }}-cluster-ingress-workstatio
 }
 
 resource "aws_eks_cluster" "{{ clusterName }}" {
-  name            = "${var.cluster-name}"
+  name            = "{{ clusterName }}"
   role_arn        = "${aws_iam_role.{{ clusterName }}-cluster.arn}"
 
   vpc_config {
