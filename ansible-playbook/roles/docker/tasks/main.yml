@@ -33,10 +33,26 @@
   become: yes
   when: ansible_system == "Linux"
 
-- name: Install docker (Darwin)
-  homebrew_cask:
-    name: "docker"
-    state: present
+- name: Install Homebrew packages that require sudo
+  block:
+    - name: Enable passwordless sudo
+      lineinfile:
+        path: /etc/sudoers
+        line: '{{ ansible_user_id }} ALL=(ALL) NOPASSWD: ALL'
+      become: yes
+      become_method: sudo
+    - name: Install docker (Darwin)
+      homebrew_cask:
+        name: "docker"
+        state: present
+  always:
+    - name: Disable passwordless sudo
+      lineinfile:
+        path: /etc/sudoers
+        line: '{{ ansible_user_id }} ALL=(ALL) NOPASSWD: ALL'
+        state: absent
+      become: yes
+      become_method: sudo
   when: ansible_system == "Darwin"
 
 - name: Start docker (Darwin)
@@ -48,7 +64,7 @@
   become: yes
   when: ansible_system == "Linux"
 
-- name: Install docker
+- name: Install docker (pip)
   pip:
     name: docker
     state: present
