@@ -3,7 +3,7 @@ const run = require('../runner');
 const path = require('path');
 
 module.exports.k8s = (dryrun, clusterName) => {
-  let prov_cmd = 'ansible-playbook --diff -l "localhost" ' +
+  let prov_cmd = 'ansible-playbook --diff -l "localhost" -K ' +
     __dirname +
     '/../../../components/ansible/init.yml -e ' + clusterName;
 
