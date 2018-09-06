@@ -37,6 +37,7 @@
   homebrew_cask:
     name: "docker"
     state: present
+  when: ansible_system == "Darwin"
 
 - name: Start docker (Darwin)
   shell: open --background -a Docker
