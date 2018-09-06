@@ -174,7 +174,7 @@ else
   cd $CWD
 fi
 
-ansible-playbook --diff -l "localhost" $TRANSMUTE_REPO/ansible-playbook/transmute.yml
+ansible-playbook --diff -l "localhost" -K $TRANSMUTE_REPO/ansible-playbook/transmute.yml
 
 } # End run_it wrapper
 
