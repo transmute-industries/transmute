@@ -86,12 +86,12 @@ exec 1>&2
 
 UNAME=$(uname)
 if [ "$UNAME" = "Linux" -o "$UNAME" = "Darwin" ] ; then
-  echo " $UNAME is a Supported OS"
+  echo "$UNAME is a Supported OS"
 elif [ "$UNAME" ">" "MINGW" -a "$UNAME" "<" "MINGX" ] ; then
-  echo " $UNAME is not a Supported OS"
+  echo "$UNAME is not a Supported OS"
   exit 1
 else
-  echo " $UNAME is not a Supported OS"
+  echo "$UNAME is not a Supported OS"
   echo "Sorry, this OS is not supported yet via this installer."
   exit 1
 fi
@@ -99,7 +99,7 @@ fi
 if [ "$UNAME" = "Darwin" ] ; then
   check_cmd brew
   ### OSX ###
-  echo 'Checking arch'
+  echo "Checking arch"
   if [ "i386" != "$(uname -p)" -o "1" != "$(sysctl -n hw.cpu64bit_capable 2>/dev/null || echo 0)" ] ; then
     # Can't just test uname -m = x86_64, because Snow Leopard can
     # return other values.
@@ -174,7 +174,13 @@ else
   cd $CWD
 fi
 
-ansible-playbook --diff -l "localhost" -K $TRANSMUTE_REPO/ansible-playbook/transmute.yml
+if [ ! $(sudo -n true >/dev/null 2>&1) ]; then
+  ANSIBLE_ASK_PASSWD='-K '
+else
+  ANSIBLE_ASK_PASSWD=''
+fi
+
+ansible-playbook --diff -l "localhost" $ANSIBLE_ASK_PASSWD$TRANSMUTE_REPO/ansible-playbook/transmute.yml
 
 } # End run_it wrapper
 
