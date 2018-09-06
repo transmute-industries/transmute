@@ -1,3 +1,4 @@
+const shell = require('shelljs');
 const run = require('../runner');
 const logger = require('../../logger');
 const TRANSMUTE_KUBE_VERSION = process.env.TRANSMUTE_KUBE_VERSION || 'v1.10.0';
@@ -46,8 +47,12 @@ module.exports.minikube = (
 
   minikube_param = minikube_param + ' -e minikube_vm_driver=' + minikubeDriver;
 
+  let check_sudo = shell.exec('sudo -n true >/dev/null 2>&1');
+  let ansible_ask_passwd = check_sudo.code === 0 ? '' : '-K ';
+
   let prov_cmd =
     'ansible-playbook --diff -l "localhost" ' +
+    ansible_ask_passwd +
     __dirname +
     '/../../../components/ansible/provision-minikube.yml' +
     minikube_param;

@@ -1,9 +1,12 @@
+const shell = require('shelljs');
 const run = require('../runner');
 
-const path = require('path');
-
 module.exports.k8s = (dryrun, clusterName) => {
-  let prov_cmd = 'ansible-playbook --diff -l "localhost" -K ' +
+  let check_sudo = shell.exec('sudo -n true >/dev/null 2>&1');
+  let ansible_ask_passwd = check_sudo.code === 0 ? '' : '-K ';
+
+  let prov_cmd = 'ansible-playbook --diff -l "localhost" ' +
+    ansible_ask_passwd +
     __dirname +
     '/../../../components/ansible/init.yml -e ' + clusterName;
 
