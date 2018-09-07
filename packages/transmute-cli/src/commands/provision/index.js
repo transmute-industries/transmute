@@ -1,6 +1,7 @@
 const shell = require('shelljs');
 const run = require('../runner');
 const logger = require('../../logger');
+
 const TRANSMUTE_KUBE_VERSION = process.env.TRANSMUTE_KUBE_VERSION || 'v1.10.0';
 const MINIKUBE_CPU = process.env.MINIKUBE_CPU || '4';
 const MINIKUBE_MEMORY = process.env.MINIKUBE_MEMORY || '4096';
@@ -8,10 +9,7 @@ const MINIKUBE_DISK = process.env.MINIKUBE_DISK || '100g';
 const MINIKUBE_PROFILE = process.env.MINIKUBE_PROFILE || 'transmute-k8s';
 const MINIKUBE_DRIVERS = ['virtualbox', 'kvm', 'kvm2', 'none'];
 
-module.exports.minikube = (
-  dryrun,
-  minikubeDriver,
-) => {
+module.exports.minikube = (dryrun, minikubeDriver) => {
   let minikube_param =
     ' -e kubernetes_version=' +
     TRANSMUTE_KUBE_VERSION +
@@ -24,21 +22,21 @@ module.exports.minikube = (
     ' -e minikube_profile=' +
     MINIKUBE_PROFILE;
 
-  if (MINIKUBE_DRIVERS.indexOf(minikubeDriver) == -1) {
-    let os_platform = process.platform;
+  if (MINIKUBE_DRIVERS.indexOf(minikubeDriver) === -1) {
+    const os_platform = process.platform;
     logger.log({
       level: 'info',
       message: `OS platform detected as: "${os_platform}"`,
-    })
+    });
 
-    if (os_platform != 'linux') {
+    if (os_platform !== 'linux') {
       minikubeDriver = 'virtualbox';
     } else {
       minikubeDriver = 'none';
     }
   }
 
-  if (minikubeDriver == 'none') {
+  if (minikubeDriver === 'none') {
     logger.log({
       level: 'info',
       message: 'VMDriver=None requires minikube to run as root!',
