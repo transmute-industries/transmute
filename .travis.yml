@@ -45,6 +45,7 @@ before_script:
 
 script:
   - lerna bootstrap
+  - lerna run --scope transmute-did test
   - lerna run --scope transmute-framework truffle:test
   - lerna run --scope transmute-framework truffle:migrate
   - lerna run --scope transmute-framework test
