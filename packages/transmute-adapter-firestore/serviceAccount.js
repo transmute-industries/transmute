@@ -1,7 +1,7 @@
 let serviceAccount;
 
 try {
-  serviceAccount = require("./transmute-id-staging-firebase-adminsdk-uasd0-9ce3fa01fc.json");
+  serviceAccount = require("./service-account-firebase-adminsdk.json");
   // console.log(JSON.stringify(serviceAccount));
 } catch (e) {
   let serviceAccountEnv = process.env.FIREBASE_SERVICE_ACCOUNT;

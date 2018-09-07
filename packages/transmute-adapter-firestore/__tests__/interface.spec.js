@@ -27,21 +27,24 @@ describe("Transmute Adapter Firestore", () => {
   });
 
   describe("bufferToContentID", () => {
-    it("converts a buffer to a bytes32 compatable IPFS hash of the buffer", async () => {
+    it("converts a buffer to a bytes32 compatible IPFS hash of the buffer", async () => {
+      expect.assertions(1);
       const calc = await adapter.bufferToContentID(contentBuffer);
-      expect(calc).toEqual(contentID);
+      expect(calc).toBe(contentID);
     });
   });
 
   describe("writeJson", () => {
     it("stores the object and returns a content identifier the object", async () => {
+      expect.assertions(1);
       let calcCID = await adapter.writeJson(contentObject);
-      expect(calcCID).toEqual(contentID);
+      expect(calcCID).toBe(contentID);
     });
   });
 
   describe("readJson", () => {
     it("returns a json object for the given content identifier", async () => {
+      expect.assertions(1);
       let readJsonResult = await adapter.readJson(contentID);
       expect(readJsonResult).toEqual(contentObject);
     });
