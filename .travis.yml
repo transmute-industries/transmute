@@ -37,10 +37,10 @@ before_script:
   - cd $TRAVIS_BUILD_DIR
   - transmute k8s provision-minikube travis_test_cluster
   - transmute k8s init travis_test_cluster
-  - transmute k8s microservice install elasticsearch
-  - transmute k8s microservice install ganache
-  - transmute k8s microservice install kong
-  - transmute k8s microservice install ipfs
+  - travis_wait travis_retry transmute k8s microservice install elasticsearch
+  - travis_wait travis_retry transmute k8s microservice install ganache
+  - travis_wait travis_retry transmute k8s microservice install kong
+  - travis_wait travis_retry transmute k8s microservice install ipfs
   - transmute debug
 
 script:

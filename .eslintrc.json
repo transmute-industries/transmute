@@ -1,8 +1,12 @@
 {
   "parserOptions": {
+    // Required for certain syntax usages
     "ecmaVersion": 2017
   },
-  "plugins": ["security", "jest"],
+  "plugins": [
+    "security",
+    "jest"
+  ],
   "extends": [
     "airbnb-base",
     "plugin:jest/recommended",
