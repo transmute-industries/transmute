@@ -3,14 +3,11 @@
  * @module src/event-store-factory
  */
 
-const Web3 = require('web3');
-const contract = require('truffle-contract');
-const Mixpanel = require('mixpanel');
+const contract = require("truffle-contract");
 
-const TransmuteIpfsAdapter = require('../decentralized-storage/ipfs');
-const pack = require('../../package.json');
+const pack = require("../../package.json");
 
-const GAS = require('../gas')
+const GAS = require("../gas");
 
 /** @class EventStoreFactory */
 module.exports = class EventStoreFactory {
@@ -22,42 +19,25 @@ module.exports = class EventStoreFactory {
    */
   constructor(config) {
     if (!config) {
+      throw new Error("a config of form { web3, abi, adapter } is required.");
+    }
+
+    let { web3, abi } = config;
+
+    if (!web3) {
+      throw new Error("a web3 property is required in constructor argument.");
+    }
+
+    if (!abi) {
       throw new Error(
-        'a config of form { eventStoreFactoryArtifact, web3 } is required.'
-      );
-    }
-
-    let { eventStoreFactoryArtifact, web3Config, mixpanelConfig } = config;
-
-    if (!eventStoreFactoryArtifact) {
-      throw new Error(
-        'a truffle-contract eventStoreFactoryArtifact property is required in constructor argument.'
-      );
-    }
-
-    if (!web3Config) {
-      throw new Error('a web3 property is required in constructor argument.');
-    }
-
-    if (mixpanelConfig && mixpanelConfig.token && mixpanelConfig.token !== '') {
-      this.mixpanel = Mixpanel.init(mixpanelConfig.token, 
-        { 
-          opt_out_tracking_by_default: mixpanelConfig.optOutOfTracking ? mixpanelConfig.optOutOfTracking : false
-        }
+        "a truffle-contract abi property is required in constructor argument."
       );
     }
 
     this.version = pack.version;
+    this.web3 = web3;
 
-    if (typeof window !== 'undefined' && window.web3) {
-      this.web3 = window.web3;
-    } else {
-      this.web3 = new Web3(
-        new Web3.providers.HttpProvider(web3Config.providerUrl)
-      );
-    }
-
-    this.eventStoreFactoryArtifact = eventStoreFactoryArtifact;
+    this.eventStoreFactoryArtifact = abi;
     this.eventStoreFactoryContract = contract(this.eventStoreFactoryArtifact);
     this.eventStoreFactoryContract.setProvider(this.web3.currentProvider);
   }
@@ -101,7 +81,7 @@ module.exports = class EventStoreFactory {
   requireInstance() {
     if (!this.eventStoreFactoryContractInstance) {
       throw new Error(
-        'You must call init() before accessing eventStoreFactoryContractInstance.'
+        "You must call init() before accessing eventStoreFactoryContractInstance."
       );
     }
   }
@@ -137,7 +117,7 @@ module.exports = class EventStoreFactory {
    */
   async createEventStore(fromAddress) {
     this.requireInstance();
-    return await this.eventStoreFactoryContractInstance.createEventStore({ 
+    return await this.eventStoreFactoryContractInstance.createEventStore({
       from: fromAddress,
       gas: GAS.MAX_GAS
     });
