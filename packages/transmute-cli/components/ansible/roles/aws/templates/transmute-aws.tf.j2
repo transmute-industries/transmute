@@ -268,11 +268,10 @@ data "aws_caller_identity" "current" {}
 data "aws_ami" "eks-worker" {
   filter {
     name   = "name"
-    values = ["eks-worker-v22"]
+    values = ["eks-worker-*"]
   }
 
   most_recent = true
-  owners      = ["${data.aws_caller_identity.current.account_id}"]
 }
 
 # This data source is included for ease of sample architecture deployment
