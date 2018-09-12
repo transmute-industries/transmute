@@ -268,7 +268,7 @@ data "aws_caller_identity" "current" {}
 data "aws_ami" "eks-worker" {
   filter {
     name   = "name"
-    values = ["eks-worker-*"]
+    values = ["eks-worker-v22"]
   }
 
   most_recent = true
