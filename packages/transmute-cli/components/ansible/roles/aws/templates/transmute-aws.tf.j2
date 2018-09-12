@@ -263,6 +263,8 @@ resource "aws_security_group_rule" "{{ clusterName }}-cluster-ingress-node-https
   type                     = "ingress"
 }
 
+data "aws_caller_identity" "current" {}
+
 data "aws_ami" "eks-worker" {
   filter {
     name   = "name"
