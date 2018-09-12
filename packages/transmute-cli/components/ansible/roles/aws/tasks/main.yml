@@ -35,11 +35,6 @@
   args:
     chdir: '{{ terraform_tmp.path }}'
 
-- name: terraform apply
-  shell: "terraform apply -no-color -input=false -auto-approve=true -lock=true"
-  args:
-    chdir: '{{ terraform_tmp.path }}'
-
 - name: get credintials
   shell: "terraform output config-map-aws-auth > config-map-aws-auth.yaml"
   args:
