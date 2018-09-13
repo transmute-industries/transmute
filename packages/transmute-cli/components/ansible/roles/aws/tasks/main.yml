@@ -18,6 +18,11 @@
   shell: "echo $(npm root -g)'/transmute-cli/components/terraform/'"
   register: terraform
 
+- name: generate config for boto
+  template:
+    src: backend.tf.j2
+    dest: "{{ terraform.stdout }}/backend.tf"
+
 - name: terraform init
   shell: "terraform init"
   args:
