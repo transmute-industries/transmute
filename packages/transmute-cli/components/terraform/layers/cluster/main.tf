@@ -12,7 +12,7 @@ terraform {
 data "terraform_remote_state" "state" {
   backend = "s3"
   config {
-    bucket =  "terraform.${var.cluster_name}"
+    bucket = "${var.bucket}"
     key    = "${var.cluster_name}.tfstate"
     region = "${var.aws_region}"
     access_key = "${var.aws_key}"
