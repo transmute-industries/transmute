@@ -14,34 +14,21 @@
     name: "terraform.{{ clusterName }}"
     region: "{{ aws_region }}"
 
-- name: create temporary directory TERRAFORM_TMP
-  tempfile:
-    state: directory
-    suffix: TERRAFORM_TMP
-  register: terraform_tmp
-
-- name: generate terraform config
-  template:
-    src: transmute-aws.tf.j2
-    dest: "{{ terraform_tmp.path }}/transmute-aws.tf"
+- name: get path
+  shell: "echo '$(npm root -g)/transmute-cli/components/terraform/layers/cluster'"
+  register: terraform
 
 - name: terraform init
-  shell: "terraform init"
+  shell: 'export TF_VAR_aws_region={{ aws_region }} && export TF_VAR_cluster_name={{ clusterName }} && export TF_VAR_aws_key=aws_key && export TF_VAR_aws_secret=aws_secret && terraform init'
   args:
-    chdir: '{{ terraform_tmp.path }}'
+    chdir: '{{ terrafrom.stdout }}'
 
 - name: terraform apply
-  shell: "terraform apply -no-color -input=false -auto-approve=true -lock=true"
+  shell: "export TF_VAR_aws_region={{ aws_region }} && export TF_VAR_cluster_name={{ clusterName }} && export TF_VAR_aws_key=aws_key && export TF_VAR_aws_secret=aws_secret && terraform apply -no-color -input=false -auto-approve=true -lock=true -var-file=../global.tfvars"
   args:
-    chdir: '{{ terraform_tmp.path }}'
+    chdir: '{{ terrafrom.stdout }}'
 
 - name: get credintials
-  shell: "terraform output config-map-aws-auth > config-map-aws-auth.yaml"
+  shell: "export TF_VAR_aws_region={{ aws_region }} && export TF_VAR_cluster_name={{ clusterName }} && export TF_VAR_aws_key=aws_key && export TF_VAR_aws_secret=aws_secret && terraform output kubeconfig-aws-1-10 > ~/.kube/config"
   args:
-    chdir: '{{ terraform_tmp.path }}'
-
-- name: set credintials to kubectl
-  shell: "kubectl apply -f config-map-aws-auth.yaml"
-  args:
-    chdir: '{{ terraform_tmp.path }}'
-
+    chdir: '{{ terrafrom.stdout }}'
