@@ -53,7 +53,7 @@ data "template_file" "user_data" {
   template = "${file("${path.module}/user-data.tpl")}"
 
   vars {
-    aws_region   = "us-east-1"
+    aws_region   = "${var.aws_region}"
     cluster_name = "${var.cluster_name}"
 
     # Hardcoded to 17 which is the max for t2.medium

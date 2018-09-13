@@ -17,3 +17,8 @@ variable "instance_profile_name_workers" {
   description = "Name of the workers instance profile"
   type        = "string"
 }
+
+variable "aws_region" {
+  type        = "string"
+  description = "Region to deploy all resources to."
+}
