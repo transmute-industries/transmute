@@ -1,4 +1,6 @@
 const misc = require("../index");
+const pgp = require("../../pgp");
+const msg = require("../../msg");
 
 const key = "606be053abf0ca332dd76cb76fc8dee21e0874e0a55877d1c0e91382b286ee4c";
 
@@ -30,6 +32,51 @@ describe("misc", () => {
         shares: shares.splice(0, 3)
       });
       expect(recoveredKey).toBe(key);
+    });
+  });
+
+  describe("publicKeysToDIDDocument", () => {
+    it("should generate a DID Document from public keys", async () => {
+      expect.assertions(1);
+      const pgpKeypair = await pgp.generateOpenPGPArmoredKeypair({
+        name: "bob",
+        passphrase: "yolo"
+      });
+      const libSodiumSigningKeypair = await msg.generateCryptoSignKeypair();
+      const libSodiumEncryptionKeypair = await msg.generateCryptoBoxKeypair();
+      const didDocumentArgs = {
+        primaryPublicKey: libSodiumSigningKeypair.publicKey,
+        pgpPublicKey: pgpKeypair.publicKey,
+        libSodiumPublicSigningKey: libSodiumSigningKeypair.publicKey,
+        libSodiumPublicEncryptionKey: libSodiumEncryptionKeypair.publicKey
+      };
+      const didDocument = await misc.publicKeysToDIDDocument(didDocumentArgs);
+      expect(didDocument["@context"]).toBe("https://w3id.org/did/v1");
+    });
+  });
+
+  describe("keypairsToTransmuteCiphertextDIDWallet", () => {
+    it("should generate a DID Wallet from keys", async () => {
+      expect.assertions(2);
+      const pgpKeypair = await pgp.generateOpenPGPArmoredKeypair({
+        name: "bob",
+        passphrase: "yolo"
+      });
+      const libSodiumSigningKeypair = await msg.generateCryptoSignKeypair();
+      const libSodiumEncryptionKeypair = await msg.generateCryptoBoxKeypair();
+
+      const cipherTextWallet = await misc.keypairsToTransmuteCiphertextDIDWallet(
+        {
+          primaryKeypair: libSodiumSigningKeypair,
+          pgpKeypair: pgpKeypair,
+          libSodiumSigningKeypair: libSodiumSigningKeypair,
+          libSodiumEncryptionKeypair: libSodiumEncryptionKeypair,
+          password: "yolo"
+        }
+      );
+
+      expect(cipherTextWallet.salt).toBeDefined();
+      expect(cipherTextWallet.wallet).toBeDefined();
     });
   });
 });
