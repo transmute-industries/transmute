@@ -4,6 +4,8 @@
 
 provider "aws" {
   region = "${var.region}"
+  access_key = "${var.aws_key}"
+  secret_key = "${var.aws_secret}"
 }
 
 # Using these data sources allows the configuration to be

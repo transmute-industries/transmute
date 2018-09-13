@@ -19,12 +19,12 @@
   register: terraform
 
 - name: terraform init
-  shell: "terraform init -backend-config 'bucket=terraform.{{ clusterName }}' -backend-config 'key={{ clusterName }}.tfstate' -backend-config 'region={{ aws_region }}' -backend-config 'access_key={{ aws_key }}' -backend-config 'secret_key={{ aws_secret }}'"
+  shell: "terraform init"
   args:
     chdir: '{{ terraform.stdout }}'
 
 - name: terraform apply
-  shell: "export TF_VAR_aws_region={{ aws_region }} && export TF_VAR_cluster_name={{ clusterName }} && export TF_VAR_aws_key=aws_key && export TF_VAR_aws_secret=aws_secret && terraform apply -no-color -input=false -auto-approve=true -lock=true -var-file=../global.tfvars"
+  shell: "terraform apply -no-color -input=false -auto-approve=true -lock=true -var region={{ aws_region }} -var cluster-name={{ clusterName }} -var aws_key={{ aws_key }} -var aws_secret={{ aws_secret }}"
   args:
     chdir: '{{ terraform.stdout }}'
 
