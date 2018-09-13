@@ -19,7 +19,7 @@
   register: terraform
 
 - name: terraform init
-  shell: "terraform init -backend-config 'bucket=terraform.{{ clusterName }}' -backend-config 'key={{ clusterName }}.tfstate' -backend-config 'region={{ aws_region }}' -backend-config 'access_key=[{ aws_key }}' -backend-config 'secret_key={{ aws_secret }}'"
+  shell: "terraform init -backend-config 'bucket=terraform.{{ clusterName }}' -backend-config 'key={{ clusterName }}.tfstate' -backend-config 'region={{ aws_region }}' -backend-config 'access_key={{ aws_key }}' -backend-config 'secret_key={{ aws_secret }}'"
   args:
     chdir: '{{ terraform.stdout }}'
 
