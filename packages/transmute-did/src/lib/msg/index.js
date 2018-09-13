@@ -1,10 +1,22 @@
 const sodiumWrappers = require("libsodium-wrappers");
 
+/**
+ * initializes the lib sodium library
+ * @function
+ * @name initSodium
+ * @returns {Object} the initialized sodium library. Ready for use.
+ */
 const initSodium = async () => {
   await sodiumWrappers.ready;
   return sodiumWrappers;
 };
 
+/**
+ * generates a sodium keypair for signing
+ * @function
+ * @name generateCryptoSignKeypair
+ * @returns {Object} public and private keys in hex
+ */
 const generateCryptoSignKeypair = async () => {
   const sodium = await initSodium();
   const keypair = sodium.crypto_sign_keypair();
@@ -15,6 +27,12 @@ const generateCryptoSignKeypair = async () => {
   };
 };
 
+/**
+ * generates a sodium keypair for authenticated encryption
+ * @function
+ * @name generateCryptoBoxKeypair
+ * @returns {Object} public and private keys in hex
+ */
 const generateCryptoBoxKeypair = async () => {
   const sodium = await initSodium();
   const keypair = sodium.crypto_box_keypair();
@@ -25,11 +43,25 @@ const generateCryptoBoxKeypair = async () => {
   };
 };
 
+/**
+ * generates a random salt
+ * @function
+ * @name generateSalt
+ * @returns {String} a random salt in hex
+ */
 const generateSalt = async () => {
   const sodium = await initSodium();
   return sodium.to_hex(sodium.randombytes_buf(sodium.crypto_pwhash_SALTBYTES));
 };
 
+/**
+ * generates a symmetric key from a password and a salt
+ * @function
+ * @name generateSymmetricKeyFromPasswordAndSalt
+ * @param {String} password to be combined with salt to generate key
+ * @param {String} salt to be combined with password to generate key
+ * @returns {String} key libsodium symmetric key in hex
+ */
 const generateSymmetricKeyFromPasswordAndSalt = async ({ password, salt }) => {
   const sodium = await initSodium();
   return sodium.to_hex(
@@ -44,6 +76,14 @@ const generateSymmetricKeyFromPasswordAndSalt = async ({ password, salt }) => {
   );
 };
 
+/**
+ * encrypts a string data with a libsodium symmetric key
+ * @function
+ * @name encryptWith
+ * @param {String} data plaintext to be encrypted
+ * @param {String} key libsodium symmetric key in hex
+ * @returns {Object} encrypted ciphertext and nonce in hex
+ */
 const encryptWith = async ({ data, key }) => {
   const sodium = await initSodium();
   const nonce = sodium.randombytes_buf(sodium.crypto_secretbox_NONCEBYTES);
@@ -58,6 +98,14 @@ const encryptWith = async ({ data, key }) => {
   };
 };
 
+/**
+ * decrypts a string data with a libsodium symmetric key
+ * @function
+ * @name decryptWith
+ * @param {Object} data json object with cipher text with nonce in hex
+ * @param {Object} key libsodium symmetric key in hex
+ * @returns {String} plaintext decrypted
+ */
 const decryptWith = async ({ data, key }) => {
   const sodium = await initSodium();
   const decrypted = sodium.crypto_secretbox_open_easy(
@@ -68,6 +116,14 @@ const decryptWith = async ({ data, key }) => {
   return Buffer.from(decrypted).toString();
 };
 
+/**
+ * encrypts a json object data with a libsodium symmetric key
+ * @function
+ * @name encryptJson
+ * @param {Object} data json object to be encrypted
+ * @param {String} key libsodium symmetric key in hex
+ * @returns {Object} encrypted ciphertext and nonce in hex
+ */
 const encryptJson = async ({ data, key }) => {
   return encryptWith({
     data: JSON.stringify(data),
@@ -75,6 +131,14 @@ const encryptJson = async ({ data, key }) => {
   });
 };
 
+/**
+ * decrypts a json object data with a libsodium symmetric key
+ * @function
+ * @name decryptJson
+ * @param {Object} data json object with cipher text with nonce in hex
+ * @param {Object} key libsodium symmetric key in hex form
+ * @returns {Object} plaintext json
+ */
 const decryptJson = async ({ data, key }) => {
   return JSON.parse(
     await decryptWith({
@@ -84,6 +148,14 @@ const decryptJson = async ({ data, key }) => {
   );
 };
 
+/**
+ * generate detached signature from message and private key
+ * @function
+ * @name signDetached
+ * @param {String} message plaintext string to be signed
+ * @param {String} privateKey libsodium private key in hex form
+ * @returns {String} detached signature in hex
+ */
 const signDetached = async ({ message, privateKey }) => {
   const sodium = await initSodium();
   return sodium.to_hex(
@@ -91,6 +163,15 @@ const signDetached = async ({ message, privateKey }) => {
   );
 };
 
+/**
+ * verify a detached signature from signature and public key
+ * @function
+ * @name verifyDetached
+ * @param {String} message plaintext string to be signed
+ * @param {String} signature detached signature in hex
+ * @param {String} publicKey libsodium public key
+ * @returns {Boolean} true if signature was generated with the correct private key
+ */
 const verifyDetached = async ({ message, signature, publicKey }) => {
   const sodium = await initSodium();
   return sodium.crypto_sign_verify_detached(
@@ -100,6 +181,15 @@ const verifyDetached = async ({ message, signature, publicKey }) => {
   );
 };
 
+/**
+ * encrypt a message for a public key from a private key
+ * @function
+ * @name encryptFor
+ * @param {String} message plaintext string to be signed
+ * @param {String} publicKey libsodium public key
+ * @param {String} privateKey libsodium private key
+ * @returns {Object} a nonce and encrypted ciphertext in hex
+ */
 const encryptFor = async ({ message, publicKey, privateKey }) => {
   const sodium = await initSodium();
   const nonce = sodium.randombytes_buf(sodium.crypto_box_NONCEBYTES);
@@ -117,6 +207,15 @@ const encryptFor = async ({ message, publicKey, privateKey }) => {
   };
 };
 
+/**
+ * decrypt a message from a public key for a private key
+ * @function
+ * @name decryptFor
+ * @param {String} message plaintext string to be signed
+ * @param {String} publicKey libsodium public key
+ * @param {String} privateKey libsodium private key
+ * @returns {Object} a nonce and encrypted ciphertext in hex
+ */
 const decryptFor = async ({ message, publicKey, privateKey }) => {
   const sodium = await initSodium();
   const plainText = sodium.crypto_box_open_easy(

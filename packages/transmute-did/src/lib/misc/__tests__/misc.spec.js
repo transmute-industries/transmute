@@ -33,6 +33,14 @@ describe("misc", () => {
       });
       expect(recoveredKey).toBe(key);
     });
+
+    it("should fail to recover a key from incorrect number of shares", async () => {
+      expect.assertions(1);
+      const recoveredKey = await misc.recoverKey({
+        shares: shares.splice(0, 2)
+      });
+      expect(recoveredKey !== key).toBe(true);
+    });
   });
 
   describe("publicKeysToDIDDocument", () => {

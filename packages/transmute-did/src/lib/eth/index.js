@@ -2,8 +2,22 @@ const bip39 = require("bip39");
 const hdkey = require("hdkey");
 const ethUtil = require("ethereumjs-util");
 
+/**
+ * generate a bip39 mneumonic
+ * @function
+ * @name generateBIP39Mneumonic
+ * @returns {String} a mneumonic for an hd wallet
+ */
 const generateBIP39Mneumonic = () => bip39.generateMnemonic();
 
+/**
+ * genetate a hex encoded keypair from mneumonic and path
+ * @function
+ * @name mneumonicToKeypair
+ * @param {String} mnemonic for hd wallet
+ * @param {String} hdPath path to keypair
+ * @returns {Object} hex encoded keypair
+ */
 const mneumonicToKeypair = (mnemonic, hdPath) => {
   const seed = bip39.mnemonicToSeed(mnemonic);
   const root = hdkey.fromMasterSeed(seed);
@@ -24,6 +38,13 @@ const mneumonicToKeypair = (mnemonic, hdPath) => {
   };
 };
 
+/**
+ * convert a public key to an ethereum address
+ * @function
+ * @name publicKeyToAddress
+ * @param {String} pubKey in hex
+ * @returns {String} hex encoded checksum valid ethereum address
+ */
 const publicKeyToAddress = pubKey => {
   const addr = ethUtil
     .publicToAddress(Buffer.from(pubKey, "hex"))
