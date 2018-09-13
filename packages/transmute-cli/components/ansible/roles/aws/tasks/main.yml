@@ -19,7 +19,7 @@
   register: terraform
 
 - name: terraform init
-  shell: 'export TF_VAR_bucket=terraform.{{ clusterName }} && export TF_VAR_aws_region={{ aws_region }} && export TF_VAR_cluster_name={{ clusterName }} && export TF_VAR_aws_key=aws_key && export TF_VAR_aws_secret=aws_secret && terraform init -backend-config "bucket=${var.bucket}" -backend-config "key=${var.cluster_name}.tfstate" -backend-config "region=${var.aws_region}" -backend-config "access_key=${var.aws_key}" -backend-config "secret_key=${var.aws_secret}"'
+  shell: "export TF_VAR_bucket=terraform.{{ clusterName }} && export TF_VAR_aws_region={{ aws_region }} && export TF_VAR_cluster_name={{ clusterName }} && export TF_VAR_aws_key=aws_key && export TF_VAR_aws_secret=aws_secret && terraform init -backend-config 'bucket=${var.bucket}' -backend-config 'key=${var.cluster_name}.tfstate' -backend-config 'region=${var.aws_region}' -backend-config 'access_key=${var.aws_key}' -backend-config 'secret_key=${var.aws_secret}'"
   args:
     chdir: '{{ terraform.stdout }}'
 
