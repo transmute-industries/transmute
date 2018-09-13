@@ -21,14 +21,14 @@
 - name: terraform init
   shell: 'export TF_VAR_aws_region={{ aws_region }} && export TF_VAR_cluster_name={{ clusterName }} && export TF_VAR_aws_key=aws_key && export TF_VAR_aws_secret=aws_secret && terraform init'
   args:
-    chdir: '{{ terrafrom.stdout }}'
+    chdir: '{{ terraform.stdout }}'
 
 - name: terraform apply
   shell: "export TF_VAR_aws_region={{ aws_region }} && export TF_VAR_cluster_name={{ clusterName }} && export TF_VAR_aws_key=aws_key && export TF_VAR_aws_secret=aws_secret && terraform apply -no-color -input=false -auto-approve=true -lock=true -var-file=../global.tfvars"
   args:
-    chdir: '{{ terrafrom.stdout }}'
+    chdir: '{{ terraform.stdout }}'
 
 - name: get credintials
   shell: "export TF_VAR_aws_region={{ aws_region }} && export TF_VAR_cluster_name={{ clusterName }} && export TF_VAR_aws_key=aws_key && export TF_VAR_aws_secret=aws_secret && terraform output kubeconfig-aws-1-10 > ~/.kube/config"
   args:
-    chdir: '{{ terrafrom.stdout }}'
+    chdir: '{{ terraform.stdout }}'
