@@ -1,14 +1,24 @@
-const { EventStore } = require('../../index');
-const transmuteConfig = require('../../transmute-config');
-const eventStoreArtifact = require('../../../build/contracts/EventStore.json');
+const { EventStore } = require("../../index");
+const transmuteConfig = require("../../transmute-config");
+const abi = require("../../../build/contracts/EventStore.json");
+const Web3 = require("web3");
+const TransmuteAdapterIPFS = require("transmute-adapter-ipfs");
+const provider = new Web3.providers.HttpProvider(
+  transmuteConfig.web3Config.providerUrl
+);
+const web3 = new Web3(provider);
+const adapter = new TransmuteAdapterIPFS(transmuteConfig.ipfsConfig);
+let eventStore = new EventStore({
+  web3,
+  abi,
+  adapter
+});
+const StreamModel = require("../index");
 
-const StreamModel = require('../index');
+const mockEvents = require("../../__mock__/events.json");
 
-const mockEvents = require('../../__mock__/events.json');
-
-describe('sync', () => {
+describe("sync", () => {
   let accounts;
-  let eventStore;
   let streamModel;
 
   const filter = event => {
@@ -32,8 +42,9 @@ describe('sync', () => {
 
   beforeAll(async () => {
     eventStore = new EventStore({
-      eventStoreArtifact,
-      ...transmuteConfig
+      web3,
+      abi,
+      adapter
     });
     await eventStore.init();
     accounts = await eventStore.getWeb3Accounts();
@@ -45,13 +56,13 @@ describe('sync', () => {
     streamModel = new StreamModel(eventStore, filter, reducer);
   });
 
-  it('should handle the empty case, where lastIndex is always null', async () => {
+  it("should handle the empty case, where lastIndex is always null", async () => {
     // sync with no events in contract
     await streamModel.sync();
     expect(streamModel.state.lastIndex).toBe(null);
   });
 
-  it('should handle new events, where lastIndex is the id of the last event', async () => {
+  it("should handle new events, where lastIndex is the id of the last event", async () => {
     await streamModel.sync();
     expect(streamModel.state.lastIndex).toBe(null);
 
@@ -72,7 +83,7 @@ describe('sync', () => {
     expect(streamModel.state.lastIndex).toBe(1);
   });
 
-  it('should handle persisted state', async () => {
+  it("should handle persisted state", async () => {
     await eventStore.write(accounts[0], mockEvents[0].key, mockEvents[0].value);
     await streamModel.sync();
     expect(streamModel.state.lastIndex).toBe(0);
@@ -90,7 +101,7 @@ describe('sync', () => {
     expect(streamModel2.state.lastIndex).toBe(1);
   });
 
-  it('should handle multiple calls to sync correctly', async () => {
+  it("should handle multiple calls to sync correctly", async () => {
     await eventStore.write(accounts[0], mockEvents[0].key, mockEvents[0].value);
 
     let eventCount = (await eventStore.eventStoreContractInstance.count.call()).toNumber();
