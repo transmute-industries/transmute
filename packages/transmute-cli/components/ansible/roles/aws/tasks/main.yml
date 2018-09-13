@@ -15,7 +15,7 @@
     region: "{{ aws_region }}"
 
 - name: get path
-  shell: "echo '$(npm root -g)/transmute-cli/components/terraform/layers/cluster'"
+  shell: "echo $(npm root -g)'/transmute-cli/components/terraform/layers/cluster'"
   register: terraform
 
 - name: terraform init
