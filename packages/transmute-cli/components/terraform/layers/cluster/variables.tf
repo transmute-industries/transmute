@@ -38,3 +38,19 @@ variable "policy_arn_ecr_read" {
   description = "ARN of the default policy: AmazonEC2ContainerRegistryReadOnly"
   type        = "string"
 }
+
+variable "bucket" {
+  description = "Bucket name for backend"
+  type        = "string"
+
+}
+
+variable "aws_key" {
+  description = "Key for access to aws"
+  type        = "string"
+}
+
+variable "aws_secret" {
+  description = "Secret for access to aws"
+  type        = "string"
+}
