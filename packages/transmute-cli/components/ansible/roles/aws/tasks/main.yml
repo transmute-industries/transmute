@@ -29,6 +29,6 @@
     chdir: '{{ terraform.stdout }}'
 
 - name: get credintials
-  shell: "export TF_VAR_aws_region={{ aws_region }} && export TF_VAR_cluster_name={{ clusterName }} && export TF_VAR_aws_key=aws_key && export TF_VAR_aws_secret=aws_secret && terraform output kubeconfig-aws-1-10 > ~/.kube/config"
+  shell: "terraform output config-map-aws-auth | kubectl apply -f -"
   args:
     chdir: '{{ terraform.stdout }}'
