@@ -76,7 +76,7 @@
 
 - name: install minikube
   get_url:
-    url: "https://storage.googleapis.com/minikube/releases/v0.25.2/minikube-linux-amd64"
+    url: "https://storage.googleapis.com/minikube/releases/v0.28.2/minikube-linux-amd64"
     dest: "/usr/local/bin/minikube"
     remote_src: yes
     mode: 0755
@@ -92,7 +92,7 @@
 
 - name: Unarchive helm
   unarchive:
-    src: "https://storage.googleapis.com/kubernetes-helm/helm-v2.8.2-linux-amd64.tar.gz"
+    src: "https://storage.googleapis.com/kubernetes-helm/helm-v2.10.0-linux-amd64.tar.gz"
     dest: "{{ tmp.path }}"
     remote_src: yes
 

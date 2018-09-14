@@ -2,7 +2,7 @@
 - name: transmute
   vars:
     fix_dotfiles: true
-    transmute_kube_version: "v1.9.4"
+    transmute_kube_version: "v1.10.7"
     nvm_version: "v0.33.11"
   hosts: localhost
   connection: local
