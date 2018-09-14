@@ -49,11 +49,11 @@
     state: directory
 
 - name: get credintials
-  shell: "terraform output kubeconfig  -var region={{ aws_region }} -var cluster-name={{ clusterName }} -var aws_key={{ aws_key }} -var aws_secret={{ aws_secret }} >  {{ ansible_env.HOME }}/.kube/config"
+  shell: "terraform output kubeconfig > {{ ansible_env.HOME }}/.kube/config"
   args:
     chdir: '{{ terraform.stdout }}'
 
 - name: get config-map
-  shell: "terraform output config-map-aws-auth  -var region={{ aws_region }} -var cluster-name={{ clusterName }} -var aws_key={{ aws_key }} -var aws_secret={{ aws_secret }} | kubectl apply -f -"
+  shell: "terraform output config-map-aws-auth | kubectl apply -f -"
   args:
     chdir: '{{ terraform.stdout }}'
