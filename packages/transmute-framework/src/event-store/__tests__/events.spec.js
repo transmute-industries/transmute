@@ -1,18 +1,26 @@
-const EventStore = require('../index.js');
-const transmuteConfig = require('../../transmute-config');
-const eventStoreArtifact = require('../../../build/contracts/EventStore.json');
+const EventStore = require("../index.js");
+const Web3 = require('web3')
+const TransmuteAdapterIPFS = require("transmute-adapter-ipfs");
+const transmuteConfig = require("../../transmute-config");
+const abi = require("../../../build/contracts/EventStore.json");
 
-const mockEvents = require('../../__mock__/events.json');
+const mockEvents = require("../../__mock__/events.json");
 
-describe('transmute-framework', () => {
+const provider = new Web3.providers.HttpProvider(
+  transmuteConfig.web3Config.providerUrl
+);
+const web3 = new Web3(provider);
+const adapter = new TransmuteAdapterIPFS(transmuteConfig.ipfsConfig);
+let eventStore = new EventStore({
+  web3,
+  abi,
+  adapter
+});
+
+describe("transmute-framework", () => {
   let accounts;
-  let eventStore;
 
   beforeAll(async () => {
-    eventStore = new EventStore({
-      eventStoreArtifact,
-      ...transmuteConfig
-    });
     await eventStore.init();
     accounts = await eventStore.getWeb3Accounts();
   });
@@ -22,8 +30,8 @@ describe('transmute-framework', () => {
     eventStore = await eventStore.clone(accounts[0]);
   });
 
-  describe('write', () => {
-    it('can save events', async () => {
+  describe("write", () => {
+    it("can save events", async () => {
       return Promise.all(
         mockEvents.map(async event => {
           let result = await eventStore.write(
@@ -37,16 +45,15 @@ describe('transmute-framework', () => {
           expect(result.event.value).toBeDefined();
           expect(result.meta).toBeDefined();
           expect(result.meta.tx).toBeDefined();
-          expect(result.meta.ipfs).toBeDefined();
-          expect(result.meta.bytes32).toBeDefined();
+          expect(result.meta.contentID).toBeDefined();
           expect(result.meta.receipt).toBeDefined();
         })
       );
     });
   });
 
-  describe('read', () => {
-    it('can read events', async () => {
+  describe("read", () => {
+    it("can read events", async () => {
       const mockEvent = mockEvents[0];
 
       let result = await eventStore.write(
@@ -62,8 +69,8 @@ describe('transmute-framework', () => {
     });
   });
 
-  describe('getSlice', () => {
-    it('supports getting a single event', async () => {
+  describe("getSlice", () => {
+    it("supports getting a single event", async () => {
       const mockEvent = mockEvents[0];
       let result = await eventStore.write(
         accounts[0],
@@ -79,7 +86,7 @@ describe('transmute-framework', () => {
       expect(events[0].value).toEqual(mockEvents[0].value);
     });
 
-    it('supports getting a slice', async () => {
+    it("supports getting a slice", async () => {
       await eventStore.write(
         accounts[0],
         mockEvents[0].key,

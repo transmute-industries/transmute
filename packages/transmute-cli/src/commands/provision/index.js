@@ -18,6 +18,7 @@ module.exports.minikube = (dryrun, clusterName, minikubeDriver) => {
     ' -e minikube_memory=' +
     MINIKUBE_MEMORY +
     ' -e minikube_profile=' + MINIKUBE_PROFILE;
+
   let prov_cmd =
     'ansible-playbook --diff -l "localhost" ' +
     __dirname +
@@ -44,12 +45,14 @@ module.exports.minikube = (dryrun, clusterName, minikubeDriver) => {
   run.shellExec(prov_cmd);
 };
 
-module.exports.aks = (dryrun,
-                      myResourceGroup,
-                      myAKSCluster,
-                      myNodeCount,
-                      myNodeSize,
-                      GenSSHKeys,) => {
+module.exports.aks = (
+  dryrun,
+  myResourceGroup,
+  myAKSCluster,
+  myNodeCount,
+  myNodeSize,
+  GenSSHKeys,
+) => {
   let prov_cmd_asible =
     'ansible-playbook --diff -l "localhost" ' +
     __dirname +
@@ -101,25 +104,4 @@ module.exports.aks = (dryrun,
     prov_cmd_azure = prov_cmd_azure + ' --check';
   }
   run.shellExec(prov_cmd_azure);
-};
-
-module.exports.aws = (dryrun, clusterName, aws_region, aws_key, aws_secret) => {
-  let prov_cmd = 'ansible-playbook --diff -l "localhost" ' +
-    __dirname +
-    '/../../../components/ansible/provision-aws.yml -e ' + clusterName;
-  let awsParams =
-    ' -e clusterName=' +
-    clusterName +
-    ' -e aws_region=' +
-    aws_region +
-    ' -e aws_key=' +
-    aws_key +
-    ' -e aws_secret=' +
-    aws_secret;
-  prov_cmd = prov_cmd + awsParams;
-  if (dryrun == 'true') {
-    console.info('<--dry run-->');
-    prov_cmd = prov_cmd + ' --check';
-  }
-  run.shellExec(prov_cmd);
 };

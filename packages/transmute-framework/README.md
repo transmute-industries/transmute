@@ -2,7 +2,9 @@
 
 - [Docs](https://docs.transmute.industries/transmute-framework/0.2.2/)
 
-The transmute framework converts javascript objects to ipfs hashes, and stores them on ethereum smart contracts.
+The transmute framework converts javascript objects to content identifiers, and stores them on ethereum smart contracts with adapters.
+
+Current support exists for ipfs and firestore.
 
 It is meant to be a building block for decentralized applications that are built on immutable event logs.
 
@@ -34,11 +36,9 @@ TRANSMUTE_ENV='localhost' npm run test
 
 If you are using the minikube environment, you will need to ensure that the framework is configured to connect to the correct ipfs and ethereum rpc interface.
 
-
 Follow the instructions in the root level [readme](https://github.com/transmute-industries/transmute/blob/master/README.md).
 
 ```
-
 export KONG_ADMIN_URL=$(minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
 export KONG_PROXY_URL=$(minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
 
@@ -59,7 +59,7 @@ You can configure your `/etc/hosts` like so:
 
 With the `/scripts/configure-hosts.sh` from the root of the repo.
 
-Update minikube in `./src/transmute-config/env.json`. 
+Update minikube in `./src/transmute-config/env.json`.
 
 The kong proxy port is likly the only thing that will change when using minikube locally.
 
@@ -77,11 +77,9 @@ The examples below are pulled from the `__tests__` directories, that are run by 
 The `EventStoreFactory` contract can be used to create `EventStore` contracts.
 
 ```
-const eventStoreFactoryArtifact = require('../../../build/contracts/EventStoreFactory.json');
+const Web3 = require('web3')
+const abi = require('../../../build/contracts/EventStoreFactory.json');
 const transmuteConfig = {
-  "mixpanelConfig": {
-    ...
-  },
   "ipfsConfig": {
     "host": "ipfs.transmute.minikube",
     "port": 32443,
@@ -91,9 +89,13 @@ const transmuteConfig = {
     "providerUrl": "https://ganache.transmute.minikube:32443"
   }
 }
+const provider = new Web3.providers.HttpProvider(
+  transmuteConfig.web3Config.providerUrl
+);
+const web3 = new Web3(provider);
 eventStoreFactory = new EventStoreFactory({
-  eventStoreFactoryArtifact,
-  ...transmuteConfig
+  web3,
+  abi,
 });
 
 await eventStoreFactory.init();
@@ -107,13 +109,30 @@ Saving key-value pairs to an `EventStore` contract can be done like so:
 ```
 const EventStore = require('../index.js');
 const transmuteConfig = require('../../transmute-config');
-const eventStoreArtifact = require('../../../build/contracts/EventStore.json');
 
-const eventStore = new EventStore({
-  eventStoreArtifact,
-  ...transmuteConfig
+const Web3 = require('web3')
+const TransmuteAdapterIPFS = require("transmute-adapter-ipfs");
+const abi = require('../../../build/contracts/EventStore.json');
+const transmuteConfig = {
+  "ipfsConfig": {
+    "host": "ipfs.transmute.minikube",
+    "port": 32443,
+    "protocol": "https"
+  },
+  "web3Config": {
+    "providerUrl": "https://ganache.transmute.minikube:32443"
+  }
+}
+const provider = new Web3.providers.HttpProvider(
+  transmuteConfig.web3Config.providerUrl
+);
+const web3 = new Web3(provider);
+const adapter = new TransmuteAdapterIPFS(transmuteConfig.ipfsConfig);
+let eventStore = new EventStore({
+  web3,
+  abi,
+  adapter
 });
-
 await eventStore.init();
 
 const event = {
@@ -131,7 +150,6 @@ let result = await eventStore.write(
   event.key,
   event.value
 );
-
 ```
 
 Events can be retrieved using:
@@ -169,4 +187,3 @@ await streamModel.sync();
 Stream models filter events, and then use a reducer function to build up state, just like Redux!
 
 See `./src/__tests__` for more example usage.
-
