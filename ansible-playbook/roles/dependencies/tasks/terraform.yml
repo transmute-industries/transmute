@@ -1,0 +1,24 @@
+---
+- name: install terraform
+  unarchive:
+    src: https://releases.hashicorp.com/terraform/0.11.8/terraform_0.11.8_linux_amd64.zip
+    dest: /usr/local/bin
+    remote_src: yes
+  become: yes
+  when: "ansible_system == 'Linux' and ansible_machine == 'x86_64'"
+
+- name: install terraform
+  unarchive:
+    src: https://releases.hashicorp.com/terraform/0.11.8/terraform_0.11.8_darwin_amd64.zip
+    dest: /usr/local/bin
+    remote_src: yes
+  become: yes
+  when: "ansible_system == 'Darwin' and ansible_machine == 'x86_64'"
+
+- name: install boto3 and botocore
+  pip:
+    name: "{{ item }}"
+  with_items:
+    - boto3
+    - botocore
+  become: yes

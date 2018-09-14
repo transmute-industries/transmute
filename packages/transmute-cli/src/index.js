@@ -187,7 +187,7 @@ vorpal
   .command('k8s init <clustername>')
   .description('Initialize k8s cluster')
   .option('--dryrun', 'Print out what would be done without executing anything')
-  .action(function(args, callback) {
+  .action(function (args, callback) {
     var t0 = performance.now();
     // begin performance test
     let dryrun = 'false';
@@ -199,8 +199,8 @@ vorpal
     var t1 = performance.now();
     vorpal.logger.info(
       'Call to transmute init took ' +
-        ((t1 - t0) / 1000).toPrecision(4) +
-        ' seconds.'
+      ((t1 - t0) / 1000).toPrecision(4) +
+      ' seconds.'
     );
     callback();
   });
@@ -219,7 +219,7 @@ vorpal
     '--nodesize <nodesize>',
     'Specify the size of nodes to create the cluster with'
   )
-  .action(function(args, callback) {
+  .action(function (args, callback) {
     var t0 = performance.now();
     // begin performance test
     let dryrun = 'false';
@@ -250,8 +250,8 @@ vorpal
     var t1 = performance.now();
     vorpal.logger.info(
       'Call to transmute provision took ' +
-        ((t1 - t0) / 1000).toPrecision(4) +
-        ' seconds.'
+      ((t1 - t0) / 1000).toPrecision(4) +
+      ' seconds.'
     );
     callback();
   });
@@ -270,7 +270,7 @@ vorpal
     'The cluster name to create the cluster with'
   )
   .option('--dryrun', 'Print out what would be done without executing anything')
-  .action(function(args, callback) {
+  .action(function (args, callback) {
     var t0 = performance.now();
     // begin performance test
     let dryrun = 'false';
@@ -287,22 +287,26 @@ vorpal
     var t1 = performance.now();
     vorpal.logger.info(
       'Call to transmute provision took ' +
-        ((t1 - t0) / 1000).toPrecision(4) +
-        ' seconds.'
+      ((t1 - t0) / 1000).toPrecision(4) +
+      ' seconds.'
     );
     callback();
   });
 
-/** transmute k8s microservice install <appname> deploy <appname> to k8s cluster
- * @name transmute k8s microservice install <appname>
- * @example transmute k8s microservice install kong
- * @param {string} appname
+/** transmute k8s provision-aws uses aws to provision a k8s cluster
+ * @name transmute k8s provision-aws <clustername> <aws_region> <aws_key> <aws_secret>
+ * @example transmute k8s provision-aws myClusterName us-east-1 key secret
+ * @param {string} clustername
+ * @param {string} aws_region
+ * @param {string} aws_key
+ * @param {string} aws_secret
  * */
 vorpal
-  .command('k8s microservice install <appname>')
-  .description('Deploy <appname> to k8s cluster')
+  .command('k8s provision-aws <clustername> <aws_region> <aws_key> <aws_secret>')
+  .description('Provision k8s cluster in aws')
+  .option('The cluster name to create the cluster with')
   .option('--dryrun', 'Print out what would be done without executing anything')
-  .action(function(args, callback) {
+  .action(function (args, callback) {
     var t0 = performance.now();
     // begin performance test
     let dryrun = 'false';
@@ -310,13 +314,13 @@ vorpal
       console.info('dry run');
       dryrun = 'true';
     }
-    microservice.install(dryrun, args.appname);
+    provision.aws(dryrun, args.clustername, args.aws_region, args.aws_key, args.aws_secret);
     // end performance test
     var t1 = performance.now();
     vorpal.logger.info(
-      'Call to k8s microservice install took ' +
-        ((t1 - t0) / 1000).toPrecision(4) +
-        ' seconds.'
+      'Call to transmute provision took ' +
+      ((t1 - t0) / 1000).toPrecision(4) +
+      ' seconds.'
     );
     callback();
   });
@@ -353,7 +357,7 @@ vorpal
  * */
 vorpal
   .command('telemetry <state>', 'toggles telemetry on or off')
-  .autocompletion(function(text, iteration, cb) {
+  .autocompletion(function (text, iteration, cb) {
     var states = ['on', 'off'];
     if (iteration > 1) {
       cb(void 0, states);

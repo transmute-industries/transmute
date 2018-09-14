@@ -1,0 +1,59 @@
+---
+- name: create directory for boto
+  file:
+    path: "{{ ansible_env.HOME }}/.aws"
+    state: directory
+
+- name: generate config for boto
+  template:
+    src: credentials.j2
+    dest: "{{ ansible_env.HOME }}/.aws/credentials"
+
+- name: create s3 bucket
+  s3_bucket:
+    name: "terraform.{{ clusterName }}"
+    region: "{{ aws_region }}"
+
+- name: get path
+  shell: "echo $(npm root -g)'/transmute-cli/components/terraform/'"
+  register: terraform
+
+- name: generate config for boto
+  template:
+    src: backend.tf.j2
+    dest: "{{ terraform.stdout }}/backend.tf"
+
+- name: install aws-iam-authenticator
+  get_url:
+    url: " https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-07-26/bin/{{ ansible_system | lower }}/amd64/aws-iam-authenticator"
+    dest: "/usr/local/bin/aws-iam-authenticator"
+    remote_src: yes
+    mode: 0755
+    owner: 0
+    group: 0
+  become: yes
+
+- name: terraform init
+  shell: "terraform init"
+  args:
+    chdir: '{{ terraform.stdout }}'
+
+- name: terraform apply
+  shell: "terraform apply -no-color -input=false -auto-approve=true -lock=true -var region={{ aws_region }} -var cluster-name={{ clusterName }} -var aws_key={{ aws_key }} -var aws_secret={{ aws_secret }}"
+  args:
+    chdir: '{{ terraform.stdout }}'
+
+- name: create dir
+  file:
+    path: "{{ ansible_env.HOME }}/.kube"
+    state: directory
+
+- name: get credintials
+  shell: "terraform output kubeconfig > {{ ansible_env.HOME }}/.kube/config"
+  args:
+    chdir: '{{ terraform.stdout }}'
+
+- name: get config-map
+  shell: "terraform output config_map_aws_auth | kubectl apply -f -"
+  args:
+    chdir: '{{ terraform.stdout }}'

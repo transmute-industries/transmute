@@ -1,0 +1,7 @@
+---
+- name: provision-aws
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  roles:
+    - role: aws
