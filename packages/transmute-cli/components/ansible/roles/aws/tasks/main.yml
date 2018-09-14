@@ -23,7 +23,7 @@
     src: backend.tf.j2
     dest: "{{ terraform.stdout }}/backend.tf"
 
-- name: install kubectl
+- name: install aws-iam-authenticator
   get_url:
     url: " https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-07-26/bin/{{ ansible_system | lower }}/amd64/aws-iam-authenticator"
     dest: "/usr/local/bin/aws-iam-authenticator"
@@ -43,7 +43,17 @@
   args:
     chdir: '{{ terraform.stdout }}'
 
+- name: create dir
+  file:
+    path: "{{ ansible_env.HOME }}/.kube"
+    state: directory
+
 - name: get credintials
+  shell: "terraform output kubeconfig >  {{ ansible_env.HOME }}/.kube/config"
+  args:
+    chdir: '{{ terraform.stdout }}'
+
+- name: get config-map
   shell: "terraform output config-map-aws-auth | kubectl apply -f -"
   args:
     chdir: '{{ terraform.stdout }}'
