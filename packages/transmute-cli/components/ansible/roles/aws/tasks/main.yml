@@ -23,6 +23,16 @@
     src: backend.tf.j2
     dest: "{{ terraform.stdout }}/backend.tf"
 
+- name: install kubectl
+  get_url:
+    url: " https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-07-26/bin/{{ ansible_system | lower }}/amd64/aws-iam-authenticator"
+    dest: "/usr/local/bin/aws-iam-authenticator"
+    remote_src: yes
+    mode: 0755
+    owner: 0
+    group: 0
+  become: yes
+
 - name: terraform init
   shell: "terraform init"
   args:
