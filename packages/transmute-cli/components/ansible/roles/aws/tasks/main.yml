@@ -54,6 +54,6 @@
     chdir: '{{ terraform.stdout }}'
 
 - name: get config-map
-  shell: "terraform output config-map-aws-auth | kubectl apply -f -"
+  shell: "terraform output config_map_aws_auth | kubectl apply -f -"
   args:
     chdir: '{{ terraform.stdout }}'
