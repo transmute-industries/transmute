@@ -4,7 +4,7 @@
   register: output
 
 - name: install ipfs
-  shell: "helm install $(npm root -g)/transmute-cli/components/ipfs/ --name decentralized-storage --wait"
+  shell: "helm install stable/ipfs --name decentralized-storage"
   when: not output.stdout
 
 - name: ready.w8 decentralized-storage-ipfs
