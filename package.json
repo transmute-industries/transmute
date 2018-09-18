@@ -1,5 +1,14 @@
 {
-	"devDependencies": {
-		"lerna": "^2.9.0"
-	}
+  "workspaces": [
+    "packages/transmute-*"
+  ],
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "clean": "lerna clean",
+    "test": "lerna exec npm test",
+    "coverage": "lerna exec npm run coverage"
+  },
+  "devDependencies": {
+    "lerna": "^2.9.0"
+  }
 }
