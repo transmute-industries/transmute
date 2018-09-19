@@ -5,6 +5,8 @@
   "scripts": {
     "transmute": "./src/index.js",
     "docs": "jsdoc -c jsdoc.json",
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "converage": "echo \"Error: no coverage specified\" && exit 0",
     "lint": "../../node_modules/.bin/eslint .",
     "lint-fix": "../../node_modules/.bin/eslint . --fix"
   },
