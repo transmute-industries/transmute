@@ -4,14 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "coverage": "jest --coverage"
+    "test": "../../node_modules/.bin/jest .",
+    "coverage": "../../node_modules/.bin/jest . --coverage"
   },
   "author": "",
   "license": "MIT",
-  "devDependencies": {
-    "jest": "^23.5.0"
-  },
+  "devDependencies": {},
   "dependencies": {
     "bs58": "^4.0.1",
     "ipfs-api": "^24.0.1"

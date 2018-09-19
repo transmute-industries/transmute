@@ -4,8 +4,8 @@
   "description": "",
   "main": "./src/index.js",
   "scripts": {
-    "test": "jest --env aegir",
-    "coverage": "jest --coverage --env aegir"
+    "test": "../../node_modules/.bin/jest . --env aegir",
+    "coverage": "../../node_modules/.bin/jest . --coverage --env aegir"
   },
   "author": "",
   "license": "MIT",
@@ -16,7 +16,6 @@
     "eslint-plugin-jest": "^21.21.0",
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-security": "^1.4.0",
-    "jest": "^21.0.0",
     "jest-environment-aegir": "^1.0.1"
   },
   "dependencies": {

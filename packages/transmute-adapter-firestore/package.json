@@ -4,14 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "coverage": "jest --coverage"
+    "test": "../../node_modules/.bin/jest .",
+    "coverage": "../../node_modules/.bin/jest --coverage ."
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "firebase-admin": "^6.0.0",
-    "jest": "^23.5.0"
+    "firebase-admin": "^6.0.0"
   },
   "dependencies": {
     "bs58": "^4.0.1",
