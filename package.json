@@ -3,12 +3,13 @@
     "packages/transmute-*"
   ],
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "clean": "lerna clean",
+    "lerna:bootstrap": "lerna bootstrap",
+    "lerna:clean": "lerna clean",
     "test": "lerna exec npm test",
-    "coverage": "lerna exec npm run coverage"
+    "coverage": "lerna exec npm run coverage",
+    "lint": "lerna exec npm run lint"
   },
   "devDependencies": {
-    "lerna": "^2.9.0"
+    "lerna": "^2.11.0"
   }
 }
