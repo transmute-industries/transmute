@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "test": "node scripts/test.js --env=jsdom",
+    "coverage": "node scripts/test.js --coverage --env=jsdom",
     "build": "node scripts/build.js && cp ./build/index.html ./build/404.html && cp -r ./build/* ./production",
     "deploy": "cd ./production && git add -A && git commit -m `cat ../package.json | jq -r '.version'` && git push origin master",
     "build:docs": "npm run build",
