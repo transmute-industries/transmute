@@ -7,10 +7,19 @@
     "lerna:clean": "lerna clean",
     "test": "lerna exec npm test",
     "coverage": "lerna exec npm run coverage",
-    "lint": "lerna exec npm run lint"
+    "lint": "lerna exec npm run lint",
+    "lint-fix": "lerna exec npm run lint-fix"
   },
   "devDependencies": {
+    "eslint": "^5.6.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jest": "^21.22.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-security": "^1.4.0",
     "jest": "^23.6.0",
+    "jest-environment-aegir": "^1.0.1",
     "lerna": "^2.11.0"
   }
 }
