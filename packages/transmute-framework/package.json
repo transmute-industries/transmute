@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "start": "npm test",
-    "test": "NODE_TLS_REJECT_UNAUTHORIZED=0 react-scripts test --coverage --forceExit",
+    "test": "NODE_TLS_REJECT_UNAUTHORIZED=0 react-scripts test --forceExit",
     "coverage": "NODE_TLS_REJECT_UNAUTHORIZED=0 react-scripts test --coverage",
     "test:report": "codecov && rm -rf ./coverage",
     "truffle:test": "NODE_TLS_REJECT_UNAUTHORIZED=0 truffle test",
