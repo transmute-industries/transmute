@@ -6,12 +6,15 @@
   "scripts": {
     "start": "node scripts/start.js",
     "test": "node scripts/test.js --env=jsdom",
+    "coverage": "node scripts/test.js --coverage --env=jsdom",
     "build": "node scripts/build.js && cp ./build/index.html ./build/404.html && cp -r ./build/* ./production",
     "deploy": "cd ./production && git add -A && git commit -m `cat ../package.json | jq -r '.version'` && git push origin master",
     "build:docs": "npm run build",
     "deploy:docs": "gh-pages -d build",
     "truffle:migrate": "rm -rf ./build/contracts/ && rm -rf ./src/contracts/ && truffle migrate --network development && cp -r ./build/contracts/ ./src/contracts",
-    "truffle:migrate:rinkeby": "rm -rf ./build/contracts/ && rm -rf ./src/contracts/ && truffle migrate --network rinkeby && cp -r ./build/contracts/ ./src/contracts"
+    "truffle:migrate:rinkeby": "rm -rf ./build/contracts/ && rm -rf ./src/contracts/ && truffle migrate --network rinkeby && cp -r ./build/contracts/ ./src/contracts",
+    "lint": "../../node_modules/.bin/eslint .",
+    "lint-fix": "../../node_modules/.bin/eslint . --fix"
   },
   "dependencies": {
     "@material-ui/icons": "^1.0.0-beta.42",
