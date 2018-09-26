@@ -1,6 +1,6 @@
 {
   "name": "transmute-framework",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Event Sourced Decentralized Application Development Framework.",
   "main": "src/index.js",
   "files": [
@@ -9,14 +9,13 @@
   ],
   "scripts": {
     "start": "npm test",
-    "test": "NODE_TLS_REJECT_UNAUTHORIZED=0 react-scripts test --forceExit",
-    "coverage": "NODE_TLS_REJECT_UNAUTHORIZED=0 react-scripts test --coverage",
+    "test": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest",
+    "coverage": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest --coverage",
     "test:report": "codecov && rm -rf ./coverage",
     "truffle:test": "NODE_TLS_REJECT_UNAUTHORIZED=0 truffle test",
     "truffle:migrate": "NODE_TLS_REJECT_UNAUTHORIZED=0 truffle migrate --network development",
     "truffle:coverage": "./node_modules/.bin/solidity-coverage",
     "truffle:coverage:report": "cat coverage/lcov.info | coveralls",
-    "eject": "react-scripts eject",
     "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json",
     "lint": "../../node_modules/.bin/eslint .",
     "lint-fix": "../../node_modules/.bin/eslint . --fix"
@@ -42,9 +41,9 @@
     "coveralls": "^3.0.0",
     "docdash": "^0.4.0",
     "firebase-admin": "^6.0.0",
+    "jest": "^23.6.0",
     "jsdoc": "^3.5.5",
     "solidity-coverage": "^0.4.14",
-    "react-scripts": "^1.1.1",
     "transmute-adapter-ipfs": "1.0.3",
     "transmute-adapter-firestore": "0.1.0"
   },
