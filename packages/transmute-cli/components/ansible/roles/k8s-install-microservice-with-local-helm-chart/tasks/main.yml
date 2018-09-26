@@ -14,9 +14,6 @@
   check_mode: no
 
 - block:
-    - name: Applying {{ microservice.name | capitalize }} CRDs before install
-      shell: kubectl apply -f "{{ microservice.helm.dest + '/' + microservice.helm.crds.path }}"
-      when: microservice.helm.crds.apply_before_install
     - name: Installing {{ microservice.name | capitalize }} with local Helm chart
       shell: >
         helm install "{{ microservice.helm.dest + '/' + microservice.helm.chart.path }}"
