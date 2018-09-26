@@ -1,0 +1,26 @@
+---
+- name: Cloning {{ microservice.name | capitalize }} ({{ microservice.release.repo }}, {{ microservice.release.version }}) into {{ microservice.release.dest }}
+  git:
+    repo: "{{ microservice.release.repo }}"
+    dest: "{{ microservice.release.dest }}"
+    version: "{{ microservice.release.version }}"
+    accept_hostkey: yes
+    depth: 1
+
+- name: Checking if Helm release {{ microservice.name }} has status "DEPLOYED"
+  shell: helm list --deployed "{{ '^' + microservice.name + '$' }}"
+  register: helm_release_status_is_deployed
+  changed_when: False
+  check_mode: no
+
+- name: Installing {{ microservice.name | capitalize }} from Helm chart
+  when: helm_release_status_is_deployed.stdout == ""
+  shell: >
+    helm install "{{ microservice.release.dest + '/' + microservice.release.chart.path }}"
+    --name "{{ microservice.name }}"
+    --namespace "{{ microservice.namespace }}"
+    {{ microservice.release.chart.flags }}
+
+- name: Wait for {{ microservice.name | capitalize }} to be ready
+  shell: "$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 istio istio-system"
+  when: helm_release_status_is_deployed.stdout == ""

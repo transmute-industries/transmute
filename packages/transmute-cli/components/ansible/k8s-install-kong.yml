@@ -5,7 +5,7 @@
   vars:
     ipfs_started: no
     ganache_started: no
-    KONG_PROXY_PORT: 32443
+    kong_proxy_port: 32443
   gather_facts: yes
   roles:
     - role: kong

@@ -1,125 +1,214 @@
 ---
-- name: KONG_ADMIN_URL
-  shell: "minikube service gateway-kong-admin --url | sed 's,http://,https://,g'"
-  register: KONG_ADMIN_URL
+- name: Initialize helm_release_status
+  set_fact:
+    helm_release_status: "{{ helm_release_status | default({}) }}"
 
-- name: KONG_PROXY_URL
-  shell: "minikube service gateway-kong-proxy --url"
-  register: KONG_PROXY_URL
+- name: Checking if Helm release for Kong has status "DEPLOYED"
+  shell: helm list --deployed gateway
+  register: result
+  changed_when: no
+  check_mode: no
 
-- name: KONG_PROXY_PORT
-  shell: "kubectl get service gateway-kong-proxy -o json | jq -r '.spec.ports[0].nodePort'"
-  register: KONG_PROXY_PORT
+- name: Setting helm_release_status.kong
+  set_fact:
+    helm_release_status: "{{ helm_release_status | combine( { 'kong': result }, recursive=True ) }}"
+  changed_when: no
+  when: result
 
-- name: KONG_HOST
-  shell: "echo {{ KONG_ADMIN_URL.stdout }} | sed 's!https://!!g' | cut -f1 -d:"
-  register: KONG_HOST
+- name: Setting kong_admin_url
+  shell: minikube service gateway-kong-admin --url | sed "s|http://|https://|"
+  register: kong_admin_url
+  changed_when: no
+  check_mode: no
+  when: helm_release_status.kong
 
-- name: KONG_PORT
-  shell: "echo {{ KONG_ADMIN_URL.stdout }} | sed 's!https://!!g' | cut -f2 -d:"
-  register: KONG_PORT
+- name: Setting kong_admin_host
+  shell: minikube service gateway-kong-admin --format "{{ '{{' }} .IP {{ '}}' }}"
+  register: kong_admin_host
+  changed_when: no
+  check_mode: no
+  when: helm_release_status.kong
 
-- name: GANACHE_CLUSTER_IP
-  shell: "kubectl get service ganache -o json | jq -r '.spec.clusterIP'"
-  register: GANACHE_CLUSTER_IP
+- name: Setting kong_admin_port
+  shell: kubectl get service gateway-kong-admin -o json | jq -r ".spec.ports[0].nodePort"
+  register: kong_admin_port
+  changed_when: no
+  check_mode: no
+  when: helm_release_status.kong
 
-- name: "wait for kong to come up"
+- name: Setting kong_proxy_url
+  shell: minikube service gateway-kong-proxy --url
+  register: kong_proxy_url
+  changed_when: no
+  check_mode: no
+  when: helm_release_status.kong
+
+- name: Setting kong_proxy_port
+  shell: kubectl get service gateway-kong-proxy -o json | jq -r ".spec.ports[0].nodePort"
+  register: kong_proxy_port
+  changed_when: no
+  check_mode: no
+  when: helm_release_status.kong
+
+- name: Waiting for Kong to response with HTTP status code "200"
   uri:
-    url: "https://{{ KONG_HOST.stdout }}:{{ KONG_PORT.stdout }}"
+    url: "https://{{ kong_admin_host.stdout }}:{{ kong_admin_port.stdout }}"
     status_code: 200
     validate_certs: no
-  register: result
+  register: request
   retries: 60
   delay: 5
-  register: result
-  until: result.status == 200
+  until: request.status == 200
+  when: helm_release_status.kong
 
-- name: Curl ganache cluster to kong
+- name: Checking if Helm release for Ganache has status "DEPLOYED"
+  shell: helm list --deployed ganache
+  register: result
+  changed_when: no
+  check_mode: no
+
+- name: Setting helm_release_status.ganache
+  set_fact:
+    helm_release_status: "{{ helm_release_status | combine( { 'ganache': result }, recursive=True ) }}"
+  changed_when: no
+  when: result
+
+- name: Setting ganache_cluster_ip
+  shell: kubectl get service ganache -o json | jq -r ".spec.clusterIP"
+  register: ganache_cluster_ip
+  changed_when: no
+  check_mode: no
+  when: helm_release_status.ganache
+
+- name: Adding Ganache to Kong APIs
   uri:
-    url: "{{ KONG_ADMIN_URL.stdout }}/apis/"
+    url: "{{ kong_admin_url.stdout }}/apis/"
     method: POST
-    body: "name=ganache&hosts=ganache.transmute.minikube&upstream_url=http://{{ GANACHE_CLUSTER_IP.stdout }}:8545/"
+    body: "name=ganache&hosts=ganache.transmute.minikube&upstream_url=http://{{ ganache_cluster_ip.stdout }}:8545/"
     validate_certs: no
-  register: result
-  ignore_errors: True
+  register: request
+  ignore_errors: yes
+  when:
+    - helm_release_status.kong
+    - helm_release_status.ganache
 
-- fail: msg="The execution has failed because of errors."
-  when: result.status != 201 and result.status != 409
+- fail:
+    msg: "The execution has failed because of errors."
+  ignore_errors: yes
+  when:
+    - request.status != 201
+    - request.status != 409
 
-- name: GANACHE HEALTHCHECK
+- name: Checking if Ganache is available through Kong proxy
   uri:
-    url: "http://ganache.transmute.minikube:{{ KONG_PROXY_PORT.stdout }}"
+    url: "http://ganache.transmute.minikube:{{ kong_proxy_port.stdout }}"
     method: POST
     body: '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":68}'
     body_format: json
     status_code: 200
-  register: out
-  retries: 5
+  register: request
   delay: 60
+  retries: 5
+  until: request.status == 200
+  when: helm_release_status.ganache
+
+- name: Checking if Helm release for IPFS has status "DEPLOYED"
+  shell: helm list --deployed decentralized-storage
   register: result
-  until: result.status == 200
+  changed_when: no
+  check_mode: no
 
-- name: IPFS_CLUSTER_IP
-  shell: "PATH=$HOME/.transmute/bin:$PATH kubectl get service decentralized-storage-ipfs -o json | jq -r '.spec.clusterIP'"
-  register: IPFS_CLUSTER_IP
+- name: Setting helm_release_status.ipfs
+  set_fact:
+    helm_release_status: "{{ helm_release_status | combine( { 'ipfs': result }, recursive=True ) }}"
+  changed_when: no
+  when: result
 
-- name: Curl ipfs cluster to kong
+- name: Setting ipfs_cluster_ip
+  shell: kubectl get service decentralized-storage-ipfs -o json | jq -r ".spec.clusterIP"
+  register: ipfs_cluster_ip
+  changed_when: no
+  check_mode: no
+  when: helm_release_status.ipfs
+
+- name: Adding IPFS to Kong APIs
   uri:
-    url: "{{ KONG_ADMIN_URL.stdout }}/apis/"
+    url: "{{ kong_admin_url.stdout }}/apis"
     method: POST
-    body: "name=ipfs&hosts=ipfs.transmute.minikube&upstream_url=http://{{ IPFS_CLUSTER_IP.stdout }}:5001/"
+    body: "name=ipfs&hosts=ipfs.transmute.minikube&upstream_url=http://{{ ipfs_cluster_ip.stdout }}:5001/"
     validate_certs: no
-  register: result
-  ignore_errors: True
+  register: adding_ipfs_to_kong_apis_request
+  ignore_errors: yes
+  when: helm_release_status.kong and helm_release_status.ipfs
 
-- fail: msg="The execution has failed because of errors."
-  when: result.status != 201 and result.status != 409
+- fail:
+    msg: "The execution has failed because of errors."
+  ignore_errors: yes
+  when:
+    - helm_release_status.kong
+    - helm_release_status.ipfs
+    - ipfs_cluster_ip
+    - (adding_ipfs_to_kong_apis_request.status != 201) or
+      (adding_ipfs_to_kong_apis_request.status != 409)
 
-- name: Curl ipfs to kong
+- name: Adding CORS plugin to IPFS Kong API
   uri:
-    url: "{{ KONG_ADMIN_URL.stdout }}/apis/ipfs/plugins"
+    url: "{{ kong_admin_url.stdout }}/apis/ipfs/plugins"
     method: POST
-    body: 'name=cors&config.origins=*&config.methods=GET, PUT, POST'
+    body: "name=cors&config.origins=*&config.methods=GET, PUT, POST"
     status_code: 201
     validate_certs: no
-  register: result
-  ignore_errors: True
+  register: adding_cors_plugin_to_ipfs_kong_api_request
+  ignore_errors: yes
+  when:
+    - helm_release_status.kong
+    - helm_release_status.ipfs
+    - (adding_cors_plugin_to_ipfs_kong_api_request.status == 200) or
+      (adding_cors_plugin_to_ipfs_kong_api_request.status == 409)
 
-- fail: msg="The execution has failed because of errors."
-  when: result.status != 201 and result.status != 409
+- fail:
+    msg: "The execution has failed because of errors."
+  when:
+    - helm_release_status.kong
+    - helm_release_status.ipfs
+    - adding_cors_plugin_to_ipfs_kong_api_request.status != 201
+    - adding_cors_plugin_to_ipfs_kong_api_request.status != 409
 
-- name: Curl ipfs get api id
+- name: Adding IPFS API ID to IPFS API
   uri:
-    url: "http://ipfs.transmute.minikube:{{ KONG_PROXY_PORT.stdout }}/api/v0/id"
+    url: "http://ipfs.transmute.minikube:{{ kong_proxy_port.stdout }}/api/v0/id"
     method: GET
-  register: out
+  register: request
   retries: 200
   delay: 1
+  when:
+    - helm_release_status.kong
+    - helm_release_status.ipfs
 
-- name: create dirs
+- name: Ensuring transmute-config directories exist
   file:
-    path: "{{ item }}"
+    path: "{{ ansible_env.HOME }}/.transmute/git/transmute/packages/{{ item }}/src/transmute-config"
     state: directory
     recurse: yes
   with_items:
-    - "{{ ansible_env.HOME }}/.transmute/git/transmute/packages/transmute-framework/src/transmute-config/"
-    - "{{ ansible_env.HOME }}/.transmute/git/transmute/packages/transmute-dashboard/src/transmute-config/"
+    - "transmute-framework"
+    - "transmute-dashboard"
 
-- name: FRAMEWORK_CONFIG
+- name: Adding Transmute Framework template
   template:
     src: framework.env.json.j2
     dest: "{{ ansible_env.HOME }}/.transmute/git/transmute/packages/transmute-framework/src/transmute-config/env.json"
 
-- name: DASHBOARD_CONFIG
+- name: Adding Transmute Dashboard template
   template:
     src: dashboard.env.json.j2
     dest: "{{ ansible_env.HOME }}/.transmute/git/transmute/packages/transmute-dashboard/src/transmute-config/env.json"
 
-- name: TRANSMUTE_ENV
+- name: Ensuring export of TRANSMUTE_ENV environment variable
   lineinfile:
     path: "{{ ansible_env.HOME }}/.bashrc"
     state: present
-    line: 'export {{ item.var }}={{ item.value }}'
+    line: "export {{ item.var }}={{ item.value }}"
   with_items:
     - var: "TRANSMUTE_ENV"
-      value: 'minikube'
+      value: "minikube"

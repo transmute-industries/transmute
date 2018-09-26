@@ -1,25 +1,19 @@
 ---
-
-- name: start minikube
+- name: Start Minikube cluster
   shell: "sudo minikube start  --kubernetes-version {{ kubernetes_version }} --disk-size {{ minikube_disk_size }} --cpus {{ minikube_cpus }} --memory {{ minikube_memory }} --vm-driver={{ minikube_vm_driver }}"
   when: minikube_vm_driver == "none"
 
-- name: setting access
+- name: Ensuring ownership of minikube and kube user configuration files
   file:
-    path: "{{ ansible_env.HOME }}/.kube"
+    path: "{{ ansible_env.HOME }}{{ item }}"
     owner: "{{ ansible_env.USER }}"
     recurse: yes
   become: yes
+  with_items:
+    - "/.kube"
+    - "/.minikube"
   when: minikube_vm_driver == "none"
 
-- name: setting access
-  file:
-    path: "{{ ansible_env.HOME }}/.minikube"
-    owner: "{{ ansible_env.USER }}"
-    recurse: yes
-  become: yes
-  when: minikube_vm_driver == "none"
-
-- name: start minikube
+- name: Start Minikube cluster
   shell: "minikube start  --kubernetes-version {{ kubernetes_version }} --disk-size {{ minikube_disk_size }} --cpus {{ minikube_cpus }} --memory {{ minikube_memory }} --vm-driver={{ minikube_vm_driver }}"
   when: minikube_vm_driver != "none"
