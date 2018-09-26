@@ -7,14 +7,17 @@
     microservice:
       name: istio
       namespace: istio-system
-      release:
+      helm:
         dest: "{{ ansible_env.HOME }}/.transmute/git/istio"
         repo: "https://github.com/istio/istio.git"
         version: "1.0.2"
         chart:
           path: "install/kubernetes/helm/istio"
-          flags: >-
-            --set "gateways.istio-ingressgateway.type=NodePort"
-            --set "gateways.istio-egressgateway.type=NodePort"
+        flags: >-
+          --set "gateways.istio-ingressgateway.type=NodePort"
+          --set "gateways.istio-egressgateway.type=NodePort"
+        crds:
+          path: "install/kubernetes/helm/istio/crds.yaml"
+          apply_before_install: yes
   roles:
     - role: k8s-install-microservice-with-local-helm-chart

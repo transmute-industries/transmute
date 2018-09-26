@@ -32,4 +32,4 @@
   register: output
 
 - set_fact:
-  ipfs_started: "{{ output.stdout }}"
+    ipfs_started: "{{ output.stdout }}"
