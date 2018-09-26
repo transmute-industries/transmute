@@ -163,8 +163,8 @@
   when:
     - helm_release_status.kong
     - helm_release_status.ipfs
-    - (adding_cors_plugin_to_ipfs_kong_api_request.status == 200) or
-      (adding_cors_plugin_to_ipfs_kong_api_request.status == 409)
+    - (adding_ipfs_to_kong_apis_request.status == 200) or
+      (adding_ipfs_to_kong_apis_request.status == 409)
 
 - fail:
     msg: "The execution has failed because of errors."
@@ -184,6 +184,8 @@
   when:
     - helm_release_status.kong
     - helm_release_status.ipfs
+    - (adding_ipfs_to_kong_apis_request.status == 200) or
+      (adding_ipfs_to_kong_apis_request.status == 409)
 
 - name: Ensuring transmute-config directories exist
   file:
