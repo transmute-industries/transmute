@@ -16,8 +16,9 @@
         flags: >-
           --set "gateways.istio-ingressgateway.type=NodePort"
           --set "gateways.istio-egressgateway.type=NodePort"
+          --no-crd-hook
         crds:
-          path: "install/kubernetes/helm/istio/crds.yaml"
+          path: "install/kubernetes/helm/istio/templates/crds.yaml"
           apply_before_install: yes
   roles:
     - role: k8s-install-microservice-with-local-helm-chart
