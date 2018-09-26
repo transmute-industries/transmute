@@ -141,7 +141,7 @@ const verify = async ({ message, publicKey }) => {
 /**
  * get message plaintext from armored signed pgp message
  * @function
- * @name verify
+ * @name getMessagePayload
  * @param {String} cleartext signed pgp message
  * @returns {String} plaintext message
  */
