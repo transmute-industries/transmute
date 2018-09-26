@@ -18,27 +18,27 @@ const KEYPAIR2 = {
 const ADDRESS = "0x0Ff5c616a5bEDA3353616E2aA36c136803fBd165";
 
 describe("eth", () => {
-  describe("generateBIP39Mneumonic", () => {
-    it("should generate a mneumonic", async () => {
+  describe("generateBIP39Mnemonic", () => {
+    it("should generate a mnemonic", async () => {
       expect.assertions(1);
-      const mneumonic = await eth.generateBIP39Mneumonic();
-      expect(mneumonic).toBeDefined();
+      const mnemonic = await eth.generateBIP39Mnemonic();
+      expect(mnemonic).toBeDefined();
     });
   });
 
-  describe("mneumonicToKeypair", () => {
-    it("should get a keypair from mneumonic and path", async () => {
+  describe("mnemonicToKeypair", () => {
+    it("should get a keypair from mnemonic and path", async () => {
       expect.assertions(2);
       const hdPath = "m/44'/60'/0'/0/0";
-      const keypair = await eth.mneumonicToKeypair(MNEUMONIC, hdPath);
+      const keypair = await eth.mnemonicToKeypair(MNEUMONIC, hdPath);
       expect(keypair.publicKey).toBe(KEYPAIR.publicKey);
       expect(keypair.privateKey).toBe(KEYPAIR.privateKey);
     });
 
-    it("should get a keypair from mneumonic and different path", async () => {
+    it("should get a keypair from mnemonic and different path", async () => {
       expect.assertions(2);
       const hdPath = "m/44'/60'/0'/0/1";
-      const keypair = await eth.mneumonicToKeypair(MNEUMONIC, hdPath);
+      const keypair = await eth.mnemonicToKeypair(MNEUMONIC, hdPath);
       expect(keypair.publicKey).toBe(KEYPAIR2.publicKey);
       expect(keypair.privateKey).toBe(KEYPAIR2.privateKey);
     });
