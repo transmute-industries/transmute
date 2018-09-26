@@ -38,7 +38,7 @@ LibSodium uses `ED25519` by default.
 
 This library provides:
 - a Signature scheme using libsodium's [crypto_sign](https://nacl.cr.yp.to/sign.html)
-- a Public-key authenticated encryption using libsodium's [crypto_box](https://nacl.cr.yp.to/box.html)
+- a Public-key authenticated encryption scheme using libsodium's [crypto_box](https://nacl.cr.yp.to/box.html)
 
 ## `src/lib/misc/`: Miscellaneous tools
 
