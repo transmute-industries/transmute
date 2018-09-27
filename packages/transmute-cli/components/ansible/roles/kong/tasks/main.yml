@@ -4,7 +4,7 @@
   register: output
 
 - name: Install kong
-  shell: "helm install stable/kong --name gateway --set proxy.useTLS=false --set proxy.nodePort={{ KONG_PROXY_PORT }} --wait"
+  shell: "helm install stable/kong --name gateway --set proxy.useTLS=false --set proxy.nodePort={{ kong_proxy_port }} --wait"
   when: not output.stdout
 
 - name: spin up
