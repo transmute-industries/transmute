@@ -3,22 +3,23 @@ const hdkey = require("hdkey");
 const ethUtil = require("ethereumjs-util");
 
 /**
- * generate a bip39 mneumonic
+ * generate a bip39 mnemonic
  * @function
- * @name generateBIP39Mneumonic
- * @returns {String} a mneumonic for an hd wallet
+ * @name generateBIP39Mnemonic
+ * @returns {String} a mnemonic for an hd wallet
  */
-const generateBIP39Mneumonic = () => bip39.generateMnemonic();
+// TODO fix typo
+const generateBIP39Mnemonic = () => bip39.generateMnemonic();
 
 /**
- * genetate a hex encoded keypair from mneumonic and path
+ * genetate a hex encoded keypair from mnemonic and path
  * @function
- * @name mneumonicToKeypair
+ * @name mnemonicToKeypair
  * @param {String} mnemonic for hd wallet
  * @param {String} hdPath path to keypair
  * @returns {Object} hex encoded keypair
  */
-const mneumonicToKeypair = (mnemonic, hdPath) => {
+const mnemonicToKeypair = (mnemonic, hdPath) => {
   const seed = bip39.mnemonicToSeed(mnemonic);
   const root = hdkey.fromMasterSeed(seed);
   //   const masterPrivateKey = root.privateKey.toString('hex');
@@ -54,7 +55,7 @@ const publicKeyToAddress = pubKey => {
 };
 
 module.exports = {
-  generateBIP39Mneumonic,
-  mneumonicToKeypair,
+  generateBIP39Mnemonic,
+  mnemonicToKeypair,
   publicKeyToAddress
 };
