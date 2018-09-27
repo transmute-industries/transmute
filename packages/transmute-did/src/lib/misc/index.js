@@ -141,6 +141,7 @@ const keypairsToTransmuteCiphertextDIDWallet = async ({
 module.exports = {
   shatterKey,
   recoverKey,
+  publicKeyToTransmuteDID,
   publicKeysToDIDDocument,
   keypairsToTransmuteCiphertextDIDWallet
 };

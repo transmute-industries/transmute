@@ -44,22 +44,69 @@ describe("misc", () => {
   });
 
   describe("publicKeysToDIDDocument", () => {
-    it("should generate a DID Document from public keys", async () => {
-      expect.assertions(1);
+    let didDocument;
+    let primaryPublicKey;
+
+    beforeAll(async() => {
       const pgpKeypair = await pgp.generateOpenPGPArmoredKeypair({
         name: "bob",
         passphrase: "yolo"
       });
       const libSodiumSigningKeypair = await msg.generateCryptoSignKeypair();
       const libSodiumEncryptionKeypair = await msg.generateCryptoBoxKeypair();
+      primaryPublicKey = libSodiumSigningKeypair.publicKey;
       const didDocumentArgs = {
-        primaryPublicKey: libSodiumSigningKeypair.publicKey,
+        primaryPublicKey,
         pgpPublicKey: pgpKeypair.publicKey,
         libSodiumPublicSigningKey: libSodiumSigningKeypair.publicKey,
         libSodiumPublicEncryptionKey: libSodiumEncryptionKeypair.publicKey
       };
-      const didDocument = await misc.publicKeysToDIDDocument(didDocumentArgs);
-      expect(didDocument["@context"]).toBe("https://w3id.org/did/v1");
+
+      didDocument = await misc.publicKeysToDIDDocument(didDocumentArgs);
+    })
+
+    it("should generate a DID Document from public keys", async () => {
+      expect.assertions(1);
+      expect(didDocument).toBeDefined();
+    });
+
+    // For reference: https://w3c-ccg.github.io/did-spec/#did-documents
+    describe('W3C v1 compliance', () => {
+      describe('DID context', () => {
+        let didContext;
+
+        beforeAll(() => {
+          didContext = didDocument["@context"];
+        });
+
+        it('should be defined', () => {
+          expect(didContext).toBeDefined();
+        });
+
+        it('should be valid', () => {
+          expect(didContext).toBe("https://w3id.org/did/v1");
+        });
+      });
+
+      describe('DID subject', () => {
+        let didSubject;
+
+        beforeAll(async() => {
+          didSubject = didDocument['id'];
+        })
+
+        it('should be valid', () => {
+          const didRegex = /^did:tst:.+/
+          expect(didSubject).toMatch(didRegex);
+        });
+
+        it('should be equal to the registered DID', async () => {
+          const registeredDid = misc.publicKeyToTransmuteDID({
+            publicKey: primaryPublicKey
+          });
+          expect(didSubject).toBe(registeredDid);
+        });
+      });
     });
   });
 
