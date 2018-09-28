@@ -110,7 +110,7 @@
         remote_src: yes
     - name: Copying Helm
       copy:
-        src: "{{ helm_tmp.path }}/{{ ansible_system | lower}}-amd64/helm/"
+        src: "{{ helm_tmp.path }}/{{ ansible_system | lower}}-amd64/helm"
         dest: "{{ ansible_env.HOME }}/.transmute/bin/helm"
         remote_src: yes
         mode: 0750
