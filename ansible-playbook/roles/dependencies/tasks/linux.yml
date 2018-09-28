@@ -24,6 +24,29 @@
     - socat
     - jq
 
+- name: Installing crictl
+  block:
+    - name: Creating temporary directory for crictl
+      tempfile:
+        state: directory
+        suffix: crictl
+      register: crictl_tmp
+    - name: Downloading crictl
+      get_url:
+        url: "https://github.com/kubernetes-sigs/cri-tools/releases/download/{{ transmute_critools_version }}/crictl-{{ transmute_critools_version }}-{{ ansible_system | lower }}-amd64.tar.gz"
+        dest: "{{ crictl_tmp.path }}/crictl.tar.gz"
+        remote_src: yes
+      register: crictl_tmp_archive
+    - name: Installing crictl
+      copy:
+        src: "{{ crictl_tmp_archive.dest }}"
+        dest: /usr/local/bin/crictl
+        remote_src: yes
+        owner: 0
+        group: 0
+        mode: 0755
+      become: yes
+
 - name: create temporary directory NSENTER_TMP
   tempfile:
     state: directory
