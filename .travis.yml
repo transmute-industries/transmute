@@ -12,7 +12,6 @@ matrix:
         - MINIKUBE_MEMORY=7777
         - MINIKUBE_CPU=4
         - MINIKUBE_DISK=50g
-
         # These options are required for travis
         - TRANSMUTE_RELEASE=$TRAVIS_BRANCH
         - TRANSMUTE_ENV='minikube'
