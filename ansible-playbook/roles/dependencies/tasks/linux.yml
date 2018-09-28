@@ -37,7 +37,7 @@
         dest: "{{ crictl_tmp.path }}/crictl.tar.gz"
         remote_src: yes
       register: crictl_tmp_archive
-    - name: Installing crictl
+    - name: Copying crictl
       copy:
         src: "{{ crictl_tmp_archive.dest }}"
         dest: /usr/local/bin/crictl
@@ -63,7 +63,7 @@
       shell: ./autogen.sh && ./configure && make nsenter
       args:
         chdir: "{{ nsenter_tmp.path }}/util-linux-2.32.1"
-    - name: Installing nsenter
+    - name: Copying nsenter
       copy:
         src: "{{ nsenter_tmp.path }}/util-linux-2.32.1/nsenter"
         dest: /usr/local/bin/nsenter
@@ -83,17 +83,18 @@
     group: 0
   become: yes
 
-- block:
-  - name: Installing Minikube
-    get_url:
-      url: "https://storage.googleapis.com/minikube/releases/{{ transmute_minikube_version }}/minikube-{{ ansible_system | lower }}-amd64"
-      dest: /usr/local/bin/minikube
-      remote_src: yes
-      mode: 0755
-      owner: 0
-      group: 0
-    become: yes
-  - shell: minikube config set WantUpdateNotification false
+- name: Installing Minikube
+  get_url:
+    url: "https://storage.googleapis.com/minikube/releases/{{ transmute_minikube_version }}/minikube-{{ ansible_system | lower }}-amd64"
+    dest: /usr/local/bin/minikube
+    remote_src: yes
+    mode: 0755
+    owner: 0
+    group: 0
+  become: yes
+
+- name: Configuring Minikube
+  shell: minikube config set WantUpdateNotification false
 
 - name: Installing Helm
   block:
@@ -103,11 +104,11 @@
         suffix: helm
       register: helm_tmp
     - name: Downloading and unarchiving Helm
-      get_url:
+      unarchive:
         url: "https://storage.googleapis.com/kubernetes-helm/helm-{{ transmute_helm_version }}-{{ ansible_system | lower }}-amd64.tar.gz"
         dest: "{{ helm_tmp.path }}"
         remote_src: yes
-    - name: Installing Helm
+    - name: Copying Helm
       copy:
         src: "{{ helm_tmp.path }}/{{ ansible_system | lower}}-amd64/helm/"
         dest: "{{ ansible_env.HOME }}/.transmute/bin/helm"
