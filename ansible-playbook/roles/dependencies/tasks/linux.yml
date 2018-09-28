@@ -1,5 +1,5 @@
 ---
-- name: install packages
+- name: Installing packages
   package:
     name: "{{ item }}"
     state: present
@@ -73,79 +73,72 @@
         mode: 0755
       become: yes
 
-# - name: create temporary directory NSENTER_TMP
+- name: Installing kubectl
+  get_url:
+    url: "https://storage.googleapis.com/kubernetes-release/release/{{ transmute_kube_version }}/bin/{{ ansible_system | lower }}/amd64/kubectl"
+    dest: /usr/local/bin/kubectl
+    remote_src: yes
+    mode: 0755
+    owner: 0
+    group: 0
+  become: yes
+
+- block:
+  - name: Installing Minikube
+    get_url:
+      url: "https://storage.googleapis.com/minikube/releases/{{ transmute_minikube_version }}/minikube-{{ ansible_system | lower }}-amd64"
+      dest: /usr/local/bin/minikube
+      remote_src: yes
+      mode: 0755
+      owner: 0
+      group: 0
+    become: yes
+  - shell: minikube config set WantUpdateNotification false
+
+- name: Installing Helm
+  shell: >
+    warn=False
+    curl -Lo get_helm.sh "https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get"
+    chmod +x ./get_helm.sh
+    ./get_helm.sh --version "$TRANSMUTE_HELM_VERSION"
+  args:
+    chdir: "{{ ansible_env.HOME }}/.transmute/bin"
+
+# - name: install kubectl
+#   get_url:
+#     url: "https://storage.googleapis.com/kubernetes-release/release/{{ transmute_kube_version }}/bin/linux/amd64/kubectl"
+#     dest: "/usr/local/bin/kubectl"
+#     remote_src: yes
+#     mode: 0755
+#     owner: 0
+#     group: 0
+#   become: yes
+
+# - name: install minikube
+#   get_url:
+#     url: "https://storage.googleapis.com/minikube/releases/{{ transmute_minikube_version }}/minikube-linux-amd64"
+#     dest: "/usr/local/bin/minikube"
+#     remote_src: yes
+#     mode: 0755
+#     owner: 0
+#     group: 0
+#   become: yes
+
+# - name: create temporary directory HELM_TMP
 #   tempfile:
 #     state: directory
-#     suffix: NSENTER_TMP
+#     suffix: HELM_TMP
 #   register: tmp
 
-# - name: Unarchive util-linux
+# - name: Unarchive helm
 #   unarchive:
-#     src: "https://www.kernel.org/pub/linux/utils/util-linux/v2.30/util-linux-2.30.2.tar.gz"
+#     src: "https://storage.googleapis.com/kubernetes-helm/helm-v2.11.0-linux-amd64.tar.gz"
 #     dest: "{{ tmp.path }}"
 #     remote_src: yes
 
-# - name: build nsenter
-#   shell: "./autogen.sh && ./configure && make nsenter"
-#   args:
-#     chdir: "{{ tmp.path }}/util-linux-2.30.2"
-
-# - name: Create dir {{ transmute_bin }}
-#   file:
-#     path: "{{ ansible_env.HOME }}/.local/bin"
-#     state: directory
-#     recurse: yes
-
-# - name: Copy nsenter
+# - name: Copy helm
 #   copy:
-#     src: "{{ tmp.path }}/util-linux-2.30.2/nsenter"
-#     dest: "{{ ansible_env.HOME }}/.local/bin/nsenter"
+#     src: "{{ tmp.path }}/linux-amd64/helm"
+#     dest: "{{ ansible_env.HOME }}/.transmute/bin/helm"
 #     remote_src: yes
 #     mode: 0750
-
-# - name: Copy nsenter
-#   copy:
-#     src: "{{ tmp.path }}/util-linux-2.30.2/nsenter"
-#     dest: "/usr/bin/nsenter"
-#     remote_src: yes
-#     mode: 0755
-#   become: yes
-
-- name: install kubectl
-  get_url:
-    url: "https://storage.googleapis.com/kubernetes-release/release/{{ transmute_kube_version }}/bin/linux/amd64/kubectl"
-    dest: "/usr/local/bin/kubectl"
-    remote_src: yes
-    mode: 0755
-    owner: 0
-    group: 0
-  become: yes
-
-- name: install minikube
-  get_url:
-    url: "https://storage.googleapis.com/minikube/releases/v0.28.2/minikube-linux-amd64"
-    dest: "/usr/local/bin/minikube"
-    remote_src: yes
-    mode: 0755
-    owner: 0
-    group: 0
-  become: yes
-
-- name: create temporary directory HELM_TMP
-  tempfile:
-    state: directory
-    suffix: HELM_TMP
-  register: tmp
-
-- name: Unarchive helm
-  unarchive:
-    src: "https://storage.googleapis.com/kubernetes-helm/helm-v2.11.0-linux-amd64.tar.gz"
-    dest: "{{ tmp.path }}"
-    remote_src: yes
-
-- name: Copy helm
-  copy:
-    src: "{{ tmp.path }}/linux-amd64/helm"
-    dest: "{{ ansible_env.HOME }}/.transmute/bin/helm"
-    remote_src: yes
-    mode: 0750

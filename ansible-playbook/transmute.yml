@@ -6,7 +6,9 @@
   vars:
     fix_dotfiles: true
     transmute_critools_version: v1.11.1
+    transmute_helm_version: v2.11.0
     transmute_kube_version: v1.11.3
+    transmute_minikube_version: v0.28.2
     nvm_version: v0.33.11
   roles:
     - role: dotfiles_install
