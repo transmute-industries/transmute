@@ -97,6 +97,7 @@
 
 - name: Installing Helm
   shell: >
+    HELM_INSTALL_DIR=/usr/local/bin
     warn=False
     curl -Lo get_helm.sh "https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get"
     chmod +x ./get_helm.sh
