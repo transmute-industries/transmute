@@ -72,18 +72,14 @@ describe("misc", () => {
 
     // For reference: https://w3c-ccg.github.io/did-spec/#did-documents
     describe('W3C v1 compliance', () => {
+      const isValidDID = (did) => {
+        const didRegex = /^did:tst:.+/
+        return didRegex.test(did);
+      };
+
       describe('DID context', () => {
-        let didContext;
-
-        beforeAll(() => {
-          didContext = didDocument["@context"];
-        });
-
-        it('should be defined', () => {
-          expect(didContext).toBeDefined();
-        });
-
-        it('should be valid', () => {
+        it('should be equal to the w3id URL', () => {
+          const didContext = didDocument["@context"];
           expect(didContext).toBe("https://w3id.org/did/v1");
         });
       });
@@ -95,16 +91,75 @@ describe("misc", () => {
           didSubject = didDocument['id'];
         })
 
-        it('should be valid', () => {
-          const didRegex = /^did:tst:.+/
-          expect(didSubject).toMatch(didRegex);
+        it('should be a valid did scheme', () => {
+          expect(isValidDID(didSubject)).toBeTruthy();
         });
 
-        it('should be equal to the registered DID', async () => {
+        it('should be equal to the DID used to register the DID document', async () => {
           const registeredDid = misc.publicKeyToTransmuteDID({
             publicKey: primaryPublicKey
           });
           expect(didSubject).toBe(registeredDid);
+        });
+      });
+
+      describe('Public Keys', () => {
+        // The following two arrays of valid keys are based on this registry
+        // https://w3c-ccg.github.io/ld-cryptosuite-registry/#the-registry
+
+        // W3C's specs are vague on what constitutes a valid property value
+        // an issue has been raised https://github.com/w3c-ccg/did-spec/issues/105
+        const validValues = [
+          'publicKeyBase58',
+          'publicKeyPem',
+          'publicKeyHex',
+        ];
+
+        const validTypes = [
+          'Ed25519VerificationKey2018',
+          'RsaVerificationKey2018',
+          // This format looks invalid. See
+          // https://github.com/w3c-ccg/ld-cryptosuite-registry/issues/8
+          // https://github.com/w3c-ccg/ld-cryptosuite-registry/pull/7
+          'EdDsaSAPublicKeySecp256k1',
+          // This last one is not in the registry but is used by Uport and Bitcoin
+          // https://github.com/uport-project/ethr-did
+          'Secp256k1VerificationKey2018', 
+        ];
+
+        let publicKeys;
+
+        beforeAll(async() => {
+          publicKeys = didDocument['publicKey'];
+        })
+
+        it('should be an array of public keys', () => {
+          expect(Array.isArray(publicKeys)).toBeTruthy();
+        });
+
+        describe('Each public key', () => {
+          it('should have a valid id', () => {
+            publicKeys.forEach((publicKey) => {
+              expect(publicKey['id']).toBeDefined();
+              expect(isValidDID(publicKey['id'])).toBeTruthy();
+            });
+          });
+
+          it('should contain a valid type', () => {
+            publicKeys.forEach((publicKey) => {
+              const { type } = publicKey;
+              expect(type).toBeDefined();
+              expect(validTypes).toContain(type);
+            });
+          });
+
+          it('should contain only one valid value', () => {
+            publicKeys.forEach((publicKey) => {
+              const valueProperties = Object.keys(publicKey)
+                .filter((key) => validValues.includes(key));
+              expect(valueProperties.length).toBe(1);
+            });
+          });
         });
       });
     });
