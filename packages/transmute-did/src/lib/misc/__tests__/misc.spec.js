@@ -124,7 +124,7 @@ describe("misc", () => {
           'EdDsaSAPublicKeySecp256k1',
           // This last one is not in the registry but is used by Uport and Bitcoin
           // https://github.com/uport-project/ethr-did
-          'Secp256k1VerificationKey2018', 
+          'Secp256k1VerificationKey2018',
         ];
 
         let publicKeys;
