@@ -47,43 +47,69 @@
         mode: 0755
       become: yes
 
-- name: create temporary directory NSENTER_TMP
-  tempfile:
-    state: directory
-    suffix: NSENTER_TMP
-  register: tmp
+- name: Installing nsenter
+  block:
+    - name: Creating temporary directory for nsenter
+      tempfile:
+        state: directory
+        suffix: nsenter
+      register: nsenter_tmp
+    - name: Unarchiving nsenter
+      unarchive:
+        src: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.32/util-linux-2.32.1.tar.gz
+        dest: "{{ nsenter_tmp.path }}"
+        remote_src: yes
+    - name: Building nsenter
+      shell: ./autogen.sh && ./configure && make nsenter
+      args:
+        chdir: "{{ nsenter_tmp.path }}/util-linux-2.32.1"
+    - name: Installing nsenter
+      copy:
+        src: "{{ nsenter_tmp.path }}/util-linux-2.32.1/nsenter"
+        dest: /usr/local/bin/nsenter
+        remote_src: yes
+        owner: 0
+        group: 0
+        mode: 0755
+      become: yes
 
-- name: Unarchive util-linux
-  unarchive:
-    src: "https://www.kernel.org/pub/linux/utils/util-linux/v2.30/util-linux-2.30.2.tar.gz"
-    dest: "{{ tmp.path }}"
-    remote_src: yes
+# - name: create temporary directory NSENTER_TMP
+#   tempfile:
+#     state: directory
+#     suffix: NSENTER_TMP
+#   register: tmp
 
-- name: build nsenter
-  shell: "./autogen.sh && ./configure && make nsenter"
-  args:
-    chdir: "{{ tmp.path }}/util-linux-2.30.2"
+# - name: Unarchive util-linux
+#   unarchive:
+#     src: "https://www.kernel.org/pub/linux/utils/util-linux/v2.30/util-linux-2.30.2.tar.gz"
+#     dest: "{{ tmp.path }}"
+#     remote_src: yes
 
-- name: Create dir {{ transmute_bin }}
-  file:
-    path: "{{ ansible_env.HOME }}/.local/bin"
-    state: directory
-    recurse: yes
+# - name: build nsenter
+#   shell: "./autogen.sh && ./configure && make nsenter"
+#   args:
+#     chdir: "{{ tmp.path }}/util-linux-2.30.2"
 
-- name: Copy nsenter
-  copy:
-    src: "{{ tmp.path }}/util-linux-2.30.2/nsenter"
-    dest: "{{ ansible_env.HOME }}/.local/bin/nsenter"
-    remote_src: yes
-    mode: 0750
+# - name: Create dir {{ transmute_bin }}
+#   file:
+#     path: "{{ ansible_env.HOME }}/.local/bin"
+#     state: directory
+#     recurse: yes
 
-- name: Copy nsenter
-  copy:
-    src: "{{ tmp.path }}/util-linux-2.30.2/nsenter"
-    dest: "/usr/bin/nsenter"
-    remote_src: yes
-    mode: 0755
-  become: yes
+# - name: Copy nsenter
+#   copy:
+#     src: "{{ tmp.path }}/util-linux-2.30.2/nsenter"
+#     dest: "{{ ansible_env.HOME }}/.local/bin/nsenter"
+#     remote_src: yes
+#     mode: 0750
+
+# - name: Copy nsenter
+#   copy:
+#     src: "{{ tmp.path }}/util-linux-2.30.2/nsenter"
+#     dest: "/usr/bin/nsenter"
+#     remote_src: yes
+#     mode: 0755
+#   become: yes
 
 - name: install kubectl
   get_url:
