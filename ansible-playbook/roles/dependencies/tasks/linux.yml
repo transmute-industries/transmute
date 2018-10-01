@@ -1,5 +1,5 @@
 ---
-- name: install packages
+- name: Installing packages
   package:
     name: "{{ item }}"
     state: present
@@ -24,79 +24,51 @@
     - socat
     - jq
 
-- name: create temporary directory NSENTER_TMP
-  tempfile:
-    state: directory
-    suffix: NSENTER_TMP
-  register: tmp
+- name: Installing crictl
+  block:
+    - name: Creating temporary directory for crictl
+      tempfile:
+        state: directory
+        suffix: crictl
+      register: crictl_tmp
+    - name: Downloading crictl
+      get_url:
+        url: "https://github.com/kubernetes-sigs/cri-tools/releases/download/{{ transmute_critools_version }}/crictl-{{ transmute_critools_version }}-{{ ansible_system | lower }}-amd64.tar.gz"
+        dest: "{{ crictl_tmp.path }}/crictl.tar.gz"
+        remote_src: yes
+      register: crictl_tmp_archive
+    - name: Copying crictl
+      copy:
+        src: "{{ crictl_tmp_archive.dest }}"
+        dest: /usr/local/bin/crictl
+        remote_src: yes
+        owner: 0
+        group: 0
+        mode: 0755
+      become: yes
 
-- name: Unarchive util-linux
-  unarchive:
-    src: "https://www.kernel.org/pub/linux/utils/util-linux/v2.30/util-linux-2.30.2.tar.gz"
-    dest: "{{ tmp.path }}"
-    remote_src: yes
-
-- name: build nsenter
-  shell: "./autogen.sh && ./configure && make nsenter"
-  args:
-    chdir: "{{ tmp.path }}/util-linux-2.30.2"
-
-- name: Create dir {{ transmute_bin }}
-  file:
-    path: "{{ ansible_env.HOME }}/.local/bin"
-    state: directory
-    recurse: yes
-
-- name: Copy nsenter
-  copy:
-    src: "{{ tmp.path }}/util-linux-2.30.2/nsenter"
-    dest: "{{ ansible_env.HOME }}/.local/bin/nsenter"
-    remote_src: yes
-    mode: 0750
-
-- name: Copy nsenter
-  copy:
-    src: "{{ tmp.path }}/util-linux-2.30.2/nsenter"
-    dest: "/usr/bin/nsenter"
-    remote_src: yes
-    mode: 0755
-  become: yes
-
-- name: install kubectl
-  get_url:
-    url: "https://storage.googleapis.com/kubernetes-release/release/{{ transmute_kube_version }}/bin/linux/amd64/kubectl"
-    dest: "/usr/local/bin/kubectl"
-    remote_src: yes
-    mode: 0755
-    owner: 0
-    group: 0
-  become: yes
-
-- name: install minikube
-  get_url:
-    url: "https://storage.googleapis.com/minikube/releases/v0.25.2/minikube-linux-amd64"
-    dest: "/usr/local/bin/minikube"
-    remote_src: yes
-    mode: 0755
-    owner: 0
-    group: 0
-  become: yes
-
-- name: create temporary directory HELM_TMP
-  tempfile:
-    state: directory
-    suffix: HELM_TMP
-  register: tmp
-
-- name: Unarchive helm
-  unarchive:
-    src: "https://storage.googleapis.com/kubernetes-helm/helm-v2.8.2-linux-amd64.tar.gz"
-    dest: "{{ tmp.path }}"
-    remote_src: yes
-
-- name: Copy helm
-  copy:
-    src: "{{ tmp.path }}/linux-amd64/helm"
-    dest: "{{ ansible_env.HOME }}/.transmute/bin/helm"
-    remote_src: yes
-    mode: 0750
+- name: Installing nsenter
+  block:
+    - name: Creating temporary directory for nsenter
+      tempfile:
+        state: directory
+        suffix: nsenter
+      register: nsenter_tmp
+    - name: Downloading and unarchiving nsenter
+      unarchive:
+        src: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.32/util-linux-2.32.1.tar.gz
+        dest: "{{ nsenter_tmp.path }}"
+        remote_src: yes
+    - name: Building nsenter
+      shell: ./autogen.sh && ./configure && make nsenter
+      args:
+        chdir: "{{ nsenter_tmp.path }}/util-linux-2.32.1"
+    - name: Copying nsenter
+      copy:
+        src: "{{ nsenter_tmp.path }}/util-linux-2.32.1/nsenter"
+        dest: /usr/local/bin/nsenter
+        remote_src: yes
+        owner: 0
+        group: 0
+        mode: 0755
+      become: yes
