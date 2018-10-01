@@ -1,11 +1,9 @@
 const run = require('../runner');
 
-const path = require('path');
-
-module.exports.k8s = (dryrun, clusterName) => {
+module.exports.k8s = (dryrun) => {
   let prov_cmd = 'ansible-playbook --diff -l "localhost" ' +
     __dirname +
-    '/../../../components/ansible/init.yml -e ' + clusterName;
+    '/../../../components/ansible/init.yml';
 
   if (dryrun == 'true') {
     console.info('<--dry run-->');

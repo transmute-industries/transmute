@@ -4,7 +4,7 @@ notifications:
 matrix:
   include:
     - os: linux
-      dist: trusty
+      dist: xenial
       sudo: required
       language: bash
       env:
@@ -12,8 +12,7 @@ matrix:
         - MINIKUBE_MEMORY=7777
         - MINIKUBE_CPU=4
         - MINIKUBE_DISK=50g
-       
-        # These options are required for travis 
+        # These options are required for travis
         - TRANSMUTE_RELEASE=$TRAVIS_BRANCH
         - TRANSMUTE_ENV='minikube'
         # This option is for testing JWT configuration with kong.
@@ -44,11 +43,15 @@ before_script:
   - transmute debug
 
 script:
-  - lerna bootstrap
+  - npm i && lerna bootstrap
   - lerna run --scope transmute-did test
+  - lerna run --scope transmute-did coverage
   - lerna run --scope transmute-adapter-ipfs test
+  - lerna run --scope transmute-adapter-ipfs coverage
   - lerna run --scope transmute-adapter-firestore test
+  - lerna run --scope transmute-adapter-firestore coverage
   - lerna run --scope transmute-framework truffle:test
   - lerna run --scope transmute-framework truffle:migrate
   - lerna run --scope transmute-framework test
+  - lerna run --scope transmute-framework coverage
   - lerna run --scope transmute-framework test:report

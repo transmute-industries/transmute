@@ -81,7 +81,7 @@ In order to connect to services running in your cluster, you will need to update
 Final steps - linking everything and migrating your smart contracts
 
 1. Navigate to the root directory
-1. Run `lerna bootstrap`
+1. Run `npm i && lerna bootstrap`
 1. Run `lerna run --scope transmute-framework truffle:test`
 1. Run `lerna run --scope transmute-framework truffle:migrate`
 1. Run `lerna run --scope transmute-framework test`
