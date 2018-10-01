@@ -44,7 +44,6 @@ before_script:
   - transmute debug
 
 script:
-  - echo "test"
   - npm i && lerna bootstrap
   - lerna run --scope transmute-did test
   - lerna run --scope transmute-did coverage
