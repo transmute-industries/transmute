@@ -9,12 +9,12 @@
       namespace: istio-system
       helm:
         dest: "{{ ansible_env.HOME }}/.transmute/git/istio"
-        repo: "https://github.com/istio/istio.git"
-        version: "{{ tranmsute_istio_version }}"
+        repo: https://github.com/istio/istio.git
+        version: "{{ transmute_istio_version | default('1.0.2')}}"
         chart:
-          path: "install/kubernetes/helm/istio"
+          path: install/kubernetes/helm/istio
         flags: >-
           --set "gateways.istio-ingressgateway.type=NodePort"
           --set "gateways.istio-egressgateway.type=NodePort"
   roles:
-    - role: k8s-install-microservice-with-local-helm-chart
+    - role: install-local-helm-chart
