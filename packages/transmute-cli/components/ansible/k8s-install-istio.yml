@@ -10,7 +10,7 @@
       helm:
         dest: "{{ ansible_env.HOME }}/.transmute/git/istio"
         repo: "https://github.com/istio/istio.git"
-        version: "1.0.2"
+        version: "{{ tranmsute_istio_version }}"
         chart:
           path: "install/kubernetes/helm/istio"
         flags: >-
