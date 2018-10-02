@@ -180,11 +180,11 @@ vorpal
   });
 
 /** transmute k8s  init initializes a cluster with the transmute framework
- * @name transmute k8s init <clustername>
- * @example transmute k8s init myClusterName
+ * @name transmute k8s init
+ * @example transmute k8s init
  * */
 vorpal
-  .command('k8s init <clustername>')
+  .command('k8s init')
   .description('Initialize k8s cluster')
   .option('--dryrun', 'Print out what would be done without executing anything')
   .action(function(args, callback) {
@@ -194,7 +194,7 @@ vorpal
     if (args.options.dryrun) {
       dryrun = 'true';
     }
-    init.k8s(dryrun, args.clustername);
+    init.k8s(dryrun);
     // end performance test
     var t1 = performance.now();
     vorpal.logger.info(
@@ -257,14 +257,18 @@ vorpal
   });
 
 /** transmute k8s provision-minikube uses minikube to provision a k8s cluster
- * @name transmute k8s provision-minikube <clustername>
- * @example transmute k8s provision-minikube myClusterName
+ * @name transmute k8s provision-minikube
+ * @example transmute k8s provision-minikube
  * @param {string} clustername
  * */
 vorpal
-  .command('k8s provision-minikube <clustername>')
+  .command('k8s provision-minikube')
   .description('Provision k8s cluster')
   .option('--nodes <nodes>', 'How many nodes to create the cluster with')
+  .option(
+    '--kubernetesVersion <kubernetesVersion>',
+    'Kubernetes version to create the cluster with; defaults to "v.1.9.4"'
+  )
   .option(
     '--vmdriver <vmdriver>',
     'The cluster name to create the cluster with'
@@ -278,10 +282,12 @@ vorpal
       console.info('dry run');
       dryrun = 'true';
     }
-    if (args.options.vmdriver) {
-      provision.minikube(dryrun, args.clustername, args.options.vmdriver);
+    if (args.options.kubernetesVersion && args.options.vmdriver) {
+      provision.minikube(dryrun, args.options.kubernetesVersion, args.options.vmdriver);
+    } else if (args.options.kubernetesVersion) {
+      provision.minikube(dryrun, args.options.kubernetesVersion);
     } else {
-      provision.minikube(dryrun, args.clustername);
+      provision.minikube(dryrun);
     }
     // end performance test
     var t1 = performance.now();
