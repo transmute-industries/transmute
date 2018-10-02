@@ -15,12 +15,21 @@
 
 - block:
     - name: Installing {{ microservice.name | capitalize }} with local Helm chart
-      shell: >
+      shell: >-
         helm install "{{ microservice.helm.dest + '/' + microservice.helm.chart.path }}"
         --name "{{ microservice.name }}"
         --namespace "{{ microservice.namespace }}"
         {{ microservice.helm.flags }}
-    - name: Wait for {{ microservice.name | capitalize }} to be ready
-      shell: "$(npm root -g)/transmute-cli/scripts/w8s/ready.w8 istio istio-system"
+    - name: Waiting for {{ microservice.name | capitalize }} to be ready
+      shell: $(npm root -g)/transmute-cli/scripts/w8s/ready.w8 "{{ microservice.name }}" "{{ microservice.namespace}}"
       changed_when: no
+    - name: Setting minikube_ip
+      shell: minikube ip
+      register: minikube_ip
+    - name: Ensuring {{ microservice.name }}.transmute.minikube is listed in /etc/hosts
+      lineinfile:
+        path: /etc/hosts
+        line: "{{ minikube_ip.stdout }} {{ microservice.name }}.transmute.minikube"
+      become: yes
+      when: minikube_ip
   when: helm_release_status_check.stdout == ""
