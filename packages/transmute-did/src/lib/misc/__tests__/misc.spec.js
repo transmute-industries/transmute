@@ -171,6 +171,33 @@ describe("misc", () => {
           });
         });
       });
+
+      describe('Authentication', () => {
+        let authentications;
+
+        beforeAll(async() => {
+          authentications = didDocument['authentication'];
+        })
+
+        it('should be an array of proof mechanisms', () => {
+          expect(Array.isArray(authentications)).toBeTruthy();
+        });
+
+        describe('Each proof mechanism', () => {
+          it('should include a type property', () => {
+            authentications.forEach((proofMechanism) => {
+              const { type } = proofMechanism;
+              expect(type).toBeDefined();
+            });
+          });
+        });
+      });
+      // Optionnally, the DID document can include other fields
+      // https://w3c-ccg.github.io/did-spec/#authorization-and-delegation
+      // https://w3c-ccg.github.io/did-spec/#service-endpoints
+      // https://w3c-ccg.github.io/did-spec/#created-optional
+      // https://w3c-ccg.github.io/did-spec/#updated-optional
+      // https://w3c-ccg.github.io/did-spec/#proof-optional
     });
   });
 
