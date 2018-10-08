@@ -138,10 +138,19 @@ describe("misc", () => {
         });
 
         describe('Each public key', () => {
+          it('should have an owner', () => {
+            publicKeys.forEach((publicKey) => {
+              const { owner } = publicKey;
+              expect(owner).toBeDefined();
+              expect(isValidDID(owner)).toBeTruthy();
+            });
+          });
+
           it('should have a valid id', () => {
             publicKeys.forEach((publicKey) => {
-              expect(publicKey['id']).toBeDefined();
-              expect(isValidDID(publicKey['id'])).toBeTruthy();
+              const { id } = publicKey;
+              expect(id).toBeDefined();
+              expect(isValidDID(id)).toBeTruthy();
             });
           });
 
