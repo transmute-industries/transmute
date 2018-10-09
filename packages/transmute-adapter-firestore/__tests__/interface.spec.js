@@ -1,13 +1,14 @@
 const TransmuteAdapterFirestore = require("../index");
 
-const admin = require("firebase-admin");
+// When using this adapter from a protected web server...
+// const admin = require("firebase-admin");
+// const serviceAccount = require("../service-account-firebase-adminsdk.json")
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount)
+// });
+// const db = admin.firestore();
 
-const serviceAccount = require("../serviceAccount");
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
-const db = admin.firestore();
+let db = {};
 const adapter = new TransmuteAdapterFirestore(db, "events");
 
 const contentID =
@@ -20,6 +21,9 @@ const contentObject = {
 };
 
 const contentBuffer = Buffer.from(JSON.stringify(contentObject));
+
+adapter.readJson = jest.fn().mockImplementation(contentID => contentObject);
+adapter.writeJson = jest.fn().mockImplementation(contentObject => contentID);
 
 describe("Transmute Adapter Firestore", () => {
   it("has a contructor", () => {

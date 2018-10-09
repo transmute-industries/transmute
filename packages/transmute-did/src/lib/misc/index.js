@@ -64,15 +64,15 @@ const publicKeysToDIDDocument = ({
     publicKey: [
       {
         id: `${did}#keys-0`,
-        type: "x25519VerificationKey2018",
+        type: "Ed25519VerificationKey2018",
         owner: did,
-        publicKey: libSodiumPublicEncryptionKey
+        publicKeyHex: libSodiumPublicEncryptionKey
       },
       {
         id: `${did}#keys-1`,
         type: "Ed25519VerificationKey2018",
         owner: did,
-        publicKey: libSodiumPublicSigningKey
+        publicKeyHex: libSodiumPublicSigningKey
       },
       {
         id: `${did}#keys-2`,
@@ -84,7 +84,7 @@ const publicKeysToDIDDocument = ({
         id: `${did}#keys-3`,
         type: "Ed25519VerificationKey2018",
         owner: did,
-        publicKey: primaryPublicKey
+        publicKeyHex: primaryPublicKey
       }
     ],
     authentication: [
@@ -141,6 +141,7 @@ const keypairsToTransmuteCiphertextDIDWallet = async ({
 module.exports = {
   shatterKey,
   recoverKey,
+  publicKeyToTransmuteDID,
   publicKeysToDIDDocument,
   keypairsToTransmuteCiphertextDIDWallet
 };

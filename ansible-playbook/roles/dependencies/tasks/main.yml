@@ -6,3 +6,44 @@
 - include: macos.yml
   when: "ansible_system == 'Darwin' and ansible_machine == 'x86_64'"
 
+- name: Installing kubectl
+  get_url:
+    url: "https://storage.googleapis.com/kubernetes-release/release/{{ transmute_kube_version }}/bin/{{ ansible_system | lower }}/amd64/kubectl"
+    dest: /usr/local/bin/kubectl
+    remote_src: yes
+    mode: 0755
+    owner: 0
+    group: 0
+  become: yes
+
+- name: Installing Minikube
+  get_url:
+    url: "https://storage.googleapis.com/minikube/releases/{{ transmute_minikube_version }}/minikube-{{ ansible_system | lower }}-amd64"
+    dest: /usr/local/bin/minikube
+    remote_src: yes
+    mode: 0755
+    owner: 0
+    group: 0
+  become: yes
+
+- name: Configuring Minikube
+  shell: minikube config set WantUpdateNotification false
+
+- name: Installing Helm
+  block:
+    - name: Creating temporary directory for Helm
+      tempfile:
+        state: directory
+        suffix: helm
+      register: helm_tmp
+    - name: Downloading and unarchiving Helm
+      unarchive:
+        src: "https://storage.googleapis.com/kubernetes-helm/helm-{{ transmute_helm_version }}-{{ ansible_system | lower }}-amd64.tar.gz"
+        dest: "{{ helm_tmp.path }}"
+        remote_src: yes
+    - name: Copying Helm
+      copy:
+        src: "{{ helm_tmp.path }}/{{ ansible_system | lower}}-amd64/helm"
+        dest: "{{ ansible_env.HOME }}/.transmute/bin/helm"
+        remote_src: yes
+        mode: 0750
