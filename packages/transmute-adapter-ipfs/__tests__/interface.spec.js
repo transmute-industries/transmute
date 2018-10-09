@@ -32,27 +32,27 @@ describe("Transmute Adapter IPFS", () => {
       expect(cid).toBe(contentID);
     });
 
-    it("matches the output of write buffer", async () => {
+    it("matches the output of _writeBuffer", async () => {
       expect.assertions(2);
       let cid = await adapter.bufferToContentID(contentBuffer);
-      let writeBufferResult = await adapter.writeBuffer(contentBuffer);
+      let writeBufferResult = await adapter._writeBuffer(contentBuffer);
       expect(cid).toBe(contentID);
       expect(writeBufferResult).toBe(contentID);
     });
   });
 
-  describe("writeBuffer", () => {
+  describe("_writeBuffer", () => {
     it("stores a buffer and returns its identifier", async () => {
       expect.assertions(1);
-      let writeBufferResult = await adapter.writeBuffer(contentBuffer);
+      let writeBufferResult = await adapter._writeBuffer(contentBuffer);
       expect(writeBufferResult).toBe(contentID);
     });
   });
 
-  describe("readBuffer", () => {
+  describe("_readBuffer", () => {
     it("retrieves a buffer from its identifier", async () => {
       expect.assertions(1);
-      let readBufferResult = await adapter.readBuffer(contentID);
+      let readBufferResult = await adapter._readBuffer(contentID);
       expect(readBufferResult).toEqual(contentBuffer);
     });
   });

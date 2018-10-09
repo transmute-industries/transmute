@@ -5,7 +5,6 @@
 
 const ipfsAPI = require("ipfs-api");
 const bs58 = require("bs58");
-const { DAGNode, DAGLink } = require("ipld-dag-pb");
 
 /** @class TransmuteAdapterIPFS */
 module.exports = class TransmuteAdapterIPFS {
@@ -62,7 +61,7 @@ module.exports = class TransmuteAdapterIPFS {
    * @param {Object} obj Object being written
    * @returns {String} IPFS multihash of object converted to bytes32
    */
-  async writeBuffer(content) {
+  async _writeBuffer(content) {
     const dagNodes = await this.ipfs.files.add(Buffer.from(content));
     const keyMultihash = dagNodes[0].hash;
     const keyBytes32ID = this.multihashToBytes32(keyMultihash);
@@ -77,7 +76,7 @@ module.exports = class TransmuteAdapterIPFS {
    * @param {String} multihash IPFS multihash of object converted to bytes32
    * @returns {Object} Object stored in IPFS multihash
    */
-  async readBuffer(bytes32ID) {
+  async _readBuffer(bytes32ID) {
     const multihash = this.bytes32ToMultihash(bytes32ID);
     const dagNodes = await this.ipfs.files.get(multihash);
     return dagNodes[0].content;
@@ -94,10 +93,10 @@ module.exports = class TransmuteAdapterIPFS {
   }
 
   async readJson(cid) {
-    return JSON.parse((await this.readBuffer(cid)).toString());
+    return JSON.parse((await this._readBuffer(cid)).toString());
   }
 
   async writeJson(data) {
-    return this.writeBuffer(JSON.stringify(data));
+    return this._writeBuffer(JSON.stringify(data));
   }
 };
