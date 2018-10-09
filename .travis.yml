@@ -34,11 +34,12 @@ before_script:
   - npm i
   - npm i -g
   - cd $TRAVIS_BUILD_DIR
-  - transmute k8s provision-minikube travis_test_cluster
-  - transmute k8s init travis_test_cluster
+  - transmute k8s provision-minikube
+  - transmute k8s init
+  - transmute k8s microservice install istio
+  - transmute k8s microservice install kong
   - transmute k8s microservice install elasticsearch
   - transmute k8s microservice install ganache
-  - transmute k8s microservice install kong
   - transmute k8s microservice install ipfs
   - transmute debug
 

@@ -1,22 +1,51 @@
-const run = require('../runner');
-const APPS_NAMES = ['kong', 'ipfs', 'ganache', 'elasticsearch'];
+const path = require('path');
 
-module.exports.install = (dryrun, appname) => {
-  if (APPS_NAMES.indexOf(appname) == -1) {
+const run = require('../runner');
+const logger = require('../../logger');
+
+const MICROSERVICE_NAMES = [
+  'istio',
+  'kong',
+  'ipfs',
+  'ganache',
+  'elasticsearch',
+];
+const MICROSERVICE_VERSIONS = {
+  istio: '1.0.2',
+  kong: '',
+  ipfs: '',
+  ganache: '',
+  elasticsearch: '',
+};
+
+module.exports.install = (dryrun, microservice, version) => {
+  if (MICROSERVICE_NAMES.indexOf(microservice) === -1) {
     logger.log({
       level: 'error',
-      message: `Required set <appname>, valid <appname> is one of: ` + APPS_NAMES.toString(),
+      message: `Error calling \`transmute k8s microservice install ${microservice}\``
+        + '\nRequired argument: <microservice>'
+        + '\nValid <microservice> is one of the following:\n\t'
+        + `${MICROSERVICE_NAMES.toString().replace(/,/g, '\n\t')}`,
     });
-  } else {
-    let deploy_cmd =
-      'ansible-playbook --diff -l "localhost" ' +
-      __dirname +
-      '/../../../components/ansible/k8s-install-' + appname + '.yml';
-
-    if (dryrun === 'true') {
-      console.info('<--dry run-->');
-      deploy_cmd = deploy_cmd + ' --check';
-    }
-    run.shellExec(deploy_cmd);
+    return;
   }
+
+  const playbookPath = path.join(
+    __dirname,
+    `/../../../components/ansible/k8s-install-${microservice}.yml`,
+  );
+
+  let deployCommand = `ansible-playbook --diff ${playbookPath}`;
+
+  const transmuteMicroserviceVersion = version || MICROSERVICE_VERSIONS[microservice];
+
+  if (transmuteMicroserviceVersion) {
+    deployCommand += ` -e transmute_${microservice}_version=${transmuteMicroserviceVersion}`;
+  }
+
+  if (dryrun === 'true') {
+    deployCommand += ' --check';
+  }
+
+  run.shellExec(deployCommand);
 };
