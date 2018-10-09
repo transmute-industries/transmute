@@ -299,31 +299,48 @@ vorpal
     callback();
   });
 
-/** transmute k8s microservice install <appname> deploy <appname> to k8s cluster
- * @name transmute k8s microservice install <appname>
- * @example transmute k8s microservice install kong
- * @param {string} appname
+/** transmute k8s microservice install <microservice> deploys a microservice to the k8s cluster
+ * @name transmute k8s microservice install <microservice>
+ * @example transmute k8s microservice install istio
+ * @param {string} microservice
  * */
 vorpal
-  .command('k8s microservice install <appname>')
-  .description('Deploy <appname> to k8s cluster')
+  .command('k8s microservice install <microservice>')
+  .description('Deploy <microservice> to the k8s cluster')
   .option('--dryrun', 'Print out what would be done without executing anything')
-  .action(function(args, callback) {
-    var t0 = performance.now();
-    // begin performance test
+  .option('-v, --version <version>', 'Specify the version of the microservice to be installed')
+  .types({
+    string: ['v', 'version'],
+  })
+  .action((args, callback) => {
     let dryrun = 'false';
     if (args.options.dryrun) {
-      console.info('dry run');
+      logger.log({
+        level: 'info',
+        message: '<--dry run-->',
+      });
       dryrun = 'true';
     }
-    microservice.install(dryrun, args.appname);
-    // end performance test
-    var t1 = performance.now();
-    vorpal.logger.info(
-      'Call to k8s microservice install took ' +
-        ((t1 - t0) / 1000).toPrecision(4) +
-        ' seconds.'
+
+    // begin performance test
+    const t0 = performance.now();
+
+    microservice.install(
+      dryrun,
+      args.microservice,
+      args.options.version,
     );
+
+    // end performance test
+    const t1 = performance.now();
+
+    logger.log({
+      level: 'info',
+      message: 'Call to k8s microservice install took '
+        + `${((t1 - t0) / 1000).toPrecision(4)}`
+        + ' seconds.',
+    });
+
     callback();
   });
 
