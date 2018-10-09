@@ -1,16 +1,19 @@
 const Web3 = require("web3");
 const TransmuteAdapterFirestore = require("transmute-adapter-firestore");
 
-const admin = require("firebase-admin");
+const adapter = new TransmuteAdapterFirestore({}, "events");
 
-const serviceAccount = require("transmute-adapter-firestore/serviceAccount");
+const contentID =
+  "0xcb2402ae09412ffb174e20aa741a7ec0b82338a9a471b4f848e2c9684fcd6a21";
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
-const db = admin.firestore();
+const contentObject = {
+  first: "Ada",
+  born: 1999,
+  last: "Lovelace"
+};
 
-const adapter = new TransmuteAdapterFirestore(db, "events");
+adapter.readJson = jest.fn().mockImplementation(contentID => contentObject);
+adapter.writeJson = jest.fn().mockImplementation(contentObject => contentID);
 
 const EventStore = require("../../event-store");
 const abi = require("../../../build/contracts/EventStore.json");
@@ -33,18 +36,17 @@ describe("EventStore with Firestore Adapter", () => {
     expect(eventStore).toBeDefined();
     await eventStore.init();
     const accounts = await eventStore.getWeb3Accounts();
-
     const writeEventResult = await eventStore.write(
       accounts[0],
-      mockEvents[0].key,
-      mockEvents[0].value
+      contentObject,
+      contentObject
     );
 
     expect(writeEventResult.event).toBeDefined();
     expect(writeEventResult.meta).toBeDefined();
 
     const readEventResult = await eventStore.read(0);
-    expect(readEventResult.key).toEqual(mockEvents[0].key);
-    expect(readEventResult.value).toEqual(mockEvents[0].value);
+    expect(readEventResult.key).toEqual(contentObject);
+    expect(readEventResult.value).toEqual(contentObject);
   });
 });
