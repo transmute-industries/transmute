@@ -11,17 +11,23 @@ const provider = new Web3.providers.HttpProvider(
 );
 const web3 = new Web3(provider);
 const adapter = new TransmuteAdapterIPFS(transmuteConfig.ipfsConfig);
-const eventStore = new EventStore({
+let eventStore = new EventStore({
   web3,
   abi,
   adapter
 });
+let accounts;
 
 describe("EventStore with IPFS Adapter", () => {
+  beforeAll(async () => {
+    accounts = await eventStore.getWeb3Accounts();
+    eventStore = await eventStore.clone(accounts[0]);
+  });
+
   it("supports the ipfs adapter", async () => {
     expect(eventStore).toBeDefined();
     await eventStore.init();
-    const accounts = await eventStore.getWeb3Accounts();
+   
 
     const writeEventResult = await eventStore.write(
       accounts[0],
