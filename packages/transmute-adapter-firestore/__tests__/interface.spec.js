@@ -1,5 +1,6 @@
 const TransmuteAdapterFirestore = require("../index");
 
+// When using this adapter from a protected web server...
 // const admin = require("firebase-admin");
 // const serviceAccount = require("../service-account-firebase-adminsdk.json")
 // admin.initializeApp({
@@ -8,7 +9,6 @@ const TransmuteAdapterFirestore = require("../index");
 // const db = admin.firestore();
 
 let db = {};
-
 const adapter = new TransmuteAdapterFirestore(db, "events");
 
 const contentID =
