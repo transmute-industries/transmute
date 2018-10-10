@@ -1,4 +1,3 @@
-// TODO: eslint error
 // TODO: Switch to IPFS instead of mocked decentralizedLedger
 const decentralizedLedger = {};
 

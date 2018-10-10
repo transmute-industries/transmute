@@ -8,7 +8,6 @@ const ethUtil = require("ethereumjs-util");
  * @name generateBIP39Mnemonic
  * @returns {String} a mnemonic for an hd wallet
  */
-// TODO fix typo
 const generateBIP39Mnemonic = () => bip39.generateMnemonic();
 
 /**
