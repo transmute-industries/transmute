@@ -1,4 +1,4 @@
-const dli = require('./decentralized-ledger-interface');
+const dli = require('../tst-decentralized-ledger-interface.js');
 const { misc, msg, pgp } = require('../index.js');
 
 // Helper function
