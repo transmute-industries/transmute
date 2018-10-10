@@ -2,6 +2,7 @@
 const decentralizedLedger = {};
 
 const create = (did, didDocument) => {
+    // TODO: verify that didDocument is valid?
     return new Promise((resolve, reject) => {
         if (did in decentralizedLedger) {
             reject(new Error('did already exists'));
@@ -25,8 +26,8 @@ const read = (did) => {
 // TODO: Implement when we have SideTree's algo
 const update = () => {}
 
-// Method is called revoke and not delete because
-// of the immutability property of DLs
+// Method is called revoke and not delete because of the
+// immutability property of decentralized ledgers
 const revoke = () => {}
 
 module.exports = {
