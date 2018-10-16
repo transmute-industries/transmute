@@ -7,10 +7,10 @@ contract EventStore {
         uint index,
         address indexed sender,
         bytes32 key,
-        bytes32 value,
+        bytes32 value
     );
 
-    function write(bytes32 key, bytes32 value) {
+    function write(bytes32 key, bytes32 value) external {
         emit TransmuteEvent(count, msg.sender, key, value);
         count++;
     }
