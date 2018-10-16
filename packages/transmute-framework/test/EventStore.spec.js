@@ -9,11 +9,10 @@ contract('EventStore', accounts => {
 
   describe('write', () => {
     let receipt;
-    const key1 = '0x3fd54831f488a22b28398de0c567a3b064b937f54f81739ae9bd545967f3abab';
-    const value1 = '0x2a1acd26847576a128e3dba3aa984feafffdf81f7c7b23bdf51e7bec1c15944c';
+    const contentHash = '0x3fd54831f488a22b28398de0c567a3b064b937f54f81739ae9bd545967f3abab';
 
     before(async () => {
-      receipt = await es.write(key1, value1, {from: accounts[1]});
+      receipt = await es.write(contentHash, {from: accounts[1]});
     });
 
     it('should emit a TransmuteEvent event', async () => {
@@ -26,8 +25,7 @@ contract('EventStore', accounts => {
       assert.ok(info);
       assert.equal(info.index, 0);
       assert.equal(info.sender, accounts[1]);
-      assert.equal(info.key, key1);
-      assert.equal(info.value, value1);
+      assert.equal(info.contentHash, contentHash);
     });
 
     it('should increment the count variable', async () => {
