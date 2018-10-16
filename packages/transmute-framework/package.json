@@ -9,11 +9,11 @@
   ],
   "scripts": {
     "start": "npm test",
-    "test": "NODE_TLS_REJECT_UNAUTHORIZED=0 react-scripts test --forceExit",
-    "coverage": "NODE_TLS_REJECT_UNAUTHORIZED=0 react-scripts test --coverage",
+    "test": "jest ./src",
+    "coverage": "npm run test --coverage",
     "test:report": "codecov && rm -rf ./coverage",
-    "truffle:test": "NODE_TLS_REJECT_UNAUTHORIZED=0 truffle test",
-    "truffle:migrate": "NODE_TLS_REJECT_UNAUTHORIZED=0 truffle migrate --network development",
+    "truffle:test": "truffle test",
+    "truffle:migrate": "truffle migrate --network development",
     "truffle:coverage": "./node_modules/.bin/solidity-coverage",
     "truffle:coverage:report": "cat coverage/lcov.info | coveralls",
     "eject": "react-scripts eject",
@@ -41,12 +41,11 @@
     "codecov": "^3.0.0",
     "coveralls": "^3.0.0",
     "docdash": "^0.4.0",
-    "firebase-admin": "^6.0.0",
+    "jest": "^23.6.0",
     "jsdoc": "^3.5.5",
-    "react-scripts": "^1.1.1",
     "solidity-coverage": "^0.4.14",
-    "transmute-adapter-ipfs": "1.0.3",
-    "transmute-adapter-firestore": "0.1.0"
+    "transmute-adapter-firestore": "0.1.0",
+    "transmute-adapter-ipfs": "1.0.3"
   },
   "dependencies": {
     "dotenv": "^6.0.0",
