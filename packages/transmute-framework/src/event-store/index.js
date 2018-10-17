@@ -170,14 +170,23 @@ module.exports = class EventStore {
     };
   }
 
+  // TODO: this scans the entire contract history for every read call
+  // Build a cache system with:
+  // - an initial initCache() call that scans the blockchain once from block 0 to X
+  // - every subsequent call only scans blocks that haven't been scanned before
   readTransmuteEvent(contractInstance, eventIndex) {
+    // The contract JS Api (see links belows) only offers callbacks.
+    // Here we Promisify the callback so that we can `await` it in `read()`
     return new Promise((resolve, reject) => {
-      contractInstance.contract.TransmuteEvent({
+      // Reference: github.com/ethereum/wiki/wiki/JavaScript-API#contract-events
+      // Possible alternative: github.com/ethereum/wiki/wiki/JavaScript-API#web3ethfilter
+      const eventSubscription = contractInstance.contract.TransmuteEvent({
         filter: {
           index: eventIndex,
         },
         fromBlock: 0,
-      }).get((error, logs) => {
+      });
+      eventSubscription.get((error, logs) => {
         if (error) {
           reject(error);
         } else {
