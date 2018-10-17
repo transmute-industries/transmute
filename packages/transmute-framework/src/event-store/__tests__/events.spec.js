@@ -41,8 +41,7 @@ describe("transmute-framework", () => {
           );
           expect(result.event).toBeDefined();
           expect(result.event.sender).toBeDefined();
-          expect(result.event.key).toBeDefined();
-          expect(result.event.value).toBeDefined();
+          expect(result.event.content).toBeDefined();
           expect(result.meta).toBeDefined();
           expect(result.meta.tx).toBeDefined();
           expect(result.meta.contentID).toBeDefined();
