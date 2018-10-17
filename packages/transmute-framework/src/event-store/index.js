@@ -124,25 +124,24 @@ module.exports = class EventStore {
     });
   }
 
-  /**
-   * Writes a key and value to contentID based storage, and writes these values to the eventStoreContractInstance
-   * @function
-   * @memberof EventStore
-   * @name write
-   * @param {String} fromAddress Address used to write event to eventStoreContractInstance
-   * @param {Object} key Event key
-   * @param {Object} value Event value
-   * @returns {Object} Event object with original key, value as well as meta from content storage and Ethereum
-   */
-  async write(fromAddress, key, value) {
+  // TODO: write tests for that
+  // TODO: Add JS doc
+  async write(fromAddress, ...args) {
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters
+    if (args.length === 1) {
+      return this.writeContent(fromAddress, args[0]);
+    } else if (args.length === 2) {
+      return this.writeKeyValue(fromAddress, args[0], args[1]);
+    } else {
+      throw new Error('Invalid number of parameters for the write function');
+    }
+  }
+
+  async writeContent(fromAddress, content) {
     this.requireInstance();
 
     const { adapter, eventStoreContractInstance } = this;
 
-    const content = {
-      key,
-      value
-    }
     const contentHash = await adapter.writeJson(content);
 
     const tx = (await eventStoreContractInstance.write(
@@ -168,6 +167,25 @@ module.exports = class EventStore {
         receipt
       }
     };
+
+  }
+
+  /**
+   * Writes a key and value to contentID based storage, and writes these values to the eventStoreContractInstance
+   * @function
+   * @memberof EventStore
+   * @name write
+   * @param {String} fromAddress Address used to write event to eventStoreContractInstance
+   * @param {Object} key Event key
+   * @param {Object} value Event value
+   * @returns {Object} Event object with original key, value as well as meta from content storage and Ethereum
+   */
+  async writeKeyValue(fromAddress, key, value) {
+    const content = {
+      key,
+      value
+    }
+    return this.writeContent(fromAddress, content);
   }
 
   // TODO: this scans the entire contract history for every read call
