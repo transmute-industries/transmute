@@ -4,7 +4,7 @@
  */
 
 
-const contract = require("truffle-contract");
+const contract = require('truffle-contract');
 
 const pack = require("../../package.json");
 
@@ -139,12 +139,14 @@ module.exports = class EventStore {
 
     const { adapter, eventStoreContractInstance } = this;
 
-    const keyContentID = await adapter.writeJson(key);
-    const valueContentID = await adapter.writeJson(value);
+    const content = {
+      key,
+      value
+    }
+    const contentHash = await adapter.writeJson(content);
 
     const tx = (await eventStoreContractInstance.write(
-      keyContentID,
-      valueContentID,
+      contentHash,
       {
         from: fromAddress,
         gas: GAS.EVENT_GAS_COST
@@ -156,18 +158,33 @@ module.exports = class EventStore {
     return {
       event: {
         sender: fromAddress,
-        key,
-        value
+        content
       },
       meta: {
         tx,
         contentID: {
-          key: keyContentID,
-          value: valueContentID
+          content,
         },
         receipt
       }
     };
+  }
+
+  readTransmuteEvent(contractInstance, eventIndex) {
+    return new Promise((resolve, reject) => {
+      contractInstance.contract.TransmuteEvent({
+        filter: {
+          index: eventIndex,
+        },
+        fromBlock: 0,
+      }).get((error, logs) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(logs);
+        }
+      });
+    })
   }
 
   /**
@@ -182,25 +199,25 @@ module.exports = class EventStore {
     this.requireInstance();
     const { web3, ipfs, eventStoreContractInstance } = this;
 
-    const eventCount = (await this.eventStoreContractInstance.count.call()).toNumber();
-    if (eventCount === 0) {
-    }
-
-    let values;
+    let events;
     try {
-      values = await eventStoreContractInstance.read(index);
+      events = await this.readTransmuteEvent(eventStoreContractInstance, index);
     } catch (e) {
-      throw new Error("Failed to read values from index.");
+      throw new Error("Could not read from Ethereum event log");
     }
 
-    const decoded = [values[0].toNumber(), values[1], values[2], values[3]];
+    if (events.length === 0) {
+      throw new Error("No event exists for that index");
+    }
 
+    const values = events[0].args;
+    const content = await this.adapter.readJson(values.contentHash);
     // TODO: add better handling for cass where the contentID is not resolveable
     return {
-      index: decoded[0],
-      sender: decoded[1],
-      key: await this.adapter.readJson(decoded[2]),
-      value: await this.adapter.readJson(decoded[3])
+      index: values.index.toNumber(),
+      sender: values.sender,
+      key: content.key,
+      value: content.value,
     };
   }
 
