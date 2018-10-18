@@ -243,8 +243,7 @@ module.exports = class EventStore {
     return {
       index: values.index.toNumber(),
       sender: values.sender,
-      key: content.key,
-      value: content.value,
+      content,
     };
   }
 
