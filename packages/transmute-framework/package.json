@@ -16,7 +16,6 @@
     "truffle:migrate": "truffle migrate --network development",
     "truffle:coverage": "./node_modules/.bin/solidity-coverage",
     "truffle:coverage:report": "cat coverage/lcov.info | coveralls",
-    "eject": "react-scripts eject",
     "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json",
     "lint": "../../node_modules/.bin/eslint .",
     "lint-fix": "../../node_modules/.bin/eslint . --fix"
