@@ -213,10 +213,13 @@ module.exports = class EventStore {
     return this.writeContent(fromAddress, content);
   }
 
-  // TODO: this scans the entire contract history for every read call
-  // Build a cache system with:
-  // - an initial initCache() call that scans the blockchain once from block 0 to X
-  // - every subsequent call only scans blocks that haven't been scanned before
+  /**
+   * Reads specified indexed event from the event log of eventStoreContractInstance
+   * @function
+   * @memberof EventStore
+   * @name readTransmuteEvent
+   * @returns {Object} Event object
+   */
   readTransmuteEvent(contractInstance, eventIndex) {
     // The contract JS Api (see links belows) only offers callbacks.
     // Here we Promisify the callback so that we can `await` it in `read()`
@@ -227,6 +230,7 @@ module.exports = class EventStore {
         filter: {
           index: eventIndex,
         },
+        // TODO: Optimize by scanning fromBlock of contract creation
         fromBlock: 0,
       });
       eventSubscription.get((error, logs) => {
@@ -236,7 +240,7 @@ module.exports = class EventStore {
           resolve(logs);
         }
       });
-    })
+    });
   }
 
   /**
@@ -284,7 +288,6 @@ module.exports = class EventStore {
    * @param {number} endIndex Index of last event for reading
    * @returns {Array.<Object>} Array of event objects
    */
-  // TODO: Optimize
   async getSlice(startIndex, endIndex) {
     if (!(endIndex >= startIndex)) {
       throw new Error("startIndex must be less than or equal to endIndex.");
