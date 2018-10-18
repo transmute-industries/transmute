@@ -39,14 +39,12 @@ describe("EventStore with Firestore Adapter", () => {
     const writeEventResult = await eventStore.write(
       accounts[0],
       contentObject,
-      contentObject
     );
 
     expect(writeEventResult.event).toBeDefined();
     expect(writeEventResult.meta).toBeDefined();
 
     const readEventResult = await eventStore.read(0);
-    expect(readEventResult.key).toEqual(contentObject);
-    expect(readEventResult.value).toEqual(contentObject);
+    expect(readEventResult.content).toEqual(contentObject);
   });
 });
