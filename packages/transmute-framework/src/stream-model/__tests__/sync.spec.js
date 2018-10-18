@@ -30,7 +30,7 @@ describe("sync", () => {
   const reducer = (state, event) => {
     return {
       ...state,
-      events: [event.value, ...(state.events || [])],
+      events: [event.content.value, ...(state.events || [])],
       eventsProcessed: (state.eventsProcessed || 0) + 1
     };
   };
