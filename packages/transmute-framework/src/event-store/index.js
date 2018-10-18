@@ -115,6 +115,12 @@ module.exports = class EventStore {
     return instance;
   }
 
+  /**
+   * Returns transaction receipt
+   * @function
+   * @memberof EventStore
+   * @name getTransactionReceipt
+   */
   async getTransactionReceipt(tx) {
     return new Promise((resolve, reject) => {
       this.web3.eth.getTransactionReceipt(tx, function(error, result) {
@@ -125,7 +131,13 @@ module.exports = class EventStore {
   }
 
   // TODO: write tests for that
-  // TODO: Add JS doc
+  /**
+   * calls writeContent if called with write(fromAddress, content)
+   * calls writeKeyValue if called with write(fromAddress, key, value)
+   * @function
+   * @memberof EventStore
+   * @name write
+   */
   async write(fromAddress, ...args) {
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters
     if (args.length === 1) {
@@ -137,6 +149,17 @@ module.exports = class EventStore {
     }
   }
 
+  /**
+   * Writes an arbitrary JSON object to contentID based storage,
+   * and writes the hash to the eventStoreContractInstance
+   * @function
+   * @memberof EventStore
+   * @name writeContent
+   * @param {String} fromAddress Address used to write event to eventStoreContractInstance
+   * @param {Object} content
+   * @returns {Object} Event object with original JSON object
+   * as well as meta from content storage and Ethereum
+   */
   async writeContent(fromAddress, content) {
     this.requireInstance();
 
@@ -171,14 +194,16 @@ module.exports = class EventStore {
   }
 
   /**
-   * Writes a key and value to contentID based storage, and writes these values to the eventStoreContractInstance
+   * Writes a key and value to contentID based storage,
+   * and writes these values to the eventStoreContractInstance
    * @function
    * @memberof EventStore
-   * @name write
+   * @name writeKeyValue
    * @param {String} fromAddress Address used to write event to eventStoreContractInstance
    * @param {Object} key Event key
    * @param {Object} value Event value
-   * @returns {Object} Event object with original key, value as well as meta from content storage and Ethereum
+   * @returns {Object} Event object with original key, value
+   * as well as meta from content storage and Ethereum
    */
   async writeKeyValue(fromAddress, key, value) {
     const content = {
