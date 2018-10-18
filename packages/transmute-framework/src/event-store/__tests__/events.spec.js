@@ -62,9 +62,11 @@ describe("transmute-framework", () => {
       );
 
       let event = await eventStore.read(0, accounts[0]);
-      expect(event.sender).toBeDefined();
-      expect(event.key).toBeDefined();
-      expect(event.value).toBeDefined();
+      expect(event).toBeDefined();
+      expect(event.index).toBe(0);
+      expect(event.sender).toBe(accounts[0]);
+      expect(event.content.key).toEqual(mockEvent.key);
+      expect(event.content.value).toEqual(mockEvent.value);
     });
   });
 
@@ -81,8 +83,8 @@ describe("transmute-framework", () => {
 
       // avoid checksum errors
       expect(events[0].sender).toEqual(accounts[0].toLowerCase());
-      expect(events[0].key).toEqual(mockEvents[0].key);
-      expect(events[0].value).toEqual(mockEvents[0].value);
+      expect(events[0].content.key).toEqual(mockEvent.key);
+      expect(events[0].content.value).toEqual(mockEvent.value);
     });
 
     it("supports getting a slice", async () => {

@@ -256,6 +256,7 @@ module.exports = class EventStore {
    * @param {number} endIndex Index of last event for reading
    * @returns {Array.<Object>} Array of event objects
    */
+  // TODO: Optimize
   async getSlice(startIndex, endIndex) {
     if (!(endIndex >= startIndex)) {
       throw new Error("startIndex must be less than or equal to endIndex.");
