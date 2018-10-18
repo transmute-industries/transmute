@@ -10,7 +10,7 @@
   "scripts": {
     "start": "npm test",
     "test": "jest ./src --runInBand",
-    "coverage": "npm run test --coverage",
+    "coverage": "jest src/ --runInBand --coverage",
     "test:report": "codecov && rm -rf ./coverage",
     "truffle:test": "truffle test",
     "truffle:migrate": "truffle migrate --network development",
