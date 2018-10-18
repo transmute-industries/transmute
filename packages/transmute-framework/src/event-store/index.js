@@ -263,13 +263,16 @@ module.exports = class EventStore {
     }
 
     const values = events[0].args;
-    const content = await this.adapter.readJson(values.contentHash);
-    // TODO: add better handling for cass where the contentID is not resolveable
-    return {
-      index: values.index.toNumber(),
-      sender: values.sender,
-      content,
-    };
+    try {
+      const content = await this.adapter.readJson(values.contentHash);
+      return {
+        index: values.index.toNumber(),
+        sender: values.sender,
+        content,
+      };
+    } catch(e) {
+      throw new Error('Couldn\'t resolve contentHash');
+    }
   }
 
   /**
