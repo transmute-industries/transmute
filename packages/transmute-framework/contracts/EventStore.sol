@@ -4,7 +4,7 @@ contract EventStore {
     uint public count;
 
     event TransmuteEvent(
-        uint index,
+        uint indexed index,
         address indexed sender,
         bytes32 contentHash
     );
