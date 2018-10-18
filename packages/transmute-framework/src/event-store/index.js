@@ -130,7 +130,6 @@ module.exports = class EventStore {
     });
   }
 
-  // TODO: write tests for that
   /**
    * calls writeContent if called with write(fromAddress, content)
    * calls writeKeyValue if called with write(fromAddress, key, value)

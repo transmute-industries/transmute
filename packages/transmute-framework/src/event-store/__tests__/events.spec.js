@@ -31,7 +31,7 @@ describe("transmute-framework", () => {
   });
 
   describe("write", () => {
-    it("can save events", async () => {
+    it("can save key/value pairs", async () => {
       return Promise.all(
         mockEvents.map(async event => {
           let result = await eventStore.write(
@@ -40,14 +40,34 @@ describe("transmute-framework", () => {
             event.value
           );
           expect(result.event).toBeDefined();
-          expect(result.event.sender).toBeDefined();
-          expect(result.event.content).toBeDefined();
+          expect(result.event.sender).toBe(accounts[0]);
+          expect(result.event.content.key).toEqual(event.key);
+          expect(result.event.content.value).toEqual(event.value);
           expect(result.meta).toBeDefined();
           expect(result.meta.tx).toBeDefined();
           expect(result.meta.contentID).toBeDefined();
           expect(result.meta.receipt).toBeDefined();
         })
       );
+    });
+    it("can save arbitrary JSON objects", async () => {
+      const arbitraryJson = {
+        foo: 1,
+        bar: {
+          lol: 'mdr',
+        },
+      };
+      const result = await eventStore.write(
+        accounts[1],
+        arbitraryJson,
+      );
+      expect(result).toBeDefined();
+      expect(result.event.sender).toBe(accounts[1]);
+      expect(result.event.content).toEqual(arbitraryJson);
+      expect(result.meta).toBeDefined();
+      expect(result.meta.tx).toBeDefined();
+      expect(result.meta.contentID).toBeDefined();
+      expect(result.meta.receipt).toBeDefined();
     });
   });
 
