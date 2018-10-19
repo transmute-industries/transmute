@@ -40,7 +40,7 @@ before_script:
   - transmute k8s microservice install kong
   # - transmute k8s microservice install elasticsearch
   - transmute k8s microservice install ganache
-  - transmute k8s microservice install ipfs
+  # - transmute k8s microservice install ipfs
   - transmute debug
 
 script:
