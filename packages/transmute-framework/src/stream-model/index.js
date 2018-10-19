@@ -22,7 +22,7 @@ module.exports = class StreamModel {
     this.state = state || {
       contractAddress: this.eventStore.eventStoreContractInstance.address,
       model: {},
-      lastIndex: null
+      lastIndex: null,
     };
   }
 
@@ -62,11 +62,11 @@ module.exports = class StreamModel {
       return;
     }
     if (
-      this.state.lastIndex === null ||
-      this.state.lastIndex + 1 < eventCount
+      this.state.lastIndex === null
+      || this.state.lastIndex + 1 < eventCount
     ) {
-      let start = this.state.lastIndex === null ? 0 : this.state.lastIndex + 1;
-      let end = eventCount - 1;
+      const start = this.state.lastIndex === null ? 0 : this.state.lastIndex + 1;
+      const end = eventCount - 1;
       const updates = await this.eventStore.getSlice(start, end);
       this.applyEvents(updates);
     }

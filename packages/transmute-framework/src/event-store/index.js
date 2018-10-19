@@ -6,9 +6,9 @@
 
 const contract = require('truffle-contract');
 
-const pack = require("../../package.json");
+const pack = require('../../package.json');
 
-const GAS = require("../gas");
+const GAS = require('../gas');
 
 /** @class EventStore */
 module.exports = class EventStore {
@@ -20,24 +20,24 @@ module.exports = class EventStore {
    */
   constructor(config) {
     if (!config) {
-      throw new Error("a config of form { web3, abi, adapter } is required.");
+      throw new Error('a config of form { web3, abi, adapter } is required.');
     }
 
-    let { web3, abi, adapter } = config;
+    const { web3, abi, adapter } = config;
 
     if (!web3) {
-      throw new Error("a web3 property is required in constructor argument.");
+      throw new Error('a web3 property is required in constructor argument.');
     }
 
     if (!abi) {
       throw new Error(
-        "a truffle-contract abi property is required in constructor argument."
+        'a truffle-contract abi property is required in constructor argument.',
       );
     }
 
     if (!adapter) {
       throw new Error(
-        "an adapter property is required in constructor argument."
+        'an adapter property is required in constructor argument.',
       );
     }
 
@@ -89,7 +89,7 @@ module.exports = class EventStore {
   requireInstance() {
     if (!this.eventStoreContractInstance) {
       throw new Error(
-        "You must call init() before accessing eventStoreContractInstance."
+        'You must call init() before accessing eventStoreContractInstance.',
       );
     }
   }
@@ -105,11 +105,11 @@ module.exports = class EventStore {
   async clone(fromAddress) {
     const newContract = await this.eventStoreContract.new({
       from: fromAddress,
-      gas: GAS.MAX_GAS
+      gas: GAS.MAX_GAS,
     });
-    let instance = Object.assign(
+    const instance = Object.assign(
       Object.create(Object.getPrototypeOf(this)),
-      this
+      this,
     );
     instance.eventStoreContractInstance = newContract;
     return instance;
@@ -123,7 +123,7 @@ module.exports = class EventStore {
    */
   async getTransactionReceipt(tx) {
     return new Promise((resolve, reject) => {
-      this.web3.eth.getTransactionReceipt(tx, function(error, result) {
+      this.web3.eth.getTransactionReceipt(tx, (error, result) => {
         if (!error) resolve(result);
         else reject(error);
       });
@@ -141,11 +141,10 @@ module.exports = class EventStore {
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters
     if (args.length === 1) {
       return this.writeContent(fromAddress, args[0]);
-    } else if (args.length === 2) {
+    } if (args.length === 2) {
       return this.writeKeyValue(fromAddress, args[0], args[1]);
-    } else {
-      throw new Error('Invalid number of parameters for the write function');
     }
+    throw new Error('Invalid number of parameters for the write function');
   }
 
   /**
@@ -170,26 +169,25 @@ module.exports = class EventStore {
       contentHash,
       {
         from: fromAddress,
-        gas: GAS.EVENT_GAS_COST
-      }
-    ))["tx"];
+        gas: GAS.EVENT_GAS_COST,
+      },
+    )).tx;
 
-    let receipt = await this.getTransactionReceipt(tx);
+    const receipt = await this.getTransactionReceipt(tx);
 
     return {
       event: {
         sender: fromAddress,
-        content
+        content,
       },
       meta: {
         tx,
         contentID: {
           content,
         },
-        receipt
-      }
+        receipt,
+      },
     };
-
   }
 
   /**
@@ -207,8 +205,8 @@ module.exports = class EventStore {
   async writeKeyValue(fromAddress, key, value) {
     const content = {
       key,
-      value
-    }
+      value,
+    };
     return this.writeContent(fromAddress, content);
   }
 
@@ -258,11 +256,11 @@ module.exports = class EventStore {
     try {
       events = await this.readTransmuteEvent(eventStoreContractInstance, index);
     } catch (e) {
-      throw new Error("Could not read from Ethereum event log");
+      throw new Error('Could not read from Ethereum event log');
     }
 
     if (events.length === 0) {
-      throw new Error("No event exists for that index");
+      throw new Error('No event exists for that index');
     }
 
     const values = events[0].args;
@@ -273,7 +271,7 @@ module.exports = class EventStore {
         sender: values.sender,
         content,
       };
-    } catch(e) {
+    } catch (e) {
       throw new Error('Couldn\'t resolve contentHash');
     }
   }
@@ -289,10 +287,10 @@ module.exports = class EventStore {
    */
   async getSlice(startIndex, endIndex) {
     if (!(endIndex >= startIndex)) {
-      throw new Error("startIndex must be less than or equal to endIndex.");
+      throw new Error('startIndex must be less than or equal to endIndex.');
     }
     let index = startIndex;
-    let events = [];
+    const events = [];
     while (index <= endIndex) {
       events.push(await this.read(index));
       index++;
@@ -311,7 +309,7 @@ module.exports = class EventStore {
     this.requireInstance();
     return {
       adapter: !!(await this.adapter.healthy()),
-      eventStoreContract: this.eventStoreContractInstance.address
+      eventStoreContract: this.eventStoreContractInstance.address,
     };
   }
 
