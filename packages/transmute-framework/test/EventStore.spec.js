@@ -1,26 +1,36 @@
 const EventStore = artifacts.require('./EventStore.sol');
 
 contract('EventStore', accounts => {
-  it('constructor works', async () => {
-    const storage = await EventStore.deployed();
-    assert(accounts[0] === (await storage.owner()));
+  let es;
+
+  before(async () => {
+    es = await EventStore.deployed();
   });
 
-  // it('write - read', async () => {
-  //   const storage = await EventStore.deployed();
-  //   const tc = new TransmuteEventStore(storage, keenClient);
-  //   const rec = await tc.write('a', 'b');
-  //   assert(rec.logs[0].event === 'TransmuteEvent');
-  //   const triple = await tc.read(0);
-  //   assert(triple.length === 3);
-  // });
+  describe('write', () => {
+    let receipt;
+    const contentHash = '0x3fd54831f488a22b28398de0c567a3b064b937f54f81739ae9bd545967f3abab';
 
-  // it('destroy', async () => {
-  //   const storage = await EventStore.deployed();
-  //   assert(accounts[0] === (await storage.owner()));
-  //   const tc = new TransmuteEventStore(storage);
-  //   assert(tc.version === '0.0.1');
-  //   assert(tc.storage === storage);
-  //   await tc.destroy(accounts[1]);
-  // });
+    before(async () => {
+      receipt = await es.write(contentHash, {from: accounts[1]});
+    });
+
+    it('should emit a TransmuteEvent event', async () => {
+      assert.equal(receipt.logs.length, 1);
+      assert.equal(receipt.logs[0].event, 'TransmuteEvent')
+    });
+
+    it('should write the correct information to the event log', async () => {
+      const info = receipt.logs[0].args;
+      assert.ok(info);
+      assert.equal(info.index, 0);
+      assert.equal(info.sender, accounts[1]);
+      assert.equal(info.contentHash, contentHash);
+    });
+
+    it('should increment the count variable', async () => {
+      const count = await es.count.call();
+      assert.equal(count, 1);
+    });
+  });
 });

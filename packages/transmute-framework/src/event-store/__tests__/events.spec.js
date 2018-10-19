@@ -31,7 +31,7 @@ describe("transmute-framework", () => {
   });
 
   describe("write", () => {
-    it("can save events", async () => {
+    it("can save key/value pairs", async () => {
       return Promise.all(
         mockEvents.map(async event => {
           let result = await eventStore.write(
@@ -40,15 +40,34 @@ describe("transmute-framework", () => {
             event.value
           );
           expect(result.event).toBeDefined();
-          expect(result.event.sender).toBeDefined();
-          expect(result.event.key).toBeDefined();
-          expect(result.event.value).toBeDefined();
+          expect(result.event.sender).toBe(accounts[0]);
+          expect(result.event.content.key).toEqual(event.key);
+          expect(result.event.content.value).toEqual(event.value);
           expect(result.meta).toBeDefined();
           expect(result.meta.tx).toBeDefined();
           expect(result.meta.contentID).toBeDefined();
           expect(result.meta.receipt).toBeDefined();
         })
       );
+    });
+    it("can save arbitrary JSON objects", async () => {
+      const arbitraryJson = {
+        foo: 1,
+        bar: {
+          lol: 'mdr',
+        },
+      };
+      const result = await eventStore.write(
+        accounts[1],
+        arbitraryJson,
+      );
+      expect(result).toBeDefined();
+      expect(result.event.sender).toBe(accounts[1]);
+      expect(result.event.content).toEqual(arbitraryJson);
+      expect(result.meta).toBeDefined();
+      expect(result.meta.tx).toBeDefined();
+      expect(result.meta.contentID).toBeDefined();
+      expect(result.meta.receipt).toBeDefined();
     });
   });
 
@@ -63,9 +82,11 @@ describe("transmute-framework", () => {
       );
 
       let event = await eventStore.read(0, accounts[0]);
-      expect(event.sender).toBeDefined();
-      expect(event.key).toBeDefined();
-      expect(event.value).toBeDefined();
+      expect(event).toBeDefined();
+      expect(event.index).toBe(0);
+      expect(event.sender).toBe(accounts[0]);
+      expect(event.content.key).toEqual(mockEvent.key);
+      expect(event.content.value).toEqual(mockEvent.value);
     });
   });
 
@@ -82,8 +103,8 @@ describe("transmute-framework", () => {
 
       // avoid checksum errors
       expect(events[0].sender).toEqual(accounts[0].toLowerCase());
-      expect(events[0].key).toEqual(mockEvents[0].key);
-      expect(events[0].value).toEqual(mockEvents[0].value);
+      expect(events[0].content.key).toEqual(mockEvent.key);
+      expect(events[0].content.value).toEqual(mockEvent.value);
     });
 
     it("supports getting a slice", async () => {

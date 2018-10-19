@@ -9,14 +9,13 @@
   ],
   "scripts": {
     "start": "npm test",
-    "test": "jest ./src",
-    "coverage": "npm run test --coverage",
+    "test": "jest ./src --runInBand",
+    "coverage": "jest src/ --runInBand --coverage",
     "test:report": "codecov && rm -rf ./coverage",
     "truffle:test": "truffle test",
     "truffle:migrate": "truffle migrate --network development",
     "truffle:coverage": "./node_modules/.bin/solidity-coverage",
     "truffle:coverage:report": "cat coverage/lcov.info | coveralls",
-    "eject": "react-scripts eject",
     "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json",
     "lint": "../../node_modules/.bin/eslint .",
     "lint-fix": "../../node_modules/.bin/eslint . --fix"
@@ -49,10 +48,10 @@
   },
   "dependencies": {
     "dotenv": "^6.0.0",
-    "truffle-contract": "^3.0.4",
-    "truffle-hdwallet-provider": "0.0.5",
-    "web3": "^0.19.1",
-    "web3-provider-engine": "^13.6.6",
+    "truffle-contract": "^3.0.6",
+    "truffle-hdwallet-provider": "0.0.6",
+    "web3": "^0.20.7",
+    "web3-provider-engine": "^14.1.0",
     "zeppelin-solidity": "^1.6.0"
   }
 }

@@ -4,7 +4,7 @@
  */
 
 
-const contract = require("truffle-contract");
+const contract = require('truffle-contract');
 
 const pack = require("../../package.json");
 
@@ -115,6 +115,12 @@ module.exports = class EventStore {
     return instance;
   }
 
+  /**
+   * Returns transaction receipt
+   * @function
+   * @memberof EventStore
+   * @name getTransactionReceipt
+   */
   async getTransactionReceipt(tx) {
     return new Promise((resolve, reject) => {
       this.web3.eth.getTransactionReceipt(tx, function(error, result) {
@@ -125,26 +131,43 @@ module.exports = class EventStore {
   }
 
   /**
-   * Writes a key and value to contentID based storage, and writes these values to the eventStoreContractInstance
+   * calls writeContent if called with write(fromAddress, content)
+   * calls writeKeyValue if called with write(fromAddress, key, value)
    * @function
    * @memberof EventStore
    * @name write
-   * @param {String} fromAddress Address used to write event to eventStoreContractInstance
-   * @param {Object} key Event key
-   * @param {Object} value Event value
-   * @returns {Object} Event object with original key, value as well as meta from content storage and Ethereum
    */
-  async write(fromAddress, key, value) {
+  async write(fromAddress, ...args) {
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters
+    if (args.length === 1) {
+      return this.writeContent(fromAddress, args[0]);
+    } else if (args.length === 2) {
+      return this.writeKeyValue(fromAddress, args[0], args[1]);
+    } else {
+      throw new Error('Invalid number of parameters for the write function');
+    }
+  }
+
+  /**
+   * Writes an arbitrary JSON object to contentID based storage,
+   * and writes the hash to the eventStoreContractInstance
+   * @function
+   * @memberof EventStore
+   * @name writeContent
+   * @param {String} fromAddress Address used to write event to eventStoreContractInstance
+   * @param {Object} content
+   * @returns {Object} Event object with original JSON object
+   * as well as meta from content storage and Ethereum
+   */
+  async writeContent(fromAddress, content) {
     this.requireInstance();
 
     const { adapter, eventStoreContractInstance } = this;
 
-    const keyContentID = await adapter.writeJson(key);
-    const valueContentID = await adapter.writeJson(value);
+    const contentHash = await adapter.writeJson(content);
 
     const tx = (await eventStoreContractInstance.write(
-      keyContentID,
-      valueContentID,
+      contentHash,
       {
         from: fromAddress,
         gas: GAS.EVENT_GAS_COST
@@ -156,18 +179,67 @@ module.exports = class EventStore {
     return {
       event: {
         sender: fromAddress,
-        key,
-        value
+        content
       },
       meta: {
         tx,
         contentID: {
-          key: keyContentID,
-          value: valueContentID
+          content,
         },
         receipt
       }
     };
+
+  }
+
+  /**
+   * Writes a key and value to contentID based storage,
+   * and writes these values to the eventStoreContractInstance
+   * @function
+   * @memberof EventStore
+   * @name writeKeyValue
+   * @param {String} fromAddress Address used to write event to eventStoreContractInstance
+   * @param {Object} key Event key
+   * @param {Object} value Event value
+   * @returns {Object} Event object with original key, value
+   * as well as meta from content storage and Ethereum
+   */
+  async writeKeyValue(fromAddress, key, value) {
+    const content = {
+      key,
+      value
+    }
+    return this.writeContent(fromAddress, content);
+  }
+
+  /**
+   * Reads specified indexed event from the event log of eventStoreContractInstance
+   * @function
+   * @memberof EventStore
+   * @name readTransmuteEvent
+   * @returns {Object} Event object
+   */
+  readTransmuteEvent(contractInstance, eventIndex) {
+    // The contract JS Api (see links belows) only offers callbacks.
+    // Here we Promisify the callback so that we can `await` it in `read()`
+    return new Promise((resolve, reject) => {
+      // Reference: github.com/ethereum/wiki/wiki/JavaScript-API#contract-events
+      // Possible alternative: github.com/ethereum/wiki/wiki/JavaScript-API#web3ethfilter
+      const eventSubscription = contractInstance.contract.TransmuteEvent({
+        filter: {
+          index: eventIndex,
+        },
+        // TODO: Optimize by scanning fromBlock of contract creation
+        fromBlock: 0,
+      });
+      eventSubscription.get((error, logs) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(logs);
+        }
+      });
+    });
   }
 
   /**
@@ -182,26 +254,28 @@ module.exports = class EventStore {
     this.requireInstance();
     const { web3, ipfs, eventStoreContractInstance } = this;
 
-    const eventCount = (await this.eventStoreContractInstance.count.call()).toNumber();
-    if (eventCount === 0) {
-    }
-
-    let values;
+    let events;
     try {
-      values = await eventStoreContractInstance.read(index);
+      events = await this.readTransmuteEvent(eventStoreContractInstance, index);
     } catch (e) {
-      throw new Error("Failed to read values from index.");
+      throw new Error("Could not read from Ethereum event log");
     }
 
-    const decoded = [values[0].toNumber(), values[1], values[2], values[3]];
+    if (events.length === 0) {
+      throw new Error("No event exists for that index");
+    }
 
-    // TODO: add better handling for cass where the contentID is not resolveable
-    return {
-      index: decoded[0],
-      sender: decoded[1],
-      key: await this.adapter.readJson(decoded[2]),
-      value: await this.adapter.readJson(decoded[3])
-    };
+    const values = events[0].args;
+    try {
+      const content = await this.adapter.readJson(values.contentHash);
+      return {
+        index: values.index.toNumber(),
+        sender: values.sender,
+        content,
+      };
+    } catch(e) {
+      throw new Error('Couldn\'t resolve contentHash');
+    }
   }
 
   /**

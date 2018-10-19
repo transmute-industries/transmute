@@ -28,7 +28,6 @@ describe("EventStore with IPFS Adapter", () => {
     expect(eventStore).toBeDefined();
     await eventStore.init();
    
-
     const writeEventResult = await eventStore.write(
       accounts[0],
       mockEvents[0].key,
@@ -39,7 +38,7 @@ describe("EventStore with IPFS Adapter", () => {
     expect(writeEventResult.meta).toBeDefined();
 
     const readEventResult = await eventStore.read(0);
-    expect(readEventResult.key).toEqual(mockEvents[0].key);
-    expect(readEventResult.value).toEqual(mockEvents[0].value);
+    expect(readEventResult.content.key).toEqual(mockEvents[0].key);
+    expect(readEventResult.content.value).toEqual(mockEvents[0].value);
   });
 });

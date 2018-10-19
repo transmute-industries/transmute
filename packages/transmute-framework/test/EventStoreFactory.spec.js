@@ -16,7 +16,6 @@ contract('EventStoreFactory', accounts => {
     const _address = await factory.createEventStore.call({ from: accounts[2] });
     await factory.createEventStore({ from: accounts[2] });
     const eventStore = await EventStore.at(_address);
-    assert(accounts[2] === (await eventStore.owner()));
   });
 
   it("getEventStores", async () => {
