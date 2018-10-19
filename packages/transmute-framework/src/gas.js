@@ -3,5 +3,5 @@ const EVENT_GAS_COST = 500000;
 
 module.exports = {
   MAX_GAS,
-  EVENT_GAS_COST
+  EVENT_GAS_COST,
 };

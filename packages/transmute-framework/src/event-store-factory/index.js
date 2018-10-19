@@ -3,11 +3,11 @@
  * @module src/event-store-factory
  */
 
-const contract = require("truffle-contract");
+const contract = require('truffle-contract');
 
-const pack = require("../../package.json");
+const pack = require('../../package.json');
 
-const GAS = require("../gas");
+const GAS = require('../gas');
 
 /** @class EventStoreFactory */
 module.exports = class EventStoreFactory {
@@ -15,22 +15,23 @@ module.exports = class EventStoreFactory {
    * Creates a new EventStoreFactory.
    * @constructor
    * @memberof EventStoreFactory
-   * @param {Object} config Config object requiring eventStoreFactoryArtifact and web3Config with optional mixpanelConfig
+   * @param {Object} config Config object requiring eventStoreFactoryArtifact
+   * and web3Config with optional mixpanelConfig
    */
   constructor(config) {
     if (!config) {
-      throw new Error("a config of form { web3, abi, adapter } is required.");
+      throw new Error('a config of form { web3, abi, adapter } is required.');
     }
 
-    let { web3, abi } = config;
+    const { web3, abi } = config;
 
     if (!web3) {
-      throw new Error("a web3 property is required in constructor argument.");
+      throw new Error('a web3 property is required in constructor argument.');
     }
 
     if (!abi) {
       throw new Error(
-        "a truffle-contract abi property is required in constructor argument."
+        'a truffle-contract abi property is required in constructor argument.',
       );
     }
 
@@ -81,7 +82,7 @@ module.exports = class EventStoreFactory {
   requireInstance() {
     if (!this.eventStoreFactoryContractInstance) {
       throw new Error(
-        "You must call init() before accessing eventStoreFactoryContractInstance."
+        'You must call init() before accessing eventStoreFactoryContractInstance.',
       );
     }
   }
@@ -97,11 +98,11 @@ module.exports = class EventStoreFactory {
   async clone(fromAddress) {
     const newContract = await this.eventStoreFactoryContract.new({
       from: fromAddress,
-      gas: GAS.MAX_GAS
+      gas: GAS.MAX_GAS,
     });
-    let instance = Object.assign(
+    const instance = Object.assign(
       Object.create(Object.getPrototypeOf(this)),
-      this
+      this,
     );
     instance.eventStoreFactoryContractInstance = newContract;
     return instance;
@@ -117,9 +118,9 @@ module.exports = class EventStoreFactory {
    */
   async createEventStore(fromAddress) {
     this.requireInstance();
-    return await this.eventStoreFactoryContractInstance.createEventStore({
+    return this.eventStoreFactoryContractInstance.createEventStore({
       from: fromAddress,
-      gas: GAS.MAX_GAS
+      gas: GAS.MAX_GAS,
     });
   }
 
@@ -132,7 +133,7 @@ module.exports = class EventStoreFactory {
    */
   async getEventStores() {
     this.requireInstance();
-    return await this.eventStoreFactoryContractInstance.getEventStores();
+    return this.eventStoreFactoryContractInstance.getEventStores();
   }
 
   /**
@@ -146,9 +147,9 @@ module.exports = class EventStoreFactory {
    */
   async destroy(fromAddress, address) {
     this.requireInstance();
-    return await this.eventStoreFactoryContractInstance.destroy(address, {
+    return this.eventStoreFactoryContractInstance.destroy(address, {
       from: fromAddress,
-      gas: GAS.MAX_GAS
+      gas: GAS.MAX_GAS,
     });
   }
 };
