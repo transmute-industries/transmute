@@ -28,7 +28,7 @@ describe('transmute-framework-factory', () => {
       expect(err.name).toEqual('Error');
     }
 
-    await eventStoreFactory.init();
+    return eventStoreFactory.init();
   });
 
   // new event store factory per test
@@ -39,7 +39,7 @@ describe('transmute-framework-factory', () => {
   describe('createEventStore', () => {
     it('can create an EventStore', async () => {
       const initialEventStores = await eventStoreFactory.getEventStores();
-      const result = await eventStoreFactory.createEventStore(accounts[0]);
+      await eventStoreFactory.createEventStore(accounts[0]);
       const eventStores = await eventStoreFactory.getEventStores();
       expect(eventStores.length - initialEventStores.length).toBe(1);
     });
@@ -51,7 +51,7 @@ describe('transmute-framework-factory', () => {
       try {
         return await eventStoreFactory.getEventStores();
       } catch (err) {
-        expect(err.name).toEqual('Error');
+        return expect(err.name).toEqual('Error');
       }
     });
   });

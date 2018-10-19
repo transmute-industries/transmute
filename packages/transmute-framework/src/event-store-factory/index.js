@@ -15,7 +15,8 @@ module.exports = class EventStoreFactory {
    * Creates a new EventStoreFactory.
    * @constructor
    * @memberof EventStoreFactory
-   * @param {Object} config Config object requiring eventStoreFactoryArtifact and web3Config with optional mixpanelConfig
+   * @param {Object} config Config object requiring eventStoreFactoryArtifact
+   * and web3Config with optional mixpanelConfig
    */
   constructor(config) {
     if (!config) {
@@ -117,7 +118,7 @@ module.exports = class EventStoreFactory {
    */
   async createEventStore(fromAddress) {
     this.requireInstance();
-    return await this.eventStoreFactoryContractInstance.createEventStore({
+    return this.eventStoreFactoryContractInstance.createEventStore({
       from: fromAddress,
       gas: GAS.MAX_GAS,
     });
@@ -132,7 +133,7 @@ module.exports = class EventStoreFactory {
    */
   async getEventStores() {
     this.requireInstance();
-    return await this.eventStoreFactoryContractInstance.getEventStores();
+    return this.eventStoreFactoryContractInstance.getEventStores();
   }
 
   /**
@@ -146,7 +147,7 @@ module.exports = class EventStoreFactory {
    */
   async destroy(fromAddress, address) {
     this.requireInstance();
-    return await this.eventStoreFactoryContractInstance.destroy(address, {
+    return this.eventStoreFactoryContractInstance.destroy(address, {
       from: fromAddress,
       gas: GAS.MAX_GAS,
     });

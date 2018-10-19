@@ -1,8 +1,8 @@
+const Web3 = require('web3');
+const TransmuteAdapterIPFS = require('transmute-adapter-ipfs');
 const { EventStore } = require('../../index');
 const transmuteConfig = require('../../transmute-config');
 const abi = require('../../../build/contracts/EventStore.json');
-const Web3 = require('web3');
-const TransmuteAdapterIPFS = require('transmute-adapter-ipfs');
 
 const provider = new Web3.providers.HttpProvider(
   transmuteConfig.web3Config.providerUrl,
@@ -32,9 +32,9 @@ describe('sync', () => {
     eventsProcessed: (state.eventsProcessed || 0) + 1,
   });
 
-  const expectUnchanged = (streamModel, eventCount) => {
-    expect(streamModel.state.model.eventsProcessed).toBe(eventCount);
-    expect(streamModel.state.model).toMatchSnapshot();
+  const expectUnchanged = (streamModelInstance, eventCount) => {
+    expect(streamModelInstance.state.model.eventsProcessed).toBe(eventCount);
+    expect(streamModelInstance.state.model).toMatchSnapshot();
   };
 
   beforeAll(async () => {

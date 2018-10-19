@@ -56,7 +56,6 @@ module.exports = class StreamModel {
    * @name sync
    */
   async sync() {
-    const web3 = this.eventStore.web3;
     const eventCount = (await this.eventStore.eventStoreContractInstance.count.call()).toNumber();
     if (eventCount === 0) {
       return;

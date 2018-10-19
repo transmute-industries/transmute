@@ -11,14 +11,12 @@ const contentObject = {
   last: 'Lovelace',
 };
 
-adapter.readJson = jest.fn().mockImplementation(contentID => contentObject);
-adapter.writeJson = jest.fn().mockImplementation(contentObject => contentID);
+adapter.readJson = jest.fn().mockImplementation(() => contentObject);
+adapter.writeJson = jest.fn().mockImplementation(() => contentID);
 
 const EventStore = require('../../event-store');
 const abi = require('../../../build/contracts/EventStore.json');
 const transmuteConfig = require('../../transmute-config');
-
-const mockEvents = require('../../__mock__/events.json');
 
 const provider = new Web3.providers.HttpProvider(
   transmuteConfig.web3Config.providerUrl,

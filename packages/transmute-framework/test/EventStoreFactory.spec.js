@@ -13,13 +13,14 @@ contract('EventStoreFactory', (accounts) => {
   });
 
   it('createEventStore', async () => {
-    const _address = await factory.createEventStore.call({ from: accounts[2] });
+    const address = await factory.createEventStore.call({ from: accounts[2] });
     await factory.createEventStore({ from: accounts[2] });
-    const eventStore = await EventStore.at(_address);
+    const eventStore = await EventStore.at(address);
+    assert(eventStore);
   });
 
   it('getEventStores', async () => {
-    const _addresses = await factory.getEventStores();
-    assert(_addresses.length === 1);
+    const addresses = await factory.getEventStores();
+    assert(addresses.length === 1);
   });
 });

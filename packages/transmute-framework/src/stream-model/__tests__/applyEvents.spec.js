@@ -1,8 +1,8 @@
+const Web3 = require('web3');
+const TransmuteAdapterIPFS = require('transmute-adapter-ipfs');
 const { EventStore } = require('../../index');
 const transmuteConfig = require('../../transmute-config');
 const abi = require('../../../build/contracts/EventStore.json');
-const Web3 = require('web3');
-const TransmuteAdapterIPFS = require('transmute-adapter-ipfs');
 
 const provider = new Web3.providers.HttpProvider(
   transmuteConfig.web3Config.providerUrl,
@@ -54,9 +54,9 @@ describe('applyEvents', () => {
   });
 
   it('should support custom event filters', async () => {
-    const custom_filter = event => event.key.type === 'patient' && event.key.id === '0';
-    const streamModel = new StreamModel(eventStore, custom_filter, reducer);
-    streamModel.applyEvents(events);
-    expect(streamModel.state.model).toMatchSnapshot();
+    const customFilter = event => event.key.type === 'patient' && event.key.id === '0';
+    const streamModelInstance = new StreamModel(eventStore, customFilter, reducer);
+    streamModelInstance.applyEvents(events);
+    expect(streamModelInstance.state.model).toMatchSnapshot();
   });
 });

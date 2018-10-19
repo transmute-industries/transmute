@@ -29,6 +29,7 @@ describe('transmute-framework', () => {
         abi,
         adapter,
       });
+      expect(eventStore).toBeDefined();
     });
 
     it('sets version', async () => {

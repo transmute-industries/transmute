@@ -16,7 +16,8 @@ module.exports = class EventStore {
    * Creates a new EventStore
    * @constructor
    * @memberof EventStore
-   * @param {Object} config Config object requiring eventStoreArtifact, web3Config, and ipfsConfig with optional mixpanelConfig
+   * @param {Object} config Config object requiring eventStoreArtifact,
+   * web3Config, and ipfsConfig with optional mixpanelConfig
    */
   constructor(config) {
     if (!config) {
@@ -165,13 +166,13 @@ module.exports = class EventStore {
 
     const contentHash = await adapter.writeJson(content);
 
-    const tx = (await eventStoreContractInstance.write(
+    const { tx } = (await eventStoreContractInstance.write(
       contentHash,
       {
         from: fromAddress,
         gas: GAS.EVENT_GAS_COST,
       },
-    )).tx;
+    ));
 
     const receipt = await this.getTransactionReceipt(tx);
 
@@ -241,7 +242,8 @@ module.exports = class EventStore {
   }
 
   /**
-   * Reads specified indexed event from eventStoreContractInstance, retrieves its data from content storage, and returns the original key, value, index, and sender
+   * Reads specified indexed event from eventStoreContractInstance,
+   * retrieves its data from content storage, and returns the original key, value, index, and sender
    * @function
    * @memberof EventStore
    * @name read
@@ -250,7 +252,7 @@ module.exports = class EventStore {
    */
   async read(index) {
     this.requireInstance();
-    const { web3, ipfs, eventStoreContractInstance } = this;
+    const { eventStoreContractInstance } = this;
 
     let events;
     try {
@@ -291,10 +293,12 @@ module.exports = class EventStore {
     }
     let index = startIndex;
     const events = [];
+    /* eslint-disable no-await-in-loop */
     while (index <= endIndex) {
       events.push(await this.read(index));
-      index++;
+      index += 1;
     }
+    /* eslint-enable no-await-in-loop */
     return events;
   }
 

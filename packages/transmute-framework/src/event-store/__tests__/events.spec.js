@@ -73,7 +73,7 @@ describe('transmute-framework', () => {
     it('can read events', async () => {
       const mockEvent = mockEvents[0];
 
-      const result = await eventStore.write(
+      await eventStore.write(
         accounts[0],
         mockEvent.key,
         mockEvent.value,
@@ -91,7 +91,7 @@ describe('transmute-framework', () => {
   describe('getSlice', () => {
     it('supports getting a single event', async () => {
       const mockEvent = mockEvents[0];
-      const result = await eventStore.write(
+      await eventStore.write(
         accounts[0],
         mockEvent.key,
         mockEvent.value,
