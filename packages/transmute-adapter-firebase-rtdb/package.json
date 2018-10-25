@@ -1,0 +1,22 @@
+{
+  "name": "@transmute/transmute-adapter-firebase-rtdb",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "lint": "../../node_modules/.bin/eslint .",
+    "lint-fix": "../../node_modules/.bin/eslint . --fix"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^23.5.0"
+  },
+  "dependencies": {
+    "bs58": "^4.0.1",
+    "ipfs-unixfs": "^0.1.15",
+    "ipld-dag-pb": "^0.14.8"
+  }
+}
