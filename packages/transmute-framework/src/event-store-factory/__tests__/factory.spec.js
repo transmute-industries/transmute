@@ -1,4 +1,4 @@
-const Web3 = require('web3');
+const Web3 = require('../../web3');
 const EventStoreFactory = require('../index.js');
 
 const transmuteConfig = require('../../transmute-config');

@@ -1,5 +1,5 @@
-const Web3 = require('web3');
-const TransmuteAdapterIPFS = require('transmute-adapter-ipfs');
+const Web3 = require('../../web3');
+const TransmuteAdapterIPFS = require('@transmute/transmute-adapter-ipfs');
 const EventStore = require('../index.js');
 const transmuteConfig = require('../../transmute-config');
 const abi = require('../../../build/contracts/EventStore.json');
@@ -82,7 +82,7 @@ describe('transmute-framework', () => {
       const event = await eventStore.read(0, accounts[0]);
       expect(event).toBeDefined();
       expect(event.index).toBe(0);
-      expect(event.sender).toBe(accounts[0]);
+      expect(event.sender).toBe(accounts[0].toLowerCase());
       expect(event.content.key).toEqual(mockEvent.key);
       expect(event.content.value).toEqual(mockEvent.value);
     });
