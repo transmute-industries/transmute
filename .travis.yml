@@ -47,12 +47,14 @@ script:
   - npm i && lerna bootstrap
   - lerna run --scope transmute-did test
   - lerna run --scope transmute-did coverage
-  - lerna run --scope transmute-adapter-ipfs test
-  - lerna run --scope transmute-adapter-ipfs coverage
-  - lerna run --scope transmute-adapter-firestore test
-  - lerna run --scope transmute-adapter-firestore coverage
-  - lerna run --scope transmute-framework truffle:test
-  - lerna run --scope transmute-framework truffle:migrate
-  - lerna run --scope transmute-framework test
-  - lerna run --scope transmute-framework coverage
-  - lerna run --scope transmute-framework test:report
+  - lerna run --scope @transmute/transmute-adapter-ipfs test
+  - lerna run --scope @transmute/transmute-adapter-ipfs coverage
+  - lerna run --scope @transmute/transmute-adapter-firestore test
+  - lerna run --scope @transmute/transmute-adapter-firestore coverage
+  - lerna run --scope @transmute/transmute-adapter-firebase-rtdb test
+  - lerna run --scope @transmute/transmute-adapter-firebase-rtdb coverage
+  - lerna run --scope @transmute/transmute-framework truffle:test
+  - lerna run --scope @transmute/transmute-framework truffle:migrate
+  - lerna run --scope @transmute/transmute-framework test
+  - lerna run --scope @transmute/transmute-framework coverage
+  - lerna run --scope @transmute/transmute-framework test:report
