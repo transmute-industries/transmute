@@ -5,7 +5,6 @@
  */
 
 const pack = require('../../package.json');
-
 const GAS = require('../gas');
 
 /** @class EventStore */
@@ -22,30 +21,27 @@ module.exports = class EventStore {
       throw new Error('a config of form { web3, abi, adapter } is required.');
     }
 
-    const { web3, abi, adapter } = config;
-
+    const {
+      web3, abi, address, adapter,
+    } = config;
     if (!web3) {
       throw new Error('a web3 property is required in constructor argument.');
     }
-
     if (!abi) {
-      throw new Error(
-        'a truffle-contract abi property is required in constructor argument.',
-      );
+      throw new Error('an abi property is required in constructor argument.');
     }
-
+    if (!address) {
+      throw new Error('an address property is required in contructor argument');
+    }
     if (!adapter) {
-      throw new Error(
-        'an adapter property is required in constructor argument.',
-      );
+      throw new Error('an adapter property is required in constructor argument.');
     }
 
     this.version = pack.version;
     this.web3 = web3;
     this.adapter = adapter;
-
-    this.eventStoreArtifact = abi;
-    this.eventStoreContract = new web3.eth.Contract(abi.abi, '0x4dec7a53e9d143dfda212816bba0d75959b48fea');
+    this.address = address;
+    this.eventStoreContract = new web3.eth.Contract(abi, address);
   }
 
   /**
@@ -64,33 +60,6 @@ module.exports = class EventStore {
         resolve(accounts);
       });
     });
-  }
-
-  /**
-   * Deploys eventStoreContract if it has not already been deployed
-   * @function
-   * @memberof EventStore
-   * @name init
-   */
-  async init() {
-    if (!this.eventStoreContractInstance) {
-      this.eventStoreContractInstance = this.eventStoreContract;
-      // await this.eventStoreContract.deployed();
-    }
-  }
-
-  /**
-   * Throws error if init() has not been called
-   * @function
-   * @memberof EventStoreFactory
-   * @name requireInstance
-   */
-  requireInstance() {
-    if (!this.eventStoreContractInstance) {
-      throw new Error(
-        'You must call init() before accessing eventStoreContractInstance.',
-      );
-    }
   }
 
   /**
@@ -143,7 +112,6 @@ module.exports = class EventStore {
    * as well as meta from content storage and Ethereum
    */
   async writeContent(fromAddress, content) {
-    this.requireInstance();
 
     const { adapter, eventStoreContractInstance } = this;
 
@@ -196,7 +164,6 @@ module.exports = class EventStore {
    * @returns {Object} Event object with original key, value, sender, and index
    */
   async read(index) {
-    this.requireInstance();
     let events;
     try {
       events = await this.eventStoreContract.getPastEvents('TransmuteEvent', {
@@ -258,7 +225,6 @@ module.exports = class EventStore {
    * @returns {Object} Health status of adapter and eventStoreContractInstance address
    */
   async healthy() {
-    this.requireInstance();
     return {
       adapter: !!(await this.adapter.healthy()),
       eventStoreContract: this.eventStoreContractInstance.address,
