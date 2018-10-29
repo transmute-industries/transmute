@@ -45,24 +45,6 @@ module.exports = class EventStore {
   }
 
   /**
-   * Returns Web3 accounts
-   * @function
-   * @memberof EventStore
-   * @name getWeb3Accounts
-   * @returns {Array.<String>} Array of Web3 account addresses
-   */
-  async getWeb3Accounts() {
-    return new Promise((resolve, reject) => {
-      this.web3.eth.getAccounts((err, accounts) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(accounts);
-      });
-    });
-  }
-
-  /**
    * calls writeContent if called with write(fromAddress, content)
    * calls writeKeyValue if called with write(fromAddress, key, value)
    * @function

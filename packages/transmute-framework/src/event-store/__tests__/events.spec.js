@@ -22,7 +22,7 @@ describe('transmute-framework', () => {
   let accounts;
 
   beforeAll(async () => {
-    accounts = await eventStore.getWeb3Accounts();
+    accounts = await web3.eth.getAccounts();
   });
 
   // new event store per test
