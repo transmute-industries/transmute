@@ -63,27 +63,6 @@ module.exports = class EventStore {
   }
 
   /**
-   * Creates EventStore instance and assigns it a new EventStoreContract
-   * @function
-   * @memberof EventStore
-   * @name clone
-   * @param {String} fromAddress Address used to create new EventStoreContract
-   * @returns {Object} EventStore instance
-   */
-  async clone(fromAddress) {
-    const newContract = await this.eventStoreContract.clone({
-      from: fromAddress,
-      gas: GAS.MAX_GAS,
-    });
-    const instance = Object.assign(
-      Object.create(Object.getPrototypeOf(this)),
-      this,
-    );
-    instance.eventStoreContractInstance = newContract;
-    return instance;
-  }
-
-  /**
    * calls writeContent if called with write(fromAddress, content)
    * calls writeKeyValue if called with write(fromAddress, key, value)
    * @function
@@ -112,12 +91,9 @@ module.exports = class EventStore {
    * as well as meta from content storage and Ethereum
    */
   async writeContent(fromAddress, content) {
-
-    const { adapter, eventStoreContractInstance } = this;
-
+    const { adapter, eventStoreContract } = this;
     const contentHash = await adapter.writeJson(content);
-
-    const txReceipt = await eventStoreContractInstance.methods
+    const txReceipt = await eventStoreContract.methods
       .write(contentHash)
       .send({
         from: fromAddress,
@@ -229,17 +205,5 @@ module.exports = class EventStore {
       adapter: !!(await this.adapter.healthy()),
       eventStoreContract: this.eventStoreContractInstance.address,
     };
-  }
-
-  /**
-   * Destroys eventStoreContractInstance
-   * @function
-   * @memberof EventStore
-   * @name destroy
-   * @param {String} address Address used to destroy eventStoreContractInstance
-   * @returns {Object} Ethereum transaction from EventStore destruction
-   */
-  destroy(address) {
-    return this.eventStoreContractInstance.destroy(address);
   }
 };

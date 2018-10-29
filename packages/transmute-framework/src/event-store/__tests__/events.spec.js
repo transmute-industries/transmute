@@ -27,7 +27,8 @@ describe('transmute-framework', () => {
 
   // new event store per test
   beforeEach(async () => {
-    eventStore = await eventStore.clone(accounts[0]);
+    // TODO: Use EventStoreFactory instead
+    // eventStore = await eventStore.clone(accounts[0]);
   });
 
   describe('write', () => {
