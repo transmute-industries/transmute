@@ -11,7 +11,7 @@ const adapter = new TransmuteAdapterIPFS(transmuteConfig.ipfsConfig);
 const { abi, networks } = contractJson;
 const latestDeploy = Object.keys(networks).pop();
 const { address } = networks[latestDeploy];
-let eventStore = new EventStore({
+const eventStore = new EventStore({
   web3,
   abi,
   address,
@@ -66,8 +66,10 @@ describe('transmute-framework', () => {
 
   describe('read', () => {
     const mockEvent = mockEvents[0];
+    let writeEventResult;
+
     beforeAll(async () => {
-      await eventStore.write(
+      writeEventResult = await eventStore.write(
         accounts[0],
         mockEvent.key,
         mockEvent.value,
@@ -75,9 +77,10 @@ describe('transmute-framework', () => {
     });
 
     it('should read event informations', async () => {
-      const event = await eventStore.read(0, accounts[0]);
+      const { index } = writeEventResult.event;
+      const event = await eventStore.read(index, accounts[0]);
       expect(event).toBeDefined();
-      expect(event.index).toBe(0);
+      expect(event.index).toBeGreaterThan(0);
       expect(event.sender).toBe(accounts[0].toLowerCase());
       expect(event.content.key).toEqual(mockEvent.key);
       expect(event.content.value).toEqual(mockEvent.value);

@@ -79,14 +79,16 @@ module.exports = class EventStore {
       .write(contentHash)
       .send({
         from: fromAddress,
+        // TODO: remove
         gas: GAS.EVENT_GAS_COST,
       });
-
+    const { index } = txReceipt.events.TransmuteEvent.returnValues;
     return {
       event: {
         sender: fromAddress,
         contentHash,
         content,
+        index,
       },
       meta: txReceipt,
     };
