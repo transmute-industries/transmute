@@ -1,4 +1,4 @@
-const Web3 = require('../../web3');
+const Web3 = require('web3');
 const TransmuteAdapterIPFS = require('transmute-adapter-ipfs');
 const EventStore = require('../index.js');
 const transmuteConfig = require('../../transmute-config');
@@ -43,9 +43,6 @@ describe('transmute-framework', () => {
         expect(result.event.content.key).toEqual(event.key);
         expect(result.event.content.value).toEqual(event.value);
         expect(result.meta).toBeDefined();
-        expect(result.meta.tx).toBeDefined();
-        expect(result.meta.contentID).toBeDefined();
-        expect(result.meta.receipt).toBeDefined();
       }),
     ));
     it('can save arbitrary JSON objects', async () => {
@@ -63,9 +60,6 @@ describe('transmute-framework', () => {
       expect(result.event.sender).toBe(accounts[1]);
       expect(result.event.content).toEqual(arbitraryJson);
       expect(result.meta).toBeDefined();
-      expect(result.meta.tx).toBeDefined();
-      expect(result.meta.contentID).toBeDefined();
-      expect(result.meta.receipt).toBeDefined();
     });
   });
 
@@ -79,7 +73,7 @@ describe('transmute-framework', () => {
       );
     });
 
-    it.only('should read event informations', async () => {
+    it('should read event informations', async () => {
       const event = await eventStore.read(0, accounts[0]);
       expect(event).toBeDefined();
       expect(event.index).toBe(0);

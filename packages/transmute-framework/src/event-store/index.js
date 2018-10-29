@@ -45,9 +45,7 @@ module.exports = class EventStore {
     this.adapter = adapter;
 
     this.eventStoreArtifact = abi;
-    // this.eventStoreContract = contract(this.eventStoreArtifact);
     this.eventStoreContract = new web3.eth.Contract(abi.abi, '0x4dec7a53e9d143dfda212816bba0d75959b48fea');
-    // this.eventStoreContract.setProvider(this.web3.currentProvider);
   }
 
   /**
@@ -150,7 +148,6 @@ module.exports = class EventStore {
     const { adapter, eventStoreContractInstance } = this;
 
     const contentHash = await adapter.writeJson(content);
-    console.log(contentHash);
 
     const txReceipt = await eventStoreContractInstance.methods
       .write(contentHash)
@@ -190,37 +187,6 @@ module.exports = class EventStore {
   }
 
   /**
-    * Reads specified indexed event from the event log of eventStoreContractInstance
-    * @function
-    * @memberof EventStore
-    * @name readTransmuteEvent
-    * @returns {Object} Event object
-    */
-  readTransmuteEvent(contractInstance, eventIndex) {
-    // The contract JS Api (see links belows) only offers callbacks.
-    // Here we Promisify the callback so that we can `await` it in `read()`
-    return new Promise((resolve, reject) => {
-      // Reference: github.com/ethereum/wiki/wiki/JavaScript-API#contract-events
-      // Possible alternative: github.com/ethereum/wiki/wiki/JavaScript-API#web3ethfilter
-      const eventSubscription = contractInstance.contract.TransmuteEvent({}, {
-        filter: {
-          index: eventIndex,
-        },
-        // TODO: Optimize by scanning fromBlock of contract creation
-        fromBlock: 0,
-        toBlock: 'latest',
-      });
-      eventSubscription.get((error, logs) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(logs);
-        }
-      });
-    });
-  }
-
-  /**
    * Reads specified indexed event from eventStoreContractInstance,
    * retrieves its data from content storage, and returns the original key, value, index, and sender
    * @function
@@ -238,13 +204,6 @@ module.exports = class EventStore {
         fromBlock: 0,
         toBlock: 'latest',
       });
-      // events = this.eventStoreContractInstance.contract.TransmuteEvent({ }, {
-      //   fromBlock: 0,
-      //   toBlock: 'latest',
-      // }).get((error, logs) => {
-      //   console.log('lol', error, logs);
-      // });
-      // events = await this.readTransmuteEvent(this.eventStoreContractInstance, index);
     } catch (e) {
       throw new Error('Could not read from Ethereum event log');
     }
@@ -252,14 +211,6 @@ module.exports = class EventStore {
     if (events.length === 0) {
       throw new Error('No event exists for that index');
     }
-
-    // I upgraded web3 to 1.0 and that broke readTransmuteEvent
-    // I fixed readTransmuteEvent but it is not filtering by index
-    // TODO: Make readTransmuteEvent filter by index (it(s))
-    // Fix all tests
-    // Get read of truffle contracts
-    // publish and use it in API
-    // profit
 
     const values = events[0].returnValues;
     let content;
