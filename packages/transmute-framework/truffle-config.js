@@ -1,5 +1,5 @@
 require('dotenv').config();
-const Web3 = require('./src/web3');
+const Web3 = require('web3');
 const HDWalletProvider = require('truffle-hdwallet-provider');
 const transmuteConfig = require('./src/transmute-config');
 
