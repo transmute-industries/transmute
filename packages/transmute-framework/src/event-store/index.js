@@ -1,10 +1,8 @@
+/* eslint-disable class-methods-use-this */
 /**
  * A module for reading and writing objects to ipfs and ethereum
  * @module src/event-store
  */
-
-
-const contract = require('truffle-contract');
 
 const pack = require('../../package.json');
 
@@ -47,8 +45,9 @@ module.exports = class EventStore {
     this.adapter = adapter;
 
     this.eventStoreArtifact = abi;
-    this.eventStoreContract = contract(this.eventStoreArtifact);
-    this.eventStoreContract.setProvider(this.web3.currentProvider);
+    // this.eventStoreContract = contract(this.eventStoreArtifact);
+    this.eventStoreContract = new web3.eth.Contract(abi.abi, '0x4dec7a53e9d143dfda212816bba0d75959b48fea');
+    // this.eventStoreContract.setProvider(this.web3.currentProvider);
   }
 
   /**
@@ -77,7 +76,8 @@ module.exports = class EventStore {
    */
   async init() {
     if (!this.eventStoreContractInstance) {
-      this.eventStoreContractInstance = await this.eventStoreContract.deployed();
+      this.eventStoreContractInstance = this.eventStoreContract;
+      // await this.eventStoreContract.deployed();
     }
   }
 
@@ -104,7 +104,7 @@ module.exports = class EventStore {
    * @returns {Object} EventStore instance
    */
   async clone(fromAddress) {
-    const newContract = await this.eventStoreContract.new({
+    const newContract = await this.eventStoreContract.clone({
       from: fromAddress,
       gas: GAS.MAX_GAS,
     });
@@ -114,21 +114,6 @@ module.exports = class EventStore {
     );
     instance.eventStoreContractInstance = newContract;
     return instance;
-  }
-
-  /**
-   * Returns transaction receipt
-   * @function
-   * @memberof EventStore
-   * @name getTransactionReceipt
-   */
-  async getTransactionReceipt(tx) {
-    return new Promise((resolve, reject) => {
-      this.web3.eth.getTransactionReceipt(tx, (error, result) => {
-        if (!error) resolve(result);
-        else reject(error);
-      });
-    });
   }
 
   /**
@@ -165,29 +150,22 @@ module.exports = class EventStore {
     const { adapter, eventStoreContractInstance } = this;
 
     const contentHash = await adapter.writeJson(content);
+    console.log(contentHash);
 
-    const { tx } = (await eventStoreContractInstance.write(
-      contentHash,
-      {
+    const txReceipt = await eventStoreContractInstance.methods
+      .write(contentHash)
+      .send({
         from: fromAddress,
         gas: GAS.EVENT_GAS_COST,
-      },
-    ));
-
-    const receipt = await this.getTransactionReceipt(tx);
+      });
 
     return {
       event: {
         sender: fromAddress,
+        contentHash,
         content,
       },
-      meta: {
-        tx,
-        contentID: {
-          content,
-        },
-        receipt,
-      },
+      meta: txReceipt,
     };
   }
 
@@ -212,24 +190,25 @@ module.exports = class EventStore {
   }
 
   /**
-   * Reads specified indexed event from the event log of eventStoreContractInstance
-   * @function
-   * @memberof EventStore
-   * @name readTransmuteEvent
-   * @returns {Object} Event object
-   */
+    * Reads specified indexed event from the event log of eventStoreContractInstance
+    * @function
+    * @memberof EventStore
+    * @name readTransmuteEvent
+    * @returns {Object} Event object
+    */
   readTransmuteEvent(contractInstance, eventIndex) {
     // The contract JS Api (see links belows) only offers callbacks.
     // Here we Promisify the callback so that we can `await` it in `read()`
     return new Promise((resolve, reject) => {
       // Reference: github.com/ethereum/wiki/wiki/JavaScript-API#contract-events
       // Possible alternative: github.com/ethereum/wiki/wiki/JavaScript-API#web3ethfilter
-      const eventSubscription = contractInstance.contract.TransmuteEvent({
+      const eventSubscription = contractInstance.contract.TransmuteEvent({}, {
         filter: {
           index: eventIndex,
         },
         // TODO: Optimize by scanning fromBlock of contract creation
         fromBlock: 0,
+        toBlock: 'latest',
       });
       eventSubscription.get((error, logs) => {
         if (error) {
@@ -252,11 +231,20 @@ module.exports = class EventStore {
    */
   async read(index) {
     this.requireInstance();
-    const { eventStoreContractInstance } = this;
-
     let events;
     try {
-      events = await this.readTransmuteEvent(eventStoreContractInstance, index);
+      events = await this.eventStoreContract.getPastEvents('TransmuteEvent', {
+        filter: { index: [index] },
+        fromBlock: 0,
+        toBlock: 'latest',
+      });
+      // events = this.eventStoreContractInstance.contract.TransmuteEvent({ }, {
+      //   fromBlock: 0,
+      //   toBlock: 'latest',
+      // }).get((error, logs) => {
+      //   console.log('lol', error, logs);
+      // });
+      // events = await this.readTransmuteEvent(this.eventStoreContractInstance, index);
     } catch (e) {
       throw new Error('Could not read from Ethereum event log');
     }
@@ -265,17 +253,26 @@ module.exports = class EventStore {
       throw new Error('No event exists for that index');
     }
 
-    const values = events[0].args;
+    // I upgraded web3 to 1.0 and that broke readTransmuteEvent
+    // I fixed readTransmuteEvent but it is not filtering by index
+    // TODO: Make readTransmuteEvent filter by index (it(s))
+    // Fix all tests
+    // Get read of truffle contracts
+    // publish and use it in API
+    // profit
+
+    const values = events[0].returnValues;
+    let content;
     try {
-      const content = await this.adapter.readJson(values.contentHash);
-      return {
-        index: values.index.toNumber(),
-        sender: values.sender,
-        content,
-      };
+      content = await this.adapter.readJson(values.contentHash);
     } catch (e) {
       throw new Error('Couldn\'t resolve contentHash');
     }
+    return {
+      index: Number.parseInt(values.index),
+      sender: values.sender.toLowerCase(),
+      content,
+    };
   }
 
   /**

@@ -1,5 +1,5 @@
 const Web3 = require('../../web3');
-const TransmuteAdapterIPFS = require('@transmute/transmute-adapter-ipfs');
+const TransmuteAdapterIPFS = require('transmute-adapter-ipfs');
 const EventStore = require('../index.js');
 const transmuteConfig = require('../../transmute-config');
 const abi = require('../../../build/contracts/EventStore.json');
@@ -70,15 +70,16 @@ describe('transmute-framework', () => {
   });
 
   describe('read', () => {
-    it('can read events', async () => {
-      const mockEvent = mockEvents[0];
-
+    const mockEvent = mockEvents[0];
+    beforeAll(async () => {
       await eventStore.write(
         accounts[0],
         mockEvent.key,
         mockEvent.value,
       );
+    });
 
+    it.only('should read event informations', async () => {
       const event = await eventStore.read(0, accounts[0]);
       expect(event).toBeDefined();
       expect(event.index).toBe(0);
