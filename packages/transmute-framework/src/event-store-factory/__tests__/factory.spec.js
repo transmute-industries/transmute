@@ -20,7 +20,7 @@ describe('transmute-framework-factory', () => {
       web3,
       abi,
     });
-    accounts = await eventStoreFactory.getWeb3Accounts();
+    accounts = await web3.eth.getAccounts();
 
     try {
       return await eventStoreFactory.getEventStores();

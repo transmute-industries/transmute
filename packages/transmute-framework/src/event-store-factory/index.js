@@ -44,24 +44,6 @@ module.exports = class EventStoreFactory {
   }
 
   /**
-   * Returns Web3 accounts
-   * @function
-   * @memberof EventStoreFactory
-   * @name getWeb3Accounts
-   * @returns {Array.<String>} Array of Web3 account addresses
-   */
-  async getWeb3Accounts() {
-    return new Promise((resolve, reject) => {
-      this.web3.eth.getAccounts((err, accounts) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(accounts);
-      });
-    });
-  }
-
-  /**
    * Deploys eventStoreFactoryContract if it has not already been deployed
    * @function
    * @memberof EventStoreFactory

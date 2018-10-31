@@ -32,7 +32,7 @@ describe('EventStore with Firestore Adapter', () => {
   it('supports the firestore adapter', async () => {
     expect(eventStore).toBeDefined();
     await eventStore.init();
-    const accounts = await eventStore.getWeb3Accounts();
+    const accounts = await web3.eth.getAccounts();
     const writeEventResult = await eventStore.write(
       accounts[0],
       contentObject,

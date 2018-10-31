@@ -52,7 +52,7 @@ describe('transmute-framework', () => {
   //       address,
   //       adapter,
   //     });
-  //     const accounts = await eventStore.getWeb3Accounts();
+  //     const accounts = await web3.eth.getAccounts();
   //     const newEventStore = await eventStore.clone(accounts[0]);
   //     expect(eventStore.eventStoreContract.options.address.toLowerCase())
   //       .not.toBe(newEventStore.address);

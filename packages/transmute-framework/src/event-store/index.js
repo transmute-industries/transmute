@@ -23,16 +23,13 @@ module.exports = class EventStore {
     }
 
     const {
-      web3, abi, address, adapter,
+      web3, abi, adapter,
     } = config;
     if (!web3) {
       throw new Error('a web3 property is required in constructor argument.');
     }
     if (!abi) {
       throw new Error('an abi property is required in constructor argument.');
-    }
-    if (!address) {
-      throw new Error('an address property is required in contructor argument');
     }
     if (!adapter) {
       throw new Error('an adapter property is required in constructor argument.');
@@ -41,8 +38,6 @@ module.exports = class EventStore {
     this.version = pack.version;
     this.web3 = web3;
     this.adapter = adapter;
-    this.address = address;
-    // this.eventStoreContract = new web3.eth.Contract(abi, address);
     this.eventStoreArtifact = abi;
     this.eventStoreContract = contract(this.eventStoreArtifact);
     this.eventStoreContract.setProvider(this.web3.currentProvider);
