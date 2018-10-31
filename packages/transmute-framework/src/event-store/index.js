@@ -3,7 +3,6 @@
  * @module src/event-store
  */
 
-
 const contract = require('truffle-contract');
 const pack = require('../../package.json');
 const GAS = require('../gas');
@@ -113,7 +112,6 @@ module.exports = class EventStore {
    * @name write
    */
   async write(fromAddress, ...args) {
-    await this.requireInstance();
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters
     if (args.length === 1) {
       return this.writeContent(fromAddress, args[0]);
@@ -135,6 +133,7 @@ module.exports = class EventStore {
    * as well as meta from content storage and Ethereum
    */
   async writeContent(fromAddress, content) {
+    this.requireInstance();
     const { adapter, eventStoreContractInstance } = this;
     const contentHash = await adapter.writeJson(content);
 
@@ -200,7 +199,6 @@ module.exports = class EventStore {
       events = await this.eventStoreContractInstance.getPastEvents('TransmuteEvent', {
         filter: { index: [index] },
         fromBlock: 0,
-        toBlock: 'latest',
       });
     } catch (e) {
       throw new Error('Could not read from Ethereum event log');

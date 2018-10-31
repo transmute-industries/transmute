@@ -19,12 +19,12 @@ describe('transmute-framework', () => {
 
   beforeAll(async () => {
     accounts = await web3.eth.getAccounts();
+    await eventStore.init();
   });
 
   // new event store per test
   beforeEach(async () => {
     eventStore = await eventStore.clone(accounts[0]);
-    await eventStore.init();
   });
 
   describe('write', () => {
