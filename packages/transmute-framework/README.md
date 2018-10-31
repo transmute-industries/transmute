@@ -111,7 +111,7 @@ const EventStore = require('../index.js');
 const transmuteConfig = require('../../transmute-config');
 
 const Web3 = require('web3')
-const TransmuteAdapterIPFS = require("transmute-adapter-ipfs");
+const TransmuteAdapterIPFS = require("@transmute/transmute-adapter-ipfs");
 const abi = require('../../../build/contracts/EventStore.json');
 const transmuteConfig = {
   "ipfsConfig": {

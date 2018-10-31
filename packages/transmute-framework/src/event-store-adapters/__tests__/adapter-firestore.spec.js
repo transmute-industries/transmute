@@ -1,5 +1,5 @@
 const Web3 = require('web3');
-const TransmuteAdapterFirestore = require('transmute-adapter-firestore');
+const TransmuteAdapterFirestore = require('@transmute/transmute-adapter-firestore');
 
 const adapter = new TransmuteAdapterFirestore({}, 'events');
 
