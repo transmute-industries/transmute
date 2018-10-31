@@ -2,19 +2,15 @@ const Web3 = require('web3');
 const TransmuteAdapterIPFS = require('@transmute/transmute-adapter-ipfs');
 const EventStore = require('../index.js');
 const transmuteConfig = require('../../transmute-config');
-const contractJson = require('../../../build/contracts/EventStore.json');
+const abi = require('../../../build/contracts/EventStore.json');
 const mockEvents = require('../../__mock__/events.json');
 
 const provider = new Web3.providers.HttpProvider(transmuteConfig.web3Config.providerUrl);
 const web3 = new Web3(provider);
 const adapter = new TransmuteAdapterIPFS(transmuteConfig.ipfsConfig);
-const { abi, networks } = contractJson;
-const latestDeploy = Object.keys(networks).pop();
-const { address } = networks[latestDeploy];
 let eventStore = new EventStore({
   web3,
-  abi: contractJson,
-  address,
+  abi,
   adapter,
 });
 
