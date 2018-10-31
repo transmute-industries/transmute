@@ -11,9 +11,9 @@ const adapter = new TransmuteAdapterIPFS(transmuteConfig.ipfsConfig);
 const { abi, networks } = contractJson;
 const latestDeploy = Object.keys(networks).pop();
 const { address } = networks[latestDeploy];
-const eventStore = new EventStore({
+let eventStore = new EventStore({
   web3,
-  abi,
+  abi: contractJson,
   address,
   adapter,
 });
@@ -27,8 +27,8 @@ describe('transmute-framework', () => {
 
   // new event store per test
   beforeEach(async () => {
-    // TODO: Use EventStoreFactory instead
-    // eventStore = await eventStore.clone(accounts[0]);
+    eventStore = await eventStore.clone(accounts[0]);
+    await eventStore.init();
   });
 
   describe('write', () => {
@@ -46,6 +46,7 @@ describe('transmute-framework', () => {
         expect(result.meta).toBeDefined();
       }),
     ));
+
     it('can save arbitrary JSON objects', async () => {
       const arbitraryJson = {
         foo: 1,
@@ -65,23 +66,18 @@ describe('transmute-framework', () => {
   });
 
   describe('read', () => {
-    const mockEvent = mockEvents[0];
-    let writeEventResult;
-
-    beforeAll(async () => {
-      writeEventResult = await eventStore.write(
+    it('should read event informations', async () => {
+      const mockEvent = mockEvents[0];
+      const writeEventResult = await eventStore.write(
         accounts[0],
         mockEvent.key,
         mockEvent.value,
       );
-    });
-
-    it('should read event informations', async () => {
       const { index } = writeEventResult.event;
       const event = await eventStore.read(index, accounts[0]);
       expect(event).toBeDefined();
-      expect(event.index).toBeGreaterThan(0);
-      expect(event.sender).toBe(accounts[0].toLowerCase());
+      expect(event.index).toBeGreaterThanOrEqual(0);
+      expect(event.sender).toBe(accounts[0]);
       expect(event.content.key).toEqual(mockEvent.key);
       expect(event.content.value).toEqual(mockEvent.value);
     });
@@ -99,7 +95,7 @@ describe('transmute-framework', () => {
       const events = await eventStore.getSlice(0, 0);
 
       // avoid checksum errors
-      expect(events[0].sender).toEqual(accounts[0].toLowerCase());
+      expect(events[0].sender).toEqual(accounts[0]);
       expect(events[0].content.key).toEqual(mockEvent.key);
       expect(events[0].content.value).toEqual(mockEvent.value);
     });

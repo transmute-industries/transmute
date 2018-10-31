@@ -1,9 +1,10 @@
-/* eslint-disable class-methods-use-this */
 /**
  * A module for reading and writing objects to ipfs and ethereum
  * @module src/event-store
  */
 
+
+const contract = require('truffle-contract');
 const pack = require('../../package.json');
 const GAS = require('../gas');
 
@@ -41,7 +42,72 @@ module.exports = class EventStore {
     this.web3 = web3;
     this.adapter = adapter;
     this.address = address;
-    this.eventStoreContract = new web3.eth.Contract(abi, address);
+    // this.eventStoreContract = new web3.eth.Contract(abi, address);
+    this.eventStoreArtifact = abi;
+    this.eventStoreContract = contract(this.eventStoreArtifact);
+    this.eventStoreContract.setProvider(this.web3.currentProvider);
+  }
+
+  /**
+   * Deploys eventStoreContract if it has not already been deployed
+   * @function
+   * @memberof EventStore
+   * @name init
+   */
+  async init() {
+    if (!this.eventStoreContractInstance) {
+      this.eventStoreContractInstance = await this.eventStoreContract.deployed();
+    }
+  }
+
+  /**
+   * Throws error if init() has not been called
+   * @function
+   * @memberof EventStoreFactory
+   * @name requireInstance
+   */
+  requireInstance() {
+    if (!this.eventStoreContractInstance) {
+      throw new Error(
+        'You must call init() before accessing eventStoreContractInstance.',
+      );
+    }
+  }
+
+  /**
+   * Creates EventStore instance and assigns it a new EventStoreContract
+   * @function
+   * @memberof EventStore
+   * @name clone
+   * @param {String} fromAddress Address used to create new EventStoreContract
+   * @returns {Object} EventStore instance
+   */
+  async clone(fromAddress) {
+    const newContract = await this.eventStoreContract.new({
+      from: fromAddress,
+      gas: GAS.MAX_GAS,
+    });
+    const instance = Object.assign(
+      Object.create(Object.getPrototypeOf(this)),
+      this,
+    );
+    instance.eventStoreContractInstance = newContract;
+    return instance;
+  }
+
+  /**
+   * Returns transaction receipt
+   * @function
+   * @memberof EventStore
+   * @name getTransactionReceipt
+   */
+  async getTransactionReceipt(tx) {
+    return new Promise((resolve, reject) => {
+      this.web3.eth.getTransactionReceipt(tx, (error, result) => {
+        if (!error) resolve(result);
+        else reject(error);
+      });
+    });
   }
 
   /**
@@ -52,6 +118,7 @@ module.exports = class EventStore {
    * @name write
    */
   async write(fromAddress, ...args) {
+    await this.requireInstance();
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters
     if (args.length === 1) {
       return this.writeContent(fromAddress, args[0]);
@@ -73,24 +140,33 @@ module.exports = class EventStore {
    * as well as meta from content storage and Ethereum
    */
   async writeContent(fromAddress, content) {
-    const { adapter, eventStoreContract } = this;
+    const { adapter, eventStoreContractInstance } = this;
     const contentHash = await adapter.writeJson(content);
-    const txReceipt = await eventStoreContract.methods
-      .write(contentHash)
-      .send({
+
+    const tx = await eventStoreContractInstance.write(
+      contentHash,
+      {
         from: fromAddress,
         // TODO: remove
         gas: GAS.EVENT_GAS_COST,
-      });
-    const { index } = txReceipt.events.TransmuteEvent.returnValues;
+      },
+    );
+    const { index } = tx.logs[0].args;
+    const receipt = await this.getTransactionReceipt(tx);
+
     return {
       event: {
         sender: fromAddress,
-        contentHash,
         content,
         index,
       },
-      meta: txReceipt,
+      meta: {
+        tx,
+        contentID: {
+          content,
+        },
+        receipt,
+      },
     };
   }
 
@@ -126,7 +202,7 @@ module.exports = class EventStore {
   async read(index) {
     let events;
     try {
-      events = await this.eventStoreContract.getPastEvents('TransmuteEvent', {
+      events = await this.eventStoreContractInstance.getPastEvents('TransmuteEvent', {
         filter: { index: [index] },
         fromBlock: 0,
         toBlock: 'latest',
@@ -138,19 +214,18 @@ module.exports = class EventStore {
     if (events.length === 0) {
       throw new Error('No event exists for that index');
     }
-
-    const values = events[0].returnValues;
+    const values = events[0].args;
     let content;
     try {
       content = await this.adapter.readJson(values.contentHash);
+      return {
+        index: values.index.toNumber(),
+        sender: values.sender,
+        content,
+      };
     } catch (e) {
       throw new Error('Couldn\'t resolve contentHash');
     }
-    return {
-      index: Number.parseInt(values.index),
-      sender: values.sender.toLowerCase(),
-      content,
-    };
   }
 
   /**
