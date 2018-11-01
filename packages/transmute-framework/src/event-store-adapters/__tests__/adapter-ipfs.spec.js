@@ -20,7 +20,7 @@ let accounts;
 
 describe('EventStore with IPFS Adapter', () => {
   beforeAll(async () => {
-    accounts = await eventStore.getWeb3Accounts();
+    accounts = await web3.eth.getAccounts();
     eventStore = await eventStore.clone(accounts[0]);
   });
 

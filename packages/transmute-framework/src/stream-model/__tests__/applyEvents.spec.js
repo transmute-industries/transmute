@@ -37,7 +37,7 @@ describe('applyEvents', () => {
       adapter,
     });
     await eventStore.init();
-    accounts = await eventStore.getWeb3Accounts();
+    accounts = await web3.eth.getAccounts();
   });
 
   // new event store per test

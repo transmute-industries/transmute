@@ -4,9 +4,7 @@
  */
 
 const contract = require('truffle-contract');
-
 const pack = require('../../package.json');
-
 const GAS = require('../gas');
 
 /** @class EventStoreFactory */
@@ -24,11 +22,9 @@ module.exports = class EventStoreFactory {
     }
 
     const { web3, abi } = config;
-
     if (!web3) {
       throw new Error('a web3 property is required in constructor argument.');
     }
-
     if (!abi) {
       throw new Error(
         'a truffle-contract abi property is required in constructor argument.',
@@ -37,28 +33,9 @@ module.exports = class EventStoreFactory {
 
     this.version = pack.version;
     this.web3 = web3;
-
     this.eventStoreFactoryArtifact = abi;
     this.eventStoreFactoryContract = contract(this.eventStoreFactoryArtifact);
     this.eventStoreFactoryContract.setProvider(this.web3.currentProvider);
-  }
-
-  /**
-   * Returns Web3 accounts
-   * @function
-   * @memberof EventStoreFactory
-   * @name getWeb3Accounts
-   * @returns {Array.<String>} Array of Web3 account addresses
-   */
-  async getWeb3Accounts() {
-    return new Promise((resolve, reject) => {
-      this.web3.eth.getAccounts((err, accounts) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(accounts);
-      });
-    });
   }
 
   /**

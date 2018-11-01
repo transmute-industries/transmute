@@ -3,12 +3,9 @@ const TransmuteAdapterIPFS = require('@transmute/transmute-adapter-ipfs');
 const EventStore = require('../index.js');
 const transmuteConfig = require('../../transmute-config');
 const abi = require('../../../build/contracts/EventStore.json');
-
 const mockEvents = require('../../__mock__/events.json');
 
-const provider = new Web3.providers.HttpProvider(
-  transmuteConfig.web3Config.providerUrl,
-);
+const provider = new Web3.providers.HttpProvider(transmuteConfig.web3Config.providerUrl);
 const web3 = new Web3(provider);
 const adapter = new TransmuteAdapterIPFS(transmuteConfig.ipfsConfig);
 let eventStore = new EventStore({
@@ -21,8 +18,8 @@ describe('transmute-framework', () => {
   let accounts;
 
   beforeAll(async () => {
+    accounts = await web3.eth.getAccounts();
     await eventStore.init();
-    accounts = await eventStore.getWeb3Accounts();
   });
 
   // new event store per test
@@ -43,11 +40,9 @@ describe('transmute-framework', () => {
         expect(result.event.content.key).toEqual(event.key);
         expect(result.event.content.value).toEqual(event.value);
         expect(result.meta).toBeDefined();
-        expect(result.meta.tx).toBeDefined();
-        expect(result.meta.contentID).toBeDefined();
-        expect(result.meta.receipt).toBeDefined();
       }),
     ));
+
     it('can save arbitrary JSON objects', async () => {
       const arbitraryJson = {
         foo: 1,
@@ -63,25 +58,21 @@ describe('transmute-framework', () => {
       expect(result.event.sender).toBe(accounts[1]);
       expect(result.event.content).toEqual(arbitraryJson);
       expect(result.meta).toBeDefined();
-      expect(result.meta.tx).toBeDefined();
-      expect(result.meta.contentID).toBeDefined();
-      expect(result.meta.receipt).toBeDefined();
     });
   });
 
   describe('read', () => {
-    it('can read events', async () => {
+    it('should read event informations', async () => {
       const mockEvent = mockEvents[0];
-
-      await eventStore.write(
+      const writeEventResult = await eventStore.write(
         accounts[0],
         mockEvent.key,
         mockEvent.value,
       );
-
-      const event = await eventStore.read(0, accounts[0]);
+      const { index } = writeEventResult.event;
+      const event = await eventStore.read(index, accounts[0]);
       expect(event).toBeDefined();
-      expect(event.index).toBe(0);
+      expect(event.index).toBeGreaterThanOrEqual(0);
       expect(event.sender).toBe(accounts[0]);
       expect(event.content.key).toEqual(mockEvent.key);
       expect(event.content.value).toEqual(mockEvent.value);
@@ -100,7 +91,7 @@ describe('transmute-framework', () => {
       const events = await eventStore.getSlice(0, 0);
 
       // avoid checksum errors
-      expect(events[0].sender).toEqual(accounts[0].toLowerCase());
+      expect(events[0].sender).toEqual(accounts[0]);
       expect(events[0].content.key).toEqual(mockEvent.key);
       expect(events[0].content.value).toEqual(mockEvent.value);
     });
