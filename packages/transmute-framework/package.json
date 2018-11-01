@@ -37,14 +37,15 @@
   },
   "homepage": "https://github.com/transmute-industries/transmute#readme",
   "devDependencies": {
+    "@transmute/transmute-adapter-firestore": "0.1.0",
+    "@transmute/transmute-adapter-ipfs": "1.0.3",
+    "bignumber.js": "^7.2.1",
     "codecov": "^3.0.0",
     "coveralls": "^3.0.0",
     "docdash": "^0.4.0",
     "jest": "^23.6.0",
     "jsdoc": "^3.5.5",
-    "solidity-coverage": "^0.4.14",
-    "@transmute/transmute-adapter-firestore": "0.1.0",
-    "@transmute/transmute-adapter-ipfs": "1.0.3"
+    "solidity-coverage": "^0.4.14"
   },
   "dependencies": {
     "dotenv": "^6.0.0",
