@@ -30,10 +30,9 @@ module.exports = class TransmuteAdapterFirebaseRTDB {
 
   readJson(key) {
     return this.db
-      .ref(this.path)
-      .ref(key)
-      .once()
-      .then(data => data);
+      .ref(`${this.path}${key}`)
+      .once('value')
+      .then(data => data.val());
   }
 
   async writeJson(value) {
