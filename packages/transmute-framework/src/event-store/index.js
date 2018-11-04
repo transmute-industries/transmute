@@ -130,7 +130,7 @@ module.exports = class EventStore {
       event: {
         sender: fromAddress,
         content,
-        index,
+        index: index.toNumber(),
       },
       meta: {
         tx,
