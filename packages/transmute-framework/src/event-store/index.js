@@ -5,7 +5,6 @@
 
 const contract = require('truffle-contract');
 const pack = require('../../package.json');
-const GAS = require('../gas');
 
 /** @class EventStore */
 module.exports = class EventStore {
@@ -79,7 +78,6 @@ module.exports = class EventStore {
   async clone(fromAddress) {
     const newContract = await this.eventStoreContract.new({
       from: fromAddress,
-      gas: GAS.MAX_GAS,
     });
     const instance = Object.assign(
       Object.create(Object.getPrototypeOf(this)),
@@ -124,11 +122,7 @@ module.exports = class EventStore {
 
     const tx = await eventStoreContractInstance.write(
       contentHash,
-      {
-        from: fromAddress,
-        // TODO: remove
-        gas: GAS.EVENT_GAS_COST,
-      },
+      { from: fromAddress },
     );
     const { index } = tx.logs[0].args;
 
