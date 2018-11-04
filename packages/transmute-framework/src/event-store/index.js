@@ -90,21 +90,6 @@ module.exports = class EventStore {
   }
 
   /**
-   * Returns transaction receipt
-   * @function
-   * @memberof EventStore
-   * @name getTransactionReceipt
-   */
-  async getTransactionReceipt(tx) {
-    return new Promise((resolve, reject) => {
-      this.web3.eth.getTransactionReceipt(tx, (error, result) => {
-        if (!error) resolve(result);
-        else reject(error);
-      });
-    });
-  }
-
-  /**
    * calls writeContent if called with write(fromAddress, content)
    * calls writeKeyValue if called with write(fromAddress, key, value)
    * @function
@@ -146,7 +131,6 @@ module.exports = class EventStore {
       },
     );
     const { index } = tx.logs[0].args;
-    const receipt = await this.getTransactionReceipt(tx);
 
     return {
       event: {
@@ -156,10 +140,6 @@ module.exports = class EventStore {
       },
       meta: {
         tx,
-        contentID: {
-          content,
-        },
-        receipt,
       },
     };
   }
