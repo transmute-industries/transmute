@@ -14,7 +14,7 @@ const MICROSERVICE_VERSIONS = {
   istio: '1.0.2',
   kong: '',
   ipfs: '',
-  ganache: '',
+  ganache: '2.2.1',
   elasticsearch: '',
 };
 
