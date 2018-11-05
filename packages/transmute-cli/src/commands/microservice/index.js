@@ -47,5 +47,6 @@ module.exports.install = (dryrun, microservice, version) => {
     deployCommand += ' --check';
   }
 
+  console.log(deployCommand);
   run.shellExec(deployCommand);
 };
