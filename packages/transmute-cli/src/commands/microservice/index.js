@@ -14,7 +14,7 @@ const MICROSERVICE_VERSIONS = {
   istio: '1.0.2',
   kong: '',
   ipfs: '',
-  ganache: '2.2.1',
+  ganache: '',
   elasticsearch: '',
 };
 
@@ -47,6 +47,5 @@ module.exports.install = (dryrun, microservice, version) => {
     deployCommand += ' --check';
   }
 
-  console.log(deployCommand);
   run.shellExec(deployCommand);
 };
