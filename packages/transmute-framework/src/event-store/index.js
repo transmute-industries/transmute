@@ -5,7 +5,6 @@
 
 const contract = require('truffle-contract');
 const pack = require('../../package.json');
-const GAS = require('../gas');
 
 /** @class EventStore */
 module.exports = class EventStore {
@@ -79,7 +78,6 @@ module.exports = class EventStore {
   async clone(fromAddress) {
     const newContract = await this.eventStoreContract.new({
       from: fromAddress,
-      gas: GAS.MAX_GAS,
     });
     const instance = Object.assign(
       Object.create(Object.getPrototypeOf(this)),
@@ -87,21 +85,6 @@ module.exports = class EventStore {
     );
     instance.eventStoreContractInstance = newContract;
     return instance;
-  }
-
-  /**
-   * Returns transaction receipt
-   * @function
-   * @memberof EventStore
-   * @name getTransactionReceipt
-   */
-  async getTransactionReceipt(tx) {
-    return new Promise((resolve, reject) => {
-      this.web3.eth.getTransactionReceipt(tx, (error, result) => {
-        if (!error) resolve(result);
-        else reject(error);
-      });
-    });
   }
 
   /**
@@ -139,27 +122,18 @@ module.exports = class EventStore {
 
     const tx = await eventStoreContractInstance.write(
       contentHash,
-      {
-        from: fromAddress,
-        // TODO: remove
-        gas: GAS.EVENT_GAS_COST,
-      },
+      { from: fromAddress },
     );
     const { index } = tx.logs[0].args;
-    const receipt = await this.getTransactionReceipt(tx);
 
     return {
       event: {
         sender: fromAddress,
         content,
-        index,
+        index: index.toNumber(),
       },
       meta: {
         tx,
-        contentID: {
-          content,
-        },
-        receipt,
       },
     };
   }
