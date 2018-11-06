@@ -1,9 +1,9 @@
 const msg = require('./lib/msg');
-const pgp = require('./lib/pgp');
+const openpgpExtensions = require('./lib/openpgpExtensions');
 const misc = require('./lib/misc');
 
 module.exports = {
   msg,
-  pgp,
+  openpgpExtensions,
   misc,
 };

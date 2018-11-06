@@ -1,8 +1,8 @@
-const { misc, msg, pgp } = require('./index.js');
+const { misc, msg, openpgpExtensions } = require('./index.js');
 
 const generateDID = async () => {
   // Generate keys
-  const pgpKeypair = await pgp.generateOpenPGPArmoredKeypair({
+  const pgpKeypair = await openpgpExtensions.cryptoHelpers.generateArmoredKeypair({
     name: 'bob',
     passphrase: 'yolo',
   });
