@@ -110,4 +110,21 @@ ik/6uypz
       expect(verify).toBe(true);
     });
   });
+
+  describe('signDetached + verifyDetached', async () => {
+    it('signs and verified in deteached mode', async () => {
+      const testDIDDocStr = 'asdfasd';
+      const detachedSig = await cryptoHelpers.signDetached(
+        testDIDDocStr,
+        testKeypair0.privateKey,
+        passphrase,
+      );
+      const valid = await cryptoHelpers.verifyDetached(
+        testDIDDocStr,
+        detachedSig,
+        testKeypair0.publicKey,
+      );
+      expect(valid).toBe(true);
+    });
+  });
 });

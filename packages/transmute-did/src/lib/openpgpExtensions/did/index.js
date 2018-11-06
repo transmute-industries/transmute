@@ -1,8 +1,41 @@
 const openpgp = require('openpgp');
 
+const fs = require('fs');
+
 const ocap = require('./ocap');
 
-const didMethod = 'gpg:fingerprint';
+const didMethod = 'openpgp:fingerprint';
+
+const verifyDIDDocumentWasSignedByID = async (didDocumentPath, didDocumentSignaturePath) => {
+  const didDocument = fs.readFileSync(didDocumentPath);
+
+  const didDocumentJson = JSON.parse(didDocument);
+
+  const didDocumentSignature = fs.readFileSync(didDocumentSignaturePath).toString();
+
+  const signedArmor = didDocumentSignature;
+  const pubkey = didDocumentJson.publicKey[0].publicKeyPem;
+
+  const options = {
+    message: openpgp.message.fromBinary(didDocument), // CleartextMessage or Message object
+    signature: await openpgp.signature.readArmored(signedArmor), // parse detached signature
+    publicKeys: (await openpgp.key.readArmored(pubkey)).keys, // for verification
+  };
+
+  const verified = await openpgp.verify(options);
+  const validity = verified.signatures[0].valid; // true
+  // console.log(verified.signatures[0])
+  if (validity) {
+    // console.log("signed by key id " + verified.signatures[0].keyid.toHex());
+    const didParts = didDocumentJson.id.split(':');
+    const fingerprint = didParts[didParts.length - 1];
+    const kid = verified.signatures[0].keyid.toHex();
+    const signatureMathesFingerprint = fingerprint.substring(24).toLowerCase() === kid;
+    // console.log(signatureMathesFingerprint);
+    return signatureMathesFingerprint;
+  }
+  return false;
+};
 
 const armoredKeytoDID = async (armoredKey) => {
   const { keys } = await openpgp.key.readArmored(armoredKey);
@@ -41,4 +74,5 @@ module.exports = {
   armoredKeytoDID,
   createDIDDocumentFromPublicKey,
   ocap,
+  verifyDIDDocumentWasSignedByID,
 };

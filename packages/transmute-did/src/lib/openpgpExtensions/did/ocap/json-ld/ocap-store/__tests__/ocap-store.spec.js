@@ -1,12 +1,9 @@
-// Adapted from:
-// https://github.com/WebOfTrustInfo/rebooting-the-web-of-trust-fall2017/blob/master/final-documents/lds-ocap.md
+const { createDIDDocumentFromPublicKey } = require('../../../../index');
+const OCAPStore = require('../index');
 
-const base64url = require('base64url');
+const { openpgpSignJson } = require('../../index');
 
-const { openpgpSignJson, openpgpVerifyJson } = require('../index');
-const { createDIDDocumentFromPublicKey } = require('../../../../did');
-const cryptoHelpers = require('../../../../cryptoHelpers');
-
+const passphrase = 'yolo';
 // Alice
 const A = {
   publicKey:
@@ -39,213 +36,77 @@ const D = {
     '-----BEGIN PGP PRIVATE KEY BLOCK-----\r\nVersion: OpenPGP.js v4.0.1\r\nComment: https://openpgpjs.org\r\n\r\nxaIEW92VXhMFK4EEAAoCAwQ8cSJZu2dsBGbgzIZGoZVhJVdi3SNus7Cc1KX+\nEuHYc5y+nJP7sA1JBTjzqLfehj/BlJpo0DMTvnlEnDlH+z48/gkDCI/2Ppnm\nyhb7YCcb86dwUJZ+j43Z74DDqMebalv/aP6ArT8WXFwhNf73UUBUm3VicakG\nq4+AKini7bdlSH3gYFSB5i7VXPa8N9D5lG7FqsvNA2JvYsJ3BBATCAApBQJb\n3ZVeBgsJBwgDAgkQSuS7oeEx7NcEFQgKAgMWAgECGQECGwMCHgEAAMrWAQCe\n3Dccvyiz2Si3wFHc50ofn2cJ92Q1XrsNazRFYDf2vwEA9BRdu6renvN6n8vJ\nRrSRVMSWmfiUihyzJ62k9CxHMWLHpgRb3ZVeEgUrgQQACgIDBHtxzc4t0eaX\nO14+a2GuwAvP8XNcvipqr1c0D4p8UbFP5ZfOuTC2/KfQ9zBO2jyaa1HNnGaj\nCHDqePBmGaX/CmUDAQgH/gkDCLqiIDq2tiApYDo1A1Gbzj5Ieg/WdWC72GkP\nz4TUfNLEdcWIszn7YC/QEoQUI+wkijTSd3ch7yOy3GLKEgoyv9SZwlvhyw8W\na82+c5XnKojCYQQYEwgAEwUCW92VXgkQSuS7oeEx7NcCGwwAAFtfAPoCJEnZ\nGYX6HC4H+6wZ/YLVzckxWgqqQ3VPPoJmyRpHPAEAhoD9DUspbIZntdAqk8j3\nZwkmi3PMU3SliO43FB725Xk=\r\n=cwWr\r\n-----END PGP PRIVATE KEY BLOCK-----\r\n',
 };
 
-const passphrase = 'yolo';
-
-describe('did openpgp webOfTrustDemo', () => {
+describe('OpenPGP DID JSON-LD OCAP Store', () => {
   let ADoc;
   let BDoc;
   let CDoc;
+
   let DDoc;
   let CtoACap;
-  let AtoBCapWithCavs;
-  let BtoDCapWithCavs;
-  let DInvocOfC;
-
-  let secureMessageForC;
-  let plainText;
-
-
+  //   let AtoBCapWithCavs;
+  //   let BtoDCapWithCavs;
+  //   let DInvocOfC;
+  let ocapStore;
 
   beforeAll(async () => {
     ADoc = JSON.parse(await createDIDDocumentFromPublicKey(A.publicKey));
     BDoc = JSON.parse(await createDIDDocumentFromPublicKey(B.publicKey));
     CDoc = JSON.parse(await createDIDDocumentFromPublicKey(C.publicKey));
+
     DDoc = JSON.parse(await createDIDDocumentFromPublicKey(D.publicKey));
-  });
 
-  it('can create an object capability for a DID Doc?', async () => {
-    const objCap = {
-      '@context': [
-        'https://example.org/did/v1',
-        'https://example.org/ocap/v1',
-        'http://schema.org',
-      ],
-      // technically, this document is owned by C at this point (it is signed by C below)
-      // probably want to fix this id, so that chains are easier to understand
-      id: 'did:example:0b36c7844941b61b-c763-4617-94de-cf5c539041f1',
-      type: 'Proclamation',
-
-      // The subject is who the capability operates on (in this case,
-      // the Cloud Store object)
-      subject: CDoc.id,
-
-      // We are granting access specifically to one of Alice's keys
-      grantedKey: ADoc.publicKey[0].id,
-
-      // No caveats on this capability... Alice has full access
-      caveat: [],
-
-      // Finally we sign this object with one of the CloudStorage's keys
-      // this is done below
-      //   signature: {
-      //     type: "RsaSignature2016",
-      //     created: "2016-02-08T16:02:20Z",
-      //     creator: "did:example:0b36c784-f9f4-4c1e-b76c-d821a4b32741#key-1",
-      //     signatureValue: "IOmA4R7TfhkYTYW8...CBMq2/gi25s="
-      //   }
-    };
-    CtoACap = await openpgpSignJson(objCap, CDoc.publicKey[0].id, C.privateKey, passphrase);
-    // console.log(CtoACap);
-  });
-
-  it('can verify a gpg object capability is signed correctly?', async () => {
-    // Alice access to C was signed by C...
-    const verified = await openpgpVerifyJson(CtoACap, C.publicKey);
-    expect(verified).toBe(true);
-  });
-
-  it('can A delegate her full access to C to B with caveats?', async () => {
-    const objCap = {
-      '@context': [
-        'https://example.org/did/v1',
-        'https://example.org/ocap/v1',
-        'http://schema.org',
-      ],
-      id: 'did:example:f7412b9a-854b-47ab-806b-3ac736cc7cda',
-      type: 'Proclamation',
-
-      // This new attenuated proclamation points to the previous one
-      parent: CtoACap.id,
-
-      // Now we grant access to one of Bob's keys
-      grantedKey: BDoc.publicKey[0].id,
-
-      // This proclamation *does* have caveats:
-      caveat: [
-        // Only the UploadFile method is allowed...
-        {
-          id: 'did:example:f7412b9a-854b-47ab-806b-3ac736cc7cda#caveats/upload-only',
-          type: 'RestrictToMethod',
-          method: 'UploadFile',
-        },
-        // ...and each upload can only be 50 Megabytes large.
-        {
-          id: 'did:example:f7412b9a-854b-47ab-806b-3ac736cc7cda#caveats/50-megs-only',
-          type: 'RestrictUploadSize',
-          // file limit here is in bytes, so 50 MB
-          limit: 52428800,
-        },
-      ],
-
-      // Finally we sign this object with Alice's key
-      // this is added below (by Alice, not C!)
-      //   signature: {
-      //     type: "RsaSignature2016",
-      //     created: "2016-02-08T16:02:20Z",
-      //     creator: "did:example:83f75926-51ba-4472-84ff-51f5e39ab9ab#key-1",
-      //     signatureValue: "..."
-      //   }
+    const didMap = {
+      [ADoc.id]: ADoc,
+      [BDoc.id]: BDoc,
+      [CDoc.id]: CDoc,
+      [DDoc.id]: DDoc,
     };
 
-    AtoBCapWithCavs = await openpgpSignJson(objCap, ADoc.publicKey[0].id, A.privateKey, passphrase);
-    // console.log(AtoBCapWithCavs);
+    const resolver = did => didMap[did];
+
+    ocapStore = new OCAPStore(resolver);
   });
 
-  it('can B delegate his partial access to C to D with caveats?', async () => {
-    const objCap = {
-      '@context': [
-        'https://example.org/did/v1',
-        'https://example.org/ocap/v1',
-        'http://schema.org',
-      ],
-      id: 'did:example:d2c83c43-878a-4c01-984f-b2f57932ce5f',
-      type: 'Proclamation',
-
-      // Yet again, point up the chain...
-      parent: AtoBCapWithCavs.id,
-
-      // Now we grant access to one of Dummy Bot's keys
-      grantedKey: DDoc.publicKey[0].id,
-
-      // We add a new caveat/attenuation: this one will expire 30 days
-      // in the future
-      caveat: [
-        {
-          id: 'did:example:d2c83c43-878a-4c01-984f-b2f57932ce5f#caveats/expire-time',
-          type: 'ExpireTime',
-          date: '2017-09-23T20:21:34Z',
-        },
-      ],
-
-      // Finally we sign this object with Bob's key
-      //   This will be done by bob below
-      //   signature: {
-      //     type: "RsaSignature2016",
-      //     created: "2016-02-08T17:12:28Z",
-      //     creator: "did:example:ee568de7-2970-4925-ad09-c685ab367b66#key-1",
-      //     signatureValue: "..."
-      //   }
-    };
-    BtoDCapWithCavs = await openpgpSignJson(objCap, BDoc.publicKey[0].id, B.privateKey, passphrase);
-    // console.log(BtoDCapWithCavs);
+  it('has a constructor', () => {
+    expect(ocapStore.verifications).toBe(0);
   });
 
-  it('can D use cap chain to upload to C?', async () => {
-    const objCap = {
-      '@context': [
-        'https://example.org/did/v1',
-        'https://example.org/ocap/v1',
-        'http://schema.org',
-      ],
-      id: 'did:example:2bdf6273-a52e-4cdf-991f-b5f000008829',
-      type: 'Invocation',
+  describe('add', () => {
+    it('can add capabilities if they can be verified by the resolver', async () => {
+      const objCap = {
+        '@context': [
+          'https://example.org/did/v1',
+          'https://example.org/ocap/v1',
+          'http://schema.org',
+        ],
+        // technically, this document is owned by C at this point (it is signed by C below)
+        // probably want to fix this id, so that chains are easier to understand
+        id: 'did:example:0b36c7844941b61b-c763-4617-94de-cf5c539041f1',
+        type: 'Proclamation',
 
-      // Dummy Bot is invoking the proclamation it has,
-      // but the whole chain will be checked for attenuation and
-      // verification of access
-      proclamation: BtoDCapWithCavs.id,
+        // The subject is who the capability operates on (in this case,
+        // the Cloud Store object)
+        subject: CDoc.id,
 
-      // The method being used
-      method: 'UploadFile',
+        // We are granting access specifically to one of Alice's keys
+        grantedKey: ADoc.publicKey[0].id,
 
-      // The key Dummy Bot is using in this invocation
-      usingKey: DDoc.publicKey[0].id,
+        // No caveats on this capability... Alice has full access
+        caveat: [],
 
-      // Here's the base64 encoded file as part of the payload
-      file: base64url('some plaintext from D'),
-
-      // Finally we sign this object with Dummy Bot's key
-      //   Signed by D below
-      //   signature: {
-      //     type: "RsaSignature2016",
-      //     created: "2016-02-08T17:13:48Z",
-      //     creator: "did:example:5e0fe086-3dd7-4b9b-a25f-023a567951a4#key-1",
-      //     signatureValue: "..."
-      //   }
-    };
-
-    DInvocOfC = await openpgpSignJson(objCap, DDoc.publicKey[0].id, D.privateKey, passphrase);
-    // console.log(DInvocOfC);
-  });
-
-  it('can D send encrypted Invocation to C?', async () => {
-    secureMessageForC = await cryptoHelpers.encryptMessage({
-      message: JSON.stringify(DInvocOfC),
-      privateKey: D.privateKey,
-      publicKey: C.publicKey,
-      passphrase,
+        // Finally we sign this object with one of the CloudStorage's keys
+        // this is done below
+        //   signature: {
+        //     type: "RsaSignature2016",
+        //     created: "2016-02-08T16:02:20Z",
+        //     creator: "did:example:0b36c784-f9f4-4c1e-b76c-d821a4b32741#key-1",
+        //     signatureValue: "IOmA4R7TfhkYTYW8...CBMq2/gi25s="
+        //   }
+      };
+      CtoACap = await openpgpSignJson(objCap, CDoc.publicKey[0].id, C.privateKey, passphrase);
+      await ocapStore.add(CtoACap);
+      // console.log(CStore);
+      expect(ocapStore.verifications).toBe(1);
     });
-  });
-
-  it('can C decrypt Invocation from D?', async () => {
-    plainText = await cryptoHelpers.decryptMessage({
-      message: secureMessageForC,
-      privateKey: C.privateKey,
-      publicKey: D.publicKey,
-      passphrase,
-    });
-    // console.log('plainText: ', plainText);
-
-    expect(plainText).toEqual(JSON.stringify(DInvocOfC));
   });
 });

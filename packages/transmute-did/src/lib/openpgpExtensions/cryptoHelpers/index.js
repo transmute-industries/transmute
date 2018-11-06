@@ -139,6 +139,33 @@ const verify = async ({ message, publicKey }) => {
  */
 const getMessagePayload = async cleartext => (await openpgp.cleartext.readArmored(cleartext)).text;
 
+const signDetached = async (data, privateKey, passphrase) => {
+  const privKeyObj = (await openpgp.key.readArmored(privateKey)).keys[0];
+  await privKeyObj.decrypt(passphrase);
+  const options = {
+    message: openpgp.cleartext.fromText(data), // CleartextMessage or Message object
+    privateKeys: [privKeyObj], // for signing
+    detached: true,
+  };
+  const signed = await openpgp.sign(options);
+  return signed.signature;
+};
+
+const verifyDetached = async (message, detachedSig, publicKey) => {
+  const options = {
+    message: openpgp.cleartext.fromText(message), // CleartextMessage or Message object
+    signature: await openpgp.signature.readArmored(detachedSig), // parse detached signature
+    publicKeys: (await openpgp.key.readArmored(publicKey)).keys, // for verification
+  };
+
+  const verified = await openpgp.verify(options);
+  const validity = verified.signatures[0].valid; // true
+  // if (validity) {
+  //   console.log(`signed by key id ${verified.signatures[0].keyid.toHex()}`);
+  // }
+  return validity;
+};
+
 module.exports = {
   generateArmoredKeypair,
   encryptMessage,
@@ -146,4 +173,6 @@ module.exports = {
   sign,
   verify,
   getMessagePayload,
+  signDetached,
+  verifyDetached,
 };

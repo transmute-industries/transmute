@@ -33,6 +33,7 @@ const openpgpVerifyJson = async (obj, publicKey) => {
   delete objWithoutSig.signature;
   const message = base64url.decode(signature.signatureValue);
 
+  // if we use detached signature here... this would not be necessary...
   if (!((await cryptoHelpers.getMessagePayload(message)) === JSON.stringify(objWithoutSig))) {
     throw new Error('Object signature does not match object');
   }
