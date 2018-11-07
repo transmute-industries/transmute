@@ -17,21 +17,68 @@ module.exports = class OCAPStore {
     this.resolver = resolver;
   }
 
-  async add(cap) {
-    // console.log('only store capabilities signed by me', cap);
-
+  async verifyCap(cap) {
     const capCreatorDID = cap.signature.creator.split('#')[0];
     const creatorDIDDoc = this.resolver(capCreatorDID);
 
     const key = findKey(cap.signature.creator, creatorDIDDoc.publicKey);
-    // console.log(key.publicKeyPem);
+    return openpgpVerifyJson(cap, key.publicKeyPem);
+  }
 
-    if (await openpgpVerifyJson(cap, key.publicKeyPem)) {
+  async add(cap) {
+    if (await this.verifyCap(cap)) {
       this.verifications += 1;
       this.caps[cap.id] = cap;
       return true;
     }
 
     return false;
+  }
+
+  async verifyChain(proclamation) {
+    // console.log(proclamation);
+
+    let searching = true;
+    let cap = this.caps[proclamation];
+
+    const capChain = [];
+
+    while (searching) {
+      capChain.push(cap);
+
+      if (cap.parent === undefined) {
+        searching = false;
+      } else {
+        cap = this.caps[cap.parent];
+      }
+    }
+    let revokedFlag = false;
+    capChain.forEach((chainCap) => {
+      if (chainCap.revoked) {
+        revokedFlag = true;
+      }
+      if (!this.verifyCap(chainCap)) {
+        throw new Error(`Capability not valid! ${chainCap.id}`);
+      }
+    });
+
+    return !revokedFlag;
+  }
+
+  async verifyInvocation(invoc) {
+    return this.verifyChain(invoc.proclamation);
+  }
+
+  async revokeCap(revokedCap) {
+    if (await this.verifyCap(revokedCap.cap)) {
+      const capCreatorDID = revokedCap.signature.creator.split('#')[0];
+      const creatorDIDDoc = this.resolver(capCreatorDID);
+      const key = findKey(revokedCap.signature.creator, creatorDIDDoc.publicKey);
+      if (await openpgpVerifyJson(revokedCap, key.publicKeyPem)) {
+        this.caps[revokedCap.cap.id] = revokedCap;
+      }
+    } else {
+      throw new Error('Capibility is not valid');
+    }
   }
 };

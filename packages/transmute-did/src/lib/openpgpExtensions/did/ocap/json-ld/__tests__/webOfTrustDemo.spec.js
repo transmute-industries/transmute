@@ -54,8 +54,6 @@ describe('did openpgp webOfTrustDemo', () => {
   let secureMessageForC;
   let plainText;
 
-
-
   beforeAll(async () => {
     ADoc = JSON.parse(await createDIDDocumentFromPublicKey(A.publicKey));
     BDoc = JSON.parse(await createDIDDocumentFromPublicKey(B.publicKey));

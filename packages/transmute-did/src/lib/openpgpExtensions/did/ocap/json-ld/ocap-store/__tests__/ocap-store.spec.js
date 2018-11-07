@@ -1,3 +1,5 @@
+const base64url = require('base64url');
+
 const { createDIDDocumentFromPublicKey } = require('../../../../index');
 const OCAPStore = require('../index');
 
@@ -43,9 +45,9 @@ describe('OpenPGP DID JSON-LD OCAP Store', () => {
 
   let DDoc;
   let CtoACap;
-  //   let AtoBCapWithCavs;
-  //   let BtoDCapWithCavs;
-  //   let DInvocOfC;
+  let AtoBCapWithCavs;
+  let BtoDCapWithCavs;
+  let DInvocOfC;
   let ocapStore;
 
   beforeAll(async () => {
@@ -54,25 +56,19 @@ describe('OpenPGP DID JSON-LD OCAP Store', () => {
     CDoc = JSON.parse(await createDIDDocumentFromPublicKey(C.publicKey));
 
     DDoc = JSON.parse(await createDIDDocumentFromPublicKey(D.publicKey));
-
-    const didMap = {
-      [ADoc.id]: ADoc,
-      [BDoc.id]: BDoc,
-      [CDoc.id]: CDoc,
-      [DDoc.id]: DDoc,
-    };
-
-    const resolver = did => didMap[did];
-
-    ocapStore = new OCAPStore(resolver);
-  });
-
-  it('has a constructor', () => {
-    expect(ocapStore.verifications).toBe(0);
   });
 
   describe('add', () => {
     it('can add capabilities if they can be verified by the resolver', async () => {
+      const didMap = {
+        [ADoc.id]: ADoc,
+        [BDoc.id]: BDoc,
+        [CDoc.id]: CDoc,
+        [DDoc.id]: DDoc,
+      };
+      const resolver = did => didMap[did];
+
+      ocapStore = new OCAPStore(resolver);
       const objCap = {
         '@context': [
           'https://example.org/did/v1',
@@ -107,6 +103,208 @@ describe('OpenPGP DID JSON-LD OCAP Store', () => {
       await ocapStore.add(CtoACap);
       // console.log(CStore);
       expect(ocapStore.verifications).toBe(1);
+    });
+  });
+
+  describe('revocation of valid chain', () => {
+    it('can add capabilities if they can be verified by the resolver', async () => {
+      const didMap = {
+        [ADoc.id]: ADoc,
+        [BDoc.id]: BDoc,
+        [CDoc.id]: CDoc,
+        [DDoc.id]: DDoc,
+      };
+      const resolver = did => didMap[did];
+
+      ocapStore = new OCAPStore(resolver);
+
+      let objCap = {
+        '@context': [
+          'https://example.org/did/v1',
+          'https://example.org/ocap/v1',
+          'http://schema.org',
+        ],
+        // technically, this document is owned by C at this point (it is signed by C below)
+        // probably want to fix this id, so that chains are easier to understand
+        id: 'did:example:0b36c7844941b61b-c763-4617-94de-cf5c539041f1',
+        type: 'Proclamation',
+
+        // The subject is who the capability operates on (in this case,
+        // the Cloud Store object)
+        subject: CDoc.id,
+
+        // We are granting access specifically to one of Alice's keys
+        grantedKey: ADoc.publicKey[0].id,
+
+        // No caveats on this capability... Alice has full access
+        caveat: [],
+
+        // Finally we sign this object with one of the CloudStorage's keys
+        // this is done below
+        //   signature: {
+        //     type: "RsaSignature2016",
+        //     created: "2016-02-08T16:02:20Z",
+        //     creator: "did:example:0b36c784-f9f4-4c1e-b76c-d821a4b32741#key-1",
+        //     signatureValue: "IOmA4R7TfhkYTYW8...CBMq2/gi25s="
+        //   }
+      };
+      CtoACap = await openpgpSignJson(objCap, CDoc.publicKey[0].id, C.privateKey, passphrase);
+      await ocapStore.add(CtoACap);
+      // console.log(CStore);
+      expect(ocapStore.verifications).toBe(1);
+
+      objCap = {
+        '@context': [
+          'https://example.org/did/v1',
+          'https://example.org/ocap/v1',
+          'http://schema.org',
+        ],
+        id: 'did:example:f7412b9a-854b-47ab-806b-3ac736cc7cda',
+        type: 'Proclamation',
+
+        // This new attenuated proclamation points to the previous one
+        parent: CtoACap.id,
+
+        // Now we grant access to one of Bob's keys
+        grantedKey: BDoc.publicKey[0].id,
+
+        // This proclamation *does* have caveats:
+        caveat: [
+          // Only the UploadFile method is allowed...
+          {
+            id: 'did:example:f7412b9a-854b-47ab-806b-3ac736cc7cda#caveats/upload-only',
+            type: 'RestrictToMethod',
+            method: 'UploadFile',
+          },
+          // ...and each upload can only be 50 Megabytes large.
+          {
+            id: 'did:example:f7412b9a-854b-47ab-806b-3ac736cc7cda#caveats/50-megs-only',
+            type: 'RestrictUploadSize',
+            // file limit here is in bytes, so 50 MB
+            limit: 52428800,
+          },
+        ],
+
+        // Finally we sign this object with Alice's key
+        // this is added below (by Alice, not C!)
+        //   signature: {
+        //     type: "RsaSignature2016",
+        //     created: "2016-02-08T16:02:20Z",
+        //     creator: "did:example:83f75926-51ba-4472-84ff-51f5e39ab9ab#key-1",
+        //     signatureValue: "..."
+        //   }
+      };
+
+      AtoBCapWithCavs = await openpgpSignJson(
+        objCap,
+        ADoc.publicKey[0].id,
+        A.privateKey,
+        passphrase,
+      );
+
+      await ocapStore.add(AtoBCapWithCavs);
+      // console.log(CStore);
+      expect(ocapStore.verifications).toBe(2);
+
+      objCap = {
+        '@context': [
+          'https://example.org/did/v1',
+          'https://example.org/ocap/v1',
+          'http://schema.org',
+        ],
+        id: 'did:example:d2c83c43-878a-4c01-984f-b2f57932ce5f',
+        type: 'Proclamation',
+
+        // Yet again, point up the chain...
+        parent: AtoBCapWithCavs.id,
+
+        // Now we grant access to one of Dummy Bot's keys
+        grantedKey: DDoc.publicKey[0].id,
+
+        // We add a new caveat/attenuation: this one will expire 30 days
+        // in the future
+        caveat: [
+          {
+            id: 'did:example:d2c83c43-878a-4c01-984f-b2f57932ce5f#caveats/expire-time',
+            type: 'ExpireTime',
+            date: '2017-09-23T20:21:34Z',
+          },
+        ],
+
+        // Finally we sign this object with Bob's key
+        //   This will be done by bob below
+        //   signature: {
+        //     type: "RsaSignature2016",
+        //     created: "2016-02-08T17:12:28Z",
+        //     creator: "did:example:ee568de7-2970-4925-ad09-c685ab367b66#key-1",
+        //     signatureValue: "..."
+        //   }
+      };
+      BtoDCapWithCavs = await openpgpSignJson(
+        objCap,
+        BDoc.publicKey[0].id,
+        B.privateKey,
+        passphrase,
+      );
+
+      await ocapStore.add(BtoDCapWithCavs);
+      // console.log(CStore);
+      expect(ocapStore.verifications).toBe(3);
+
+      objCap = {
+        '@context': [
+          'https://example.org/did/v1',
+          'https://example.org/ocap/v1',
+          'http://schema.org',
+        ],
+        id: 'did:example:2bdf6273-a52e-4cdf-991f-b5f000008829',
+        type: 'Invocation',
+
+        // Dummy Bot is invoking the proclamation it has,
+        // but the whole chain will be checked for attenuation and
+        // verification of access
+        proclamation: BtoDCapWithCavs.id,
+
+        // The method being used
+        method: 'UploadFile',
+
+        // The key Dummy Bot is using in this invocation
+        usingKey: DDoc.publicKey[0].id,
+
+        // Here's the base64 encoded file as part of the payload
+        file: base64url('some plaintext from D'),
+
+        // Finally we sign this object with Dummy Bot's key
+        //   Signed by D below
+        //   signature: {
+        //     type: "RsaSignature2016",
+        //     created: "2016-02-08T17:13:48Z",
+        //     creator: "did:example:5e0fe086-3dd7-4b9b-a25f-023a567951a4#key-1",
+        //     signatureValue: "..."
+        //   }
+      };
+
+      DInvocOfC = await openpgpSignJson(objCap, DDoc.publicKey[0].id, D.privateKey, passphrase);
+
+      let isInvocationValid = await ocapStore.verifyInvocation(DInvocOfC);
+      expect(isInvocationValid).toBe(true);
+
+      const revocationObj = {
+        cap: BtoDCapWithCavs,
+        revoked: true,
+      };
+
+      const signedRevokedCap = await openpgpSignJson(
+        revocationObj,
+        BDoc.publicKey[0].id,
+        B.privateKey,
+        passphrase,
+      );
+
+      await ocapStore.revokeCap(signedRevokedCap);
+
+      isInvocationValid = await ocapStore.verifyInvocation(DInvocOfC);
+      expect(isInvocationValid).toBe(false);
     });
   });
 });
