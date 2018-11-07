@@ -120,17 +120,15 @@ module.exports = class EventStore {
     const { adapter, eventStoreContractInstance } = this;
     const contentHash = await adapter.writeJson(content);
 
-    const tx = await eventStoreContractInstance.write(
-      contentHash,
-      { from: fromAddress },
-    );
-    const { index } = tx.logs[0].args;
-
+    const tx = await eventStoreContractInstance.contract.methods
+      .write(contentHash)
+      .send({ from: fromAddress });
+    const { index } = tx.events.TransmuteEvent.returnValues;
     return {
       event: {
         sender: fromAddress,
         content,
-        index: index.toNumber(),
+        index: parseInt(index),
       },
       meta: {
         tx,
