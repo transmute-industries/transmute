@@ -1,5 +1,5 @@
 const Web3 = require('web3');
-const TransmuteAdapterFirestore = require('transmute-adapter-firestore');
+const TransmuteAdapterFirestore = require('@transmute/transmute-adapter-firestore');
 
 const adapter = new TransmuteAdapterFirestore({}, 'events');
 
@@ -32,7 +32,7 @@ describe('EventStore with Firestore Adapter', () => {
   it('supports the firestore adapter', async () => {
     expect(eventStore).toBeDefined();
     await eventStore.init();
-    const accounts = await eventStore.getWeb3Accounts();
+    const accounts = await web3.eth.getAccounts();
     const writeEventResult = await eventStore.write(
       accounts[0],
       contentObject,
