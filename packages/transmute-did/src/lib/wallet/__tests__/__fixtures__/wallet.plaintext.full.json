@@ -1,16 +1,36 @@
 {
   "version": "1.0.0",
-  "salt": "c99811e9a2d79c4f7f386533b11d6cd6",
+  "salt": "bbb019784a408f0dcc0b24a69a38c873",
   "keystore": {
-    "assymetric": {
-      "fcbe1c84f48510b2bf29eff966f50844615607e26bc97072a49fa7b12b940359": {
-        "publicKey": "fcbe1c84f48510b2bf29eff966f50844615607e26bc97072a49fa7b12b940359",
-        "privateKey": "b51fcc08d80bca4c2ea1c5537b638d025d7e452bfcbea7c38a98414ff6d0f4e4fcbe1c84f48510b2bf29eff966f50844615607e26bc97072a49fa7b12b940359",
+    "assymetric": {},
+    "symmetric": {},
+    "47afa93d573f356dbbc384610c14cad93cbdcda6b4d595b3159d57ed36a27a27": {
+      "data": {
+        "publicKey": "08ad45bf71ee12e14ce243075cc639dd7b1bceab0b4cc39e4c9e294a7c0c9de5",
+        "privateKey": "f35a4c45a814f606fbc12fae968b2aef99f014e5179506dd1f07a7e0cb3a411d08ad45bf71ee12e14ce243075cc639dd7b1bceab0b4cc39e4c9e294a7c0c9de5",
         "keyType": "ed25519"
+      },
+      "type": "assymetric",
+      "meta": {
+        "version": "libsodium-wrappers@^0.7.3",
+        "tags": [
+          "signing key",
+          "macbook pro"
+        ],
+        "notes": "created for testing purposes"
       }
     },
-    "symmetric": {
-      "f27f2faa3f21fa89c11709d10c9b8b80aae2412547abd4b8d7fe922214829f0b": "bb0a5b81c0d26bd368312ef7b5187d6b87d5f82e3af34b263a79a45863379b8e"
+    "dca5423a4d8d307df237a491f226c8f6459995b153407ae4d8a3e514809335c3": {
+      "data": "dcc1ae67c1ae00847ccb3f727cb394497c032869a43b0b7ef2e34b66f2654583",
+      "type": "symmetric",
+      "meta": {
+        "version": "libsodium-wrappers@^0.7.3",
+        "tags": [
+          "symmetric key",
+          "macbook pro"
+        ],
+        "notes": "created for testing purposes"
+      }
     }
   }
 }

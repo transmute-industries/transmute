@@ -1,6 +1,6 @@
 const secrets = require("secrets.js-grempe");
 
-const msg = require("../msg");
+const sodiumExtensions = require("../sodiumExtensions");
 
 const { keccak256 } = require("js-sha3");
 
@@ -120,16 +120,16 @@ const keypairsToTransmuteCiphertextDIDWallet = async ({
     libSodiumEncryptionKeypair
   };
 
-  const salt = await msg.generateSalt();
+  const salt = await sodiumExtensions.generateSalt();
 
-  const key = await msg.generateSymmetricKeyFromPasswordAndSalt({
+  const key = await sodiumExtensions.generateSymmetricKeyFromPasswordAndSalt({
     password,
     salt
   });
 
   const cipherTextWallet = {
     salt,
-    wallet: await msg.encryptJson({
+    wallet: await sodiumExtensions.encryptJson({
       data: plainTextWallet,
       key
     })

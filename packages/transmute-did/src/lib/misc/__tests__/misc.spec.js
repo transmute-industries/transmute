@@ -1,6 +1,6 @@
 const misc = require('../index');
 const openpgpExtensions = require('../../openpgpExtensions');
-const msg = require('../../msg');
+const sodiumExtensions = require('../../sodiumExtensions');
 
 const key = '606be053abf0ca332dd76cb76fc8dee21e0874e0a55877d1c0e91382b286ee4c';
 
@@ -52,8 +52,8 @@ describe('misc', () => {
         name: 'bob',
         passphrase: 'yolo',
       });
-      const libSodiumSigningKeypair = await msg.generateCryptoSignKeypair();
-      const libSodiumEncryptionKeypair = await msg.generateCryptoBoxKeypair();
+      const libSodiumSigningKeypair = await sodiumExtensions.generateCryptoSignKeypair();
+      const libSodiumEncryptionKeypair = await sodiumExtensions.generateCryptoBoxKeypair();
       primaryPublicKey = libSodiumSigningKeypair.publicKey;
       const didDocumentArgs = {
         primaryPublicKey,
@@ -203,8 +203,8 @@ describe('misc', () => {
         name: 'bob',
         passphrase: 'yolo',
       });
-      const libSodiumSigningKeypair = await msg.generateCryptoSignKeypair();
-      const libSodiumEncryptionKeypair = await msg.generateCryptoBoxKeypair();
+      const libSodiumSigningKeypair = await sodiumExtensions.generateCryptoSignKeypair();
+      const libSodiumEncryptionKeypair = await sodiumExtensions.generateCryptoBoxKeypair();
 
       const cipherTextWallet = await misc.keypairsToTransmuteCiphertextDIDWallet({
         primaryKeypair: libSodiumSigningKeypair,

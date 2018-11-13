@@ -1,57 +1,72 @@
 const pack = require('../../../package.json');
 
-const msg = require('../msg');
+const sodiumExtensions = require('../sodiumExtensions');
 
 //   eslint-disable-next-line
 const { sha3_256 } = require('js-sha3');
 
-const createWallet = async () => ({
+class TransmuteDIDWallet {
+  constructor(walletData) {
+    this.data = walletData;
+  }
+
+  async addKey(data, type, meta) {
+    let kid;
+    const { keystore } = this.data;
+    switch (type) {
+      case 'symmetric':
+        kid = sha3_256(data);
+        break;
+      case 'assymetric':
+        kid = sha3_256(data.publicKey);
+        break;
+      default:
+        throw new Error('Unknown key type.');
+    }
+    keystore[kid] = {
+      data,
+      type,
+      meta,
+    };
+  }
+
+  async encrypt(passphrase) {
+    this.data = {
+      ...this.data,
+      keystore: await sodiumExtensions.encryptJson({
+        data: this.data.keystore,
+        key: await sodiumExtensions.generateSymmetricKeyFromPasswordAndSalt({
+          password: passphrase,
+          salt: this.data.salt,
+        }),
+      }),
+    };
+  }
+
+  async decrypt(passphrase) {
+    this.data = {
+      ...this.data,
+      keystore: await sodiumExtensions.decryptJson({
+        data: this.data.keystore,
+        key: await sodiumExtensions.generateSymmetricKeyFromPasswordAndSalt({
+          password: passphrase,
+          salt: this.data.salt,
+        }),
+      }),
+    };
+  }
+}
+
+const createWallet = async () => new TransmuteDIDWallet({
   version: pack.version,
-  salt: await msg.generateSalt(),
+  salt: await sodiumExtensions.generateSalt(),
   keystore: {
     assymetric: {},
     symmetric: {},
   },
 });
 
-const addKeypairToWallet = (wallet, keypair) => {
-  //   eslint-disable-next-line
-  wallet.keystore.assymetric[keypair.publicKey] = keypair;
-};
-
-const addKeyToWallet = (wallet, key) => {
-  //   eslint-disable-next-line
-  const sha3_256_of_key = sha3_256(key);
-  //   eslint-disable-next-line
-  wallet.keystore.symmetric[sha3_256_of_key] = key;
-};
-
-const encryptWallet = async (wallet, passphrase) => ({
-  ...wallet,
-  keystore: await msg.encryptJson({
-    data: wallet.keystore,
-    key: await msg.generateSymmetricKeyFromPasswordAndSalt({
-      password: passphrase,
-      salt: wallet.salt,
-    }),
-  }),
-});
-
-const decryptWallet = async (wallet, passphrase) => ({
-  ...wallet,
-  keystore: await msg.decryptJson({
-    data: wallet.keystore,
-    key: await msg.generateSymmetricKeyFromPasswordAndSalt({
-      password: passphrase,
-      salt: wallet.salt,
-    }),
-  }),
-});
-
 module.exports = {
+  TransmuteDIDWallet,
   createWallet,
-  addKeypairToWallet,
-  encryptWallet,
-  decryptWallet,
-  addKeyToWallet,
 };

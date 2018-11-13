@@ -1,4 +1,4 @@
-const msg = require("../index");
+const sodiumExtensions = require("../index");
 
 const aliceSign = {
   publicKey: "9f183c3fcd8d91603f4c754023305018911038a563ba6d15e7041b2bf52b6e4f",
@@ -32,11 +32,11 @@ const message = "hello";
 
 const key = "606be053abf0ca332dd76cb76fc8dee21e0874e0a55877d1c0e91382b286ee4c";
 
-describe("msg", () => {
+describe("sodiumExtensions", () => {
   describe("generateCryptoBoxKeypair", () => {
     it("should generate an hex x25519 key pair", async () => {
       expect.assertions(3);
-      const keyPair = await msg.generateCryptoBoxKeypair();
+      const keyPair = await sodiumExtensions.generateCryptoBoxKeypair();
       expect(keyPair.publicKey).toBeDefined();
       expect(keyPair.privateKey).toBeDefined();
       expect(keyPair.keyType).toBe("x25519");
@@ -46,7 +46,7 @@ describe("msg", () => {
   describe("generateCryptoSignKeypair", () => {
     it("should generate an hex Ed25519 key pair", async () => {
       expect.assertions(3);
-      const keyPair = await msg.generateCryptoSignKeypair();
+      const keyPair = await sodiumExtensions.generateCryptoSignKeypair();
       expect(keyPair.publicKey).toBeDefined();
       expect(keyPair.privateKey).toBeDefined();
       expect(keyPair.keyType).toBe("ed25519");
@@ -56,7 +56,7 @@ describe("msg", () => {
   describe("generateSalt", () => {
     it("should generate a salt", async () => {
       expect.assertions(1);
-      const salt = await msg.generateSalt();
+      const salt = await sodiumExtensions.generateSalt();
       expect(salt.length).toBe(32);
     });
   });
@@ -65,8 +65,8 @@ describe("msg", () => {
     it("should generate an symmetric key from a password and salt", async () => {
       expect.assertions(1);
       const password = "thanos did nothing wrong";
-      const salt = await msg.generateSalt();
-      const key = await msg.generateSymmetricKeyFromPasswordAndSalt({
+      const salt = await sodiumExtensions.generateSalt();
+      const key = await sodiumExtensions.generateSymmetricKeyFromPasswordAndSalt({
         password,
         salt
       });
@@ -79,7 +79,7 @@ describe("msg", () => {
       expect.assertions(1);
       const keyPair = aliceSign;
 
-      const signature = await msg.signDetached({
+      const signature = await sodiumExtensions.signDetached({
         message,
         privateKey: keyPair.privateKey
       });
@@ -94,7 +94,7 @@ describe("msg", () => {
 
       const signature =
         "bf6a7cd62d37c8f3bde61ac35535d741fa018eac502209f5197f3f66d36e5a521bd6a9464bbedf343f94a323d21d5acb609e1f5006d7b0f8755886ffc2e87c04";
-      const verified = await msg.verifyDetached({
+      const verified = await sodiumExtensions.verifyDetached({
         message,
         signature,
         publicKey: keyPair.publicKey
@@ -107,7 +107,7 @@ describe("msg", () => {
     it("should authenticated encrypt message from privateKey to publicKey", async () => {
       expect.assertions(1);
 
-      const cipherText = await msg.encryptFor({
+      const cipherText = await sodiumExtensions.encryptFor({
         message,
         publicKey: bobBox.publicKey,
         privateKey: aliceBox.privateKey
@@ -124,7 +124,7 @@ describe("msg", () => {
         encrypted: "f1b1227e6b770c81efec743b616f0a4f6f6217d06e"
       };
 
-      const plainText = await msg.decryptFor({
+      const plainText = await sodiumExtensions.decryptFor({
         message: cipherText,
         publicKey: aliceBox.publicKey,
         privateKey: bobBox.privateKey
@@ -137,7 +137,7 @@ describe("msg", () => {
   describe("encryptWith", () => {
     it("should symmetric encrypt with data with key", async () => {
       expect.assertions(1);
-      const cipherText = await msg.encryptWith({
+      const cipherText = await sodiumExtensions.encryptWith({
         data: "hi",
         key
       });
@@ -152,7 +152,7 @@ describe("msg", () => {
         nonce: "ebac5573a16c985a1fb5d721b578d554820fa19160781811",
         encrypted: "202e4630090c666987e8062599426e7339a8"
       };
-      const plainText = await msg.decryptWith({
+      const plainText = await sodiumExtensions.decryptWith({
         data: cipherText,
         key
       });
@@ -167,7 +167,7 @@ describe("msg", () => {
       const data = {
         yolo: 1
       };
-      const cipherText = await msg.encryptJson({
+      const cipherText = await sodiumExtensions.encryptJson({
         data,
         key
       });
@@ -183,7 +183,7 @@ describe("msg", () => {
         nonce: "2c4c79bc9e85dcd1250ffa498f234793d7f0c37d90bc7d27",
         encrypted: "f19fd16b6e032752fabdc66a787815e07eb5fea8bbd954a2101c"
       };
-      const plainText = await msg.decryptJson({
+      const plainText = await sodiumExtensions.decryptJson({
         data: cipherText,
         key
       });

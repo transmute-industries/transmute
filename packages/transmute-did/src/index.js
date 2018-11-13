@@ -1,9 +1,11 @@
-const msg = require('./lib/msg');
+const sodiumExtensions = require('./lib/sodiumExtensions');
 const openpgpExtensions = require('./lib/openpgpExtensions');
 const misc = require('./lib/misc');
+const wallet = require('./lib/wallet');
 
 module.exports = {
-  msg,
+  sodiumExtensions,
   openpgpExtensions,
   misc,
+  wallet,
 };
