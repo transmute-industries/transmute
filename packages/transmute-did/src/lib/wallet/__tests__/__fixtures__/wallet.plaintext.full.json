@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "salt": "96fcf6b693bac4f38be94dd84e299d37",
+  "salt": "6945bc82ab14fda89fabec25b50a86c6",
   "keystore": {
     "2c4e730145b89cfebc1a0a16c64ccfa297277c2f136cfff8269b6bbfbaa3e178": {
       "kid": "2c4e730145b89cfebc1a0a16c64ccfa297277c2f136cfff8269b6bbfbaa3e178",
@@ -91,9 +91,9 @@
         }
       }
     },
-    "5f89098d8b452c14eadc086b6165df75c3df9f28b949cdb234d8f5423f4311fa": {
-      "kid": "5f89098d8b452c14eadc086b6165df75c3df9f28b949cdb234d8f5423f4311fa",
-      "data": "c6ab7242282917dfce8f411a8a49f1af1803d78bcc7d4f40df10478b40edf207",
+    "d9e4812c59e412c49e30263ded9ec0460c92f419e83c40fd87ef90b5ae4979e6": {
+      "kid": "d9e4812c59e412c49e30263ded9ec0460c92f419e83c40fd87ef90b5ae4979e6",
+      "data": "caac1fd1380a8ef81d2f97dd84a59642df83ea5c10432a35398580d6b4948c5f",
       "type": "symmetric",
       "meta": {
         "version": "libsodium-wrappers@^0.7.3",
@@ -102,6 +102,19 @@
           "macbook pro"
         ],
         "notes": "created for testing purposes"
+      }
+    },
+    "8fc810a42fecae6fe12b1306f8d8b75236fce49eedbfc65febbcf72a1f7cf80f": {
+      "kid": "8fc810a42fecae6fe12b1306f8d8b75236fce49eedbfc65febbcf72a1f7cf80f",
+      "data": "80157b05ca9edcc16c089ebb36c5ab9b63a84f495e716b23e04ff993ab0813fdfcb6743ab939ce638a6a2e82fd35c33caf8",
+      "type": "shamir-share",
+      "meta": {
+        "version": "secrets.js-grempe@^1.1.0",
+        "tags": [
+          "shamir share",
+          "macbook pro"
+        ],
+        "notes": "created for testing purposes (3/5)"
       }
     }
   }

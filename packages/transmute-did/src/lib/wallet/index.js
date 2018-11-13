@@ -74,6 +74,9 @@ class TransmuteDIDWallet {
       case 'symmetric':
         kid = sha3_256(data);
         break;
+      case 'shamir-share':
+        kid = sha3_256(data);
+        break;
       case 'assymetric':
         kid = sha3_256(data.publicKey);
         break;

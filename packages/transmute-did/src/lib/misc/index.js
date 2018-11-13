@@ -1,32 +1,6 @@
-const secrets = require("secrets.js-grempe");
+const { keccak256 } = require('js-sha3');
 
-const sodiumExtensions = require("../sodiumExtensions");
-
-const { keccak256 } = require("js-sha3");
-
-/**
- * shatter a key with shamir secret sharing
- * @function
- * @name shatterKey
- * @param {String} key a hex encoded symmetric key to shatter
- * @param {String} shareNumber number of shares to create
- * @param {String} shareThreshold number of shares needed to recover key
- * @returns {Array} shamir secret shares of the key
- */
-const shatterKey = async ({ key, shareNumber, shareThreshold }) => {
-  return secrets.share(key, shareNumber, shareThreshold);
-};
-
-/**
- * recover a key with shamir secret sharing
- * @function
- * @name recoverKey
- * @param {Array} shares of a key
- * @returns {String} a key recoverd from shares
- */
-const recoverKey = async ({ shares }) => {
-  return secrets.combine(shares);
-};
+const sodiumExtensions = require('../sodiumExtensions');
 
 /**
  * converts a public key into a DID
@@ -35,8 +9,7 @@ const recoverKey = async ({ shares }) => {
  * @param {String} publicKey a public key in hex
  * @returns {String} a DID
  */
-const publicKeyToTransmuteDID = ({ publicKey }) =>
-  `did:tst:0x${keccak256(publicKey)}`;
+const publicKeyToTransmuteDID = ({ publicKey }) => `did:tst:0x${keccak256(publicKey)}`;
 
 /**
  * converts public keys into a DID Document
@@ -52,47 +25,47 @@ const publicKeysToDIDDocument = ({
   primaryPublicKey,
   pgpPublicKey,
   libSodiumPublicSigningKey,
-  libSodiumPublicEncryptionKey
+  libSodiumPublicEncryptionKey,
 }) => {
   const did = publicKeyToTransmuteDID({
-    publicKey: primaryPublicKey
+    publicKey: primaryPublicKey,
   });
 
   return {
-    "@context": "https://w3id.org/did/v1",
+    '@context': 'https://w3id.org/did/v1',
     id: did,
     publicKey: [
       {
         id: `${did}#keys-0`,
-        type: "Ed25519VerificationKey2018",
+        type: 'Ed25519VerificationKey2018',
         owner: did,
-        publicKeyHex: libSodiumPublicEncryptionKey
+        publicKeyHex: libSodiumPublicEncryptionKey,
       },
       {
         id: `${did}#keys-1`,
-        type: "Ed25519VerificationKey2018",
+        type: 'Ed25519VerificationKey2018',
         owner: did,
-        publicKeyHex: libSodiumPublicSigningKey
+        publicKeyHex: libSodiumPublicSigningKey,
       },
       {
         id: `${did}#keys-2`,
-        type: "Secp256k1VerificationKey2018",
+        type: 'Secp256k1VerificationKey2018',
         owner: did,
-        publicKeyPem: pgpPublicKey
+        publicKeyPem: pgpPublicKey,
       },
       {
         id: `${did}#keys-3`,
-        type: "Ed25519VerificationKey2018",
+        type: 'Ed25519VerificationKey2018',
         owner: did,
-        publicKeyHex: primaryPublicKey
-      }
+        publicKeyHex: primaryPublicKey,
+      },
     ],
     authentication: [
       {
-        type: "Ed25519SignatureAuthentication2018",
-        publicKey: `${did}#keys-1`
-      }
-    ]
+        type: 'Ed25519SignatureAuthentication2018',
+        publicKey: `${did}#keys-1`,
+      },
+    ],
   };
 };
 
@@ -111,37 +84,35 @@ const keypairsToTransmuteCiphertextDIDWallet = async ({
   pgpKeypair,
   libSodiumSigningKeypair,
   libSodiumEncryptionKeypair,
-  password
+  password,
 }) => {
   const plainTextWallet = {
     primaryKeypair,
     pgpKeypair,
     libSodiumSigningKeypair,
-    libSodiumEncryptionKeypair
+    libSodiumEncryptionKeypair,
   };
 
   const salt = await sodiumExtensions.generateSalt();
 
   const key = await sodiumExtensions.generateSymmetricKeyFromPasswordAndSalt({
     password,
-    salt
+    salt,
   });
 
   const cipherTextWallet = {
     salt,
     wallet: await sodiumExtensions.encryptJson({
       data: plainTextWallet,
-      key
-    })
+      key,
+    }),
   };
 
   return cipherTextWallet;
 };
 
 module.exports = {
-  shatterKey,
-  recoverKey,
   publicKeyToTransmuteDID,
   publicKeysToDIDDocument,
-  keypairsToTransmuteCiphertextDIDWallet
+  keypairsToTransmuteCiphertextDIDWallet,
 };
