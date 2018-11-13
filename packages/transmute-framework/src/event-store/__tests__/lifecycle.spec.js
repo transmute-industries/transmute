@@ -1,17 +1,13 @@
-
 const Web3 = require('web3');
-const TransmuteAdapterIPFS = require('transmute-adapter-ipfs');
+const TransmuteAdapterIPFS = require('@transmute/transmute-adapter-ipfs');
 const EventStore = require('../index.js');
 const transmuteConfig = require('../../transmute-config');
 const abi = require('../../../build/contracts/EventStore.json');
+const pack = require('../../../package.json');
 
-const provider = new Web3.providers.HttpProvider(
-  transmuteConfig.web3Config.providerUrl,
-);
+const provider = new Web3.providers.HttpProvider(transmuteConfig.web3Config.providerUrl);
 const web3 = new Web3(provider);
 const adapter = new TransmuteAdapterIPFS(transmuteConfig.ipfsConfig);
-
-const pack = require('../../../package.json');
 
 describe('transmute-framework', () => {
   describe('constructor', () => {
@@ -49,12 +45,10 @@ describe('transmute-framework', () => {
         abi,
         adapter,
       });
-      const accounts = await eventStore.getWeb3Accounts();
+      const accounts = await web3.eth.getAccounts();
       const newEventStore = await eventStore.clone(accounts[0]);
-      expect(
-        newEventStore.eventStoreContract.address
-          !== eventStore.eventStoreContract.address,
-      );
+      expect(eventStore.eventStoreContract.address)
+        .not.toBe(newEventStore.address);
     });
   });
 

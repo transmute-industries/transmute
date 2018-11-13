@@ -1,5 +1,5 @@
 const Web3 = require('web3');
-const TransmuteAdapterIPFS = require('transmute-adapter-ipfs');
+const TransmuteAdapterIPFS = require('@transmute/transmute-adapter-ipfs');
 const { EventStore } = require('../../index');
 const transmuteConfig = require('../../transmute-config');
 const abi = require('../../../build/contracts/EventStore.json');
@@ -44,7 +44,7 @@ describe('sync', () => {
       adapter,
     });
     await eventStore.init();
-    accounts = await eventStore.getWeb3Accounts();
+    accounts = await web3.eth.getAccounts();
   });
 
   // new event store per test

@@ -3,12 +3,8 @@
  * @module src/event-store
  */
 
-
 const contract = require('truffle-contract');
-
 const pack = require('../../package.json');
-
-const GAS = require('../gas');
 
 /** @class EventStore */
 module.exports = class EventStore {
@@ -24,49 +20,25 @@ module.exports = class EventStore {
       throw new Error('a config of form { web3, abi, adapter } is required.');
     }
 
-    const { web3, abi, adapter } = config;
-
+    const {
+      web3, abi, adapter,
+    } = config;
     if (!web3) {
       throw new Error('a web3 property is required in constructor argument.');
     }
-
     if (!abi) {
-      throw new Error(
-        'a truffle-contract abi property is required in constructor argument.',
-      );
+      throw new Error('an abi property is required in constructor argument.');
     }
-
     if (!adapter) {
-      throw new Error(
-        'an adapter property is required in constructor argument.',
-      );
+      throw new Error('an adapter property is required in constructor argument.');
     }
 
     this.version = pack.version;
     this.web3 = web3;
     this.adapter = adapter;
-
     this.eventStoreArtifact = abi;
     this.eventStoreContract = contract(this.eventStoreArtifact);
     this.eventStoreContract.setProvider(this.web3.currentProvider);
-  }
-
-  /**
-   * Returns Web3 accounts
-   * @function
-   * @memberof EventStore
-   * @name getWeb3Accounts
-   * @returns {Array.<String>} Array of Web3 account addresses
-   */
-  async getWeb3Accounts() {
-    return new Promise((resolve, reject) => {
-      this.web3.eth.getAccounts((err, accounts) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(accounts);
-      });
-    });
   }
 
   /**
@@ -106,7 +78,6 @@ module.exports = class EventStore {
   async clone(fromAddress) {
     const newContract = await this.eventStoreContract.new({
       from: fromAddress,
-      gas: GAS.MAX_GAS,
     });
     const instance = Object.assign(
       Object.create(Object.getPrototypeOf(this)),
@@ -114,21 +85,6 @@ module.exports = class EventStore {
     );
     instance.eventStoreContractInstance = newContract;
     return instance;
-  }
-
-  /**
-   * Returns transaction receipt
-   * @function
-   * @memberof EventStore
-   * @name getTransactionReceipt
-   */
-  async getTransactionReceipt(tx) {
-    return new Promise((resolve, reject) => {
-      this.web3.eth.getTransactionReceipt(tx, (error, result) => {
-        if (!error) resolve(result);
-        else reject(error);
-      });
-    });
   }
 
   /**
@@ -161,32 +117,21 @@ module.exports = class EventStore {
    */
   async writeContent(fromAddress, content) {
     this.requireInstance();
-
     const { adapter, eventStoreContractInstance } = this;
-
     const contentHash = await adapter.writeJson(content);
 
-    const { tx } = (await eventStoreContractInstance.write(
-      contentHash,
-      {
-        from: fromAddress,
-        gas: GAS.EVENT_GAS_COST,
-      },
-    ));
-
-    const receipt = await this.getTransactionReceipt(tx);
-
+    const tx = await eventStoreContractInstance.contract.methods
+      .write(contentHash)
+      .send({ from: fromAddress });
+    const { index } = tx.events.TransmuteEvent.returnValues;
     return {
       event: {
         sender: fromAddress,
         content,
+        index: parseInt(index),
       },
       meta: {
         tx,
-        contentID: {
-          content,
-        },
-        receipt,
       },
     };
   }
@@ -212,36 +157,6 @@ module.exports = class EventStore {
   }
 
   /**
-   * Reads specified indexed event from the event log of eventStoreContractInstance
-   * @function
-   * @memberof EventStore
-   * @name readTransmuteEvent
-   * @returns {Object} Event object
-   */
-  readTransmuteEvent(contractInstance, eventIndex) {
-    // The contract JS Api (see links belows) only offers callbacks.
-    // Here we Promisify the callback so that we can `await` it in `read()`
-    return new Promise((resolve, reject) => {
-      // Reference: github.com/ethereum/wiki/wiki/JavaScript-API#contract-events
-      // Possible alternative: github.com/ethereum/wiki/wiki/JavaScript-API#web3ethfilter
-      const eventSubscription = contractInstance.contract.TransmuteEvent({
-        filter: {
-          index: eventIndex,
-        },
-        // TODO: Optimize by scanning fromBlock of contract creation
-        fromBlock: 0,
-      });
-      eventSubscription.get((error, logs) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(logs);
-        }
-      });
-    });
-  }
-
-  /**
    * Reads specified indexed event from eventStoreContractInstance,
    * retrieves its data from content storage, and returns the original key, value, index, and sender
    * @function
@@ -251,12 +166,12 @@ module.exports = class EventStore {
    * @returns {Object} Event object with original key, value, sender, and index
    */
   async read(index) {
-    this.requireInstance();
-    const { eventStoreContractInstance } = this;
-
     let events;
     try {
-      events = await this.readTransmuteEvent(eventStoreContractInstance, index);
+      events = await this.eventStoreContractInstance.getPastEvents('TransmuteEvent', {
+        filter: { index: [index] },
+        fromBlock: 0,
+      });
     } catch (e) {
       throw new Error('Could not read from Ethereum event log');
     }
@@ -264,10 +179,10 @@ module.exports = class EventStore {
     if (events.length === 0) {
       throw new Error('No event exists for that index');
     }
-
     const values = events[0].args;
+    let content;
     try {
-      const content = await this.adapter.readJson(values.contentHash);
+      content = await this.adapter.readJson(values.contentHash);
       return {
         index: values.index.toNumber(),
         sender: values.sender,
@@ -310,22 +225,9 @@ module.exports = class EventStore {
    * @returns {Object} Health status of adapter and eventStoreContractInstance address
    */
   async healthy() {
-    this.requireInstance();
     return {
       adapter: !!(await this.adapter.healthy()),
       eventStoreContract: this.eventStoreContractInstance.address,
     };
-  }
-
-  /**
-   * Destroys eventStoreContractInstance
-   * @function
-   * @memberof EventStore
-   * @name destroy
-   * @param {String} address Address used to destroy eventStoreContractInstance
-   * @returns {Object} Ethereum transaction from EventStore destruction
-   */
-  destroy(address) {
-    return this.eventStoreContractInstance.destroy(address);
   }
 };

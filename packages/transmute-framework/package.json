@@ -1,6 +1,6 @@
 {
-  "name": "transmute-framework",
-  "version": "0.2.5",
+  "name": "@transmute/transmute-framework",
+  "version": "0.3.3",
   "description": "Event Sourced Decentralized Application Development Framework.",
   "main": "src/index.js",
   "files": [
@@ -37,21 +37,22 @@
   },
   "homepage": "https://github.com/transmute-industries/transmute#readme",
   "devDependencies": {
+    "@transmute/transmute-adapter-firestore": "0.1.0",
+    "@transmute/transmute-adapter-ipfs": "1.0.3",
+    "bignumber.js": "^7.2.1",
     "codecov": "^3.0.0",
     "coveralls": "^3.0.0",
     "docdash": "^0.4.0",
     "jest": "^23.6.0",
     "jsdoc": "^3.5.5",
-    "solidity-coverage": "^0.4.14",
-    "transmute-adapter-firestore": "0.1.0",
-    "transmute-adapter-ipfs": "1.0.3"
+    "solidity-coverage": "^0.4.14"
   },
   "dependencies": {
     "dotenv": "^6.0.0",
-    "truffle-contract": "^3.0.6",
-    "truffle-hdwallet-provider": "0.0.6",
-    "web3": "^0.20.7",
-    "web3-provider-engine": "^14.1.0",
+    "truffle": "^5.0.0-beta.1",
+    "truffle-contract": "^4.0.0-beta.1",
+    "truffle-hdwallet-provider": "^1.0.0-web3one.0",
+    "web3": "^1.0.0-beta.36",
     "zeppelin-solidity": "^1.6.0"
   }
 }
