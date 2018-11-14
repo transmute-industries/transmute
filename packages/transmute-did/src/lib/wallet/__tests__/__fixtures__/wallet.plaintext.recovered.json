@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "salt": "6945bc82ab14fda89fabec25b50a86c6",
+  "salt": "9e114fadf5c2f0c9f847f42beb50d7ba",
   "keystore": {
     "2c4e730145b89cfebc1a0a16c64ccfa297277c2f136cfff8269b6bbfbaa3e178": {
       "kid": "2c4e730145b89cfebc1a0a16c64ccfa297277c2f136cfff8269b6bbfbaa3e178",
@@ -54,7 +54,7 @@
       },
       "type": "assymetric",
       "meta": {
-        "version": "orbit-db",
+        "version": "elliptic@^6.4.1",
         "tags": [
           "OrbitDB",
           "macbook pro"
@@ -91,9 +91,9 @@
         }
       }
     },
-    "d9e4812c59e412c49e30263ded9ec0460c92f419e83c40fd87ef90b5ae4979e6": {
-      "kid": "d9e4812c59e412c49e30263ded9ec0460c92f419e83c40fd87ef90b5ae4979e6",
-      "data": "caac1fd1380a8ef81d2f97dd84a59642df83ea5c10432a35398580d6b4948c5f",
+    "2c0b791a1ee3d9735b845837953869615251cf6dc08cc7a3c3355aae1027938d": {
+      "kid": "2c0b791a1ee3d9735b845837953869615251cf6dc08cc7a3c3355aae1027938d",
+      "data": "06fff5adec07743ccf18cb606a40da85119d883c4430115c391ab63b5eb9bdfb",
       "type": "symmetric",
       "meta": {
         "version": "libsodium-wrappers@^0.7.3",

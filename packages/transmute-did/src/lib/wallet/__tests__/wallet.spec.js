@@ -102,7 +102,7 @@ describe('did-wallet', () => {
       );
 
       await wallet.addKey(keypair, 'assymetric', {
-        version: 'orbit-db',
+        version: `elliptic@${pack.dependencies.elliptic}`,
         tags: ['OrbitDB', 'macbook pro'],
         notes: 'created for testing purposes',
         did: {

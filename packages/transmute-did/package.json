@@ -1,6 +1,6 @@
 {
-  "name": "transmute-did",
-  "version": "1.0.0",
+  "name": "@transmute/transmute-did",
+  "version": "1.0.0-alpha.0",
   "description": "",
   "main": "./src/index.js",
   "scripts": {
@@ -8,6 +8,10 @@
     "coverage": "jest . --coverage --env aegir",
     "lint": "../../node_modules/.bin/eslint .",
     "lint-fix": "../../node_modules/.bin/eslint . --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/transmute-industries/transmute.git"
   },
   "author": "",
   "license": "MIT",
@@ -25,12 +29,14 @@
     "base64url": "^3.0.0",
     "bip39": "^2.5.0",
     "did-resolver": "0.0.4",
+    "elliptic": "^6.4.1",
     "ethereumjs-util": "^5.2.0",
     "hdkey": "^1.1.0",
     "js-sha3": "^0.8.0",
     "libsodium-wrappers": "^0.7.3",
     "lodash": "^4.17.11",
     "openpgp": "^4.0.1",
-    "secrets.js-grempe": "^1.1.0"
+    "secrets.js-grempe": "^1.1.0",
+    "@transmute/transmute-adapter-memory": "1.0.0-alpha.0"
   }
 }

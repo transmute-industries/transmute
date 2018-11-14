@@ -14,14 +14,14 @@ npm run test
 
 The `transmute-id` package contains several libraries for basic cryptographic operations
 
-## `src/lib/eth/`: Ethereum
+## `src/lib/ethereumExtensions/`: Ethereum
 
 Creating an Ethereum identity
 - Generate a BIP-39 Mnemonic
 - Get a keypair from a mnemonic and a derivation path
 - Get an Ethereum address from a public key
 
-## `src/lib/pgp/`: PGP
+## `src/lib/openpgpExtensions/`: PGP
 
 PGP uses RSA by default but also supports the following Elliptic Curves: `curve25519, p256, p384, p521, secp256k1, brainpoolP256r1, brainpoolP384r1, brainpoolP512r1`.
 
@@ -32,7 +32,7 @@ This library provides:
 - Encrypting a message with the recipient's public key and signing it with the sender's private key
 - Decrypting a message with the recipient's private key and verifying it with the sender's public key
 
-## `src/lib/msg/`: Libsodium
+## `src/lib/sodiumExtensions/`: Libsodium
 
 LibSodium uses `ED25519` by default.
 
@@ -40,9 +40,13 @@ This library provides:
 - a Signature scheme using libsodium's [crypto_sign](https://nacl.cr.yp.to/sign.html)
 - a Public-key authenticated encryption scheme using libsodium's [crypto_box](https://nacl.cr.yp.to/box.html)
 
-## `src/lib/misc/`: Miscellaneous tools
+## `src/lib/shamirExtensions/`: Secret Sharing
 
 This library provides
 - Shamir secret sharing methods
+
+## `src/lib/misc/`: Miscellaneous tools
+
+This library provides
 - Transmute DID document generation
 - converting keypairs to a ciphertext wallet
