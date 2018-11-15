@@ -2,12 +2,12 @@
 // const openpgpExtensions = require('../../openpgpExtensions');
 // const ellipticExtensions = require('../../ellipticExtensions');
 
-const { verifyDIDSignature } = require('../../did');
-
 class SignatureStore {
-  constructor(adapter, resolver) {
+  constructor(adapter, resolver, verifyDIDSignature, kidTransform) {
     this.adapter = adapter;
     this.resolver = resolver;
+    this.verifyDIDSignature = verifyDIDSignature;
+    this.kidTransform = kidTransform;
     this.objectIndex = {};
     this.signatureIndex = {};
   }
@@ -42,7 +42,7 @@ class SignatureStore {
     if (meta.kid.indexOf('did:') === 0) {
       const did = meta.kid.split('#')[0];
       const doc = await this.resolver.resolve(did);
-      return verifyDIDSignature(object, signature, meta, doc);
+      return this.verifyDIDSignature(object, signature, meta, doc, this.kidTransform);
     }
     throw new Error('cannot verify a signature without a did in kid.');
   }

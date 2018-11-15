@@ -5,6 +5,8 @@ const TransmuteAdapterMemory = require('@transmute/transmute-adapter-memory');
 
 const adapter = new TransmuteAdapterMemory();
 
+const { verifyDIDSignature } = require('../../index');
+
 const SignatureStore = require('../index');
 
 const { TransmuteDIDWallet } = require('../../../wallet');
@@ -53,7 +55,7 @@ describe('SignatureStore', () => {
       resolve: did => Promise.resolve(doc),
     };
 
-    signatureStore = new SignatureStore(adapter, resolver);
+    signatureStore = new SignatureStore(adapter, resolver, verifyDIDSignature);
   });
 
   it('supports saving openpgp signed did documents', async () => {

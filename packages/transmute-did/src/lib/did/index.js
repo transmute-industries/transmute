@@ -7,6 +7,8 @@ const sodiumExtensions = require('../sodiumExtensions');
 
 const { didMethods } = require('./constants');
 
+const SignatureStore = require('./SignatureStore');
+
 const publicKeyToDID = async (type, publicKey) => {
   switch (type) {
     case 'openpgp':
@@ -46,9 +48,10 @@ const guessKeyType = (meta) => {
   throw new Error('unguessable key type');
 };
 
-const verifyDIDSignature = (object, signature, meta, doc) => {
+const verifyDIDSignature = (object, signature, meta, doc, kidTransform) => {
   const keyType = guessKeyType(meta);
-  const publicKey = getPublicKeyFromDIDDocByKID(doc, meta.kid);
+  const kid2 = kidTransform ? kidTransform(meta.kid) : meta.kid;
+  const publicKey = getPublicKeyFromDIDDocByKID(doc, kid2);
 
   switch (keyType) {
     case 'elliptic':
@@ -74,4 +77,5 @@ const verifyDIDSignature = (object, signature, meta, doc) => {
 module.exports = {
   publicKeyToDID,
   verifyDIDSignature,
+  SignatureStore,
 };

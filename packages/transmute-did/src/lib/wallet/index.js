@@ -108,7 +108,7 @@ class TransmuteDIDWallet {
   }
 
   async signObject({
-    obj, kid, passphrase, asDIDByKID, asDIDByKIDPassphrase,
+    obj, kid, passphrase, asDIDByKID, asDIDByKIDPassphrase, overwriteKID,
   }) {
     const keypair = this.data.keystore[kid];
     const guessedType = guessKeyType(keypair);
@@ -152,9 +152,11 @@ class TransmuteDIDWallet {
         throw new Error('Unknown key type. Cannot sign did document');
     }
 
+    const kid2 = overwriteKID || (doc.id ? `${doc.id}#${kid}` : kid);
+
     const meta = {
       version: `${guessedType}@${pack.dependencies[guessedType]}`,
-      kid: doc.id ? `${doc.id}#${kid}` : kid,
+      kid: kid2,
     };
 
     return {
