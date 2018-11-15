@@ -1,6 +1,6 @@
 // const sodiumExtensions = require('../../sodiumExtensions');
 // const openpgpExtensions = require('../../openpgpExtensions');
-const ellipticExtensions = require('../../ellipticExtensions');
+// const ellipticExtensions = require('../../ellipticExtensions');
 
 const { verifyDIDSignature } = require('../../did');
 

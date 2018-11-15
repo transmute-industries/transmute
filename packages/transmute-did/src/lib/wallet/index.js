@@ -122,7 +122,7 @@ class TransmuteDIDWallet {
     if (asDIDByKID) {
       const result = await this.toDIDDocument(asDIDByKID, asDIDByKIDPassphrase);
       //   eslint-disable-next-line
-      doc = result.doc;
+      doc = result.object;
       if (!requireKIDinPublicKeys(`${doc.id}#${kid}`, doc.publicKey)) {
         throw new Error('kid is not listed in did document. Cannot sign asDIDByKID');
       }
@@ -188,12 +188,12 @@ class TransmuteDIDWallet {
     };
 
     //   eslint-disable-next-line
-    const { signature, meta } = await this.signObject({
+    const { object, signature, meta } = await this.signObject({
       obj: doc,
       kid: ownerKID,
       passphrase,
     });
-    return { doc, signature };
+    return { object, signature, meta };
   }
 }
 

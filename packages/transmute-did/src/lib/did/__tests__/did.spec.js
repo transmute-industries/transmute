@@ -1,5 +1,7 @@
 const didLib = require('../index');
 
+const didMethods = require('../constants').didMethods;
+
 const ethereumKeypair = {
   publicKey:
     'a3a757304f5ca97101385a630a5334d2594016cf408645c592ad265c084a197d1b79d9b10dd918ae565f16db67535e26a7c687285ce38d713c45aa930cea3931',
@@ -23,17 +25,17 @@ describe('did-spec', () => {
   describe('publicKeyToDID', () => {
     it('supports ethereum', async () => {
       const did = await didLib.publicKeyToDID('ethereum', ethereumKeypair.publicKey);
-      expect(did.indexOf('did:eth')).toBe(0);
+      expect(did.indexOf(didMethods.ETHEREUM)).toBe(4);
     });
 
     it('supports openpgp', async () => {
       const did = await didLib.publicKeyToDID('openpgp', openpgpKeypair.publicKey);
-      expect(did.indexOf('did:openpgp')).toBe(0);
+      expect(did.indexOf(didMethods.OPENPGP)).toBe(4);
     });
 
     it('supports orbitdb', async () => {
       const did = await didLib.publicKeyToDID('orbitdb', orbitdbKeypair.publicKey);
-      expect(did.indexOf('did:orbitdb')).toBe(0);
+      expect(did.indexOf(didMethods.ORBITDB)).toBe(4);
     });
   });
 });

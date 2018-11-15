@@ -1,15 +1,15 @@
 {
   "object": {
-    "subject": "did:openpgp:fingerprint:03c1c863029047a1dd0db583702d0138c349ca04",
+    "subject": "did:transmute.openpgp:03c1c863029047a1dd0db583702d0138c349ca04",
     "claims": {
       "isTruckDriver": true,
       "isInvestor": true,
       "isDoctor": false
     }
   },
-  "signature": "3045022100b4059791d816630432cf293aec0a518d5480e9a34e428e28b343a7b2f833f75c02201a7734ab7a73afb86a0d7c610b13aba54a255cc8b06fbe12eb2f3b26eace04d3",
+  "signature": "304502203170c7e2e937860b5638159fa19adae5d3cb843a2bcd1024ccb5b552f21f043f022100e6071cc580c81c2a25628c875e445c01bbffb51de83de7b6e59835b091ca73ea",
   "meta": {
     "version": "elliptic@^6.4.1",
-    "kid": "did:openpgp:fingerprint:03c1c863029047a1dd0db583702d0138c349ca04#5c51560bcef78d176b726a00b27ad3ef533ae39ef3d0f514392c79988c40d220"
+    "kid": "did:transmute.openpgp:03c1c863029047a1dd0db583702d0138c349ca04#5c51560bcef78d176b726a00b27ad3ef533ae39ef3d0f514392c79988c40d220"
   }
 }

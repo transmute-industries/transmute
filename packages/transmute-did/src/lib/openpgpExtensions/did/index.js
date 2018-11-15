@@ -4,7 +4,9 @@ const fs = require('fs');
 
 const ocap = require('./ocap');
 
-const didMethod = 'openpgp:fingerprint';
+const didMethod = require('../../did/constants').didMethods.OPENPGP;
+
+const { armoredKeytoFingerprintHex } = require('../cryptoHelpers');
 
 const verifyDIDDocumentWasSignedByID = async (didDocumentPath, didDocumentSignaturePath) => {
   const didDocument = fs.readFileSync(didDocumentPath);
@@ -37,11 +39,7 @@ const verifyDIDDocumentWasSignedByID = async (didDocumentPath, didDocumentSignat
   return false;
 };
 
-const armoredKeytoDID = async (armoredKey) => {
-  const { keys } = await openpgp.key.readArmored(armoredKey);
-  const hex = Buffer.from(keys[0].keyPacket.fingerprint).toString('hex');
-  return `did:${didMethod}:${hex}`;
-};
+const armoredKeytoDID = async armoredKey => `did:${didMethod}:${await armoredKeytoFingerprintHex(armoredKey)}`;
 
 const createDIDDocumentFromPublicKey = async (publicKey) => {
   const did = await armoredKeytoDID(publicKey);

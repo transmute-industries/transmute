@@ -1,4 +1,3 @@
-const { keccak256 } = require('js-sha3');
 const _ = require('lodash');
 
 const openpgpExtensions = require('../openpgpExtensions');
@@ -6,14 +5,18 @@ const ethereumExtensions = require('../ethereumExtensions');
 const ellipticExtensions = require('../ellipticExtensions');
 const sodiumExtensions = require('../sodiumExtensions');
 
-const publicKeyToDID = (type, publicKey) => {
+const { didMethods } = require('./constants');
+
+const publicKeyToDID = async (type, publicKey) => {
   switch (type) {
     case 'openpgp':
-      return openpgpExtensions.did.armoredKeytoDID(publicKey);
+      return `did:${
+        didMethods.OPENPGP
+      }:${await openpgpExtensions.cryptoHelpers.armoredKeytoFingerprintHex(publicKey)}`;
     case 'ethereum':
-      return `did:eth:${ethereumExtensions.publicKeyToAddress(publicKey)}`;
+      return `did:${didMethods.ETHEREUM}:${await ethereumExtensions.publicKeyToAddress(publicKey)}`;
     case 'orbitdb':
-      return `did:orbitdb:0x${keccak256(publicKey)}`;
+      return `did:${didMethods.ORBITDB}:${publicKey}`;
     default:
       throw new Error('Unknown key type');
   }

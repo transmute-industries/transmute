@@ -1,6 +1,19 @@
 const openpgp = require('openpgp');
 
 /**
+ * generate a hex fingerprint from an armored public key
+ * @function
+ * @name armoredKeytoFingerprintHex
+ * @param {String} armoredKey public key
+ * @returns {String} hex encoded pgp fingerprint
+ */
+const armoredKeytoFingerprintHex = async (armoredKey) => {
+  const { keys } = await openpgp.key.readArmored(armoredKey);
+  const hex = Buffer.from(keys[0].keyPacket.fingerprint).toString('hex');
+  return hex;
+};
+
+/**
  * generate an armored pgp keypair
  * @function
  * @name generateArmoredKeypair
@@ -167,6 +180,7 @@ const verifyDetached = async (message, detachedSig, publicKey) => {
 };
 
 module.exports = {
+  armoredKeytoFingerprintHex,
   generateArmoredKeypair,
   encryptMessage,
   decryptMessage,

@@ -34,6 +34,7 @@ const openPGPKID = '2c4e730145b89cfebc1a0a16c64ccfa297277c2f136cfff8269b6bbfbaa3
 const passhprase = 'yolo';
 describe('SignatureStore', () => {
   let doc;
+  let meta;
   let signature;
   let resolver;
   let signatureStore;
@@ -41,9 +42,12 @@ describe('SignatureStore', () => {
   beforeAll(async () => {
     const result = await wallet.toDIDDocument(openPGPKID, passhprase);
     //   eslint-disable-next-line
-    doc = result.doc;
+    doc = result.object;
     //   eslint-disable-next-line
     signature = result.signature;
+
+    //   eslint-disable-next-line
+    meta = result.meta;
     resolver = {
       //   eslint-disable-next-line
       resolve: did => Promise.resolve(doc),
@@ -57,6 +61,7 @@ describe('SignatureStore', () => {
       object: doc,
       signature,
       meta: {
+        ...meta,
         did: doc.id,
         publicKey: `${doc.id}#${openPGPKID}`,
         notes: 'DID Document signature',

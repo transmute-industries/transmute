@@ -1,15 +1,15 @@
 {
   "object": {
-    "subject": "did:openpgp:fingerprint:03c1c863029047a1dd0db583702d0138c349ca04",
+    "subject": "did:transmute.openpgp:03c1c863029047a1dd0db583702d0138c349ca04",
     "claims": {
       "isTruckDriver": true,
       "isInvestor": true,
       "isDoctor": false
     }
   },
-  "signature": "17efb3dfc8ac1d4f0168f420f5a7a606fb9b84e79c1b3e9fb7b7906a6c2e37839c9115d75ffd8b2e7082f67835f949a33e58775d5c15732bc782cd575e88040b",
+  "signature": "039883559aad99c996f4c32a5b403228507a610e1f4540d04d9153e913be2b44146e094a4f89d9bdd8e577f2f314451e3bd96461c503331666a3f509be8a3d06",
   "meta": {
     "version": "libsodium-wrappers@^0.7.3",
-    "kid": "did:openpgp:fingerprint:03c1c863029047a1dd0db583702d0138c349ca04#c541a06014170f7e85383f13e95f2bf45da28473daa241fc2f21b16461efdec2"
+    "kid": "did:transmute.openpgp:03c1c863029047a1dd0db583702d0138c349ca04#c541a06014170f7e85383f13e95f2bf45da28473daa241fc2f21b16461efdec2"
   }
 }
