@@ -2,6 +2,8 @@
 
 This is an experiment, and usafe to use.
 
+https://ipfs.io/ipns/orbit-did.transmute.world/
+
 ```
 npm run did:wallet:create
 npm run did:wallet:encrypt password123
@@ -98,14 +100,7 @@ We can transform an Orbit DB Address into a valid DID:
 `did:orbitdb.transmute.openpgp:QmQ8ZKRR4n8sA4PTMv7vX48rYwKjHWidd5fzn66kxHiCgZ.21b5ef5af61ce78cce35f9c0101f800c3448abae`
 
 
-
-/orbitdb/QmQ8ZKRR4n8sA4PTMv7vX48rYwKjHWidd5fzn66kxHiCgZ/did
-
-did:openpgp:fingerprint:21b5ef5af61ce78cce35f9c0101f800c3448abae
-
-Public DID Registry must be universally writable
-
-Document Database owned by a DID good for signature store, not good for registry
+## About Demo
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -151,3 +146,6 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+[Deploying to IPFS](https://medium.com/coinmonks/how-to-add-site-to-ipfs-and-ipns-f121b4cfc8ee)
+[More on IPNS](https://medium.com/textileio/the-definitive-guide-to-publishing-content-on-ipfs-ipns-dfe751f1e8d0)

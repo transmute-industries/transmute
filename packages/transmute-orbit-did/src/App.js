@@ -29,6 +29,8 @@ const ipfs = new window.Ipfs({
   }
 });
 
+console.log("hello :)");
+
 // eslint-disable-next-line
 let orbitdb = new OrbitDB(ipfs);
 

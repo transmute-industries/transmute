@@ -2,13 +2,16 @@ const transmuteDID = require("@transmute/transmute-did");
 const {
   TransmuteAdapterOrbitDB
 } = require("@transmute/transmute-adapter-orbit-db");
-const IPFS = require("ipfs");
+
+
 const OrbitDB = require("orbit-db");
+
 const CustomTestKeystore = transmuteDID.ellipticExtensions.CustomTestKeystore;
 
 const claimData = require("./orbitdb.transmute.openpgp.claim.json");
+
 const getOrbitDBFromKeypair = async (ipfsOptions, keypair) => {
-  const ipfs = new IPFS(ipfsOptions);
+  const ipfs = new window.Ipfs(ipfsOptions);
 
   return new Promise((resolve, reject) => {
     ipfs.on("ready", async () => {
