@@ -8,33 +8,31 @@ class SignatureStore {
     this.resolver = resolver;
     this.verifyDIDSignature = verifyDIDSignature;
     this.kidTransform = kidTransform;
-    this.objectIndex = {};
     this.signatureIndex = {};
   }
 
   async add({ object, signature, meta }) {
-    const objectID = await this.adapter.writeJson(object);
-    const signatureID = await this.adapter.writeJson(signature);
     const storeObject = {
       object,
       signature,
       meta,
     };
 
-    this.objectIndex[objectID] = storeObject;
+    const signatureID = await this.adapter.writeJson(storeObject);
+
     this.signatureIndex[signatureID] = storeObject;
 
     return {
-      objectID,
       signatureID,
     };
   }
 
-  async getByObjectID(objectID) {
-    return this.objectIndex[objectID];
-  }
-
   async getBySignatureID(signatureID) {
+    if (!this.signatureIndex[signatureID]) {
+      this.signatureIndex[signatureID] = await this.adapter.readJson(signatureID);
+    }
+
+    // console.log('yolo...', this.adapter);
     return this.signatureIndex[signatureID];
   }
 

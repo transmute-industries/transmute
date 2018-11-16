@@ -63,11 +63,12 @@ class TransmuteAdapterOrbitDB {
       // Load only the local version of the database,
       // don't load the latest from the network yet
       localOnly: false,
-      type: type || "keyvalue",
+      type: type || "docstore",
       // If "Public" flag is set, allow anyone to write to the database,
       // otherwise only the creator of the database can write
       write: access || ["*"]
     });
+    await this.db.load();
   }
 
   /**
@@ -110,14 +111,18 @@ class TransmuteAdapterOrbitDB {
   }
 
   async readJson(key) {
-    return this.db[key];
+    return (await this.db.get(key))[0].object;
   }
 
   async writeJson(value) {
     const key = await this.bufferToContentID(
       Buffer.from(JSON.stringify(value))
     );
-    this.db[key] = value;
+
+    await this.db.put({
+      _id: key,
+      object: value
+    });
     return key;
   }
 }

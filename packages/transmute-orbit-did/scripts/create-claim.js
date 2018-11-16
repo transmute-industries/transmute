@@ -66,13 +66,10 @@ const {
 
     //   console.log(adapter);
     const address = await orbitDBDIDToOrbitDBAddress(didData.orbitDID);
-    //   console.log(address);
-    await adapter.open(address, "docstore", {
-      write: [orbitKeypair.publicKey]
-    });
+    await adapter.open(address);
 
-    const claimsAddress = adapter.db.address.toString();
-    //   console.log(claimsAddress);
+    const claimAddress = adapter.db.address.toString();
+    console.log("claimAddress ", claimAddress);
 
     const resolver = await createOrbitDIDResolver(orbitdb);
 
@@ -125,7 +122,7 @@ const {
       path.resolve(__dirname, "../src/orbitdb.transmute.openpgp.claim.json"),
       JSON.stringify(
         {
-          address: claimsAddress,
+          address: claimAddress,
           did: didData.orbitDID,
           storeObject: {
             _id: object.id,

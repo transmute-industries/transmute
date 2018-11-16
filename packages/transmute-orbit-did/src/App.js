@@ -5,6 +5,7 @@ import "./App.css";
 
 // import OrbitDBPeerInfo from "./components/OrbitDBPeerInfo";
 import DIDResolver from "./components/DIDResolver";
+import ClaimResolver from "./components/ClaimResolver";
 
 const OrbitDB = require("orbit-db");
 
@@ -64,6 +65,7 @@ class App extends Component {
             {" "}
             {/* <OrbitDBPeerInfo ipfs={ipfs} orbitdb={orbitdb} /> */}
             <DIDResolver orbitdb={orbitdb} />
+            <ClaimResolver orbitdb={orbitdb} />
           </div>
         )}
       </div>

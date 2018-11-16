@@ -1,8 +1,12 @@
 const transmuteDID = require("@transmute/transmute-did");
+const {
+  TransmuteAdapterOrbitDB
+} = require("@transmute/transmute-adapter-orbit-db");
 const IPFS = require("ipfs");
 const OrbitDB = require("orbit-db");
 const CustomTestKeystore = transmuteDID.ellipticExtensions.CustomTestKeystore;
 
+const claimData = require("./orbitdb.transmute.openpgp.claim.json");
 const getOrbitDBFromKeypair = async (ipfsOptions, keypair) => {
   const ipfs = new IPFS(ipfsOptions);
 
@@ -70,9 +74,86 @@ const createOrbitDIDResolver = orbitdb => {
   };
 };
 
+const createOrbitClaimResolver = orbitdb => {
+  const adapter = new TransmuteAdapterOrbitDB(orbitdb);
+  const resolver = createOrbitDIDResolver(orbitdb);
+
+  // console.log(orbitDID);
+
+  //   console.log(adapter);
+  //
+  // //   console.log(address);
+
+  return {
+    resolve: async (orbitDID, signatureID) => {
+      const address = await orbitDBDIDToOrbitDBAddress(orbitDID);
+      const doc = await resolver.resolve(orbitDID);
+
+      console.log("verifying claim, resolving did doc...", doc);
+
+      const publicKey = doc.publicKey[1].publicKeyHex;
+
+      console.log("verifying claim, resolving did doc...", publicKey);
+
+      await adapter.open(address);
+
+      console.log("claimAddress ", adapter.db.address.toString());
+
+      await adapter.db.load();
+
+      const kidTransformRegex = /(did:(.+)\.transmute\.(.+)):(.+\.)(.+)/;
+
+      const transform = did => {
+        let result = did.match(kidTransformRegex);
+        if (result) {
+          //   const storageKey = result[2];
+          //   const storageID = result[4];
+
+          const maybeKIDInDID = result[5].split("#");
+
+          const didSignatureMethod = result[3];
+
+          const didSignatureID = maybeKIDInDID[0];
+          const kid = maybeKIDInDID[1];
+
+          let kidPart = kid ? `#${kid}` : "";
+
+          //   console.log({
+          //     storageKey,
+          //     storageID,
+          //     didSignatureMethod,
+          //     didSignatureID,
+          //     kid
+          //   });
+          return `did:transmute.${didSignatureMethod}:${didSignatureID}${kidPart}`;
+        } else {
+          return did;
+        }
+      };
+
+      const signatureStore = new transmuteDID.did.SignatureStore(
+        adapter,
+        resolver,
+        transmuteDID.did.verifyDIDSignature,
+        transform
+      );
+
+      // console.log(signatureStore);
+      console.log("loading signature...");
+
+      const storeObject = await signatureStore.getBySignatureID(signatureID);
+
+      console.log("loaded signature...", storeObject);
+
+      return storeObject;
+    }
+  };
+};
+
 export {
   getOrbitDBFromKeypair,
   orbitdbAddressToDID,
   orbitDBDIDToOrbitDBAddress,
-  createOrbitDIDResolver
+  createOrbitDIDResolver,
+  createOrbitClaimResolver
 };
