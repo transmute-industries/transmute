@@ -17,14 +17,9 @@ import Typography from "@material-ui/core/Typography";
 
 const didData = require("../orbitdb.transmute.openpgp.did.json");
 
-const { createOrbitDIDResolver } = require("../orbitHelpers");
-
-// console.log(didData, orbitHelpers);
-// const didExample = `/orbitdb/QmTjTQfsuSiMrMwzjLUZH4fgZAdmsML4aP1Ms6DTrhT4zb/did:transmute.openpgp:6075f9ad86de29d7644752c95e7379e3e5e4a806`;
+const { createOrbitDIDResolver, transmuteDID } = require("../orbitHelpers");
 
 const fullPlaceholder = `/orbitdb/QmQ8ZK.../did:openpgp:fingerprint:21b5ef5af6...`;
-
-// console.log("did example: " + didExample);
 
 const styles = theme => ({
   container: {
@@ -65,7 +60,10 @@ class DIDResolver extends Component {
 
   render() {
     const { classes, orbitdb } = this.props;
-    const resolver = createOrbitDIDResolver(orbitdb);
+    const resolver = createOrbitDIDResolver(
+      orbitdb,
+      transmuteDID.did.verifyDIDSignature
+    );
     return (
       <div className="DIDResolver">
         <Card className={classes.card}>

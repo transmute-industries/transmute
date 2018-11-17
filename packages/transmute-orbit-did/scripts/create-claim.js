@@ -7,15 +7,19 @@ const { ipfsOptions } = require("../src/constants");
 const didData = require("../src/orbitdb.transmute.openpgp.did.json");
 
 const {
+  getReadyIPFS,
+  getOrbitDBFromKeypair,
   TransmuteAdapterOrbitDB
 } = require("@transmute/transmute-adapter-orbit-db");
 
 const {
-  getOrbitDBFromKeypair,
-  orbitdbAddressToDID,
   orbitDBDIDToOrbitDBAddress,
-  createOrbitDIDResolver
-} = require("./orbitHelpers");
+  createOrbitDIDResolver,
+  createOrbitClaimResolver,
+  transform
+} = transmuteDID.did.orbitDID;
+
+const { SignatureStore, verifyDIDSignature } = transmuteDID.did;
 
 (async () => {
   try {
@@ -57,56 +61,22 @@ const {
       overwriteKID: `${didData.orbitDID}#${openPGPKID}`
     });
 
-    // console.log({ object, signature, meta });
-
     const orbitKeypair = wallet.data.keystore[orbitKID].data;
-    const orbitdb = await getOrbitDBFromKeypair(ipfsOptions, orbitKeypair);
+
+    const ipfs = await getReadyIPFS(ipfsOptions);
+    const orbitdb = await getOrbitDBFromKeypair(ipfs, orbitKeypair);
 
     const adapter = new TransmuteAdapterOrbitDB(orbitdb);
-
-    //   console.log(adapter);
     const address = await orbitDBDIDToOrbitDBAddress(didData.orbitDID);
     await adapter.open(address);
 
     const claimAddress = adapter.db.address.toString();
-    console.log("claimAddress ", claimAddress);
+    const resolver = await createOrbitDIDResolver(orbitdb, verifyDIDSignature);
 
-    const resolver = await createOrbitDIDResolver(orbitdb);
-
-    const kidTransformRegex = /(did:(.+)\.transmute\.(.+)):(.+\.)(.+)/;
-
-    const transform = did => {
-      let result = did.match(kidTransformRegex);
-      if (result) {
-        //   const storageKey = result[2];
-        //   const storageID = result[4];
-
-        const maybeKIDInDID = result[5].split("#");
-
-        const didSignatureMethod = result[3];
-
-        const didSignatureID = maybeKIDInDID[0];
-        const kid = maybeKIDInDID[1];
-
-        let kidPart = kid ? `#${kid}` : "";
-
-        //   console.log({
-        //     storageKey,
-        //     storageID,
-        //     didSignatureMethod,
-        //     didSignatureID,
-        //     kid
-        //   });
-        return `did:transmute.${didSignatureMethod}:${didSignatureID}${kidPart}`;
-      } else {
-        return did;
-      }
-    };
-
-    const signatureStore = new transmuteDID.did.SignatureStore(
+    const signatureStore = new SignatureStore(
       adapter,
       resolver,
-      transmuteDID.did.verifyDIDSignature,
+      verifyDIDSignature,
       transform
     );
 
@@ -115,9 +85,29 @@ const {
       signature,
       meta
     };
-    const { objectID, signatureID } = await signatureStore.add(storeObject);
 
-    //   console.log({ objectID, signatureID });
+    const { signatureID } = await signatureStore.add(storeObject);
+
+    const claimResolver = createOrbitClaimResolver(
+      orbitdb,
+      TransmuteAdapterOrbitDB,
+      SignatureStore,
+      verifyDIDSignature
+    );
+
+    const resolvedClaim = await claimResolver.resolve(
+      didData.orbitDID,
+      signatureID
+    );
+
+    const verifiedClaim = await signatureStore.verify(
+      resolvedClaim.object,
+      resolvedClaim.signature,
+      resolvedClaim.meta
+    );
+
+    console.log("\n🔗 Created, Uploaded, Resolved and Verified Claim");
+
     fs.writeFileSync(
       path.resolve(__dirname, "../src/orbitdb.transmute.openpgp.claim.json"),
       JSON.stringify(
@@ -130,28 +120,14 @@ const {
             signature,
             meta
           },
-          objectID,
-          signatureID
+          signatureID,
+          verifiedClaim
         },
         null,
         2
       )
     );
-
-    console.log("\nClaim written.");
-
-    try {
-      const verified = await signatureStore.verify(
-        storeObject.object,
-        storeObject.signature,
-        storeObject.meta
-      );
-
-      console.log("\nClaim verified: ", verified);
-    } catch (e) {
-      console.log(e);
-    }
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 })();

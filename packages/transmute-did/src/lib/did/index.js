@@ -9,6 +9,8 @@ const { didMethods } = require('./constants');
 
 const SignatureStore = require('./SignatureStore');
 
+const orbitDID = require('./orbitDID');
+
 const publicKeyToDID = async (type, publicKey) => {
   switch (type) {
     case 'openpgp':
@@ -78,4 +80,5 @@ module.exports = {
   publicKeyToDID,
   verifyDIDSignature,
   SignatureStore,
+  orbitDID,
 };

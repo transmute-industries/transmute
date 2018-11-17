@@ -13,7 +13,7 @@ console.log("Resolver Started: ");
 
 const didData = require("../src/orbitdb.transmute.openpgp.did.json");
 
-const { createOrbitDIDResolver } = require("./orbitHelpers");
+const { createOrbitDIDResolver } = transmuteDID.did.orbitDID;
 
 console.log(`http://localhost:7000/1.0/identifiers/${didData.orbitDID}`);
 
@@ -21,7 +21,10 @@ console.log(`http://localhost:7000/1.0/identifiers/${didData.orbitDID}`);
   const node = await getReadyIPFS(ipfsOptions);
   const resolverKeypair = await createKeypair();
   const orbitdb = await getOrbitDBFromKeypair(node, resolverKeypair);
-  const resolver = createOrbitDIDResolver(orbitdb);
+  const resolver = createOrbitDIDResolver(
+    orbitdb,
+    transmuteDID.did.verifyDIDSignature
+  );
 
   http
     .createServer(async (req, resp) => {

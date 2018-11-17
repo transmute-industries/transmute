@@ -1,4 +1,11 @@
-# OrbitDB DID
+# Transmute Orbit DID
+
+🚧 Under Construction. Not for production use! 🚧
+
+<p align="center">
+  <img src="../../transmute-banner.png"/>
+</p>
+
 
 This is an experiment, and usafe to use.
 

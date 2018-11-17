@@ -1,58 +1,29 @@
 import React, { Component } from "react";
 import GitHubForkRibbon from "react-github-fork-ribbon";
 
-import "./App.css";
-
-// import OrbitDBPeerInfo from "./components/OrbitDBPeerInfo";
 import DIDResolver from "./components/DIDResolver";
 import ClaimResolver from "./components/ClaimResolver";
 
-const OrbitDB = require("orbit-db");
-
-// eslint-disable-next-line
-const ipfs = new window.Ipfs({
-  repo: "/orbitdb/examples/browser/new/ipfs/0.27.3",
-  start: true,
-  EXPERIMENTAL: {
-    pubsub: true
-  },
-  config: {
-    Addresses: {
-      Swarm: [
-        // Use IPFS dev signal server
-        // '/dns4/star-signal.cloud.ipfs.team/wss/p2p-webrtc-star',
-        "/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star"
-        // Use local signal server
-        // '/ip4/0.0.0.0/tcp/9090/wss/p2p-webrtc-star',
-      ]
-    }
-  }
-});
-
-console.log("hello :)");
-
-// eslint-disable-next-line
-let orbitdb = new OrbitDB(ipfs);
-
-ipfs.on("error", e => console.error(e));
+const { getOrbitDBFromKeypair, ipfsOptions } = require("./orbitHelpers");
 
 class App extends Component {
   state = {
     ready: false,
     address: ""
   };
-  componentWillMount() {
-    ipfs.on("ready", async () => {
-      console.log("IPFS READY");
-      const ipfsPeerInfo = await ipfs.id();
-
-      this.setState({
-        ready: true,
-        ipfsPeerInfo
-      });
+  async componentWillMount() {
+    const keypair = {
+      publicKey:
+        "044ae395f44339e7838c406e127791c149dada742fd9674e64125fb07b15bda5e1dcbd8ff4042af018404da79f22a3895fae7aaf528e3c445e193324a026afe670",
+      privateKey:
+        "a6574e23c60bbf9e55fa2f6eef9ee1c3f91652d0ab7421dad3899f496108e86f"
+    };
+    this.setState({
+      orbitdb: await getOrbitDBFromKeypair(ipfsOptions, keypair)
     });
   }
   render() {
+    const { orbitdb } = this.state;
     return (
       <div className="App">
         <GitHubForkRibbon
@@ -62,7 +33,7 @@ class App extends Component {
         >
           Fork me on GitHub
         </GitHubForkRibbon>
-        {this.state.ready && (
+        {orbitdb && (
           <div>
             {" "}
             {/* <OrbitDBPeerInfo ipfs={ipfs} orbitdb={orbitdb} /> */}

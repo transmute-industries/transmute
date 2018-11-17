@@ -13,19 +13,15 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 
-// const orbitHelpers = require("../orbitHelpers");
-
 const claimData = require("../orbitdb.transmute.openpgp.claim.json");
 const didData = require("../orbitdb.transmute.openpgp.did.json");
 
-const { createOrbitClaimResolver } = require("../orbitHelpers");
-
-// console.log(claimData, orbitHelpers);
-// const didExample = `/orbitdb/QmTjTQfsuSiMrMwzjLUZH4fgZAdmsML4aP1Ms6DTrhT4zb/did:transmute.openpgp:6075f9ad86de29d7644752c95e7379e3e5e4a806`;
-
+const {
+  createOrbitClaimResolver,
+  transmuteDID,
+  TransmuteAdapterOrbitDB
+} = require("../orbitHelpers");
 const fullPlaceholder = `/orbitdb/QmQ8ZK.../did:openpgp:fingerprint:21b5ef5af6...`;
-
-// console.log("did example: " + didExample);
 
 const styles = theme => ({
   container: {
@@ -67,7 +63,12 @@ class ClaimResolver extends Component {
 
   render() {
     const { classes, orbitdb } = this.props;
-    const resolver = createOrbitClaimResolver(orbitdb);
+    const resolver = createOrbitClaimResolver(
+      orbitdb,
+      TransmuteAdapterOrbitDB,
+      transmuteDID.did.SignatureStore,
+      transmuteDID.did.verifyDIDSignature
+    );
     return (
       <div className="ClaimResolver">
         <Card className={classes.card}>
