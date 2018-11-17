@@ -45,8 +45,8 @@ before_script:
 
 script:
   - npm i && lerna bootstrap
-  - lerna run --scope transmute-did test
-  - lerna run --scope transmute-did coverage
+  - lerna run --scope @transmute/transmute-did test
+  - lerna run --scope @transmute/transmute-did coverage
   - lerna run --scope @transmute/transmute-adapter-ipfs test
   - lerna run --scope @transmute/transmute-adapter-ipfs coverage
   - lerna run --scope @transmute/transmute-adapter-firestore test
