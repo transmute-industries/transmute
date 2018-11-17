@@ -69,13 +69,10 @@ describe('SignatureStore', () => {
         notes: 'DID Document signature',
       },
     };
-    const { objectID, signatureID } = await signatureStore.add(storeObject);
+    const { signatureID } = await signatureStore.add(storeObject);
 
-    const storeObject1 = await signatureStore.getByObjectID(objectID);
     const storeObject2 = await signatureStore.getBySignatureID(signatureID);
-
-    expect(storeObject1).toEqual(storeObject);
-    expect(storeObject2).toEqual(storeObject);
+    expect(storeObject2.object).toEqual(doc);
   });
 
   it('supports verifying an elliptic signature', async () => {
