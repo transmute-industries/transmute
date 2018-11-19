@@ -26,6 +26,7 @@
     "jest-environment-aegir": "^1.0.1"
   },
   "dependencies": {
+    "@transmute/transmute-adapter-memory": "1.0.0-alpha.0",
     "base64url": "^3.0.0",
     "bip39": "^2.5.0",
     "did-resolver": "0.0.4",
@@ -33,10 +34,10 @@
     "ethereumjs-util": "^5.2.0",
     "hdkey": "^1.1.0",
     "js-sha3": "^0.8.0",
+    "jsonschema": "^1.2.4",
     "libsodium-wrappers": "^0.7.3",
     "lodash": "^4.17.11",
     "openpgp": "^4.0.1",
-    "secrets.js-grempe": "^1.1.0",
-    "@transmute/transmute-adapter-memory": "1.0.0-alpha.0"
+    "secrets.js-grempe": "^1.1.0"
   }
 }

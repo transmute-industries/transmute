@@ -1,0 +1,10 @@
+{
+  "id": "/didWalletPlaintextSchema",
+  "properties": {
+    "version": { "type": "string" },
+    "salt": { "type": "string" },
+    "keystore": { "type": "object" }
+  },
+  "required": ["version", "salt", "keystore"],
+  "type": "object"
+}
