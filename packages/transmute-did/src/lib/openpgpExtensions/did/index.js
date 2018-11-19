@@ -26,14 +26,12 @@ const verifyDIDDocumentWasSignedByID = async (didDocumentPath, didDocumentSignat
 
   const verified = await openpgp.verify(options);
   const validity = verified.signatures[0].valid; // true
-  // console.log(verified.signatures[0])
   if (validity) {
     // console.log("signed by key id " + verified.signatures[0].keyid.toHex());
     const didParts = didDocumentJson.id.split(':');
     const fingerprint = didParts[didParts.length - 1];
     const kid = verified.signatures[0].keyid.toHex();
     const signatureMathesFingerprint = fingerprint.substring(24).toLowerCase() === kid;
-    // console.log(signatureMathesFingerprint);
     return signatureMathesFingerprint;
   }
   return false;

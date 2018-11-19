@@ -1,7 +1,3 @@
-// const sodiumExtensions = require('../../sodiumExtensions');
-// const openpgpExtensions = require('../../openpgpExtensions');
-// const ellipticExtensions = require('../../ellipticExtensions');
-
 class SignatureStore {
   constructor(adapter, resolver, verifyDIDSignature, kidTransform) {
     this.adapter = adapter;
@@ -31,8 +27,6 @@ class SignatureStore {
     if (!this.signatureIndex[signatureID]) {
       this.signatureIndex[signatureID] = await this.adapter.readJson(signatureID);
     }
-
-    // console.log('yolo...', this.adapter);
     return this.signatureIndex[signatureID];
   }
 

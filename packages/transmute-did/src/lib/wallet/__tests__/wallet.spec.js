@@ -8,7 +8,6 @@ const didWallet = require('../index');
 const pack = require('../../../../package.json');
 
 const sodiumExtensions = require('../../sodiumExtensions');
-// const openpgpExtensions = require('../../openpgpExtensions');
 const ethereumExtensions = require('../../ethereumExtensions');
 
 const passphrase = 'yolo';
@@ -38,10 +37,6 @@ describe('did-wallet', () => {
       const wallet = new didWallet.TransmuteDIDWallet(
         JSON.parse(fs.readFileSync(emptyWalletPath).toString()),
       );
-      // const keypair = await openpgpExtensions.cryptoHelpers.generateArmoredKeypair({
-      //   name: 'test-key',
-      //   passphrase: 'yolo',
-      // });
       const keypair = {
         publicKey:
           '-----BEGIN PGP PUBLIC KEY BLOCK-----\r\nVersion: OpenPGP.js v4.0.1\r\nComment: https://openpgpjs.org\r\n\r\nxk8EW+sYmRMFK4EEAAoCAwQgn6FzXRZot68Pudbhd1zXxc8loBPpqFmuli9f\nsa6xeTNFjY9IhOAGr0HQNEKh4DhyuIoHf0CTtkzKBEHECK4mzQh0ZXN0LWtl\necJ3BBATCAApBQJb6xiZBgsJBwgDAgkQcC0BOMNJygQEFQgKAgMWAgECGQEC\nGwMCHgEAAFAyAP9gy5LEX/24+YA1o7Hc5mLfWvsx/fpU48xCKd8JD22TPwEA\n3Fgf3c0NvoF0UxfR5ldDSvTvp+jrw5gvueZTzHlmNOPOUwRb6xiZEgUrgQQA\nCgIDBDtD+1QEekxkg8yU83fN+nMFAOgLOm2KKxhGxypyPZJgubSEk5J1kFrG\nQtu11L9Afo3QIezx0/iKKnv8sMDupkUDAQgHwmEEGBMIABMFAlvrGJkJEHAt\nATjDScoEAhsMAABFvwEA3Xr3daeZThSbNEklVtrOvC3Um9gXZsqHDEELF2rF\nzCUA/RkscQMeVcd6AH8f3Vl6SneXiY9qTgJfD6NAP0qMYsEo\r\n=8g9/\r\n-----END PGP PUBLIC KEY BLOCK-----\r\n\r\n',
@@ -65,7 +60,6 @@ describe('did-wallet', () => {
     });
 
     it('supports adding an ethereum keypair', async () => {
-      // const mneumonic = await ethereumExtensions.generateBIP39Mnemonic();
       const mneumonic = 'pear outside bone car depend dentist evil arrive rhythm price stand off';
       const hdPath = "m/44'/60'/0'/0/0";
       const keypair = await ethereumExtensions.mnemonicToKeypair(mneumonic, hdPath);
@@ -121,7 +115,6 @@ describe('did-wallet', () => {
       const wallet = new didWallet.TransmuteDIDWallet(
         JSON.parse(fs.readFileSync(fullWalletPath).toString()),
       );
-      // const keypair = await sodiumExtensions.generateCryptoSignKeypair();
       const keypair = {
         publicKey: '0dd352b917fe90926c3ac045d91c37bdcc22e2ca90e0cc3b3409be8ceda936a6',
         privateKey:

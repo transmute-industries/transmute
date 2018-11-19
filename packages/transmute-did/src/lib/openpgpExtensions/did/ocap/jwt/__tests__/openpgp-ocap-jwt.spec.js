@@ -40,14 +40,10 @@ describe('did openpgp ocap jwt', () => {
       { did: aliceDID, privateKey: testKeypair0.privateKey, passphrase },
     );
 
-    // console.log("CREATED: ", jwt);
-
     const verified = await openpgpVerifySignedJWT(jwt, {
       issDID: aliceDID,
       issPublicKey: testKeypair0.publicKey,
     });
-
-    // console.log('VERIFIED: ', verified);
 
     expect(verified.payload.iss).toBe(aliceDID);
   });

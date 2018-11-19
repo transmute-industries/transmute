@@ -93,7 +93,7 @@ describe('did openpgp webOfTrustDemo', () => {
       //   }
     };
     CtoACap = await openpgpSignJson(objCap, CDoc.publicKey[0].id, C.privateKey, passphrase);
-    // console.log(CtoACap);
+    expect(CtoACap).toBeDefined();
   });
 
   it('can verify a gpg object capability is signed correctly?', async () => {
@@ -146,7 +146,7 @@ describe('did openpgp webOfTrustDemo', () => {
     };
 
     AtoBCapWithCavs = await openpgpSignJson(objCap, ADoc.publicKey[0].id, A.privateKey, passphrase);
-    // console.log(AtoBCapWithCavs);
+    expect(AtoBCapWithCavs).toBeDefined();
   });
 
   it('can B delegate his partial access to C to D with caveats?', async () => {
@@ -185,7 +185,7 @@ describe('did openpgp webOfTrustDemo', () => {
       //   }
     };
     BtoDCapWithCavs = await openpgpSignJson(objCap, BDoc.publicKey[0].id, B.privateKey, passphrase);
-    // console.log(BtoDCapWithCavs);
+    expect(BtoDCapWithCavs).toBeDefined();
   });
 
   it('can D use cap chain to upload to C?', async () => {
@@ -223,7 +223,7 @@ describe('did openpgp webOfTrustDemo', () => {
     };
 
     DInvocOfC = await openpgpSignJson(objCap, DDoc.publicKey[0].id, D.privateKey, passphrase);
-    // console.log(DInvocOfC);
+    expect(DInvocOfC).toBeDefined();
   });
 
   it('can D send encrypted Invocation to C?', async () => {
@@ -242,8 +242,6 @@ describe('did openpgp webOfTrustDemo', () => {
       publicKey: D.publicKey,
       passphrase,
     });
-    // console.log('plainText: ', plainText);
-
     expect(plainText).toEqual(JSON.stringify(DInvocOfC));
   });
 });

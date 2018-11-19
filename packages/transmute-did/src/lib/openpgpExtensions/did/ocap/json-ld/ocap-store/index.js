@@ -36,8 +36,6 @@ module.exports = class OCAPStore {
   }
 
   async verifyChain(proclamation) {
-    // console.log(proclamation);
-
     let searching = true;
     let cap = this.caps[proclamation];
 

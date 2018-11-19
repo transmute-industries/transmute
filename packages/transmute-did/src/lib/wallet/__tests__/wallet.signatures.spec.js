@@ -32,7 +32,6 @@ describe('did-wallet', () => {
   let wallet;
   let doc;
   let signature;
-  let meta;
   beforeAll(async () => {
     wallet = new didWallet.TransmuteDIDWallet(
       JSON.parse(fs.readFileSync(fullWalletPath).toString()),
