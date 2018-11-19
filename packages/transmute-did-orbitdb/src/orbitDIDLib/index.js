@@ -1,3 +1,5 @@
+const { constructDIDPublicKeyID, publicKeyKIDPrefix } = require('@transmute/transmute-did').did;
+
 const orbitdbAddressToDID = (address) => {
   const parts = address.split('did:transmute.');
   const orbitAddress = parts[0].replace('/orbitdb/', '').replace('/', '');
@@ -7,6 +9,9 @@ const orbitdbAddressToDID = (address) => {
 };
 
 const orbitDBDIDToOrbitDBAddress = (orbitDID) => {
+  // we exclude the fragment when converting a did.
+  //   eslint-disable-next-line
+  orbitDID = orbitDID.split('#')[0];
   const parts = orbitDID.split('.');
   const didParts = parts[2].split(':');
   const orbitAddress = didParts[1];
@@ -25,7 +30,7 @@ const createOrbitDIDResolver = (orbitdb, verifyDIDSignature) => ({
 
     // did doc signatures do not contain a did reference
     // here we hack the kid to be correct so verify will select the correct key
-    meta.kid = `${object.id}#${meta.kid}`;
+    meta.kid = constructDIDPublicKeyID(object.id, meta.kid);
 
     const success = await verifyDIDSignature(object, signature, meta, object);
 
@@ -46,7 +51,7 @@ const transform = (did) => {
     const didSignatureMethod = result[3];
     const didSignatureID = maybeKIDInDID[0];
     const kid = maybeKIDInDID[1];
-    const kidPart = kid ? `#${kid}` : '';
+    const kidPart = kid ? `#${publicKeyKIDPrefix}${kid}` : '';
     return `did:transmute.${didSignatureMethod}:${didSignatureID}${kidPart}`;
   }
   return did;

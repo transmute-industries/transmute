@@ -7,6 +7,8 @@ const sodiumExtensions = require('../sodiumExtensions');
 const openpgpExtensions = require('../openpgpExtensions');
 const ellipticExtensions = require('../ellipticExtensions');
 
+const { constructDIDPublicKeyID } = didLib;
+
 //   eslint-disable-next-line
 const { sha3_256 } = require('js-sha3');
 
@@ -33,7 +35,7 @@ const constructPublicKeysProperty = (did, keystore) => {
     key => key.meta && key.meta.did && key.meta.did.publicKey,
   );
   return onlyPublicKeys.map(key => ({
-    id: `${did}#${key.kid}`,
+    id: constructDIDPublicKeyID(did, key.kid),
     type: key.meta.did.signatureType,
     owner: did,
     [key.meta.did.publicKeyType]: key.data.publicKey,
@@ -47,7 +49,7 @@ const constructAuthenticationProperty = (did, keystore) => {
     key => key.meta && key.meta.did && key.meta.did.authentication,
   );
   return onlyAuthentricationKeys.map(key => ({
-    publicKey: `${did}#${key.kid}`,
+    publicKey: constructDIDPublicKeyID(did, key.kid),
     type: key.meta.did.signatureType,
   }));
 };
@@ -123,7 +125,7 @@ class TransmuteDIDWallet {
       const result = await this.toDIDDocument(asDIDByKID, asDIDByKIDPassphrase);
       //   eslint-disable-next-line
       doc = result.object;
-      if (!requireKIDinPublicKeys(`${doc.id}#${kid}`, doc.publicKey)) {
+      if (!requireKIDinPublicKeys(constructDIDPublicKeyID(doc.id, kid), doc.publicKey)) {
         throw new Error('kid is not listed in did document. Cannot sign asDIDByKID');
       }
     }
@@ -152,7 +154,7 @@ class TransmuteDIDWallet {
         throw new Error('Unknown key type. Cannot sign did document');
     }
 
-    const kid2 = overwriteKID || (doc.id ? `${doc.id}#${kid}` : kid);
+    const kid2 = overwriteKID || (doc.id ? constructDIDPublicKeyID(doc.id, kid) : kid);
 
     const meta = {
       version: `${guessedType}@${pack.dependencies[guessedType]}`,

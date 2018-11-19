@@ -37,7 +37,6 @@ const getReadyIPFS = ipfsOptions => {
 
 const getOrbitDBFromKeypair = async (ipfs, keypair) => {
   return new Promise((resolve, reject) => {
-    // console.log("keypair: ", keypair);
     const keystore = new CustomTestKeystore(keypair);
     // Create OrbitDB instance
     const orbitdb = new OrbitDB(ipfs, "./orbitdb", {

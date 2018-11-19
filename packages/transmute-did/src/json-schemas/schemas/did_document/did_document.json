@@ -1,4 +1,11 @@
 {
+  "$schema": "https://docs.transmute.industries/schemas/com.transmute.self-desc/schema/jsonschema/1-0-0#",
+  "self": {
+    "vendor": "com.transmute",
+    "name": "didDocumentSchema",
+    "format": "jsonschema",
+    "version": "1-0-0"
+  },
   "id": "/didDocumentSchema",
   "properties": {
     "@context": { "type": "string" },

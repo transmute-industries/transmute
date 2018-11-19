@@ -9,7 +9,8 @@ const { didMethods } = require('./constants');
 
 const SignatureStore = require('./SignatureStore');
 
-const orbitDID = require('./orbitDID');
+const publicKeyKIDPrefix = 'kid=';
+const constructDIDPublicKeyID = (did, kid) => `${did}#${publicKeyKIDPrefix}${kid}`;
 
 const publicKeyToDID = async (type, publicKey) => {
   switch (type) {
@@ -28,6 +29,7 @@ const publicKeyToDID = async (type, publicKey) => {
 
 const getPublicKeyFromDIDDocByKID = (doc, kid) => {
   const key = _.find(doc.publicKey, key => key.id === kid);
+
   if (key.publicKeyPem) {
     return key.publicKeyPem;
   }
@@ -80,5 +82,6 @@ module.exports = {
   publicKeyToDID,
   verifyDIDSignature,
   SignatureStore,
-  orbitDID,
+  constructDIDPublicKeyID,
+  publicKeyKIDPrefix,
 };

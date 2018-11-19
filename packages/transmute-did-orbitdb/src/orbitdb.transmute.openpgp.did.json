@@ -1,0 +1,40 @@
+{
+  "orbitDID": "did:orbitdb.transmute.openpgp:QmSrJSHTtkP1FnS5NdV95tYiLgXN15m8LVN2py8Hpvh7Ur.92066afa13c212d70de716cba309733aad9ddd77",
+  "doc": {
+    "_id": "did:transmute.openpgp:92066afa13c212d70de716cba309733aad9ddd77",
+    "object": {
+      "@context": "https://w3id.org/did/v1",
+      "id": "did:transmute.openpgp:92066afa13c212d70de716cba309733aad9ddd77",
+      "publicKey": [
+        {
+          "id": "did:transmute.openpgp:92066afa13c212d70de716cba309733aad9ddd77#kid=be1e2a65341a9204dd7fae9fb3b5a004eedf757461d2181420610382960c949f",
+          "type": "Secp256k1VerificationKey2018",
+          "owner": "did:transmute.openpgp:92066afa13c212d70de716cba309733aad9ddd77",
+          "publicKeyPem": "-----BEGIN PGP PUBLIC KEY BLOCK-----\r\nVersion: OpenPGP.js v4.0.1\r\nComment: https://openpgpjs.org\r\n\r\nxk8EW/MxoxMFK4EEAAoCAwQ8tvyVZD/J3v2uE4iN9ksU/TIyluLMu+gcP4r0\nKSkTyTprMAHzY6kzOETt7AHSmJEajADvJJBrChAQwuAkhPxQzQh0ZXN0LWtl\necJ3BBATCAApBQJb8zGjBgsJBwgDAgkQowlzOq2d3XcEFQgKAgMWAgECGQEC\nGwMCHgEAAN9yAP9XLGibXpySFKrHuFVwlSSNTEb/dBjfd8r5wWLgfUBEZwD/\nXW1eE31JTMRjINZkTu22iC7NL8B8Y7HHxfoGsVYwDRrOUwRb8zGjEgUrgQQA\nCgIDBEQYK+dhgg/Imx6v+vGbTkMVFPURa7v00gfvD+NNuiRXoBDbOrJg6Qzv\nNXSSQmpLAgAoL2vvmXpsmVGFNr9GlWQDAQgHwmEEGBMIABMFAlvzMaMJEKMJ\nczqtnd13AhsMAAAmPgEAlbjlrA5+b/2VGujbQxchuuxcC0mYyFMHFzSiG+iF\n0FkBAO3+YdU+PfBmMk1bLYAF1M85Tx5v7YZk4lOv7xfjeIpR\r\n=Mq/M\r\n-----END PGP PUBLIC KEY BLOCK-----\r\n\r\n"
+        },
+        {
+          "id": "did:transmute.openpgp:92066afa13c212d70de716cba309733aad9ddd77#kid=8d950a39a395c5893392d9afc7200cc2ea05a2303e160afe1ea3404b612a4118",
+          "type": "Secp256k1VerificationKey2018",
+          "owner": "did:transmute.openpgp:92066afa13c212d70de716cba309733aad9ddd77",
+          "publicKeyHex": "04bdc07061123a32e09801ebf8df150c477756765853b290d49c68657c590c72ec9b9bdcbc9ea67c19bd4875501463effc8815d7985bfbaaec8e7875e84c94c028"
+        }
+      ],
+      "authentication": [
+        {
+          "publicKey": "did:transmute.openpgp:92066afa13c212d70de716cba309733aad9ddd77#kid=be1e2a65341a9204dd7fae9fb3b5a004eedf757461d2181420610382960c949f",
+          "type": "Secp256k1VerificationKey2018"
+        },
+        {
+          "publicKey": "did:transmute.openpgp:92066afa13c212d70de716cba309733aad9ddd77#kid=8d950a39a395c5893392d9afc7200cc2ea05a2303e160afe1ea3404b612a4118",
+          "type": "Secp256k1VerificationKey2018"
+        }
+      ]
+    },
+    "signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v4.0.1\r\nComment: https://openpgpjs.org\r\n\r\nwl4EARMIABAFAlvzMa0JEKMJczqtnd13AADRRAD/QCNLJmr7LRDCqe85PEOx\ndvm3SeI76SN4gFRZiqg9oi0BAIjrGN96d1pJFtq8ECxW/HfW1wpWbynmsowU\na5sDIAYX\r\n=ZZeb\r\n-----END PGP SIGNATURE-----\r\n",
+    "meta": {
+      "version": "openpgp@^4.0.1",
+      "kid": "be1e2a65341a9204dd7fae9fb3b5a004eedf757461d2181420610382960c949f"
+    }
+  },
+  "hash": "Qmb8Kre45HVkW1DvdhLJdFMLD3TBKMCnuBnbpynUnMQJJ6"
+}

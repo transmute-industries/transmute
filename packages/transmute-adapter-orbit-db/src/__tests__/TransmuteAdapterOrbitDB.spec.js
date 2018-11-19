@@ -23,9 +23,7 @@ describe("TransmuteAdapterOrbitDB", () => {
   let address;
   beforeAll(async () => {
     ipfs = await getReadyIPFS(ipfsOptions);
-    // orbitdb = await getOrbitDBFromKeypair(ipfs, keypair);
     ipfs.on("error", error => {
-      // console.info("TransmuteAdapterOrbitDB: ", error.code);
       expect(error.code).toBe("ERR_DB_DELETE_FAILED");
     });
     orbitdb = await getOrbitDBFromKeypair(ipfs, keypair);
