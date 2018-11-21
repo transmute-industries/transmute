@@ -20,7 +20,7 @@ const {
   createOrbitClaimResolver,
   transmuteDID,
   TransmuteAdapterOrbitDB
-} = require("../orbitHelpers");
+} = require("../orbitDIDLib");
 const fullPlaceholder = `/orbitdb/QmQ8ZK.../did:openpgp:fingerprint:21b5ef5af6...`;
 
 const styles = theme => ({

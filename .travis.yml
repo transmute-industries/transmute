@@ -45,14 +45,15 @@ before_script:
 
 script:
   - npm i && lerna bootstrap
-  - lerna run --scope @transmute/transmute-did test
+
   - lerna run --scope @transmute/transmute-did coverage
-  - lerna run --scope @transmute/transmute-adapter-ipfs test
+  
+  - lerna run --scope @transmute/transmute-adapter-memory coverage
+  - lerna run --scope @transmute/transmute-adapter-orbit-db coverage
   - lerna run --scope @transmute/transmute-adapter-ipfs coverage
-  - lerna run --scope @transmute/transmute-adapter-firestore test
   - lerna run --scope @transmute/transmute-adapter-firestore coverage
-  - lerna run --scope @transmute/transmute-adapter-firebase-rtdb test
   - lerna run --scope @transmute/transmute-adapter-firebase-rtdb coverage
+
   - lerna run --scope @transmute/transmute-framework truffle:test
   - lerna run --scope @transmute/transmute-framework truffle:migrate
   - lerna run --scope @transmute/transmute-framework test

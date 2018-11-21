@@ -17,7 +17,7 @@ import Typography from "@material-ui/core/Typography";
 
 const didData = require("../orbitdb.transmute.openpgp.did.json");
 
-const { createOrbitDIDResolver, transmuteDID } = require("../orbitHelpers");
+const { createOrbitDIDResolver, transmuteDID } = require("../orbitDIDLib");
 
 const fullPlaceholder = `/orbitdb/QmQ8ZK.../did:openpgp:fingerprint:21b5ef5af6...`;
 

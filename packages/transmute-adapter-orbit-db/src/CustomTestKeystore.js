@@ -7,7 +7,6 @@ const ec = new EC("secp256k1");
  */
 class CustomTestKeystore {
   constructor(keypair) {
-    // this.createKey()
     this.key = ec.keyPair({
       pub: keypair.publicKey,
       priv: keypair.privateKey,

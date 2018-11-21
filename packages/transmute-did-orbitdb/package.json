@@ -2,7 +2,7 @@
   "name": "@transmute/transmute-did-orbitdb",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://transmute.world/ipns/QmeAEqFBjW9LqcoEXRzj4NS1qBC3sdGh6y9PvPTRkieG3C",
+  "homepage": "https://transmute.world/ipns/QmabE1HbPoeTEqA4THQWAzu1oMWqnFfRCzKqEaDYyTWmGV",
   "dependencies": {
     "@material-ui/core": "^3.5.1",
     "@material-ui/icons": "^3.0.1",
@@ -23,7 +23,10 @@
     "did:create:claim": "node ./scripts/create-claim.js",
     "did:resolver": "node ./scripts/resolver.js",
     "start": "react-scripts start",
-    "build": "export NODE_OPTIONS='--max-old-space-size=2048' && react-scripts build",
+    "build": "react-scripts build && npm run delete-maps",
+    "delete-maps": "yarn run delete-map-files && yarn run delete-references-to-map-files",
+    "delete-map-files": "find ./build -name '*.map' -delete",
+    "delete-references-to-map-files": "find ./build -regex '.*\\.\\(js\\|css\\)' -exec sed -i -E '\\/[\\*\\/]#\\ssourceMappingURL=main(\\.[0-9a-f]+)?\\.(css|js)\\.map(\\*\\/)?/g' {} +",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "node ./scripts/deploy-demo.js"
@@ -38,7 +41,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "gh-pages": "^2.0.1",
     "ipfs": "^0.33.1",
-    "gh-pages": "^2.0.1"
+    "ipfs-api": "^26.1.2"
   }
 }

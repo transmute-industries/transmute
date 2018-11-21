@@ -73,7 +73,7 @@ class TransmuteAdapterOrbitDB {
   /**
    * Converts bytes32 to ipfs multihash
    * @function
-   * @memberof TransmuteAdaperMemory
+   * @memberof TransmuteAdapterOrbitDB
    * @name bytes32ToMultihash
    * @param {String} hash bytes32 hash of IPFS multihash
    * @returns {String} IPFS multihash of bytes32 hash
@@ -85,7 +85,7 @@ class TransmuteAdapterOrbitDB {
   /**
    * Convert ipfs multihash to bytes32
    * @function
-   * @memberof TransmuteAdaperMemory
+   * @memberof TransmuteAdapterOrbitDB
    * @name multihashToBytes32
    * @param {String} ipfshash IPFS multihash of bytes32 hash
    * @returns {String} bytes32 hash of IPFS multihash

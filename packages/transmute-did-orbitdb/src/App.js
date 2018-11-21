@@ -1,10 +1,15 @@
 import React, { Component } from "react";
 import GitHubForkRibbon from "react-github-fork-ribbon";
 
-import DIDResolver from "./components/DIDResolver";
-import ClaimResolver from "./components/ClaimResolver";
+// yolo...
+// import DIDResolver from "./components/DIDResolver";
+// import ClaimResolver from "./components/ClaimResolver";
 
-const { getOrbitDBFromKeypair, ipfsOptions } = require("./orbitHelpers");
+// const { getOrbitDBFromKeypair, ipfsOptions } = require("./orbitDIDLib");
+
+
+console.log('haha');
+
 
 class App extends Component {
   state = {
@@ -12,15 +17,15 @@ class App extends Component {
     address: ""
   };
   async componentWillMount() {
-    const keypair = {
-      publicKey:
-        "044ae395f44339e7838c406e127791c149dada742fd9674e64125fb07b15bda5e1dcbd8ff4042af018404da79f22a3895fae7aaf528e3c445e193324a026afe670",
-      privateKey:
-        "a6574e23c60bbf9e55fa2f6eef9ee1c3f91652d0ab7421dad3899f496108e86f"
-    };
-    this.setState({
-      orbitdb: await getOrbitDBFromKeypair(ipfsOptions, keypair)
-    });
+    // const keypair = {
+    //   publicKey:
+    //     "044ae395f44339e7838c406e127791c149dada742fd9674e64125fb07b15bda5e1dcbd8ff4042af018404da79f22a3895fae7aaf528e3c445e193324a026afe670",
+    //   privateKey:
+    //     "a6574e23c60bbf9e55fa2f6eef9ee1c3f91652d0ab7421dad3899f496108e86f"
+    // };
+    // this.setState({
+    //   orbitdb: await getOrbitDBFromKeypair(ipfsOptions, keypair)
+    // });
   }
   render() {
     const { orbitdb } = this.state;
@@ -36,9 +41,8 @@ class App extends Component {
         {orbitdb && (
           <div>
             {" "}
-            {/* <OrbitDBPeerInfo ipfs={ipfs} orbitdb={orbitdb} /> */}
-            <DIDResolver orbitdb={orbitdb} />
-            <ClaimResolver orbitdb={orbitdb} />
+            {/* <DIDResolver orbitdb={orbitdb} />
+            <ClaimResolver orbitdb={orbitdb} /> */}
           </div>
         )}
       </div>

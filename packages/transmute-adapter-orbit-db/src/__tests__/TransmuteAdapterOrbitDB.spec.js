@@ -41,18 +41,19 @@ describe("TransmuteAdapterOrbitDB", () => {
   });
 
   it("can open an orbit db by address", async () => {
+    adapter = new TransmuteAdapterOrbitDB(orbitdb);
     await adapter.open(address);
     expect(adapter.db).toBeDefined();
   });
 
   it("can bufferToContentID", async () => {
-    const contentID = await adapter.bufferToContentID(contentBuffer);
-    expect(contentID).toBe(contentID);
+    const contentID2 = await adapter.bufferToContentID(contentBuffer);
+    expect(contentID2).toBe(contentID);
   });
 
   it("writeJson", async () => {
-    const contentID = await adapter.writeJson(content);
-    expect(contentID).toBe(
+    const contentID2 = await adapter.writeJson(content);
+    expect(contentID2).toBe(
       "0x07944c2cf8591b40bce4bc010e2d8906cc31e8d8fbf8e7a352b458020cc9439f"
     );
   });

@@ -152,7 +152,7 @@ An example signature from this DID:
 }
 ```
 
-This contruction is made possible by a symmetric tranformation function between orbit db addresses and DIDs, as well as the fact that orbit db addresses are deterministic functions of the access control (list of public keys) and databse type and name.
+This construction is made possible by a symmetric transformation function between orbit db addresses and DIDs, as well as the fact that orbit db addresses are deterministic functions of the access control (list of public keys) and database type and name.
 
 [Learn more about Orbit DB Addresses](https://github.com/orbitdb/orbit-db/blob/master/GUIDE.md#address)
 

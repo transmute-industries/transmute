@@ -20,9 +20,7 @@ describe('ellipticExtensions', () => {
     it('from scratch', () => {
       const key = ec.genKeyPair();
       const sig = ec.sign(data, key).toDER('hex');
-      //   console.log(sig);
       const res = ec.verify(data, sig, key);
-      //   console.log(res);
       expect(res).toBe(true);
     });
 
@@ -34,9 +32,7 @@ describe('ellipticExtensions', () => {
         pubEnc: 'hex',
       });
       const sig = ec.sign(data, key).toDER('hex');
-      //   console.log(sig);
       const res = ec.verify(data, sig, key);
-      //   console.log(res);
       expect(res).toBe(true);
     });
   });
@@ -49,7 +45,6 @@ describe('ellipticExtensions', () => {
 
   it('sign', async () => {
     const signature2 = await sign(data, keypair.privateKey);
-    // console.log(signature2);
     expect(signature2).toBeDefined();
   });
 
