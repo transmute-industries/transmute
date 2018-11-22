@@ -1,0 +1,72 @@
+{
+  "name": "@transmute/transmute-did-orbit-db",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://transmute.world/ipns/QmabE1HbPoeTEqA4THQWAzu1oMWqnFfRCzKqEaDYyTWmGV",
+  "hostingOptions": {
+    "local": "http://localhost:8080/ipns/QmeAEqFBjW9LqcoEXRzj4NS1qBC3sdGh6y9PvPTRkieG3C",
+    "transmute": "https://transmute.world/ipns/QmabE1HbPoeTEqA4THQWAzu1oMWqnFfRCzKqEaDYyTWmGV"
+  },
+  "ipfsOptions": {
+    "local": {
+      "host": "localhost",
+      "port": "5001",
+      "protocol": "http",
+      "gatewayBase": "http://localhost:8080/ipns/"
+    },
+    "transmute": {
+      "host": "api.transmute.world",
+      "port": "443",
+      "protocol": "https",
+      "gatewayBase": "https://transmute.world/ipns/"
+    }
+  },
+  "dependencies": {
+    "@material-ui/core": "^3.5.1",
+    "@material-ui/icons": "^3.0.1",
+    "@transmute/transmute-adapter-orbit-db": "^1.0.0-alpha.1",
+    "@transmute/transmute-did": "^1.0.0-alpha.3",
+    "orbit-db": "^0.19.9",
+    "qrcode.react": "^0.8.0",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
+    "react-github-fork-ribbon": "^0.6.0",
+    "react-scripts": "2.1.1"
+  },
+  "scripts": {
+    "did:clean": "rm -rf orbitdb",
+    "did:wallet:create": "node ./scripts/create-wallet.js",
+    "did:wallet:encrypt": "node ./scripts/encrypt-wallet.js",
+    "did:wallet:decrypt": "node ./scripts/decrypt-wallet.js",
+    "did:create": "node ./scripts/create-did.js",
+    "did:create:claim": "node ./scripts/create-claim.js",
+    "did:resolver": "node ./scripts/resolver.js",
+    "start": "react-scripts start",
+    "build": "export NODE_OPTIONS='--max-old-space-size=2048' && react-scripts build && npm run delete-maps",
+    "delete-maps": "yarn run delete-map-files && yarn run delete-references-to-map-files",
+    "delete-map-files": "find ./build -name '*.map' -delete",
+    "delete-references-to-map-files": "find ./build -regex '.*\\.\\(js\\|css\\)' -exec sed -i -E '\\/[\\*\\/]#\\ssourceMappingURL=main(\\.[0-9a-f]+)?\\.(css|js)\\.map(\\*\\/)?/g' {} +",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "deploy:local": "npm run rewrite-homepage local && npm run build && node ./scripts/deploy-ipfs.js local",
+    "deploy:transmute": "npm run rewrite-homepage transmute && npm run build && node ./scripts/deploy-ipfs.js transmute",
+    "rewrite-homepage": "node ./scripts/rewrite-homepage.js"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "ipfs": "^0.33.1",
+    "lodash": "^4.17.11"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/transmute-industries/transmute.git"
+  }
+}

@@ -30,6 +30,9 @@ const publicKeyToDID = async (type, publicKey) => {
 const getPublicKeyFromDIDDocByKID = (doc, kid) => {
   const key = _.find(doc.publicKey, key => key.id === kid);
 
+  if (!key) {
+    throw new Error(`No key exists in doc for kid: ${kid}`);
+  }
   if (key.publicKeyPem) {
     return key.publicKeyPem;
   }
@@ -55,7 +58,15 @@ const guessKeyType = (meta) => {
 const verifyDIDSignature = (object, signature, meta, doc, kidTransform) => {
   const keyType = guessKeyType(meta);
   const kid2 = kidTransform ? kidTransform(meta.kid) : meta.kid;
-  const publicKey = getPublicKeyFromDIDDocByKID(doc, kid2);
+
+  let publicKey;
+  try {
+    publicKey = getPublicKeyFromDIDDocByKID(doc, kid2);
+  } catch (e) {
+    console.error(e);
+
+    throw new Error('kidTransform is likely required.');
+  }
 
   switch (keyType) {
     case 'elliptic':
@@ -78,10 +89,26 @@ const verifyDIDSignature = (object, signature, meta, doc, kidTransform) => {
   }
 };
 
+const kidTransformRegex = /(did:(.+)\.transmute\.(.+)):(.+\.)(.+)/;
+const transformNestedDIDToDID = (did) => {
+  const result = did.match(kidTransformRegex);
+  if (result) {
+    const maybeKIDInDID = result[5].split(`#${publicKeyKIDPrefix}`);
+    const didSignatureMethod = result[3];
+    const didSignatureID = maybeKIDInDID[0];
+    const kid = maybeKIDInDID[1];
+    const kidPart = kid ? `#${publicKeyKIDPrefix}${kid}` : '';
+    return `did:transmute.${didSignatureMethod}:${didSignatureID}${kidPart}`;
+  }
+  return did;
+};
+
 module.exports = {
   publicKeyToDID,
   verifyDIDSignature,
   SignatureStore,
   constructDIDPublicKeyID,
   publicKeyKIDPrefix,
+  kidTransformRegex,
+  transformNestedDIDToDID,
 };

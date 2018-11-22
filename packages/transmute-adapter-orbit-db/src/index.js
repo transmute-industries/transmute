@@ -1,5 +1,3 @@
-const IPFS = require("ipfs");
-const OrbitDB = require("orbit-db");
 const bs58 = require("bs58");
 const Unixfs = require("ipfs-unixfs");
 const { DAGNode } = require("ipld-dag-pb");
@@ -10,42 +8,6 @@ const {
   sign,
   verify
 } = require("./CustomTestKeystore");
-
-const ipfsOptions = {
-  start: true,
-  repo: "./ipfs-repo",
-  EXPERIMENTAL: {
-    pubsub: true
-  },
-  config: {
-    Addresses: {
-      Swarm: [
-        "/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star"
-      ]
-    }
-  }
-};
-
-const getReadyIPFS = ipfsOptions => {
-  const node = new IPFS(ipfsOptions);
-  return new Promise((resolve, reject) => {
-    node.on("ready", () => {
-      resolve(node);
-    });
-  });
-};
-
-const getOrbitDBFromKeypair = async (ipfs, keypair) => {
-  return new Promise((resolve, reject) => {
-    const keystore = new CustomTestKeystore(keypair);
-    // Create OrbitDB instance
-    const orbitdb = new OrbitDB(ipfs, "./orbitdb", {
-      peerID: keypair.publicKey,
-      keystore: keystore
-    });
-    resolve(orbitdb);
-  });
-};
 
 class TransmuteAdapterOrbitDB {
   constructor(orbitdb) {
@@ -127,9 +89,6 @@ class TransmuteAdapterOrbitDB {
 }
 
 module.exports = {
-  getOrbitDBFromKeypair,
-  ipfsOptions,
-  getReadyIPFS,
   TransmuteAdapterOrbitDB,
   CustomTestKeystore,
   createKeypair,

@@ -1,6 +1,6 @@
 {
   "name": "@transmute/transmute-adapter-orbit-db",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "description": "",
   "main": "./src/index.js",
   "scripts": {
@@ -10,15 +10,15 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "ipfs": "^0.33.1",
+    "orbit-db": "^0.19.9"
   },
   "dependencies": {
     "bs58": "^4.0.1",
     "elliptic": "^6.4.1",
-    "ipfs": "^0.33.1",
     "ipfs-unixfs": "^0.1.15",
-    "ipld-dag-pb": "^0.14.8",
-    "orbit-db": "^0.19.9"
+    "ipld-dag-pb": "^0.14.8"
   },
   "repository": {
     "type": "git",

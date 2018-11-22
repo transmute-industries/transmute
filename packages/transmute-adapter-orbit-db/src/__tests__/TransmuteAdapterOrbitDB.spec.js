@@ -1,9 +1,7 @@
-const {
-  TransmuteAdapterOrbitDB,
-  ipfsOptions,
-  getReadyIPFS,
-  getOrbitDBFromKeypair
-} = require("../index");
+const IPFS = require("ipfs");
+const OrbitDB = require("orbit-db");
+
+const { TransmuteAdapterOrbitDB, CustomTestKeystore } = require("../index");
 
 const keypair = {
   publicKey:
@@ -15,6 +13,42 @@ const content = { hello: "world" };
 const contentBuffer = Buffer.from(JSON.stringify(content));
 const contentID =
   "0x07944c2cf8591b40bce4bc010e2d8906cc31e8d8fbf8e7a352b458020cc9439f";
+
+const ipfsOptions = {
+  start: true,
+  repo: "./ipfs-repo",
+  EXPERIMENTAL: {
+    pubsub: true
+  },
+  config: {
+    Addresses: {
+      Swarm: [
+        "/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star"
+      ]
+    }
+  }
+};
+
+const getReadyIPFS = ipfsOptions => {
+  const node = new IPFS(ipfsOptions);
+  return new Promise((resolve, reject) => {
+    node.on("ready", () => {
+      resolve(node);
+    });
+  });
+};
+
+const getOrbitDBFromKeypair = async (ipfs, keypair) => {
+  return new Promise((resolve, reject) => {
+    const keystore = new CustomTestKeystore(keypair);
+    // Create OrbitDB instance
+    const orbitdb = new OrbitDB(ipfs, "./orbitdb", {
+      peerID: keypair.publicKey,
+      keystore: keystore
+    });
+    resolve(orbitdb);
+  });
+};
 
 describe("TransmuteAdapterOrbitDB", () => {
   let ipfs;
