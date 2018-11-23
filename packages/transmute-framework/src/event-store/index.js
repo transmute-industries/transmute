@@ -194,13 +194,13 @@ module.exports = class EventStore {
   }
 
   /**
-   * Reads specified indexed event from eventStoreContractInstance,
+   * Reads specified indices events from eventStoreContractInstance,
    * retrieves its data from content storage, and returns the original key, value, index, and sender
    * @function
    * @memberof EventStore
    * @name batchRead
-   * @param {number} index Index of specified event in eventStoreContractInstance
-   * @returns {Object} Event object with original key, value, sender, and index
+   * @param {Array} indices Array of indices of specified events in eventStoreContractInstance
+   * @returns {Array} Array of Event objects with original key, value, sender, and index
    */
   async batchRead(indices) {
     let events;
