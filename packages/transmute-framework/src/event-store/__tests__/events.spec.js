@@ -169,5 +169,10 @@ describe('transmute-framework', () => {
       expectEventToEqual(events[0], mockEvents[0], 0);
       expectEventToEqual(events[1], mockEvents[2], 2);
     });
+
+    it('should throw if index does not exist', async () => {
+      expect.assertions(1);
+      await expect(eventStore.batchRead([3])).rejects.toThrowError();
+    });
   });
 });
