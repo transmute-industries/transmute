@@ -128,7 +128,7 @@ module.exports = class EventStore {
       event: {
         sender: fromAddress,
         content,
-        index: parseInt(index),
+        index: parseInt(index, 10),
       },
       meta: {
         tx,
