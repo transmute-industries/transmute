@@ -79,47 +79,6 @@ describe('transmute-framework', () => {
     });
   });
 
-  describe('getSlice', () => {
-    it('supports getting a single event', async () => {
-      const mockEvent = mockEvents[0];
-      await eventStore.write(
-        accounts[0],
-        mockEvent.key,
-        mockEvent.value,
-      );
-
-      const events = await eventStore.getSlice(0, 0);
-
-      // avoid checksum errors
-      expect(events[0].sender).toEqual(accounts[0]);
-      expect(events[0].content.key).toEqual(mockEvent.key);
-      expect(events[0].content.value).toEqual(mockEvent.value);
-    });
-
-    it('supports getting a slice', async () => {
-      await eventStore.write(
-        accounts[0],
-        mockEvents[0].key,
-        mockEvents[0].value,
-      );
-
-      await eventStore.write(
-        accounts[0],
-        mockEvents[1].key,
-        mockEvents[1].value,
-      );
-
-      await eventStore.write(
-        accounts[0],
-        mockEvents[2].key,
-        mockEvents[2].value,
-      );
-
-      const events = await eventStore.getSlice(0, 2);
-      expect(events.length).toBe(3);
-    });
-  });
-
   describe('batchRead', () => {
     beforeEach(async () => {
       await eventStore.write(

@@ -230,30 +230,6 @@ module.exports = class EventStore {
   }
 
   /**
-   * Reads events between specified indices from eventStoreContractInstance
-   * @function
-   * @memberof EventStore
-   * @name read
-   * @param {number} startIndex Index of first event for reading
-   * @param {number} endIndex Index of last event for reading
-   * @returns {Array.<Object>} Array of event objects
-   */
-  async getSlice(startIndex, endIndex) {
-    if (!(endIndex >= startIndex)) {
-      throw new Error('startIndex must be less than or equal to endIndex.');
-    }
-    let index = startIndex;
-    const events = [];
-    /* eslint-disable no-await-in-loop */
-    while (index <= endIndex) {
-      events.push(await this.read(index));
-      index += 1;
-    }
-    /* eslint-enable no-await-in-loop */
-    return events;
-  }
-
-  /**
    * Returns health status of adapter and eventStoreContractInstance address
    * @function
    * @memberof EventStore
