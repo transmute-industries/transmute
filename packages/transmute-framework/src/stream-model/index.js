@@ -70,8 +70,7 @@ module.exports = class StreamModel {
       for (let index = start; index <= end; index += 1) {
         indices.push(index);
       }
-      console.log(start, end, indices);
-      const updates = await this.eventStore.batchRead(start, end);
+      const updates = await this.eventStore.batchRead(indices);
       this.applyEvents(updates);
     }
   }

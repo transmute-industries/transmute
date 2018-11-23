@@ -78,6 +78,16 @@ describe('sync', () => {
     await streamModel.sync();
     expect(streamModel.state.model.eventsProcessed).toBe(2);
     expect(streamModel.state.lastIndex).toBe(1);
+
+    await eventStore.write(accounts[0], mockEvents[1].key, mockEvents[1].value);
+    await eventStore.write(accounts[0], mockEvents[1].key, mockEvents[1].value);
+    await eventStore.write(accounts[0], mockEvents[1].key, mockEvents[1].value);
+    await eventStore.write(accounts[0], mockEvents[1].key, mockEvents[1].value);
+    await eventStore.write(accounts[0], mockEvents[1].key, mockEvents[1].value);
+
+    await streamModel.sync();
+    expect(streamModel.state.model.eventsProcessed).toBe(7);
+    expect(streamModel.state.lastIndex).toBe(6);
   });
 
   it('should handle persisted state', async () => {
