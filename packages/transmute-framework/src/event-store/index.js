@@ -216,19 +216,17 @@ module.exports = class EventStore {
     if (events.length === 0) {
       throw new Error('No event exists for that index');
     }
-    try {
-      return Promise.all(events.map((event) => {
-        const values = event.args;
-        return this.adapter.readJson(values.contentHash)
-          .then(content => ({
-            index: values.index.toNumber(),
-            sender: values.sender,
-            content,
-          }));
-      }));
-    } catch (e) {
-      throw new Error('Couldn\'t resolve contentHash');
-    }
+    return Promise.all(events.map((event) => {
+      const values = event.args;
+      return this.adapter.readJson(values.contentHash)
+        .then(content => ({
+          index: values.index.toNumber(),
+          sender: values.sender,
+          content,
+        })).catch(() => {
+          throw new Error('Couldn\'t resolve contentHash');
+        });
+    }));
   }
 
   /**

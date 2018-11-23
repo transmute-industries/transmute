@@ -174,5 +174,29 @@ describe('transmute-framework', () => {
       expect.assertions(1);
       await expect(eventStore.batchRead([3])).rejects.toThrowError();
     });
+
+    it('should throw if Ethereum event log cannot be read', async () => {
+      // Mock function to throw
+      const { getPastEvents } = eventStore.eventStoreContractInstance;
+      eventStore.eventStoreContractInstance.getPastEvents = jest.fn().mockRejectedValueOnce();
+
+      expect.assertions(1);
+      await expect(eventStore.batchRead([0])).rejects.toThrowError();
+
+      // Restore original function
+      eventStore.eventStoreContractInstance.getPastEvents = getPastEvents;
+    });
+
+    it('should throw if contentHash cannot be resolved', async () => {
+      // Mock function to throw
+      const { readJson } = eventStore.adapter;
+      eventStore.adapter.readJson = jest.fn().mockRejectedValueOnce();
+
+      expect.assertions(1);
+      await expect(eventStore.batchRead([0])).rejects.toThrowError();
+
+      // Restore original function
+      eventStore.adapter.readJson = readJson;
+    });
   });
 });
