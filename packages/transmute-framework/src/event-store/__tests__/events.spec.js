@@ -119,4 +119,55 @@ describe('transmute-framework', () => {
       expect(events.length).toBe(3);
     });
   });
+
+  describe('batchRead', () => {
+    beforeEach(async () => {
+      await eventStore.write(
+        accounts[0],
+        mockEvents[0].key,
+        mockEvents[0].value,
+      );
+
+      await eventStore.write(
+        accounts[0],
+        mockEvents[1].key,
+        mockEvents[1].value,
+      );
+
+      await eventStore.write(
+        accounts[0],
+        mockEvents[2].key,
+        mockEvents[2].value,
+      );
+    });
+
+    const expectEventToEqual = (event, mockEvent, index) => {
+      expect(event.index).toBe(index);
+      expect(event.sender).toEqual(accounts[0]);
+      expect(event.content.key).toEqual(mockEvent.key);
+      expect(event.content.value).toEqual(mockEvent.value);
+    };
+
+    it('supports getting a single event', async () => {
+      const mockEvent = mockEvents[0];
+      const events = await eventStore.batchRead([0]);
+      expect(events).toHaveLength(1);
+      expectEventToEqual(events[0], mockEvent, 0);
+    });
+
+    it('supports getting multiple contiguous events', async () => {
+      const events = await eventStore.batchRead([0, 1, 2]);
+      expect(events).toHaveLength(3);
+      expectEventToEqual(events[0], mockEvents[0], 0);
+      expectEventToEqual(events[1], mockEvents[1], 1);
+      expectEventToEqual(events[2], mockEvents[2], 2);
+    });
+
+    it('supports getting multiple non contiguous events', async () => {
+      const events = await eventStore.batchRead([0, 2]);
+      expect(events).toHaveLength(2);
+      expectEventToEqual(events[0], mockEvents[0], 0);
+      expectEventToEqual(events[1], mockEvents[2], 2);
+    });
+  });
 });
