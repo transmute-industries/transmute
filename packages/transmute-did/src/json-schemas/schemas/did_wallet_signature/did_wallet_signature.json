@@ -14,7 +14,7 @@
       "type": "object",
       "properties": {
         "version": { "type": "string" },
-        "kit": { "type": "string" }
+        "kid": { "type": "/did" }
       },
       "required": ["version", "kid"]
     }

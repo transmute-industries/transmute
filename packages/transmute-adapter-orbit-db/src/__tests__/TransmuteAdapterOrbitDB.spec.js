@@ -50,14 +50,12 @@ const getOrbitDBFromKeypair = async (ipfs, keypair) => {
   });
 };
 
-
-
 describe("TransmuteAdapterOrbitDB", () => {
   let ipfs;
   let orbitdb;
   let adapter;
   let address;
-  jest.setTimeout(5 * 1000);
+  jest.setTimeout(10 * 1000);
   beforeAll(async () => {
     ipfs = await getReadyIPFS(ipfsOptions);
     ipfs.on("error", error => {

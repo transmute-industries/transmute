@@ -39,13 +39,13 @@ The OrbitDB record for this identity:
       "id": "did:transmute.openpgp:6075f9ad86de29d7644752c95e7379e3e5e4a806",
       "publicKey": [
         {
-          "id": "did:transmute.openpgp:6075f9ad86de29d7644752c95e7379e3e5e4a806#99397de30ac7011ae098e0942168077fe5243869b5111c2dee96d4d55055cf51",
+          "id": "did:transmute.openpgp:6075f9ad86de29d7644752c95e7379e3e5e4a806#kid=99397de30ac7011ae098e0942168077fe5243869b5111c2dee96d4d55055cf51",
           "type": "Secp256k1VerificationKey2018",
           "owner": "did:transmute.openpgp:6075f9ad86de29d7644752c95e7379e3e5e4a806",
           "publicKeyPem": "-----BEGIN PGP PUBLIC KEY BLOCK-----\r\nVersion: OpenPGP.js v4.2.1\r\nComment: https://openpgpjs.org\r\n\r\nxk8EW+2/QRMFK4EEAAoCAwRcJb/1TzuJOhKidOCNIB6bZLZ9wJmP0CCALUiQ\r\nSnCRMsY+V75Me9T74DeCJvn/LvgpbxeIreJ/nddxE7pxIJv+zQh0ZXN0LWtl\r\necJ3BBATCAAfBQJb7b9BBgsJBwgDAgQVCAoCAxYCAQIZAQIbAwIeAQAKCRBe\r\nc3nj5eSoBkSeAP9cCJyT5Y8veQON+1gc3iciymMTaV5FUqgH3DBmHYJ3+gEA\r\n6qvb7qOH7I0YEMpzgYMNblS8GcaLwIsEbpyTbOfeog/OUwRb7b9BEgUrgQQA\r\nCgIDBAG1wZ23+Gw517yYRXN/xIMYeqRbnolkW+gdvyk1edhm0KqYc2AMjqfR\r\n9447c6FJ/i5jFrvqhs1ZI9fedDb7dukDAQgHwmEEGBMIAAkFAlvtv0ECGwwA\r\nCgkQXnN54+XkqAYwFAD/dNeNPeYWlFWIt2oNZYGufJiHLQtPee/s/7BpJlLN\r\n7AMA/2/0M/vwONA58pHCT6fb6/iQmHczSLrBo/nckxA7zhG2\r\n=wnW5\r\n-----END PGP PUBLIC KEY BLOCK-----\r\n"
         },
         {
-          "id": "did:transmute.openpgp:6075f9ad86de29d7644752c95e7379e3e5e4a806#ea80153b192aad477d9f1faab5976af16071657b28df2d394ad216138b71388c",
+          "id": "did:transmute.openpgp:6075f9ad86de29d7644752c95e7379e3e5e4a806#kid=ea80153b192aad477d9f1faab5976af16071657b28df2d394ad216138b71388c",
           "type": "Secp256k1VerificationKey2018",
           "owner": "did:transmute.openpgp:6075f9ad86de29d7644752c95e7379e3e5e4a806",
           "publicKeyHex": "044ae395f44339e7838c406e127791c149dada742fd9674e64125fb07b15bda5e1dcbd8ff4042af018404da79f22a3895fae7aaf528e3c445e193324a026afe670"
@@ -53,11 +53,11 @@ The OrbitDB record for this identity:
       ],
       "authentication": [
         {
-          "publicKey": "did:transmute.openpgp:6075f9ad86de29d7644752c95e7379e3e5e4a806#99397de30ac7011ae098e0942168077fe5243869b5111c2dee96d4d55055cf51",
+          "publicKey": "did:transmute.openpgp:6075f9ad86de29d7644752c95e7379e3e5e4a806#kid=99397de30ac7011ae098e0942168077fe5243869b5111c2dee96d4d55055cf51",
           "type": "Secp256k1VerificationKey2018"
         },
         {
-          "publicKey": "did:transmute.openpgp:6075f9ad86de29d7644752c95e7379e3e5e4a806#ea80153b192aad477d9f1faab5976af16071657b28df2d394ad216138b71388c",
+          "publicKey": "did:transmute.openpgp:6075f9ad86de29d7644752c95e7379e3e5e4a806#kid=ea80153b192aad477d9f1faab5976af16071657b28df2d394ad216138b71388c",
           "type": "Secp256k1VerificationKey2018"
         }
       ]
@@ -145,7 +145,7 @@ An example signature from this DID:
     "signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v4.0.1\r\nComment: https://openpgpjs.org\r\n\r\nwl4EARMIABAFAlvu+McJEF5zeePl5KgGAABQpQEAuZF+jpbAxNzPlLhuwuUz\nJ+W8+q8F7VQHo//OGiE4ImsBANlCptfhxdiCPqfvMvDwdKfmNpEY3zevebbC\n+P5lq84O\r\n=OG6p\r\n-----END PGP SIGNATURE-----\r\n",
     "meta": {
       "version": "openpgp@^4.0.1",
-      "kid": "did:orbitdb.transmute.openpgp:QmTjTQfsuSiMrMwzjLUZH4fgZAdmsML4aP1Ms6DTrhT4zb.6075f9ad86de29d7644752c95e7379e3e5e4a806#99397de30ac7011ae098e0942168077fe5243869b5111c2dee96d4d55055cf51"
+      "kid": "did:orbitdb.transmute.openpgp:QmTjTQfsuSiMrMwzjLUZH4fgZAdmsML4aP1Ms6DTrhT4zb.6075f9ad86de29d7644752c95e7379e3e5e4a806#kid=99397de30ac7011ae098e0942168077fe5243869b5111c2dee96d4d55055cf51"
     }
   },
   "signatureID": "0x97f9ef48f47c48f97e269dda8d5553985c63f3716c011ddd210fe34bf1250827"
