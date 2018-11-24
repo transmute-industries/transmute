@@ -128,7 +128,7 @@ module.exports = class EventStore {
       event: {
         sender: fromAddress,
         content,
-        index: parseInt(index),
+        index: parseInt(index, 10),
       },
       meta: {
         tx,
@@ -194,27 +194,39 @@ module.exports = class EventStore {
   }
 
   /**
-   * Reads events between specified indices from eventStoreContractInstance
+   * Reads specified indices events from eventStoreContractInstance,
+   * retrieves its data from content storage, and returns the original key, value, index, and sender
    * @function
    * @memberof EventStore
-   * @name read
-   * @param {number} startIndex Index of first event for reading
-   * @param {number} endIndex Index of last event for reading
-   * @returns {Array.<Object>} Array of event objects
+   * @name batchRead
+   * @param {Array} indices Array of indices of specified events in eventStoreContractInstance
+   * @returns {Array} Array of Event objects with original key, value, sender, and index
    */
-  async getSlice(startIndex, endIndex) {
-    if (!(endIndex >= startIndex)) {
-      throw new Error('startIndex must be less than or equal to endIndex.');
+  async batchRead(indices) {
+    let events;
+    try {
+      events = await this.eventStoreContractInstance.getPastEvents('TransmuteEvent', {
+        filter: { index: indices },
+        fromBlock: 0,
+      });
+    } catch (e) {
+      throw new Error('Could not read from Ethereum event log');
     }
-    let index = startIndex;
-    const events = [];
-    /* eslint-disable no-await-in-loop */
-    while (index <= endIndex) {
-      events.push(await this.read(index));
-      index += 1;
+
+    if (events.length === 0) {
+      throw new Error('No event exists for that index');
     }
-    /* eslint-enable no-await-in-loop */
-    return events;
+    return Promise.all(events.map((event) => {
+      const values = event.args;
+      return this.adapter.readJson(values.contentHash)
+        .then(content => ({
+          index: values.index.toNumber(),
+          sender: values.sender,
+          content,
+        })).catch(() => {
+          throw new Error('Couldn\'t resolve contentHash');
+        });
+    }));
   }
 
   /**

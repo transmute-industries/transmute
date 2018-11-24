@@ -155,7 +155,7 @@ let result = await eventStore.write(
 Events can be retrieved using:
 
 ```
-let events = await eventStore.getSlice(0, 2);
+let events = await eventStore.batchRead([0, 1, 2]);
 ```
 
 ##### Encryption should be used before saving sensitive information to Ethereum and IPFS!

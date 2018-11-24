@@ -61,42 +61,60 @@ describe('transmute-framework', () => {
     });
   });
 
+  const expectEventToEqual = (event, mockEvent, index) => {
+    expect(event.index).toBe(index);
+    expect(event.sender).toEqual(accounts[0]);
+    expect(event.content.key).toEqual(mockEvent.key);
+    expect(event.content.value).toEqual(mockEvent.value);
+  };
+
   describe('read', () => {
-    it('should read event informations', async () => {
-      const mockEvent = mockEvents[0];
-      const writeEventResult = await eventStore.write(
+    beforeEach(async () => {
+      await eventStore.write(
         accounts[0],
-        mockEvent.key,
-        mockEvent.value,
+        mockEvents[0].key,
+        mockEvents[0].value,
       );
-      const { index } = writeEventResult.event;
-      const event = await eventStore.read(index, accounts[0]);
+    });
+
+    it('should read event informations', async () => {
+      const event = await eventStore.read(0);
       expect(event).toBeDefined();
-      expect(event.index).toBeGreaterThanOrEqual(0);
-      expect(event.sender).toBe(accounts[0]);
-      expect(event.content.key).toEqual(mockEvent.key);
-      expect(event.content.value).toEqual(mockEvent.value);
+      expectEventToEqual(event, mockEvents[0], 0);
+    });
+
+    it('should throw if index does not exist', async () => {
+      expect.assertions(1);
+      await expect(eventStore.read(1)).rejects.toThrowError();
+    });
+
+    it('should throw if Ethereum event log cannot be read', async () => {
+      // Mock function to throw
+      const { getPastEvents } = eventStore.eventStoreContractInstance;
+      eventStore.eventStoreContractInstance.getPastEvents = jest.fn().mockRejectedValueOnce();
+
+      expect.assertions(1);
+      await expect(eventStore.read(0)).rejects.toThrowError();
+
+      // Restore original function
+      eventStore.eventStoreContractInstance.getPastEvents = getPastEvents;
+    });
+
+    it('should throw if contentHash cannot be resolved', async () => {
+      // Mock function to throw
+      const { readJson } = eventStore.adapter;
+      eventStore.adapter.readJson = jest.fn().mockRejectedValueOnce();
+
+      expect.assertions(1);
+      await expect(eventStore.read(0)).rejects.toThrowError();
+
+      // Restore original function
+      eventStore.adapter.readJson = readJson;
     });
   });
 
-  describe('getSlice', () => {
-    it('supports getting a single event', async () => {
-      const mockEvent = mockEvents[0];
-      await eventStore.write(
-        accounts[0],
-        mockEvent.key,
-        mockEvent.value,
-      );
-
-      const events = await eventStore.getSlice(0, 0);
-
-      // avoid checksum errors
-      expect(events[0].sender).toEqual(accounts[0]);
-      expect(events[0].content.key).toEqual(mockEvent.key);
-      expect(events[0].content.value).toEqual(mockEvent.value);
-    });
-
-    it('supports getting a slice', async () => {
+  describe('batchRead', () => {
+    beforeEach(async () => {
       await eventStore.write(
         accounts[0],
         mockEvents[0].key,
@@ -114,9 +132,57 @@ describe('transmute-framework', () => {
         mockEvents[2].key,
         mockEvents[2].value,
       );
+    });
 
-      const events = await eventStore.getSlice(0, 2);
-      expect(events.length).toBe(3);
+    it('supports getting a single event', async () => {
+      const mockEvent = mockEvents[0];
+      const events = await eventStore.batchRead([0]);
+      expect(events).toHaveLength(1);
+      expectEventToEqual(events[0], mockEvent, 0);
+    });
+
+    it('supports getting multiple contiguous events', async () => {
+      const events = await eventStore.batchRead([0, 1, 2]);
+      expect(events).toHaveLength(3);
+      expectEventToEqual(events[0], mockEvents[0], 0);
+      expectEventToEqual(events[1], mockEvents[1], 1);
+      expectEventToEqual(events[2], mockEvents[2], 2);
+    });
+
+    it('supports getting multiple non contiguous events', async () => {
+      const events = await eventStore.batchRead([0, 2]);
+      expect(events).toHaveLength(2);
+      expectEventToEqual(events[0], mockEvents[0], 0);
+      expectEventToEqual(events[1], mockEvents[2], 2);
+    });
+
+    it('should throw if index does not exist', async () => {
+      expect.assertions(1);
+      await expect(eventStore.batchRead([3])).rejects.toThrowError();
+    });
+
+    it('should throw if Ethereum event log cannot be read', async () => {
+      // Mock function to throw
+      const { getPastEvents } = eventStore.eventStoreContractInstance;
+      eventStore.eventStoreContractInstance.getPastEvents = jest.fn().mockRejectedValueOnce();
+
+      expect.assertions(1);
+      await expect(eventStore.batchRead([0])).rejects.toThrowError();
+
+      // Restore original function
+      eventStore.eventStoreContractInstance.getPastEvents = getPastEvents;
+    });
+
+    it('should throw if contentHash cannot be resolved', async () => {
+      // Mock function to throw
+      const { readJson } = eventStore.adapter;
+      eventStore.adapter.readJson = jest.fn().mockRejectedValueOnce();
+
+      expect.assertions(1);
+      await expect(eventStore.batchRead([0])).rejects.toThrowError();
+
+      // Restore original function
+      eventStore.adapter.readJson = readJson;
     });
   });
 });
