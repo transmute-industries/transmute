@@ -7,7 +7,8 @@
     "test": "jest --env aegir",
     "coverage": "jest . --coverage --env aegir",
     "lint": "../../node_modules/.bin/eslint .",
-    "lint-fix": "../../node_modules/.bin/eslint . --fix"
+    "lint-fix": "../../node_modules/.bin/eslint . --fix",
+    "docs": "cp -R ./docs/ ../../docs/did/"
   },
   "repository": {
     "type": "git",
