@@ -56,6 +56,5 @@ script:
 
   - lerna run --scope @transmute/transmute-framework truffle:test
   - lerna run --scope @transmute/transmute-framework truffle:migrate
-  - lerna run --scope @transmute/transmute-framework test
   - lerna run --scope @transmute/transmute-framework coverage
   - lerna run --scope @transmute/transmute-framework test:report
