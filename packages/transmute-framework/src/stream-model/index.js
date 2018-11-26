@@ -66,7 +66,11 @@ module.exports = class StreamModel {
     ) {
       const start = this.state.lastIndex === null ? 0 : this.state.lastIndex + 1;
       const end = eventCount - 1;
-      const updates = await this.eventStore.getSlice(start, end);
+      const indices = [];
+      for (let index = start; index <= end; index += 1) {
+        indices.push(index);
+      }
+      const updates = await this.eventStore.batchRead(indices);
       this.applyEvents(updates);
     }
   }
