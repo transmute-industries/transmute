@@ -1,0 +1,33 @@
+{
+  "$id": "https://docs.transmute.industries/schemas/com.transmute/did/did.1-0-0.json",
+  "$schema": "https://docs.transmute.industries/schemas/com.transmute.self-desc/schema/jsonschema/1-0-0#",
+  "self": {
+    "vendor": "com.transmute",
+    "name": "did",
+    "format": "jsonschema",
+    "version": "1-0-0"
+  },
+  "id": "/didRevocationCert",
+  "type": "object",
+  "properties": {
+    "object": {
+      "type": "object",
+      "properties": {
+        "publicKey": { "type": "string" },
+        "message": { "type": "string" },
+        "timestampUTC": { "type": "string" }
+      },
+      "required": ["publicKey", "timestampUTC"]
+    },
+    "signature": { "type": "string" },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "version": { "type": "string" },
+        "kid": { "type": "/did" }
+      },
+      "required": ["version", "kid"]
+    }
+  },
+  "required": ["object", "signature", "meta"]
+}

@@ -24,6 +24,10 @@ describe('json-schemas', () => {
       it('supports uport', () => {
         expect(validator.isValid(examples.uport, schema)).toBe(true);
       });
+
+      it('supports revoked transmute did document', () => {
+        expect(validator.isValid(examples.transmuteRevoked.object, schema)).toBe(true);
+      });
     });
   });
 });

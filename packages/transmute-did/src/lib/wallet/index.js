@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const moment = require('moment');
 
 const pack = require('../../../package.json');
 
@@ -109,6 +110,35 @@ class TransmuteDIDWallet {
     };
   }
 
+  async generateDIDRevocationCertificate({ asDIDByKID, asDIDByKIDPassphrase, overwriteKID }) {
+    const result = await this.toDIDDocument(asDIDByKID, asDIDByKIDPassphrase);
+    //   eslint-disable-next-line
+    const doc = result.object;
+
+    const didKey = this.data.keystore[asDIDByKID];
+
+    const revocationCert = await this.signObject({
+      obj: {
+        publicKey: didKey.data.publicKey,
+        message: `This signed json object serves as a revocation certificate for ${
+          doc.id
+        }. See https://docs.transmute.industries/did/revocation for more information.`,
+        timestampUTC: moment()
+          .utc()
+          .toISOString(),
+      },
+      kid: asDIDByKID,
+      passphrase: asDIDByKIDPassphrase,
+      asDIDByKID,
+      asDIDByKIDPassphrase,
+      overwriteKID,
+    });
+
+    // a revocation cert is a DID Document, with property.
+    didKey.meta.did.revocationCert = revocationCert;
+    return this.toDIDDocument(asDIDByKID, asDIDByKIDPassphrase);
+  }
+
   async signObject({
     obj, kid, passphrase, asDIDByKID, asDIDByKIDPassphrase, overwriteKID,
   }) {
@@ -154,6 +184,7 @@ class TransmuteDIDWallet {
         throw new Error('Unknown key type. Cannot sign did document');
     }
 
+    // todo: this is super confusing... needs documentation
     const kid2 = overwriteKID || (doc.id ? constructDIDPublicKeyID(doc.id, kid) : kid);
 
     const meta = {
@@ -187,6 +218,7 @@ class TransmuteDIDWallet {
     const doc = {
       '@context': 'https://w3id.org/did/v1',
       id: did,
+      revocationCert: masterKeypair.meta.did.revocationCert,
       publicKey,
       authentication,
     };
