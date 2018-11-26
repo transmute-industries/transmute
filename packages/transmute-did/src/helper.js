@@ -1,13 +1,13 @@
-const { misc, msg, pgp } = require('./index.js');
+const { misc, sodiumExtensions, openpgpExtensions } = require('./index.js');
 
 const generateDID = async () => {
   // Generate keys
-  const pgpKeypair = await pgp.generateOpenPGPArmoredKeypair({
+  const pgpKeypair = await openpgpExtensions.cryptoHelpers.generateArmoredKeypair({
     name: 'bob',
     passphrase: 'yolo',
   });
-  const libSodiumSigningKeypair = await msg.generateCryptoSignKeypair();
-  const libSodiumEncryptionKeypair = await msg.generateCryptoBoxKeypair();
+  const libSodiumSigningKeypair = await sodiumExtensions.generateCryptoSignKeypair();
+  const libSodiumEncryptionKeypair = await sodiumExtensions.generateCryptoBoxKeypair();
   const primaryPublicKey = libSodiumSigningKeypair.publicKey;
   // Generate DID
   const did = misc.publicKeyToTransmuteDID({ publicKey: primaryPublicKey });

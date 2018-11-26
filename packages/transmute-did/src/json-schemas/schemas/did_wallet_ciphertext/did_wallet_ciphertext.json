@@ -1,0 +1,26 @@
+{
+  "$schema": "https://docs.transmute.industries/schemas/com.transmute.self-desc/schema/jsonschema/1-0-0#",
+  "self": {
+    "vendor": "com.transmute",
+    "name": "didWalletCiphertextSchema",
+    "format": "jsonschema",
+    "version": "1-0-0"
+  },
+  "id": "/didWalletCiphertextSchema",
+  "properties": {
+    "version": { "type": "string" },
+    "salt": { "type": "string" },
+    "keystore": {
+      "type": "object",
+      "properties": {
+        "nonce": { "type": "string" },
+        "encrypted": { "type": "string" }
+      },
+      "required": ["nonce", "encrypted"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["version", "salt", "keystore"],
+  "type": "object",
+  "additionalProperties": false
+}

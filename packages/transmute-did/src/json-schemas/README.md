@@ -1,0 +1,1 @@
+Modeled after https://github.com/0xProject/0x-monorepo/tree/528ae4376e5e605dac9666f2a5917803e942a1f9/packages/json-schemas
