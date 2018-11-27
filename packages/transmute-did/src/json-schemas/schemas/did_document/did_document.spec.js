@@ -13,6 +13,10 @@ describe('json-schemas', () => {
         expect(schema).toBeDefined();
       });
 
+      it('is self describing', () => {
+        expect(validator.isValid(schema, jsonSchemas.schemas.selfDescSchema)).toBe(true);
+      });
+
       it('supports w3c', () => {
         expect(validator.isValid(examples.w3c, schema)).toBe(true);
       });

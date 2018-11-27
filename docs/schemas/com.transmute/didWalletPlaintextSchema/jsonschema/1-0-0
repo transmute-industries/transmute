@@ -9,26 +9,47 @@
   },
   "id": "/didWalletPlaintextSchema",
   "properties": {
-    "version": { "type": "string" },
-    "salt": { "type": "string" },
+    "version": {
+      "type": "string"
+    },
+    "salt": {
+      "type": "string"
+    },
     "keystore": {
       "type": "object",
       "patternProperties": {
         "^S_": {
           "type": "object",
           "properties": {
-            "kid": { "type": "string" },
-            "data": { "type": "object" },
-            "type": { "type": "string" },
-            "meta": { "type": "object" }
+            "kid": {
+              "type": "string"
+            },
+            "data": {
+              "type": "object"
+            },
+            "type": {
+              "type": "string"
+            },
+            "meta": {
+              "type": "object"
+            }
           },
-          "required": ["kid", "data", "type", "meta"],
+          "required": [
+            "kid",
+            "data",
+            "type",
+            "meta"
+          ],
           "additionalProperties": false
         }
       }
     }
   },
-  "required": ["version", "salt", "keystore"],
+  "required": [
+    "version",
+    "salt",
+    "keystore"
+  ],
   "type": "object",
   "additionalProperties": false
 }

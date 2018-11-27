@@ -9,19 +9,34 @@
   },
   "id": "/didWalletCiphertextSchema",
   "properties": {
-    "version": { "type": "string" },
-    "salt": { "type": "string" },
+    "version": {
+      "type": "string"
+    },
+    "salt": {
+      "type": "string"
+    },
     "keystore": {
       "type": "object",
       "properties": {
-        "nonce": { "type": "string" },
-        "encrypted": { "type": "string" }
+        "nonce": {
+          "type": "string"
+        },
+        "encrypted": {
+          "type": "string"
+        }
       },
-      "required": ["nonce", "encrypted"],
+      "required": [
+        "nonce",
+        "encrypted"
+      ],
       "additionalProperties": false
     }
   },
-  "required": ["version", "salt", "keystore"],
+  "required": [
+    "version",
+    "salt",
+    "keystore"
+  ],
   "type": "object",
   "additionalProperties": false
 }
