@@ -83,8 +83,13 @@ Once present in the Document, it is invalid to make further updates to the Docum
 
 It should be noted that an attacker with a stolen private key can generate additional signatures after a did has been revoked. These signatures will not be ignored by a decentralized system at the protocol layer, and must be ignored at the app layer by honest clients. For example, a blockchain based DID will continue to emit events signed by the private key, but those events should be ignored by any client that is aware of an earlier revoked state for the DID. Similarly for decentralized storage systems, such as Orbit DB.
 
-Because a stolen private key can be used to create a backdated revocation cert, and we don't want to force revocation certs to be created up front for all key types for compatability reasons, we require revocation certs to commit to a random beacon. For now we 
+Because a stolen private key can be used to create a backdated revocation cert, and we don't want to force revocation certs to be created up front for all key types for compatability reasons, revocation certs require an additional expensive feature: they must be anchored to some immutable timestamp system, such as a blockchain.
 
+Signatures before the anchor point are protected, signatures after the anchor point cannot be trusted.
+
+In order for the anchor to be usable it must be publically resolvable to a revocationCert.
+
+In the case of multiple anchor systems, the earliest anchor should be accepted.
 
 ## Revocation of a DID Key
 
