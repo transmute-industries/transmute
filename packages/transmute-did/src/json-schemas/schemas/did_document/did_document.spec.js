@@ -13,6 +13,10 @@ describe('json-schemas', () => {
         expect(schema).toBeDefined();
       });
 
+      it('is self describing', () => {
+        expect(validator.isValid(schema, jsonSchemas.schemas.selfDescSchema)).toBe(true);
+      });
+
       it('supports w3c', () => {
         expect(validator.isValid(examples.w3c, schema)).toBe(true);
       });
@@ -23,6 +27,10 @@ describe('json-schemas', () => {
 
       it('supports uport', () => {
         expect(validator.isValid(examples.uport, schema)).toBe(true);
+      });
+
+      it('supports revoked transmute did document', () => {
+        expect(validator.isValid(examples.transmuteRevoked.object, schema)).toBe(true);
       });
     });
   });

@@ -9,18 +9,33 @@
   },
   "id": "/didWalletSignatureSchema",
   "properties": {
-    "object": { "type": "object" },
-    "signature": { "type": "string" },
+    "object": {
+      "type": "object"
+    },
+    "signature": {
+      "type": "string"
+    },
     "meta": {
       "type": "object",
       "properties": {
-        "version": { "type": "string" },
-        "kid": { "$ref": "/didSchema" }
+        "version": {
+          "type": "string"
+        },
+        "kid": {
+          "$ref": "/didSchema"
+        }
       },
-      "required": ["version", "kid"]
+      "required": [
+        "version",
+        "kid"
+      ]
     }
   },
-  "required": ["object", "signature", "meta"],
+  "required": [
+    "object",
+    "signature",
+    "meta"
+  ],
   "type": "object",
   "additionalProperties": false
 }

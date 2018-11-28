@@ -49,7 +49,12 @@ class SchemaValidator {
    * @returns Whether or not the instance adheres to the schema
    */
   isValid(instance, s) {
-    const isValid = this.validate(instance, s).errors.length === 0;
+    const result = this.validate(instance, s);
+    if (result.errors.length) {
+      console.log(result);
+    }
+
+    const isValid = result.errors.length === 0;
     return isValid;
   }
 }
