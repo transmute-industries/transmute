@@ -1,18 +1,20 @@
 {
   "name": "@transmute/transmute-adapter-orbit-db",
   "version": "1.0.0-alpha.1",
-  "description": "",
+  "description": "Simple bytes32 compatible content addressed json object interface for orbit db.",
   "main": "./src/index.js",
   "scripts": {
     "test": "jest ",
     "coverage": "jest --coverage"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "jest": "^23.6.0",
     "ipfs": "^0.33.1",
-    "orbit-db": "^0.19.9"
+    "orbit-db": "^0.19.9",
+    "merge": ">=1.2.1",
+    "lodash": ">=4.17.5"
   },
   "dependencies": {
     "bs58": "^4.0.1",
