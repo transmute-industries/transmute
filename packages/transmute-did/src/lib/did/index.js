@@ -28,7 +28,7 @@ const publicKeyToDID = async (type, publicKey) => {
 };
 
 const getPublicKeyFromDIDDocByKID = (doc, kid) => {
-  const key = _.find(doc.publicKey, key => key.id === kid);
+  const key = _.find(doc.publicKey, k => k.id === kid);
 
   if (!key) {
     throw new Error(`No key exists in doc for kid: ${kid}`);
@@ -63,8 +63,6 @@ const verifyDIDSignature = (object, signature, meta, doc, kidTransform) => {
   try {
     publicKey = getPublicKeyFromDIDDocByKID(doc, kid2);
   } catch (e) {
-    console.error(e);
-
     throw new Error('kidTransform is likely required.');
   }
 
