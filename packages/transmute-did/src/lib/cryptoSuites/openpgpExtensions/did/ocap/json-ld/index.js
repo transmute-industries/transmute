@@ -2,7 +2,7 @@ const base64url = require('base64url');
 
 const cryptoHelpers = require('../../../cryptoHelpers');
 
-const pack = require('../../../../../../package.json');
+const pack = require('../../../../../../../package.json');
 
 const openpgpVersion = `openpgp@${pack.dependencies.openpgp}`;
 

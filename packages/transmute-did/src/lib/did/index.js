@@ -1,9 +1,9 @@
 const _ = require('lodash');
 
-const openpgpExtensions = require('../openpgpExtensions');
-const ethereumExtensions = require('../ethereumExtensions');
-const ellipticExtensions = require('../ellipticExtensions');
-const sodiumExtensions = require('../sodiumExtensions');
+const openpgpExtensions = require('../cryptoSuites/openpgpExtensions');
+const ethereumExtensions = require('../cryptoSuites/ethereumExtensions');
+const ellipticExtensions = require('../cryptoSuites/ellipticExtensions');
+const sodiumExtensions = require('../cryptoSuites/sodiumExtensions');
 
 const { didMethods } = require('./constants');
 

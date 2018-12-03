@@ -4,9 +4,9 @@ const moment = require('moment');
 const pack = require('../../../package.json');
 
 const didLib = require('../did');
-const sodiumExtensions = require('../sodiumExtensions');
-const openpgpExtensions = require('../openpgpExtensions');
-const ellipticExtensions = require('../ellipticExtensions');
+const sodiumExtensions = require('../cryptoSuites/sodiumExtensions');
+const openpgpExtensions = require('../cryptoSuites/openpgpExtensions');
+const ellipticExtensions = require('../cryptoSuites/ellipticExtensions');
 
 const { constructDIDPublicKeyID } = didLib;
 

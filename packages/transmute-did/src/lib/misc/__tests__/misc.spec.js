@@ -1,6 +1,6 @@
 const misc = require('../index');
-const openpgpExtensions = require('../../openpgpExtensions');
-const sodiumExtensions = require('../../sodiumExtensions');
+const openpgpExtensions = require('../../cryptoSuites/openpgpExtensions');
+const sodiumExtensions = require('../../cryptoSuites/sodiumExtensions');
 
 describe('misc', () => {
   describe('publicKeysToDIDDocument', () => {

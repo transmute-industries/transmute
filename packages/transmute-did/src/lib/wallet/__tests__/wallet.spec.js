@@ -5,8 +5,8 @@ const { sha3_256 } = require('js-sha3');
 
 const didWallet = require('../index');
 const pack = require('../../../../package.json');
-const sodiumExtensions = require('../../sodiumExtensions');
-const ethereumExtensions = require('../../ethereumExtensions');
+const sodiumExtensions = require('../../cryptoSuites/sodiumExtensions');
+const ethereumExtensions = require('../../cryptoSuites/ethereumExtensions');
 
 const emptyWalletPath = tmp.fileSync().name;
 const fullWalletPath = tmp.fileSync().name;
