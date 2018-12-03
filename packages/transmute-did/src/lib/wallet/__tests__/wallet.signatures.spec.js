@@ -2,6 +2,7 @@ const tmp = require('tmp');
 const fs = require('fs');
 const path = require('path');
 const didWallet = require('../index');
+
 const fullWalletPath = path.resolve(__dirname, '__fixtures__/wallet.plaintext.full.json');
 
 const openpgpDIDDocPath = tmp.fileSync().name;
