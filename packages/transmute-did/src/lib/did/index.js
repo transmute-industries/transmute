@@ -103,7 +103,18 @@ const transformNestedDIDToDID = (did) => {
   return did;
 };
 
+// https://w3c-ccg.github.io/did-spec/#proving-ownership-of-a-did-and-did-document
+const verifyDID = async (did, resolver) => {
+  const doc = await resolver.resolve(did);
+  const ID_MATCH = doc.id === did;
+  // TODO: Signature MATCH
+  // TODO: Timestamp MATCH
+
+  return ID_MATCH;
+};
+
 module.exports = {
+  verifyDID,
   publicKeyToDID,
   verifyDIDSignature,
   SignatureStore,
