@@ -1,3 +1,4 @@
+const tmp = require('tmp');
 const fs = require('fs');
 const path = require('path');
 const didWallet = require('../index');
@@ -7,10 +8,7 @@ const fullWalletPath = path.resolve(__dirname, '__fixtures__/wallet.plaintext.fu
 const openPGPKID = '2c4e730145b89cfebc1a0a16c64ccfa297277c2f136cfff8269b6bbfbaa3e178';
 const passphrase = 'yolo';
 
-const didRevocationCertificatePath = path.resolve(
-  __dirname,
-  '__fixtures__/wallet.did.revocation.json',
-);
+const didRevocationCertificatePath = tmp.fileSync().name;
 
 describe('did-wallet', () => {
   let wallet;
