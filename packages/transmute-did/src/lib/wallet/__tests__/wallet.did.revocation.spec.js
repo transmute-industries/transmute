@@ -14,6 +14,7 @@ describe('did-wallet', () => {
   let wallet;
   let doc;
   let signature;
+
   beforeAll(async () => {
     wallet = new didWallet.TransmuteDIDWallet(
       JSON.parse(fs.readFileSync(fullWalletPath).toString()),
@@ -26,6 +27,7 @@ describe('did-wallet', () => {
     //   eslint-disable-next-line
     meta = result.meta;
   });
+
   describe('generateDIDRevocationCertificate', () => {
     it('supports revocation of an openpgp based did', async () => {
       const cert = await wallet.generateDIDRevocationCertificate({

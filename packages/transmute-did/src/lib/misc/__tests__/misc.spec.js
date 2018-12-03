@@ -120,7 +120,8 @@ describe('misc', () => {
 
           it('should contain only one valid value', () => {
             publicKeys.forEach((publicKey) => {
-              const valueProperties = Object.keys(publicKey).filter(key => validValues.includes(key));
+              const valueProperties = Object.keys(publicKey)
+                .filter(key => validValues.includes(key));
               expect(valueProperties.length).toBe(1);
             });
           });

@@ -9,7 +9,8 @@ const secrets = require('secrets.js-grempe');
  * @param {String} shareThreshold number of shares needed to recover key
  * @returns {Array} shamir secret shares of the key
  */
-const shatterKey = async ({ key, shareNumber, shareThreshold }) => secrets.share(key, shareNumber, shareThreshold);
+const shatterKey = async ({ key, shareNumber, shareThreshold }) => secrets
+  .share(key, shareNumber, shareThreshold);
 
 /**
  * recover a key with shamir secret sharing

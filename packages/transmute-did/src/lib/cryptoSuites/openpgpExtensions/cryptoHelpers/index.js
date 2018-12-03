@@ -110,7 +110,7 @@ const sign = async ({ message, privateKey, passphrase }) => {
     privateKeys: [privKeyObj], // for signing
   };
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     openpgp.sign(options).then((signed) => {
       const cleartext = signed.data; // '-----BEGIN PGP SIGNED MESSAGE ... END PGP SIGNATURE-----'
       resolve(cleartext);
@@ -132,12 +132,9 @@ const verify = async ({ message, publicKey }) => {
     publicKeys: (await openpgp.key.readArmored(publicKey)).keys, // for verification
   };
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     openpgp.verify(options).then((verified) => {
       const validity = verified.signatures[0].valid; // true
-      // if (validity) {
-      //   console.log("signed by key id " + verified.signatures[0].keyid.toHex());
-      // }
       resolve(validity);
     });
   });
@@ -173,9 +170,6 @@ const verifyDetached = async (message, detachedSig, publicKey) => {
 
   const verified = await openpgp.verify(options);
   const validity = verified.signatures[0].valid; // true
-  // if (validity) {
-  //   console.log(`signed by key id ${verified.signatures[0].keyid.toHex()}`);
-  // }
   return validity;
 };
 

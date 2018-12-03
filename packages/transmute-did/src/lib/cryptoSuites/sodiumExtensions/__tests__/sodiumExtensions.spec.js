@@ -7,13 +7,6 @@ const aliceSign = {
   keyType: 'ed25519',
 };
 
-const bobSign = {
-  publicKey: '4a3267b5124ef5885dd0793cf8698e70114f723397a5581774b35203ba852fe9',
-  privateKey:
-    '62312b941a26b09bbe341a5a046d265ff993a0722444a32ecc77d10e6e1295f54a3267b5124ef5885dd0793cf8698e70114f723397a5581774b35203ba852fe9',
-  keyType: 'ed25519',
-};
-
 const aliceBox = {
   publicKey: '9935faa5dd716ca1e52692d3322e7aad8c1a086bbfbe46f40f69283efcef7332',
   privateKey:
@@ -66,11 +59,11 @@ describe('sodiumExtensions', () => {
       expect.assertions(1);
       const password = 'thanos did nothing wrong';
       const salt = await sodiumExtensions.generateSalt();
-      const key = await sodiumExtensions.generateSymmetricKeyFromPasswordAndSalt({
+      const symmetricKey = await sodiumExtensions.generateSymmetricKeyFromPasswordAndSalt({
         password,
         salt,
       });
-      expect(key.length).toBe(64);
+      expect(symmetricKey.length).toBe(64);
     });
   });
 

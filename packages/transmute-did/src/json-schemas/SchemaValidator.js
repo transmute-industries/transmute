@@ -50,10 +50,6 @@ class SchemaValidator {
    */
   isValid(instance, s) {
     const result = this.validate(instance, s);
-    if (result.errors.length) {
-      console.log(result);
-    }
-
     const isValid = result.errors.length === 0;
     return isValid;
   }
