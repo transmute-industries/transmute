@@ -32,19 +32,19 @@ describe('did-wallet', () => {
   let wallet;
   let doc;
   let signature;
+
   beforeAll(async () => {
     wallet = new didWallet.TransmuteDIDWallet(
       JSON.parse(fs.readFileSync(fullWalletPath).toString()),
     );
     const result = await wallet.toDIDDocument(openPGPKID, passphrase);
-    //   eslint-disable-next-line
     doc = result.object;
     //   eslint-disable-next-line
     signature = result.signature;
     //   eslint-disable-next-line
     meta = result.meta;
-    // console.log(doc.id)
   });
+
   describe('toDIDDocument', () => {
     it('supports exporting a did document for an openpgp keypair', async () => {
       // todo: call validation on document....

@@ -65,8 +65,6 @@ class TransmuteDIDWallet {
     const { keystore } = this.data;
     switch (type) {
       case 'symmetric':
-        kid = sha3_256(data);
-        break;
       case 'shamir-share':
         kid = sha3_256(data);
         break;
