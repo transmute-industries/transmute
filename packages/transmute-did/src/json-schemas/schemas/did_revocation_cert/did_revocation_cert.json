@@ -15,7 +15,7 @@
       "properties": {
         "kid": { "$ref": "/didSchema" },
         "message": { "type": "string" },
-        "timestamp": { "type": "string" }
+        "timestamp": { "type": "integer" }
       },
       "required": ["kid"]
     },

@@ -13,7 +13,7 @@
     "id": { "$ref": "/didSchema" },
     "publicKey": { "type": "array" },
     "authentication": { "type": "array" },
-    "service": { "type": "array" },
+    "service": { "type": "array" }
   },
   "required": ["@context", "id", "publicKey"],
   "type": "object"
