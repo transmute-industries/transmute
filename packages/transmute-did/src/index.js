@@ -1,8 +1,8 @@
-const sodiumExtensions = require('./lib/sodiumExtensions');
-const openpgpExtensions = require('./lib/openpgpExtensions');
-const shamirExtensions = require('./lib/shamirExtensions');
-const ellipticExtensions = require('./lib/ellipticExtensions');
-const ethereumExtensions = require('./lib/ethereumExtensions');
+const sodiumExtensions = require('./lib/cryptoSuites/sodiumExtensions');
+const openpgpExtensions = require('./lib/cryptoSuites/openpgpExtensions');
+const shamirExtensions = require('./lib/cryptoSuites/shamirExtensions');
+const ellipticExtensions = require('./lib/cryptoSuites/ellipticExtensions');
+const ethereumExtensions = require('./lib/cryptoSuites/ethereumExtensions');
 const wallet = require('./lib/wallet');
 const misc = require('./lib/misc');
 const {

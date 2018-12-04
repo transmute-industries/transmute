@@ -1,27 +1,19 @@
+const tmp = require('tmp');
 const fs = require('fs');
-const path = require('path');
 //   eslint-disable-next-line
 const { sha3_256 } = require('js-sha3');
 
 const didWallet = require('../index');
-
 const pack = require('../../../../package.json');
+const sodiumExtensions = require('../../cryptoSuites/sodiumExtensions');
+const ethereumExtensions = require('../../cryptoSuites/ethereumExtensions');
 
-const sodiumExtensions = require('../../sodiumExtensions');
-const ethereumExtensions = require('../../ethereumExtensions');
+const emptyWalletPath = tmp.fileSync().name;
+const fullWalletPath = tmp.fileSync().name;
+const cipherTextWalletPath = tmp.fileSync().name;
+const recoveredPlaintextWalletPath = tmp.fileSync().name;
 
 const passphrase = 'yolo';
-
-const emptyWalletPath = path.resolve(__dirname, '__fixtures__/wallet.plaintext.empty.json');
-
-const fullWalletPath = path.resolve(__dirname, '__fixtures__/wallet.plaintext.full.json');
-
-const cipherTextWalletPath = path.resolve(__dirname, '__fixtures__/wallet.ciphertext.full.json');
-
-const recoveredPlaintextWalletPath = path.resolve(
-  __dirname,
-  '__fixtures__/wallet.plaintext.recovered.json',
-);
 
 describe('did-wallet', () => {
   describe('createWallet', () => {

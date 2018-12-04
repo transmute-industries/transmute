@@ -1,4 +1,4 @@
-const sodiumWrappers = require("libsodium-wrappers");
+const sodiumWrappers = require('libsodium-wrappers');
 
 /**
  * initializes the lib sodium library
@@ -23,7 +23,7 @@ const generateCryptoSignKeypair = async () => {
   return {
     publicKey: sodium.to_hex(keypair.publicKey),
     privateKey: sodium.to_hex(keypair.privateKey),
-    keyType: keypair.keyType
+    keyType: keypair.keyType,
   };
 };
 
@@ -39,7 +39,7 @@ const generateCryptoBoxKeypair = async () => {
   return {
     publicKey: sodium.to_hex(keypair.publicKey),
     privateKey: sodium.to_hex(keypair.privateKey),
-    keyType: keypair.keyType
+    keyType: keypair.keyType,
   };
 };
 
@@ -71,8 +71,8 @@ const generateSymmetricKeyFromPasswordAndSalt = async ({ password, salt }) => {
       sodium.from_hex(salt),
       sodium.crypto_pwhash_OPSLIMIT_MIN,
       sodium.crypto_pwhash_MEMLIMIT_MIN,
-      sodium.crypto_pwhash_ALG_DEFAULT
-    )
+      sodium.crypto_pwhash_ALG_DEFAULT,
+    ),
   );
 };
 
@@ -90,11 +90,11 @@ const encryptWith = async ({ data, key }) => {
   const encrypted = sodium.crypto_secretbox_easy(
     data,
     nonce,
-    sodium.from_hex(key)
+    sodium.from_hex(key),
   );
   return {
     nonce: sodium.to_hex(nonce),
-    encrypted: sodium.to_hex(encrypted)
+    encrypted: sodium.to_hex(encrypted),
   };
 };
 
@@ -111,7 +111,7 @@ const decryptWith = async ({ data, key }) => {
   const decrypted = sodium.crypto_secretbox_open_easy(
     sodium.from_hex(data.encrypted),
     sodium.from_hex(data.nonce),
-    sodium.from_hex(key)
+    sodium.from_hex(key),
   );
   return Buffer.from(decrypted).toString();
 };
@@ -124,12 +124,10 @@ const decryptWith = async ({ data, key }) => {
  * @param {String} key libsodium symmetric key in hex
  * @returns {Object} encrypted ciphertext and nonce in hex
  */
-const encryptJson = async ({ data, key }) => {
-  return encryptWith({
-    data: JSON.stringify(data),
-    key
-  });
-};
+const encryptJson = async ({ data, key }) => encryptWith({
+  data: JSON.stringify(data),
+  key,
+});
 
 /**
  * decrypts a json object data with a libsodium symmetric key
@@ -139,14 +137,12 @@ const encryptJson = async ({ data, key }) => {
  * @param {Object} key libsodium symmetric key in hex form
  * @returns {Object} plaintext json
  */
-const decryptJson = async ({ data, key }) => {
-  return JSON.parse(
-    await decryptWith({
-      data,
-      key
-    })
-  );
-};
+const decryptJson = async ({ data, key }) => JSON.parse(
+  await decryptWith({
+    data,
+    key,
+  }),
+);
 
 /**
  * generate detached signature from message and private key
@@ -159,7 +155,7 @@ const decryptJson = async ({ data, key }) => {
 const signDetached = async ({ message, privateKey }) => {
   const sodium = await initSodium();
   return sodium.to_hex(
-    sodium.crypto_sign_detached(message, sodium.from_hex(privateKey))
+    sodium.crypto_sign_detached(message, sodium.from_hex(privateKey)),
   );
 };
 
@@ -177,7 +173,7 @@ const verifyDetached = async ({ message, signature, publicKey }) => {
   return sodium.crypto_sign_verify_detached(
     sodium.from_hex(signature),
     message,
-    sodium.from_hex(publicKey)
+    sodium.from_hex(publicKey),
   );
 };
 
@@ -198,12 +194,12 @@ const encryptFor = async ({ message, publicKey, privateKey }) => {
     message,
     nonce,
     sodium.from_hex(publicKey),
-    sodium.from_hex(privateKey)
+    sodium.from_hex(privateKey),
   );
 
   return {
     nonce: sodium.to_hex(nonce),
-    encrypted: sodium.to_hex(encrypted)
+    encrypted: sodium.to_hex(encrypted),
   };
 };
 
@@ -222,9 +218,9 @@ const decryptFor = async ({ message, publicKey, privateKey }) => {
     sodium.from_hex(message.encrypted),
     sodium.from_hex(message.nonce),
     sodium.from_hex(publicKey),
-    sodium.from_hex(privateKey)
+    sodium.from_hex(privateKey),
   );
-  return Buffer.from(plainText).toString("utf8");
+  return Buffer.from(plainText).toString('utf8');
 };
 
 module.exports = {
@@ -239,5 +235,5 @@ module.exports = {
   signDetached,
   verifyDetached,
   encryptFor,
-  decryptFor
+  decryptFor,
 };

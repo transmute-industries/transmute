@@ -6,7 +6,7 @@ const { getMessagePayload } = require('../../../../cryptoHelpers');
 
 const { openpgpSignJson, openpgpVerifyJson } = require('../index');
 
-const pack = require('../../../../../../../package.json');
+const pack = require('../../../../../../../../package.json');
 
 const openpgpVersion = `openpgp@${pack.dependencies.openpgp}`;
 

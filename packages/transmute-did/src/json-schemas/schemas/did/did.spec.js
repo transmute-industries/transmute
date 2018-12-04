@@ -1,9 +1,7 @@
+const examples = require('./did.examples.json');
 const jsonSchemas = require('../../index');
 
 const validator = new jsonSchemas.SchemaValidator();
-
-const examples = require('./did.examples.json');
-
 const schema = jsonSchemas.schemas.didSchema;
 
 describe('json-schemas', () => {

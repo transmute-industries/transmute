@@ -1,6 +1,6 @@
 const { keccak256 } = require('js-sha3');
 
-const sodiumExtensions = require('../sodiumExtensions');
+const sodiumExtensions = require('../cryptoSuites/sodiumExtensions');
 
 /**
  * converts a public key into a DID

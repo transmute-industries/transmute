@@ -6,7 +6,6 @@ const keypair = {
 
 const data = 'hello';
 
-// //   eslint-disable-next-line
 const signature = '304402202dfa90d516f410823f4087fe2e1e003f35217e4539d52dea5e75ff4562d9b432022016e245b57194a6d6d500a373bd07b551f2b0c479a1c24cab0ddca4a2b5f3fb60';
 
 const EC = require('elliptic').ec;

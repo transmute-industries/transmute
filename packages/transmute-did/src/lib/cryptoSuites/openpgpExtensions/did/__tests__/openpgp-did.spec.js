@@ -1,5 +1,5 @@
+const tmp = require('tmp');
 const path = require('path');
-
 const fs = require('fs');
 
 const testKeypair0 = {
@@ -46,7 +46,7 @@ describe('openpgp did', () => {
     it('should use a detached signature to verify a DID Document', async () => {
       const formattedDocStr = JSON.stringify(testDIDDoc, null, 2);
       const docPath = path.resolve(__dirname, './did_doc.json');
-      const sigPath = path.resolve(__dirname, './did_doc.sig');
+      const sigPath = tmp.fileSync().name;
 
       fs.writeFileSync(docPath, formattedDocStr);
 

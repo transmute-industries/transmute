@@ -1,18 +1,13 @@
+const tmp = require('tmp');
 const fs = require('fs');
 const path = require('path');
 const didWallet = require('../index');
 
 const fullWalletPath = path.resolve(__dirname, '__fixtures__/wallet.plaintext.full.json');
 
-const openpgpDIDDocPath = path.resolve(__dirname, '__fixtures__/openpgp.did.document.json');
-
+const openpgpDIDDocPath = tmp.fileSync().name;
 const openPGPSignaturePath = path.resolve(__dirname, '__fixtures__/wallet.signature.json');
-
-const walletOpenPGPSignaturePath = path.resolve(
-  __dirname,
-  '__fixtures__/wallet.did.openpgp.signature.json',
-);
-
+const walletOpenPGPSignaturePath = tmp.fileSync().name;
 const walletLibSodiumSignaturePath = path.resolve(
   __dirname,
   '__fixtures__/wallet.did.sodium.signature.json',
@@ -32,19 +27,19 @@ describe('did-wallet', () => {
   let wallet;
   let doc;
   let signature;
+
   beforeAll(async () => {
     wallet = new didWallet.TransmuteDIDWallet(
       JSON.parse(fs.readFileSync(fullWalletPath).toString()),
     );
     const result = await wallet.toDIDDocument(openPGPKID, passphrase);
-    //   eslint-disable-next-line
     doc = result.object;
     //   eslint-disable-next-line
     signature = result.signature;
     //   eslint-disable-next-line
     meta = result.meta;
-    // console.log(doc.id)
   });
+
   describe('toDIDDocument', () => {
     it('supports exporting a did document for an openpgp keypair', async () => {
       // todo: call validation on document....

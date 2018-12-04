@@ -1,7 +1,7 @@
-const { openpgpSignJson, openpgpVerifyJson } = require('../index');
+const { openpgpVerifyJson } = require('../index');
 
 const findKey = (kid, list) => {
-  for (let i = 0; i < list.length; i++) {
+  for (let i = 0; i < list.length; i += 1) {
     const key = list[i];
     if (key.id === kid) {
       return key;
