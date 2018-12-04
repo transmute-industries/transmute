@@ -10,13 +10,8 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Snackbar from "@material-ui/core/Snackbar";
 
-import { verifyDIDSignature, isKeyRevoked } from "../../utils/orbitHelpers";
-
 const styles = theme => ({
   container: {
-    // margin: "16px",
-    // display: "flex",
-    // flexWrap: "wrap"
   }
 });
 
@@ -50,7 +45,9 @@ class DIDClaimsVerifier extends Component {
                       variant="contained"
                       color="primary"
                       onClick={async () => {
+                        
                         const {
+                          // eslint-disable-next-line
                           claim,
                           isSignatureValid,
                           isSignatureKeyRevoked

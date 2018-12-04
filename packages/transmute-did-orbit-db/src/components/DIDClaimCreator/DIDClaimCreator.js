@@ -5,23 +5,16 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 
+// eslint-disable-next-line
 import brace from "brace";
 import AceEditor from "react-ace";
 
 import "brace/mode/json";
 import "brace/theme/github";
 
-import {
-  createOrbitDIDWallet,
-  createOrbitDIDFromWallet
-} from "../../utils/orbitHelpers";
-
 const styles = theme => ({
   container: {
-    // margin: "16px",
-    // display: "flex",
     width: "100%"
-    // flexWrap: "wrap"
   },
   textField: {
     marginLeft: theme.spacing.unit,

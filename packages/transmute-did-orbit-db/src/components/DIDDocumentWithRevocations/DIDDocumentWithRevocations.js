@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
@@ -19,10 +18,7 @@ const styles = theme => ({
   container: {
     textAlign: "left"
   },
-  heading: {
-    // fontSize: theme.typography.pxToRem(15),
-    // fontWeight: theme.typography.fontWeightRegular
-  }
+  heading: {}
 });
 
 class DIDDocumentWithRevocations extends Component {
@@ -35,7 +31,6 @@ class DIDDocumentWithRevocations extends Component {
 
     return (
       <div className={classes.container}>
-        {/* <pre>{JSON.stringify(doc, null, 2)}</pre> */}
         <List dense={true}>
           {doc.publicKey.map(key => {
             const revocation = key.revocation !== undefined;
@@ -53,14 +48,13 @@ class DIDDocumentWithRevocations extends Component {
                 </ListItemAvatar>
                 <ListItemText
                   primary={kid}
-                  secondary={revocation ? key.revocation.id : key.type }
+                  secondary={revocation ? key.revocation.id : key.type}
                 />
                 <ListItemSecondaryAction>
                   {revocation ? (
                     <IconButton
                       aria-label="Revocation Info"
                       onClick={() => {
-                        // console.log(key.revocation);
                         this.setState({
                           open: true,
                           message: `Revocation ${key.revocation.hash}`
@@ -84,9 +78,8 @@ class DIDDocumentWithRevocations extends Component {
                           kid,
                           revocations: key.revocations,
                           wallet: this.props.wallet
-                        })
+                        });
                         console.log("data", data);
-
                       }}
                     >
                       <DeleteIcon />

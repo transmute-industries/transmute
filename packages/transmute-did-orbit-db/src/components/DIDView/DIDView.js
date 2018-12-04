@@ -13,19 +13,11 @@ import QRCode from "qrcode.react";
 
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-import DIDDocumentWithRevocations from "../DIDDocumentWithRevocations";
-
 const styles = theme => ({
   container: {
-    // margin: "16px",
-    // display: "flex",
-    // flexWrap: "wrap"
     textAlign: "left"
   },
-  heading: {
-    // fontSize: theme.typography.pxToRem(15),
-    // fontWeight: theme.typography.fontWeightRegular
-  }
+  heading: {}
 });
 
 class DIDView extends Component {

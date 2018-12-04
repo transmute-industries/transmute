@@ -12,9 +12,7 @@ import {
 
 const styles = theme => ({
   container: {
-    // margin: "16px",
-    // display: "flex",
-    // flexWrap: "wrap"
+
   }
 });
 

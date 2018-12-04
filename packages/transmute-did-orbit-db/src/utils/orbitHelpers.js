@@ -324,6 +324,7 @@ const createOrbitDIDClaimFromWallet = async ({
 };
 
 const isKeyRevoked = async ({ object, signature, meta }) => {
+  // eslint-disable-next-line
   const [did, kid] = meta.kid.split("#kid=");
   const { doc } = await orbitDIDRevocationsResolver(did);
   const key = _.find(doc.publicKey, key => {
