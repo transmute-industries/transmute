@@ -4,9 +4,9 @@ const moment = require('moment');
 const pack = require('../../../package.json');
 
 const didLib = require('../did');
-const sodiumExtensions = require('../sodiumExtensions');
-const openpgpExtensions = require('../openpgpExtensions');
-const ellipticExtensions = require('../ellipticExtensions');
+const sodiumExtensions = require('../cryptoSuites/sodiumExtensions');
+const openpgpExtensions = require('../cryptoSuites/openpgpExtensions');
+const ellipticExtensions = require('../cryptoSuites/ellipticExtensions');
 
 const { constructDIDPublicKeyID } = didLib;
 
@@ -66,8 +66,6 @@ class TransmuteDIDWallet {
     const { keystore } = this.data;
     switch (type) {
       case 'symmetric':
-        kid = sha3_256(data);
-        break;
       case 'shamir-share':
         kid = sha3_256(data);
         break;

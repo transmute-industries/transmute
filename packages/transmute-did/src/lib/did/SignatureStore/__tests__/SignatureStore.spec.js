@@ -45,13 +45,13 @@ describe('SignatureStore', () => {
     const result = await wallet.toDIDDocument({ kid: openPGPKID, password: passhprase });
     //   eslint-disable-next-line
     doc = result.object;
-    //   eslint-disable-next-line
+    // eslint-disable-next-line
     signature = result.signature;
 
-    //   eslint-disable-next-line
+    // eslint-disable-next-line
     meta = result.meta;
     resolver = {
-      //   eslint-disable-next-line
+      // eslint-disable-next-line
       resolve: did => Promise.resolve(doc),
     };
 
@@ -77,7 +77,7 @@ describe('SignatureStore', () => {
   });
 
   it('supports verifying an elliptic signature', async () => {
-    //   eslint-disable-next-line
+    // eslint-disable-next-line
     const { object, signature, meta } = JSON.parse(
       fs.readFileSync(walletEllipticSignaturePath).toString(),
     );
@@ -86,7 +86,7 @@ describe('SignatureStore', () => {
   });
 
   it('supports verifying an openpgp signature', async () => {
-    //   eslint-disable-next-line
+    // eslint-disable-next-line
     const { object, signature, meta } = JSON.parse(
       fs.readFileSync(walletOpenPGPSignaturePath).toString(),
     );
@@ -95,7 +95,7 @@ describe('SignatureStore', () => {
   });
 
   it('supports verifying an libsodium signature', async () => {
-    //   eslint-disable-next-line
+    // eslint-disable-next-line
     const { object, signature, meta } = JSON.parse(
       fs.readFileSync(walletLibSodiumSignaturePath).toString(),
     );

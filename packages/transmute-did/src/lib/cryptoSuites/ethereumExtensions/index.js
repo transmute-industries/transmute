@@ -1,6 +1,6 @@
-const bip39 = require("bip39");
-const hdkey = require("hdkey");
-const ethUtil = require("ethereumjs-util");
+const bip39 = require('bip39');
+const hdkey = require('hdkey');
+const ethUtil = require('ethereumjs-util');
 
 /**
  * generate a bip39 mnemonic
@@ -33,8 +33,8 @@ const mnemonicToKeypair = (mnemonic, hdPath) => {
   const pubKey = ethUtil.privateToPublic(addrNode._privateKey);
 
   return {
-    publicKey: pubKey.toString("hex"),
-    privateKey: addrNode._privateKey.toString("hex")
+    publicKey: pubKey.toString('hex'),
+    privateKey: addrNode._privateKey.toString('hex'),
   };
 };
 
@@ -45,10 +45,10 @@ const mnemonicToKeypair = (mnemonic, hdPath) => {
  * @param {String} pubKey in hex
  * @returns {String} hex encoded checksum valid ethereum address
  */
-const publicKeyToAddress = pubKey => {
+const publicKeyToAddress = (pubKey) => {
   const addr = ethUtil
-    .publicToAddress(Buffer.from(pubKey, "hex"))
-    .toString("hex");
+    .publicToAddress(Buffer.from(pubKey, 'hex'))
+    .toString('hex');
   const address = ethUtil.toChecksumAddress(addr);
   return address;
 };
@@ -56,5 +56,5 @@ const publicKeyToAddress = pubKey => {
 module.exports = {
   generateBIP39Mnemonic,
   mnemonicToKeypair,
-  publicKeyToAddress
+  publicKeyToAddress,
 };

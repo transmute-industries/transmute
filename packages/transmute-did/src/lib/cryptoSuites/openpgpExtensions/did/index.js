@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const ocap = require('./ocap');
 
-const didMethod = require('../../did/constants').didMethods.OPENPGP;
+const didMethod = require('../../../did/constants').didMethods.OPENPGP;
 
 const { armoredKeytoFingerprintHex } = require('../cryptoHelpers');
 

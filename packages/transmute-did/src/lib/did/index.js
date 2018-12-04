@@ -1,9 +1,9 @@
 const _ = require('lodash');
 
-const openpgpExtensions = require('../openpgpExtensions');
-const ethereumExtensions = require('../ethereumExtensions');
-const ellipticExtensions = require('../ellipticExtensions');
-const sodiumExtensions = require('../sodiumExtensions');
+const openpgpExtensions = require('../cryptoSuites/openpgpExtensions');
+const ethereumExtensions = require('../cryptoSuites/ethereumExtensions');
+const ellipticExtensions = require('../cryptoSuites/ellipticExtensions');
+const sodiumExtensions = require('../cryptoSuites/sodiumExtensions');
 
 const { didMethods } = require('./constants');
 
@@ -28,7 +28,7 @@ const publicKeyToDID = async (type, publicKey) => {
 };
 
 const getPublicKeyFromDIDDocByKID = (doc, kid) => {
-  const key = _.find(doc.publicKey, key => key.id === kid);
+  const key = _.find(doc.publicKey, k => k.id === kid);
 
   if (!key) {
     throw new Error(`No key exists in doc for kid: ${kid}`);
@@ -63,8 +63,6 @@ const verifyDIDSignature = (object, signature, meta, doc, kidTransform) => {
   try {
     publicKey = getPublicKeyFromDIDDocByKID(doc, kid2);
   } catch (e) {
-    console.error(e);
-
     throw new Error('kidTransform is likely required.');
   }
 
