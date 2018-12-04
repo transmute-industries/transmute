@@ -17,8 +17,10 @@ npm run did:wallet:decrypt password123
 npm run did:create password123
 npm run did:create:claim password123
 npm run did:resolver
-npm run did:start
+
 npm run did:clean
+
+npm run start
 npm run deploy:local
 npm run deploy:transmute
 ```

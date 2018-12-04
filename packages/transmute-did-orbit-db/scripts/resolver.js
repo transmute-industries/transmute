@@ -1,23 +1,14 @@
 var http = require("http");
 
-
-
 console.log("Resolver Started: ");
 
 const didData = require("../src/data/did_document.json");
 
-const { getOrbitDBFromKeypair, ipfsOptions, createOrbitDIDResolver, verifyDIDSignature } = require('./utils/orbitHelpers')
+const { orbitDIDResolver } = require("./utils/orbitHelpers");
 
-console.log(`http://localhost:7000/1.0/identifiers/${didData.orbitDID}`);
+console.log(`http://localhost:7000/1.0/identifiers/${didData.id}`);
 
 (async () => {
-
-  const orbitdb = await getOrbitDBFromKeypair(ipfsOptions);
-  const resolver = createOrbitDIDResolver(
-    orbitdb,
-    verifyDIDSignature
-  );
-
   http
     .createServer(async (req, resp) => {
       if (req.url === "/favicon.ico") {
@@ -30,8 +21,8 @@ console.log(`http://localhost:7000/1.0/identifiers/${didData.orbitDID}`);
         const did = req.url.split("/1.0/identifiers/")[1];
 
         try {
-          const object = await resolver.resolve(did);
-          const didDoc = JSON.stringify(object);
+          const { doc } = await orbitDIDResolver(did);
+          const didDoc = JSON.stringify(doc);
           resp.writeHead(200, { "Content-type": "application/json" });
           resp.write(didDoc);
         } catch (e) {
