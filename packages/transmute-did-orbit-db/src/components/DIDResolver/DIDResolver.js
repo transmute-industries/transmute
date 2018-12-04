@@ -39,13 +39,12 @@ class DIDResolver extends Component {
     });
   };
 
-  componentWillReceiveProps(nextProps){
-    if (nextProps.did){
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.did) {
       this.setState({
         did: nextProps.did
-      })
+      });
     }
-   
   }
 
   render() {
@@ -54,32 +53,33 @@ class DIDResolver extends Component {
     return (
       <div className={classes.container}>
         <Paper className={classes.paper}>
-        <h3>DID Resolver</h3>
-        <TextField
-          id="standard-with-placeholder"
-          label="DID"
-          placeholder={fullPlaceholder}
-          className={classes.textField}
-          value={this.state.did}
-          onChange={this.handleChange("did")}
-          margin="normal"
-        />
-        {this.state.doc && <pre>{JSON.stringify(this.state.doc, null, 2)}</pre>}
+          <h3>DID Resolver</h3>
+          <TextField
+            id="standard-with-placeholder"
+            label="DID"
+            placeholder={fullPlaceholder}
+            className={classes.textField}
+            value={this.state.did}
+            onChange={this.handleChange("did")}
+            margin="normal"
+          />
+          {this.state.doc && (
+            <pre>{JSON.stringify(this.state.doc, null, 2)}</pre>
+          )}
 
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={async () => {
-            const doc = await resolve(this.state.did);
-            this.setState({
-              doc
-            });
-          }}
-        >
-          Resolve
-        </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={async () => {
+              const { doc } = await resolve(this.state.did);
+              this.setState({
+                doc
+              });
+            }}
+          >
+            Resolve
+          </Button>
         </Paper>
-      
       </div>
     );
   }

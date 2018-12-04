@@ -13,14 +13,18 @@ import DIDClaimCreator from "../DIDClaimCreator";
 import DIDView from "../DIDView";
 import DIDSelector from "../DIDSelector";
 import DIDResolver from "../DIDResolver";
+import DIDClaimResolver from "../DIDClaimResolver";
 
 import DIDClaimsVerifier from "../DIDClaimsVerifier";
+import DIDRevocationsList from "../DIDRevocationsList";
 
 import {
   createOrbitDIDFromWallet,
   TransmuteDIDWallet,
   orbitDIDResolver,
-  createOrbitDIDClaimFromWallet
+  orbitDIDClaimResolver,
+  createOrbitDIDClaimFromWallet,
+  revokeKIDWithOrbitDB
 } from "../../utils/orbitHelpers";
 
 const styles = theme => ({
@@ -30,7 +34,6 @@ const styles = theme => ({
   },
   paper: {
     padding: theme.spacing.unit * 2,
-    // textAlign: "center",
     color: theme.palette.text.secondary
   }
 });
@@ -42,75 +45,86 @@ class DIDDemo extends Component {
   };
 
   async componentWillMount() {
-    let maybeCurrentDID = localStorage.getItem("current_did");
-    if (maybeCurrentDID) {
-      const { wallet_json, wallet_password } = JSON.parse(maybeCurrentDID);
-      const wallet = new TransmuteDIDWallet(wallet_json);
-      const did = await createOrbitDIDFromWallet(wallet, wallet_password);
+    let maybeCurrentDIDs = localStorage.getItem("current_dids");
+    if (maybeCurrentDIDs) {
+      const dids = JSON.parse(maybeCurrentDIDs);
+      const wallet = new TransmuteDIDWallet(dids[0].wallet_json);
+      const did = await createOrbitDIDFromWallet(
+        wallet,
+        dids[0].wallet_password
+      );
       this.setState({
         current_did: did,
-        dids: [did]
+        dids: dids
       });
     }
 
     let maybeClaimDatas = localStorage.getItem("claimDatas");
     if (maybeClaimDatas) {
       this.setState({
-        claimDatas: [JSON.parse(maybeClaimDatas)]
+        claimDatas: JSON.parse(maybeClaimDatas)
       });
     }
   }
 
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value
-    });
-  };
-
   onDIDCreated = did => {
     localStorage.setItem(
-      "current_did",
-      JSON.stringify({
-        wallet_json: did.wallet.data,
-        wallet_password: did.password,
-        did_document: did.did_document
-      })
+      "current_dids",
+      JSON.stringify([...this.state.dids, did])
     );
-
     this.setState({
       dids: [...this.state.dids, did],
       current_did: did
     });
   };
 
-  onDIDSelected = did => {
+  onDIDSelected = async did => {
+    const wallet = new TransmuteDIDWallet(did.wallet_json);
+    did = await createOrbitDIDFromWallet(wallet, did.wallet_password);
     this.setState({
       current_did: did
     });
   };
 
   onClaimCreated = claimDatas => {
-    // console.log(claimDatas);
-
-    localStorage.setItem("claimDatas", JSON.stringify(claimDatas));
-
+    const allClaimData = [...this.state.claimDatas, claimDatas];
+    localStorage.setItem("claimDatas", JSON.stringify(allClaimData));
     this.setState({
-      claimDatas: [...this.state.claimDatas, claimDatas],
+      claimDatas: allClaimData,
       current_claim: claimDatas
     });
   };
 
   render() {
     const { classes } = this.props;
-
-    let current_did;
-    if (this.state.current_did && this.state.current_did.did_document){
+    let current_did, current_claim;
+    if (this.state.current_did && this.state.current_did.did_document) {
       current_did = this.state.current_did.did_document.id;
+    }
+
+    if (this.state.claimDatas.length) {
+      current_claim = this.state.claimDatas[0].claimID;
     }
 
     return (
       <div className={classes.container}>
         <Grid container spacing={24}>
+          <Grid item xs={3} md={3}>
+            <Paper className={classes.paper}>
+              <DIDCreator onDIDCreated={this.onDIDCreated} />
+            </Paper>
+          </Grid>
+          <Grid item xs={9} md={9}>
+            <Paper className={classes.paper}>
+              <h3>Impersonate DID</h3>
+              <DIDSelector
+                current_did={this.state.current_did}
+                dids={this.state.dids}
+                onSelected={this.onDIDSelected}
+              />
+            </Paper>
+          </Grid>
+
           {this.state.dids[0] && (
             <Grid item xs={12} md={12}>
               <Paper className={classes.paper}>
@@ -133,43 +147,43 @@ class DIDDemo extends Component {
                     />
                   </ExpansionPanelDetails>
                 </ExpansionPanel>
+
+                <ExpansionPanel>
+                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                    <Typography className={classes.heading}>
+                      Revocations
+                    </Typography>
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                    <DIDRevocationsList
+                      did={this.state.current_did}
+                      revokeKIDWithOrbitDB={revokeKIDWithOrbitDB}
+                    />
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>
               </Paper>
             </Grid>
           )}
-          <Grid item xs={6} md={6}>
-            <Paper className={classes.paper}>
-              <DIDCreator onDIDCreated={this.onDIDCreated} />
-            </Paper>
-          </Grid>
-          <Grid item xs={6} md={6}>
-            <Paper className={classes.paper}>
-              <h3>Impersonate</h3>
-              <DIDSelector
-                current_did={this.state.current_did}
-                dids={this.state.dids}
-                onSelected={this.onDIDSelected}
-              />
-            </Paper>
-          </Grid>
+
           <Grid item xs={12} md={12}>
-            <DIDResolver resolve={orbitDIDResolver} did={current_did}/>
+            <DIDResolver resolve={orbitDIDResolver} did={current_did} />
+          </Grid>
+
+          <Grid item xs={12} md={12}>
+            <DIDClaimResolver
+              resolve={orbitDIDClaimResolver}
+              signatureID={current_claim}
+            />
           </Grid>
 
           <Grid item xs={12} md={12}>
             <Paper className={classes.paper}>
               <DIDClaimsVerifier
-                resolve={orbitDIDResolver}
+                resolve={orbitDIDClaimResolver}
                 claimDatas={this.state.claimDatas}
               />
             </Paper>
           </Grid>
-
-          {/* <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              <h3>Debug</h3>
-              <pre>{JSON.stringify(this.state, null, 2)}</pre>
-            </Paper>
-          </Grid> */}
         </Grid>
       </div>
     );

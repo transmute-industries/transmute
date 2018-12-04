@@ -13,6 +13,7 @@ import QRCode from "qrcode.react";
 
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
+import DIDDocumentWithRevocations from "../DIDDocumentWithRevocations";
 
 const styles = theme => ({
   container: {
@@ -54,7 +55,7 @@ class DIDView extends Component {
                   style={{
                     cursor: "pointer"
                   }}
-                  text={did.orbitDID}
+                  text={did.did_document.id}
                   onCopy={() => {
                     this.setState({ copied: true, open: true });
                     setTimeout(() => {
@@ -62,7 +63,7 @@ class DIDView extends Component {
                     }, 1 * 1000);
                   }}
                 >
-                  <QRCode value={did.orbitDID} />
+                  <QRCode value={did.did_document.id} />
                 </CopyToClipboard>
               </Grid>
               <Grid item xs={12} md={10}>

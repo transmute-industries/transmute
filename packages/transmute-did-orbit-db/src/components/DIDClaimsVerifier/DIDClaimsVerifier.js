@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Snackbar from "@material-ui/core/Snackbar";
 
-import { verifyDIDSignature } from "../../utils/orbitHelpers";
+import { verifyDIDSignature, isKeyRevoked } from "../../utils/orbitHelpers";
 
 const styles = theme => ({
   container: {
@@ -21,11 +21,10 @@ const styles = theme => ({
 });
 
 class DIDClaimsVerifier extends Component {
-
-  state ={
+  state = {
     open: false,
-    message: ''
-  }
+    message: ""
+  };
   render() {
     const { claimDatas, resolve, classes } = this.props;
 
@@ -35,10 +34,10 @@ class DIDClaimsVerifier extends Component {
 
         {claimDatas.map(data => {
           return (
-            <ExpansionPanel key={data.signatureID}>
+            <ExpansionPanel key={data.claimID}>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography className={classes.heading}>
-                  {data.signatureID}
+                  {data.claimID}
                 </Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
@@ -51,20 +50,22 @@ class DIDClaimsVerifier extends Component {
                       variant="contained"
                       color="primary"
                       onClick={async () => {
-                        const { object, signature, meta } = data.resolvedClaim;
-                        const doc = await resolve(meta.kid.split("#kid=")[0]);
-
-                        const isValid = await verifyDIDSignature(
-                          object,
-                          signature,
-                          meta,
-                          doc
-                        );
+                        const {
+                          claim,
+                          isSignatureValid,
+                          isSignatureKeyRevoked
+                        } = await resolve(data.claimID);
 
                         this.setState({
                           open: true,
-                          message: `signature is ${
-                            isValid ? "valid" : "not valid"
+                          message: `${
+                            isSignatureValid
+                              ? "Signature is VALID, "
+                              : "Signature is BAD, "
+                          }${
+                            isSignatureKeyRevoked
+                              ? "But key is REVOKED!"
+                              : "And key is GOOD"
                           }`
                         });
 

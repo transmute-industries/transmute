@@ -52,7 +52,7 @@ class DIDClaimCreator extends Component {
     this.setState({
       claimText: JSON.stringify(
         {
-          subject: this.props.did.orbitDID,
+          subject: this.props.did.did_document.id,
           claims: {
             isTruckDriver: true,
             isInvestor: true,
@@ -116,7 +116,7 @@ class DIDClaimCreator extends Component {
                 )[1];
 
                 const claimData = await createOrbitDIDClaimFromWallet({
-                  did: did.orbitDID,
+                  did: did.did_document.id,
                   kid: firstKID,
                   claim: JSON.parse(this.state.claimText),
                   wallet: did.wallet,

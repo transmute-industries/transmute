@@ -57,7 +57,11 @@ class DIDCreator extends Component {
                   w,
                   this.state.password
                 );
-                onDIDCreated(data);
+                onDIDCreated({
+                  wallet_json: data.wallet.data,
+                  wallet_password: data.password,
+                  did_document: data.did_document
+                });
               }}
             >
               Create DID

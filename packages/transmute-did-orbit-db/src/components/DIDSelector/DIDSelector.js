@@ -44,7 +44,7 @@ class DIDSelector extends Component {
             >
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography className={classes.heading}>
-                  {did.orbitDID}
+                  {did.did_document.id}
                 </Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
