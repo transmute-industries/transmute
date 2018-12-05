@@ -25,7 +25,7 @@ class CustomTestKeystore {
     };
   }
 
-  static createKey() {
+  createKey() {
     const key = ec.genKeyPair();
 
     this.key = ec.keyPair({
@@ -88,5 +88,8 @@ const verify = (data, signature, publicKey) => {
 };
 
 module.exports = {
-  CustomTestKeystore, createKeypair, sign, verify,
+  CustomTestKeystore,
+  createKeypair,
+  sign,
+  verify,
 };
