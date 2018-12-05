@@ -14,9 +14,9 @@ const ec = new EC('secp256k1');
 
 const {
   CustomTestKeystore, createKeypair, sign, verify,
-} = require('../index');
+} = require('../CustomTestKeystore');
 
-describe('ellipticExtensions', () => {
+describe('CustomTestKeystore', () => {
   describe('sanity', () => {
     it('from scratch', () => {
       const key = ec.genKeyPair();
