@@ -50,7 +50,7 @@ describe('TransmuteAdapterOrbitDB', () => {
   let orbitdb;
   let adapter;
   let address;
-  jest.setTimeout(20 * 1000);
+  jest.setTimeout(30 * 1000);
   beforeAll(async () => {
     ipfs = await getReadyIPFS(ipfsOptions);
     ipfs.on('error', (error) => {
