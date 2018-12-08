@@ -55,15 +55,13 @@ const guessKeyType = (meta) => {
   throw new Error('unguessable key type');
 };
 
-const verifyDIDSignature = (object, signature, meta, doc, kidTransform) => {
+const verifyDIDSignature = (object, signature, meta, doc) => {
   const keyType = guessKeyType(meta);
-  const kid2 = kidTransform ? kidTransform(meta.kid) : meta.kid;
-
   let publicKey;
   try {
-    publicKey = getPublicKeyFromDIDDocByKID(doc, kid2);
+    publicKey = getPublicKeyFromDIDDocByKID(doc, meta.kid);
   } catch (e) {
-    throw new Error('kidTransform is likely required.');
+    throw new Error('Public Key with kid does not exist in document.');
   }
 
   switch (keyType) {
@@ -87,21 +85,6 @@ const verifyDIDSignature = (object, signature, meta, doc, kidTransform) => {
   }
 };
 
-const kidTransformRegex = /(did:(.+)\.transmute\.(.+)):(.+\.)(.+)/;
-const transformNestedDIDToDID = (did) => {
-  const result = did.match(kidTransformRegex);
-  if (result) {
-    const maybeKIDInDID = result[5].split(`#${publicKeyKIDPrefix}`);
-    const didSignatureMethod = result[3];
-    const didSignatureID = maybeKIDInDID[0];
-    const kid = maybeKIDInDID[1];
-    const kidPart = kid ? `#${publicKeyKIDPrefix}${kid}` : '';
-    return `did:transmute.${didSignatureMethod}:${didSignatureID}${kidPart}`;
-  }
-  return did;
-};
-
-
 const verifyDIDSignatureWithResolver = async ({
   object, signature, meta, resolver,
 }) => {
@@ -120,6 +103,4 @@ module.exports = {
   SignatureStore,
   constructDIDPublicKeyID,
   publicKeyKIDPrefix,
-  kidTransformRegex,
-  transformNestedDIDToDID,
 };
