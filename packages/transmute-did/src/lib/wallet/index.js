@@ -5,29 +5,17 @@ const pack = require('../../../package.json');
 
 const didLib = require('../did');
 const sodiumExtensions = require('../cryptoSuites/sodiumExtensions');
-const openpgpExtensions = require('../cryptoSuites/openpgpExtensions');
-const ellipticExtensions = require('../cryptoSuites/ellipticExtensions');
 
-const { constructDIDPublicKeyID, verifyDIDSignatureWithResolver } = didLib;
+const {
+  createSignedLinkedData,
+  verifySignedLinkedData,
+  signObjectWithKeypair,
+} = require('./signatureMethods');
+
+const { constructDIDPublicKeyID, publicKeyKIDPrefix, verifyDIDSignatureWithResolver } = didLib;
 
 //   eslint-disable-next-line
 const { sha3_256 } = require('js-sha3');
-
-const guessKeyType = (key) => {
-  if (key.meta.version.indexOf('openpgp') === 0) {
-    return 'openpgp';
-  }
-  if (key.meta.version.indexOf('libsodium-wrappers') === 0) {
-    return 'libsodium-wrappers';
-  }
-  if (key.meta.version.indexOf('elliptic') === 0) {
-    return 'elliptic';
-  }
-
-  throw new Error('unguessable key type');
-};
-
-const requireKIDinPublicKeys = (kid, publicKeys) => _.some(publicKeys, key => key.id === kid);
 
 const constructPublicKeysProperty = (did, keystore) => {
   const allPublicKeys = _.values(keystore);
@@ -54,31 +42,6 @@ const constructAuthenticationProperty = (did, keystore) => {
     publicKey: constructDIDPublicKeyID(did, key.kid),
     type: key.meta.did.signatureType,
   }));
-};
-
-const marshalSignedDataObject = ({
-  field, object, signature, meta,
-}) => ({
-  ...object,
-  [field]: {
-    type: 'LinkedDataSignature2015',
-    created: moment.utc().toISOString(),
-    creator: meta.kid,
-    signatureValue: signature,
-    meta,
-  },
-});
-
-const unmarshalSignedData = ({ field, signedLinkedData }) => {
-  const mutable = _.cloneDeep(signedLinkedData);
-  const proof = mutable[field];
-  delete mutable[field];
-
-  return {
-    object: mutable,
-    signature: proof.signatureValue,
-    meta: proof.meta,
-  };
 };
 
 class TransmuteDIDWallet {
@@ -164,119 +127,40 @@ class TransmuteDIDWallet {
   }
 
   async signObject({
-    obj, kid, passphrase, did, asDIDByKID, asDIDByKIDPassphrase, overwriteKID,
+    field, obj, kid, password,
   }) {
-    const keypair = this.data.keystore[kid];
-    const guessedType = guessKeyType(keypair);
-    const payload = JSON.stringify(obj);
-    let signature;
-    let doc = {};
-
-    // this will first generate a did document
-    // from the keystore with asDIDByKID as the owner
-    // this is a good way of ensuring a signature is traceable to a did
-    if (asDIDByKID) {
-      const result = await this.toDIDDocument({
-        did,
-        kid: asDIDByKID,
-        password: asDIDByKIDPassphrase,
-      });
-      //   eslint-disable-next-line
-      doc = result.object;
-      if (!requireKIDinPublicKeys(constructDIDPublicKeyID(doc.id, kid), doc.publicKey)) {
-        throw new Error('kid is not listed in did document. Cannot sign asDIDByKID');
-      }
-    }
-
-    switch (guessedType) {
-      case 'openpgp':
-        signature = await openpgpExtensions.cryptoHelpers.signDetached(
-          payload,
-          keypair.data.privateKey,
-          passphrase,
-        );
-        break;
-
-      case 'libsodium-wrappers':
-        signature = await sodiumExtensions.signDetached({
-          message: payload,
-          privateKey: keypair.data.privateKey,
-        });
-        break;
-
-      case 'elliptic':
-        signature = await ellipticExtensions.sign(payload, keypair.data.privateKey);
-        break;
-
-      default:
-        throw new Error('Unknown key type. Cannot sign did document');
-    }
-
-    // todo: this is super confusing... needs documentation
-    const kid2 = overwriteKID || (doc.id ? constructDIDPublicKeyID(doc.id, kid) : kid);
-
-    const meta = {
-      version: `${guessedType}@${pack.dependencies[guessedType]}`,
-      kid: kid2,
-    };
-
-    return {
-      object: obj,
-      signature,
-      meta,
-    };
+    const justTheHash = kid.split(`#${publicKeyKIDPrefix}`)[1];
+    const keypair = this.data.keystore[justTheHash];
+    return signObjectWithKeypair({
+      keypair,
+      field,
+      obj,
+      kid,
+      password,
+    });
   }
 
-  async createSignedLinkedData({
-    data, did, kid, password,
-  }) {
-    const { object, signature, meta } = await this.signObject({
-      obj: data,
-      kid,
-      overwriteKID: constructDIDPublicKeyID(did, kid),
-      passphrase: password,
-    });
-    return marshalSignedDataObject({
-      field: 'proof',
-      object,
-      signature,
-      meta,
-    });
+  async createSignedLinkedData({ data, proofSet }) {
+    return createSignedLinkedData({ data, proofSet, signObject: this.signObject.bind(this) });
   }
 
   async verifySignedLinkedData({ signedLinkedData }) {
-    // verifyDIDSignature
-
-    const { object, signature, meta } = unmarshalSignedData({
-      field: 'proof',
+    return verifySignedLinkedData({
       signedLinkedData,
-    });
-
-    return verifyDIDSignatureWithResolver({
-      object,
-      signature,
-      meta,
+      verifyDIDSignatureWithResolver,
       resolver: this.resolver,
     });
   }
 
   async toDIDDocument({
-    did, kid, password, cacheLocal,
+    did, proofSet, proofChain, cacheLocal,
   }) {
-    const masterKeypair = this.data.keystore[kid];
-
-    if (!masterKeypair || !masterKeypair.data.privateKey) {
-      throw new Error('Cannot create a DID without a private key. Invalid KID');
+    if (!(proofSet || proofChain)) {
+      throw new Error('A proof set or chain is required.');
     }
 
-    const guessedType = await guessKeyType(masterKeypair);
-
-    if (guessedType === 'openpgp' && password === undefined) {
-      throw new Error('Passphrase is required to sign with openpgp.');
-    }
-    if (!did) {
-      //   eslint-disable-next-line
-      did = await didLib.publicKeyToDID(guessedType, masterKeypair.data.publicKey);
+    if (proofChain) {
+      proofSet = proofChain;
     }
 
     const publicKey = await constructPublicKeysProperty(did, this.data.keystore);
@@ -289,19 +173,16 @@ class TransmuteDIDWallet {
       authentication,
     };
 
-    //   eslint-disable-next-line
-    const { object, signature, meta } = await this.signObject({
-      obj: doc,
-      kid,
-      overwriteKID: constructDIDPublicKeyID(did, kid),
-      passphrase: password,
+    const didDocument = await this.createSignedLinkedData({
+      data: doc,
+      proofSet,
     });
 
     if (cacheLocal) {
-      this.didCache[object.id] = object;
+      this.didCache[didDocument.id] = didDocument;
     }
 
-    return { object, signature, meta };
+    return didDocument;
   }
 }
 
@@ -314,4 +195,5 @@ const createWallet = async () => new TransmuteDIDWallet({
 module.exports = {
   TransmuteDIDWallet,
   createWallet,
+  constructDIDPublicKeyID,
 };

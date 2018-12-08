@@ -23,6 +23,13 @@ const orbitDBKID = '5c51560bcef78d176b726a00b27ad3ef533ae39ef3d0f514392c79988c40
 
 const passphrase = 'yolo';
 
+const linkedData = {
+  '@context': 'https://w3id.org/identity/v1',
+  title: 'Hello World!',
+};
+
+const did = 'did:test:0x123';
+
 describe('did-wallet', () => {
   let wallet;
   let doc;
@@ -32,7 +39,12 @@ describe('did-wallet', () => {
     wallet = new didWallet.TransmuteDIDWallet(
       JSON.parse(fs.readFileSync(fullWalletPath).toString()),
     );
-    const result = await wallet.toDIDDocument({ kid: openPGPKID, password: passphrase });
+    const result = await wallet.toDIDDocument({
+      did,
+      kid: openPGPKID,
+      password: passphrase,
+      cacheLocal: true,
+    });
     //   eslint-disable-next-line
     doc = result.object;
     //   eslint-disable-next-line
@@ -52,7 +64,6 @@ describe('did-wallet', () => {
     });
 
     it('supports passsing a did param', async () => {
-      const did = '0x123';
       const { object } = await wallet.toDIDDocument({ did, kid: openPGPKID, password: passphrase });
       expect(object.id).toBe(did);
     });
@@ -186,6 +197,21 @@ describe('did-wallet', () => {
         `${walletEllipticSignaturePath}`,
         JSON.stringify({ object, signature, meta }, null, 2),
       );
+    });
+
+    describe('linked data signatures', () => {
+      it('can create and verify linked data signatures produced by wallet', async () => {
+        const signedLinkedData = await wallet.createSignedLinkedData({
+          data: linkedData,
+          did,
+          kid: openPGPKID,
+          password: passphrase,
+        });
+        const isVerified = await wallet.verifySignedLinkedData({
+          signedLinkedData,
+        });
+        expect(isVerified).toBe(true);
+      });
     });
   });
 });
