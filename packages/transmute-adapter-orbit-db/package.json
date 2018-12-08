@@ -5,7 +5,7 @@
   "main": "./src/index.js",
   "scripts": {
     "test": "jest",
-    "coverage": "npm run test --coverage"
+    "coverage": "jest --coverage"
   },
   "jest": {
     "setupFiles": ["./setupJest.js"]

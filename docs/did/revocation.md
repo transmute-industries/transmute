@@ -53,7 +53,7 @@ Note that the revocation will no longer be verifiable if the publicKey is remove
 
 ### Signatures from revoked keys
 
-A revoked key which is still listed should simply result in a warning to the client, that allthough the signature is valid, it should maybe not be trusted because the key has been revoked.
+A revoked key which is still listed should simply result in a warning to the client, that although the signature is valid, it should maybe not be trusted because the key has been revoked.
 
 A revoked key which is removed from a DID document should cause DID signature verifcation error (because the public key is no longer listed, signature will not be verified).
 

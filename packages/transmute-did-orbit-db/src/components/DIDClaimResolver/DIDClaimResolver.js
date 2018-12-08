@@ -13,8 +13,6 @@ const fullPlaceholder = `/orbitdb/QmQ8ZK.../did:openpgp:fingerprint:21b5ef5af6..
 
 const styles = theme => ({
   container: {
-    // display: "flex",
-    // flexWrap: "wrap"
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -23,7 +21,6 @@ const styles = theme => ({
   },
   paper: {
     padding: theme.spacing.unit * 2,
-    // textAlign: "center",
     color: theme.palette.text.secondary
   }
 });
