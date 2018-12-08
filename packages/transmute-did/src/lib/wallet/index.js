@@ -258,18 +258,6 @@ class TransmuteDIDWallet {
       meta,
       resolver: this.resolver,
     });
-    // const { object, signature, meta } = await this.signObject({
-    //   obj: data,
-    //   kid,
-    //   overwriteKID: constructDIDPublicKeyID(did, kid),
-    //   passphrase: password,
-    // });
-    // return marshalSignedDataObject({
-    //   field: 'proof',
-    //   object,
-    //   signature,
-    //   meta,
-    // });
   }
 
   async toDIDDocument({

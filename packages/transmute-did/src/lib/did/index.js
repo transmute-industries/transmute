@@ -101,6 +101,7 @@ const transformNestedDIDToDID = (did) => {
   return did;
 };
 
+
 const verifyDIDSignatureWithResolver = async ({
   object, signature, meta, resolver,
 }) => {
