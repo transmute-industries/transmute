@@ -11,7 +11,6 @@ const {
   verifyDIDSignature,
   publicKeyKIDPrefix,
   constructDIDPublicKeyID,
-  transformNestedDIDToDID,
 } = require('./lib/did');
 
 module.exports = {
@@ -27,5 +26,4 @@ module.exports = {
   verifyDIDSignature,
   publicKeyKIDPrefix,
   constructDIDPublicKeyID,
-  transformNestedDIDToDID,
 };
