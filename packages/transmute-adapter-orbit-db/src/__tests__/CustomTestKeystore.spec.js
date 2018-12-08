@@ -12,9 +12,11 @@ const EC = require('elliptic').ec;
 
 const ec = new EC('secp256k1');
 
-const { createKeypair, sign, verify } = require('../index');
+const {
+  CustomTestKeystore, createKeypair, sign, verify,
+} = require('../CustomTestKeystore');
 
-describe('ellipticExtensions', () => {
+describe('CustomTestKeystore', () => {
   describe('sanity', () => {
     it('from scratch', () => {
       const key = ec.genKeyPair();
@@ -33,6 +35,40 @@ describe('ellipticExtensions', () => {
       const sig = ec.sign(data, key).toDER('hex');
       const res = ec.verify(data, sig, key);
       expect(res).toBe(true);
+    });
+  });
+
+  describe('CustomTestKeystore', () => {
+    it('constructor takes a keypair', async () => {
+      const cust = new CustomTestKeystore(keypair);
+      expect(cust).toBeDefined();
+      const sig = await cust.sign(cust.key, data);
+      const ver = await cust.verify(sig, cust.key, data);
+      expect(ver).toBe(true);
+    });
+
+    it('importPrivateKey', async () => {
+      const cust = new CustomTestKeystore(keypair);
+      const key = await cust.importPrivateKey(keypair.privateKey);
+      expect(key).toBeDefined();
+    });
+
+    it('importPublicKey', async () => {
+      const cust = new CustomTestKeystore(keypair);
+      const key = await cust.importPublicKey(keypair.publicKey);
+      expect(key).toBeDefined();
+    });
+
+    it('generateKey', async () => {
+      const cust = new CustomTestKeystore(keypair);
+      const key = await cust.generateKey();
+      expect(key).toBeDefined();
+    });
+
+    it('getKey', async () => {
+      const cust = new CustomTestKeystore(keypair);
+      const key = await cust.getKey();
+      expect(key).toBeDefined();
     });
   });
 

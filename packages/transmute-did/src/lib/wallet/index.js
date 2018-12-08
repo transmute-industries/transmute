@@ -39,6 +39,7 @@ const constructPublicKeysProperty = (did, keystore) => {
     id: constructDIDPublicKeyID(did, key.kid),
     type: key.meta.did.signatureType,
     owner: did,
+    revocations: key.meta.did.revocations,
     [key.meta.did.publicKeyType]: key.data.publicKey,
   }));
 };
@@ -109,21 +110,19 @@ class TransmuteDIDWallet {
   }
 
   async generateDIDRevocationCertificate({ asDIDByKID, asDIDByKIDPassphrase, overwriteKID }) {
-    const result = await this.toDIDDocument(asDIDByKID, asDIDByKIDPassphrase);
+    const result = await this.toDIDDocument({ kid: asDIDByKID, password: asDIDByKIDPassphrase });
     //   eslint-disable-next-line
     const doc = result.object;
 
-    const didKey = this.data.keystore[asDIDByKID];
+    const didPublicKeyID = constructDIDPublicKeyID(doc.id, asDIDByKID);
 
     const revocationCert = await this.signObject({
       obj: {
-        publicKey: didKey.data.publicKey,
-        message: `This signed json object serves as a revocation certificate for ${
-          doc.id
-        }. See https://docs.transmute.industries/did/revocation for more information.`,
-        timestampUTC: moment()
+        kid: didPublicKeyID,
+        message: `This signed json object serves as a revocation certificate for ${didPublicKeyID}. See https://docs.transmute.industries/did/revocation for more information.`,
+        timestamp: moment()
           .utc()
-          .toISOString(),
+          .unix(),
       },
       kid: asDIDByKID,
       passphrase: asDIDByKIDPassphrase,
@@ -132,13 +131,11 @@ class TransmuteDIDWallet {
       overwriteKID,
     });
 
-    // a revocation cert is a DID Document, with property.
-    didKey.meta.did.revocationCert = revocationCert;
-    return this.toDIDDocument(asDIDByKID, asDIDByKIDPassphrase);
+    return revocationCert;
   }
 
   async signObject({
-    obj, kid, passphrase, asDIDByKID, asDIDByKIDPassphrase, overwriteKID,
+    obj, kid, passphrase, did, asDIDByKID, asDIDByKIDPassphrase, overwriteKID,
   }) {
     const keypair = this.data.keystore[kid];
     const guessedType = guessKeyType(keypair);
@@ -150,7 +147,11 @@ class TransmuteDIDWallet {
     // from the keystore with asDIDByKID as the owner
     // this is a good way of ensuring a signature is traceable to a did
     if (asDIDByKID) {
-      const result = await this.toDIDDocument(asDIDByKID, asDIDByKIDPassphrase);
+      const result = await this.toDIDDocument({
+        did,
+        kid: asDIDByKID,
+        password: asDIDByKIDPassphrase,
+      });
       //   eslint-disable-next-line
       doc = result.object;
       if (!requireKIDinPublicKeys(constructDIDPublicKeyID(doc.id, kid), doc.publicKey)) {
@@ -197,8 +198,8 @@ class TransmuteDIDWallet {
     };
   }
 
-  async toDIDDocument(ownerKID, passphrase) {
-    const masterKeypair = this.data.keystore[ownerKID];
+  async toDIDDocument({ did, kid, password }) {
+    const masterKeypair = this.data.keystore[kid];
 
     if (!masterKeypair || !masterKeypair.data.privateKey) {
       throw new Error('Cannot create a DID without a private key. Invalid KID');
@@ -206,17 +207,20 @@ class TransmuteDIDWallet {
 
     const guessedType = await guessKeyType(masterKeypair);
 
-    if (guessedType === 'openpgp' && passphrase === undefined) {
+    if (guessedType === 'openpgp' && password === undefined) {
       throw new Error('Passphrase is required to sign with openpgp.');
     }
-    const did = await didLib.publicKeyToDID(guessedType, masterKeypair.data.publicKey);
+    if (!did) {
+      //   eslint-disable-next-line
+      did = await didLib.publicKeyToDID(guessedType, masterKeypair.data.publicKey);
+    }
+
     const publicKey = await constructPublicKeysProperty(did, this.data.keystore);
     const authentication = await constructAuthenticationProperty(did, this.data.keystore);
 
     const doc = {
       '@context': 'https://w3id.org/did/v1',
       id: did,
-      revocationCert: masterKeypair.meta.did.revocationCert,
       publicKey,
       authentication,
     };
@@ -224,8 +228,9 @@ class TransmuteDIDWallet {
     //   eslint-disable-next-line
     const { object, signature, meta } = await this.signObject({
       obj: doc,
-      kid: ownerKID,
-      passphrase,
+      kid,
+      overwriteKID: constructDIDPublicKeyID(did, kid),
+      passphrase: password,
     });
     return { object, signature, meta };
   }

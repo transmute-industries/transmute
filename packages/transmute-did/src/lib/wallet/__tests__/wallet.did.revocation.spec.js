@@ -12,14 +12,16 @@ const didRevocationCertificatePath = tmp.fileSync().name;
 
 describe('did-wallet', () => {
   let wallet;
+  //   eslint-disable-next-line
   let doc;
+  //   eslint-disable-next-line
   let signature;
 
   beforeAll(async () => {
     wallet = new didWallet.TransmuteDIDWallet(
       JSON.parse(fs.readFileSync(fullWalletPath).toString()),
     );
-    const result = await wallet.toDIDDocument(openPGPKID, passphrase);
+    const result = await wallet.toDIDDocument({ kid: openPGPKID, password: passphrase });
     //   eslint-disable-next-line
     doc = result.object;
     //   eslint-disable-next-line

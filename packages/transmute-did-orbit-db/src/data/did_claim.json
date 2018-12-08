@@ -1,21 +1,22 @@
 {
-  "address": "/orbitdb/QmZ5ymeGirf41jNai6YsFYSGw2upCy2y41E7WEQnY2GG8z/did:transmute.openpgp:38e6ed554af8c1da5ee9eb81d8b7399b955f6ffe",
-  "did": "did:orbitdb.transmute.openpgp:QmZ5ymeGirf41jNai6YsFYSGw2upCy2y41E7WEQnY2GG8z.38e6ed554af8c1da5ee9eb81d8b7399b955f6ffe",
-  "storeObject": {
-    "object": {
-      "subject": "did:orbitdb.transmute.openpgp:QmZ5ymeGirf41jNai6YsFYSGw2upCy2y41E7WEQnY2GG8z.38e6ed554af8c1da5ee9eb81d8b7399b955f6ffe",
-      "claims": {
-        "isTruckDriver": true,
-        "isInvestor": true,
-        "isDoctor": false
+  "claimID": "did:orbitdb.transmute.openpgp:QmZ5ymeGirf41jNai6YsFYSGw2upCy2y41E7WEQnY2GG8z.38e6ed554af8c1da5ee9eb81d8b7399b955f6ffe#signatureID=0x471ac33e4a9d5091a7a1195e5a85fab05a1a852a156653cea22e92623611b78b",
+  "resolvedClaim": {
+    "claim": {
+      "object": {
+        "subject": "did:orbitdb.transmute.openpgp:QmZ5ymeGirf41jNai6YsFYSGw2upCy2y41E7WEQnY2GG8z.38e6ed554af8c1da5ee9eb81d8b7399b955f6ffe",
+        "claims": {
+          "isTruckDriver": true,
+          "isInvestor": true,
+          "isDoctor": false
+        }
+      },
+      "signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v4.0.1\r\nComment: https://openpgpjs.org\r\n\r\nwl4EARMIABAFAlwGDv0JENi3OZuVX2/+AAAe6gEAvskepBHidKScPoGe7fVH\nkLzIh0O5EVfZoxcDi8Pzl3IBALwU6JXdnVh2PHHvb0ATDsfQC3Ecz+e59RV4\nlvIUEELG\r\n=kN+N\r\n-----END PGP SIGNATURE-----\r\n",
+      "meta": {
+        "version": "openpgp@^4.0.1",
+        "kid": "did:orbitdb.transmute.openpgp:QmZ5ymeGirf41jNai6YsFYSGw2upCy2y41E7WEQnY2GG8z.38e6ed554af8c1da5ee9eb81d8b7399b955f6ffe#kid=69dec37005c2df5414e356d8269ff79cdca772e7f57438ea35d35850c82f3e1e"
       }
     },
-    "signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v4.2.1\r\nComment: https://openpgpjs.org\r\n\r\nwl4EARMIAAYFAlv8UcsACgkQ2Lc5m5Vfb/53dAD/UBx5Z7XaQApjcLKYFlfJ\r\n2nJDO/UNEZlsA5Ppn4sJhnsA+gLyM8ym+pqoQ8bllZnptRU58SB77hVbrOas\r\n5uiorVka\r\n=hHCS\r\n-----END PGP SIGNATURE-----\r\n",
-    "meta": {
-      "version": "openpgp@^4.0.1",
-      "kid": "did:orbitdb.transmute.openpgp:QmZ5ymeGirf41jNai6YsFYSGw2upCy2y41E7WEQnY2GG8z.38e6ed554af8c1da5ee9eb81d8b7399b955f6ffe#kid=69dec37005c2df5414e356d8269ff79cdca772e7f57438ea35d35850c82f3e1e"
-    }
-  },
-  "signatureID": "0x590e0c9caad44907548968a44ad8877b2b00a1616852f862602befc7cbe0ab9c",
-  "verifiedClaim": true
+    "isSignatureValid": true,
+    "isSignatureKeyRevoked": false
+  }
 }

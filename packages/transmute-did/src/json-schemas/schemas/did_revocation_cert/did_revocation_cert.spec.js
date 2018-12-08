@@ -2,7 +2,7 @@ const jsonSchemas = require('../../index');
 
 const validator = new jsonSchemas.SchemaValidator();
 
-const examples = require('../did_document/examples');
+const examples = require('./examples');
 
 const schema = jsonSchemas.schemas.didRevocationCertSchema;
 
@@ -13,9 +13,7 @@ describe('json-schemas', () => {
         expect(validator.isValid(schema, jsonSchemas.schemas.selfDescSchema)).toBe(true);
       });
       it('supports revoked transmute did document', () => {
-        expect(validator.isValid(examples.transmuteRevoked.object.revocationCert, schema)).toBe(
-          true,
-        );
+        expect(validator.isValid(examples.openPGPRevocationCert, schema)).toBe(true);
       });
     });
   });

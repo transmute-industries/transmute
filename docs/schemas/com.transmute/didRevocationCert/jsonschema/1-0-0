@@ -13,19 +13,18 @@
     "object": {
       "type": "object",
       "properties": {
-        "publicKey": {
-          "type": "string"
+        "kid": {
+          "$ref": "/didSchema"
         },
         "message": {
           "type": "string"
         },
-        "timestampUTC": {
-          "type": "string"
+        "timestamp": {
+          "type": "integer"
         }
       },
       "required": [
-        "publicKey",
-        "timestampUTC"
+        "kid"
       ]
     },
     "signature": {

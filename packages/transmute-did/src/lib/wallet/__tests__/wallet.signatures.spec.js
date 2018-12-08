@@ -32,7 +32,8 @@ describe('did-wallet', () => {
     wallet = new didWallet.TransmuteDIDWallet(
       JSON.parse(fs.readFileSync(fullWalletPath).toString()),
     );
-    const result = await wallet.toDIDDocument(openPGPKID, passphrase);
+    const result = await wallet.toDIDDocument({ kid: openPGPKID, password: passphrase });
+    //   eslint-disable-next-line
     doc = result.object;
     //   eslint-disable-next-line
     signature = result.signature;
@@ -41,6 +42,21 @@ describe('did-wallet', () => {
   });
 
   describe('toDIDDocument', () => {
+    it('throws an error when exporting a did document for an openpgp keypair, and no password', async () => {
+      expect.assertions(1);
+      try {
+        await wallet.toDIDDocument({ kid: openPGPKID });
+      } catch (e) {
+        expect(e.message).toEqual('Passphrase is required to sign with openpgp.');
+      }
+    });
+
+    it('supports passsing a did param', async () => {
+      const did = '0x123';
+      const { object } = await wallet.toDIDDocument({ did, kid: openPGPKID, password: passphrase });
+      expect(object.id).toBe(did);
+    });
+
     it('supports exporting a did document for an openpgp keypair', async () => {
       // todo: call validation on document....
       expect(doc).toBeDefined();

@@ -42,8 +42,8 @@ describe('SignatureStore', () => {
   let signatureStore;
 
   beforeAll(async () => {
-    const result = await wallet.toDIDDocument(openPGPKID, passhprase);
-    // eslint-disable-next-line
+    const result = await wallet.toDIDDocument({ kid: openPGPKID, password: passhprase });
+    //   eslint-disable-next-line
     doc = result.object;
     // eslint-disable-next-line
     signature = result.signature;

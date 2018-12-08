@@ -3,22 +3,9 @@ const path = require("path");
 const transmuteDID = require("@transmute/transmute-did");
 
 const {
-  TransmuteAdapterOrbitDB
-} = require("@transmute/transmute-adapter-orbit-db");
-
-const {
-  ipfsOptions,
-  getOrbitDBFromKeypair,
-  orbitDBDIDToOrbitDBAddress,
-  createOrbitDIDResolver,
-  createOrbitClaimResolver,
-  transformNestedDIDToDID,
-  SignatureStore,
-  verifyDIDSignature,
-  constructDIDPublicKeyID
+  createOrbitDIDFromWallet,
+  createOrbitDIDClaimFromWallet
 } = require("./utils/orbitHelpers");
-
-const didData = require("../src/data/did_document.json");
 
 (async () => {
   try {
@@ -39,15 +26,12 @@ const didData = require("../src/data/did_document.json");
 
     await wallet.decrypt(password);
 
-    const openPGPKID = Object.keys(wallet.data.keystore)[0];
+    const { did_document } = await createOrbitDIDFromWallet(wallet, password);
 
-    const orbitKID = Object.keys(wallet.data.keystore)[1];
-
-    const result = await wallet.toDIDDocument(openPGPKID, password);
-
+    // todo: parse from command line arg
     const claim = {
       //   eslint-disable-next-line
-      subject: didData.orbitDID,
+      subject: did_document.id,
       claims: {
         isTruckDriver: true,
         isInvestor: true,
@@ -55,61 +39,15 @@ const didData = require("../src/data/did_document.json");
       }
     };
 
-    //   eslint-disable-next-line
-    const { object, signature, meta } = await wallet.signObject({
-      obj: claim,
+    const openPGPKID = Object.keys(wallet.data.keystore)[0];
+
+    const { claimID, resolvedClaim } = await createOrbitDIDClaimFromWallet({
+      did: did_document.id,
       kid: openPGPKID,
-      passphrase: password,
-      asDIDByKID: openPGPKID,
-      asDIDByKIDPassphrase: password,
-      overwriteKID: constructDIDPublicKeyID(didData.orbitDID, openPGPKID)
+      claim,
+      wallet,
+      password
     });
-
-    // console.log(object, signature, meta)
-
-    const orbitKeypair = wallet.data.keystore[orbitKID].data;
-
-    const orbitdb = await getOrbitDBFromKeypair(ipfsOptions, orbitKeypair);
-
-    const adapter = new TransmuteAdapterOrbitDB(orbitdb);
-    const address = await orbitDBDIDToOrbitDBAddress(didData.orbitDID);
-    await adapter.open(address);
-
-    const claimAddress = adapter.db.address.toString();
-    const resolver = await createOrbitDIDResolver(orbitdb, verifyDIDSignature);
-
-    const signatureStore = new SignatureStore(
-      adapter,
-      resolver,
-      verifyDIDSignature,
-      transformNestedDIDToDID
-    );
-
-    const storeObject = {
-      object,
-      signature,
-      meta
-    };
-
-    const { signatureID } = await signatureStore.add(storeObject);
-
-    const claimResolver = createOrbitClaimResolver(
-      orbitdb,
-      TransmuteAdapterOrbitDB,
-      SignatureStore,
-      verifyDIDSignature
-    );
-
-    const resolvedClaim = await claimResolver.resolve(
-      didData.orbitDID,
-      signatureID
-    );
-
-    const verifiedClaim = await signatureStore.verify(
-      resolvedClaim.object,
-      resolvedClaim.signature,
-      resolvedClaim.meta
-    );
 
     console.log("\n🔗 Created, Uploaded, Resolved and Verified Claim");
 
@@ -117,16 +55,8 @@ const didData = require("../src/data/did_document.json");
       path.resolve(__dirname, "../src/data/did_claim.json"),
       JSON.stringify(
         {
-          address: claimAddress,
-          did: didData.orbitDID,
-          storeObject: {
-            _id: object.id,
-            object,
-            signature,
-            meta
-          },
-          signatureID,
-          verifiedClaim
+          claimID,
+          resolvedClaim
         },
         null,
         2
