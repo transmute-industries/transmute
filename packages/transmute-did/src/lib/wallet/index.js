@@ -8,7 +8,7 @@ const sodiumExtensions = require('../cryptoSuites/sodiumExtensions');
 const openpgpExtensions = require('../cryptoSuites/openpgpExtensions');
 const ellipticExtensions = require('../cryptoSuites/ellipticExtensions');
 
-const { constructDIDPublicKeyID } = didLib;
+const { constructDIDPublicKeyID, verifyDIDSignatureWithResolver } = didLib;
 
 //   eslint-disable-next-line
 const { sha3_256 } = require('js-sha3');
@@ -56,9 +56,38 @@ const constructAuthenticationProperty = (did, keystore) => {
   }));
 };
 
+const marshalSignedDataObject = ({
+  field, object, signature, meta,
+}) => ({
+  ...object,
+  [field]: {
+    type: 'LinkedDataSignature2015',
+    created: moment.utc().toISOString(),
+    creator: meta.kid,
+    signatureValue: signature,
+    meta,
+  },
+});
+
+const unmarshalSignedData = ({ field, signedLinkedData }) => {
+  const mutable = _.cloneDeep(signedLinkedData);
+  const proof = mutable[field];
+  delete mutable[field];
+
+  return {
+    object: mutable,
+    signature: proof.signatureValue,
+    meta: proof.meta,
+  };
+};
+
 class TransmuteDIDWallet {
   constructor(walletData) {
     this.data = walletData;
+    this.didCache = {};
+    this.resolver = {
+      resolve: did => Promise.resolve(this.didCache[did]),
+    };
   }
 
   async addKey(data, type, meta) {
@@ -198,7 +227,54 @@ class TransmuteDIDWallet {
     };
   }
 
-  async toDIDDocument({ did, kid, password }) {
+  async createSignedLinkedData({
+    data, did, kid, password,
+  }) {
+    const { object, signature, meta } = await this.signObject({
+      obj: data,
+      kid,
+      overwriteKID: constructDIDPublicKeyID(did, kid),
+      passphrase: password,
+    });
+    return marshalSignedDataObject({
+      field: 'proof',
+      object,
+      signature,
+      meta,
+    });
+  }
+
+  async verifySignedLinkedData({ signedLinkedData }) {
+    // verifyDIDSignature
+
+    const { object, signature, meta } = unmarshalSignedData({
+      field: 'proof',
+      signedLinkedData,
+    });
+
+    return verifyDIDSignatureWithResolver({
+      object,
+      signature,
+      meta,
+      resolver: this.resolver,
+    });
+    // const { object, signature, meta } = await this.signObject({
+    //   obj: data,
+    //   kid,
+    //   overwriteKID: constructDIDPublicKeyID(did, kid),
+    //   passphrase: password,
+    // });
+    // return marshalSignedDataObject({
+    //   field: 'proof',
+    //   object,
+    //   signature,
+    //   meta,
+    // });
+  }
+
+  async toDIDDocument({
+    did, kid, password, cacheLocal,
+  }) {
     const masterKeypair = this.data.keystore[kid];
 
     if (!masterKeypair || !masterKeypair.data.privateKey) {
@@ -232,6 +308,11 @@ class TransmuteDIDWallet {
       overwriteKID: constructDIDPublicKeyID(did, kid),
       passphrase: password,
     });
+
+    if (cacheLocal) {
+      this.didCache[object.id] = object;
+    }
+
     return { object, signature, meta };
   }
 }
