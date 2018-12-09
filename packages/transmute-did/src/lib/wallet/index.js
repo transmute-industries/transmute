@@ -4,6 +4,8 @@ const pack = require('../../../package.json');
 
 const sodiumExtensions = require('../cryptoSuites/sodiumExtensions');
 
+const schema = require('../../json-schemas');
+
 const {
   constructDIDPublicKeyID,
   publicKeyKIDPrefix,
@@ -101,13 +103,19 @@ class TransmuteDIDWallet {
   }
 
   async generateDIDRevocationCertificate({ did, proofSet }) {
-    return this.createSignedLinkedData({
+    const result = await this.createSignedLinkedData({
       data: {
+        '@context': 'https://w3id.org/identity/v1',
         did,
         message: `This signed json object serves as a revocation certificate for ${did}. See https://docs.transmute.industries/did/revocation for more information.`,
       },
       proofSet,
     });
+
+    return {
+      schema: schema.schemaToURI(schema.schemas.didRevocationCertSchema),
+      data: result.data,
+    };
   }
 
   async signObject({ obj, kid, password }) {
@@ -162,16 +170,19 @@ class TransmuteDIDWallet {
       authentication,
     };
 
-    const didDocument = await this.createSignedLinkedData({
+    const result = await this.createSignedLinkedData({
       data: doc,
       proofSet,
     });
 
     if (cacheLocal) {
-      this.didCache[didDocument.id] = didDocument;
+      this.didCache[result.data.id] = result.data;
     }
 
-    return didDocument;
+    return {
+      schema: schema.schemaToURI(schema.schemas.didDocument),
+      data: result.data,
+    };
   }
 }
 

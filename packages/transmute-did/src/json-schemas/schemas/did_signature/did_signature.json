@@ -1,25 +1,25 @@
 {
-  "$id": "https://docs.transmute.industries/schemas/com.transmute/didRevocationCert/jsonschema/1-0-0",
+  "$id": "https://docs.transmute.industries/schemas/com.transmute/didSignature/jsonschema/1-0-0",
   "$schema": "https://docs.transmute.industries/schemas/com.transmute.self-desc/schema/jsonschema/1-0-0#",
   "self": {
     "vendor": "com.transmute",
-    "name": "didRevocationCert",
+    "name": "didSignature",
     "format": "jsonschema",
     "version": "1-0-0"
   },
-  "id": "/didRevocationCert",
+  "id": "/didSignature",
   "type": "object",
   "properties": {
     "schema": { "type": "string" },
     "data": {
       "type": "object",
       "properties": {
-        "@context": { "type": "string" },
-        "did": { "type": "string" },
-        "message": { "type": "string" },
-        "proof": { "$ref": "/ldProof" }
+        "@context": { "type": "string" }
       },
-      "required": ["@context", "did", "proof"]
+      "patternProperties": {
+        "^((proofChain)|(proof))": { "$ref": "/ldProof" }
+      },
+      "required": ["@context"]
     }
   },
   "required": ["data", "schema"],

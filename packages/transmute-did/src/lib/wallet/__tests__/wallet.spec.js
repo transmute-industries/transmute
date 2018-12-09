@@ -3,10 +3,15 @@ const fs = require('fs');
 //   eslint-disable-next-line
 const { sha3_256 } = require('js-sha3');
 
-const didWallet = require('../index');
+const {
+  createWallet,
+  TransmuteDIDWallet,
+  schema,
+  sodiumExtensions,
+  ethereumExtensions,
+} = require('../../../index');
+
 const pack = require('../../../../package.json');
-const sodiumExtensions = require('../../cryptoSuites/sodiumExtensions');
-const ethereumExtensions = require('../../cryptoSuites/ethereumExtensions');
 
 const emptyWalletPath = tmp.fileSync().name;
 const fullWalletPath = tmp.fileSync().name;
@@ -18,15 +23,18 @@ const passphrase = 'yolo';
 describe('did-wallet', () => {
   describe('createWallet', () => {
     it('has a version', async () => {
-      const wallet = await didWallet.createWallet();
+      const wallet = await createWallet();
       expect(wallet.data.version).toBe(pack.version);
+      expect(schema.validator.isValid(wallet.data, schema.schemas.didWalletPlaintext)).toBe(
+        true,
+      );
       fs.writeFileSync(emptyWalletPath, JSON.stringify(wallet.data, null, 2));
     });
   });
 
   describe('addKey', () => {
     it('supports adding an openpgp keypair', async () => {
-      const wallet = new didWallet.TransmuteDIDWallet(
+      const wallet = new TransmuteDIDWallet(
         JSON.parse(fs.readFileSync(emptyWalletPath).toString()),
       );
       const keypair = {
@@ -48,6 +56,9 @@ describe('did-wallet', () => {
       });
       const kid = sha3_256(keypair.publicKey);
       expect(wallet.data.keystore[kid].data).toEqual(keypair);
+      expect(schema.validator.isValid(wallet.data, schema.schemas.didWalletPlaintext)).toBe(
+        true,
+      );
       fs.writeFileSync(fullWalletPath, JSON.stringify(wallet.data, null, 2));
     });
 
@@ -56,9 +67,7 @@ describe('did-wallet', () => {
       const hdPath = "m/44'/60'/0'/0/0";
       const keypair = await ethereumExtensions.mnemonicToKeypair(mneumonic, hdPath);
 
-      const wallet = new didWallet.TransmuteDIDWallet(
-        JSON.parse(fs.readFileSync(fullWalletPath).toString()),
-      );
+      const wallet = new TransmuteDIDWallet(JSON.parse(fs.readFileSync(fullWalletPath).toString()));
 
       await wallet.addKey(keypair, 'assymetric', {
         version: `hdkey@${pack.dependencies.hdkey}`,
@@ -73,6 +82,9 @@ describe('did-wallet', () => {
       });
       const kid = sha3_256(keypair.publicKey);
       expect(wallet.data.keystore[kid].data).toEqual(keypair);
+      expect(schema.validator.isValid(wallet.data, schema.schemas.didWalletPlaintext)).toBe(
+        true,
+      );
       fs.writeFileSync(fullWalletPath, JSON.stringify(wallet.data, null, 2));
     });
 
@@ -83,9 +95,7 @@ describe('did-wallet', () => {
         privateKey: 'ef3ff305e9492fa7904eb3c671df5f683c68548153bc8d6cf2dc663f06e13dfe',
       };
 
-      const wallet = new didWallet.TransmuteDIDWallet(
-        JSON.parse(fs.readFileSync(fullWalletPath).toString()),
-      );
+      const wallet = new TransmuteDIDWallet(JSON.parse(fs.readFileSync(fullWalletPath).toString()));
 
       await wallet.addKey(keypair, 'assymetric', {
         version: `elliptic@${pack.dependencies.elliptic}`,
@@ -100,13 +110,14 @@ describe('did-wallet', () => {
       });
       const kid = sha3_256(keypair.publicKey);
       expect(wallet.data.keystore[kid].data).toEqual(keypair);
+      expect(schema.validator.isValid(wallet.data, schema.schemas.didWalletPlaintext)).toBe(
+        true,
+      );
       fs.writeFileSync(fullWalletPath, JSON.stringify(wallet.data, null, 2));
     });
 
     it('supports adding a libsodium signing key', async () => {
-      const wallet = new didWallet.TransmuteDIDWallet(
-        JSON.parse(fs.readFileSync(fullWalletPath).toString()),
-      );
+      const wallet = new TransmuteDIDWallet(JSON.parse(fs.readFileSync(fullWalletPath).toString()));
       const keypair = {
         publicKey: '0dd352b917fe90926c3ac045d91c37bdcc22e2ca90e0cc3b3409be8ceda936a6',
         privateKey:
@@ -126,13 +137,14 @@ describe('did-wallet', () => {
       });
       const kid = sha3_256(keypair.publicKey);
       expect(wallet.data.keystore[kid].data).toEqual(keypair);
+      expect(schema.validator.isValid(wallet.data, schema.schemas.didWalletPlaintext)).toBe(
+        true,
+      );
       fs.writeFileSync(fullWalletPath, JSON.stringify(wallet.data, null, 2));
     });
 
     it('supports adding a libsodium symmetric key', async () => {
-      const wallet = new didWallet.TransmuteDIDWallet(
-        JSON.parse(fs.readFileSync(fullWalletPath).toString()),
-      );
+      const wallet = new TransmuteDIDWallet(JSON.parse(fs.readFileSync(fullWalletPath).toString()));
       const key = await sodiumExtensions.generateSymmetricKeyFromPasswordAndSalt({
         password: 'haha',
         salt: wallet.data.salt,
@@ -146,13 +158,14 @@ describe('did-wallet', () => {
       //   eslint-disable-next-line
       const kid = sha3_256(key);
       expect(wallet.data.keystore[kid].data).toEqual(key);
+      expect(schema.validator.isValid(wallet.data, schema.schemas.didWalletPlaintext)).toBe(
+        true,
+      );
       fs.writeFileSync(fullWalletPath, JSON.stringify(wallet.data, null, 2));
     });
 
     it('supports adding a shamir share', async () => {
-      const wallet = new didWallet.TransmuteDIDWallet(
-        JSON.parse(fs.readFileSync(fullWalletPath).toString()),
-      );
+      const wallet = new TransmuteDIDWallet(JSON.parse(fs.readFileSync(fullWalletPath).toString()));
 
       const shares = [
         '80157b05ca9edcc16c089ebb36c5ab9b63a84f495e716b23e04ff993ab0813fdfcb6743ab939ce638a6a2e82fd35c33caf8',
@@ -171,28 +184,35 @@ describe('did-wallet', () => {
       //   eslint-disable-next-line
       const kid = sha3_256(shares[0]);
       expect(wallet.data.keystore[kid].data).toEqual(shares[0]);
+      expect(schema.validator.isValid(wallet.data, schema.schemas.didWalletPlaintext)).toBe(
+        true,
+      );
       fs.writeFileSync(fullWalletPath, JSON.stringify(wallet.data, null, 2));
     });
   });
 
   describe('encrypt', () => {
     it('supports encryption with a passphrase', async () => {
-      const wallet = new didWallet.TransmuteDIDWallet(
-        JSON.parse(fs.readFileSync(fullWalletPath).toString()),
-      );
+      const wallet = new TransmuteDIDWallet(JSON.parse(fs.readFileSync(fullWalletPath).toString()));
       await wallet.encrypt(passphrase);
       expect(wallet.data.keystore.nonce).toBeDefined();
+      expect(schema.validator.isValid(wallet.data, schema.schemas.didWalletCiphertext)).toBe(
+        true,
+      );
       fs.writeFileSync(cipherTextWalletPath, JSON.stringify(wallet.data, null, 2));
     });
   });
 
   describe('decrypt', () => {
     it('supports decryption with a passphrase', async () => {
-      const wallet = new didWallet.TransmuteDIDWallet(
+      const wallet = new TransmuteDIDWallet(
         JSON.parse(fs.readFileSync(cipherTextWalletPath).toString()),
       );
       await wallet.decrypt(passphrase);
       expect(wallet.data.keystore.nonce).toBeUndefined();
+      expect(schema.validator.isValid(wallet.data, schema.schemas.didWalletPlaintext)).toBe(
+        true,
+      );
       fs.writeFileSync(recoveredPlaintextWalletPath, JSON.stringify(wallet.data, null, 2));
     });
   });

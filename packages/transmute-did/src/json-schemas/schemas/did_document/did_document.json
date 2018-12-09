@@ -1,20 +1,28 @@
 {
-  "$id": "https://docs.transmute.industries/schemas/com.transmute/didDocumentSchema/jsonschema/1-0-0",
+  "$id": "https://docs.transmute.industries/schemas/com.transmute/didDocument/jsonschema/1-0-0",
   "$schema": "https://docs.transmute.industries/schemas/com.transmute.self-desc/schema/jsonschema/1-0-0#",
   "self": {
     "vendor": "com.transmute",
-    "name": "didDocumentSchema",
+    "name": "didDocument",
     "format": "jsonschema",
     "version": "1-0-0"
   },
-  "id": "/didDocumentSchema",
+  "id": "/didDocument",
+  "type": "object",
   "properties": {
-    "@context": { "type": "string" },
-    "id": { "$ref": "/didSchema" },
-    "publicKey": { "type": "array" },
-    "authentication": { "type": "array" },
-    "service": { "type": "array" }
+    "schema": { "type": "string" },
+    "data": {
+      "properties": {
+        "@context": { "type": "string" },
+        "id": { "$ref": "/did" },
+        "publicKey": { "type": "array" },
+        "authentication": { "type": "array" },
+        "service": { "type": "array" }
+      },
+      "required": ["@context", "id", "publicKey"],
+      "type": "object"
+    }
   },
-  "required": ["@context", "id", "publicKey"],
-  "type": "object"
+  "required": ["data", "schema"],
+  "additionalProperties": false
 }

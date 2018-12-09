@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const { TransmuteDIDWallet, constructDIDPublicKeyID } = require('../index');
+const { TransmuteDIDWallet, constructDIDPublicKeyID, schema } = require('../../../index');
 
 const {
   fullWalletPath,
@@ -51,12 +51,17 @@ describe('createSignedLinkedData', () => {
         data: linkedData,
         proofChain,
       });
-      expect(signedLinkedData.proofChain.length).toBe(3);
+      expect(signedLinkedData.data.proofChain.length).toBe(3);
       expect(
         await wallet.verifySignedLinkedData({
           signedLinkedData,
         }),
       ).toBe(true);
+      expect(
+        schema.validator.isValid(signedLinkedData, schema.schemas.didSignature),
+      ).toBe(true);
+
+      expect(signedLinkedData.schema).toBe(schema.schemas.didSignature.$id);
       fs.writeFileSync(`${proofChainPath}`, JSON.stringify(signedLinkedData, null, 2));
     });
 
@@ -65,12 +70,16 @@ describe('createSignedLinkedData', () => {
         data: linkedData,
         proofSet: proofChain,
       });
-      expect(signedLinkedData.proof.length).toBe(3);
+      expect(signedLinkedData.data.proof.length).toBe(3);
       expect(
         await wallet.verifySignedLinkedData({
           signedLinkedData,
         }),
       ).toBe(true);
+      expect(
+        schema.validator.isValid(signedLinkedData, schema.schemas.didSignature),
+      ).toBe(true);
+      expect(signedLinkedData.schema).toBe(schema.schemas.didSignature.$id);
       fs.writeFileSync(`${proofSetPath}`, JSON.stringify(signedLinkedData, null, 2));
     });
   });

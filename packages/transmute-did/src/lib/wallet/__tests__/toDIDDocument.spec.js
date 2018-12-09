@@ -1,7 +1,8 @@
 const fs = require('fs');
 
 const tmp = require('tmp');
-const { TransmuteDIDWallet, constructDIDPublicKeyID } = require('../index');
+
+const { TransmuteDIDWallet, constructDIDPublicKeyID, schema } = require('../../../index');
 
 const {
   fullWalletPath,
@@ -66,21 +67,25 @@ describe('toDIDDocument', () => {
     fs.writeFileSync(openpgpDIDDocPath, JSON.stringify(doc, null, 2));
   });
 
-  describe('supports creating a did document', async () => {
+  describe('supports creating a valid did document', async () => {
     it('with a proof set', async () => {
-      const didDocument = await wallet.toDIDDocument({
+      const result = await wallet.toDIDDocument({
         did,
         proofSet,
         cacheLocal: true,
       });
-      expect(didDocument.proof.length).toBe(3);
+
+      expect(result.data.proof.length).toBe(3);
       expect(
         await wallet.verifySignedLinkedData({
-          signedLinkedData: didDocument,
+          signedLinkedData: result.data,
         }),
       ).toBe(true);
 
-      fs.writeFileSync(`${didDocumentPath}`, JSON.stringify(didDocument, null, 2));
+      expect(schema.validator.isValid(result, schema.schemas.didDocument)).toBe(true);
+      expect(result.schema).toBe(schema.schemas.didDocument.$id);
+
+      fs.writeFileSync(`${didDocumentPath}`, JSON.stringify(result.data, null, 2));
     });
   });
 });

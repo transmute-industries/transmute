@@ -37,23 +37,24 @@ describe('SignatureStore', () => {
 
   beforeAll(async () => {
     wallet = new TransmuteDIDWallet(fullWallet);
-    didDocument = await wallet.toDIDDocument({
+    const result = await wallet.toDIDDocument({
       did,
       proofSet,
       cacheLocal: true,
     });
+    didDocument = result.data;
     signatureStore = new SignatureStore(adapter, wallet.resolver);
   });
 
   it('supports ld-signatures', async () => {
-    const data = await wallet.createSignedLinkedData({
+    const result = await wallet.createSignedLinkedData({
       data: {
         subject: didDocument.id,
         claims: ['isInvestor', 'hasDriversLicense'],
       },
       proofSet,
     });
-    const { contentID } = await signatureStore.add(data);
+    const { contentID } = await signatureStore.add(result.data);
     const { verified, signedLinkedData } = await signatureStore.getSignedLinkedDataByContentID(
       contentID,
     );
@@ -62,15 +63,15 @@ describe('SignatureStore', () => {
   });
 
   it('returns with verified false when signature verication fails', async () => {
-    const data = await wallet.createSignedLinkedData({
+    const result = await wallet.createSignedLinkedData({
       data: {
         subject: didDocument.id,
         claims: ['isInvestor', 'hasDriversLicense'],
       },
       proofSet,
     });
-    data.breakingChange = true;
-    const { contentID } = await signatureStore.add(data);
+    result.data.breakingChange = true;
+    const { contentID } = await signatureStore.add(result.data);
     const { verified, signedLinkedData } = await signatureStore.getSignedLinkedDataByContentID(
       contentID,
     );

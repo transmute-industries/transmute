@@ -7,6 +7,8 @@ const sodiumExtensions = require('./cryptoSuites/sodiumExtensions');
 const openpgpExtensions = require('./cryptoSuites/openpgpExtensions');
 const ellipticExtensions = require('./cryptoSuites/ellipticExtensions');
 
+const schema = require('../json-schemas');
+
 const pack = require('../../package.json');
 
 const didMethods = {
@@ -71,7 +73,7 @@ const marshalSignedDataObject = ({
     type: 'LinkedDataSignature2015',
     created: moment.utc().toISOString(),
     creator: meta.kid,
-    proofValue: signature,
+    signatureValue: signature,
     nonce: object.proofMeta.nonce,
     domain: object.proofMeta.domain,
     meta,
@@ -103,7 +105,7 @@ const unmarshalSignedData = ({ field, signedLinkedData, proof }) => {
 
   return {
     object: mutable,
-    signature: proof.proofValue,
+    signature: proof.signatureValue,
     meta: proof.meta,
   };
 };
@@ -266,21 +268,30 @@ const verifySignedLinkedData = async ({
 const createSignedLinkedData = async ({
   data, proofSet, proofChain, signObject,
 }) => {
+  let signed;
+
   if (proofSet && proofSet.length) {
-    return signWithProofSet({
+    signed = await signWithProofSet({
       data,
       proofSet,
       signObject,
     });
   }
   if (proofChain && proofChain.length) {
-    return signWithProofChain({
+    signed = await signWithProofChain({
       data,
       proofChain,
       signObject,
     });
   }
-  throw new Error('createSignedLinkedData requires proofSet or proofChain');
+  if (!(proofSet && proofSet.length) && !(proofChain && proofChain.length)) {
+    throw new Error('createSignedLinkedData requires proofSet or proofChain');
+  }
+
+  return {
+    schema: schema.schemaToURI(schema.schemas.didSignature),
+    data: signed,
+  };
 };
 
 const verifyDIDSignature = (object, signature, meta, doc) => {

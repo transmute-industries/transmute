@@ -1,42 +1,45 @@
 {
-  "@context": "https://w3id.org/identity/v1",
-  "title": "Hello World!",
-  "proof": [
-    {
-      "type": "LinkedDataSignature2015",
-      "created": "2018-12-09T20:47:49.935Z",
-      "creator": "did:test:0x123#kid=2c4e730145b89cfebc1a0a16c64ccfa297277c2f136cfff8269b6bbfbaa3e178",
-      "proofValue": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v4.0.1\r\nComment: https://openpgpjs.org\r\n\r\nwl4EARMIABAFAlwNf3UJEHAtATjDScoEAAByIgD/QrCk8HLED3xS4OeNC6Qk\njS6JyDkjQbGvkRsUyxmXGAwA/3MRoVfQ8H235CsGz+8U8cf0FRe0UUoNylpd\nVgYGuDL0\r\n=Fjgx\r\n-----END PGP SIGNATURE-----\r\n",
-      "nonce": "15ecca3e2e6198a86df35fa9ae12969f",
-      "domain": "wallet",
-      "meta": {
-        "version": "openpgp@^4.0.1",
-        "kid": "did:test:0x123#kid=2c4e730145b89cfebc1a0a16c64ccfa297277c2f136cfff8269b6bbfbaa3e178"
+  "schema": "https://docs.transmute.industries/schemas/com.transmute/didSignature/jsonschema/1-0-0",
+  "data": {
+    "@context": "https://w3id.org/identity/v1",
+    "title": "Hello World!",
+    "proof": [
+      {
+        "type": "LinkedDataSignature2015",
+        "created": "2018-12-09T22:33:35.920Z",
+        "creator": "did:test:0x123#kid=2c4e730145b89cfebc1a0a16c64ccfa297277c2f136cfff8269b6bbfbaa3e178",
+        "signatureValue": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v4.0.1\r\nComment: https://openpgpjs.org\r\n\r\nwl4EARMIABAFAlwNmD8JEHAtATjDScoEAAAhGgD/eZrqvtNu7MVCfToa2I7I\nc2nCUHMWXeGFJ6MwfVfAXKsBANxU2i2gY3YdAPTPzXY2tjhOD1SftxTbojtn\nwXId0odw\r\n=h1dR\r\n-----END PGP SIGNATURE-----\r\n",
+        "nonce": "bc550bf68ded8be0fd123a8bea19ea41",
+        "domain": "wallet",
+        "meta": {
+          "version": "openpgp@^4.0.1",
+          "kid": "did:test:0x123#kid=2c4e730145b89cfebc1a0a16c64ccfa297277c2f136cfff8269b6bbfbaa3e178"
+        }
+      },
+      {
+        "type": "LinkedDataSignature2015",
+        "created": "2018-12-09T22:33:35.846Z",
+        "creator": "did:test:0x123#kid=c541a06014170f7e85383f13e95f2bf45da28473daa241fc2f21b16461efdec2",
+        "signatureValue": "c52f67b03c9d005c2a0bb33b8979a63613377d35967604d7be2b983824ef9c9cc5a4d10f5664badd84321defbe59d25b9604258f19ba33c3ef276bed016d520d",
+        "nonce": "1e1f24c9d781d303ac35cab109225498",
+        "domain": "wallet",
+        "meta": {
+          "version": "libsodium-wrappers@^0.7.3",
+          "kid": "did:test:0x123#kid=c541a06014170f7e85383f13e95f2bf45da28473daa241fc2f21b16461efdec2"
+        }
+      },
+      {
+        "type": "LinkedDataSignature2015",
+        "created": "2018-12-09T22:33:35.845Z",
+        "creator": "did:test:0x123#kid=5c51560bcef78d176b726a00b27ad3ef533ae39ef3d0f514392c79988c40d220",
+        "signatureValue": "30460221009b80b7bc9988573b0b65c66f6b9290106ff7537352bafefe69699a22c71269f40221009b0c8bc102ea56aa3fdb46aed775ddfedcd4e6510b44c46256c166f42e3a69d5",
+        "nonce": "22b3ed29da11699eb93d178226f2ed61",
+        "domain": "wallet",
+        "meta": {
+          "version": "elliptic@^6.4.1",
+          "kid": "did:test:0x123#kid=5c51560bcef78d176b726a00b27ad3ef533ae39ef3d0f514392c79988c40d220"
+        }
       }
-    },
-    {
-      "type": "LinkedDataSignature2015",
-      "created": "2018-12-09T20:47:49.786Z",
-      "creator": "did:test:0x123#kid=c541a06014170f7e85383f13e95f2bf45da28473daa241fc2f21b16461efdec2",
-      "proofValue": "d631117fdf1e573642e0191b461865cd151d233ad33ad287cdafd2477f44ed8be05c997c68bee741a118b8e5fc26a1505c104c36d61c8b7350338fa002c68b0b",
-      "nonce": "decc97c9d90cc92e9167d0724307345d",
-      "domain": "wallet",
-      "meta": {
-        "version": "libsodium-wrappers@^0.7.3",
-        "kid": "did:test:0x123#kid=c541a06014170f7e85383f13e95f2bf45da28473daa241fc2f21b16461efdec2"
-      }
-    },
-    {
-      "type": "LinkedDataSignature2015",
-      "created": "2018-12-09T20:47:49.786Z",
-      "creator": "did:test:0x123#kid=5c51560bcef78d176b726a00b27ad3ef533ae39ef3d0f514392c79988c40d220",
-      "proofValue": "30460221009b80b7bc9988573b0b65c66f6b9290106ff7537352bafefe69699a22c71269f40221009b0c8bc102ea56aa3fdb46aed775ddfedcd4e6510b44c46256c166f42e3a69d5",
-      "nonce": "04c2aa74b77cef2e9f7f306459f8c6d3",
-      "domain": "wallet",
-      "meta": {
-        "version": "elliptic@^6.4.1",
-        "kid": "did:test:0x123#kid=5c51560bcef78d176b726a00b27ad3ef533ae39ef3d0f514392c79988c40d220"
-      }
-    }
-  ]
+    ]
+  }
 }
