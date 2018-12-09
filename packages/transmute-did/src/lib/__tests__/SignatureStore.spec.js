@@ -2,9 +2,11 @@ const TransmuteAdapterMemory = require('@transmute/transmute-adapter-memory');
 
 const adapter = new TransmuteAdapterMemory();
 
-const { constructDIDPublicKeyID, SignatureStore } = require('../signatureMethods');
+const SignatureStore = require('../SignatureStore');
 
-const { TransmuteDIDWallet } = require('../../wallet');
+const { constructDIDPublicKeyID } = require('../signatureMethods');
+
+const { TransmuteDIDWallet } = require('../wallet');
 
 const {
   fullWallet,
@@ -13,7 +15,7 @@ const {
   orbitDBKID,
   passphrase,
   did,
-} = require('./__fixtures__/testParams');
+} = require('../wallet/__tests__/__fixtures__/testParams');
 
 const proofSet = [
   {
@@ -52,7 +54,9 @@ describe('SignatureStore', () => {
       proofSet,
     });
     const { contentID } = await signatureStore.add(data);
-    const { verified, signedLinkedData } = await signatureStore.getSignedLinkedDataByContentID(contentID);
+    const { verified, signedLinkedData } = await signatureStore.getSignedLinkedDataByContentID(
+      contentID,
+    );
     expect(signedLinkedData.subject).toEqual(didDocument.id);
     expect(verified).toBe(true);
   });
@@ -67,7 +71,9 @@ describe('SignatureStore', () => {
     });
     data.breakingChange = true;
     const { contentID } = await signatureStore.add(data);
-    const { verified, signedLinkedData } = await signatureStore.getSignedLinkedDataByContentID(contentID);
+    const { verified, signedLinkedData } = await signatureStore.getSignedLinkedDataByContentID(
+      contentID,
+    );
     expect(signedLinkedData.subject).toEqual(didDocument.id);
     expect(verified).toBe(false);
   });

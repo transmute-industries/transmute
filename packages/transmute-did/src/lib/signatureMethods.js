@@ -2,12 +2,12 @@ const _ = require('lodash');
 const moment = require('moment');
 const stringify = require('json-stringify-deterministic');
 
-const ethereumExtensions = require('../cryptoSuites/ethereumExtensions');
-const sodiumExtensions = require('../cryptoSuites/sodiumExtensions');
-const openpgpExtensions = require('../cryptoSuites/openpgpExtensions');
-const ellipticExtensions = require('../cryptoSuites/ellipticExtensions');
+const ethereumExtensions = require('./cryptoSuites/ethereumExtensions');
+const sodiumExtensions = require('./cryptoSuites/sodiumExtensions');
+const openpgpExtensions = require('./cryptoSuites/openpgpExtensions');
+const ellipticExtensions = require('./cryptoSuites/ellipticExtensions');
 
-const pack = require('../../../package.json');
+const pack = require('../../package.json');
 
 const didMethods = {
   OPENPGP: 'transmute.openpgp',
@@ -324,38 +324,10 @@ const verifyDIDSignatureWithResolver = async ({
   return verifyDIDSignature(object, signature, meta, doc);
 };
 
-class SignatureStore {
-  constructor(adapter, resolver) {
-    this.adapter = adapter;
-    this.resolver = resolver;
-  }
-
-  async add(signedLinkedData) {
-    const contentID = await this.adapter.writeJson(signedLinkedData);
-    return {
-      contentID,
-    };
-  }
-
-  async getSignedLinkedDataByContentID(contentID) {
-    const signedLinkedData = await this.adapter.readJson(contentID);
-    const verified = await verifySignedLinkedData({
-      signedLinkedData,
-      resolver: this.resolver,
-      verifyDIDSignatureWithResolver,
-    });
-    return {
-      signedLinkedData,
-      verified,
-    };
-  }
-}
-
 module.exports = {
   createSignedLinkedData,
   verifySignedLinkedData,
   signObjectWithKeypair,
-  SignatureStore,
   constructDIDPublicKeyID,
   publicKeyToDID,
   didMethods,

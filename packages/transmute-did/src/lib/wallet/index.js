@@ -11,7 +11,7 @@ const {
   createSignedLinkedData,
   verifySignedLinkedData,
   signObjectWithKeypair,
-} = require('./signatureMethods');
+} = require('../signatureMethods');
 
 //   eslint-disable-next-line
 const { sha3_256 } = require('js-sha3');

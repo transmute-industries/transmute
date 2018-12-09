@@ -4,10 +4,10 @@
   "proof": [
     {
       "type": "LinkedDataSignature2015",
-      "created": "2018-12-09T20:39:44.057Z",
+      "created": "2018-12-09T20:47:49.935Z",
       "creator": "did:test:0x123#kid=2c4e730145b89cfebc1a0a16c64ccfa297277c2f136cfff8269b6bbfbaa3e178",
-      "proofValue": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v4.0.1\r\nComment: https://openpgpjs.org\r\n\r\nwl4EARMIABAFAlwNfY8JEHAtATjDScoEAAAWowEArUpjonlAkeAYWc0CEb9N\nVVSlHnUtssYY7gXbiEQCKngA+QE0PKepMGqJ+ow0UsIiFuF8sKvJBgnlms/L\nfAdip/Ee\r\n=bBBV\r\n-----END PGP SIGNATURE-----\r\n",
-      "nonce": "25f52b805eb63d38fc5893e4e5176919",
+      "proofValue": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v4.0.1\r\nComment: https://openpgpjs.org\r\n\r\nwl4EARMIABAFAlwNf3UJEHAtATjDScoEAAByIgD/QrCk8HLED3xS4OeNC6Qk\njS6JyDkjQbGvkRsUyxmXGAwA/3MRoVfQ8H235CsGz+8U8cf0FRe0UUoNylpd\nVgYGuDL0\r\n=Fjgx\r\n-----END PGP SIGNATURE-----\r\n",
+      "nonce": "15ecca3e2e6198a86df35fa9ae12969f",
       "domain": "wallet",
       "meta": {
         "version": "openpgp@^4.0.1",
@@ -16,10 +16,10 @@
     },
     {
       "type": "LinkedDataSignature2015",
-      "created": "2018-12-09T20:39:43.869Z",
+      "created": "2018-12-09T20:47:49.786Z",
       "creator": "did:test:0x123#kid=c541a06014170f7e85383f13e95f2bf45da28473daa241fc2f21b16461efdec2",
-      "proofValue": "a1571c1d2e79993be5da220f17dccb87f09011cfc78bd2906eb8f34faf49672392af25533c3fc3c25f89238cddec4141ea09f286a24fd0cea22b69657f2d9907",
-      "nonce": "265d899361e872410d60eb872b512fdc",
+      "proofValue": "d631117fdf1e573642e0191b461865cd151d233ad33ad287cdafd2477f44ed8be05c997c68bee741a118b8e5fc26a1505c104c36d61c8b7350338fa002c68b0b",
+      "nonce": "decc97c9d90cc92e9167d0724307345d",
       "domain": "wallet",
       "meta": {
         "version": "libsodium-wrappers@^0.7.3",
@@ -28,10 +28,10 @@
     },
     {
       "type": "LinkedDataSignature2015",
-      "created": "2018-12-09T20:39:43.869Z",
+      "created": "2018-12-09T20:47:49.786Z",
       "creator": "did:test:0x123#kid=5c51560bcef78d176b726a00b27ad3ef533ae39ef3d0f514392c79988c40d220",
       "proofValue": "30460221009b80b7bc9988573b0b65c66f6b9290106ff7537352bafefe69699a22c71269f40221009b0c8bc102ea56aa3fdb46aed775ddfedcd4e6510b44c46256c166f42e3a69d5",
-      "nonce": "296980c73460a4543bd2fd9d3c7e9c08",
+      "nonce": "04c2aa74b77cef2e9f7f306459f8c6d3",
       "domain": "wallet",
       "meta": {
         "version": "elliptic@^6.4.1",
