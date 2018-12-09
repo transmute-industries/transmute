@@ -331,34 +331,24 @@ class SignatureStore {
   }
 
   async add(signedLinkedData) {
-    const signatureID = await this.adapter.writeJson(signedLinkedData);
+    const contentID = await this.adapter.writeJson(signedLinkedData);
     return {
-      signatureID,
+      contentID,
     };
   }
 
-  async getBySignatureID(signatureID) {
-    const signedLinkedData = await this.adapter.readJson(signatureID);
+  async getSignedLinkedDataByContentID(contentID) {
+    const signedLinkedData = await this.adapter.readJson(contentID);
     const verified = await verifySignedLinkedData({
       signedLinkedData,
       resolver: this.resolver,
       verifyDIDSignatureWithResolver,
     });
-
     return {
       signedLinkedData,
       verified,
     };
   }
-
-  // async verify(object, signature, meta) {
-  //   if (meta.kid.indexOf('did:') === 0) {
-  //     const did = meta.kid.split('#')[0];
-  //     const doc = await this.resolver.resolve(did);
-  //     return this.verifyDIDSignature(object, signature, meta, doc);
-  //   }
-  //   throw new Error('cannot verify a signature without a did in kid.');
-  // }
 }
 
 module.exports = {

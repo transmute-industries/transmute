@@ -202,7 +202,7 @@ const createOrbitClaimResolver = (
   const resolver = createOrbitDIDResolver(orbitdb, verifyDIDSignature);
   return {
     resolve: async claimID => {
-      const [did, signatureID] = claimID.split("#signatureID=");
+      const [did, contentID] = claimID.split("#contentID=");
       const address = await orbitDBDIDToOrbitDBAddress(did);
       await adapter.open(address);
       await adapter.db.load();
@@ -211,7 +211,7 @@ const createOrbitClaimResolver = (
         resolver,
         verifyDIDSignature
       );
-      const storeObject = await signatureStore.getBySignatureID(signatureID);
+      const storeObject = await signatureStore.getSignedLinkedDataByContentID(contentID);
       const doc = await resolver.resolve(did);
       const isSignatureValid = await verifyDIDSignature(
         storeObject.object,
@@ -264,9 +264,9 @@ const createOrbitDIDClaimFromWallet = async ({
     meta
   };
 
-  const { signatureID } = await signatureStore.add(storeObject);
+  const { contentID } = await signatureStore.add(storeObject);
 
-  const claimID = `${did}#signatureID=${signatureID}`;
+  const claimID = `${did}#contentID=${contentID}`;
 
   const claimResolver = createOrbitClaimResolver(
     orbitdb,

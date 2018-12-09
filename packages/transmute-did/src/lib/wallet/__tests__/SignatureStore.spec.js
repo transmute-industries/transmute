@@ -51,8 +51,8 @@ describe('SignatureStore', () => {
       },
       proofSet,
     });
-    const { signatureID } = await signatureStore.add(data);
-    const { verified, signedLinkedData } = await signatureStore.getBySignatureID(signatureID);
+    const { contentID } = await signatureStore.add(data);
+    const { verified, signedLinkedData } = await signatureStore.getSignedLinkedDataByContentID(contentID);
     expect(signedLinkedData.subject).toEqual(didDocument.id);
     expect(verified).toBe(true);
   });
@@ -66,8 +66,8 @@ describe('SignatureStore', () => {
       proofSet,
     });
     data.breakingChange = true;
-    const { signatureID } = await signatureStore.add(data);
-    const { verified, signedLinkedData } = await signatureStore.getBySignatureID(signatureID);
+    const { contentID } = await signatureStore.add(data);
+    const { verified, signedLinkedData } = await signatureStore.getSignedLinkedDataByContentID(contentID);
     expect(signedLinkedData.subject).toEqual(didDocument.id);
     expect(verified).toBe(false);
   });

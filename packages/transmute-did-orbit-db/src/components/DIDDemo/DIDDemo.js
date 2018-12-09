@@ -172,7 +172,7 @@ class DIDDemo extends Component {
           <Grid item xs={12} md={12}>
             <DIDClaimResolver
               resolve={orbitDIDClaimResolver}
-              signatureID={current_claim}
+              contentID={current_claim}
             />
           </Grid>
 
