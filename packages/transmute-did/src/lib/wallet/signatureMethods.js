@@ -8,14 +8,14 @@ const ellipticExtensions = require('../cryptoSuites/ellipticExtensions');
 
 const pack = require('../../../package.json');
 
-const guessKeyType = (key) => {
-  if (key.meta.version.indexOf('openpgp') === 0) {
+const guessKeyType = (meta) => {
+  if (meta.version.indexOf('openpgp') === 0) {
     return 'openpgp';
   }
-  if (key.meta.version.indexOf('libsodium-wrappers') === 0) {
+  if (meta.version.indexOf('libsodium-wrappers') === 0) {
     return 'libsodium-wrappers';
   }
-  if (key.meta.version.indexOf('elliptic') === 0) {
+  if (meta.version.indexOf('elliptic') === 0) {
     return 'elliptic';
   }
 
@@ -72,7 +72,7 @@ const unmarshalSignedData = ({ field, signedLinkedData, proof }) => {
 const signObjectWithKeypair = async ({
   keypair, obj, kid, password,
 }) => {
-  const guessedType = guessKeyType(keypair);
+  const guessedType = guessKeyType(keypair.meta);
   const payload = stringify(obj);
   let signature;
 
@@ -244,8 +244,101 @@ const createSignedLinkedData = async ({
   throw new Error('createSignedLinkedData requires proofSet or proofChain');
 };
 
+const getPublicKeyFromDIDDocByKID = (doc, kid) => {
+  const key = _.find(doc.publicKey, k => k.id === kid);
+
+  if (!key) {
+    throw new Error(`No key exists in doc for kid: ${kid}`);
+  }
+  if (key.publicKeyPem) {
+    return key.publicKeyPem;
+  }
+  if (key.publicKeyHex) {
+    return key.publicKeyHex;
+  }
+};
+
+const verifyDIDSignature = (object, signature, meta, doc) => {
+  const keyType = guessKeyType(meta);
+  let publicKey;
+  try {
+    publicKey = getPublicKeyFromDIDDocByKID(doc, meta.kid);
+  } catch (e) {
+    throw new Error('Public Key with kid does not exist in document.');
+  }
+
+  switch (keyType) {
+    case 'elliptic':
+      return ellipticExtensions.verify(stringify(object), signature, publicKey);
+    case 'openpgp':
+      return openpgpExtensions.cryptoHelpers.verifyDetached(
+        stringify(object),
+        signature,
+        publicKey,
+      );
+    case 'libsodium-wrappers':
+      return sodiumExtensions.verifyDetached({
+        message: stringify(object),
+        signature,
+        publicKey,
+      });
+
+    default:
+      throw new Error('Unknown key type');
+  }
+};
+
+const verifyDIDSignatureWithResolver = async ({
+  object, signature, meta, resolver,
+}) => {
+  const did = meta.kid.split('#')[0];
+  const doc = await resolver.resolve(did);
+  if (doc.id !== did) {
+    throw new Error('DID is not valid. Document ID does not match DID.');
+  }
+  return verifyDIDSignature(object, signature, meta, doc);
+};
+
+class SignatureStore {
+  constructor(adapter, resolver) {
+    this.adapter = adapter;
+    this.resolver = resolver;
+  }
+
+  async add(signedLinkedData) {
+    const signatureID = await this.adapter.writeJson(signedLinkedData);
+    return {
+      signatureID,
+    };
+  }
+
+  async getBySignatureID(signatureID) {
+    const signedLinkedData = await this.adapter.readJson(signatureID);
+    const verified = await verifySignedLinkedData({
+      signedLinkedData,
+      resolver: this.resolver,
+      verifyDIDSignatureWithResolver,
+    });
+
+    return {
+      signedLinkedData,
+      verified,
+    };
+  }
+
+  // async verify(object, signature, meta) {
+  //   if (meta.kid.indexOf('did:') === 0) {
+  //     const did = meta.kid.split('#')[0];
+  //     const doc = await this.resolver.resolve(did);
+  //     return this.verifyDIDSignature(object, signature, meta, doc);
+  //   }
+  //   throw new Error('cannot verify a signature without a did in kid.');
+  // }
+}
+
 module.exports = {
   createSignedLinkedData,
   verifySignedLinkedData,
   signObjectWithKeypair,
+  SignatureStore,
 };

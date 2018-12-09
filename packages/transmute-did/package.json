@@ -4,8 +4,8 @@
   "description": "",
   "main": "./src/index.js",
   "scripts": {
-    "test": "jest --env aegir",
-    "coverage": "jest . --coverage --env aegir",
+    "test": "jest --env aegir --testPathIgnorePatterns testParams.js -- ",
+    "coverage": "jest --env aegir --testPathIgnorePatterns testParams.js --coverage --",
     "lint": "../../node_modules/.bin/eslint .",
     "lint-fix": "../../node_modules/.bin/eslint . --fix",
     "publishSchema": "node ./scripts/publish-schema.js"

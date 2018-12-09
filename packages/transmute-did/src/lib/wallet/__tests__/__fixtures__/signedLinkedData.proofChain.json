@@ -1,0 +1,42 @@
+{
+  "@context": "https://w3id.org/identity/v1",
+  "title": "Hello World!",
+  "proofChain": [
+    {
+      "type": "LinkedDataSignature2015",
+      "created": "2018-12-09T20:15:49.858Z",
+      "creator": "did:test:0x123#kid=2c4e730145b89cfebc1a0a16c64ccfa297277c2f136cfff8269b6bbfbaa3e178",
+      "proofValue": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v4.0.1\r\nComment: https://openpgpjs.org\r\n\r\nwl4EARMIABAFAlwNd/UJEHAtATjDScoEAAAl3AEAnMwUawqd2jR2pAPG3vS0\n+GEAUmIf6hN6OozNa8qsfqAA/ir/fit3f3WcwiobP6dCr/UVHNNENzW4/Gz2\nhvgzfdSw\r\n=vQNf\r\n-----END PGP SIGNATURE-----\r\n",
+      "nonce": "6c5ff210f38a5ab30038ca55370d2318",
+      "domain": "wallet",
+      "meta": {
+        "version": "openpgp@^4.0.1",
+        "kid": "did:test:0x123#kid=2c4e730145b89cfebc1a0a16c64ccfa297277c2f136cfff8269b6bbfbaa3e178"
+      }
+    },
+    {
+      "type": "LinkedDataSignature2015",
+      "created": "2018-12-09T20:15:49.859Z",
+      "creator": "did:test:0x123#kid=c541a06014170f7e85383f13e95f2bf45da28473daa241fc2f21b16461efdec2",
+      "proofValue": "bc619d14b54ac627f516d79c66c97a7788f78c94bc2bf5c366e74036d37118f3d364c23026699671ce684e5e32c2288e021ecaa85db6f6ed63082d1a6658bd04",
+      "nonce": "a932ae994c0e506c25ff5e0b39dbda96",
+      "domain": "wallet",
+      "meta": {
+        "version": "libsodium-wrappers@^0.7.3",
+        "kid": "did:test:0x123#kid=c541a06014170f7e85383f13e95f2bf45da28473daa241fc2f21b16461efdec2"
+      }
+    },
+    {
+      "type": "LinkedDataSignature2015",
+      "created": "2018-12-09T20:15:50.003Z",
+      "creator": "did:test:0x123#kid=5c51560bcef78d176b726a00b27ad3ef533ae39ef3d0f514392c79988c40d220",
+      "proofValue": "30440220174c049368b7febfe730cd2a968c94db3c9709322baf6344b12b695e5544f9b10220602ea85f227099cf6643123b550fc2cccb718fe937916b95dd1d56c220837b62",
+      "nonce": "18b9d8cb0a3959e708233c104a7960d0",
+      "domain": "wallet",
+      "meta": {
+        "version": "elliptic@^6.4.1",
+        "kid": "did:test:0x123#kid=5c51560bcef78d176b726a00b27ad3ef533ae39ef3d0f514392c79988c40d220"
+      }
+    }
+  ]
+}

@@ -84,16 +84,7 @@ const verifyDIDSignature = (object, signature, meta, doc) => {
   }
 };
 
-const verifyDIDSignatureWithResolver = async ({
-  object, signature, meta, resolver,
-}) => {
-  const did = meta.kid.split('#')[0];
-  const doc = await resolver.resolve(did);
-  if (doc.id !== did) {
-    throw new Error('DID is not valid. Document ID does not match DID.');
-  }
-  return verifyDIDSignature(object, signature, meta, doc);
-};
+
 
 module.exports = {
   publicKeyToDID,

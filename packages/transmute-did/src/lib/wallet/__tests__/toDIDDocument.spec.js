@@ -1,15 +1,32 @@
 const fs = require('fs');
-const path = require('path');
+
+const tmp = require('tmp');
 const { TransmuteDIDWallet, constructDIDPublicKeyID } = require('../index');
 
-const fullWalletPath = path.resolve(__dirname, '__fixtures__/wallet.plaintext.full.json');
+const {
+  fullWalletPath,
+  didDocumentPath,
+  openPGPKID,
+  libsodiumKID,
+  orbitDBKID,
+  passphrase,
+  did,
+} = require('./__fixtures__/testParams');
 
-const openPGPKID = '2c4e730145b89cfebc1a0a16c64ccfa297277c2f136cfff8269b6bbfbaa3e178';
-const libsodiumKID = 'c541a06014170f7e85383f13e95f2bf45da28473daa241fc2f21b16461efdec2';
-const orbitDBKID = '5c51560bcef78d176b726a00b27ad3ef533ae39ef3d0f514392c79988c40d220';
+const proofSet = [
+  {
+    kid: constructDIDPublicKeyID(did, openPGPKID),
+    password: passphrase,
+  },
+  {
+    kid: constructDIDPublicKeyID(did, libsodiumKID),
+  },
+  {
+    kid: constructDIDPublicKeyID(did, orbitDBKID),
+  },
+];
 
-const passphrase = 'yolo';
-const did = 'did:test:0x123';
+const openpgpDIDDocPath = tmp.fileSync().name;
 
 describe('toDIDDocument', () => {
   let wallet;
@@ -18,20 +35,39 @@ describe('toDIDDocument', () => {
     wallet = new TransmuteDIDWallet(JSON.parse(fs.readFileSync(fullWalletPath).toString()));
   });
 
+  it('throws an error when kid does not reference a did', async () => {
+    expect.assertions(1);
+    try {
+      await wallet.toDIDDocument({ did, proofSet: [{ kid: openPGPKID }] });
+    } catch (e) {
+      expect(e.message).toEqual('kid must be of the format: did#kid=...');
+    }
+  });
+
+  it('throws an error when exporting a did document for an openpgp keypair, and no password', async () => {
+    expect.assertions(1);
+    try {
+      await wallet.toDIDDocument({
+        did,
+        proofSet: [{ kid: constructDIDPublicKeyID(did, openPGPKID) }],
+      });
+    } catch (e) {
+      expect(e.message).toEqual('Incorrect key passphrase');
+    }
+  });
+
+  it('supports exporting a did document for an openpgp keypair', async () => {
+    const doc = await wallet.toDIDDocument({
+      did,
+      proofSet: [{ kid: constructDIDPublicKeyID(did, openPGPKID), password: passphrase }],
+    });
+    expect(doc).toBeDefined();
+
+    fs.writeFileSync(openpgpDIDDocPath, JSON.stringify(doc, null, 2));
+  });
+
   describe('supports creating a did document', async () => {
     it('with a proof set', async () => {
-      const proofSet = [
-        {
-          kid: constructDIDPublicKeyID(did, openPGPKID),
-          password: passphrase,
-        },
-        {
-          kid: constructDIDPublicKeyID(did, libsodiumKID),
-        },
-        {
-          kid: constructDIDPublicKeyID(did, orbitDBKID),
-        },
-      ];
       const didDocument = await wallet.toDIDDocument({
         did,
         proofSet,
@@ -43,32 +79,8 @@ describe('toDIDDocument', () => {
           signedLinkedData: didDocument,
         }),
       ).toBe(true);
-    });
 
-    it.only('with a proof chain', async () => {
-      const proofChain = [
-        {
-          kid: constructDIDPublicKeyID(did, openPGPKID),
-          password: passphrase,
-        },
-        {
-          kid: constructDIDPublicKeyID(did, libsodiumKID),
-        },
-        {
-          kid: constructDIDPublicKeyID(did, orbitDBKID),
-        },
-      ];
-      const didDocument = await wallet.toDIDDocument({
-        did,
-        proofChain,
-        cacheLocal: true,
-      });
-      expect(didDocument.proof.length).toBe(3);
-      expect(
-        await wallet.verifySignedLinkedData({
-          signedLinkedData: didDocument,
-        }),
-      ).toBe(true);
+      fs.writeFileSync(`${didDocumentPath}`, JSON.stringify(didDocument, null, 2));
     });
   });
 });

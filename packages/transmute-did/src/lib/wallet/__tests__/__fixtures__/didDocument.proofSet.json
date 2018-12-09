@@ -1,0 +1,86 @@
+{
+  "@context": "https://w3id.org/did/v1",
+  "id": "did:test:0x123",
+  "publicKey": [
+    {
+      "id": "did:test:0x123#kid=2c4e730145b89cfebc1a0a16c64ccfa297277c2f136cfff8269b6bbfbaa3e178",
+      "type": "Secp256k1VerificationKey2018",
+      "owner": "did:test:0x123",
+      "publicKeyPem": "-----BEGIN PGP PUBLIC KEY BLOCK-----\r\nVersion: OpenPGP.js v4.0.1\r\nComment: https://openpgpjs.org\r\n\r\nxk8EW+sYmRMFK4EEAAoCAwQgn6FzXRZot68Pudbhd1zXxc8loBPpqFmuli9f\nsa6xeTNFjY9IhOAGr0HQNEKh4DhyuIoHf0CTtkzKBEHECK4mzQh0ZXN0LWtl\necJ3BBATCAApBQJb6xiZBgsJBwgDAgkQcC0BOMNJygQEFQgKAgMWAgECGQEC\nGwMCHgEAAFAyAP9gy5LEX/24+YA1o7Hc5mLfWvsx/fpU48xCKd8JD22TPwEA\n3Fgf3c0NvoF0UxfR5ldDSvTvp+jrw5gvueZTzHlmNOPOUwRb6xiZEgUrgQQA\nCgIDBDtD+1QEekxkg8yU83fN+nMFAOgLOm2KKxhGxypyPZJgubSEk5J1kFrG\nQtu11L9Afo3QIezx0/iKKnv8sMDupkUDAQgHwmEEGBMIABMFAlvrGJkJEHAt\nATjDScoEAhsMAABFvwEA3Xr3daeZThSbNEklVtrOvC3Um9gXZsqHDEELF2rF\nzCUA/RkscQMeVcd6AH8f3Vl6SneXiY9qTgJfD6NAP0qMYsEo\r\n=8g9/\r\n-----END PGP PUBLIC KEY BLOCK-----\r\n\r\n"
+    },
+    {
+      "id": "did:test:0x123#kid=96f51708b7f2b17f23e8d96f0559a2a4235554d4963aea6996f1484c310e4b6a",
+      "type": "Secp256k1VerificationKey2018",
+      "owner": "did:test:0x123",
+      "publicKeyHex": "5b767b4fcf8664e3e4c32dd41d5b4c3b88680c10946e063e4100d3c7484a563b99576ba1de98cb77366ecafd47730ed5830a6c3e7faed48010b49532d0b01585"
+    },
+    {
+      "id": "did:test:0x123#kid=5c51560bcef78d176b726a00b27ad3ef533ae39ef3d0f514392c79988c40d220",
+      "type": "Secp256k1VerificationKey2018",
+      "owner": "did:test:0x123",
+      "publicKeyHex": "04c44cb158a11cd03f30b713276faf8cf8869fccb2a48662dc43fcde61af5008040270257a3734f47acbb1bf2def85b7a4c0d213ab634bc2e79dbc4c1916d45a4f"
+    },
+    {
+      "id": "did:test:0x123#kid=c541a06014170f7e85383f13e95f2bf45da28473daa241fc2f21b16461efdec2",
+      "type": "Ed25519VerificationKey2018",
+      "owner": "did:test:0x123",
+      "publicKeyHex": "0dd352b917fe90926c3ac045d91c37bdcc22e2ca90e0cc3b3409be8ceda936a6"
+    }
+  ],
+  "authentication": [
+    {
+      "publicKey": "did:test:0x123#kid=2c4e730145b89cfebc1a0a16c64ccfa297277c2f136cfff8269b6bbfbaa3e178",
+      "type": "Secp256k1VerificationKey2018"
+    },
+    {
+      "publicKey": "did:test:0x123#kid=96f51708b7f2b17f23e8d96f0559a2a4235554d4963aea6996f1484c310e4b6a",
+      "type": "Secp256k1VerificationKey2018"
+    },
+    {
+      "publicKey": "did:test:0x123#kid=5c51560bcef78d176b726a00b27ad3ef533ae39ef3d0f514392c79988c40d220",
+      "type": "Secp256k1VerificationKey2018"
+    },
+    {
+      "publicKey": "did:test:0x123#kid=c541a06014170f7e85383f13e95f2bf45da28473daa241fc2f21b16461efdec2",
+      "type": "Ed25519VerificationKey2018"
+    }
+  ],
+  "proof": [
+    {
+      "type": "LinkedDataSignature2015",
+      "created": "2018-12-09T20:15:50.053Z",
+      "creator": "did:test:0x123#kid=2c4e730145b89cfebc1a0a16c64ccfa297277c2f136cfff8269b6bbfbaa3e178",
+      "proofValue": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v4.0.1\r\nComment: https://openpgpjs.org\r\n\r\nwl4EARMIABAFAlwNd/UJEHAtATjDScoEAADM+gEAtou1/K3pDZXTmwbpD4dV\n/LPEPgtzcQ9muDAV52WNY8sA/1yk+BYR3ZAJlviE8SNzmSBPZO+b9X+0oiXy\nGkPJs4K/\r\n=ktBM\r\n-----END PGP SIGNATURE-----\r\n",
+      "nonce": "632634b6c6e39cc07928f7a3aece7bec",
+      "domain": "wallet",
+      "meta": {
+        "version": "openpgp@^4.0.1",
+        "kid": "did:test:0x123#kid=2c4e730145b89cfebc1a0a16c64ccfa297277c2f136cfff8269b6bbfbaa3e178"
+      }
+    },
+    {
+      "type": "LinkedDataSignature2015",
+      "created": "2018-12-09T20:15:49.880Z",
+      "creator": "did:test:0x123#kid=c541a06014170f7e85383f13e95f2bf45da28473daa241fc2f21b16461efdec2",
+      "proofValue": "617ff6a2ab0eacd8cc20672921de42358fb41e43ec3d203e6d0749f1b49c5a0958988e4f380e397f4811e86556869a82d71d1671915c7566670cf6b470114e0c",
+      "nonce": "58d6dba46129248ea5ebdb6597566c0c",
+      "domain": "wallet",
+      "meta": {
+        "version": "libsodium-wrappers@^0.7.3",
+        "kid": "did:test:0x123#kid=c541a06014170f7e85383f13e95f2bf45da28473daa241fc2f21b16461efdec2"
+      }
+    },
+    {
+      "type": "LinkedDataSignature2015",
+      "created": "2018-12-09T20:15:49.878Z",
+      "creator": "did:test:0x123#kid=5c51560bcef78d176b726a00b27ad3ef533ae39ef3d0f514392c79988c40d220",
+      "proofValue": "3045022100c5767d303b6f191079cb24c3c82c4aa16486d9bd4a38a64a5495317a96395c6402201b93fcc67899e017a1d07ebf4dc7e3445c057bac136f2ea68e91238a34be7b26",
+      "nonce": "773b22c59edbf42a8dc6dbb861cc7389",
+      "domain": "wallet",
+      "meta": {
+        "version": "elliptic@^6.4.1",
+        "kid": "did:test:0x123#kid=5c51560bcef78d176b726a00b27ad3ef533ae39ef3d0f514392c79988c40d220"
+      }
+    }
+  ]
+}

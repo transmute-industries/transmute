@@ -101,39 +101,30 @@ class TransmuteDIDWallet {
     };
   }
 
-  async generateDIDRevocationCertificate({ asDIDByKID, asDIDByKIDPassphrase, overwriteKID }) {
-    const result = await this.toDIDDocument({ kid: asDIDByKID, password: asDIDByKIDPassphrase });
-    //   eslint-disable-next-line
-    const doc = result.object;
-
-    const didPublicKeyID = constructDIDPublicKeyID(doc.id, asDIDByKID);
-
-    const revocationCert = await this.signObject({
-      obj: {
-        kid: didPublicKeyID,
-        message: `This signed json object serves as a revocation certificate for ${didPublicKeyID}. See https://docs.transmute.industries/did/revocation for more information.`,
-        timestamp: moment()
-          .utc()
-          .unix(),
+  async generateDIDRevocationCertificate({ did, proofSet }) {
+    return this.createSignedLinkedData({
+      data: {
+        did,
+        message: `This signed json object serves as a revocation certificate for ${did}. See https://docs.transmute.industries/did/revocation for more information.`,
       },
-      kid: asDIDByKID,
-      passphrase: asDIDByKIDPassphrase,
-      asDIDByKID,
-      asDIDByKIDPassphrase,
-      overwriteKID,
+      proofSet,
     });
-
-    return revocationCert;
   }
 
-  async signObject({
-    field, obj, kid, password,
-  }) {
+  async signObject({ obj, kid, password }) {
     const justTheHash = kid.split(`#${publicKeyKIDPrefix}`)[1];
+
+    if (justTheHash === undefined) {
+      throw new Error(`kid must be of the format: did#${publicKeyKIDPrefix}...`);
+    }
+
     const keypair = this.data.keystore[justTheHash];
+
+    if (!keypair) {
+      throw new Error(justTheHash);
+    }
     return signObjectWithKeypair({
       keypair,
-      field,
       obj,
       kid,
       password,
@@ -157,15 +148,9 @@ class TransmuteDIDWallet {
     });
   }
 
-  async toDIDDocument({
-    did, proofSet, proofChain, cacheLocal,
-  }) {
-    if (!(proofSet || proofChain)) {
-      throw new Error('A proof set or chain is required.');
-    }
-
-    if (proofChain) {
-      proofSet = proofChain;
+  async toDIDDocument({ did, proofSet, cacheLocal }) {
+    if (!proofSet) {
+      throw new Error('A proofSet is required.');
     }
 
     const publicKey = await constructPublicKeysProperty(did, this.data.keystore);
