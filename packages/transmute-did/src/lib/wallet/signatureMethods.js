@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const moment = require('moment');
+const stringify = require('json-stringify-deterministic');
 
 const sodiumExtensions = require('../cryptoSuites/sodiumExtensions');
 const openpgpExtensions = require('../cryptoSuites/openpgpExtensions');
@@ -26,46 +27,53 @@ const marshalSignedDataObject = ({
 }) => {
   const objectWithoutProofMeta = _.cloneDeep(object);
   delete objectWithoutProofMeta.proofMeta;
+  objectWithoutProofMeta[field] = objectWithoutProofMeta[field] || [];
+  objectWithoutProofMeta[field].push({
+    type: 'LinkedDataSignature2015',
+    created: moment.utc().toISOString(),
+    creator: meta.kid,
+    proofValue: signature,
+    nonce: object.proofMeta.nonce,
+    domain: object.proofMeta.domain,
+    meta,
+  });
 
-  const result = {
-    ...objectWithoutProofMeta,
-    [field]: {
-      type: 'LinkedDataSignature2015',
-      created: moment.utc().toISOString(),
-      creator: meta.kid,
-      proofValue: signature,
-      nonce: object.proofMeta.nonce,
-      domain: object.proofMeta.domain,
-      meta,
-    },
-  };
-
-  return result;
+  return objectWithoutProofMeta;
 };
 
-const unmarshalSignedData = ({ field, signedLinkedData }) => {
-  const mutable = _.cloneDeep(signedLinkedData);
-  const proof = mutable[field];
-  delete mutable[field];
+const unmarshalSignedData = ({ field, signedLinkedData, proof }) => {
+  let mutable = _.cloneDeep(signedLinkedData);
+  mutable = {
+    ...mutable,
+    proofMeta: {
+      nonce: proof.nonce,
+      domain: proof.domain,
+    },
+  };
+  if (field === 'proofChain') {
+    const chainEnd = _.findIndex(mutable[field], p => p.nonce === proof.nonce);
+    const chain = mutable[field].splice(0, chainEnd);
+    mutable = {
+      ...mutable,
+
+      [field]: chain,
+    };
+  } else {
+    delete mutable[field];
+  }
 
   return {
-    object: {
-      ...mutable,
-      proofMeta: {
-        nonce: proof.nonce,
-        domain: proof.domain,
-      },
-    },
+    object: mutable,
     signature: proof.proofValue,
     meta: proof.meta,
   };
 };
 
 const signObjectWithKeypair = async ({
-  keypair, field, obj, kid, password,
+  keypair, obj, kid, password,
 }) => {
   const guessedType = guessKeyType(keypair);
-  const payload = JSON.stringify(obj);
+  const payload = stringify(obj);
   let signature;
 
   switch (guessedType) {
@@ -97,20 +105,18 @@ const signObjectWithKeypair = async ({
     kid,
   };
 
-  return marshalSignedDataObject({
-    field,
+  return {
     object: obj,
     signature,
     meta,
-  });
+  };
 };
-const createSignedLinkedData = async ({ data, proofSet, signObject }) => {
+
+const signWithProofSet = async ({ data, proofSet, signObject }) => {
   const signedLinkedData = _.cloneDeep(data);
   const signedData = await Promise.all(
     proofSet.map(async ({ kid, domain, password }) => {
-      console.log('kid', kid);
-      return signObject({
-        field: 'proof',
+      const { object, signature, meta } = await signObject({
         obj: {
           ...data,
           proofMeta: {
@@ -121,11 +127,51 @@ const createSignedLinkedData = async ({ data, proofSet, signObject }) => {
         kid,
         password,
       });
+      return marshalSignedDataObject({
+        field: 'proof',
+        object,
+        signature,
+        meta,
+      });
     }),
   );
 
-  signedLinkedData.proof = signedData.map(signedObject => signedObject.proof);
+  signedLinkedData.proof = signedData.map(signedObject => signedObject.proof[0]);
   return signedLinkedData;
+};
+
+const signWithProofChain = async ({ data, proofChain, signObject }) => {
+  let lastSignedObject = {
+    ..._.cloneDeep(data),
+  };
+  // eslint-disable-next-line
+  for (let i = 0; i < proofChain.length; i++) {
+    const signatureMaterial = proofChain[i];
+    const { kid, domain, password } = signatureMaterial;
+    // eslint-disable-next-line
+    const obj = {
+      ...lastSignedObject,
+      proofMeta: {
+        // eslint-disable-next-line
+        nonce: await sodiumExtensions.generateSalt(),
+        domain: domain || 'wallet',
+      },
+      proofChain: [...(lastSignedObject.proofChain || [])],
+    };
+    // eslint-disable-next-line
+    const { object, signature, meta } = await signObject({
+      obj,
+      kid,
+      password,
+    });
+    lastSignedObject = marshalSignedDataObject({
+      field: 'proofChain',
+      object,
+      signature,
+      meta,
+    });
+  }
+  return lastSignedObject;
 };
 
 const verifySignedLinkedData = async ({
@@ -133,30 +179,69 @@ const verifySignedLinkedData = async ({
   verifyDIDSignatureWithResolver,
   resolver,
 }) => {
-  if (!signedLinkedData.proof) {
-    throw new Error('SignedLinkedData does not contain a proof field!');
-  }
-
-  const verifications = await Promise.all(
-    signedLinkedData.proof.map(async (proof) => {
+  let verifications = [];
+  if (signedLinkedData.proofChain) {
+    // eslint-disable-next-line
+    for (let i = 0; i < signedLinkedData.proofChain.length; i++) {
+      const proof = signedLinkedData.proofChain[i];
       const { object, signature, meta } = unmarshalSignedData({
-        field: 'proof',
+        field: 'proofChain',
         signedLinkedData: {
           ...signedLinkedData,
-          proof,
+          proofMeta: { nonce: proof.nonce, domain: proof.domain },
         },
+        proof,
       });
-
-      return verifyDIDSignatureWithResolver({
+      // eslint-disable-next-line
+      const verification = await verifyDIDSignatureWithResolver({
         object,
         signature,
         meta,
         resolver,
       });
-    }),
-  );
+      verifications.push(verification);
+    }
+  }
 
+  if (signedLinkedData.proof) {
+    verifications = await Promise.all(
+      signedLinkedData.proof.map(async (proof) => {
+        const { object, signature, meta } = unmarshalSignedData({
+          field: 'proof',
+          signedLinkedData,
+          proof,
+        });
+
+        return verifyDIDSignatureWithResolver({
+          object,
+          signature,
+          meta,
+          resolver,
+        });
+      }),
+    );
+  }
   return _.every(verifications);
+};
+
+const createSignedLinkedData = async ({
+  data, proofSet, proofChain, signObject,
+}) => {
+  if (proofSet && proofSet.length) {
+    return signWithProofSet({
+      data,
+      proofSet,
+      signObject,
+    });
+  }
+  if (proofChain && proofChain.length) {
+    return signWithProofChain({
+      data,
+      proofChain,
+      signObject,
+    });
+  }
+  throw new Error('createSignedLinkedData requires proofSet or proofChain');
 };
 
 module.exports = {

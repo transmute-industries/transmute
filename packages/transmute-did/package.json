@@ -33,8 +33,10 @@
     "did-resolver": "0.0.4",
     "elliptic": "^6.4.1",
     "ethereumjs-util": "^5.2.0",
+    "fs-extra": "^7.0.1",
     "hdkey": "^1.1.0",
     "js-sha3": "^0.8.0",
+    "json-stringify-deterministic": "^1.0.1",
     "jsonschema": "^1.2.4",
     "libsodium-wrappers": "^0.7.3",
     "lodash": "^4.17.11",
@@ -42,7 +44,6 @@
     "moment": "^2.22.2",
     "openpgp": "^4.0.1",
     "secrets.js-grempe": "^1.1.0",
-    "tmp": "0.0.33",
-    "fs-extra": "^7.0.1"
+    "tmp": "0.0.33"
   }
 }

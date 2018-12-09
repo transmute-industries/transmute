@@ -29,7 +29,7 @@ const linkedData = {
   title: 'Hello World!',
 };
 
-describe('createProofChain', () => {
+describe('createSignedLinkedData', () => {
   let wallet;
 
   beforeAll(async () => {
@@ -42,10 +42,22 @@ describe('createProofChain', () => {
     });
   });
 
-  describe('supports creating json ld with a proof chain', async () => {
-    
+  // https://w3c-dvcg.github.io/ld-signatures/#introduction
+  describe('supports creating ld-signatures', async () => {
     it('with a proof chain', async () => {
-      console.log('\n BEGIN PROOF CHAIN')
+      const signedLinkedData = await wallet.createSignedLinkedData({
+        data: linkedData,
+        proofChain,
+      });
+      expect(signedLinkedData.proofChain.length).toBe(3);
+      expect(
+        await wallet.verifySignedLinkedData({
+          signedLinkedData,
+        }),
+      ).toBe(true);
+    });
+
+    it('with a proof set', async () => {
       const signedLinkedData = await wallet.createSignedLinkedData({
         data: linkedData,
         proofSet: proofChain,

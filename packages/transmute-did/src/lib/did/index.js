@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const stringify = require('json-stringify-deterministic');
 
 const openpgpExtensions = require('../cryptoSuites/openpgpExtensions');
 const ethereumExtensions = require('../cryptoSuites/ethereumExtensions');
@@ -66,16 +67,16 @@ const verifyDIDSignature = (object, signature, meta, doc) => {
 
   switch (keyType) {
     case 'elliptic':
-      return ellipticExtensions.verify(JSON.stringify(object), signature, publicKey);
+      return ellipticExtensions.verify(stringify(object), signature, publicKey);
     case 'openpgp':
       return openpgpExtensions.cryptoHelpers.verifyDetached(
-        JSON.stringify(object),
+        stringify(object),
         signature,
         publicKey,
       );
     case 'libsodium-wrappers':
       return sodiumExtensions.verifyDetached({
-        message: JSON.stringify(object),
+        message: stringify(object),
         signature,
         publicKey,
       });

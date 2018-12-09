@@ -140,8 +140,13 @@ class TransmuteDIDWallet {
     });
   }
 
-  async createSignedLinkedData({ data, proofSet }) {
-    return createSignedLinkedData({ data, proofSet, signObject: this.signObject.bind(this) });
+  async createSignedLinkedData({ data, proofSet, proofChain }) {
+    return createSignedLinkedData({
+      data,
+      proofSet,
+      proofChain,
+      signObject: this.signObject.bind(this),
+    });
   }
 
   async verifySignedLinkedData({ signedLinkedData }) {
