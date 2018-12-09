@@ -1,13 +1,10 @@
-// const fs = require('fs');
-
 const TransmuteAdapterMemory = require('@transmute/transmute-adapter-memory');
-const { SignatureStore, verifySignedLinkedData } = require('../../../wallet/signatureMethods');
 
 const adapter = new TransmuteAdapterMemory();
 
-const { verifyDIDSignatureWithResolver, constructDIDPublicKeyID } = require('../../index');
+const { constructDIDPublicKeyID, SignatureStore } = require('../signatureMethods');
 
-const { TransmuteDIDWallet } = require('../../../wallet');
+const { TransmuteDIDWallet } = require('../../wallet');
 
 const {
   fullWallet,
@@ -16,7 +13,7 @@ const {
   orbitDBKID,
   passphrase,
   did,
-} = require('../../../wallet/__tests__/__fixtures__/testParams');
+} = require('./__fixtures__/testParams');
 
 const proofSet = [
   {

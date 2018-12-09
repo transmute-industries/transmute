@@ -1,18 +1,17 @@
 const _ = require('lodash');
-const moment = require('moment');
 
 const pack = require('../../../package.json');
 
-const didLib = require('../did');
 const sodiumExtensions = require('../cryptoSuites/sodiumExtensions');
 
 const {
+  constructDIDPublicKeyID,
+  publicKeyKIDPrefix,
+  verifyDIDSignatureWithResolver,
   createSignedLinkedData,
   verifySignedLinkedData,
   signObjectWithKeypair,
 } = require('./signatureMethods');
-
-const { constructDIDPublicKeyID, publicKeyKIDPrefix, verifyDIDSignatureWithResolver } = didLib;
 
 //   eslint-disable-next-line
 const { sha3_256 } = require('js-sha3');

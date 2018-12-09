@@ -1,6 +1,4 @@
-const didLib = require('../index');
-
-const didMethods = require('../constants').didMethods;
+const { didMethods, publicKeyToDID } = require('../signatureMethods');
 
 const ethereumKeypair = {
   publicKey:
@@ -20,22 +18,19 @@ const orbitdbKeypair = {
     '04c44cb158a11cd03f30b713276faf8cf8869fccb2a48662dc43fcde61af5008040270257a3734f47acbb1bf2def85b7a4c0d213ab634bc2e79dbc4c1916d45a4f',
   privateKey: 'ef3ff305e9492fa7904eb3c671df5f683c68548153bc8d6cf2dc663f06e13dfe',
 };
+describe('publicKeyToDID', () => {
+  it('supports ethereum', async () => {
+    const did = await publicKeyToDID('ethereum', ethereumKeypair.publicKey);
+    expect(did.indexOf(didMethods.ETHEREUM)).toBe(4);
+  });
 
-describe('did-spec', () => {
-  describe('publicKeyToDID', () => {
-    it('supports ethereum', async () => {
-      const did = await didLib.publicKeyToDID('ethereum', ethereumKeypair.publicKey);
-      expect(did.indexOf(didMethods.ETHEREUM)).toBe(4);
-    });
+  it('supports openpgp', async () => {
+    const did = await publicKeyToDID('openpgp', openpgpKeypair.publicKey);
+    expect(did.indexOf(didMethods.OPENPGP)).toBe(4);
+  });
 
-    it('supports openpgp', async () => {
-      const did = await didLib.publicKeyToDID('openpgp', openpgpKeypair.publicKey);
-      expect(did.indexOf(didMethods.OPENPGP)).toBe(4);
-    });
-
-    it('supports orbitdb', async () => {
-      const did = await didLib.publicKeyToDID('orbitdb', orbitdbKeypair.publicKey);
-      expect(did.indexOf(didMethods.ORBITDB)).toBe(4);
-    });
+  it('supports orbitdb', async () => {
+    const did = await publicKeyToDID('orbitdb', orbitdbKeypair.publicKey);
+    expect(did.indexOf(didMethods.ORBITDB)).toBe(4);
   });
 });

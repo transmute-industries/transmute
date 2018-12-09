@@ -2,11 +2,50 @@ const _ = require('lodash');
 const moment = require('moment');
 const stringify = require('json-stringify-deterministic');
 
+const ethereumExtensions = require('../cryptoSuites/ethereumExtensions');
 const sodiumExtensions = require('../cryptoSuites/sodiumExtensions');
 const openpgpExtensions = require('../cryptoSuites/openpgpExtensions');
 const ellipticExtensions = require('../cryptoSuites/ellipticExtensions');
 
 const pack = require('../../../package.json');
+
+const didMethods = {
+  OPENPGP: 'transmute.openpgp',
+  ETHEREUM: 'transmute.eth',
+  ORBITDB: 'transmute.orbitdb',
+};
+
+const publicKeyKIDPrefix = 'kid=';
+const constructDIDPublicKeyID = (did, kid) => `${did}#${publicKeyKIDPrefix}${kid}`;
+
+const publicKeyToDID = async (type, publicKey) => {
+  switch (type) {
+    case 'openpgp':
+      return `did:${
+        didMethods.OPENPGP
+      }:${await openpgpExtensions.cryptoHelpers.armoredKeytoFingerprintHex(publicKey)}`;
+    case 'ethereum':
+      return `did:${didMethods.ETHEREUM}:${await ethereumExtensions.publicKeyToAddress(publicKey)}`;
+    case 'orbitdb':
+      return `did:${didMethods.ORBITDB}:${publicKey}`;
+    default:
+      throw new Error('Unknown key type');
+  }
+};
+
+const getPublicKeyFromDIDDocByKID = (doc, kid) => {
+  const key = _.find(doc.publicKey, k => k.id === kid);
+
+  if (!key) {
+    throw new Error(`No key exists in doc for kid: ${kid}`);
+  }
+  if (key.publicKeyPem) {
+    return key.publicKeyPem;
+  }
+  if (key.publicKeyHex) {
+    return key.publicKeyHex;
+  }
+};
 
 const guessKeyType = (meta) => {
   if (meta.version.indexOf('openpgp') === 0) {
@@ -244,20 +283,6 @@ const createSignedLinkedData = async ({
   throw new Error('createSignedLinkedData requires proofSet or proofChain');
 };
 
-const getPublicKeyFromDIDDocByKID = (doc, kid) => {
-  const key = _.find(doc.publicKey, k => k.id === kid);
-
-  if (!key) {
-    throw new Error(`No key exists in doc for kid: ${kid}`);
-  }
-  if (key.publicKeyPem) {
-    return key.publicKeyPem;
-  }
-  if (key.publicKeyHex) {
-    return key.publicKeyHex;
-  }
-};
-
 const verifyDIDSignature = (object, signature, meta, doc) => {
   const keyType = guessKeyType(meta);
   let publicKey;
@@ -341,4 +366,9 @@ module.exports = {
   verifySignedLinkedData,
   signObjectWithKeypair,
   SignatureStore,
+  constructDIDPublicKeyID,
+  publicKeyToDID,
+  didMethods,
+  publicKeyKIDPrefix,
+  verifyDIDSignatureWithResolver,
 };

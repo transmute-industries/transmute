@@ -4,7 +4,7 @@
   "description": "",
   "main": "./src/index.js",
   "scripts": {
-    "test": "jest --env aegir --testPathIgnorePatterns testParams.js -- ",
+    "test": "jest --env aegir --testPathIgnorePatterns testParams.js __ignore -- ",
     "coverage": "jest --env aegir --testPathIgnorePatterns testParams.js --coverage --",
     "lint": "../../node_modules/.bin/eslint .",
     "lint-fix": "../../node_modules/.bin/eslint . --fix",
