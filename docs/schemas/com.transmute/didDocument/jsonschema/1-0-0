@@ -1,19 +1,19 @@
 {
-  "$id": "https://docs.transmute.industries/schemas/com.transmute/didDocumentSchema/jsonschema/1-0-0",
+  "$id": "https://docs.transmute.industries/schemas/com.transmute/didDocument/jsonschema/1-0-0",
   "$schema": "https://docs.transmute.industries/schemas/com.transmute.self-desc/schema/jsonschema/1-0-0#",
   "self": {
     "vendor": "com.transmute",
-    "name": "didDocumentSchema",
+    "name": "didDocument",
     "format": "jsonschema",
     "version": "1-0-0"
   },
-  "id": "/didDocumentSchema",
+  "id": "/didDocument",
   "properties": {
     "@context": {
       "type": "string"
     },
     "id": {
-      "$ref": "/didSchema"
+      "$ref": "/did"
     },
     "publicKey": {
       "type": "array"

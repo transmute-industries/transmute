@@ -1,13 +1,14 @@
 {
-  "$id": "https://docs.transmute.industries/schemas/com.transmute/didWalletPlaintextSchema/jsonschema/1-0-0",
+  "$id": "https://docs.transmute.industries/schemas/com.transmute/didWalletPlaintext/jsonschema/1-0-0",
   "$schema": "https://docs.transmute.industries/schemas/com.transmute.self-desc/schema/jsonschema/1-0-0#",
   "self": {
     "vendor": "com.transmute",
-    "name": "didWalletPlaintextSchema",
+    "name": "didWalletPlaintext",
     "format": "jsonschema",
     "version": "1-0-0"
   },
-  "id": "/didWalletPlaintextSchema",
+  "id": "/didWalletPlaintext",
+  "type": "object",
   "properties": {
     "version": {
       "type": "string"
@@ -50,6 +51,5 @@
     "salt",
     "keystore"
   ],
-  "type": "object",
   "additionalProperties": false
 }
