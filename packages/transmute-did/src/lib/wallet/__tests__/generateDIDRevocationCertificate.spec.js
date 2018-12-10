@@ -37,9 +37,7 @@ describe('generateDIDRevocationCertificate', () => {
     });
     didDocument = result.data;
 
-    expect(schema.validator.isValid(wallet.data, schema.schemas.didWalletPlaintext)).toBe(
-      true,
-    );
+    expect(schema.validator.isValid(wallet.data, schema.schemas.didWalletPlaintext)).toBe(true);
   });
 
   it('Can revoke a full did', async () => {
@@ -47,7 +45,9 @@ describe('generateDIDRevocationCertificate', () => {
       did: didDocument.id,
       proofSet,
     });
-    expect(schema.validator.isValid(result, schema.schemas.didRevocationCertSchema)).toBe(true);
+    expect(schema.validator.isValid(result.data, schema.schemas.didRevocationCertSchema)).toBe(
+      true,
+    );
     expect(result.schema).toBe(schema.schemas.didRevocationCertSchema.$id);
   });
 
@@ -57,7 +57,9 @@ describe('generateDIDRevocationCertificate', () => {
       proofSet,
     });
     expect(result.data.proof).toBeDefined();
-    expect(schema.validator.isValid(result, schema.schemas.didRevocationCertSchema)).toBe(true);
+    expect(schema.validator.isValid(result.data, schema.schemas.didRevocationCertSchema)).toBe(
+      true,
+    );
     expect(result.schema).toBe(schema.schemas.didRevocationCertSchema.$id);
   });
 });

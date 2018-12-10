@@ -8,6 +8,7 @@
     "version": "1-0-0"
   },
   "id": "/didWalletPlaintext",
+  "type": "object",
   "properties": {
     "version": { "type": "string" },
     "salt": { "type": "string" },
@@ -29,6 +30,5 @@
     }
   },
   "required": ["version", "salt", "keystore"],
-  "type": "object",
   "additionalProperties": false
 }

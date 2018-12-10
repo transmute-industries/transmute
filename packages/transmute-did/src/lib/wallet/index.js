@@ -147,11 +147,11 @@ class TransmuteDIDWallet {
     });
   }
 
-  async verifySignedLinkedData({ signedLinkedData }) {
+  async verifySignedLinkedData({ signedLinkedData, resolver }) {
     return verifySignedLinkedData({
       signedLinkedData,
       verifyDIDSignatureWithResolver,
-      resolver: this.resolver,
+      resolver: resolver || this.resolver,
     });
   }
 

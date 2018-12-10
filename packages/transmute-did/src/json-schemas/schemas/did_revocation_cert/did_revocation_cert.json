@@ -10,18 +10,10 @@
   "id": "/didRevocationCert",
   "type": "object",
   "properties": {
-    "schema": { "type": "string" },
-    "data": {
-      "type": "object",
-      "properties": {
-        "@context": { "type": "string" },
-        "did": { "type": "string" },
-        "message": { "type": "string" },
-        "proof": { "$ref": "/ldProof" }
-      },
-      "required": ["@context", "did", "proof"]
-    }
+    "@context": { "type": "string" },
+    "did": { "type": "string" },
+    "message": { "type": "string" },
+    "proof": { "$ref": "/ldProof" }
   },
-  "required": ["data", "schema"],
-  "additionalProperties": false
+  "required": ["@context", "did", "proof"]
 }

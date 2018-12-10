@@ -8,20 +8,15 @@
     "version": "1-0-0"
   },
   "id": "/didSignature",
-  "type": "object",
-  "properties": {
-    "schema": { "type": "string" },
-    "data": {
-      "type": "object",
-      "properties": {
-        "@context": { "type": "string" }
-      },
-      "patternProperties": {
-        "^((proofChain)|(proof))": { "$ref": "/ldProof" }
-      },
-      "required": ["@context"]
-    }
-  },
-  "required": ["data", "schema"],
-  "additionalProperties": false
+  "schema": { "type": "string" },
+  "data": {
+    "type": "object",
+    "properties": {
+      "@context": { "type": "string" }
+    },
+    "patternProperties": {
+      "^((proofChain)|(proof))": { "$ref": "/ldProof" }
+    },
+    "required": ["@context"]
+  }
 }

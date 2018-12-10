@@ -8,21 +8,13 @@
     "version": "1-0-0"
   },
   "id": "/didDocument",
-  "type": "object",
   "properties": {
-    "schema": { "type": "string" },
-    "data": {
-      "properties": {
-        "@context": { "type": "string" },
-        "id": { "$ref": "/did" },
-        "publicKey": { "type": "array" },
-        "authentication": { "type": "array" },
-        "service": { "type": "array" }
-      },
-      "required": ["@context", "id", "publicKey"],
-      "type": "object"
-    }
+    "@context": { "type": "string" },
+    "id": { "$ref": "/did" },
+    "publicKey": { "type": "array" },
+    "authentication": { "type": "array" },
+    "service": { "type": "array" }
   },
-  "required": ["data", "schema"],
-  "additionalProperties": false
+  "required": ["@context", "id", "publicKey"],
+  "type": "object"
 }

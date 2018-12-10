@@ -82,7 +82,7 @@ describe('toDIDDocument', () => {
         }),
       ).toBe(true);
 
-      expect(schema.validator.isValid(result, schema.schemas.didDocument)).toBe(true);
+      expect(schema.validator.isValid(result.data, schema.schemas.didDocument)).toBe(true);
       expect(result.schema).toBe(schema.schemas.didDocument.$id);
 
       fs.writeFileSync(`${didDocumentPath}`, JSON.stringify(result.data, null, 2));

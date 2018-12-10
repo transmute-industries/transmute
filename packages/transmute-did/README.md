@@ -20,6 +20,8 @@ npm run test
 
 ### Documentation
 
+This library uses self describing json-ld.
+
 #### [Nested DID Spec](./docs/nested-did-spec.md)
 
 ## What it does
