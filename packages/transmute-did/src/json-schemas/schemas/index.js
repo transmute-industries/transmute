@@ -1,11 +1,7 @@
-const fs = require('fs');
-const path = require('path');
 
-const schema = JSON.parse(fs.readFileSync(path.resolve(__dirname, './com/schema.json')));
+const schema = require('./com/schema.json');
 
-const selfDescSchema = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, './com/com.transmute.self-desc.json')),
-);
+const selfDescSchema = require('./com/com.transmute.self-desc.json')
 
 const did = require('./did/did.json');
 const didDocument = require('./did_document/did_document.json');

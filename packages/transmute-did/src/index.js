@@ -15,6 +15,10 @@ const {
   verifyDIDSignature,
   publicKeyKIDPrefix,
   constructDIDPublicKeyID,
+  publicKeyToDID,
+  verifySignedLinkedData,
+  verifyDIDSignatureWithResolver,
+  isLinkedDataSignedByDocument,
 } = require('./lib/signatureMethods');
 
 module.exports = {
@@ -32,4 +36,8 @@ module.exports = {
   verifyDIDSignature,
   publicKeyKIDPrefix,
   constructDIDPublicKeyID,
+  publicKeyToDID,
+  verifySignedLinkedData,
+  verifyDIDSignatureWithResolver,
+  isLinkedDataSignedByDocument,
 };

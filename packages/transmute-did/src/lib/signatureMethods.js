@@ -235,7 +235,7 @@ const verifySignedLinkedData = async ({
           proof,
         });
         // eslint-disable-next-line
-        const verification = await verifyDIDSignatureWithResolver({
+        const verification = verifyDIDSignatureWithResolver({
           object,
           signature,
           meta,
@@ -273,6 +273,8 @@ const verifySignedLinkedData = async ({
       };
     }
   }
+
+  await Promise.all(verifications);
 
   if (!verifications.length) {
     throw new Error('proofSet or proofChain is requried for verification.');
@@ -354,6 +356,15 @@ const verifyDIDSignatureWithResolver = async ({
   return verifyDIDSignature(object, signature, meta, doc);
 };
 
+const isLinkedDataSignedByDocument = ({ signedLinkedData, didDocument }) => {
+  if (!(signedLinkedData.proof || signedLinkedData.proofChain)) {
+    return false;
+  }
+  const kids = (signedLinkedData.proof || signedLinkedData.proofChain).map(p => p.creator);
+  const didKids = didDocument.publicKey.map(k => k.id);
+  return _.intersection(kids, didKids).length !== 0;
+};
+
 module.exports = {
   createSignedLinkedData,
   verifySignedLinkedData,
@@ -363,4 +374,5 @@ module.exports = {
   didMethods,
   publicKeyKIDPrefix,
   verifyDIDSignatureWithResolver,
+  isLinkedDataSignedByDocument,
 };

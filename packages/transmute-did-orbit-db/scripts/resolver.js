@@ -21,8 +21,9 @@ console.log(`http://localhost:7000/1.0/identifiers/${didData.id}`);
         const did = req.url.split("/1.0/identifiers/")[1];
 
         try {
-          const { doc } = await orbitDIDResolver(did);
-          const didDoc = JSON.stringify(doc);
+          const data = await orbitDIDResolver(did);
+          console.log(data)
+          const didDoc = JSON.stringify({});
           resp.writeHead(200, { "Content-type": "application/json" });
           resp.write(didDoc);
         } catch (e) {

@@ -30,13 +30,13 @@ class DIDSelector extends Component {
 
     return (
       <div className={classes.container}>
-        {dids.map(did => {
+        {dids && dids.map(did => {
           return (
             <ExpansionPanel
               key={did.did_document.id}
               style={{
                 backgroundColor:
-                  current_did &&
+                  current_did && current_did.did_document && 
                   did.did_document.id === current_did.did_document.id
                     ? "#d1c4e9"
                     : ""

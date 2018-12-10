@@ -12,11 +12,14 @@ const {
 } = require("@transmute/transmute-adapter-orbit-db");
 
 const {
-  wallet,
+  createWallet,
+  constructDIDPublicKeyID,
   openpgpExtensions,
   ellipticExtensions,
   SignatureStore,
-  verifyDIDSignature
+  verifyDIDSignature,
+  TransmuteDIDWallet,
+  publicKeyToDID
 } = require("@transmute/transmute-did");
 
 const pack = require("@transmute/transmute-did/package.json");
@@ -41,31 +44,34 @@ const orbitDBDIDToOrbitDBAddress = orbitDID => {
   }`.trim();
 };
 
+
 const createOrbitDIDResolver = (orbitdb, verifyDIDSignature) => ({
   resolve: async orbitDID => {
-    const address = orbitDBDIDToOrbitDBAddress(orbitDID);
+    const address = orbitDBDIDToOrbitDBAddress(orbitDID);    
     const db = await orbitdb.open(address);
     await db.load();
     const doc = await db.get(orbitDID);
+    console.log(doc)
 
     if (doc.length) {
-      const { object, signature, meta } = doc[0];
+      console.log(doc)
+      // const { object, signature, meta } = doc[0];
 
-      if (verifyDIDSignature) {
-        const success = await verifyDIDSignature(
-          object,
-          signature,
-          meta,
-          object
-        );
-        if (!success) {
-          throw new Error("Signature verifcation failed.");
-        } else {
-          console.log("DID DOC signature verified on client!");
-        }
-      }
+      // if (verifyDIDSignature) {
+      //   const success = await verifyDIDSignature(
+      //     object,
+      //     signature,
+      //     meta,
+      //     object
+      //   );
+      //   if (!success) {
+      //     throw new Error("Signature verifcation failed.");
+      //   } else {
+      //     console.log("DID DOC signature verified on client!");
+      //   }
+      // }
 
-      return object;
+      // return object;
     } else {
       console.error("unable to get did document.");
     }
@@ -73,7 +79,7 @@ const createOrbitDIDResolver = (orbitdb, verifyDIDSignature) => ({
 });
 
 const createOrbitDIDWallet = async password => {
-  const w = await wallet.createWallet();
+  const w = await createWallet();
 
   let keypair = await openpgpExtensions.cryptoHelpers.generateArmoredKeypair({
     name: "test-key",
@@ -119,14 +125,23 @@ const createOrbitDIDFromWallet = async (w, password) => {
   const openPGPKID = Object.keys(w.data.keystore)[0];
   const orbitKID = Object.keys(w.data.keystore)[1];
 
-  let rawDocument = await w.toDIDDocument({
-    kid: openPGPKID,
-    password
+
+  const did = publicKeyToDID('openpgp', w.data.keystore[openPGPKID].data.publicKey);
+
+  let result = await w.toDIDDocument({
+    did,
+    proofSet: [
+      {
+        kid: constructDIDPublicKeyID(did, openPGPKID),
+        password
+      }
+    ],
+    cacheLocal: true
   });
 
   const orbitdb = await getOrbitDBFromWallet(w);
 
-  const db = await orbitdb.docs(rawDocument.object.id, {
+  let db = await orbitdb.docs(result.data.id, {
     write: [orbitdb.key.getPublic("hex")]
   });
 
@@ -136,29 +151,39 @@ const createOrbitDIDFromWallet = async (w, password) => {
 
   const orbitDID = orbitdbAddressToDID(address);
 
+  console.log(orbitDID)
+
+  db = await orbitdb.docs(orbitDID, {
+    write: [orbitdb.key.getPublic("hex")]
+  });
+
+
   const doesDIDDocExist = await db.get(orbitDID);
 
   if (doesDIDDocExist.length) {
     console.log("DID Exists, returning.");
     return {
       wallet: w,
-      did_document: doesDIDDocExist[0].object,
+      did_document: doesDIDDocExist[0],
       password
     };
   }
 
   // create the did document with the correct did
-  rawDocument = await w.toDIDDocument({
+  result = await w.toDIDDocument({
     did: orbitDID,
-    kid: openPGPKID,
-    password
+    proofSet: [
+      {
+        kid: constructDIDPublicKeyID(orbitDID, openPGPKID),
+        password
+      }
+    ],
+    cacheLocal: true
   });
 
   await db.put({
-    _id: rawDocument.object.id,
-    object: rawDocument.object,
-    signature: rawDocument.signature,
-    meta: rawDocument.meta
+    _id: result.data.id,
+    ...result.data
   });
 
   const revocationsLog = await orbitdb.log("revocations", {
@@ -172,25 +197,28 @@ const createOrbitDIDFromWallet = async (w, password) => {
   w.data.keystore[openPGPKID].meta.did.revocations = revocationsLogAddress;
   w.data.keystore[orbitKID].meta.did.revocations = revocationsLogAddress;
 
-  let didDocWithRevocations = await w.toDIDDocument({
-    did: rawDocument.object.id,
-    kid: openPGPKID,
-    password
+  result = await w.toDIDDocument({
+    did: result.data.id,
+    proofSet: [
+      {
+        kid: constructDIDPublicKeyID(orbitDID, openPGPKID),
+        password
+      }
+    ],
+    cacheLocal: true
   });
 
   await db.put({
-    _id: didDocWithRevocations.object.id,
-    ...didDocWithRevocations
+    _id: result.data.id,
+    ...result.data
   });
 
   return {
     wallet: w,
-    did_document: didDocWithRevocations.object,
+    did_document: result.data,
     password
   };
 };
-
-const TransmuteDIDWallet = wallet.TransmuteDIDWallet;
 
 const createOrbitClaimResolver = (
   orbitdb,
@@ -211,7 +239,9 @@ const createOrbitClaimResolver = (
         resolver,
         verifyDIDSignature
       );
-      const storeObject = await signatureStore.getSignedLinkedDataByContentID(contentID);
+      const storeObject = await signatureStore.getSignedLinkedDataByContentID(
+        contentID
+      );
       const doc = await resolver.resolve(did);
       const isSignatureValid = await verifyDIDSignature(
         storeObject.object,
@@ -286,66 +316,66 @@ const createOrbitDIDClaimFromWallet = async ({
 const isKeyRevoked = async ({ object, signature, meta }) => {
   // eslint-disable-next-line
   const [did, kid] = meta.kid.split("#kid=");
-  const { doc } = await orbitDIDRevocationsResolver(did);
+  const { doc } = await orbitDIDResolver(did);
   const key = _.find(doc.publicKey, key => {
     return key.id === meta.kid;
   });
   return key.revocation !== undefined;
 };
 
-const orbitDIDRevocationsResolver = async did => {
+const orbitDIDResolver = async did => {
   const orbitdb = await getOrbitDBFromKeypair();
   const resolver = await createOrbitDIDResolver(orbitdb, verifyDIDSignature);
+  const result = await resolver.resolve(did);
+  console.log(result)
+  return {}
 
-  const doc = await resolver.resolve(did);
+  // const revocationsAddresses = _.uniq(
+  //   _.map(doc.publicKey, key => {
+  //     return key.revocations;
+  //   })
+  // );
 
-  const revocationsAddresses = _.uniq(
-    _.map(doc.publicKey, key => {
-      return key.revocations;
-    })
-  );
+  // const revocationMap = {};
+  // const getAllRevocationsFromAddress = async address => {
+  //   const revocationsLog = await orbitdb.open(address);
+  //   await revocationsLog.load();
 
-  const revocationMap = {};
-  const getAllRevocationsFromAddress = async address => {
-    const revocationsLog = await orbitdb.open(address);
-    await revocationsLog.load();
+  //   const allRevocations = revocationsLog
+  //     .iterator({ limit: -1 })
+  //     .collect()
+  //     .map(e => {
+  //       revocationMap[e.payload.value.kid] = e;
+  //       return e.payload.value;
+  //     });
+  //   return allRevocations;
+  // };
 
-    const allRevocations = revocationsLog
-      .iterator({ limit: -1 })
-      .collect()
-      .map(e => {
-        revocationMap[e.payload.value.kid] = e;
-        return e.payload.value;
-      });
-    return allRevocations;
-  };
+  // const allRevocations = _.map(
+  //   _.flatten(
+  //     await Promise.all(
+  //       revocationsAddresses.map(async address => {
+  //         return await getAllRevocationsFromAddress(address);
+  //       })
+  //     )
+  //   ),
+  //   data => {
+  //     return data.kid;
+  //   }
+  // );
 
-  const allRevocations = _.map(
-    _.flatten(
-      await Promise.all(
-        revocationsAddresses.map(async address => {
-          return await getAllRevocationsFromAddress(address);
-        })
-      )
-    ),
-    data => {
-      return data.kid;
-    }
-  );
+  // doc.publicKey.forEach(key => {
+  //   const kid = key.id.split("#kid=")[1];
+  //   if (allRevocations.indexOf(kid) !== -1) {
+  //     key.revocation = revocationMap[kid];
+  //   }
+  // });
 
-  doc.publicKey.forEach(key => {
-    const kid = key.id.split("#kid=")[1];
-    if (allRevocations.indexOf(kid) !== -1) {
-      key.revocation = revocationMap[kid];
-    }
-  });
-
-  return {
-    doc
-  };
+  // return {
+  //   doc
+  // };
 };
 
-const orbitDIDResolver = orbitDIDRevocationsResolver;
 
 const revokeKIDWithOrbitDB = async ({ kid, wallet }) => {
   const orbitdb = await getOrbitDBFromWallet(wallet);
@@ -384,18 +414,11 @@ const ipfsOptions = {
 };
 
 const getOrbitDBFromKeypair = async keypair => {
-
   // eslint-disable-next-line
   if (orbitdb) {
     // eslint-disable-next-line
     return Promise.resolve(orbitdb);
   }
-
-  // if (keypair) {
-  //   ipfsOptions.repo = "orbitdb/did/" + keypair.publicKey;
-  // }
-
-
   return new Promise((resolve, reject) => {
     const ipfs = new IPFS(ipfsOptions);
 
@@ -407,7 +430,6 @@ const getOrbitDBFromKeypair = async keypair => {
           }
         : undefined;
 
-      // Create OrbitDB instance
       // eslint-disable-next-line
       orbitdb = new OrbitDB(
         ipfs,
@@ -429,7 +451,6 @@ module.exports = {
   verifyDIDSignature,
   orbitDIDResolver,
   orbitDIDClaimResolver,
-  orbitDIDRevocationsResolver,
   createOrbitDIDClaimFromWallet,
   revokeKIDWithOrbitDB,
   isKeyRevoked
