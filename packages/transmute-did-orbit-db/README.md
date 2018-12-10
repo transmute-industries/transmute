@@ -32,6 +32,10 @@ npm run deploy:transmute
 ```
 # Start Your IPFS Daemon
 ipfs daemon 
+ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST"]'
+
 
 # get your IPFS PeerID
 curl -s http://localhost:5001/api/v0/id | jq '.ID' 
