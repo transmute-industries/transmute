@@ -155,6 +155,23 @@ class TransmuteDIDWallet {
     });
   }
 
+  async revoke({ did, kid, proofSet }) {
+    let index = kid;
+    if (_.find(proofSet, p => p.kid.indexOf(kid) !== -1)) {
+      throw new Error('Cannot revoke a key in a proofSet.');
+    }
+    if (index.indexOf(publicKeyKIDPrefix) !== -1) {
+      // eslint-disable-next-line
+      index = kid.split(`#${publicKeyKIDPrefix}`)[1];
+    }
+    delete this.data.keystore[index];
+    await this.toDIDDocument({
+      did,
+      proofSet,
+      cacheLocal: true,
+    });
+  }
+
   async toDIDDocument({ did, proofSet, cacheLocal }) {
     if (!proofSet) {
       throw new Error('A proofSet is required.');

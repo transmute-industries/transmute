@@ -221,48 +221,67 @@ const verifySignedLinkedData = async ({
   resolver,
 }) => {
   let verifications = [];
-  if (signedLinkedData.proofChain) {
-    // eslint-disable-next-line
-    for (let i = 0; i < signedLinkedData.proofChain.length; i++) {
-      const proof = signedLinkedData.proofChain[i];
-      const { object, signature, meta } = unmarshalSignedData({
-        field: 'proofChain',
-        signedLinkedData: {
-          ...signedLinkedData,
-          proofMeta: { nonce: proof.nonce, domain: proof.domain },
-        },
-        proof,
-      });
+  try {
+    if (signedLinkedData.proofChain) {
       // eslint-disable-next-line
-      const verification = await verifyDIDSignatureWithResolver({
-        object,
-        signature,
-        meta,
-        resolver,
-      });
-      verifications.push(verification);
-    }
-  }
-
-  if (signedLinkedData.proof) {
-    verifications = await Promise.all(
-      signedLinkedData.proof.map(async (proof) => {
+      for (let i = 0; i < signedLinkedData.proofChain.length; i++) {
+        const proof = signedLinkedData.proofChain[i];
         const { object, signature, meta } = unmarshalSignedData({
-          field: 'proof',
-          signedLinkedData,
+          field: 'proofChain',
+          signedLinkedData: {
+            ...signedLinkedData,
+            proofMeta: { nonce: proof.nonce, domain: proof.domain },
+          },
           proof,
         });
-
-        return verifyDIDSignatureWithResolver({
+        // eslint-disable-next-line
+        const verification = await verifyDIDSignatureWithResolver({
           object,
           signature,
           meta,
           resolver,
         });
-      }),
-    );
+        verifications.push(verification);
+      }
+    }
+
+    if (signedLinkedData.proof) {
+      verifications = await Promise.all(
+        signedLinkedData.proof.map(async (proof) => {
+          const { object, signature, meta } = unmarshalSignedData({
+            field: 'proof',
+            signedLinkedData,
+            proof,
+          });
+
+          return verifyDIDSignatureWithResolver({
+            object,
+            signature,
+            meta,
+            resolver,
+          });
+        }),
+      );
+    }
+  } catch (e) {
+    // assume revocation..
+    if (e.message === 'Public Key with kid does not exist in document.') {
+      console.warn('A proof key is revoked');
+      return {
+        verified: false,
+        details: [e.message],
+      };
+    }
   }
-  return _.every(verifications);
+
+  if (!verifications.length) {
+    throw new Error('proofSet or proofChain is requried for verification.');
+  }
+
+  return {
+    verified: _.every(verifications),
+    details: [`${signedLinkedData.proofChain ? 'proofChain' : 'proofSet'} verified.`],
+  };
 };
 
 const createSignedLinkedData = async ({

@@ -76,11 +76,10 @@ describe('toDIDDocument', () => {
       });
 
       expect(result.data.proof.length).toBe(3);
-      expect(
-        await wallet.verifySignedLinkedData({
-          signedLinkedData: result.data,
-        }),
-      ).toBe(true);
+      const { verified } = await wallet.verifySignedLinkedData({
+        signedLinkedData: result.data,
+      });
+      expect(verified).toBe(true);
 
       expect(schema.validator.isValid(result.data, schema.schemas.didDocument)).toBe(true);
       expect(result.schema).toBe(schema.schemas.didDocument.$id);

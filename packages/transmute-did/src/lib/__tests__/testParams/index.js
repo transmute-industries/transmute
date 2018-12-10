@@ -14,7 +14,22 @@ const actors = ['A', 'B', 'C', 'D'];
 
 // const createActorWallet = async (actor) => {
 //   const wallet = await createWallet();
-//   const keypair = await openpgpExtensions.cryptoHelpers.generateArmoredKeypair({
+//   let keypair = await openpgpExtensions.cryptoHelpers.generateArmoredKeypair({
+//     name: actor,
+//     passphrase: actor,
+//   });
+//   await wallet.addKey(keypair, 'assymetric', {
+//     version: `openpgp@${pack.dependencies.openpgp}`,
+//     tags: ['OpenPGP.js', 'macbook pro'],
+//     notes: 'created for testing purposes',
+//     did: {
+//       publicKey: true,
+//       authentication: true,
+//       publicKeyType: 'publicKeyPem',
+//       signatureType: 'Secp256k1VerificationKey2018',
+//     },
+//   });
+//   keypair = await openpgpExtensions.cryptoHelpers.generateArmoredKeypair({
 //     name: actor,
 //     passphrase: actor,
 //   });
@@ -43,8 +58,12 @@ const generateActors = async () => Promise.all(
     );
     const wallet = new TransmuteDIDWallet(walletJson);
     const firstKey = Object.keys(walletJson.keystore)[0];
+    const secondKey = Object.keys(walletJson.keystore)[1];
     const did = `did:test:${actor}`;
-    const proofSet = [{ kid: constructDIDPublicKeyID(did, firstKey), password: actor }];
+    const proofSet = [
+      { kid: constructDIDPublicKeyID(did, firstKey), password: actor },
+      { kid: constructDIDPublicKeyID(did, secondKey), password: actor },
+    ];
     const { data } = await wallet.toDIDDocument({
       did,
       proofSet,

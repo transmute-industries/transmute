@@ -52,14 +52,11 @@ describe('createSignedLinkedData', () => {
         proofChain,
       });
       expect(signedLinkedData.data.proofChain.length).toBe(3);
-      expect(
-        await wallet.verifySignedLinkedData({
-          signedLinkedData,
-        }),
-      ).toBe(true);
-      expect(
-        schema.validator.isValid(signedLinkedData, schema.schemas.didSignature),
-      ).toBe(true);
+      const result = await wallet.verifySignedLinkedData({
+        signedLinkedData: signedLinkedData.data,
+      });
+      expect(result.verified).toBe(true);
+      expect(schema.validator.isValid(signedLinkedData, schema.schemas.didSignature)).toBe(true);
 
       expect(signedLinkedData.schema).toBe(schema.schemas.didSignature.$id);
       // fs.writeFileSync(`${proofChainPath}`, JSON.stringify(signedLinkedData, null, 2));
@@ -71,14 +68,11 @@ describe('createSignedLinkedData', () => {
         proofSet: proofChain,
       });
       expect(signedLinkedData.data.proof.length).toBe(3);
-      expect(
-        await wallet.verifySignedLinkedData({
-          signedLinkedData,
-        }),
-      ).toBe(true);
-      expect(
-        schema.validator.isValid(signedLinkedData, schema.schemas.didSignature),
-      ).toBe(true);
+      const result = await wallet.verifySignedLinkedData({
+        signedLinkedData: signedLinkedData.data,
+      });
+      expect(result.verified).toBe(true);
+      expect(schema.validator.isValid(signedLinkedData, schema.schemas.didSignature)).toBe(true);
       expect(signedLinkedData.schema).toBe(schema.schemas.didSignature.$id);
       // leave for debugging
       // fs.writeFileSync(`${proofSetPath}`, JSON.stringify(signedLinkedData, null, 2));

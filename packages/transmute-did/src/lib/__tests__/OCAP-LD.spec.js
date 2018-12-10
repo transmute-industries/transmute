@@ -1,16 +1,24 @@
+const _ = require('lodash');
 const base64url = require('base64url');
 const testParams = require('./testParams');
 
 const verifyInvocation = async (invocation, capabilities, actors) => {
   const resolver = {
-    resolve: did => Promise.resolve(actors[did].didDocument),
+    resolve: async (did) => {
+      const { data } = await actors[did].wallet.toDIDDocument({
+        did,
+        proofSet: actors[did].proofSet,
+      });
+      // console.log(did, actors[did].proofSet)
+      return Promise.resolve(data);
+    },
   };
   const verifications = [];
   const isInvocationSignatureGood = await actors['did:test:C'].wallet.verifySignedLinkedData({
     signedLinkedData: invocation,
     resolver,
   });
-  if (!isInvocationSignatureGood) {
+  if (!isInvocationSignatureGood.verified) {
     throw new Error('Invocation signature failed verification');
   }
   verifications.push(invocation.id);
@@ -23,7 +31,7 @@ const verifyInvocation = async (invocation, capabilities, actors) => {
       signedLinkedData: cap,
       resolver,
     });
-    if (!isCapabilitySignatureGood) {
+    if (!isCapabilitySignatureGood.verified) {
       chainVerificationFailure = true;
     }
     verifications.push(cap.id);
@@ -149,5 +157,28 @@ describe('OCAP-LD', () => {
       actors,
     );
     expect(isInvocationValid).toBe(true);
+  });
+
+  it('cloudStorage can NOT verify invocation when a key has been revoked.', async () => {
+    // remove the key from the proofSet first
+    // this is only necessar because our resolver uses the wallets for testing.
+    actors['did:test:B'].proofSet = _.reject(
+      actors['did:test:B'].proofSet,
+      p => p.kid === actors['did:test:B'].didDocument.publicKey[0].id,
+    );
+
+    await actors['did:test:B'].wallet.revoke({
+      did: 'did:test:B',
+      kid: actors['did:test:B'].didDocument.publicKey[0].id,
+      proofSet: [{ kid: actors['did:test:B'].didDocument.publicKey[1].id, password: 'B' }],
+    });
+
+    const isInvocationValid = await verifyInvocation(
+      invocations['did:test:dummyUploadsFileWithInvocationOfCapability'],
+      capabilities,
+      actors,
+    );
+
+    expect(isInvocationValid).toBe(false);
   });
 });

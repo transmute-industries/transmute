@@ -15,7 +15,7 @@ class SignatureStore {
 
   async getSignedLinkedDataByContentID(contentID) {
     const signedLinkedData = await this.adapter.readJson(contentID);
-    const verified = await verifySignedLinkedData({
+    const { verified } = await verifySignedLinkedData({
       signedLinkedData,
       resolver: this.resolver,
       verifyDIDSignatureWithResolver,
