@@ -41,7 +41,7 @@ const verifyInvocation = async (invocation, capabilities, actors) => {
 };
 
 // https://github.com/WebOfTrustInfo/rebooting-the-web-of-trust-fall2017/blob/master/final-documents/lds-ocap.md
-describe('OCAP-LD', () => {
+describe('Micro Services OCAP-LD Flow', () => {
   let actors;
   const capabilities = {};
   const invocations = {};
