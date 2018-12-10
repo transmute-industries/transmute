@@ -22,8 +22,7 @@ console.log(`http://localhost:7000/1.0/identifiers/${didData.id}`);
 
         try {
           const data = await orbitDIDResolver(did);
-          console.log(data)
-          const didDoc = JSON.stringify({});
+          const didDoc = JSON.stringify(data);
           resp.writeHead(200, { "Content-type": "application/json" });
           resp.write(didDoc);
         } catch (e) {

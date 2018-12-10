@@ -1,16 +1,17 @@
 const fs = require("fs");
 const path = require("path");
-const transmuteDID = require("@transmute/transmute-did");
+const {TransmuteDIDWallet} = require("@transmute/transmute-did");
 
 const {
   createOrbitDIDFromWallet,
-  createOrbitDIDClaimFromWallet
+  createOrbitDIDClaimFromWallet,
+  orbitDIDClaimResolver
 } = require("./utils/orbitHelpers");
 
 (async () => {
   try {
     // console.log("creating orbit db did...", ipfsOptions);
-    const wallet = new transmuteDID.wallet.TransmuteDIDWallet(
+    const wallet = new TransmuteDIDWallet(
       JSON.parse(
         fs
           .readFileSync(path.resolve(__dirname, "../wallet/ciphertext.json"))
@@ -41,7 +42,7 @@ const {
 
     const openPGPKID = Object.keys(wallet.data.keystore)[0];
 
-    const { claimID, resolvedClaim } = await createOrbitDIDClaimFromWallet({
+    const { claimID } = await createOrbitDIDClaimFromWallet({
       did: did_document.id,
       kid: openPGPKID,
       claim,
@@ -50,6 +51,8 @@ const {
     });
 
     console.log("\n🔗 Created, Uploaded, Resolved and Verified Claim");
+
+    const resolvedClaim = await orbitDIDClaimResolver(claimID)
 
     fs.writeFileSync(
       path.resolve(__dirname, "../src/data/did_claim.json"),

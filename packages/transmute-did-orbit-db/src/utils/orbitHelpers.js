@@ -153,7 +153,7 @@ const createOrbitDIDFromWallet = async (w, password) => {
   const openPGPKID = Object.keys(w.data.keystore)[0];
   const orbitKID = Object.keys(w.data.keystore)[1];
 
-  const did = await publicKeyToDID(
+  let did = await publicKeyToDID(
     "openpgp",
     w.data.keystore[openPGPKID].data.publicKey
   );
@@ -176,6 +176,7 @@ const createOrbitDIDFromWallet = async (w, password) => {
   await db.load();
   const address = db.address.toString();
   const orbitDID = orbitdbAddressToDID(address);
+  did = orbitDID;
 
   const doesDIDDocExist = await db.get(orbitDID);
 
