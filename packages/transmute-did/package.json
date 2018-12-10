@@ -1,6 +1,6 @@
 {
   "name": "@transmute/transmute-did",
-  "version": "1.0.1-alpha.0",
+  "version": "1.0.1-alpha.1",
   "description": "",
   "main": "./src/index.js",
   "scripts": {
@@ -27,7 +27,7 @@
     "jest-environment-aegir": "^1.0.1"
   },
   "dependencies": {
-    "@transmute/transmute-adapter-memory": "^1.0.0-alpha.1",
+    "@transmute/transmute-adapter-memory": "^1.0.0-alpha.2",
     "base64url": "^3.0.0",
     "bip39": "^2.5.0",
     "did-resolver": "0.0.4",
