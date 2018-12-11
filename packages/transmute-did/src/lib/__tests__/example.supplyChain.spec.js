@@ -56,11 +56,13 @@ describe('Supply Chain DID OCAP-LD Flow', () => {
       actors['did:test:B'].proofSet,
       p => p.kid === actors['did:test:B'].didDocument.publicKey[0].id,
     );
+
     await actors['did:test:B'].wallet.revoke({
       did: 'did:test:B',
       kid: actors['did:test:B'].didDocument.publicKey[0].id,
-      proofSet: [{ kid: actors['did:test:B'].didDocument.publicKey[1].id, password: 'B' }],
+      proofSet: actors['did:test:B'].proofSet,
     });
+
     const areNestedLinkedDataSignatureValid = await actors[
       'did:test:D'
     ].wallet.verifySignedLinkedData({

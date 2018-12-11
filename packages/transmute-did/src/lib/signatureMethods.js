@@ -235,13 +235,17 @@ const verifySignedLinkedData = async ({
           proof,
         });
         // eslint-disable-next-line
-        const verification = verifyDIDSignatureWithResolver({
-          object,
-          signature,
-          meta,
-          resolver,
-        });
-        verifications.push(verification);
+        try {
+          const verification = await verifyDIDSignatureWithResolver({
+            object,
+            signature,
+            meta,
+            resolver,
+          });
+          verifications.push(verification);
+        } catch (e) {
+          verifications.push(false);
+        }
       }
     }
 
@@ -273,9 +277,7 @@ const verifySignedLinkedData = async ({
       };
     }
   }
-
-  await Promise.all(verifications);
-
+  verifications = await Promise.all(verifications);
   if (!verifications.length) {
     throw new Error('proofSet or proofChain is requried for verification.');
   }
