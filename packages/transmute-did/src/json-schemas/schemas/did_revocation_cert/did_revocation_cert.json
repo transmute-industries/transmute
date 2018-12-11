@@ -10,24 +10,10 @@
   "id": "/didRevocationCert",
   "type": "object",
   "properties": {
-    "object": {
-      "type": "object",
-      "properties": {
-        "kid": { "$ref": "/didSchema" },
-        "message": { "type": "string" },
-        "timestamp": { "type": "integer" }
-      },
-      "required": ["kid"]
-    },
-    "signature": { "type": "string" },
-    "meta": {
-      "type": "object",
-      "properties": {
-        "version": { "type": "string" },
-        "kid": { "$ref": "/didSchema" }
-      },
-      "required": ["version", "kid"]
-    }
+    "@context": { "type": "string" },
+    "did": { "type": "string" },
+    "message": { "type": "string" },
+    "proof": { "$ref": "/ldProof" }
   },
-  "required": ["object", "signature", "meta"]
+  "required": ["@context", "did", "proof"]
 }

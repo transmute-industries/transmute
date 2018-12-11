@@ -1,33 +1,22 @@
 const _ = require('lodash');
-const moment = require('moment');
 
 const pack = require('../../../package.json');
 
-const didLib = require('../did');
 const sodiumExtensions = require('../cryptoSuites/sodiumExtensions');
-const openpgpExtensions = require('../cryptoSuites/openpgpExtensions');
-const ellipticExtensions = require('../cryptoSuites/ellipticExtensions');
 
-const { constructDIDPublicKeyID } = didLib;
+const schema = require('../../json-schemas');
+
+const {
+  constructDIDPublicKeyID,
+  publicKeyKIDPrefix,
+  verifyDIDSignatureWithResolver,
+  createSignedLinkedData,
+  verifySignedLinkedData,
+  signObjectWithKeypair,
+} = require('../signatureMethods');
 
 //   eslint-disable-next-line
 const { sha3_256 } = require('js-sha3');
-
-const guessKeyType = (key) => {
-  if (key.meta.version.indexOf('openpgp') === 0) {
-    return 'openpgp';
-  }
-  if (key.meta.version.indexOf('libsodium-wrappers') === 0) {
-    return 'libsodium-wrappers';
-  }
-  if (key.meta.version.indexOf('elliptic') === 0) {
-    return 'elliptic';
-  }
-
-  throw new Error('unguessable key type');
-};
-
-const requireKIDinPublicKeys = (kid, publicKeys) => _.some(publicKeys, key => key.id === kid);
 
 const constructPublicKeysProperty = (did, keystore) => {
   const allPublicKeys = _.values(keystore);
@@ -59,6 +48,10 @@ const constructAuthenticationProperty = (did, keystore) => {
 class TransmuteDIDWallet {
   constructor(walletData) {
     this.data = walletData;
+    this.didCache = {};
+    this.resolver = {
+      resolve: did => Promise.resolve(this.didCache[did]),
+    };
   }
 
   async addKey(data, type, meta) {
@@ -109,110 +102,79 @@ class TransmuteDIDWallet {
     };
   }
 
-  async generateDIDRevocationCertificate({ asDIDByKID, asDIDByKIDPassphrase, overwriteKID }) {
-    const result = await this.toDIDDocument({ kid: asDIDByKID, password: asDIDByKIDPassphrase });
-    //   eslint-disable-next-line
-    const doc = result.object;
-
-    const didPublicKeyID = constructDIDPublicKeyID(doc.id, asDIDByKID);
-
-    const revocationCert = await this.signObject({
-      obj: {
-        kid: didPublicKeyID,
-        message: `This signed json object serves as a revocation certificate for ${didPublicKeyID}. See https://docs.transmute.industries/did/revocation for more information.`,
-        timestamp: moment()
-          .utc()
-          .unix(),
+  async generateDIDRevocationCertificate({ did, proofSet }) {
+    const result = await this.createSignedLinkedData({
+      data: {
+        '@context': 'https://w3id.org/identity/v1',
+        did,
+        message: `This signed json object serves as a revocation certificate for ${did}. See https://docs.transmute.industries/did/revocation for more information.`,
       },
-      kid: asDIDByKID,
-      passphrase: asDIDByKIDPassphrase,
-      asDIDByKID,
-      asDIDByKIDPassphrase,
-      overwriteKID,
+      proofSet,
     });
 
-    return revocationCert;
-  }
-
-  async signObject({
-    obj, kid, passphrase, did, asDIDByKID, asDIDByKIDPassphrase, overwriteKID,
-  }) {
-    const keypair = this.data.keystore[kid];
-    const guessedType = guessKeyType(keypair);
-    const payload = JSON.stringify(obj);
-    let signature;
-    let doc = {};
-
-    // this will first generate a did document
-    // from the keystore with asDIDByKID as the owner
-    // this is a good way of ensuring a signature is traceable to a did
-    if (asDIDByKID) {
-      const result = await this.toDIDDocument({
-        did,
-        kid: asDIDByKID,
-        password: asDIDByKIDPassphrase,
-      });
-      //   eslint-disable-next-line
-      doc = result.object;
-      if (!requireKIDinPublicKeys(constructDIDPublicKeyID(doc.id, kid), doc.publicKey)) {
-        throw new Error('kid is not listed in did document. Cannot sign asDIDByKID');
-      }
-    }
-
-    switch (guessedType) {
-      case 'openpgp':
-        signature = await openpgpExtensions.cryptoHelpers.signDetached(
-          payload,
-          keypair.data.privateKey,
-          passphrase,
-        );
-        break;
-
-      case 'libsodium-wrappers':
-        signature = await sodiumExtensions.signDetached({
-          message: payload,
-          privateKey: keypair.data.privateKey,
-        });
-        break;
-
-      case 'elliptic':
-        signature = await ellipticExtensions.sign(payload, keypair.data.privateKey);
-        break;
-
-      default:
-        throw new Error('Unknown key type. Cannot sign did document');
-    }
-
-    // todo: this is super confusing... needs documentation
-    const kid2 = overwriteKID || (doc.id ? constructDIDPublicKeyID(doc.id, kid) : kid);
-
-    const meta = {
-      version: `${guessedType}@${pack.dependencies[guessedType]}`,
-      kid: kid2,
-    };
-
     return {
-      object: obj,
-      signature,
-      meta,
+      schema: schema.schemaToURI(schema.schemas.didRevocationCertSchema),
+      data: result.data,
     };
   }
 
-  async toDIDDocument({ did, kid, password }) {
-    const masterKeypair = this.data.keystore[kid];
+  async signObject({ obj, kid, password }) {
+    const justTheHash = kid.split(`#${publicKeyKIDPrefix}`)[1];
 
-    if (!masterKeypair || !masterKeypair.data.privateKey) {
-      throw new Error('Cannot create a DID without a private key. Invalid KID');
+    if (justTheHash === undefined) {
+      throw new Error(`kid must be of the format: did#${publicKeyKIDPrefix}...`);
     }
 
-    const guessedType = await guessKeyType(masterKeypair);
+    const keypair = this.data.keystore[justTheHash];
 
-    if (guessedType === 'openpgp' && password === undefined) {
-      throw new Error('Passphrase is required to sign with openpgp.');
+    if (!keypair) {
+      throw new Error(justTheHash);
     }
-    if (!did) {
-      //   eslint-disable-next-line
-      did = await didLib.publicKeyToDID(guessedType, masterKeypair.data.publicKey);
+    return signObjectWithKeypair({
+      keypair,
+      obj,
+      kid,
+      password,
+    });
+  }
+
+  async createSignedLinkedData({ data, proofSet, proofChain }) {
+    return createSignedLinkedData({
+      data,
+      proofSet,
+      proofChain,
+      signObject: this.signObject.bind(this),
+    });
+  }
+
+  async verifySignedLinkedData({ signedLinkedData, resolver }) {
+    return verifySignedLinkedData({
+      signedLinkedData,
+      verifyDIDSignatureWithResolver,
+      resolver: resolver || this.resolver,
+    });
+  }
+
+  async revoke({ did, kid, proofSet }) {
+    let index = kid;
+    if (_.find(proofSet, p => p.kid.indexOf(kid) !== -1)) {
+      throw new Error('Cannot revoke a key in a proofSet.');
+    }
+    if (index.indexOf(publicKeyKIDPrefix) !== -1) {
+      // eslint-disable-next-line
+      index = kid.split(`#${publicKeyKIDPrefix}`)[1];
+    }
+    delete this.data.keystore[index];
+    await this.toDIDDocument({
+      did,
+      proofSet,
+      cacheLocal: true,
+    });
+  }
+
+  async toDIDDocument({ did, proofSet, cacheLocal }) {
+    if (!proofSet) {
+      throw new Error('A proofSet is required.');
     }
 
     const publicKey = await constructPublicKeysProperty(did, this.data.keystore);
@@ -225,14 +187,19 @@ class TransmuteDIDWallet {
       authentication,
     };
 
-    //   eslint-disable-next-line
-    const { object, signature, meta } = await this.signObject({
-      obj: doc,
-      kid,
-      overwriteKID: constructDIDPublicKeyID(did, kid),
-      passphrase: password,
+    const result = await this.createSignedLinkedData({
+      data: doc,
+      proofSet,
     });
-    return { object, signature, meta };
+
+    if (cacheLocal) {
+      this.didCache[result.data.id] = result.data;
+    }
+
+    return {
+      schema: schema.schemaToURI(schema.schemas.didDocument),
+      data: result.data,
+    };
   }
 }
 
@@ -245,4 +212,5 @@ const createWallet = async () => new TransmuteDIDWallet({
 module.exports = {
   TransmuteDIDWallet,
   createWallet,
+  constructDIDPublicKeyID,
 };

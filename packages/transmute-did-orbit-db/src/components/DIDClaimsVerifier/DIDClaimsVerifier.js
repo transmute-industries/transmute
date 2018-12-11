@@ -11,14 +11,14 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Snackbar from "@material-ui/core/Snackbar";
 
 const styles = theme => ({
-  container: {
-  }
+  container: {}
 });
 
 class DIDClaimsVerifier extends Component {
   state = {
     open: false,
-    message: ""
+    message: "",
+    resolvedClaims: {}
   };
   render() {
     const { claimDatas, resolve, classes } = this.props;
@@ -38,14 +38,19 @@ class DIDClaimsVerifier extends Component {
               <ExpansionPanelDetails>
                 <Grid container spacing={24}>
                   <Grid item xs={12} md={6}>
-                    <pre>{JSON.stringify(data.resolvedClaim, null, 2)}</pre>
+                    <pre>
+                      {JSON.stringify(
+                        this.state.resolvedClaims[data.claimID],
+                        null,
+                        2
+                      )}
+                    </pre>
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <Button
                       variant="contained"
                       color="primary"
                       onClick={async () => {
-                        
                         const {
                           // eslint-disable-next-line
                           claim,
@@ -55,6 +60,10 @@ class DIDClaimsVerifier extends Component {
 
                         this.setState({
                           open: true,
+                          resolvedClaims: {
+                            ...this.state.resolvedClaims,
+                            [data.claimID]: claim
+                          },
                           message: `${
                             isSignatureValid
                               ? "Signature is VALID, "

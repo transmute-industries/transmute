@@ -26,5 +26,19 @@
       "publicKey": "did:orbitdb.transmute.openpgp:QmZ5ymeGirf41jNai6YsFYSGw2upCy2y41E7WEQnY2GG8z.38e6ed554af8c1da5ee9eb81d8b7399b955f6ffe#kid=e95349e60571896fad39f77e1a4061239174250509730b4c19702ddd737a2d7d",
       "type": "Secp256k1VerificationKey2018"
     }
+  ],
+  "proof": [
+    {
+      "type": "LinkedDataSignature2015",
+      "created": "2018-12-10T21:01:20.420Z",
+      "creator": "did:orbitdb.transmute.openpgp:QmZ5ymeGirf41jNai6YsFYSGw2upCy2y41E7WEQnY2GG8z.38e6ed554af8c1da5ee9eb81d8b7399b955f6ffe#kid=69dec37005c2df5414e356d8269ff79cdca772e7f57438ea35d35850c82f3e1e",
+      "signatureValue": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v4.0.1\r\nComment: https://openpgpjs.org\r\n\r\nwl4EARMIABAFAlwO1CAJENi3OZuVX2/+AABqEQEAkU13FBeK9wWuQFQDz/p5\nbLRtajWvkO3DKJYKn8SegtYA/RyMnlTw8+NqGBd4/KQLSq1OvAj2ZCzU0kOk\n2mjKiXYT\r\n=0xAJ\r\n-----END PGP SIGNATURE-----\r\n",
+      "nonce": "13fbc7c484b1931a4a72101476da24e9",
+      "domain": "wallet",
+      "meta": {
+        "version": "openpgp@^4.0.1",
+        "kid": "did:orbitdb.transmute.openpgp:QmZ5ymeGirf41jNai6YsFYSGw2upCy2y41E7WEQnY2GG8z.38e6ed554af8c1da5ee9eb81d8b7399b955f6ffe#kid=69dec37005c2df5414e356d8269ff79cdca772e7f57438ea35d35850c82f3e1e"
+      }
+    }
   ]
 }

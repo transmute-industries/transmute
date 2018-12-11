@@ -71,7 +71,7 @@ class DIDResolver extends Component {
             variant="contained"
             color="primary"
             onClick={async () => {
-              const { doc } = await resolve(this.state.did);
+              const doc = await resolve(this.state.did);
               this.setState({
                 doc
               });

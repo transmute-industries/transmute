@@ -14,7 +14,7 @@ import DIDView from "../DIDView";
 import DIDSelector from "../DIDSelector";
 import DIDResolver from "../DIDResolver";
 import DIDClaimResolver from "../DIDClaimResolver";
-
+import DIDResolveAndSignClaim from "../DIDResolveAndSignClaim";
 import DIDClaimsVerifier from "../DIDClaimsVerifier";
 import DIDRevocationsList from "../DIDRevocationsList";
 
@@ -24,7 +24,8 @@ import {
   orbitDIDResolver,
   orbitDIDClaimResolver,
   createOrbitDIDClaimFromWallet,
-  revokeKIDWithOrbitDB
+  revokeKIDWithOrbitDB,
+  isLinkedDataSignedByDocument
 } from "../../utils/orbitHelpers";
 
 const styles = theme => ({
@@ -81,6 +82,7 @@ class DIDDemo extends Component {
   onDIDSelected = async did => {
     const wallet = new TransmuteDIDWallet(did.wallet_json);
     did = await createOrbitDIDFromWallet(wallet, did.wallet_password);
+    // console.log(did)
     this.setState({
       current_did: did
     });
@@ -122,6 +124,7 @@ class DIDDemo extends Component {
                 dids={this.state.dids}
                 onSelected={this.onDIDSelected}
               />
+              {/* <pre>{JSON.stringify(this.state.dids, null, 2)}</pre> */}
             </Paper>
           </Grid>
 
@@ -140,6 +143,27 @@ class DIDDemo extends Component {
                     <DIDClaimCreator
                       style={{ width: "100%" }}
                       did={this.state.current_did}
+                      createOrbitDIDClaimFromWallet={
+                        createOrbitDIDClaimFromWallet
+                      }
+                      onClaimCreated={this.onClaimCreated}
+                    />
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>
+
+                <ExpansionPanel>
+                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                    <Typography className={classes.heading}>
+                      Resolve And Sign Claim
+                    </Typography>
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                    <DIDResolveAndSignClaim
+                      style={{ width: "100%" }}
+                      did={this.state.current_did}
+                      contentID={current_claim}
+                      isLinkedDataSignedByDocument={isLinkedDataSignedByDocument}
+                      resolve={orbitDIDClaimResolver}
                       createOrbitDIDClaimFromWallet={
                         createOrbitDIDClaimFromWallet
                       }
@@ -172,7 +196,7 @@ class DIDDemo extends Component {
           <Grid item xs={12} md={12}>
             <DIDClaimResolver
               resolve={orbitDIDClaimResolver}
-              signatureID={current_claim}
+              contentID={current_claim}
             />
           </Grid>
 

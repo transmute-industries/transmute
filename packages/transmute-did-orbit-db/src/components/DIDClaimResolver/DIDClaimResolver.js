@@ -27,7 +27,7 @@ const styles = theme => ({
 
 class DIDClaimResolver extends Component {
   state = {
-    signatureID: exampleDIDClaim.claimID
+    contentID: exampleDIDClaim.claimID
   };
 
   handleChange = name => event => {
@@ -37,9 +37,9 @@ class DIDClaimResolver extends Component {
   };
 
   componentWillReceiveProps(nextProps){
-    if (nextProps.signatureID){
+    if (nextProps.contentID){
       this.setState({
-        signatureID: nextProps.signatureID
+        contentID: nextProps.contentID
       })
     }
    
@@ -57,8 +57,8 @@ class DIDClaimResolver extends Component {
           label="Signature ID"
           placeholder={fullPlaceholder}
           className={classes.textField}
-          value={this.state.signatureID}
-          onChange={this.handleChange("signatureID")}
+          value={this.state.contentID}
+          onChange={this.handleChange("contentID")}
           margin="normal"
         />
         {this.state.doc && <pre>{JSON.stringify(this.state.doc, null, 2)}</pre>}
@@ -67,7 +67,7 @@ class DIDClaimResolver extends Component {
           variant="contained"
           color="primary"
           onClick={async () => {
-            const doc = await resolve(this.state.signatureID);
+            const doc = await resolve(this.state.contentID);
             this.setState({
               doc
             });

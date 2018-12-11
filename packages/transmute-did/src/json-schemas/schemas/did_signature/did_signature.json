@@ -1,0 +1,22 @@
+{
+  "$id": "https://docs.transmute.industries/schemas/com.transmute/didSignature/jsonschema/1-0-0",
+  "$schema": "https://docs.transmute.industries/schemas/com.transmute.self-desc/schema/jsonschema/1-0-0#",
+  "self": {
+    "vendor": "com.transmute",
+    "name": "didSignature",
+    "format": "jsonschema",
+    "version": "1-0-0"
+  },
+  "id": "/didSignature",
+  "schema": { "type": "string" },
+  "data": {
+    "type": "object",
+    "properties": {
+      "@context": { "type": "string" }
+    },
+    "patternProperties": {
+      "^((proofChain)|(proof))": { "$ref": "/ldProof" }
+    },
+    "required": ["@context"]
+  }
+}

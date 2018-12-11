@@ -22,7 +22,7 @@ class DIDRevocationsList extends Component {
 
   async componentWillReceiveProps(nextProps) {
     if (this.state.did !== nextProps.did.did_document.id) {
-      const { doc } = await orbitDIDRevocationsResolver(
+      const doc = await orbitDIDRevocationsResolver(
         nextProps.did.did_document.id
       );
 

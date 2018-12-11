@@ -12,7 +12,8 @@ const ipfs = ipfsAPI(ipfsOptions);
   const addedData = await ipfs.util.addFromFs(
     path.resolve(__dirname, "../build"),
     {
-      recursive: true
+      recursive: true,
+      ignore:['ipfs.js']
     }
   );
 
