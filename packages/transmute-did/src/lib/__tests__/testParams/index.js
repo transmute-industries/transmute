@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const fs = require('fs');
 const path = require('path');
+const stringify = require('json-stringify-deterministic');
 
 const {
   TransmuteDIDWallet,
@@ -46,7 +47,7 @@ const actors = ['A', 'B', 'C', 'D'];
 //   });
 //   fs.writeFileSync(
 //     path.resolve(__dirname, `${actor}Wallet.json`),
-//     JSON.stringify(wallet.data, null, 2),
+//     stringify(wallet.data, null, 2),
 //   );
 // };
 

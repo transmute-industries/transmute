@@ -1,5 +1,6 @@
 const tmp = require('tmp');
 const fs = require('fs');
+const stringify = require('json-stringify-deterministic');
 //   eslint-disable-next-line
 const { sha3_256 } = require('js-sha3');
 
@@ -28,7 +29,7 @@ describe('did-wallet', () => {
       expect(schema.validator.isValid(wallet.data, schema.schemas.didWalletPlaintext)).toBe(
         true,
       );
-      fs.writeFileSync(emptyWalletPath, JSON.stringify(wallet.data, null, 2));
+      fs.writeFileSync(emptyWalletPath, stringify(wallet.data, null, 2));
     });
   });
 
@@ -59,7 +60,7 @@ describe('did-wallet', () => {
       expect(schema.validator.isValid(wallet.data, schema.schemas.didWalletPlaintext)).toBe(
         true,
       );
-      fs.writeFileSync(fullWalletPath, JSON.stringify(wallet.data, null, 2));
+      fs.writeFileSync(fullWalletPath, stringify(wallet.data, null, 2));
     });
 
     it('supports adding an ethereum keypair', async () => {
@@ -85,7 +86,7 @@ describe('did-wallet', () => {
       expect(schema.validator.isValid(wallet.data, schema.schemas.didWalletPlaintext)).toBe(
         true,
       );
-      fs.writeFileSync(fullWalletPath, JSON.stringify(wallet.data, null, 2));
+      fs.writeFileSync(fullWalletPath, stringify(wallet.data, null, 2));
     });
 
     it('supports adding an orbitdb keypair', async () => {
@@ -113,7 +114,7 @@ describe('did-wallet', () => {
       expect(schema.validator.isValid(wallet.data, schema.schemas.didWalletPlaintext)).toBe(
         true,
       );
-      fs.writeFileSync(fullWalletPath, JSON.stringify(wallet.data, null, 2));
+      fs.writeFileSync(fullWalletPath, stringify(wallet.data, null, 2));
     });
 
     it('supports adding a libsodium signing key', async () => {
@@ -140,7 +141,7 @@ describe('did-wallet', () => {
       expect(schema.validator.isValid(wallet.data, schema.schemas.didWalletPlaintext)).toBe(
         true,
       );
-      fs.writeFileSync(fullWalletPath, JSON.stringify(wallet.data, null, 2));
+      fs.writeFileSync(fullWalletPath, stringify(wallet.data, null, 2));
     });
 
     it('supports adding a libsodium symmetric key', async () => {
@@ -161,7 +162,7 @@ describe('did-wallet', () => {
       expect(schema.validator.isValid(wallet.data, schema.schemas.didWalletPlaintext)).toBe(
         true,
       );
-      fs.writeFileSync(fullWalletPath, JSON.stringify(wallet.data, null, 2));
+      fs.writeFileSync(fullWalletPath, stringify(wallet.data, null, 2));
     });
 
     it('supports adding a shamir share', async () => {
@@ -187,7 +188,7 @@ describe('did-wallet', () => {
       expect(schema.validator.isValid(wallet.data, schema.schemas.didWalletPlaintext)).toBe(
         true,
       );
-      fs.writeFileSync(fullWalletPath, JSON.stringify(wallet.data, null, 2));
+      fs.writeFileSync(fullWalletPath, stringify(wallet.data, null, 2));
     });
   });
 
@@ -199,7 +200,7 @@ describe('did-wallet', () => {
       expect(schema.validator.isValid(wallet.data, schema.schemas.didWalletCiphertext)).toBe(
         true,
       );
-      fs.writeFileSync(cipherTextWalletPath, JSON.stringify(wallet.data, null, 2));
+      fs.writeFileSync(cipherTextWalletPath, stringify(wallet.data, null, 2));
     });
   });
 
@@ -213,7 +214,7 @@ describe('did-wallet', () => {
       expect(schema.validator.isValid(wallet.data, schema.schemas.didWalletPlaintext)).toBe(
         true,
       );
-      fs.writeFileSync(recoveredPlaintextWalletPath, JSON.stringify(wallet.data, null, 2));
+      fs.writeFileSync(recoveredPlaintextWalletPath, stringify(wallet.data, null, 2));
     });
   });
 });

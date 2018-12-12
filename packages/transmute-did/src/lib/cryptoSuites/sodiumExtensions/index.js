@@ -1,4 +1,5 @@
 const sodiumWrappers = require('libsodium-wrappers');
+const stringify = require('json-stringify-deterministic');
 
 /**
  * initializes the lib sodium library
@@ -125,7 +126,7 @@ const decryptWith = async ({ data, key }) => {
  * @returns {Object} encrypted ciphertext and nonce in hex
  */
 const encryptJson = async ({ data, key }) => encryptWith({
-  data: JSON.stringify(data),
+  data: stringify(data),
   key,
 });
 
