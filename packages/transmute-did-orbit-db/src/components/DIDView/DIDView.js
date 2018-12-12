@@ -12,7 +12,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import QRCode from "qrcode.react";
 
 import { CopyToClipboard } from "react-copy-to-clipboard";
-const stringify = require('json-stringify-deterministic');
+import stringify from 'json-stringify-deterministic';
 
 const styles = theme => ({
   container: {

@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { EventStoreFactory } from 'transmute-framework';
 
 import { getIpfsId } from '../transmute/ipfs-helpers/middleware';
-const stringify = require('json-stringify-deterministic');
+import stringify from 'json-stringify-deterministic';
 
 let eventStoreFactoryArtifact = require('../../contracts/EventStoreFactory.json');
 let transmuteConfig = require('../../transmute-config');

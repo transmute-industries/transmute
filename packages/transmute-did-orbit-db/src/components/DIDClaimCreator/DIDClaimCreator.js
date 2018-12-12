@@ -11,7 +11,7 @@ import AceEditor from "react-ace";
 
 import "brace/mode/json";
 import "brace/theme/github";
-const stringify = require('json-stringify-deterministic');
+import stringify from 'json-stringify-deterministic';
 
 const styles = theme => ({
   container: {

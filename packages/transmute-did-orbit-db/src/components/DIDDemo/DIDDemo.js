@@ -17,7 +17,7 @@ import DIDClaimResolver from "../DIDClaimResolver";
 import DIDResolveAndSignClaim from "../DIDResolveAndSignClaim";
 import DIDClaimsVerifier from "../DIDClaimsVerifier";
 import DIDRevocationsList from "../DIDRevocationsList";
-const stringify = require('json-stringify-deterministic');
+import stringify from 'json-stringify-deterministic';
 
 import {
   createOrbitDIDFromWallet,

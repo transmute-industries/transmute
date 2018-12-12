@@ -13,7 +13,7 @@ import AppBar from '../AppBar';
 import { getUser, setUserProfile } from '../../store/transmute/user/middleware';
 import * as actions from '../../store/transmute/user/actions';
 import { history } from '../../store';
-const stringify = require('json-stringify-deterministic');
+import stringify from 'json-stringify-deterministic';
 
 const styles = theme => ({
   margin: {

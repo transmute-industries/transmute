@@ -9,7 +9,7 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Snackbar from "@material-ui/core/Snackbar";
-const stringify = require('json-stringify-deterministic');
+import stringify from 'json-stringify-deterministic';
 
 const styles = theme => ({
   container: {}

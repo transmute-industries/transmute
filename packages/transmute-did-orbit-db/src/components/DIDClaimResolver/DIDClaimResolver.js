@@ -9,7 +9,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 
 import exampleDIDClaim from "../../data/did_claim.json";
-const stringify = require('json-stringify-deterministic');
+import stringify from 'json-stringify-deterministic';
 const fullPlaceholder = `/orbitdb/QmQ8ZK.../did:openpgp:fingerprint:21b5ef5af6...`;
 
 const styles = theme => ({

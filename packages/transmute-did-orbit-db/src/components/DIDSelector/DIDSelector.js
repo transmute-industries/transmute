@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-const stringify = require('json-stringify-deterministic');
+import stringify from 'json-stringify-deterministic';
 
 const styles = theme => ({
   container: {

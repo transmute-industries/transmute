@@ -19,8 +19,8 @@ import { withAuth } from '@okta/okta-react';
 import config from '../../ipfs_pubsub_config';
 
 import theme from '../../theme';
+import stringify from 'json-stringify-deterministic';
 const openpgp = require('openpgp');
-const stringify = require('json-stringify-deterministic');
 
 const styles = theme => ({
   root: {

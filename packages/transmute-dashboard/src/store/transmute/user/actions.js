@@ -1,6 +1,6 @@
 import * as actionCreators from './actionCreators';
 import * as middleware from './middleware';
-const stringify = require('json-stringify-deterministic');
+import stringify from 'json-stringify-deterministic';
 
 export const register = async ({ primaryKey, recoveryKey, profile }) => {
   try {

@@ -15,7 +15,7 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
 import Tooltip from 'material-ui/Tooltip';
-const stringify = require('json-stringify-deterministic');
+import stringify from 'json-stringify-deterministic';
 
 const columnData = [
   { id: 'index', numeric: true, disablePadding: false, label: 'Index' },

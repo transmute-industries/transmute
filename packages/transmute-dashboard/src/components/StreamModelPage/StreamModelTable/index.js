@@ -13,7 +13,7 @@ import Table, {
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
-const stringify = require('json-stringify-deterministic');
+import stringify from 'json-stringify-deterministic';
 
 
 const columnData = [

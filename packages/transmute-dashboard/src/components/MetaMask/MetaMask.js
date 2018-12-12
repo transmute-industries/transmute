@@ -10,7 +10,7 @@ import Typography from 'material-ui/Typography';
 import theme from '../../theme';
 
 import transmuteConfig from '../../transmute-config';
-const stringify = require('json-stringify-deterministic');
+import stringify from 'json-stringify-deterministic';
 
 const styles = {
   card: {
