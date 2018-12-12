@@ -167,7 +167,7 @@ const filter = event => {
   return true;
 };
 const reducer = (state, event) => {
-  let eventHash = eventStore.web3.sha3(JSON.stringify(event));
+  let eventHash = eventStore.web3.sha3(stringify(event));
   const eventHashes = new Set(state.eventHashes || []);
   eventHashes.add(eventHash);
   return {
