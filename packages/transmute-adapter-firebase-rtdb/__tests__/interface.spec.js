@@ -1,3 +1,5 @@
+const stringify = require('json-stringify-deterministic');
+
 const TransmuteAdapterFirebaseRTDB = require('../index');
 
 // When using this adapter from a protected web server...
@@ -19,7 +21,7 @@ const contentObject = {
   last: 'Lovelace',
 };
 
-const contentBuffer = Buffer.from(JSON.stringify(contentObject));
+const contentBuffer = Buffer.from(stringify(contentObject));
 
 adapter.readJson = jest.fn().mockImplementation(() => contentObject);
 adapter.writeJson = jest.fn().mockImplementation(() => contentID);
