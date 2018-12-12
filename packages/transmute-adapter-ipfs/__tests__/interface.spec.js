@@ -6,7 +6,7 @@ const ipfsConfig = require("../ipfsConfig");
 const adapter = new TransmuteAdapterIPFS(ipfsConfig);
 
 const contentID =
-  "0xcb2402ae09412ffb174e20aa741a7ec0b82338a9a471b4f848e2c9684fcd6a21";
+  "0x6eca7ce8578c4adda340adf6b40fa59e4283ef9ff432c4e417e55bb53436bb38";
 
 const contentObject = {
   first: "Ada",
