@@ -9,6 +9,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 
 import exampleDIDClaim from "../../data/did_claim.json";
+const stringify = require('json-stringify-deterministic');
 const fullPlaceholder = `/orbitdb/QmQ8ZK.../did:openpgp:fingerprint:21b5ef5af6...`;
 
 const styles = theme => ({
@@ -61,7 +62,7 @@ class DIDClaimResolver extends Component {
           onChange={this.handleChange("contentID")}
           margin="normal"
         />
-        {this.state.doc && <pre>{JSON.stringify(this.state.doc, null, 2)}</pre>}
+        {this.state.doc && <pre>{stringify(this.state.doc, null, 2)}</pre>}
 
         <Button
           variant="contained"

@@ -9,6 +9,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 
 import didDocumentExample from "../../data/did_document.json";
+const stringify = require('json-stringify-deterministic');
 const fullPlaceholder = `/orbitdb/QmQ8ZK.../did:openpgp:fingerprint:21b5ef5af6...`;
 
 const styles = theme => ({
@@ -64,7 +65,7 @@ class DIDResolver extends Component {
             margin="normal"
           />
           {this.state.doc && (
-            <pre>{JSON.stringify(this.state.doc, null, 2)}</pre>
+            <pre>{stringify(this.state.doc, null, 2)}</pre>
           )}
 
           <Button
