@@ -1,5 +1,6 @@
 const IPFS = require('ipfs');
 const OrbitDB = require('orbit-db');
+const stringify = require('json-stringify-deterministic');
 
 const { TransmuteAdapterOrbitDB, CustomTestKeystore } = require('../index');
 
@@ -10,7 +11,7 @@ const keypair = {
 };
 
 const content = { hello: 'world' };
-const contentBuffer = Buffer.from(JSON.stringify(content));
+const contentBuffer = Buffer.from(stringify(content));
 const contentID = '0x07944c2cf8591b40bce4bc010e2d8906cc31e8d8fbf8e7a352b458020cc9439f';
 
 const ipfsOptions = {

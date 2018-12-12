@@ -1,6 +1,7 @@
 const bs58 = require("bs58");
 const Unixfs = require("ipfs-unixfs");
 const { DAGNode } = require("ipld-dag-pb");
+const stringify = require('json-stringify-deterministic');
 
 const {
   CustomTestKeystore,
@@ -77,7 +78,7 @@ class TransmuteAdapterOrbitDB {
 
   async writeJson(value) {
     const key = await this.bufferToContentID(
-      Buffer.from(JSON.stringify(value))
+      Buffer.from(stringify(value))
     );
 
     await this.db.put({
