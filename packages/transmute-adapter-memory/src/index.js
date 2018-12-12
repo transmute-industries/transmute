@@ -1,6 +1,7 @@
 const bs58 = require("bs58");
 const Unixfs = require("ipfs-unixfs");
 const { DAGNode } = require("ipld-dag-pb");
+const stringify = require('json-stringify-deterministic');
 
 class TransmuteAdaperMemory {
   constructor(db) {
@@ -51,7 +52,7 @@ class TransmuteAdaperMemory {
 
   async writeJson(value) {
     const key = await this.bufferToContentID(
-      Buffer.from(JSON.stringify(value))
+      Buffer.from(stringify(value))
     );
     this.db[key] = value;
     return key;
