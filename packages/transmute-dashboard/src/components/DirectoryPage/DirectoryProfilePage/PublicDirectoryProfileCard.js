@@ -7,6 +7,7 @@ import Card, { CardContent } from 'material-ui/Card';
 import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
 import Grid from 'material-ui/Grid';
+const stringify = require('json-stringify-deterministic');
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -37,7 +38,7 @@ class PublicDirectoryProfileCard extends React.Component {
                 type="text"
                 disabled={true}
                 multiline={true}
-                value={JSON.stringify(JSON.parse(profile.didDocument), null, 2)}
+                value={stringify(JSON.parse(profile.didDocument), null, 2)}
               />
             </FormControl>
           </Grid> 

@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import { EventStoreFactory } from 'transmute-framework';
 
 import { getIpfsId } from '../transmute/ipfs-helpers/middleware';
+const stringify = require('json-stringify-deterministic');
 
 let eventStoreFactoryArtifact = require('../../contracts/EventStoreFactory.json');
 let transmuteConfig = require('../../transmute-config');
@@ -27,7 +28,7 @@ export const init = store => {
       if (!accounts.length) {
         throw new Error('No accounts available.');
       }
-      console.log('accounts: ', JSON.stringify(accounts, null, 2));
+      console.log('accounts: ', stringify(accounts, null, 2));
     } catch (e) {
       console.warn('web3...', e.message);
       toast.error('Unable to connect web3 to an ethereum network.');
@@ -35,7 +36,7 @@ export const init = store => {
 
     try {
       let { data } = await getIpfsId();
-      console.log('ipfs: ', JSON.stringify(data, null, 2));
+      console.log('ipfs: ', stringify(data, null, 2));
     } catch (e) {
       console.error('ipfs...', e);
       toast.error('Unable to connect to ipfs.');

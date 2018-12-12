@@ -1,6 +1,6 @@
-
 import * as actionCreators from './actionCreators';
 import * as middleware from './middleware';
+const stringify = require('json-stringify-deterministic');
 
 export const register = async ({ primaryKey, recoveryKey, profile }) => {
   try {
@@ -55,7 +55,7 @@ export const loginApiCall = (auth, email, password) => {
         password: password
       })
       .then(res => {
-        console.log(JSON.stringify(res));
+        console.log(stringify(res));
         dispatch(actionCreators.loginSuccess(res.sessionToken));
       })
       .catch(err => {

@@ -20,6 +20,7 @@ import config from '../../ipfs_pubsub_config';
 
 import theme from '../../theme';
 const openpgp = require('openpgp');
+const stringify = require('json-stringify-deterministic');
 
 const styles = theme => ({
   root: {
@@ -69,7 +70,7 @@ class Messages extends Component {
 
       this.room.on('peer joined', (peer) => {
         // Send introductory message to peer
-        this.room.sendTo(peer, JSON.stringify(currentPeerInfo));
+        this.room.sendTo(peer, stringify(currentPeerInfo));
       });
 
       this.room.on('peer left', (peer) => {

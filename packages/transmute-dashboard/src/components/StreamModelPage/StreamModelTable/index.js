@@ -13,6 +13,7 @@ import Table, {
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
+const stringify = require('json-stringify-deterministic');
 
 
 const columnData = [
@@ -145,7 +146,7 @@ class StreamModelTable extends React.Component {
                   return (
                     <TableRow key={n} hover role="checkbox" aria-checked tabIndex={-1}>
                       <TableCell>
-                        <pre>{JSON.stringify(n, null, 2)}</pre>
+                        <pre>{stringify(n, null, 2)}</pre>
                       </TableCell>
                     </TableRow>
                   );

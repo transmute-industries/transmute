@@ -15,6 +15,7 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
 import Tooltip from 'material-ui/Tooltip';
+const stringify = require('json-stringify-deterministic');
 
 const columnData = [
   { id: 'index', numeric: true, disablePadding: false, label: 'Index' },
@@ -206,10 +207,10 @@ class EventsTable extends React.Component {
                         <TableCell numeric>{n.index}</TableCell>
                         <TableCell>{n.sender.substring(0, 16) + '...'}</TableCell>
                         <TableCell>
-                          <pre>{JSON.stringify(n.key, null, 2)}</pre>
+                          <pre>{stringify(n.key, null, 2)}</pre>
                         </TableCell>
                         <TableCell>
-                          <pre>{JSON.stringify(n.value, null, 2)}</pre>
+                          <pre>{stringify(n.value, null, 2)}</pre>
                         </TableCell>
                       </TableRow>
                     ) :
