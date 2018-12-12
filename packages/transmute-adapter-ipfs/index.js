@@ -5,6 +5,7 @@
 
 const ipfsAPI = require("ipfs-api");
 const bs58 = require("bs58");
+const stringify = require('json-stringify-deterministic');
 
 /** @class TransmuteAdapterIPFS */
 module.exports = class TransmuteAdapterIPFS {
@@ -97,6 +98,6 @@ module.exports = class TransmuteAdapterIPFS {
   }
 
   async writeJson(data) {
-    return this._writeBuffer(JSON.stringify(data));
+    return this._writeBuffer(stringify(data));
   }
 };

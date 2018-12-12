@@ -1,5 +1,6 @@
-const TransmuteAdapterIPFS = require("../index");
+const stringify = require('json-stringify-deterministic');
 
+const TransmuteAdapterIPFS = require("../index");
 const ipfsConfig = require("../ipfsConfig");
 
 const adapter = new TransmuteAdapterIPFS(ipfsConfig);
@@ -13,7 +14,7 @@ const contentObject = {
   last: "Lovelace"
 };
 
-const contentBuffer = Buffer.from(JSON.stringify(contentObject));
+const contentBuffer = Buffer.from(stringify(contentObject));
 
 describe("Transmute Adapter IPFS", () => {
   it("has a contructor", () => {
