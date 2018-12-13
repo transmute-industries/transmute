@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const transmuteDID = require("@transmute/transmute-did");
 const pack = require("@transmute/transmute-did/package.json");
+const stringify = require('json-stringify-deterministic');
 
 (async () => {
   try {
@@ -50,7 +51,7 @@ const pack = require("@transmute/transmute-did/package.json");
 
     fs.writeFileSync(
       path.resolve(__dirname, "../wallet/plaintext.json"),
-      JSON.stringify(wallet.data, null, 2)
+      stringify(wallet.data, null, 2)
     );
 
     console.log("👛  created ./wallet/plaintext.json");

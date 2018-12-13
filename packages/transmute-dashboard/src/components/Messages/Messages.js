@@ -19,6 +19,7 @@ import { withAuth } from '@okta/okta-react';
 import config from '../../ipfs_pubsub_config';
 
 import theme from '../../theme';
+import stringify from 'json-stringify-deterministic';
 const openpgp = require('openpgp');
 
 const styles = theme => ({
@@ -69,7 +70,7 @@ class Messages extends Component {
 
       this.room.on('peer joined', (peer) => {
         // Send introductory message to peer
-        this.room.sendTo(peer, JSON.stringify(currentPeerInfo));
+        this.room.sendTo(peer, stringify(currentPeerInfo));
       });
 
       this.room.on('peer left', (peer) => {

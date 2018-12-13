@@ -1,6 +1,6 @@
 const { Validator } = require('jsonschema');
-
 const { values } = require('lodash');
+const stringify = require('json-stringify-deterministic');
 
 const schemas = require('./schemas');
 
@@ -37,7 +37,7 @@ class SchemaValidator {
    * @returns The results of the validation
    */
   validate(instance, s) {
-    const jsonSchemaCompatibleObject = JSON.parse(JSON.stringify(instance));
+    const jsonSchemaCompatibleObject = JSON.parse(stringify(instance));
     //   eslint-disable-next-line
     return this._validator.validate(jsonSchemaCompatibleObject, s);
   }

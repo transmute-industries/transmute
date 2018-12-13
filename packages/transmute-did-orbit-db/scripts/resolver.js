@@ -1,4 +1,5 @@
 var http = require("http");
+const stringify = require('json-stringify-deterministic');
 
 console.log("Resolver Started: ");
 
@@ -22,14 +23,14 @@ console.log(`http://localhost:7000/1.0/identifiers/${didData.id}`);
 
         try {
           const data = await orbitDIDResolver(did);
-          const didDoc = JSON.stringify(data);
+          const didDoc = stringify(data);
           resp.writeHead(200, { "Content-type": "application/json" });
           resp.write(didDoc);
         } catch (e) {
           console.log(e);
           resp.writeHead(500, { "Content-type": "application/json" });
           resp.write(
-            JSON.stringify({
+            stringify({
               error: 406,
               message: "DID Document signature could not be verified."
             })

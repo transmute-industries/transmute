@@ -39,7 +39,7 @@ class DIDRevocationsList extends Component {
     return (
       <div className={classes.container}>
         {/* {this.state.revokedPublicKeys && this.state.revokedPublicKeys.map(key => (
-          <pre key={key.id}>{JSON.stringify(key, null, 2)}</pre>
+          <pre key={key.id}>{stringify(key, null, 2)}</pre>
         ))} */}
         {this.state.doc && <DIDDocumentWithRevocations doc={this.state.doc} revokeKIDWithOrbitDB={this.props.revokeKIDWithOrbitDB} wallet={this.props.did.wallet}/>}
       </div>

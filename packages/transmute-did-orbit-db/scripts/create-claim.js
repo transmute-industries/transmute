@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const {TransmuteDIDWallet} = require("@transmute/transmute-did");
+const stringify = require('json-stringify-deterministic');
 
 const {
   createOrbitDIDFromWallet,
@@ -56,7 +57,7 @@ const {
 
     fs.writeFileSync(
       path.resolve(__dirname, "../src/data/did_claim.json"),
-      JSON.stringify(
+      stringify(
         {
           claimID,
           resolvedClaim

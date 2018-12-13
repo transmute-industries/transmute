@@ -9,6 +9,7 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Snackbar from "@material-ui/core/Snackbar";
+import stringify from 'json-stringify-deterministic';
 
 const styles = theme => ({
   container: {}
@@ -39,7 +40,7 @@ class DIDClaimsVerifier extends Component {
                 <Grid container spacing={24}>
                   <Grid item xs={12} md={6}>
                     <pre>
-                      {JSON.stringify(
+                      {stringify(
                         this.state.resolvedClaims[data.claimID],
                         null,
                         2

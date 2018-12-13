@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { TransmuteDIDWallet } = require("@transmute/transmute-did");
+const stringify = require('json-stringify-deterministic');
 
 const { createOrbitDIDFromWallet } = require("./utils/orbitHelpers");
 
@@ -24,11 +25,11 @@ const { createOrbitDIDFromWallet } = require("./utils/orbitHelpers");
 
     const { did_document } = await createOrbitDIDFromWallet(wallet, password);
 
-    console.log(JSON.stringify(did_document, null, 2));
+    console.log(stringify(did_document, null, 2));
 
     fs.writeFileSync(
       path.resolve(__dirname, "../src/data/did_document.json"),
-      JSON.stringify(did_document, null, 2)
+      stringify(did_document, null, 2)
     );
   } catch (e) {
     console.error(e);

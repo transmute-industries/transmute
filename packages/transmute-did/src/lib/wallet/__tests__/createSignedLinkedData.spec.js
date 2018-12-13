@@ -1,11 +1,10 @@
 const fs = require('fs');
+const stringify = require('json-stringify-deterministic');
 
 const { TransmuteDIDWallet, constructDIDPublicKeyID, schema } = require('../../../index');
 
 const {
   fullWalletPath,
-  proofChainPath,
-  proofSetPath,
   openPGPKID,
   libsodiumKID,
   orbitDBKID,
@@ -59,7 +58,7 @@ describe('createSignedLinkedData', () => {
       expect(schema.validator.isValid(signedLinkedData, schema.schemas.didSignature)).toBe(true);
 
       expect(signedLinkedData.schema).toBe(schema.schemas.didSignature.$id);
-      // fs.writeFileSync(`${proofChainPath}`, JSON.stringify(signedLinkedData, null, 2));
+      // fs.writeFileSync(`${proofChainPath}`, stringify(signedLinkedData, null, 2));
     });
 
     it('with a proof set', async () => {
@@ -75,7 +74,7 @@ describe('createSignedLinkedData', () => {
       expect(schema.validator.isValid(signedLinkedData, schema.schemas.didSignature)).toBe(true);
       expect(signedLinkedData.schema).toBe(schema.schemas.didSignature.$id);
       // leave for debugging
-      // fs.writeFileSync(`${proofSetPath}`, JSON.stringify(signedLinkedData, null, 2));
+      // fs.writeFileSync(`${proofSetPath}`, stringify(signedLinkedData, null, 2));
     });
   });
 });

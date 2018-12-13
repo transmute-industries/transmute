@@ -12,6 +12,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import QRCode from "qrcode.react";
 
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import stringify from 'json-stringify-deterministic';
 
 const styles = theme => ({
   container: {
@@ -59,7 +60,7 @@ class DIDView extends Component {
                 </CopyToClipboard>
               </Grid>
               <Grid item xs={12} md={10}>
-                <pre>{JSON.stringify(did.did_document, null, 2)}</pre>
+                <pre>{stringify(did.did_document, null, 2)}</pre>
               </Grid>
             </Grid>
           </ExpansionPanelDetails>

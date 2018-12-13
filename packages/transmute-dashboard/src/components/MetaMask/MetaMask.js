@@ -10,6 +10,7 @@ import Typography from 'material-ui/Typography';
 import theme from '../../theme';
 
 import transmuteConfig from '../../transmute-config';
+import stringify from 'json-stringify-deterministic';
 
 const styles = {
   card: {
@@ -135,7 +136,7 @@ class MetaMask extends Component {
             {' '}
             <br />
             Your metamask account details,{' '}
-            <pre>{JSON.stringify(this.state, null, 2)}</pre>{' '}
+            <pre>{stringify(this.state, null, 2)}</pre>{' '}
             <Typography gutterBottom variant="headline" component="h1">
               If you are not connected to ganache, and need testnet ether for
               MetaMask, you can use this faucet:

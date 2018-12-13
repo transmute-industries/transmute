@@ -12,6 +12,7 @@ import AceEditor from 'react-ace';
 
 import 'brace/mode/json';
 import 'brace/theme/github';
+import stringify from 'json-stringify-deterministic';
 
 
 class ResponsiveDialog extends React.Component {
@@ -34,7 +35,7 @@ class ResponsiveDialog extends React.Component {
 
   componentWillMount() {
     this.setState({
-      eventEditor: JSON.stringify(this.props.defaultEvent, null, 2)
+      eventEditor: stringify(this.props.defaultEvent, null, 2)
     });
   }
 

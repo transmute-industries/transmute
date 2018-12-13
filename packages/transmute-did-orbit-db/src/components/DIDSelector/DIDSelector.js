@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+import stringify from 'json-stringify-deterministic';
 
 const styles = theme => ({
   container: {
@@ -61,7 +62,7 @@ class DIDSelector extends Component {
                     </Button>
                   </Grid>
                   <Grid item xs={12} md={12}>
-                    <pre>{JSON.stringify(did.did_document, null, 2)}</pre>
+                    <pre>{stringify(did.did_document, null, 2)}</pre>
                   </Grid>
                 </Grid>
               </ExpansionPanelDetails>

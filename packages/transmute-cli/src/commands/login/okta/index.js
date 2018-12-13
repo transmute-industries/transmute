@@ -1,12 +1,10 @@
 const crypto = require('crypto');
-
 const path = require('path');
+const fse = require('fs-extra');
+const stringify = require('json-stringify-deterministic');
 
 const callbackServer = require('./callbackServer');
-
 const config = require('./config');
-
-const fse = require('fs-extra');
 
 const writeFile = async (filePath, fileData) => {
   return new Promise((resolve, reject) => {
@@ -67,7 +65,7 @@ module.exports.login = async () => {
   let home = require('os').homedir();
 
   let sessionPath = path.join(home, '.transmute/cli-secrets/session.json');
-  await writeFile(sessionPath, JSON.stringify(response, null, 2));
+  await writeFile(sessionPath, stringify(response, null, 2));
 
   console.info('session saved: ', sessionPath);
 

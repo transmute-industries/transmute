@@ -13,6 +13,7 @@ import AppBar from '../AppBar';
 import { getUser, setUserProfile } from '../../store/transmute/user/middleware';
 import * as actions from '../../store/transmute/user/actions';
 import { history } from '../../store';
+import stringify from 'json-stringify-deterministic';
 
 const styles = theme => ({
   margin: {
@@ -124,7 +125,7 @@ class ProfilePage extends Component {
                 type="text"
                 disabled={true}
                 multiline={true}
-                value={JSON.stringify(JSON.parse(profile.didDocument), null, 2)}
+                value={stringify(JSON.parse(profile.didDocument), null, 2)}
               />
             </FormControl>
           </Grid>

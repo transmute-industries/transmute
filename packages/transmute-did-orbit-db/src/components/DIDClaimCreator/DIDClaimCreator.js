@@ -11,6 +11,7 @@ import AceEditor from "react-ace";
 
 import "brace/mode/json";
 import "brace/theme/github";
+import stringify from 'json-stringify-deterministic';
 
 const styles = theme => ({
   container: {
@@ -26,7 +27,7 @@ const styles = theme => ({
 class DIDClaimCreator extends Component {
   state = {
     password: "yolo",
-    claimText: JSON.stringify(
+    claimText: stringify(
       {
         hello: "world"
       },
@@ -43,7 +44,7 @@ class DIDClaimCreator extends Component {
 
   componentWillMount() {
     this.setState({
-      claimText: JSON.stringify(
+      claimText: stringify(
         {
           subject: this.props.did.did_document.id,
           claims: {

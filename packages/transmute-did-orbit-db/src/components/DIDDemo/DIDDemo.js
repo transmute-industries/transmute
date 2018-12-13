@@ -17,6 +17,7 @@ import DIDClaimResolver from "../DIDClaimResolver";
 import DIDResolveAndSignClaim from "../DIDResolveAndSignClaim";
 import DIDClaimsVerifier from "../DIDClaimsVerifier";
 import DIDRevocationsList from "../DIDRevocationsList";
+import stringify from 'json-stringify-deterministic';
 
 import {
   createOrbitDIDFromWallet,
@@ -71,7 +72,7 @@ class DIDDemo extends Component {
   onDIDCreated = did => {
     localStorage.setItem(
       "current_dids",
-      JSON.stringify([...this.state.dids, did])
+      stringify([...this.state.dids, did])
     );
     this.setState({
       dids: [...this.state.dids, did],
@@ -90,7 +91,7 @@ class DIDDemo extends Component {
 
   onClaimCreated = claimDatas => {
     const allClaimData = [...this.state.claimDatas, claimDatas];
-    localStorage.setItem("claimDatas", JSON.stringify(allClaimData));
+    localStorage.setItem("claimDatas", stringify(allClaimData));
     this.setState({
       claimDatas: allClaimData,
       current_claim: claimDatas
@@ -124,7 +125,7 @@ class DIDDemo extends Component {
                 dids={this.state.dids}
                 onSelected={this.onDIDSelected}
               />
-              {/* <pre>{JSON.stringify(this.state.dids, null, 2)}</pre> */}
+              {/* <pre>{stringify(this.state.dids, null, 2)}</pre> */}
             </Paper>
           </Grid>
 

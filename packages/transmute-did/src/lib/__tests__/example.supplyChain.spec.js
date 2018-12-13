@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const stringify = require('json-stringify-deterministic');
 const testParams = require('./testParams');
 
 describe('Supply Chain DID OCAP-LD Flow', () => {
@@ -48,7 +49,7 @@ describe('Supply Chain DID OCAP-LD Flow', () => {
     expect(areNestedLinkedDataSignatureValid.verified).toBe(true);
 
     // leave for debugging
-    // console.log(JSON.stringify(result.data, null, 2));
+    // console.log(stringify(result.data, null, 2));
   });
 
   it('Bob revokes his key invalidating the capability', async () => {
