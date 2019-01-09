@@ -21,6 +21,8 @@ const {
   isLinkedDataSignedByDocument,
 } = require('./lib/signatureMethods');
 
+const DIDLinkedDataSignatureVerifier = require('./lib/DIDLinkedDataSignatureVerifier');
+
 module.exports = {
   schema,
   ellipticExtensions,
@@ -40,4 +42,5 @@ module.exports = {
   verifySignedLinkedData,
   verifyDIDSignatureWithResolver,
   isLinkedDataSignedByDocument,
+  DIDLinkedDataSignatureVerifier,
 };
