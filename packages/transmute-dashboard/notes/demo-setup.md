@@ -1,1 +1,0 @@
-TRANSMUTE_ENV=infura npm run truffle:migrate
