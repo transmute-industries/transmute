@@ -1,0 +1,25 @@
+{
+  "@context": "https://w3id.org/did/v1",
+  "id": "did:example:123",
+  "publicKey": [
+    {
+      "id": "did:example:123#kid=1b96181835f46197512e826e1e5c06d2ce45a3518ee9d975938aab899de4c933",
+      "type": "EcdsaKoblitzSignature2016",
+      "owner": "did:example:123",
+      "publicKeyHex": "02234be9bcdf041f7530979b8b88b7dc62dd505a75883c8211f3a8250534f96dc0"
+    }
+  ],
+  "authentication": [
+    {
+      "publicKey": "did:example:123#kid=1b96181835f46197512e826e1e5c06d2ce45a3518ee9d975938aab899de4c933",
+      "type": "EcdsaKoblitzSignature2016"
+    }
+  ],
+  "proof": {
+    "type": "EcdsaKoblitzSignature2016",
+    "created": "2019-01-10T19:08:32.922Z",
+    "creator": "did:example:123#kid=1b96181835f46197512e826e1e5c06d2ce45a3518ee9d975938aab899de4c933",
+    "domain": "example.com",
+    "signatureValue": "H7LZt7ilaL4Yen6DlWbVUKNjvg0U4Y6AWKe9sLx7OimAIdk4n2I7mUhdTAvCrZOrQ7k8HlrGGTioXPic6YORqHY="
+  }
+}

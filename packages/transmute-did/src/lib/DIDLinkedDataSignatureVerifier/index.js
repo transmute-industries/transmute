@@ -1,6 +1,6 @@
 const signatureAttributeNames = ['proof', 'signature'];
 
-const publicKeyAttributeNames = ['publicKeyPem'];
+const publicKeyAttributeNames = ['publicKeyPem', 'publicKeyHex'];
 
 const verifyLinkedDataWithDIDResolver = async ({ data, verify, resolver }) => {
   // determine the signature property in the data.
@@ -40,6 +40,10 @@ const verifyLinkedDataWithDIDResolver = async ({ data, verify, resolver }) => {
   publicKeyAttributeNames.forEach((name) => {
     if (publicKey[name]) {
       publicKeyUsed = publicKey[name];
+      // support for EcdsaKoblitzSignature2016
+      if (name === 'address') {
+        signature.creator = publicKeyUsed;
+      }
     }
   });
 
