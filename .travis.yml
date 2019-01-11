@@ -1,47 +1,33 @@
-notifications:
-  slack: transmute-industries:qsGJfymYKydjgEM89Q9tPXrv
-
 matrix:
   include:
     - os: linux
       dist: xenial
       sudo: required
-      language: bash
+      language: node_js
+      node_js:
+        - "8.11.3"
       env:
-        # TODO: These are used in the transmute CLI and should be removed from here.
-        - MINIKUBE_MEMORY=7777
-        - MINIKUBE_CPU=4
-        - MINIKUBE_DISK=50g
-        # These options are required for travis
-        - TRANSMUTE_RELEASE=$TRAVIS_BRANCH
-        - TRANSMUTE_ENV='minikube'
-        # This option is for testing JWT configuration with kong.
-        # It is not currently active.
-        - TRANSMUTE_DO_JWT_DL=n
-        - TRANSMUTE_VERBOSITY=10
-        # This option will warn the user that bootstrap will be installing lots of things...
-        # It is true normally, and set false for CI.
-        - TRANSMUTE_USE_WARN=n
-        - CHANGE_MINIKUBE_NONE_USER=true
-        - EDITOR=cat
+        - TRANSMUTE_ENV='localhost'
+  
+cache:
+  directories:
+    - "node_modules"
 
-before_script:
-  # bootstrap installs global dev dependencies, including the transmute-cli
-  - bash ./bootstrap
-  - source ~/.bashrc
-  # This setup overwrites the transmute-cli with a build from the current branch (so the cli is tested)
-  - cd $TRAVIS_BUILD_DIR/packages/transmute-cli
-  - npm i
-  - npm i -g
-  - cd $TRAVIS_BUILD_DIR
-  - transmute k8s provision-minikube
-  - transmute k8s init
-  # - transmute k8s microservice install istio
-  - transmute k8s microservice install kong
-  # - transmute k8s microservice install elasticsearch
-  - transmute k8s microservice install ganache -v 0.1.1
-  - transmute k8s microservice install ipfs
-  - transmute debug
+notifications:
+  slack: transmute-industries:qsGJfymYKydjgEM89Q9tPXrv
+
+before_install:
+  # Ethereum Test Dependencies
+  - npm i -g ganache-cli@6.1.0 truffle@4.1.8
+  - ganache-cli &>/dev/null &
+  # IPFS Test Dependencies
+  - wget "https://dist.ipfs.io/go-ipfs/v0.4.9/go-ipfs_v0.4.9_linux-amd64.tar.gz" -O /tmp/ipfs.tar.gz
+  - pushd . && cd $HOME/bin && tar -xzvf /tmp/ipfs.tar.gz && popd
+  - export PATH="$HOME/bin/go-ipfs:$PATH"
+  - ipfs init
+  - ipfs daemon &>/dev/null &
+  - sleep 5
+  - curl http://localhost:5001/api/v0/id
 
 script:
   - npm i && lerna bootstrap

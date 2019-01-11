@@ -123,7 +123,7 @@ module.exports = class EventStoreFactory {
     this.requireInstance();
     return this.eventStoreFactoryContractInstance.destroy(
       address,
-      { from: fromAddress },
+      { from: fromAddress, gas: 30000 },
     );
   }
 };

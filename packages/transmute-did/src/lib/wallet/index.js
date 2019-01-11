@@ -24,13 +24,20 @@ const constructPublicKeysProperty = (did, keystore) => {
     allPublicKeys,
     key => key.meta && key.meta.did && key.meta.did.publicKey,
   );
-  return onlyPublicKeys.map(key => ({
-    id: constructDIDPublicKeyID(did, key.kid),
-    type: key.meta.did.signatureType,
-    owner: did,
-    revocations: key.meta.did.revocations,
-    [key.meta.did.publicKeyType]: key.data.publicKey,
-  }));
+  return onlyPublicKeys.map((key) => {
+    const publicKey = {
+      id: constructDIDPublicKeyID(did, key.kid),
+      type: key.meta.did.signatureType,
+      owner: did,
+      revocations: key.meta.did.revocations,
+      [key.meta.did.publicKeyType]: key.data.publicKey,
+    };
+
+    if (!publicKey.revocations) {
+      delete publicKey.revocations;
+    }
+    return publicKey;
+  });
 };
 
 const constructAuthenticationProperty = (did, keystore) => {
@@ -173,32 +180,30 @@ class TransmuteDIDWallet {
   }
 
   async toDIDDocument({ did, proofSet, cacheLocal }) {
-    if (!proofSet) {
-      throw new Error('A proofSet is required.');
-    }
-
     const publicKey = await constructPublicKeysProperty(did, this.data.keystore);
     const authentication = await constructAuthenticationProperty(did, this.data.keystore);
 
-    const doc = {
+    let doc = {
       '@context': 'https://w3id.org/did/v1',
       id: did,
       publicKey,
       authentication,
     };
 
-    const result = await this.createSignedLinkedData({
-      data: doc,
-      proofSet,
-    });
+    if (proofSet) {
+      doc = (await this.createSignedLinkedData({
+        data: doc,
+        proofSet,
+      })).data;
+    }
 
     if (cacheLocal) {
-      this.didCache[result.data.id] = result.data;
+      this.didCache[doc.id] = doc;
     }
 
     return {
       schema: schema.schemaToURI(schema.schemas.didDocument),
-      data: result.data,
+      data: doc,
     };
   }
 }

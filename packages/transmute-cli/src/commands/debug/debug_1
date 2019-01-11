@@ -1,6 +1,0 @@
-echo 'DEBUG: Cluster Details'
-
-kubectl get pods --all-namespaces
-kubectl get svc --all-namespaces
-kubectl describe pod $(kubectl get pod --all-namespaces|grep gateway-kong-migrations|awk '{print $2}')
-kubectl describe pod $(kubectl get pod --all-namespaces|grep -v gateway-kong-migrations|grep gateway-kong|awk '{print $2}')
