@@ -12,9 +12,9 @@ const schema = require('../json-schemas');
 const pack = require('../../package.json');
 
 const didMethods = {
-  OPENPGP: 'transmute.openpgp',
-  ETHEREUM: 'transmute.eth',
-  ORBITDB: 'transmute.orbitdb',
+  OPENPGP: 'transmute_openpgp',
+  ETHEREUM: 'transmute_ethr',
+  ORBITDB: 'transmute_orbitdb',
 };
 
 const publicKeyKIDPrefix = 'kid=';
