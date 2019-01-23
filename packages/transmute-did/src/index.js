@@ -3,7 +3,7 @@ const openpgpExtensions = require('./lib/cryptoSuites/openpgpExtensions');
 const shamirExtensions = require('./lib/cryptoSuites/shamirExtensions');
 const ellipticExtensions = require('./lib/cryptoSuites/ellipticExtensions');
 const ethereumExtensions = require('./lib/cryptoSuites/ethereumExtensions');
-const { TransmuteDIDWallet, createWallet } = require('./lib/wallet');
+const { TransmuteDIDWallet, createWallet, getPrimaryKidForDid } = require('./lib/wallet');
 const misc = require('./lib/misc');
 
 const SignatureStore = require('./lib/SignatureStore');
@@ -32,6 +32,7 @@ module.exports = {
   ethereumExtensions,
   TransmuteDIDWallet,
   createWallet,
+  getPrimaryKidForDid,
   misc,
   SignatureStore,
   getPublicKeyFromDIDDocByKID,

@@ -240,4 +240,5 @@ module.exports = {
   TransmuteDIDWallet,
   createWallet,
   constructDIDPublicKeyID,
+  getPrimaryKidForDid,
 };
