@@ -34,7 +34,6 @@ describe('toDIDDocument', () => {
 
   beforeAll(async () => {
     wallet = new TransmuteDIDWallet(JSON.parse(fs.readFileSync(fullWalletPath).toString()));
-    wallet.data.keystore[openPGPKID].meta.did.primaryKeyOf = 'did:test:0x123';
   });
 
   it('throws an error when kid does not reference a did', async () => {
@@ -101,6 +100,6 @@ describe('toDIDDocument', () => {
     expect(doc).toBeDefined();
     const primaryKid = doc.data.publicKey[0].id.split('kid=')[1];
     expect(primaryKid).toBe(ethereumKID);
+    wallet.data.keystore[openPGPKID].meta.did.primaryKeyOf = 'did:test:0x123';
   });
-
 });
