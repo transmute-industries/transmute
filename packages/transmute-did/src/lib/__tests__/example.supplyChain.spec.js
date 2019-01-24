@@ -58,18 +58,24 @@ describe('Supply Chain DID OCAP-LD Flow', () => {
       p => p.kid === actors['did:test:B'].didDocument.publicKey[0].id,
     );
 
-    await actors['did:test:B'].wallet.revoke({
-      did: 'did:test:B',
-      kid: actors['did:test:B'].didDocument.publicKey[0].id,
-      proofSet: actors['did:test:B'].proofSet,
-    });
+    try {
+      await actors['did:test:B'].wallet.revoke({
+        did: 'did:test:B',
+        kid: actors['did:test:B'].didDocument.publicKey[0].id,
+        proofSet: actors['did:test:B'].proofSet,
+      });
 
-    const areNestedLinkedDataSignatureValid = await actors[
-      'did:test:D'
-    ].wallet.verifySignedLinkedData({
-      signedLinkedData: capabilities['did:test:aliceCanTransportBiohazard'],
-      resolver,
-    });
-    expect(areNestedLinkedDataSignatureValid.verified).toBe(false);
+      const areNestedLinkedDataSignatureValid = await actors[
+        'did:test:D'
+      ].wallet.verifySignedLinkedData({
+        signedLinkedData: capabilities['did:test:aliceCanTransportBiohazard'],
+        resolver,
+      });
+      expect(areNestedLinkedDataSignatureValid.verified).toBe(false);
+    } catch (e) {
+      expect(e.message).toBe(
+        'No primary key was found',
+      );
+    }
   });
 });

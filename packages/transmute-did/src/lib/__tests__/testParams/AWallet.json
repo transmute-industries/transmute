@@ -17,6 +17,7 @@
         ],
         "notes": "created for testing purposes",
         "did": {
+          "primaryKeyOf": "did:test:A",
           "publicKey": true,
           "authentication": true,
           "publicKeyType": "publicKeyPem",
