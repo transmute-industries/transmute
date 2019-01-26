@@ -53,8 +53,26 @@ const publicKeyToAddress = (pubKey) => {
   return address;
 };
 
+const sign = async (payload, privateKey) => {
+  const message = ethUtil.toBuffer(payload);
+  const msgHash = ethUtil.hashPersonalMessage(message);
+  const privateKeyBuffer = Buffer.from(privateKey, 'hex');
+  const signature = ethUtil.ecsign(msgHash, privateKeyBuffer);
+  return signature;
+};
+
+const verify = async (signature, payload, publicKey) => {
+  const message = ethUtil.toBuffer(payload);
+  const msgHash = ethUtil.hashPersonalMessage(message);
+  const publicKeyBuffer = Buffer.from(publicKey, 'hex');
+  const recoveredPublicKey = ethUtil.ecrecover(msgHash, signature.v, signature.r, signature.s);
+  return publicKeyBuffer.equals(recoveredPublicKey);
+};
+
 module.exports = {
   generateBIP39Mnemonic,
   mnemonicToKeypair,
   publicKeyToAddress,
+  sign,
+  verify,
 };
