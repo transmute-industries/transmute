@@ -14,11 +14,13 @@ const setup = async () => {
     name: actor,
     passphrase: actor,
   });
+  const did = `did:test:${actor}`;
   await wallet.addKey(keypair, 'assymetric', {
     version: `openpgp@${pack.dependencies.openpgp}`,
     tags: ['OpenPGP.js', 'macbook pro'],
     notes: 'created for testing purposes',
     did: {
+      primaryKeyOf: did,
       publicKey: true,
       authentication: true,
       publicKeyType: 'publicKeyPem',
@@ -26,7 +28,6 @@ const setup = async () => {
     },
   });
   const firstKey = Object.keys(wallet.data.keystore)[0];
-  const did = `did:test:${actor}`;
   const proofSet = [{ kid: constructDIDPublicKeyID(did, firstKey), password: actor }];
   // make sure local resolver has this did
   await wallet.toDIDDocument({
@@ -90,6 +91,7 @@ describe('didRevocation', () => {
       tags: ['OpenPGP.js', 'macbook pro'],
       notes: 'created for testing purposes',
       did: {
+        primaryKeyOf: did,
         publicKey: true,
         authentication: true,
         publicKeyType: 'publicKeyPem',

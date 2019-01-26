@@ -9,6 +9,8 @@ const {
   DIDLinkedDataSignatureVerifier,
 } = require('../../../index');
 
+jest.setTimeout(10000);
+
 describe('OpenPgpSignature2019', () => {
   let wallet;
   let kid;
@@ -37,6 +39,7 @@ describe('OpenPgpSignature2019', () => {
         tags: ['OpenPgpSignature2019', 'PROPOSAL'],
         notes: 'created for testing purposes',
         did: {
+          primaryKeyOf: did,
           publicKey: true,
           authentication: true,
           publicKeyType: 'publicKeyPem',
@@ -113,12 +116,12 @@ describe('OpenPgpSignature2019', () => {
 
     // delete keystore
     wallet.data.keystore = {};
-    await wallet.toDIDDocument({
-      did,
-      cacheLocal: true,
-    });
-
     try {
+      await wallet.toDIDDocument({
+        did,
+        cacheLocal: true,
+      });
+
       await DIDLinkedDataSignatureVerifier.verifyLinkedDataWithDIDResolver({
         data: signed,
         resolver: wallet.resolver,
@@ -126,7 +129,7 @@ describe('OpenPgpSignature2019', () => {
       });
     } catch (e) {
       expect(e.message).toBe(
-        'Creator key is not present in resolved DID Document. Catch this error and consider the key revoked.',
+        'No primary key was found',
       );
     }
   });

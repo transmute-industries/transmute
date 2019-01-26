@@ -167,18 +167,23 @@ describe('Micro Services OCAP-LD Flow', () => {
       p => p.kid === actors['did:test:B'].didDocument.publicKey[0].id,
     );
 
-    await actors['did:test:B'].wallet.revoke({
-      did: 'did:test:B',
-      kid: actors['did:test:B'].didDocument.publicKey[0].id,
-      proofSet: [{ kid: actors['did:test:B'].didDocument.publicKey[1].id, password: 'B' }],
-    });
+    try {
+      await actors['did:test:B'].wallet.revoke({
+        did: 'did:test:B',
+        kid: actors['did:test:B'].didDocument.publicKey[0].id,
+        proofSet: [{ kid: actors['did:test:B'].didDocument.publicKey[1].id, password: 'B' }],
+      });
+      const isInvocationValid = await verifyInvocation(
+        invocations['did:test:dummyUploadsFileWithInvocationOfCapability'],
+        capabilities,
+        actors,
+      );
 
-    const isInvocationValid = await verifyInvocation(
-      invocations['did:test:dummyUploadsFileWithInvocationOfCapability'],
-      capabilities,
-      actors,
-    );
-
-    expect(isInvocationValid).toBe(false);
+      expect(isInvocationValid).toBe(false);
+    } catch (e) {
+      expect(e.message).toBe(
+        'No primary key was found',
+      );
+    }
   });
 });

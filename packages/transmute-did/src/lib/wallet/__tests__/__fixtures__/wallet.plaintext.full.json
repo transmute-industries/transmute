@@ -17,9 +17,31 @@
         ],
         "notes": "created for testing purposes",
         "did": {
+          "primaryKeyOf": "did:test:0x123",
           "publicKey": true,
           "authentication": true,
           "publicKeyType": "publicKeyPem",
+          "signatureType": "Secp256k1VerificationKey2018"
+        }
+      }
+    },
+    "911a23e0029a183ae4399017cc7f6f3d7535e5b651b563e283b71a4d9ca3763a": {
+      "kid": "911a23e0029a183ae4399017cc7f6f3d7535e5b651b563e283b71a4d9ca3763a",
+      "data": {
+        "publicKey": "871f80eac0d6e80437b76c330171f29a0f7ba98da64f237a5877517e675fc6f409d7fa0c6e0e397bd02bfc973d6520a42f4be0812794b2d1cada28b3cb1c4877",
+        "privateKey": "706530331de9b3bb6143b4f6a80c9f6a7ca24708d2471f125c78f267f746b63b"
+      },
+      "type": "assymetric",
+      "meta": {
+        "version": "elliptic@^6.4.1",
+        "tags": [
+          "Ethereum"
+        ],
+        "notes": "Ethereum keypair",
+        "did": {
+          "publicKey": true,
+          "authentication": true,
+          "publicKeyType": "publicKeyHex",
           "signatureType": "Secp256k1VerificationKey2018"
         }
       }

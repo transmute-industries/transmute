@@ -18,26 +18,48 @@ const {
 //   eslint-disable-next-line
 const { sha3_256 } = require('js-sha3');
 
-const constructPublicKeysProperty = (did, keystore) => {
-  const allPublicKeys = _.values(keystore);
-  const onlyPublicKeys = _.filter(
-    allPublicKeys,
-    key => key.meta && key.meta.did && key.meta.did.publicKey,
-  );
-  return onlyPublicKeys.map((key) => {
-    const publicKey = {
-      id: constructDIDPublicKeyID(did, key.kid),
-      type: key.meta.did.signatureType,
-      owner: did,
-      revocations: key.meta.did.revocations,
-      [key.meta.did.publicKeyType]: key.data.publicKey,
-    };
+const getPrimaryKidForDid = (did, keystore) => {
+  const primaryKeys = Object.values(keystore)
+    .filter(key => key.meta && key.meta.did && key.meta.did.primaryKeyOf === did);
+  if (primaryKeys.length > 1) {
+    throw new Error('More than one primary key was found');
+  }
+  if (primaryKeys.length < 1) {
+    throw new Error('No primary key was found');
+  }
+  return primaryKeys[0].kid;
+};
 
-    if (!publicKey.revocations) {
-      delete publicKey.revocations;
-    }
-    return publicKey;
-  });
+const constructPublicKeysProperty = (did, keystore) => {
+  const primaryKID = getPrimaryKidForDid(did, keystore);
+  const orderedPublicKeys = Object.values(keystore)
+    .filter(key => key.meta && key.meta.did && key.meta.did.publicKey)
+    // Primary key first
+    .sort((key1, key2) => {
+      if (key1.kid === primaryKID) {
+        return -1;
+      }
+      if (key2.kid === primaryKID) {
+        return 1;
+      }
+      return 0;
+    })
+    .map((key) => {
+      const publicKey = {
+        id: constructDIDPublicKeyID(did, key.kid),
+        type: key.meta.did.signatureType,
+        owner: did,
+        revocations: key.meta.did.revocations,
+        [key.meta.did.publicKeyType]: key.data.publicKey,
+      };
+
+      if (!publicKey.revocations) {
+        delete publicKey.revocations;
+      }
+      return publicKey;
+    });
+
+  return orderedPublicKeys;
 };
 
 const constructAuthenticationProperty = (did, keystore) => {
@@ -218,4 +240,5 @@ module.exports = {
   TransmuteDIDWallet,
   createWallet,
   constructDIDPublicKeyID,
+  getPrimaryKidForDid,
 };

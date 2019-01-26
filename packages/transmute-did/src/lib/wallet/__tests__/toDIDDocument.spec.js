@@ -6,6 +6,7 @@ const { TransmuteDIDWallet, constructDIDPublicKeyID, schema } = require('../../.
 
 const {
   fullWalletPath,
+  ethereumKID,
   openPGPKID,
   libsodiumKID,
   orbitDBKID,
@@ -62,6 +63,8 @@ describe('toDIDDocument', () => {
       proofSet: [{ kid: constructDIDPublicKeyID(did, openPGPKID), password: passphrase }],
     });
     expect(doc).toBeDefined();
+    const primaryKid = doc.data.publicKey[0].id.split('kid=')[1];
+    expect(primaryKid).toBe(openPGPKID);
 
     fs.writeFileSync(openpgpDIDDocPath, stringify(doc, null, 2));
   });
@@ -85,5 +88,18 @@ describe('toDIDDocument', () => {
       // leave for debugging
       // fs.writeFileSync(`${didDocumentPath}`, stringify(result.data, null, 2));
     });
+  });
+
+  it('supports exporting a did document for an ethereum keypair', async () => {
+    delete wallet.data.keystore[openPGPKID].meta.did.primaryKeyOf;
+    wallet.data.keystore[ethereumKID].meta.did.primaryKeyOf = 'did:test:0x123';
+    const doc = await wallet.toDIDDocument({
+      did,
+      proofSet: [{ kid: constructDIDPublicKeyID(did, ethereumKID), password: passphrase }],
+    });
+    expect(doc).toBeDefined();
+    const primaryKid = doc.data.publicKey[0].id.split('kid=')[1];
+    expect(primaryKid).toBe(ethereumKID);
+    wallet.data.keystore[openPGPKID].meta.did.primaryKeyOf = 'did:test:0x123';
   });
 });
