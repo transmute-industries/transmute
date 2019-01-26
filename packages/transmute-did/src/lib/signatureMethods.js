@@ -59,6 +59,9 @@ const guessKeyType = (meta) => {
   if (meta.version.indexOf('elliptic') === 0) {
     return 'elliptic';
   }
+  if (meta.version.indexOf('ethereum') === 0) {
+    return 'ethereum';
+  }
 
   throw new Error('unguessable key type');
 };
@@ -135,6 +138,10 @@ const signObjectWithKeypair = async ({
 
     case 'elliptic':
       signature = await ellipticExtensions.sign(payload, keypair.data.privateKey);
+      break;
+
+    case 'ethereum':
+      signature = ethereumExtensions.sign(payload, keypair.data.privateKey);
       break;
 
     default:
@@ -341,6 +348,12 @@ const verifyDIDSignature = (object, signature, meta, doc) => {
         signature,
         publicKey,
       });
+    case 'ethereum':
+      return ethereumExtensions.verify(
+        stringify(object),
+        signature,
+        publicKey,
+      );
 
     default:
       throw new Error('Unknown key type');
