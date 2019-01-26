@@ -137,6 +137,10 @@ const signObjectWithKeypair = async ({
       signature = await ellipticExtensions.sign(payload, keypair.data.privateKey);
       break;
 
+    case 'ethereum':
+      signature = ethereumExtensions.sign(payload, keypair.data.privateKey);
+      break;
+
     default:
       throw new Error('Unknown key type. Cannot sign did document');
   }
@@ -341,6 +345,12 @@ const verifyDIDSignature = (object, signature, meta, doc) => {
         signature,
         publicKey,
       });
+    case 'ethereum':
+      return ethereumExtensions.verify(
+        stringify(object),
+        signature,
+        publicKey,
+      );
 
     default:
       throw new Error('Unknown key type');
