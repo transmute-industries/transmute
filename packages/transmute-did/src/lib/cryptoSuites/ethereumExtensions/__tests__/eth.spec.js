@@ -50,4 +50,44 @@ describe('ethereumExtensions', () => {
       expect(address).toBe(ADDRESS);
     });
   });
+
+  describe('sign / verify', () => {
+    const message = 'test message';
+    const wrongMessage = 'wrong message';
+    let signature;
+    let ethereumKeyPair;
+
+    beforeAll(async () => {
+      const mnemonic = ethereumExtensions.generateBIP39Mnemonic();
+      ethereumKeyPair = await ethereumExtensions.mnemonicToKeypair(mnemonic, "m/44'/60'/0'/0/0");
+    });
+
+    describe('sign', () => {
+      it('should return a signature', async () => {
+        signature = await ethereumExtensions.sign(message, ethereumKeyPair.privateKey);
+        expect(signature).toBeDefined();
+        expect(signature.r).toBeDefined();
+        expect(signature.s).toBeDefined();
+        expect(signature.v).toBeDefined();
+      });
+    });
+
+    describe('verify', () => {
+      it('should verify the signature', async () => {
+        const verified = await ethereumExtensions.verify(signature, message, ethereumKeyPair.publicKey);
+        expect(verified).toBeTruthy();
+      });
+
+      it('should not verify if the signature is wrong', async () => {
+        const wrongSignature = await ethereumExtensions.sign(wrongMessage, ethereumKeyPair.privateKey);
+        const verified = await ethereumExtensions.verify(wrongSignature, message, ethereumKeyPair.publicKey);
+        expect(verified).not.toBeTruthy();
+      });
+
+      it('should not verify if the message is wrong', async () => {
+        const verified = await ethereumExtensions.verify(signature, wrongMessage, ethereumKeyPair.publicKey);
+        expect(verified).not.toBeTruthy();
+      });
+    });
+  });
 });
