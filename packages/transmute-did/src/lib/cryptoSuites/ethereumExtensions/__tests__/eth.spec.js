@@ -74,18 +74,18 @@ describe('ethereumExtensions', () => {
 
     describe('verify', () => {
       it('should verify the signature', async () => {
-        const verified = await ethereumExtensions.verify(signature, message, ethereumKeyPair.publicKey);
+        const verified = await ethereumExtensions.verify(message, signature, ethereumKeyPair.publicKey);
         expect(verified).toBeTruthy();
       });
 
       it('should not verify if the signature is wrong', async () => {
         const wrongSignature = await ethereumExtensions.sign(wrongMessage, ethereumKeyPair.privateKey);
-        const verified = await ethereumExtensions.verify(wrongSignature, message, ethereumKeyPair.publicKey);
+        const verified = await ethereumExtensions.verify(message, wrongSignature, ethereumKeyPair.publicKey);
         expect(verified).not.toBeTruthy();
       });
 
       it('should not verify if the message is wrong', async () => {
-        const verified = await ethereumExtensions.verify(signature, wrongMessage, ethereumKeyPair.publicKey);
+        const verified = await ethereumExtensions.verify(wrongMessage, signature, ethereumKeyPair.publicKey);
         expect(verified).not.toBeTruthy();
       });
     });

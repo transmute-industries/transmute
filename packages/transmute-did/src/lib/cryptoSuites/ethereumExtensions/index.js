@@ -61,7 +61,7 @@ const sign = async (payload, privateKey) => {
   return signature;
 };
 
-const verify = async (signature, payload, publicKey) => {
+const verify = async (payload, signature, publicKey) => {
   const message = ethUtil.toBuffer(payload);
   const msgHash = ethUtil.hashPersonalMessage(message);
   const publicKeyBuffer = Buffer.from(publicKey, 'hex');
