@@ -13,7 +13,7 @@ const pack = require('../../package.json');
 
 const didMethods = {
   OPENPGP: 'transmute_openpgp',
-  ETHEREUM: 'transmute_ethr',
+  ETHR: 'ethr',
   ORBITDB: 'transmute_orbitdb',
 };
 
@@ -26,8 +26,8 @@ const publicKeyToDID = async (type, publicKey) => {
       return `did:${
         didMethods.OPENPGP
       }:${await openpgpExtensions.cryptoHelpers.armoredKeytoFingerprintHex(publicKey)}`;
-    case 'ethereum':
-      return `did:${didMethods.ETHEREUM}:${await ethereumExtensions.publicKeyToAddress(publicKey)}`;
+    case 'ethr':
+      return `did:${didMethods.ETHR}:${await ethereumExtensions.publicKeyToAddress(publicKey)}`;
     case 'orbitdb':
       return `did:${didMethods.ORBITDB}:${publicKey}`;
     default:
@@ -140,7 +140,7 @@ const signObjectWithKeypair = async ({
       signature = await ellipticExtensions.sign(payload, keypair.data.privateKey);
       break;
 
-    case 'ethereum':
+    case 'ethr':
       signature = ethereumExtensions.sign(payload, keypair.data.privateKey);
       break;
 
@@ -348,7 +348,7 @@ const verifyDIDSignature = (object, signature, meta, doc) => {
         signature,
         publicKey,
       });
-    case 'ethereum':
+    case 'ethr':
       return ethereumExtensions.verify(
         stringify(object),
         signature,
