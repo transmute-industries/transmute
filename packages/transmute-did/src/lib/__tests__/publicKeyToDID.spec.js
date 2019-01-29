@@ -19,9 +19,9 @@ const orbitdbKeypair = {
   privateKey: 'ef3ff305e9492fa7904eb3c671df5f683c68548153bc8d6cf2dc663f06e13dfe',
 };
 describe('publicKeyToDID', () => {
-  it('supports ethereum', async () => {
-    const did = await publicKeyToDID('ethereum', ethereumKeypair.publicKey);
-    expect(did.indexOf(didMethods.ETHEREUM)).toBe(4);
+  it('supports ethr', async () => {
+    const did = await publicKeyToDID('ethr', ethereumKeypair.publicKey);
+    expect(did.indexOf(didMethods.ETHR)).toBe(4);
   });
 
   it('supports openpgp', async () => {
