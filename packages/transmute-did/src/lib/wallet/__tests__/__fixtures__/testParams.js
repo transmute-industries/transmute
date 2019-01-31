@@ -13,6 +13,7 @@ const orbitDBKID = '5c51560bcef78d176b726a00b27ad3ef533ae39ef3d0f514392c79988c40
 
 const passphrase = 'yolo';
 const did = 'did:test:0x123';
+const did2 = 'did:test:0x456';
 
 const fullWallet = JSON.parse(fs.readFileSync(fullWalletPath).toString());
 
@@ -28,4 +29,5 @@ module.exports = {
   orbitDBKID,
   passphrase,
   did,
+  did2,
 };

@@ -12,6 +12,7 @@ const {
   orbitDBKID,
   passphrase,
   did,
+  did2,
 } = require('./__fixtures__/testParams');
 
 const proofSet = [
@@ -101,5 +102,44 @@ describe('toDIDDocument', () => {
     const primaryKid = doc.data.publicKey[0].id.split('kid=')[1];
     expect(primaryKid).toBe(ethereumKID);
     wallet.data.keystore[openPGPKID].meta.did.primaryKeyOf = 'did:test:0x123';
+  });
+});
+
+describe('toDIDDocumentByTag', () => {
+  let wallet;
+
+  beforeAll(async () => {
+    wallet = new TransmuteDIDWallet(JSON.parse(fs.readFileSync(fullWalletPath).toString()));
+  });
+
+  it('supports exporting a did document by chosing the keys by tag', async () => {
+    const doc = await wallet.toDIDDocumentByTag({
+      did: did2,
+      tag: 'wallet1',
+    });
+    expect(doc).toBeDefined();
+    const primaryKid = doc.data.publicKey[0].id.split('kid=')[1];
+    expect(primaryKid).toBe(ethereumKID);
+    const kids = doc.data.publicKey
+      .map(key => key.id.split('kid=')[1]);
+    expect(kids).toContain(ethereumKID);
+    expect(kids).toContain(orbitDBKID);
+    // This one does not have the 'wallet1' tag
+    expect(kids).not.toContain('4c22585330c9150c3e61ffc668963ec0e841c14396e638561312bc518c371b6a');
+  });
+
+  it('supports exporting a different did document by chosing the keys by tag from the same wallet', async () => {
+    const doc = await wallet.toDIDDocumentByTag({
+      did,
+      tag: 'wallet2',
+    });
+    expect(doc).toBeDefined();
+    const primaryKid = doc.data.publicKey[0].id.split('kid=')[1];
+    expect(primaryKid).toBe(openPGPKID);
+    const kids = doc.data.publicKey
+      .map(key => key.id.split('kid=')[1]);
+    expect(kids).toContain(openPGPKID);
+    expect(kids).toContain(libsodiumKID);
+    expect(kids).toHaveLength(2);
   });
 });

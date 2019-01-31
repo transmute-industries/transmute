@@ -201,6 +201,28 @@ class TransmuteDIDWallet {
     });
   }
 
+  async toDIDDocumentByTag({ did, tag }) {
+    const filteredKeystore = Object.values(this.data.keystore)
+      .filter(key => key.meta.tags.includes(tag))
+      .reduce((acc, key) => Object.assign(acc, {
+        [key.kid]: key,
+      }), {});
+    const publicKey = await constructPublicKeysProperty(did, filteredKeystore);
+    const authentication = await constructAuthenticationProperty(did, filteredKeystore);
+
+    const doc = {
+      '@context': 'https://w3id.org/did/v1',
+      id: did,
+      publicKey,
+      authentication,
+    };
+
+    return {
+      schema: schema.schemaToURI(schema.schemas.didDocument),
+      data: doc,
+    };
+  }
+
   async toDIDDocument({ did, proofSet, cacheLocal }) {
     const publicKey = await constructPublicKeysProperty(did, this.data.keystore);
     const authentication = await constructAuthenticationProperty(did, this.data.keystore);
