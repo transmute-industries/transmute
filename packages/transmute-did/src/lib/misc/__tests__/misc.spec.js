@@ -3,6 +3,7 @@ const openpgpExtensions = require('../../cryptoSuites/openpgpExtensions');
 const sodiumExtensions = require('../../cryptoSuites/sodiumExtensions');
 
 describe('misc', () => {
+  // TODO: refactor that
   describe('publicKeysToDIDDocument', () => {
     let didDocument;
     let primaryPublicKey;

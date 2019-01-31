@@ -21,6 +21,7 @@ const publicKeyToTransmuteDID = ({ publicKey }) => `did:tst:0x${keccak256(public
  * @param {String} libSodiumPublicEncryptionKey libsodium public key in hex
  * @returns {Object} a DID Document
  */
+// TODO: refactor that. Potentially remove this code?
 const publicKeysToDIDDocument = ({
   primaryPublicKey,
   pgpPublicKey,

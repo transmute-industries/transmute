@@ -31,7 +31,6 @@ describe('RsaSignature2017', () => {
         tags: ['RsaSignature2017', 'Mastodon'],
         notes: 'created for testing purposes',
         did: {
-          primaryKeyOf: did,
           publicKey: true,
           authentication: true,
           publicKeyType: 'publicKeyPem',
@@ -109,7 +108,7 @@ describe('RsaSignature2017', () => {
       });
     } catch (e) {
       expect(e.message).toBe(
-        'No primary key was found',
+        'Creator key is not present in resolved DID Document. Catch this error and consider the key revoked.',
       );
     }
   });

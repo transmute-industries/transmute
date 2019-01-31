@@ -18,34 +18,14 @@ const {
 //   eslint-disable-next-line
 const { sha3_256 } = require('js-sha3');
 
-const getPrimaryKidForDid = (did, keystore) => {
-  const primaryKeys = Object.values(keystore)
-    .filter(key => key.meta && key.meta.did && key.meta.did.primaryKeyOf === did);
-  if (primaryKeys.length > 1) {
-    throw new Error('More than one primary key was found');
-  }
-  if (primaryKeys.length < 1) {
-    throw new Error('No primary key was found');
-  }
-  return primaryKeys[0].kid;
-};
-
 const constructPublicKeysProperty = (did, keystore) => {
-  const primaryKID = getPrimaryKidForDid(did, keystore);
   const orderedPublicKeys = Object.values(keystore)
     .filter(key => key.meta && key.meta.did && key.meta.did.publicKey)
-    // Primary key first
-    .sort((key1, key2) => {
-      if (key1.kid === primaryKID) {
-        return -1;
-      }
-      if (key2.kid === primaryKID) {
-        return 1;
-      }
-      return 0;
-    })
     .map((key) => {
       const publicKey = {
+        // TODO: this id should be constructed outside of this file
+        // and the way it is constructed should be a function of the
+        // did method used
         id: constructDIDPublicKeyID(did, key.kid),
         type: key.meta.did.signatureType,
         owner: did,
@@ -63,6 +43,7 @@ const constructPublicKeysProperty = (did, keystore) => {
 };
 
 const constructAuthenticationProperty = (did, keystore) => {
+  // TODO: refactor
   const allPublicKeys = _.values(keystore);
   const onlyAuthentricationKeys = _.filter(
     allPublicKeys,
@@ -223,6 +204,7 @@ class TransmuteDIDWallet {
     };
   }
 
+  // TODO: refactor (should be renamed and restructured)
   async toDIDDocument({ did, proofSet, cacheLocal }) {
     const publicKey = await constructPublicKeysProperty(did, this.data.keystore);
     const authentication = await constructAuthenticationProperty(did, this.data.keystore);
@@ -262,5 +244,4 @@ module.exports = {
   TransmuteDIDWallet,
   createWallet,
   constructDIDPublicKeyID,
-  getPrimaryKidForDid,
 };
