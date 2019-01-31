@@ -84,6 +84,7 @@ class TransmuteDIDWallet {
       type,
       meta,
     };
+    return kid;
   }
 
   async encrypt(passphrase) {
