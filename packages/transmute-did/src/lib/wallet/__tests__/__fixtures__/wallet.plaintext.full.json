@@ -13,11 +13,11 @@
         "version": "openpgp@^4.0.1",
         "tags": [
           "OpenPGP.js",
-          "macbook pro"
+          "macbook pro",
+          "wallet2"
         ],
         "notes": "created for testing purposes",
         "did": {
-          "primaryKeyOf": "did:test:0x123",
           "publicKey": true,
           "authentication": true,
           "publicKeyType": "publicKeyPem",
@@ -35,7 +35,8 @@
       "meta": {
         "version": "elliptic@^6.4.1",
         "tags": [
-          "Ethereum"
+          "Ethereum",
+          "wallet1"
         ],
         "notes": "Ethereum keypair",
         "did": {
@@ -79,7 +80,8 @@
         "version": "elliptic@^6.4.1",
         "tags": [
           "OrbitDB",
-          "macbook pro"
+          "macbook pro",
+          "wallet1"
         ],
         "notes": "created for testing purposes",
         "did": {
@@ -102,7 +104,8 @@
         "version": "libsodium-wrappers@^0.7.3",
         "tags": [
           "signing key",
-          "macbook pro"
+          "macbook pro",
+          "wallet2"
         ],
         "notes": "created for testing purposes",
         "did": {

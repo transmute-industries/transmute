@@ -20,7 +20,6 @@ const setup = async () => {
     tags: ['OpenPGP.js', 'macbook pro'],
     notes: 'created for testing purposes',
     did: {
-      primaryKeyOf: did,
       publicKey: true,
       authentication: true,
       publicKeyType: 'publicKeyPem',
@@ -91,7 +90,6 @@ describe('didRevocation', () => {
       tags: ['OpenPGP.js', 'macbook pro'],
       notes: 'created for testing purposes',
       did: {
-        primaryKeyOf: did,
         publicKey: true,
         authentication: true,
         publicKeyType: 'publicKeyPem',
