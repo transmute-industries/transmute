@@ -35,6 +35,7 @@ const publicKeyToDID = async (type, publicKey) => {
   }
 };
 
+// eslint-disable-next-line
 const getPublicKeyFromDIDDocByKID = (doc, kid) => {
   const key = _.find(doc.publicKey, k => k.id === kid);
 
@@ -243,6 +244,7 @@ const verifySignedLinkedData = async ({
         });
         // eslint-disable-next-line
         try {
+          // eslint-disable-next-line
           const verification = await verifyDIDSignatureWithResolver({
             object,
             signature,
@@ -349,11 +351,7 @@ const verifyDIDSignature = (object, signature, meta, doc) => {
         publicKey,
       });
     case 'ethr':
-      return ethereumExtensions.verify(
-        stringify(object),
-        signature,
-        publicKey,
-      );
+      return ethereumExtensions.verify(stringify(object), signature, publicKey);
 
     default:
       throw new Error('Unknown key type');
@@ -390,4 +388,5 @@ module.exports = {
   publicKeyKIDPrefix,
   verifyDIDSignatureWithResolver,
   isLinkedDataSignedByDocument,
+  getPublicKeyFromDIDDocByKID,
 };
