@@ -14,7 +14,7 @@ const KEYPAIR2 = {
   privateKey: '286cef7c99a2ea1aca0dac8a3e8813da333516c83f226d1c3bae4bf6e6df8af2',
 };
 
-const ADDRESS = '0x0Ff5c616a5bEDA3353616E2aA36c136803fBd165';
+const ADDRESS = '0x0ff5c616a5beda3353616e2aa36c136803fbd165';
 
 describe('ethereumExtensions', () => {
   describe('generateBIP39Mnemonic', () => {
