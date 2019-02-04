@@ -49,7 +49,7 @@ const publicKeyToAddress = (pubKey) => {
   const addr = ethUtil
     .publicToAddress(Buffer.from(pubKey, 'hex'))
     .toString('hex');
-  const address = ethUtil.toChecksumAddress(addr);
+  const address = ethUtil.toChecksumAddress(addr).toLowerCase();
   return address;
 };
 
