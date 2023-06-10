@@ -1,0 +1,29 @@
+{
+  "@context": ["https://www.w3.org/ns/credentials/v2"],
+  "type": ["VerifiablePresentation"],
+  "verifiableCredential": [
+    {
+      "@context": ["https://www.w3.org/ns/credentials/v2"],
+      "type": ["VerifiableCredential"],
+      "issuer": "https://issuer.vendor.example",
+      "validFrom": "2023-06-07T21:14:14.148Z",
+      "credentialSubject": {
+        "id": "https://subject.vendor.example"
+      },
+      "proof": {
+        "type": "DataIntegrityProof",
+        "created": "2021-10-30T17:32:33Z",
+        "verificationMethod": "https://issuer.vendor.example#key-0",
+        "proofPurpose": "assertionMethod",
+        "proofValue": "11111"
+      }
+    }
+  ],
+  "proof": {
+    "type": "DataIntegrityProof",
+    "created": "2022-10-30T17:32:33Z",
+    "verificationMethod": "https://holder.vendor.example#key-1",
+    "proofPurpose": "authentication",
+    "proofValue": "22222"
+  }
+}

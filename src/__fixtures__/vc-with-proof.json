@@ -1,0 +1,16 @@
+{
+  "@context": ["https://www.w3.org/ns/credentials/v2"],
+  "type": ["VerifiableCredential"],
+  "issuer": "https://issuer.vendor.example",
+  "validFrom": "2023-06-07T21:14:14.148Z",
+  "credentialSubject": {
+    "id": "https://subject.vendor.example"
+  },
+  "proof": {
+    "type": "DataIntegrityProof",
+    "created": "2021-10-30T17:32:33Z",
+    "verificationMethod": "https://issuer.vendor.example#key-0",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..YSJ1frCj50u2ZU7m5FkK1pShjHUsuieL3-6L9XLhGiBU6HNGezd2f5HGRDAhXbHLQfXrmkdUIUGzvnR0ST--Dw"
+  }
+}

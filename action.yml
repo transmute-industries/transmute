@@ -1,0 +1,28 @@
+name: 'Verifiable Credential Graph Actions'
+description: |
+  This action enabled Verifiable Credential Graph Operations.
+inputs:
+  json:
+    description: |
+      A JSON Document (string).
+    require: true
+  neo4j-uri:
+    description: |
+      Neo4j Connection URL.
+    require: false
+  neo4j-user:
+    description: |
+      Neo4j User.
+    require: false
+  neo4j-password:
+    description: |
+      Neo4j Password.
+    require: false
+    
+outputs:
+  json:
+    description: 'The output as json.'
+
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
