@@ -1,9 +1,0 @@
----
-
-- name: Install npm packages globally
-  shell: 'bash -c "source {{ ansible_env.HOME }}/.nvm/nvm.sh  && npm i -g {{ item }}"'
-  with_items:
-    - '--unsafe-perm ngrok'
-    - 'truffle@4.1.8'
-    - 'lerna@2.9.0'
-    - 'openpgp'
