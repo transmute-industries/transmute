@@ -1,14 +1,12 @@
-import yargs from 'yargs'
 import fs from 'fs'
 import path from 'path'
-import jsongraph from '../src/api/rdf/jsongraph'
-import * as contants from './constants'
-import cypher from '../src/api/cypher'
+import jsongraph from '../../api/rdf/jsongraph'
+import * as contants from '../../constants'
+import cypher from '../../api/cypher'
 
-import operationSwitch from './operationSwitch'
+import operationSwitch from '../../operationSwitch'
 
-const init = () => {
-  yargs.scriptName('✨')
+const register = (yargs) => {
   yargs.command(
     'graph [action]',
     'graph operations',
@@ -69,7 +67,7 @@ const init = () => {
           )
           const graph = await jsongraph.fromDocument(document)
           const { query, params } = await cypher.fromJsonGraph(graph)
-          if(!unsafe){
+          if (!unsafe) {
             console.log(JSON.stringify({ query, params }, null, 2))
           }
           console.log(cypher.makeInjectionVulnerable({ query, params }))
@@ -77,15 +75,6 @@ const init = () => {
       }
     },
   )
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { file }: any = yargs.help().alias('help', 'h').argv
-  const skipAction = file !== undefined
-  // skip action if file is argument
-  // action will parse json when this is not the case.
-  return skipAction
 }
-
-const cli = { init }
-
-export default cli
+const graph = { register }
+export default graph

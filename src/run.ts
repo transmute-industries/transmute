@@ -7,10 +7,11 @@ import cli from './cli'
 
 async function run() {
   try {
-    const done = await cli.init()
-    if (!done) {
+    if (process.env.GITHUB_ACTION) {
       const opts = getOpts()
       await operationSwitch(opts)
+    } else {
+      await cli.init()
     }
   } catch (error) {
     core.setFailed((error as Error).message)
