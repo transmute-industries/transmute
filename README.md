@@ -1,4 +1,4 @@
-# <a href="https://platform.transmute.industries">Verifiable Data Platform</a> GitHub Action
+# <a href="https://transmute.industries">Transmute</a> CLI
 
 [![CI](https://github.com/transmute-industries/transmute/actions/workflows/ci.yml/badge.svg)](https://github.com/transmute-industries/transmute/actions/workflows/ci.yml)
 

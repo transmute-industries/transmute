@@ -15,6 +15,10 @@ const generate = async ({ crv, alg }, extractable = true) => {
   if (alg === 'ECDH-ES+A128KW' && crv === undefined) {
     crv = 'P-384'
   }
+  if (alg === 'HPKE-B0') {
+    throw new Error('HPKE is not supported.')
+  }
+
   const { publicKey, privateKey } = await jose.generateKeyPair(alg, {
     extractable,
     crv,

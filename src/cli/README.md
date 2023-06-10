@@ -32,17 +32,27 @@ npm run transmute -- controller key verify \
 ### Confidentiality
 
 ```sh
-npm run transmute -- controller key generate --alg ECDH-ES+A128KW --output private.jwk.json
+npm run transmute -- controller key generate \
+--alg ECDH-ES+A128KW \
+--output scratch/private.jwk.decrypt.json
 ```
 
 ```sh
-npm run transmute -- controller key export --input private.jwk.json --output public.jwk.json
+npm run transmute -- controller key export \
+--input scratch/private.jwk.decrypt.json \
+--output scratch/public.jwk.encrypt.json
 ```
 
 ```sh
-npm run transmute -- controller key encrypt --recipient public.jwk.json --input plaintext.json --output ciphertext.json
+npm run transmute -- controller key encrypt \
+--recipient scratch/public.jwk.encrypt.json \
+--input scratch/content-0.json \
+--output scratch/ciphertext.json
 ```
 
 ```sh
-npm run transmute -- controller key decrypt --recipient private.jwk.json --input ciphertext.json --output plaintext.recovered.json
+npm run transmute -- controller key decrypt \
+--recipient scratch/private.jwk.decrypt.json \
+--input scratch/ciphertext.json \
+--output scratch/content-0.decrypted.json
 ```
