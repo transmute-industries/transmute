@@ -1,4 +1,4 @@
-# <a href="https://transmute.industries">Transmute</a> CLI
+# <a href="https://transmute.industries">Transmute Command</a> 
 
 [![CI](https://github.com/transmute-industries/transmute/actions/workflows/ci.yml/badge.svg)](https://github.com/transmute-industries/transmute/actions/workflows/ci.yml)
 
