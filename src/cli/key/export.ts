@@ -1,13 +1,13 @@
 import fs from 'fs'
 import path from 'path'
 
-import controller from '../../../api/controller'
+import key from '../../api/jose/key'
 
 const exportKey = ({ input, output }) => {
   const jwk = JSON.parse(
     fs.readFileSync(path.resolve(process.cwd(), input)).toString(),
   )
-  const content = JSON.stringify(controller.key.publicFromPrivate(jwk), null, 2)
+  const content = JSON.stringify(key.publicFromPrivate(jwk), null, 2)
   const outputPath = path.resolve(process.cwd(), output)
   fs.writeFileSync(outputPath, content)
 }

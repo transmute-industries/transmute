@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import controller from '../../../api/controller'
+import key from '../../api/jose/key'
 
 const verifyWithKey = async ({ verifierKey, input, signature, output }) => {
   const publicKeyJwk = JSON.parse(
@@ -11,7 +11,7 @@ const verifyWithKey = async ({ verifierKey, input, signature, output }) => {
   const detached = JSON.parse(
     fs.readFileSync(path.resolve(process.cwd(), signature)).toString(),
   )
-  const verifier = await controller.detached.verifier(publicKeyJwk)
+  const verifier = await key.detached.verifier(publicKeyJwk)
   const { protectedHeader } = await verifier.verify({
     ...detached,
     payload: content,

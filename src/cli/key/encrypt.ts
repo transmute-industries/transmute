@@ -1,14 +1,14 @@
 import fs from 'fs'
 import path from 'path'
 
-import controller from '../../../api/controller'
+import key from '../../api/jose/key'
 
 const encryptToKey = async ({ recipient, input, output }) => {
   const recipientPublicKey = JSON.parse(
     fs.readFileSync(path.resolve(process.cwd(), recipient)).toString(),
   )
   const recipientContent = fs.readFileSync(path.resolve(process.cwd(), input))
-  const jwe = await controller.key.encryptToKey({
+  const jwe = await key.recipient.encrypt({
     publicKey: recipientPublicKey,
     plaintext: recipientContent,
   })

@@ -38,30 +38,9 @@ As a github action:
 
 ### Commands
 
-#### Push Graph to Neo4j
-
-```sh
-transmute graph \
---env .env \
---file ./src/__fixtures__/_minimal-credential.json
-```
-
-#### Convert to JSON Graph
-
-```sh
-transmute graph \
---file ./src/__fixtures__/_minimal-credential.json \
---accept application/vnd.transmute.graph+json
-```
-
-#### Convert to Cypher
-
-```sh
-transmute graph \
---file ./src/__fixtures__/_minimal-credential.json \
---accept application/vnd.transmute.cypher \
---unsafe
-```
+- [JOSE](./examples/jose)
+- [W3C Verifiable Credentials](./examples/vcdm/)
+- [Neo4j](./examples/neo4j)
 
 ## Develop
 
@@ -70,42 +49,23 @@ npm i
 npm t
 ```
 
-### Testing CLI Locally
+### Testing Commands
 
-#### Install local build on CLI
+Install a local build of the cli globally using:
 
 ```sh
 npm i -g .
 ```
 
-Then see the usage section above, or use the npm script aliases, below:
-
-#### JSON-LD to JSON Graph
+Test a local build with this npm script alias:
 
 ```sh
-npm run transmute -- graph \
---accept application/vnd.transmute.graph+json \
---file ./src/__fixtures__/_minimal-credential.json
+npm run transmute -- controller key generate \
+--alg ES384 \
+--output examples/keys/private.ES384.json
 ```
 
-#### JSON-LD to Cypher
-
-```sh
-npm --silent run transmute -- graph \
---accept application/vnd.transmute.cypher+json \
---file ./src/__fixtures__/_minimal-credential.json \
-| jq -r '.query'
-```
-
-#### Push JSON-LD to Neo4j
-
-```sh
-npm --silent run transmute -- graph \
---env .env \
---file ./src/__fixtures__/_minimal-credential.json
-```
-
-### Testing GitHub Actions Locally
+### Testing GitHub Actions
 
 You will need to use a remote neo4j instance to test with act locally.
 

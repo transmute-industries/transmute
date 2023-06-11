@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import controller from '../../../api/controller'
+import key from '../../api/jose/key'
 
 const decryptWithKey = async ({ recipient, input, output }) => {
   const recipientPrivateKey = JSON.parse(
@@ -10,7 +10,7 @@ const decryptWithKey = async ({ recipient, input, output }) => {
   const recipientCipherText = JSON.parse(
     fs.readFileSync(path.resolve(process.cwd(), input)).toString(),
   )
-  const decrypted = await controller.key.decryptWithKey({
+  const decrypted = await key.recipient.decrypt({
     privateKey: recipientPrivateKey,
     ciphertext: recipientCipherText,
   })

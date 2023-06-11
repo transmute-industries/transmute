@@ -1,13 +1,24 @@
-import key from '../key'
+import generateKey from './generate'
+import exportKey from './export'
+import encryptToKey from './encrypt'
+import decryptWithKey from './decrypt'
 
-const resources = {
-  key,
+import signWithKey from './sign'
+import verifyWithKey from './verify'
+
+const key = {
+  generate: generateKey,
+  export: exportKey,
+  encrypt: encryptToKey,
+  decrypt: decryptWithKey,
+  sign: signWithKey,
+  verify: verifyWithKey,
 }
 
 const register = (yargs) => {
   yargs.command(
-    'controller [resource] [action]',
-    'controller operations',
+    'key [action]',
+    'key operations',
     {
       crv: {
         alias: 'crv',
@@ -25,11 +36,9 @@ const register = (yargs) => {
       },
     },
     async (argv) => {
-      const { resource, action } = argv
-      if (resources[resource]) {
-        if (key[action]) {
-          await key[action](argv)
-        }
+      const { action } = argv
+      if (key[action]) {
+        await key[action](argv)
       }
     },
   )

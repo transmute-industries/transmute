@@ -1,10 +1,15 @@
 import yargs from 'yargs'
-import controller from './controller'
+import key from './key'
+// import controller from './controller'
+import credential from './credential'
+import presentation from './presentation'
 import graph from './graph'
 
 const init = () => {
   yargs.scriptName('✨')
-  controller.register(yargs)
+  key.register(yargs)
+  credential.register(yargs)
+  presentation.register(yargs)
   graph.register(yargs)
   yargs.help().alias('help', 'h').demandCommand().argv
 }

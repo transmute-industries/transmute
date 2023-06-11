@@ -1,10 +1,10 @@
 import fs from 'fs'
 import path from 'path'
 
-import controller from '../../../api/controller'
+import key from '../../api/jose/key'
 
 const generateKey = async ({ crv, alg, output }) => {
-  const { privateKeyJwk } = await controller.key.generate({ crv, alg })
+  const privateKeyJwk = await key.generate({ crv, alg })
   const content = JSON.stringify(privateKeyJwk, null, 2)
   const outputPath = path.resolve(process.cwd(), output)
   fs.writeFileSync(outputPath, content)

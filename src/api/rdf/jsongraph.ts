@@ -160,7 +160,8 @@ const fromPresentation = async (document: DataIntegrityDocument) => {
   return graph
 }
 
-const fromJwt = async (jwt: string) => {
+const fromFlattendJws = async (jws: {protected: string, payload: string, signature: string}) => {
+  const jwt = `${jws.protected}.${jws.payload}.${jws.signature}`
   const header = jose.decodeProtectedHeader(jwt)
   const claimset = jose.decodeJwt(jwt)
   const key = hmac.key()
@@ -190,8 +191,13 @@ const fromJwt = async (jwt: string) => {
 
 const fromDocument = async (document: DataIntegrityDocument) => {
   let graph
-  if (document.jwt) {
-    graph = await fromJwt(document.jwt)
+  if (document.jwt ||  (document.protected && document.payload && document.signature)) {
+    let jws = document;
+    if (document.jwt){
+      const [protectedHeader, protectedPayload, signature] = document.jwt.split('.')
+      jws = {protected: protectedHeader, payload: protectedPayload, signature}
+    }
+    graph = await fromFlattendJws(jws)
   } else if (isVC(document)) {
     graph = await fromCredential(document)
   } else if (isVP(document)) {
