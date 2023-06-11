@@ -1,17 +1,17 @@
 import * as jose from 'jose'
 
-import { isVC } from '../rdf/utils'
-import { detachedHeaderParams } from './utils'
+import attached from '../jose/attached'
+import detached from '../jose/detached'
 
-const claimsetToTyp = (claimset) => {
-  if (isVC(claimset)) {
-    return 'vc+ld+jwt'
-  } else {
-    return 'vp+ld+jwt'
-  }
+export type RequestGenerateKey = {
+  alg: string
+  crv?: string
 }
 
-const generate = async ({ crv, alg }, extractable = true) => {
+const generate = async (
+  { crv, alg }: RequestGenerateKey,
+  extractable = true,
+) => {
   if (alg === 'ECDH-ES+A128KW' && crv === undefined) {
     crv = 'P-384'
   }
@@ -38,46 +38,6 @@ const generate = async ({ crv, alg }, extractable = true) => {
     controller: holder,
     publicKeyJwk: formatJwk(publicKeyJwk),
     privateKeyJwk: formatJwk(privateKeyJwk),
-  }
-}
-
-// TODO Remote KMS.
-const signer = async (privateKeyJwk) => {
-  const { alg } = privateKeyJwk
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { d, ...publicKewJwk } = privateKeyJwk
-  const privateKey = await jose.importJWK(privateKeyJwk)
-  return {
-    alg: alg,
-    iss: publicKeyToDid(publicKewJwk),
-    kid: `#0`,
-    sign: async (bytes) => {
-      const typ = claimsetToTyp(JSON.parse(new TextDecoder().decode(bytes)))
-      const jws = await new jose.FlattenedSign(bytes)
-        .setProtectedHeader({ alg, typ, ...detachedHeaderParams })
-        .sign(privateKey)
-      return `${jws.protected}..${jws.signature}`
-    },
-  }
-}
-
-// TODO Remote KMS.
-const verifier = async (publicKeyJwk) => {
-  const { alg } = publicKeyJwk
-  const publicKey = await jose.importJWK(publicKeyJwk)
-  return {
-    alg: alg,
-    verify: async (jws: {
-      protected: string
-      payload: Uint8Array
-      signature: string
-    }) => {
-      const { protectedHeader, payload } = await jose.flattenedVerify(
-        jws,
-        publicKey,
-      )
-      return { protectedHeader, payload }
-    },
   }
 }
 
@@ -169,6 +129,6 @@ const key = {
   decryptWithKey,
 }
 
-const controller = { key, signer, verifier }
+const controller = { key, detached, attached }
 
 export default controller

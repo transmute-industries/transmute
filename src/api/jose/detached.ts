@@ -15,5 +15,26 @@ const signer = async (privateKeyJwk) => {
   }
 }
 
-const api = { signer }
+// TODO Remote KMS.
+const verifier = async (publicKeyJwk) => {
+  const { alg } = publicKeyJwk
+  const publicKey = await jose.importJWK(publicKeyJwk)
+  return {
+    alg: alg,
+    verify: async (jws: {
+      protected: string
+      payload: Uint8Array
+      signature: string
+    }) => {
+      const { protectedHeader, payload } = await jose.flattenedVerify(
+        jws,
+        publicKey,
+      )
+      return { protectedHeader, payload }
+    },
+  }
+}
+
+
+const api = { signer, verifier }
 export default api

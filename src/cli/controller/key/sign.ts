@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 
 import mime from 'mime'
-import scitt from '../../../api/scitt/jose'
+import controller from '../../../api/controller'
 
 const signWithKey = async ({ issuerKey, input, output }) => {
   const privateKeyJwk = JSON.parse(
@@ -10,7 +10,7 @@ const signWithKey = async ({ issuerKey, input, output }) => {
   )
   const content = fs.readFileSync(path.resolve(process.cwd(), input))
   const cty = mime.getType(path.resolve(process.cwd(), input))
-  const signer = await scitt.signer(privateKeyJwk)
+  const signer = await controller.detached.signer(privateKeyJwk)
   const detached = await signer.sign(content, { cty })
   fs.writeFileSync(
     path.resolve(process.cwd(), output),

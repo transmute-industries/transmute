@@ -11,7 +11,7 @@ const verifyWithKey = async ({ verifierKey, input, signature, output }) => {
   const detached = JSON.parse(
     fs.readFileSync(path.resolve(process.cwd(), signature)).toString(),
   )
-  const verifier = await controller.verifier(publicKeyJwk)
+  const verifier = await controller.detached.verifier(publicKeyJwk)
   const { protectedHeader } = await verifier.verify({
     ...detached,
     payload: content,
