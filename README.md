@@ -10,26 +10,53 @@
 
 ## Usage
 
+As a global binary:
+
 ```sh
 npm i -g @transmute/cli
 ```
 
-### Push Graph to Neo4j
+As a github action:
 
-```sh
-transmute graph --env .env --file ./src/__fixtures__/_minimal-credential.json
+```yaml
+- uses: transmute-industries/transmute@v0.8.2
+  with:
+    neo4j-uri: ${{ secrets.NEO4J_URI }}
+    neo4j-user: ${{ secrets.NEO4J_USERNAME }}
+    neo4j-password: ${{ secrets.NEO4J_PASSWORD }}
+    json: |
+      {
+        "@context": ["https://www.w3.org/2018/credentials/v1"],
+        "type": ["VerifiablePresentation"],
+        "verifiableCredential": [
+        ...
 ```
 
-### Convert to JSON Graph
+### Commands
+
+#### Push Graph to Neo4j
 
 ```sh
-transmute graph --file ./src/__fixtures__/_minimal-credential.json --accept application/vnd.transmute.graph+json
+transmute graph \
+--env .env \
+--file ./src/__fixtures__/_minimal-credential.json
 ```
 
-### Convert to Cypher
+#### Convert to JSON Graph
 
 ```sh
-transmute graph --file ./src/__fixtures__/_minimal-credential.json --accept application/vnd.transmute.cypher --unsafe
+transmute graph \
+--file ./src/__fixtures__/_minimal-credential.json \
+--accept application/vnd.transmute.graph+json
+```
+
+#### Convert to Cypher
+
+```sh
+transmute graph \
+--file ./src/__fixtures__/_minimal-credential.json \
+--accept application/vnd.transmute.cypher \
+--unsafe
 ```
 
 ## Develop
@@ -52,20 +79,26 @@ Then see the usage section above, or use the npm script aliases, below:
 #### JSON-LD to JSON Graph
 
 ```sh
-npm run transmute -- graph --accept application/vnd.transmute.graph+json --file ./src/__fixtures__/_minimal-credential.json
+npm run transmute -- graph \
+--accept application/vnd.transmute.graph+json \
+--file ./src/__fixtures__/_minimal-credential.json
 ```
 
 #### JSON-LD to Cypher
 
 ```sh
-npm --silent run transmute -- graph --accept application/vnd.transmute.cypher+json --file ./src/__fixtures__/_minimal-credential.json \
+npm --silent run transmute -- graph \
+--accept application/vnd.transmute.cypher+json \
+--file ./src/__fixtures__/_minimal-credential.json \
 | jq -r '.query'
 ```
 
 #### Push JSON-LD to Neo4j
 
 ```sh
-npm --silent run transmute -- graph --env .env --file ./src/__fixtures__/_minimal-credential.json
+npm --silent run transmute -- graph \
+--env .env \
+--file ./src/__fixtures__/_minimal-credential.json
 ```
 
 ### Testing GitHub Actions Locally
