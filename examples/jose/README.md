@@ -1,20 +1,20 @@
 
 # Javascript Object Signing and Encryption (jose)
 
-## Create Private Key
+## Create Private Signing Key
 
 ```sh
-npm run transmute -- controller key generate \
+npm run transmute -- key generate \
 --alg ES384 \
---output examples/jose/private.ES384.json
+--output examples/jose/private.signing.jwk.json
 ```
 
-## Export Public Key
+## Export Public Verification Key
 
 ```sh
-npm run transmute -- controller key export \
---input  examples/jose/private.ES384.json \
---output examples/jose/public.ES384.json
+npm run transmute -- key export \
+--input  examples/jose/private.signing.jwk.json \
+--output examples/jose/public.verifying.jwk.json
 ```
 
 ## Detached
@@ -22,8 +22,8 @@ npm run transmute -- controller key export \
 ### Sign 
 
 ```sh
-npm run transmute -- controller key sign \
---issuer-key examples/jose/private.ES384.json \
+npm run transmute -- key sign \
+--issuer-key examples/jose/private.signing.jwk.json \
 --input  examples/jose/manifest.spdx.json \
 --output examples/jose/manifest.spdx.jws.json
 ```
@@ -31,8 +31,8 @@ npm run transmute -- controller key sign \
 ### Verify
 
 ```sh
-npm run transmute -- controller key verify \
---verifier-key examples/jose/public.ES384.json \
+npm run transmute -- key verify \
+--verifier-key examples/jose/public.verifying.jwk.json \
 --input  examples/jose/manifest.spdx.json \
 --signature examples/jose/manifest.spdx.jws.json \
 --output examples/jose/manifest.spdx.jws.verified.json
@@ -44,7 +44,7 @@ npm run transmute -- controller key verify \
 ### Generate Decryption Key
 
 ```sh
-npm run transmute -- controller key generate \
+npm run transmute -- key generate \
 --alg ECDH-ES+A128KW \
 --output examples/jose/private.decryption.jwk.json
 ```
@@ -52,7 +52,7 @@ npm run transmute -- controller key generate \
 ### Export Encryption Key
 
 ```sh
-npm run transmute -- controller key export \
+npm run transmute -- key export \
 --input  examples/jose/private.decryption.jwk.json \
 --output examples/jose/public.encryption.jwk.json
 ```
@@ -60,7 +60,7 @@ npm run transmute -- controller key export \
 ### Encrypt to Recipient Public Key
 
 ```sh
-npm run transmute -- controller key encrypt \
+npm run transmute -- key encrypt \
 --recipient examples/jose/public.encryption.jwk.json \
 --input examples/jose/manifest.spdx.json \
 --output examples/jose/manifest.spdx.jwe.json
@@ -69,7 +69,7 @@ npm run transmute -- controller key encrypt \
 ### Decrypt with Recipient Private Key
 
 ```sh
-npm run transmute -- controller key decrypt \
+npm run transmute -- key decrypt \
 --recipient examples/jose/private.decryption.jwk.json \
 --input examples/jose/manifest.spdx.jwe.json \
 --output examples/jose/manifest.spdx.jwe.decrypted.json
