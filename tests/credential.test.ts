@@ -5,9 +5,10 @@ import vcdm from '../src/api/vcdm'
 
 describe('credential', () => {
   it('issue / verify', async () => {
-    const k = await controller.key.generate({ alg: 'ES384' })
-    const signer = await vcdm.vc.signer(k.privateKeyJwk)
-    const verifier = await vcdm.vc.verifier(k.publicKeyJwk)
+    const privateKey = await controller.key.generate({ alg: 'ES384' })
+    const publicKey = controller.key.publicFromPrivate(privateKey)
+    const signer = await vcdm.vc.signer(privateKey)
+    const verifier = await vcdm.vc.verifier(publicKey)
     const credential = {
       '@context': ['https://www.w3.org/ns/credentials/v2'],
       type: ['VerifiableCredential'],

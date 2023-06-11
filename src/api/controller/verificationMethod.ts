@@ -2,24 +2,24 @@ import * as jose from 'jose'
 
 import key from '../jose/key'
 
-const create = async (
-  publicKeyJwk
-) => {
-  const holder = await jose.calculateJwkThumbprintUri(publicKeyJwk)
-  const controller = publicKeyToDid(publicKeyJwk)
-  return {
-    id: controller + '#0',
-    type: 'JsonWebKey',
-    controller: holder,
-    publicKeyJwk: key.format(publicKeyJwk)
+export const formatVerificationMethod = (vm) => {
+  const formatted = {
+    id: vm.id,
+    type: vm.type,
+    controller: vm.controller,
+    publicKeyJwk: vm.publicKeyJwk,
   }
+  return JSON.parse(JSON.stringify(formatted))
 }
 
-const publicKeyToDid = (publicKeyJwk) => {
-  const id = `did:jwk:${jose.base64url.encode(
-    JSON.stringify(key.format(publicKeyJwk)),
-  )}`
-  return id
+const create = async (publicKeyJwk) => {
+  const holder = await jose.calculateJwkThumbprintUri(publicKeyJwk)
+  return {
+    id: holder,
+    type: 'JsonWebKey',
+    controller: holder,
+    publicKeyJwk: key.format(publicKeyJwk),
+  }
 }
 
 const dereferencePublicKey = async (didUrl: string) =>
@@ -37,6 +37,7 @@ const publicKeyToVerificationMethod = async (publicKeyJwk) => {
 
 const verificationMethod = {
   id: publicKeyToVerificationMethod,
+  format: formatVerificationMethod,
   create,
   dereference: dereferencePublicKey,
 }

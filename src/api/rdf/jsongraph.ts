@@ -5,7 +5,8 @@ import canonize from '../../api/rdf/canonize'
 import hmac from '../../api/jose/hmac'
 import documentLoader from '../../api/rdf/documentLoader'
 
-import { isVC, isVP } from './utils'
+import { isVC, isVP, didCoreContext } from './utils'
+
 import annotateGraph from './annotateGraph'
 const addGraphNode = ({ graph, id }) => {
   graph.nodes[id] = {
@@ -160,7 +161,11 @@ const fromPresentation = async (document: DataIntegrityDocument) => {
   return graph
 }
 
-const fromFlattendJws = async (jws: {protected: string, payload: string, signature: string}) => {
+const fromFlattendJws = async (jws: {
+  protected: string
+  payload: string
+  signature: string
+}) => {
   const jwt = `${jws.protected}.${jws.payload}.${jws.signature}`
   const header = jose.decodeProtectedHeader(jwt)
   const claimset = jose.decodeJwt(jwt)
@@ -189,13 +194,83 @@ const fromFlattendJws = async (jws: {protected: string, payload: string, signatu
   return claimsetGraph
 }
 
+const fromDidDocument = async (document: DataIntegrityDocument) => {
+  const { verificationMethod, ...controller } = document
+  if (controller['@context'] === undefined) {
+    controller['@context'] = didCoreContext
+  }
+  const key = hmac.key()
+  const signer = await hmac.signer(key)
+  const graph = await fromJsonLd({ document: controller, signer })
+  if (verificationMethod !== undefined) {
+    const verificationMethods = Array.isArray(verificationMethod)
+      ? verificationMethod
+      : [verificationMethod]
+    await Promise.all(
+      verificationMethods.map(async (verificationMethod) => {
+        const key = hmac.key()
+        const signer = await hmac.signer(key)
+        const proofGraph = await fromJsonLd({
+          document: {
+            '@context': controller['@context'],
+            ...verificationMethod,
+          },
+          signer,
+        })
+        const controllerId = Object.keys(graph.nodes)[0]
+        const verificationMethodId = Object.keys(proofGraph.nodes)[0]
+        graph.nodes = { ...graph.nodes, ...proofGraph.nodes }
+        graph.edges = [
+          ...graph.edges,
+          {
+            source: verificationMethodId,
+            label: 'https://w3id.org/security#verificationMethod',
+            target: controllerId,
+          },
+          ...proofGraph.edges,
+        ]
+      }),
+    )
+  }
+  return graph
+}
+
+const suspectDidDocument = (document: any) => {
+  if (document.id && document.id.startsWith('did:')) {
+    return true
+  }
+  if (
+    document['@context'] &&
+    Array.isArray(document['@context']) &&
+    document['@context'].includes('https://www.w3.org/ns/did/v1')
+  ) {
+    return true
+  }
+  if (
+    document.verificationMethod ||
+    document.authentication ||
+    document.assertionMethod ||
+    document.keyAgreement
+  ) {
+    return true
+  }
+  return false
+}
+
 const fromDocument = async (document: DataIntegrityDocument) => {
   let graph
-  if (document.jwt ||  (document.protected && document.payload && document.signature)) {
-    let jws = document;
-    if (document.jwt){
-      const [protectedHeader, protectedPayload, signature] = document.jwt.split('.')
-      jws = {protected: protectedHeader, payload: protectedPayload, signature}
+  if (suspectDidDocument(document)) {
+    graph = await fromDidDocument(document)
+  } else if (
+    document.jwt ||
+    (document.protected && document.payload && document.signature)
+  ) {
+    let jws = document
+    if (document.jwt) {
+      const [protectedHeader, protectedPayload, signature] = document.jwt.split(
+        '.',
+      )
+      jws = { protected: protectedHeader, payload: protectedPayload, signature }
     }
     graph = await fromFlattendJws(jws)
   } else if (isVC(document)) {

@@ -4,9 +4,10 @@ import controller from '../src/api/controller'
 
 describe('detached', () => {
   it('generate / sign / verify', async () => {
-    const k = await controller.key.generate({ alg: 'ES384' })
-    const signer = await controller.detached.signer(k.privateKeyJwk)
-    const verifier = await controller.detached.verifier(k.publicKeyJwk)
+    const privateKey = await controller.key.generate({ alg: 'ES384' })
+    const publicKey = controller.key.publicFromPrivate(privateKey)
+    const signer = await controller.key.detached.signer(privateKey)
+    const verifier = await controller.key.detached.verifier(publicKey)
     const message = new TextEncoder().encode('hello')
     const jws = await signer.sign(message)
     const verified = await verifier.verify({

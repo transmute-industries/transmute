@@ -1,4 +1,25 @@
 
+# Importing JSON-LD
+
+## Adding a Controller Document
+
+### application/did+ld+json
+
+```sh
+npm run transmute -- graph \
+--env '.env' \
+--input  'examples/vcdm/did.jsonld'
+```
+
+### application/did+json
+
+```sh
+npm run transmute -- graph \
+--env '.env' \
+--input  'examples/vcdm/did.json'
+```
+
+
 #### Example Cypher Queries
 
 Get Holder Location

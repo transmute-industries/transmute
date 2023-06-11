@@ -19,19 +19,19 @@ const register = (yargs) => {
         alias: 'a',
         description: 'Acceptable content type',
       },
-      file: {
-        alias: 'f',
+      input: {
+        alias: 'i',
         description: 'File path as input',
       },
     },
     async (argv) => {
-      const { env, accept, file, unsafe } = argv
+      const { env, accept, input, unsafe } = argv
       if (env) {
         // eslint-disable-next-line @typescript-eslint/no-var-requires
         require('dotenv').config({ path: env })
         const options = {
           json: fs
-            .readFileSync(path.resolve(process.cwd(), file as string))
+            .readFileSync(path.resolve(process.cwd(), input as string))
             .toString(),
           neo4jUri: process.env.NEO4J_URI || '',
           neo4jUser: process.env.NEO4J_USERNAME || '',
@@ -39,11 +39,11 @@ const register = (yargs) => {
         }
         const result = await operationSwitch(options)
         console.log(JSON.stringify(result, null, 2))
-      } else if (accept && file) {
+      } else if (accept && input) {
         if (accept === contants.graphContentType) {
           const document = JSON.parse(
             fs
-              .readFileSync(path.resolve(process.cwd(), file as string))
+              .readFileSync(path.resolve(process.cwd(), input as string))
               .toString(),
           )
           const graph = await jsongraph.fromDocument(document)
@@ -52,7 +52,7 @@ const register = (yargs) => {
         if (accept === contants.cypherContentType) {
           const document = JSON.parse(
             fs
-              .readFileSync(path.resolve(process.cwd(), file as string))
+              .readFileSync(path.resolve(process.cwd(), input as string))
               .toString(),
           )
           const graph = await jsongraph.fromDocument(document)
@@ -62,7 +62,7 @@ const register = (yargs) => {
         if (accept === contants.rawCypherContentType) {
           const document = JSON.parse(
             fs
-              .readFileSync(path.resolve(process.cwd(), file as string))
+              .readFileSync(path.resolve(process.cwd(), input as string))
               .toString(),
           )
           const graph = await jsongraph.fromDocument(document)

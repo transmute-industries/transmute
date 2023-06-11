@@ -1,0 +1,27 @@
+{
+  "id": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:_Y18XKe4uOMU-r7D7Gy3GE0pLzH72sxxOj-ghMrfPsc",
+  "verificationMethod": [
+    {
+      "id": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:_Y18XKe4uOMU-r7D7Gy3GE0pLzH72sxxOj-ghMrfPsc",
+      "type": "JsonWebKey",
+      "controller": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:_Y18XKe4uOMU-r7D7Gy3GE0pLzH72sxxOj-ghMrfPsc",
+      "publicKeyJwk": {
+        "kid": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:_Y18XKe4uOMU-r7D7Gy3GE0pLzH72sxxOj-ghMrfPsc",
+        "kty": "EC",
+        "crv": "P-384",
+        "alg": "ES384",
+        "x": "-RBSMSz95pTA1PIXkMBKMop270W69BtQZrrUvzYmTf98n122UzS2KyYF6ZFevvSz",
+        "y": "EkKeangs0dAQ0aW03k4_oQyLuO1DdztJpmECUnb91yD0WJuoEMJOdCptn-s99RCL"
+      }
+    }
+  ],
+  "authentication": [
+    "urn:ietf:params:oauth:jwk-thumbprint:sha-256:_Y18XKe4uOMU-r7D7Gy3GE0pLzH72sxxOj-ghMrfPsc"
+  ],
+  "assertionMethod": [
+    "urn:ietf:params:oauth:jwk-thumbprint:sha-256:_Y18XKe4uOMU-r7D7Gy3GE0pLzH72sxxOj-ghMrfPsc"
+  ],
+  "keyAgreement": [
+    "urn:ietf:params:oauth:jwk-thumbprint:sha-256:_Y18XKe4uOMU-r7D7Gy3GE0pLzH72sxxOj-ghMrfPsc"
+  ]
+}

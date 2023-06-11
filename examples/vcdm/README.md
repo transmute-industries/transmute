@@ -1,5 +1,25 @@
 # W3C Verifiable Credentials
 
+## Controllers
+
+### JSON Controller
+
+```sh
+npm run transmute -- controller create \
+--accept 'application/did+json' \
+--input  'examples/jose/public.verifying.jwk.json' \
+--output 'examples/vcdm/did.json'
+```
+
+### JSON-LD Controller
+
+```sh
+npm run transmute -- controller create \
+--accept 'application/did+ld+json' \
+--input  'examples/jose/public.verifying.jwk.json' \
+--output 'examples/vcdm/did.jsonld'
+```
+
 ## Credentials
 
 ### Issue
