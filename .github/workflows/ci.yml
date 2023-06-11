@@ -1,0 +1,13 @@
+name: CI
+on: [push]
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - run: npm ci
+    - run: npm run coverage
+    - name: Badges
+      uses: jpb06/jest-badges-action@latest
+      with:
+        branches: main
