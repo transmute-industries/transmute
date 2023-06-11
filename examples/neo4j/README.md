@@ -6,7 +6,7 @@
 ### application/did+ld+json
 
 ```sh
-npm run transmute -- graph \
+transmute graph \
 --env '.env' \
 --input  'examples/vcdm/did.jsonld'
 ```
@@ -14,7 +14,7 @@ npm run transmute -- graph \
 ### application/did+json
 
 ```sh
-npm run transmute -- graph \
+transmute graph \
 --env '.env' \
 --input  'examples/vcdm/did.json'
 ```
@@ -24,7 +24,7 @@ npm run transmute -- graph \
 ### application/vc+ld+json
 
 ```sh
-npm run transmute -- graph \
+transmute graph \
 --env '.env' \
 --input  'examples/vcdm/credential-with-location.json'
 ```
@@ -32,7 +32,7 @@ npm run transmute -- graph \
 ### application/vc+ld+jwt
 
 ```sh
-npm run transmute -- graph \
+transmute graph \
 --env '.env' \
 --input  'examples/vcdm/credential.jwt.flat.json'
 ```
@@ -42,7 +42,7 @@ npm run transmute -- graph \
 ### application/vp+ld+json
 
 ```sh
-npm run transmute -- graph \
+transmute graph \
 --env '.env' \
 --input  'examples/vcdm/presentation-with-location.json'
 ```
@@ -50,7 +50,7 @@ npm run transmute -- graph \
 ### application/vp+ld+jwt
 
 ```sh
-npm run transmute -- graph \
+transmute graph \
 --env '.env' \
 --input  'examples/vcdm/presentation.jwt.flat.json'
 ```

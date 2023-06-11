@@ -4,7 +4,7 @@
 ## Create Private Signing Key
 
 ```sh
-npm run transmute -- key generate \
+transmute key generate \
 --alg ES384 \
 --output examples/jose/private.signing.jwk.json
 ```
@@ -12,7 +12,7 @@ npm run transmute -- key generate \
 ## Export Public Verification Key
 
 ```sh
-npm run transmute -- key export \
+transmute key export \
 --input  examples/jose/private.signing.jwk.json \
 --output examples/jose/public.verifying.jwk.json
 ```
@@ -22,7 +22,7 @@ npm run transmute -- key export \
 ### Sign 
 
 ```sh
-npm run transmute -- key sign \
+transmute key sign \
 --issuer-key examples/jose/private.signing.jwk.json \
 --input  examples/jose/manifest.spdx.json \
 --output examples/jose/manifest.spdx.jws.json
@@ -31,7 +31,7 @@ npm run transmute -- key sign \
 ### Verify
 
 ```sh
-npm run transmute -- key verify \
+transmute key verify \
 --verifier-key examples/jose/public.verifying.jwk.json \
 --input  examples/jose/manifest.spdx.json \
 --signature examples/jose/manifest.spdx.jws.json \
@@ -44,7 +44,7 @@ npm run transmute -- key verify \
 ### Generate Decryption Key
 
 ```sh
-npm run transmute -- key generate \
+transmute key generate \
 --alg ECDH-ES+A128KW \
 --output examples/jose/private.decryption.jwk.json
 ```
@@ -52,7 +52,7 @@ npm run transmute -- key generate \
 ### Export Encryption Key
 
 ```sh
-npm run transmute -- key export \
+transmute key export \
 --input  examples/jose/private.decryption.jwk.json \
 --output examples/jose/public.encryption.jwk.json
 ```
@@ -60,7 +60,7 @@ npm run transmute -- key export \
 ### Encrypt to Recipient Public Key
 
 ```sh
-npm run transmute -- key encrypt \
+transmute key encrypt \
 --recipient examples/jose/public.encryption.jwk.json \
 --input examples/jose/manifest.spdx.json \
 --output examples/jose/manifest.spdx.jwe.json
@@ -69,7 +69,7 @@ npm run transmute -- key encrypt \
 ### Decrypt with Recipient Private Key
 
 ```sh
-npm run transmute -- key decrypt \
+transmute key decrypt \
 --recipient examples/jose/private.decryption.jwk.json \
 --input examples/jose/manifest.spdx.jwe.json \
 --output examples/jose/manifest.spdx.jwe.decrypted.json
