@@ -1,7 +1,7 @@
 
 # Importing JSON-LD
 
-## Adding a Controller Document
+## Controller Documents
 
 ### application/did+ld+json
 
@@ -19,10 +19,45 @@ npm run transmute -- graph \
 --input  'examples/vcdm/did.json'
 ```
 
+## Credentials
 
-#### Example Cypher Queries
+### application/vc+ld+json
 
-Get Holder Location
+```sh
+npm run transmute -- graph \
+--env '.env' \
+--input  'examples/vcdm/credential-with-location.json'
+```
+
+### application/vc+ld+jwt
+
+```sh
+npm run transmute -- graph \
+--env '.env' \
+--input  'examples/vcdm/credential.jwt.flat.json'
+```
+
+## Presentations
+
+### application/vp+ld+json
+
+```sh
+npm run transmute -- graph \
+--env '.env' \
+--input  'examples/vcdm/presentation-with-location.json'
+```
+
+### application/vp+ld+jwt
+
+```sh
+npm run transmute -- graph \
+--env '.env' \
+--input  'examples/vcdm/presentation.jwt.flat.json'
+```
+
+## Cypher Examples
+
+### Get Holder Location
 
 ```
 MATCH (holder:`https://www.w3.org/2018/credentials#holder`)-[:Location]->(place:`https://schema.org/Place`)
@@ -30,7 +65,7 @@ MATCH (place)-[:Geo]->(point:`https://schema.org/GeoCoordinates`)
 RETURN holder, point
 ```
 
-Get Issuer Location
+### Get Issuer Location
 
 ```
 MATCH (issuer:`https://www.w3.org/2018/credentials#issuer`)-[:Location]->(place:`https://schema.org/Place`)
@@ -38,7 +73,7 @@ MATCH (place)-[:Geo]->(point:`https://schema.org/GeoCoordinates`)
 RETURN issuer, point
 ```
 
-Get Distance Between Issuer and Holder
+### Get Distance Between Issuer and Holder
 
 ```
 MATCH (issuer:`https://www.w3.org/2018/credentials#issuer`)-[:Location]->(p1:`https://schema.org/Place`)

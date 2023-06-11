@@ -8,7 +8,8 @@ const contextsUrls = [
   'https://w3id.org/security/data-integrity/v1',
   'https://w3id.org/vc-revocation-list-2020/v1',
   'https://w3id.org/traceability/v1',
-  'https://www.w3.org/ns/did/v1'
+  'https://www.w3.org/ns/did/v1',
+  'https://www.w3.org/ns/credentials/examples/v2'
 ];
 
 (async ()=>{
