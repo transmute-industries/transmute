@@ -4,6 +4,7 @@ import controller from './controller'
 import credential from './credential'
 import presentation from './presentation'
 import graph from './graph'
+import platform from './platform'
 
 const init = () => {
   yargs.scriptName('✨')
@@ -15,6 +16,9 @@ const init = () => {
   controller.register(yargs)
   credential.register(yargs)
   presentation.register(yargs)
+
+  //platform
+  platform.register(yargs)
 
   // neo4j
   graph.register(yargs)
