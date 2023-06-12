@@ -1,3 +1,17 @@
+# Dry Run
+
+Generate cypher without running it.
+
+The unsafe flag is required to inline parameters.
+
+Beware of cypher injection, use schemas to restrict the shape of the source data.
+
+```sh
+transmute graph \
+--accept 'application/vnd.transmute.cypher' \
+--input  'examples/vcdm/did.jsonld' \
+--unsafe
+```
 
 # Importing JSON-LD
 
