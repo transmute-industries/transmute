@@ -4,6 +4,7 @@ import controller from './controller'
 import credential from './credential'
 import presentation from './presentation'
 import graph from './graph'
+
 import platform from './platform'
 
 const init = () => {
@@ -18,7 +19,7 @@ const init = () => {
   presentation.register(yargs)
 
   //platform
-  platform.register(yargs)
+  yargs.command(platform)
 
   // neo4j
   graph.register(yargs)
