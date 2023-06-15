@@ -3,6 +3,10 @@
     "https://www.w3.org/2018/credentials/v1",
     {
       "@vocab": "https://w3id.org/traceability#",
+      "replaces": {
+        "@id": "https://w3id.org/traceability#replaces",
+        "@type": "@id"
+      },
       "workflow": {
         "@context": {
           "definition": {
@@ -17,12 +21,15 @@
       }
     }
   ],
-  "id": "urn:uuid:p1",
-  "type":
-  [
+  "id": "urn:uuid:p2",
+  "type": [
     "VerifiablePresentation",
     "TraceablePresentation"
   ],
+  "replaces": {
+    "id": "urn:uuid:p1",
+    "note": "I made a mistake in p1"
+  },
   "workflow": {
     "definition": [
       "urn:definition:steel-import"
@@ -31,20 +38,22 @@
       "urn:instance:steel-import-from-customs-broker-123"
     ]
   },
-  "holder":{
-    "id":"did:web:customs.broker.2.example"
+  "holder": {
+    "id": "did:web:customs.broker.1.example"
   },
   "verifiableCredential": [
     {
       "@context": [
         "https://www.w3.org/2018/credentials/v1",
-        {"@vocab": "https://w3id.org/traceability#"}
+        {
+          "@vocab": "https://w3id.org/traceability#"
+        }
       ],
       "id": "urn:uuid:c2",
       "type": [
         "VerifiableCredential"
       ],
-      "invoice": "123"
+      "invoice": "123xxxx"
     }
   ]
- }
+}
