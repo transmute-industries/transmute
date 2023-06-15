@@ -99,3 +99,21 @@ WITH
   point({longitude: toFloat(p4.`https://schema.org/longitude`), latitude: toFloat(p4.`https://schema.org/latitude`)}) AS holderPoint
 RETURN round(point.distance(issuerPoint, holderPoint)) AS presentationDistance
 ```
+
+
+## Traceable Presentations
+
+```sh
+transmute graph \
+--env '.env' \
+--input  'examples/neo4j/traceable-presentation-0.json'
+```
+
+
+```sh
+transmute graph \
+--env '.env' \
+--input  'examples/neo4j/traceable-presentation-1.json'
+```
+
+

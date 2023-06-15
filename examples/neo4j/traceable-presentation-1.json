@@ -1,0 +1,47 @@
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    {
+      "@context": {
+        "@vocab": "https://w3id.org/traceability#",
+        "workflow": {
+          "@context": {
+            "definition": {
+              "@id": "https://w3id.org/traceability#definition",
+              "@type": "@id"
+            },
+            "instance": {
+              "@id": "https://w3id.org/traceability#instance",
+              "@type": "@id"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "id": "urn:uuid:f1974aa0-f956-4762-bfba-adc675f320ab",
+  "type":
+  [
+    "VerifiablePresentation",
+    "TraceablePresentation"
+  ],
+  "workflow": {
+    "definition": [
+      "urn:definition:steel-import"
+    ],
+    "instance": [
+      "urn:instance:steel-import-from-customs-broker-123"
+    ]
+  },
+  "holder":{
+    "id":"did:web:customs.broker.2.example"
+  },
+  "verifiableCredential": [
+    {
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1"
+      ],
+      "id": "urn:uuid:ee4e5a38-3ae4-4ee7-bbe4-b18af7c1d0aa"
+    }
+  ]
+ }
