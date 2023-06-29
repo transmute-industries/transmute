@@ -1,8 +1,15 @@
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/ns/credentials/v2",
     {
-      "@vocab": "https://w3id.org/traceability#",
+      "replaces": {
+        "@id": "https://w3id.org/traceability#replaces",
+        "@type": "@id"
+      },
+      "patch": {
+        "@id": "https://datatracker.ietf.org/doc/rfc6902#section-4",
+        "@type": "@json"
+      },
       "workflow": {
         "@context": {
           "definition": {
@@ -17,9 +24,15 @@
       }
     }
   ],
-  "id": "urn:uuid:p1",
-  "type":
-  [
+  "id": "urn:uuid:2222",
+  "replaces": {
+    "id": "urn:uuid:1111",
+    "type": [
+      "VerifiablePresentation",
+      "TraceablePresentation"
+    ]
+  },
+  "type": [
     "VerifiablePresentation",
     "TraceablePresentation"
   ],
@@ -31,20 +44,5 @@
       "urn:instance:steel-import-from-customs-broker-123"
     ]
   },
-  "holder":{
-    "id":"did:web:customs.broker.2.example"
-  },
-  "verifiableCredential": [
-    {
-      "@context": [
-        "https://www.w3.org/2018/credentials/v1",
-        {"@vocab": "https://w3id.org/traceability#"}
-      ],
-      "id": "urn:uuid:c2",
-      "type": [
-        "VerifiableCredential"
-      ],
-      "invoice": "123"
-    }
-  ]
- }
+  "name": "alice"
+}

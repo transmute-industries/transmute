@@ -1,11 +1,14 @@
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/ns/credentials/v2",
     {
-      "@vocab": "https://w3id.org/traceability#",
       "replaces": {
         "@id": "https://w3id.org/traceability#replaces",
         "@type": "@id"
+      },
+      "patch": {
+        "@id": "https://datatracker.ietf.org/doc/rfc6902#section-4",
+        "@type": "@json"
       },
       "workflow": {
         "@context": {
@@ -21,15 +24,11 @@
       }
     }
   ],
-  "id": "urn:uuid:p2",
+  "id": "urn:uuid:1111",
   "type": [
     "VerifiablePresentation",
     "TraceablePresentation"
   ],
-  "replaces": {
-    "id": "urn:uuid:p1",
-    "note": "I made a mistake in p1"
-  },
   "workflow": {
     "definition": [
       "urn:definition:steel-import"
@@ -38,22 +37,5 @@
       "urn:instance:steel-import-from-customs-broker-123"
     ]
   },
-  "holder": {
-    "id": "did:web:customs.broker.1.example"
-  },
-  "verifiableCredential": [
-    {
-      "@context": [
-        "https://www.w3.org/2018/credentials/v1",
-        {
-          "@vocab": "https://w3id.org/traceability#"
-        }
-      ],
-      "id": "urn:uuid:c2",
-      "type": [
-        "VerifiableCredential"
-      ],
-      "invoice": "123xxxx"
-    }
-  ]
+  "name": "alcie"
 }

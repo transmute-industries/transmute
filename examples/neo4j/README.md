@@ -106,17 +106,14 @@ RETURN round(point.distance(issuerPoint, holderPoint)) AS presentationDistance
 ```sh
 transmute graph \
 --env '.env' \
---input  'examples/neo4j/traceable-presentation-0.json'
+--input  'examples/neo4j/simple-presentation-with-errors.json'
 
 transmute graph \
 --env '.env' \
---input  'examples/neo4j/traceable-presentation-1.json'
+--input  'examples/neo4j/simple-presentation-making-corrections.json'
 
-transmute graph \
---env '.env' \
---input  'examples/neo4j/traceable-presentation-2.json'
 ```
 
-
+<img src="./simple.png" />
 
 
