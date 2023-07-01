@@ -14,30 +14,27 @@ describe("cose", () => {
     const publicKeyFromFile = fs.readFileSync(`examples/cose/public.verifying.jwk.json`)
     
 
-    const signer = await cose.signer({ privateKeyJwk: JSON.parse(privateKeyFromFile.toString()) })
-    const verifier = await cose.verifier({ publicKeyJwk: JSON.parse(publicKeyFromFile.toString()) })
+    const signer = await cose.detached.signer({ privateKeyJwk: JSON.parse(privateKeyFromFile.toString()) })
+    const verifier = await cose.detached.verifier({ publicKeyJwk: JSON.parse(publicKeyFromFile.toString()) })
 
-    const message = 'hello'
-    const content = Buffer.from(new TextEncoder().encode(message))
+    const content = fs.readFileSync(`examples/cose/bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi.jpg`)
   
     const u = new Map();
-    const signature = await signer.sign({
+    const {signature} = await signer.sign({
       protectedHeader: { alg: privateKey.alg },
       unprotectedHeader: u,
       payload: content
     })
+    
+    fs.writeFileSync('examples/cose/bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi.cose', signature)
 
-    fs.writeFileSync('examples/cose/payload', content)
-    fs.writeFileSync('examples/cose/signature', signature)
+    const payloadFromFile = fs.readFileSync(`examples/cose/bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi.jpg`)
+    const signatureFromFile = fs.readFileSync(`examples/cose/bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi.cose`)
 
-    const payloadFromFile = fs.readFileSync(`examples/cose/payload`)
-    const signatureFromFile = fs.readFileSync(`examples/cose/signature`)
-
-    const attached = cose.attachPayload({
-      signature: signatureFromFile,
-      payload: payloadFromFile
+    const verified = await verifier.verify({
+      payload: payloadFromFile,
+      signature: signatureFromFile
     })
-    const verified = await verifier.verify(attached)
-    expect(new TextDecoder().decode(verified)).toBe(message)    
+    expect(verified).toBe(true)    
   });
 });

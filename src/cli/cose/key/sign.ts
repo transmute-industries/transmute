@@ -16,17 +16,17 @@ const sign = async (argv: RequestCoseSign) => {
     fs.readFileSync(path.resolve(process.cwd(), issuerKey)).toString(),
   )
   const payload = fs.readFileSync(path.resolve(process.cwd(), input))
-  const signer = await cose.signer({ privateKeyJwk })
+  const signer = await cose.detached.signer({ privateKeyJwk })
   const u = new Map()
-  const signature = await signer.sign({
+  const {signature} = await signer.sign({
     protectedHeader: { alg: privateKeyJwk.alg },
     unprotectedHeader: u,
     payload
   })
-  const detached = cose.detachPayload(signature);
+
   fs.writeFileSync(
     path.resolve(process.cwd(), output),
-    Buffer.from(detached.signature)
+    Buffer.from(signature)
   )
 }
 

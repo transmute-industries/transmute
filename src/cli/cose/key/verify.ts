@@ -17,21 +17,16 @@ const verify = async (argv: RequestCoseVerify) => {
   const publicKeyJwk = JSON.parse(
     fs.readFileSync(path.resolve(process.cwd(), verifierKey)).toString(),
   )
-  const payload = fs.readFileSync(path.resolve(process.cwd(), input))
-  const detached = fs.readFileSync(path.resolve(process.cwd(), signature))
-  const attached = cose.attachPayload({
-    payload: payload,
-    signature: detached
+  const payloadFromFile = fs.readFileSync(path.resolve(process.cwd(), input))
+  const signatureFromFile = fs.readFileSync(path.resolve(process.cwd(), signature))
+
+  const verifier = await cose.detached.verifier({ publicKeyJwk })
+  const verified = await verifier.verify({
+    payload: payloadFromFile,
+    signature: signatureFromFile
   })
-  const verifier = await cose.verifier({ publicKeyJwk })
-  let result = { verified: false}
-  try {
-    // TODO: https://github.com/transmute-industries/cose/issues/2
-    const verified = await verifier.verify(attached)
-    result = { verified: verified !== undefined}
-  } catch(e){
-    // 
-  }
+  const result = { verified }
+  
   fs.writeFileSync(
     path.resolve(process.cwd(), output),
     JSON.stringify(
