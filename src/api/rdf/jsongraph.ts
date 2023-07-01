@@ -8,6 +8,12 @@ import documentLoader from '../../api/rdf/documentLoader'
 import { isVC, isVP, didCoreContext } from './utils'
 
 import annotateGraph from './annotateGraph'
+
+import context from './jose-context'
+
+import transmute from '@transmute/did-transmute'
+import { AsymmetricJsonWebKey } from '@transmute/did-transmute/dist/jose/AsymmetricJsonWebKey'
+
 const addGraphNode = ({ graph, id }) => {
   graph.nodes[id] = {
     ...(graph.nodes[id] || { id, labels: ['Node'] }),
@@ -173,7 +179,7 @@ const fromFlattendJws = async (jws: {
   const signer = await hmac.signer(key)
   const headerGraph = await fromJsonLd({
     document: {
-      '@context': { '@vocab': 'https://www.iana.org/assignments/jose#' },
+      '@context': context,
       ...header,
     },
     signer,
@@ -192,6 +198,15 @@ const fromFlattendJws = async (jws: {
     ...headerGraph.edges,
   ]
   return claimsetGraph
+}
+
+const fromJsonWebKey = async (document: JsonWebKey ) => {
+  const did = await transmute.did.jwk.toDid(document as AsymmetricJsonWebKey);
+  const doc = await transmute.did.jwk.resolve({
+    id: did,
+    documentLoader: transmute.did.jwk.documentLoader
+  })
+  return fromDidDocument(doc);
 }
 
 const fromDidDocument = async (document: DataIntegrityDocument) => {
@@ -257,9 +272,15 @@ const suspectDidDocument = (document: any) => {
   return false
 }
 
+const suspectJsonWebKey = (document: any) => {
+  return document.kty !== undefined
+}
+
 const fromDocument = async (document: DataIntegrityDocument) => {
   let graph
-  if (suspectDidDocument(document)) {
+  if (suspectJsonWebKey(document)) {
+    graph = await fromJsonWebKey(document);
+  } else if (suspectDidDocument(document)) {
     graph = await fromDidDocument(document)
   } else if (
     document.jwt ||

@@ -13,8 +13,6 @@ export const run = async (options: ActionOptions) => {
   const document = JSON.parse(options.json)
   const graph = await jsongraph.fromDocument(document)
   const { query, params } = await cypher.fromJsonGraph(graph)
-  console.log(query)
-  console.log(params)
   await session.run(query, params)
   await session.close()
   await driver.close()

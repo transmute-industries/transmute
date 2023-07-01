@@ -38,7 +38,7 @@ const register = (yargs) => {
           neo4jPassword: process.env.NEO4J_PASSWORD || '',
         }
         const result = await operationSwitch(options)
-        console.log(JSON.stringify(result, null, 2))
+        console.info(JSON.stringify(result, null, 2))
       } else if (accept && input) {
         if (accept === contants.graphContentType) {
           const document = JSON.parse(
@@ -47,7 +47,7 @@ const register = (yargs) => {
               .toString(),
           )
           const graph = await jsongraph.fromDocument(document)
-          console.log(JSON.stringify({ graph }, null, 2))
+          console.info(JSON.stringify({ graph }, null, 2))
         }
         if (accept === contants.cypherContentType) {
           const document = JSON.parse(
@@ -57,7 +57,7 @@ const register = (yargs) => {
           )
           const graph = await jsongraph.fromDocument(document)
           const { query, params } = await cypher.fromJsonGraph(graph)
-          console.log(JSON.stringify({ query, params }, null, 2))
+          console.info(JSON.stringify({ query, params }, null, 2))
         }
         if (accept === contants.rawCypherContentType) {
           const document = JSON.parse(
@@ -68,9 +68,9 @@ const register = (yargs) => {
           const graph = await jsongraph.fromDocument(document)
           const { query, params } = await cypher.fromJsonGraph(graph)
           if (!unsafe) {
-            console.log(JSON.stringify({ query, params }, null, 2))
+            console.info(JSON.stringify({ query, params }, null, 2))
           }
-          console.log(cypher.makeInjectionVulnerable({ query, params }))
+          console.info(cypher.makeInjectionVulnerable({ query, params }))
         }
       }
     },

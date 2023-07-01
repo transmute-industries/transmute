@@ -57,13 +57,13 @@ const readableEdges = (graph: JsonGraph) => {
 
 const addVCDMVocab = (graph: JsonGraph) => {
   graph.edges.forEach((edge) => {
-    if (edge.label.startsWith('https://www.w3.org/2018/credentials')) {
+    if (edge.label && edge.label.startsWith('https://www.w3.org/2018/credentials')) {
       if (!predicatesNotLabels.includes(edge.label)) {
         addLabelsFromEdge(graph, 'target', edge.label, 'label')
       }
     }
-    if (edge.label.startsWith('https://w3id.org/security')) {
-      if (edge.target.startsWith('https://w3id.org/security')) {
+    if (edge.label && edge.label.startsWith('https://w3id.org/security')) {
+      if (edge.target && edge.target.startsWith('https://w3id.org/security')) {
         addLabelsFromEdge(graph, 'target', edge.label, 'target')
       } else {
         addLabelsFromEdge(graph, 'target', edge.label, 'label')

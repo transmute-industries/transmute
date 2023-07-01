@@ -88,7 +88,7 @@ const resources = {
         }
       }
       if (!pushNeo4j) {
-        console.log(JSON.stringify(results, null, 2))
+        console.info(JSON.stringify(results, null, 2))
       } else {
         const verifiablePresentations = results.items
         // if this is too much, we will need to import each vc one by one.
@@ -101,10 +101,10 @@ const resources = {
               neo4jPassword: process.env.NEO4J_PASSWORD || '',
             }
             const result = await operationSwitch(options)
-            console.log(JSON.stringify(result, null, 2))
+            console.info(JSON.stringify(result, null, 2))
           } catch (e) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            console.log(JSON.stringify({ error: (e as any).message }, null, 2))
+            console.info(JSON.stringify({ error: (e as any).message }, null, 2))
           }
         }
       }
