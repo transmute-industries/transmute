@@ -25,6 +25,15 @@ export const builder = (yargs) => {
       description: 'Detached payload',
       default: true
     })
+    .option('did-jwk', {
+      alias: 'did-jwk',
+      description: 'Use did:jwk',
+      default: true
+    })
+    .option('kid', {
+      alias: 'kid',
+      description: 'Key id',
+    })
     .option('input', {
       alias: 'i',
       description: 'File path as input',
