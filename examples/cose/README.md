@@ -27,3 +27,50 @@ npm run transmute -- graph \
 -->
 
 <img src="./public.verifying.jwk.png" />
+
+## Detached
+
+<!-- add back after fix bug ..... bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi.jpg -->
+
+```sh
+npm run build;
+
+npm run transmute -- cose key sign \
+--issuer-key examples/cose/private.signing.jwk.json \
+--input  examples/cose/payload \
+--output examples/cose/signature
+
+npm run transmute -- cose key verify \
+--verifier-key examples/cose/public.verifying.jwk.json \
+--input  examples/cose/payload \
+--signature examples/cose/signature \
+--output examples/cose/verified.json
+
+```
+
+
+<!-- ### Sign 
+
+
+```sh
+transmute key export \
+--input  examples/cose/private.signing.jwk.json \
+--output examples/cose/public.verifying.jwk.json
+```
+
+```sh
+npm run transmute -- cose key sign \
+--issuer-key examples/cose/private.signing.jwk.json \
+--input  examples/cose/bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi.jpg \
+--output examples/cose/bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi.cose
+```
+
+### Verify
+
+```sh
+npm run transmute -- cose key verify \
+--verifier-key examples/cose/public.verifying.jwk.json \
+--input  examples/cose/bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi.jpg \
+--signature examples/cose/bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi.cose \
+--output examples/cose/bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi.verified.json
+```  -->

@@ -7,11 +7,16 @@ import graph from './graph'
 
 import platform from './platform'
 
+import cose from './cose'
+
 const init = () => {
   yargs.scriptName('✨')
 
   // jose
   key.register(yargs)
+
+  // cose
+  yargs.command(cose)
 
   // vcdm
   controller.register(yargs)
