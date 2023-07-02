@@ -89,3 +89,22 @@ npm run transmute -- scitt receipt verify \
 --transparent-statement examples/scitt/statement.transparent.cose
 ```
 -->
+
+## Attach
+
+```sh
+transmute scitt receipt attach \
+--receipt  examples/scitt/statement.inclusion.cose \
+--signed-statement  examples/scitt/statement.cose  \
+--transparent-statement examples/scitt/statement.transparent.cose
+```
+
+## Detach
+
+```sh
+transmute scitt receipt detach \
+--receipt  examples/scitt/statement.inclusion.cose \
+--signed-statement  examples/scitt/statement.cose  \
+--transparent-statement examples/scitt/statement.transparent.cose
+```
+
