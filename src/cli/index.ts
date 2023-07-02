@@ -8,6 +8,7 @@ import graph from './graph'
 import platform from './platform'
 
 import cose from './cose'
+import scitt from './scitt'
 
 const init = () => {
   yargs.scriptName('✨')
@@ -17,6 +18,9 @@ const init = () => {
 
   // cose
   yargs.command(cose)
+
+  // scitt
+  yargs.command(scitt)
 
   // vcdm
   controller.register(yargs)
@@ -28,7 +32,7 @@ const init = () => {
 
   // neo4j
   graph.register(yargs)
-  
+
   yargs.help().alias('help', 'h').demandCommand().argv
 }
 

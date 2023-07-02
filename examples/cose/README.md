@@ -49,11 +49,6 @@ npm run transmute -- cose key verify \
 
 ### Sign 
 
-```sh
-transmute key export \
---input  examples/cose/private.signing.jwk.json \
---output examples/cose/public.verifying.jwk.json
-```
 
 ```sh
 transmute cose key sign \

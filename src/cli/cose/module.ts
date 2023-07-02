@@ -25,10 +25,9 @@ export const builder = (yargs) => {
       description: 'Detached payload',
       default: true
     })
-    .option('did-jwk', {
-      alias: 'did-jwk',
-      description: 'Use did:jwk',
-      default: true
+    .option('iss', {
+      alias: 'iss',
+      description: 'Issuer id',
     })
     .option('kid', {
       alias: 'kid',
