@@ -30,7 +30,18 @@ export const builder = (yargs) => {
       alias: 'o',
       description: 'File path as output',
     })
+    // cose / jose specific
+    .option('issuer-key', {
+      description: 'Path to issuer private key (jwk)',
+    })
+    .option('issuer-kid', {
+      description: 'Identifier to use for kid',
+    })
     // scitt specific
+    .option('transparency-service', {
+      description: 'Base URL of a scitt transparency service api',
+      default: 'http://localhost:3000/api/did:web:scitt.xyz'
+    })
     .option('statement', {
       description: 'Path to statement',
     })

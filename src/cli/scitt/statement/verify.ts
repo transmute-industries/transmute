@@ -3,15 +3,21 @@ import { default as detachedVerify } from '../../cose/key/verify'
 interface RequestVerifySignedStatement {
   detached: boolean // defaults to true
   verifierKey?: string // relative path to jwk
-  input: string // path to input file
-  signature: string // path to signature file
+  statement: string // path to input file
+  signedStatement: string // path to signature file
   output: string // path to output file
 }
 
 const verify = async (argv: RequestVerifySignedStatement) => {
-  const { verifierKey, input, signature, output } = argv
+  const { verifierKey, output } = argv
   // map to normal cose
-  return detachedVerify(argv)
+  return detachedVerify({
+    verifierKey,
+    input: argv.statement,
+    signature: argv.signedStatement,
+    output,
+    detached: true
+  })
 }
 
 export default verify

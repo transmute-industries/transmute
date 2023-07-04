@@ -2,7 +2,8 @@ import fs from "fs"
 import path from "path"
 
 import cose from "@transmute/cose"
-import transmute, { DidJwkUrl } from "@transmute/did-transmute"
+
+import getPublicKeyJwkFromKid from "../../../api/did/getPublicKeyJwkFromKid"
 
 interface RequestCoseVerify {
   detached: boolean // defaults to true
@@ -15,20 +16,20 @@ interface RequestCoseVerify {
 const verify = async (argv: RequestCoseVerify) => {
 
   const { verifierKey, input, signature, output } = argv
-  let publicKeyJwk;
+
   const payloadFromFile = fs.readFileSync(path.resolve(process.cwd(), input))
   const signatureFromFile = fs.readFileSync(path.resolve(process.cwd(), signature))
+
+  let publicKeyJwk;
+
   if (verifierKey) {
     publicKeyJwk = JSON.parse(
       fs.readFileSync(path.resolve(process.cwd(), verifierKey)).toString(),
     )
   } else {
     const kid = cose.getKid(signatureFromFile)
-    const doc = await transmute.did.jwk.dereference({
-      id: kid as DidJwkUrl,
-      documentLoader: transmute.did.jwk.documentLoader
-    })
-    publicKeyJwk = doc.publicKeyJwk
+    // todo: expose resolver options better here...
+    publicKeyJwk = await getPublicKeyJwkFromKid(kid)
   }
 
   const verifier = await cose.detached.verifier({ publicKeyJwk })

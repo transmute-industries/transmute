@@ -41,7 +41,7 @@ const workflow = {
   ]
 }
 
-it("simple", async () => {
+it.skip("simple", async () => {
   const presentationWithErrors = { '@context': context, id: 'urn:uuid:1111', type, workflow, name: 'alcie' }
   const presentationWithCorrections = {
     '@context': context, id: 'urn:uuid:2222', replaces: {

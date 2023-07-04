@@ -38,11 +38,13 @@ npm run build;
 
 npm run transmute -- scitt statement issue \
 --issuer-key examples/scitt/private.signing.jwk.json \
---input  examples/scitt/statement.jpg \
+--issuer-kid did:web:scitt.xyz#urn:ietf:params:oauth:jwk-thumbprint:sha-256:gP8lW7iRNl2u0oE99RtuAQ7hnpWQIfEF8f0n_tK_ch8 \
+--statement  examples/scitt/statement.jpg \
+--signed-statement examples/scitt/statement.cose
 
 npm run transmute -- scitt statement verify \
---input  examples/scitt/statement.jpg \
---signature examples/scitt/statement.cose \
+--statement  examples/scitt/statement.jpg \
+--signed-statement examples/scitt/statement.cose
 
 ```
 -->
@@ -52,16 +54,17 @@ npm run transmute -- scitt statement verify \
 ```sh
 transmute scitt statement issue \
 --issuer-key examples/scitt/private.signing.jwk.json \
---input  examples/scitt/statement.jpg \
---output examples/scitt/statement.cose
+--issuer-kid did:web:scitt.xyz#urn:ietf:params:oauth:jwk-thumbprint:sha-256:gP8lW7iRNl2u0oE99RtuAQ7hnpWQIfEF8f0n_tK_ch8 \
+--statement  examples/scitt/statement.jpg \
+--signed-statement examples/scitt/statement.cose
 ```
 
 ### Verify
 
 ```sh
 transmute scitt statement verify \
---input  examples/scitt/statement.jpg \
---signature examples/scitt/statement.cose \
+--statement  examples/scitt/statement.jpg \
+--signed-statement examples/scitt/statement.cose \
 ```
 
 ## Receipts
@@ -81,6 +84,8 @@ npm run transmute -- scitt receipt detach \
 --transparent-statement examples/scitt/statement.transparent.cose
 
 npm run transmute -- scitt receipt issue \
+--transparency-service https://scitt.xyz/api/did:web:scitt.xyz \
+--statement  examples/scitt/statement.jpg \
 --signed-statement  examples/scitt/statement.cose \
 --transparent-statement examples/scitt/statement.transparent.cose
 
@@ -108,3 +113,24 @@ transmute scitt receipt detach \
 --transparent-statement examples/scitt/statement.transparent.cose
 ```
 
+## Issue
+
+Assumes the transparency service has a registration policy that accepts statements signed by specific issuers, and that the statement provided is signed by one of those issuers.
+
+```sh
+transmute scitt receipt issue \
+--transparency-service https://scitt.xyz/api/did:web:scitt.xyz \
+--statement  examples/scitt/statement.jpg \
+--signed-statement  examples/scitt/statement.cose \
+--transparent-statement examples/scitt/statement.transparent.cose
+```
+
+## Verify
+
+Assumes the issuers of the signed statenment and the receipt are trusted by the client.
+
+```sh
+transmute scitt receipt verify \
+--statement  examples/scitt/statement.jpg \
+--transparent-statement examples/scitt/statement.transparent.cose
+```
