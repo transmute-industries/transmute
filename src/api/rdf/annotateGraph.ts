@@ -62,6 +62,11 @@ const addVCDMVocab = (graph: JsonGraph) => {
         addLabelsFromEdge(graph, 'target', edge.label, 'label')
       }
     }
+    if (edge.label && edge.label.startsWith('https://www.w3.org/ns/credentials/examples')) {
+      if (!predicatesNotLabels.includes(edge.label)) {
+        addLabelsFromEdge(graph, 'target', edge.label, 'label')
+      }
+    }
     if (edge.label && edge.label.startsWith('https://w3id.org/security')) {
       if (edge.target && edge.target.startsWith('https://w3id.org/security')) {
         addLabelsFromEdge(graph, 'target', edge.label, 'target')

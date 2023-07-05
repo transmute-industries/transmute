@@ -121,11 +121,20 @@ const fromPresentation = async (document: DataIntegrityDocument) => {
     const verifiableCredentials = Array.isArray(verifiableCredential)
       ? verifiableCredential
       : [verifiableCredential]
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const presentationGraphEdge: any = graph.edges.find((e) => {
+      return e.target === 'https://www.w3.org/2018/credentials#VerifiablePresentation'
+    })
     await Promise.all(
       verifiableCredentials.map(async (verifiableCredential) => {
         const credentialGraph = await fromCredential(verifiableCredential)
-        const presentationId = Object.keys(graph.nodes)[0]
-        const credentialId = Object.keys(credentialGraph.nodes)[0]
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const credentialGraphEdge: any = credentialGraph.edges.find((e) => {
+          return e.target === 'https://www.w3.org/2018/credentials#VerifiableCredential'
+        })
+        const presentationId = presentationGraphEdge.source
+        const credentialId = credentialGraphEdge.source;
         graph.nodes = { ...graph.nodes, ...credentialGraph.nodes }
         graph.edges = [
           ...graph.edges,
@@ -200,7 +209,7 @@ const fromFlattendJws = async (jws: {
   return claimsetGraph
 }
 
-const fromJsonWebKey = async (document: JsonWebKey ) => {
+const fromJsonWebKey = async (document: JsonWebKey) => {
   const did = await transmute.did.jwk.toDid(document as AsymmetricJsonWebKey);
   const doc = await transmute.did.jwk.resolve({
     id: did,
