@@ -1,0 +1,16 @@
+{
+  "protectedHeader": {
+    "typ": "vp+ld+jwt",
+    "alg": "ES384",
+    "kid": "did:web:scitt.xyz#urn:ietf:params:oauth:jwk-thumbprint:sha-256:gP8lW7iRNl2u0oE99RtuAQ7hnpWQIfEF8f0n_tK_ch8"
+  },
+  "claimset": {
+    "@context": [
+      "https://www.w3.org/ns/credentials/v2"
+    ],
+    "type": [
+      "VerifiablePresentation"
+    ],
+    "holder": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:_Fpfe27AuGmEljZE9s2lw2UH-qrZLRFNrWbJrWIe4SI"
+  }
+}

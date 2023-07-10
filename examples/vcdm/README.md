@@ -1,5 +1,7 @@
 # W3C Verifiable Credentials
 
+(JSON Serialization Experiment)
+
 ## Controllers
 
 ### JSON Controller

@@ -10,6 +10,8 @@ import platform from './platform'
 import cose from './cose'
 import scitt from './scitt'
 
+import w3c from './w3c'
+
 const init = () => {
   yargs.scriptName('✨')
 
@@ -22,16 +24,19 @@ const init = () => {
   // scitt
   yargs.command(scitt)
 
+  // w3c
+  yargs.command(w3c)
+
   // vcdm
   controller.register(yargs)
   credential.register(yargs)
   presentation.register(yargs)
 
-  //platform
-  yargs.command(platform)
-
   // neo4j
   graph.register(yargs)
+
+  // platform
+  yargs.command(platform)
 
   yargs.help().alias('help', 'h').demandCommand().argv
 }
