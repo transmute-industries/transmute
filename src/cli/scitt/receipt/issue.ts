@@ -24,8 +24,6 @@ const issue = async (argv: RequestIssueReceipt) => {
       "Content-Type": 'application/json'
     }
   })
-  console.log(response.status)
-  console.log(response.data)
   const { proof } = response.data
   const receipt = base64url.decode(proof)
   const signedStatementUnprotectedHeader = cose.unprotectedHeader.get(signedStatement)

@@ -2,6 +2,7 @@ import { default as detachedVerify } from '../../cose/key/verify'
 // scitt specific options
 interface RequestVerifySignedStatement {
   detached: boolean // defaults to true
+  didResolver: string
   verifierKey?: string // relative path to jwk
   statement: string // path to input file
   signedStatement: string // path to signature file
@@ -16,7 +17,7 @@ const verify = async (argv: RequestVerifySignedStatement) => {
     input: argv.statement,
     signature: argv.signedStatement,
     output,
-    detached: true
+    didResolver: argv.didResolver
   })
 }
 

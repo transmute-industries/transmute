@@ -1,16 +1,14 @@
 import fs from "fs"
 import path from "path"
-
+import axios from "axios"
 import cose from "@transmute/cose"
 
-import getPublicKeyJwkFromKid from "../../../api/did/getPublicKeyJwkFromKid"
-
 interface RequestCoseVerify {
-  detached: boolean // defaults to true
-  verifierKey?: string // relative path to jwk
   input: string // path to input file
   signature: string // path to signature file
   output?: string // path to output file
+  verifierKey?: string // relative path to jwk
+  didResolver: string
 }
 
 const verify = async (argv: RequestCoseVerify) => {
@@ -28,8 +26,16 @@ const verify = async (argv: RequestCoseVerify) => {
     )
   } else {
     const kid = cose.getKid(signatureFromFile)
-    // todo: expose resolver options better here...
-    publicKeyJwk = await getPublicKeyJwkFromKid(kid)
+    const response = await axios.get(argv.didResolver + '/' + kid, {
+      headers: {
+        "Content-Type": 'application/did+json'
+      }
+    })
+    const didDocument = response.data.didDocument ? response.data.didDocument : response.data
+    const vm = didDocument.verificationMethod.find((vm) => {
+      return kid?.endsWith(vm.id)
+    })
+    publicKeyJwk = vm.publicKeyJwk
   }
 
   const verifier = await cose.detached.verifier({ publicKeyJwk })
@@ -37,6 +43,7 @@ const verify = async (argv: RequestCoseVerify) => {
     payload: payloadFromFile,
     signature: signatureFromFile
   })
+
   const result = { verified }
 
   if (output) {

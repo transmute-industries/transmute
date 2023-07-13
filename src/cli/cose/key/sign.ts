@@ -8,25 +8,25 @@ interface RequestCoseSign {
   detached: boolean // defaults to true
   issuerKey: string // relative path to jwk
   input: string // path to input file
+  issuerKid?: string // kid
   output?: string // path to output file
-  iss?: string // issuer id
-  kid?: string // key identifier
   content_type?: string // media type
 }
 
 const sign = async (argv: RequestCoseSign) => {
-  const { issuerKey, input, output, kid, content_type } = argv
+  const { issuerKey, input, output, issuerKid, content_type } = argv
   const privateKeyJwk = JSON.parse(
     fs.readFileSync(path.resolve(process.cwd(), issuerKey)).toString(),
   )
   const payload = fs.readFileSync(path.resolve(process.cwd(), input))
   const signer = await cose.detached.signer({ privateKeyJwk })
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const protectedHeader: any = { alg: privateKeyJwk.alg, kid: privateKeyJwk.kid, }
 
   // set optional protected header
-  if (kid) {
-    protectedHeader.kid = kid
+  if (issuerKid) {
+    protectedHeader.kid = issuerKid
   }
   if (content_type) {
     protectedHeader.content_type = content_type

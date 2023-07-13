@@ -37,14 +37,16 @@ npm run transmute -- graph \
 npm run build;
 
 npm run transmute -- scitt statement issue \
---issuer-key examples/scitt/private.signing.jwk.json \
 --issuer-kid did:web:scitt.xyz#urn:ietf:params:oauth:jwk-thumbprint:sha-256:gP8lW7iRNl2u0oE99RtuAQ7hnpWQIfEF8f0n_tK_ch8 \
+--issuer-key examples/scitt/private.signing.jwk.json \
 --statement  examples/scitt/statement.jpg \
 --signed-statement examples/scitt/statement.cose
 
 npm run transmute -- scitt statement verify \
+--did-resolver https://transmute.id/api \
 --statement  examples/scitt/statement.jpg \
---signed-statement examples/scitt/statement.cose
+--signed-statement examples/scitt/statement.cose \
+--output examples/scitt/statement.cose.verified.json
 
 ```
 -->

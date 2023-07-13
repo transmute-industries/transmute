@@ -38,6 +38,10 @@ export const builder = (yargs) => {
       description: 'Identifier to use for kid',
     })
     // scitt specific
+    .option('did-resolver', {
+      description: 'Base URL of a did resolver api',
+      default: 'https://transmute.id/api'
+    })
     .option('transparency-service', {
       description: 'Base URL of a scitt transparency service api',
       default: 'http://localhost:3000/api/did:web:scitt.xyz'

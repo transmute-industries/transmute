@@ -2,14 +2,13 @@
 import fs from "fs"
 import path from "path"
 import cose from "@transmute/cose"
-
-import getPublicKeyJwkFromKid from "../../../api/did/getPublicKeyJwkFromKid"
-
+import axios from "axios"
 
 // scitt specific options
 interface RequestVerifyReceipt {
   statement: string // path to input file
   transparentStatement: string // path to input file
+  didResolver: string
 }
 
 const verify = async (argv: RequestVerifyReceipt) => {
@@ -22,8 +21,16 @@ const verify = async (argv: RequestVerifyReceipt) => {
   const signedStatement = cose.unprotectedHeader.set(transparentStatement, transparentStatementUnprotectedHeader)
   try {
     const kid = cose.getKid(signedStatement)
-    const publicKeyJwk = await getPublicKeyJwkFromKid(kid)
-
+    const response = await axios.get(argv.didResolver + '/' + kid, {
+      headers: {
+        "Content-Type": 'application/did+json'
+      }
+    })
+    const didDocument = response.data.didDocument ? response.data.didDocument : response.data
+    const vm = didDocument.verificationMethod.find((vm) => {
+      return kid?.endsWith(vm.id)
+    })
+    const publicKeyJwk = vm.publicKeyJwk
     const statementVerifier = await cose.detached.verifier({ publicKeyJwk })
     const isStatementVerified = (await statementVerifier).verify({
       payload: statement,
@@ -41,7 +48,16 @@ const verify = async (argv: RequestVerifyReceipt) => {
 
   try {
     const kid2 = cose.getKid(receipt)
-    const publicKeyJwk2 = await getPublicKeyJwkFromKid(kid2)
+    const response = await axios.get(argv.didResolver + '/' + kid2, {
+      headers: {
+        "Content-Type": 'application/did+json'
+      }
+    })
+    const didDocument = response.data.didDocument ? response.data.didDocument : response.data
+    const vm = didDocument.verificationMethod.find((vm) => {
+      return kid2?.endsWith(vm.id)
+    })
+    const publicKeyJwk2 = vm.publicKeyJwk
     const receiptVerifier = await cose.verifier({ publicKeyJwk: publicKeyJwk2 })
     const verifiedRoot = await cose.merkle.verify_inclusion_proof({
       leaf: cose.merkle.leaf(signedStatement),
