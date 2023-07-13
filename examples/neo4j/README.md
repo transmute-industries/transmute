@@ -133,3 +133,12 @@ transmute graph \
 
 <img src="./simple.png" />
 
+
+## Credential with 2 Schemas
+
+```sh
+transmute graph \
+--env '.env' \
+--input  'examples/neo4j/credential-schema.0.json'
+
+```
