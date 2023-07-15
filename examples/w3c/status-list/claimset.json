@@ -1,0 +1,18 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "https://example.com/credentials/status/3",
+  "type": [
+    "VerifiableCredential",
+    "StatusList2021Credential"
+  ],
+  "issuer": "https://key.transparency/issuer/42",
+  "validFrom": "2019-05-25T03:10:16.992Z",
+  "credentialSubject": {
+    "id": "https://example.com/credentials/status/3#list",
+    "type": "StatusList2021",
+    "statusPurpose": "revocation",
+    "encodedList": "H4sIAAAAAAAAA2MAAI3vAtIBAAAA"
+  }
+}

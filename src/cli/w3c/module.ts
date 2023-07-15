@@ -1,10 +1,14 @@
 
 import credential from "./credential"
 import presentation from "./presentation"
+import statusList from "./status-list"
+import controller from "./controller"
 
 export const resources = {
   credential,
-  presentation
+  presentation,
+  controller,
+  ['status-list']: statusList
 }
 
 export const command = 'w3c <resource> <action>'
