@@ -1,5 +1,7 @@
 import create from "./create"
 import add from "./add"
-const statusList = { create, add }
+import update from "./update"
+
+const statusList = { create, add, update }
 
 export default statusList

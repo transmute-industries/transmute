@@ -11,6 +11,7 @@ import cose from './cose'
 import scitt from './scitt'
 
 import w3c from './w3c'
+import dl from './digital-link'
 
 const init = () => {
   yargs.scriptName('✨')
@@ -26,6 +27,9 @@ const init = () => {
 
   // w3c
   yargs.command(w3c)
+
+  // digital-link
+  yargs.command(dl)
 
   // vcdm
   controller.register(yargs)
