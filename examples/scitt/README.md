@@ -30,7 +30,7 @@ npm run transmute -- graph \
 
 <img src="./public.verifying.jwk.png" />
 
-## Create Self Signed Certificate
+## Create Root Certificate
 
 <!--
 
@@ -60,7 +60,7 @@ transmute scitt certificate create \
 --subject-certificate examples/scitt/ca.cert.public.pem
 ```
 
-## Create User Certificate
+## Create Leaf Certificate
 
 <!--
 
@@ -79,6 +79,17 @@ npm run transmute -- scitt certificate create \
 -->
 
 ```sh
+transmute scitt certificate create \
+--alg ES256 \
+--valid-from 2020/01/01 \
+--valid-until 2020/01/03 \
+--issuer-private-key examples/scitt/ca.cert.private.jwk.json \
+--issuer-certificate examples/scitt/ca.cert.public.pem \
+--subject CN=Test CA \
+--subject-did did:web:issuer.key.transparency.example \
+--subject-private-key examples/scitt/user.private.jwk.json \
+--subject-public-key examples/scitt/user.public.jwk.json \
+--subject-certificate examples/scitt/user.cert.public.pem
 ```
 
 ## Create Controller
