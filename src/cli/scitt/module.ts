@@ -1,8 +1,9 @@
-
+import certificate from "./certificate"
 import statement from "./statement"
 import receipt from "./receipt"
 
 export const resources = {
+  certificate,
   statement,
   receipt
 }

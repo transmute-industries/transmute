@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" 
+		targetNamespace="http://softwareassuranceguardian.com/" 
+		version="1.1.4" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:SAG="http://softwareassuranceguardian.com/">
+<!-- 
+	Copyright and all other rights reserved by Reliable Energy Analytics, LLC (REA) 2018-2021. 
+	Licensed under Creative Commons 4.0 https://creativecommons.org/licenses/by/4.0/  
+
+DISCLAIMER OF WARRANTIES
+TO THE EXTENT NOT PROHIBITED BY LAW, REA HEREBY DISCLAIMS ALL EXPRESS OR IMPLIED REPRESENTATIONS, 
+WARRANTIES, GUARANTEES, AND CONDITIONS OF ANY KIND, ARISING BY LAW OR OTHERWISE, WITH REGARD TO THIS ARTIFACT, 
+INCLUDING BUT NOT LIMITED TO REPRESENTATIONS, WARRANTIES, GUARANTEES, AND CONDITIONS OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE, TITLE, NONINFRINGEMENT, AND QUALITY OF SERVICE.
+ 
+REA MAKES NO REPRESENTATIONS OR WARRANTIES REGARDING THE CONTENT, EFFECTIVENESS, USEFULNESS, RELIABILITY, 
+AVAILABILITY, TIMELINESS, QUALITY, SUITABILITY, ACCURACY OR COMPLETENESS OF THIS ARTIFACT OR THE 
+RESULTS YOU MAY OBTAIN BY USING THE ARTIFACT OR THAT THE ARTIFACT WILL BE ERROR-FREE.
+	
+--> 
+  
+
+    <element name="VendorResponse" type="SAG:VendorResponsetype"></element>
+
+    <complexType name="VendorResponsetype">
+    	<sequence>
+    		<element name="VendorLegalName" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="SupplierID" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="StreetAddress" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="City" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="StateOrProvince" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="ZipCode" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="Country" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="WebsiteURL" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="ContactTelephone" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="ContactEmail" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="ContactPerson" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="DUNSNumber" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="NAESBEIRID" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+
+    		<element name="CyberSecPolicyURL" type="string"
+    			maxOccurs="1" minOccurs="1">
+    		</element>
+    		<element name="FinancialDataURL" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="CompanyDataURL" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="Products" type="SAG:Products" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    	</sequence>
+    </complexType>
+
+
+
+    <complexType name="ProductType">
+    	<sequence>
+    		<element name="LicensorName" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="ProductName" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="Version" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="SBOM" type="SAG:SBOMType" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="SourceLocationURL" type="string"
+    			maxOccurs="1" minOccurs="1">
+    		</element>
+    		<element name="DigitallySigned" maxOccurs="1"
+    			minOccurs="1">
+    			<simpleType>
+    				<restriction base="string">
+    					<enumeration value="Y"></enumeration>
+    					<enumeration value="N"></enumeration>
+    				</restriction>
+    			</simpleType>
+    		</element>
+    		<element name="UnsolvedVulnerabilities" maxOccurs="1"
+    			minOccurs="1">
+    			<simpleType>
+    				<restriction base="string">
+    					<enumeration value="Y"></enumeration>
+    					<enumeration value="N"></enumeration>
+    				</restriction>
+    			</simpleType>
+    		</element>
+    		<element name="KnownVulnInfoURL" type="SAG:KnownVulnType" maxOccurs="1" minOccurs="1"></element>
+    		<element name="SDLCPolicyURL" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="SDLCEvidenceDataURL" type="string"
+    			maxOccurs="1" minOccurs="1">
+    		</element>
+    		<element name="CommercialStatus" maxOccurs="1"
+    			minOccurs="1">
+    			<simpleType>
+    				<restriction base="string">
+    					<enumeration value="Available"></enumeration>
+    					<enumeration value="Retired"></enumeration>
+    					<enumeration value="EOL"></enumeration>
+    					<enumeration value="BetaTest"></enumeration>
+    					<enumeration value="Pilot"></enumeration>
+    					<enumeration value="Abandoned"></enumeration>
+    				</restriction>
+    			</simpleType>
+    		</element>
+    		<element name="SupportStatus" maxOccurs="1" minOccurs="1">
+    			<simpleType>
+    				<restriction base="string">
+    					<enumeration value="Supported"></enumeration>
+    					<enumeration value="Unsupported"></enumeration>
+    					<enumeration value="Community"></enumeration>
+    				</restriction>
+    			</simpleType>
+    		</element>
+    		<element name="LastModifiedDateTimeUTC" type="dateTime"
+    			maxOccurs="1" minOccurs="1">
+    		</element>
+    	</sequence>
+
+    </complexType>
+
+  
+    <complexType name="Products">
+    	<sequence>
+    		<element name="Product" type="SAG:ProductType" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+
+
+    <attributeGroup name="SBOMAttrGrp">
+    	<attribute name="type">
+    		<simpleType>
+    			<restriction base="string">
+    				<enumeration value="spdx"></enumeration>
+    				<enumeration value="cycloneDX"></enumeration>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    	<attribute name="version" type="string"></attribute>
+    	<attribute name="format">
+    		<simpleType>
+    			<restriction base="string">
+    				<enumeration value="JSON"></enumeration>
+    				<enumeration value="XML"></enumeration>
+    				<enumeration value="TV"></enumeration>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    	<attribute name="DigitalSignatureURL" type="string"></attribute>
+    </attributeGroup>
+
+    <complexType name="SBOMType">
+    	<simpleContent>
+    		<extension base="string">
+    			<attributeGroup ref="SAG:SBOMAttrGrp"></attributeGroup>
+    		</extension>
+    	</simpleContent>
+    </complexType>
+
+
+
+    <complexType name="KnownVulnType">
+    	<simpleContent>
+    		<extension base="string">
+    			<attribute name="DocFormat">
+    				<simpleType>
+    					<restriction base="string">
+    						<enumeration value="Word"></enumeration>
+    						<enumeration value="PDF"></enumeration>
+    						<enumeration value="XML"></enumeration>
+    						<enumeration value="JSON"></enumeration>
+    						<enumeration value="HTML"></enumeration>
+    						<enumeration value="Text"></enumeration>
+    						<enumeration value="CDXVEX"></enumeration>
+    					</restriction>
+    				</simpleType>
+    			</attribute>
+    			<attribute name="DigitalSignatureURL" type="string"></attribute>
+    		</extension>
+    	</simpleContent>
+    </complexType>
+</schema>

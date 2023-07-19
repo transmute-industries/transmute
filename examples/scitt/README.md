@@ -30,6 +30,75 @@ npm run transmute -- graph \
 
 <img src="./public.verifying.jwk.png" />
 
+## Create Self Signed Certificate
+
+<!--
+
+npm run transmute -- scitt certificate create \
+--alg ES256 \
+--issuer CN=Test CA \
+--subject CN=Test CA \
+--valid-from 2020/01/01 \
+--valid-until 2020/01/03 \
+--subject-guid f81d4fae-7dec-11d0-a765-00a0c91e6bf6 \
+--subject-did did:web:root.transparency.example \
+--subject-private-key examples/scitt/ca.cert.private.jwk.json \
+--subject-certificate examples/scitt/ca.cert.public.pem
+
+-->
+
+```sh
+transmute scitt certificate create \
+--alg ES256 \
+--valid-from 2020/01/01 \
+--valid-until 2020/01/03 \
+--issuer CN=Test CA \
+--subject CN=Test CA \
+--subject-guid f81d4fae-7dec-11d0-a765-00a0c91e6bf6 \
+--subject-did did:web:root.transparency.example \
+--subject-private-key examples/scitt/ca.cert.private.jwk.json \
+--subject-certificate examples/scitt/ca.cert.public.pem
+```
+
+## Create User Certificate
+
+<!--
+
+npm run transmute -- scitt certificate create \
+--alg ES256 \
+--valid-from 2020/01/01 \
+--valid-until 2020/01/03 \
+--issuer-private-key examples/scitt/ca.cert.private.jwk.json \
+--issuer-certificate examples/scitt/ca.cert.public.pem \
+--subject CN=Test CA \
+--subject-did did:web:issuer.key.transparency.example \
+--subject-private-key examples/scitt/user.private.jwk.json \
+--subject-public-key examples/scitt/user.public.jwk.json \
+--subject-certificate examples/scitt/user.cert.public.pem
+
+-->
+
+```sh
+```
+
+## Create Controller
+
+<!--
+
+npm run transmute -- scitt certificate controller \
+--subject-did did:web:issuer.key.transparency.example \
+--subject-public-key examples/scitt/user.public.jwk.json \
+--controller examples/scitt/user.did.json
+
+-->
+
+```sh
+transmute scitt certificate controller \
+--subject-did did:web:issuer.key.transparency.example \
+--subject-public-key examples/scitt/user.public.jwk.json \
+--controller examples/scitt/user.did.json
+```
+
 ## Statements
 
 <!-- 

@@ -30,6 +30,16 @@ npm run transmute -- w3c status-list create \
 --claimset examples/w3c/status-list/claimset.json
 -->
 
+```sh
+transmute w3c status-list create \
+--id https://status-list.vc/1 \
+--issuer did:web:status-list.vc \
+--valid-from 2032-07-15T12:00:00.992Z \
+--purpose revocation \
+--length 8 \
+--claimset 1/claimset.json
+```
+
 ## Compute Issuer ID
 
 <!--
@@ -37,6 +47,12 @@ npm run transmute -- w3c controller create \
 --issuer-key examples/w3c/status-list/public.verifying.jwk.json \
 --controller examples/w3c/status-list/did.json
 -->
+
+```sh
+transmute w3c controller create \
+--issuer-key examples/w3c/status-list/public.verifying.jwk.json \
+--controller examples/w3c/status-list/did.json
+```
 
 ```sh
 jq -r '.id' examples/w3c/status-list/did.json
