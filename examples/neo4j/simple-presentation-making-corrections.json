@@ -11,13 +11,14 @@
         "@type": "@json"
       },
       "workflow": {
+        "@id": "https://w3id.org/traceability#workflow",
         "@context": {
           "definition": {
-            "@id": "https://w3id.org/traceability#definition",
+            "@id": "https://w3id.org/traceability#workflow-definition",
             "@type": "@id"
           },
           "instance": {
-            "@id": "https://w3id.org/traceability#instance",
+            "@id": "https://w3id.org/traceability#workflow-instance",
             "@type": "@id"
           }
         }
