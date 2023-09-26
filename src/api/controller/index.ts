@@ -42,7 +42,7 @@ const did = {
         ],
       }
       relationships[publicKeyJwk.alg].forEach((vmr) => {
-        ddoc[vmr] = [id]
+        ddoc[vmr] = ['#0']
       })
       return ddoc
     },

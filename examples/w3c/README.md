@@ -14,6 +14,24 @@ transmute key export \
 --output examples/w3c/public.verifying.jwk.json
 ```
 
+### JSON-LD Controller Document
+
+```sh
+transmute controller create \
+--accept 'application/did+ld+json' \
+--id     'did:web:example.com' \
+--input  'examples/w3c/public.verifying.jwk.json' \
+--output 'examples/w3c/did.json'
+```
+
+<!-- 
+npm run transmute -- controller create \
+--accept 'application/did+ld+json' \
+--id  'did:web:example.com' \
+--input  'examples/w3c/public.verifying.jwk.json' \
+--output 'examples/w3c/did.json'
+-->
+
 ### Issue Verifiable Credential
 
 <!-- 
