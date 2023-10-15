@@ -1,5 +1,6 @@
 
 import key from "./key"
+import diagnostic from "./diagnostic"
 
 export const command = 'cose <resource> <action>'
 
@@ -44,7 +45,8 @@ export const builder = (yargs) => {
 }
 
 const resources = {
-  key
+  key,
+  diagnostic
 }
 
 export const handler = async function (argv) {

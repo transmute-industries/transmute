@@ -1,6 +1,26 @@
 
 # CBOR Object Signing and Encryption (cose)
 
+```bash
+npm i -g @transmute/cli
+```
+
+### Diagnostic 
+
+<!--
+
+npm run transmute -- cose diagnostic diagnose \
+--input  examples/cose/inclusion-proof.cose \
+--output examples/cose/diagnostic.md
+-->
+
+```sh
+transmute cose diagnostic diagnose \
+--input  examples/cose/inclusion-proof.cose \
+--output examples/cose/diagnostic.md
+```
+
+
 ## Create Private Signing Key
 
 ```sh
@@ -65,3 +85,4 @@ transmute cose key verify \
 --signature examples/cose/bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi.cose \
 --output examples/cose/bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi.verified.json
 ```
+
