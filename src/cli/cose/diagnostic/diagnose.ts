@@ -13,15 +13,16 @@ const diagnose = async (argv: RequestDiagnose) => {
   const { input, output } = argv
 
   const payload = fs.readFileSync(path.resolve(process.cwd(), input))
-  const result = await cose.rfc.diag(payload)
+  const items = await cose.rfc.diag(payload)
+  const markdown = await cose.rfc.blocks(items)
   if (output) {
     fs.writeFileSync(
       path.resolve(process.cwd(), output),
-      result
+      markdown
     )
   } else {
 
-    console.info(result)
+    console.info(markdown)
   }
 
 }

@@ -216,3 +216,62 @@ transmute scitt receipt verify \
 --statement  examples/scitt/statement.jpg \
 --transparent-statement examples/scitt/statement.transparent.cose
 ```
+
+
+<!-- Local ledger api -->
+
+# Local Ledger
+
+<!--
+npm run transmute -- scitt statement issue \
+--issuer-key examples/scitt/private.signing.jwk.json \
+--statement  examples/scitt/statement1.text \
+--signed-statement examples/scitt/statement1.cose
+
+npm run transmute -- cose diagnostic diagnose \
+--input  examples/scitt/statement1.cose \
+--output examples/scitt/statement1.md
+
+npm run transmute -- scitt statement issue \
+--issuer-key examples/scitt/private.signing.jwk.json \
+--statement  examples/scitt/statement2.text \
+--signed-statement examples/scitt/statement2.cose
+
+npm run transmute -- cose diagnostic diagnose \
+--input  examples/scitt/statement2.cose \
+--output examples/scitt/statement2.md
+
+-->
+
+## Append to Ledger
+
+<!--
+
+npm run transmute -- scitt ledger append \
+--issuer-key examples/scitt/private.signing.jwk.json \
+--signed-statement  examples/scitt/statement1.cose \
+--transparent-statement examples/scitt/statement1.transparent.cose \
+--ledger  examples/scitt/db.sqlite
+
+npm run transmute -- cose diagnostic diagnose \
+--input  examples/scitt/statement1.transparent.cose \
+--output examples/scitt/statement1.transparent.md
+
+npm run transmute -- scitt ledger append \
+--issuer-key examples/scitt/private.signing.jwk.json \
+--signed-statement  examples/scitt/statement2.cose \
+--transparent-statement examples/scitt/statement2.transparent.cose \
+--ledger  examples/scitt/db.sqlite
+
+npm run transmute -- cose diagnostic diagnose \
+--input  examples/scitt/statement2.transparent.cose \
+--output examples/scitt/statement2.transparent.md
+
+
+npm run transmute -- scitt transparency verify \
+--statement  examples/scitt/statement2.text \
+--transparent-statement examples/scitt/statement2.transparent.cose \
+--issuer-key examples/scitt/public.verifying.jwk.json \
+--transparency-service-key examples/scitt/public.verifying.jwk.json
+
+-->

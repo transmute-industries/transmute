@@ -50,7 +50,8 @@ const appendToLog = async (db: AsyncDatabase, value: LeafValue) => {
   if (maybeRecord) {
     return maybeRecord
   }
-  return db.run(`INSERT INTO ${scittLedgerTableName} (leaf) VALUES (?)`, value);
+  await db.run(`INSERT INTO ${scittLedgerTableName} (leaf) VALUES (?)`, value);
+  return entryByValue(db, value)
 }
 
 const ensureLeafText = (value: LeafValue) => {
@@ -58,12 +59,12 @@ const ensureLeafText = (value: LeafValue) => {
   if (!valid) {
     throw new Error('leaf must be hexidecimal and lower case string.')
   }
+
 }
 
 const transparency_log = (pathToDb: string) => {
   let db;
   const logInterface = {
-    db,
     create: async () => {
       db = await AsyncDatabase.open(pathToDb);
       try {
@@ -73,10 +74,10 @@ const transparency_log = (pathToDb: string) => {
       }
       return logInterface
     },
-    append: async (leaf: LeafValue) => {
+    append: async (leaf: LeafValue): Promise<LogEntry> => {
       ensureLeafText(leaf)
-      await appendToLog(db, leaf)
-      return logInterface
+      const record = await appendToLog(db, leaf)
+      return record as LogEntry
     },
     getByIndex: async (index: LeafIndex): Promise<LogEntry | undefined> => {
       return entryByIndex(db, index)

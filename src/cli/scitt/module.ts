@@ -1,11 +1,15 @@
 import certificate from "./certificate"
 import statement from "./statement"
 import receipt from "./receipt"
+import ledger from "./ledger"
+import transparency from "./transparency"
 
 export const resources = {
   certificate,
   statement,
-  receipt
+  receipt,
+  ledger,
+  transparency
 }
 
 export const command = 'scitt <resource> <action>'
