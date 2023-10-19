@@ -1,12 +1,10 @@
 
-import credential from "./credential"
-import presentation from "./presentation"
+import vc from "./vc"
 import statusList from "./status-list"
 import controller from "./controller"
 
 export const resources = {
-  credential,
-  presentation,
+  vc,
   controller,
   ['status-list']: statusList
 }
