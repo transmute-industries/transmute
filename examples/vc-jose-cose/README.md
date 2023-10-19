@@ -3,6 +3,11 @@
 
 - https://www.w3.org/TR/vc-jose-cose/
 
+```bash
+npm i -g @transmute/cli
+```
+
+
 ### Create Private Signing Key
 
 ```sh
@@ -22,7 +27,7 @@ transmute key export \
 ### Issue Credential
 
 ```sh
-npm run transmute -- w3c vc issue \
+transmute w3c vc issue \
 --issuer-key examples/vc-jose-cose/private.signing.jwk.json \
 --holder-key examples/vc-jose-cose/public.verifying.jwk.json \
 --claimset  examples/vc-jose-cose/issuance-claims.yaml \
@@ -32,7 +37,7 @@ npm run transmute -- w3c vc issue \
 ### Disclose Presentation
 
 ```sh
-npm run transmute -- w3c vc disclose \
+transmute w3c vc disclose \
 --holder-key examples/vc-jose-cose/private.signing.jwk.json \
 --audience verifier.example \
 --nonce challenge.example \
@@ -44,7 +49,7 @@ npm run transmute -- w3c vc disclose \
 ### Presentation Verify
 
 ```sh
-npm run transmute -- w3c vc verify \
+transmute w3c vc verify \
 --issuer-key examples/vc-jose-cose/public.verifying.jwk.json \
 --holder-key examples/vc-jose-cose/public.verifying.jwk.json \
 --audience verifier.example \
@@ -56,7 +61,7 @@ npm run transmute -- w3c vc verify \
 ### Verification Validate
 
 ```sh
-npm run transmute -- w3c vc validate \
+transmute w3c vc validate \
 --transparency-service https://dune.did.ai \
 --verification examples/vc-jose-cose/vp.sd-jwt.verification.json
 ```
@@ -64,7 +69,7 @@ npm run transmute -- w3c vc validate \
 ### Update Credential Status
 
 ```sh
-npm run transmute -- w3c vc status \
+transmute w3c vc status \
 --verification examples/vc-jose-cose/vp.sd-jwt.verification.json \
 --verifiable-credential examples/vc-jose-cose/status-list.vc.sd-jwt \
 --revocation false
