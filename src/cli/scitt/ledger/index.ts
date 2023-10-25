@@ -1,5 +1,5 @@
-import append from "./append"
+import receipt from "./receipt"
 
-const ledger = { append }
+const ledger = { receipt }
 
 export default ledger

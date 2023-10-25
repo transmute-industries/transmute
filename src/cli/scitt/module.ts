@@ -1,18 +1,19 @@
-import certificate from "./certificate"
+
+import key from './key'
 import statement from "./statement"
-import receipt from "./receipt"
 import ledger from "./ledger"
-import transparency from "./transparency"
+import transparent from "./transparent"
+import certificate from "./certificate"
 
 export const resources = {
   certificate,
+  key,
   statement,
-  receipt,
   ledger,
-  transparency
+  transparent,
 }
 
-export const command = 'scitt <resource> <action>'
+export const command = 'scitt <resource> <action> [action2]'
 
 export const describe = 'scitt operations'
 
@@ -67,12 +68,13 @@ export const builder = (yargs) => {
     .option('transparent-statement', {
       description: 'Path to transparent-statement',
     })
-
 }
 
 export const handler = async function (argv) {
-  const { resource, action } = argv
-  if (resources[resource][action]) {
+  const { resource, action, action2 } = argv
+  if (action2) {
+    resources[resource][action][action2](argv)
+  } else if (resources[resource][action]) {
     resources[resource][action](argv)
   }
 }

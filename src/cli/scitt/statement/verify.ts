@@ -1,24 +1,38 @@
-import { default as detachedVerify } from '../../cose/key/verify'
-// scitt specific options
-interface RequestVerifySignedStatement {
-  detached: boolean // defaults to true
-  didResolver: string
-  verifierKey?: string // relative path to jwk
-  statement: string // path to input file
-  signedStatement: string // path to signature file
-  output: string // path to output file
+import fs from 'fs'
+import path from 'path'
+
+import cose from '@transmute/cose'
+
+type RequestScittStatementVerify = {
+  issuerKey: string
+  statement: string
+  signedStatement: string
+  output?: string
 }
 
-const verify = async (argv: RequestVerifySignedStatement) => {
-  const { verifierKey, output } = argv
-  // map to normal cose
-  return detachedVerify({
-    verifierKey,
-    input: argv.statement,
-    signature: argv.signedStatement,
-    output,
-    didResolver: argv.didResolver
+const verify = async (argv: RequestScittStatementVerify) => {
+  const publicCoseKey = fs.readFileSync(path.resolve(process.cwd(), argv.issuerKey))
+  const publicCoseKeyMap = cose.cbor.decode(publicCoseKey)
+  const statement = fs.readFileSync(path.resolve(process.cwd(), argv.statement))
+  const signedStatement = fs.readFileSync(path.resolve(process.cwd(), argv.signedStatement))
+
+  const verification = await cose.scitt.statement.verify({
+    statement,
+    signedStatement,
+    publicCoseKey: publicCoseKeyMap
   })
+
+  const result = JSON.stringify({ verification }, null, 2)
+
+  if (argv.output) {
+    fs.writeFileSync(
+      path.resolve(process.cwd(), argv.signedStatement),
+      Buffer.from(result)
+    )
+  } else {
+    console.log(result)
+  }
+
 }
 
 export default verify

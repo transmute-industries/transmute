@@ -4,8 +4,7 @@ import path from "path"
 import crypto from 'crypto'
 import x509 from '@peculiar/x509'
 import * as jose from 'jose'
-
-import cose from '@transmute/cose'
+import controller from "../../../api/controller"
 
 // https://github.com/PeculiarVentures/x509
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,6 +66,73 @@ const algTowebCryptoParams = {
 }
 
 
+const createLeafCertificate = async (argv: RequestCertificate) => {
+  const issuerCert = fs.readFileSync(path.resolve(process.cwd(), argv.issuerCertificate))
+  const caCert = new x509.X509Certificate(issuerCert.toString())
+  const alg = algTowebCryptoParams[argv.alg]
+  const userKeys = await crypto.subtle.generateKey(alg, extractable, ["sign", "verify"]);
+  const issuerPrivateKey = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), argv.issuerPrivateKey)).toString())
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const extensions: any = []
+  if (argv.subjectGuid) {
+    extensions.push({
+      type: 'guid', value: argv.subjectGuid
+    })
+  }
+  if (argv.subjectDid) {
+    extensions.push({
+      type: 'url', value: argv.subjectDid
+    })
+  }
+  const userCert = await x509.X509CertificateGenerator.create({
+    serialNumber: "01",
+    subject: argv.subject,
+    issuer: caCert.issuer,
+    notBefore: new Date(argv.validFrom),
+    notAfter: new Date(argv.validUntil),
+    signingAlgorithm: alg,
+    publicKey: userKeys.publicKey, // leaf public key
+    signingKey: await crypto.subtle.importKey(
+      "jwk",
+      issuerPrivateKey,
+      algTowebCryptoParams[issuerPrivateKey.alg],
+      true,
+      ["sign"],
+    ), // root private key
+    extensions: [
+      new x509.SubjectAlternativeNameExtension(extensions),
+      await x509.SubjectKeyIdentifierExtension.create(userKeys.publicKey)
+    ]
+  });
+  // prepare cert chain
+  const chain = new x509.X509ChainBuilder({
+    certificates: [
+      caCert,
+    ],
+  });
+  const items = await chain.build(userCert);
+  const x5c = items.map((cert) => {
+    return cert.toString('base64')
+  })
+  // export use keys as jwks with cert chain
+  const ecPublicKey = await jose.importX509(userCert.toString(), argv.alg)
+  const userPublicKeyJwk = await jose.exportJWK(ecPublicKey)
+  userPublicKeyJwk.kid = await jose.calculateJwkThumbprintUri(userPublicKeyJwk)
+  userPublicKeyJwk.alg = argv.alg
+  userPublicKeyJwk.x5c = x5c
+  const userPrivateKeyJwk = {
+    ...userPublicKeyJwk,
+    ...await jose.exportJWK(userKeys.privateKey)
+  }
+  delete userPrivateKeyJwk.x5c
+  const certPem = userCert.toString()
+  return {
+    subjectCertificate: certPem,
+    subjectPublicKey: userPublicKeyJwk,
+    subjectPrivateKey: userPrivateKeyJwk
+  }
+}
+
 const createRootCertificate = async (argv: RequestCertificate) => {
   const alg = algTowebCryptoParams[argv.alg]
   const caKeys = await crypto.subtle.generateKey(alg, extractable, ["sign", "verify"]);
@@ -100,119 +166,41 @@ const createRootCertificate = async (argv: RequestCertificate) => {
   const privateKeyJwk = await jose.exportJWK(caKeys.privateKey)
   privateKeyJwk.alg = argv.alg;
   privateKeyJwk.kid = await jose.calculateJwkThumbprintUri(privateKeyJwk)
+
   const publicKeyJwk = await jose.exportJWK(caKeys.publicKey)
   publicKeyJwk.alg = argv.alg;
   publicKeyJwk.kid = await jose.calculateJwkThumbprintUri(publicKeyJwk)
-
   return {
     subjectCertificate: certPem,
-    subjectPublicKey: JSON.stringify(publicKeyJwk, null, 2),
-    subjectPrivateKey: JSON.stringify(privateKeyJwk, null, 2),
+    subjectPublicKey: publicKeyJwk,
+    subjectPrivateKey: privateKeyJwk
   }
 
 }
-
-
-
-const createLeafCertificate = async (argv: RequestCertificate) => {
-  const issuerCert = fs.readFileSync(path.resolve(process.cwd(), argv.issuerCertificate))
-  const caCert = new x509.X509Certificate(issuerCert.toString())
-  const alg = algTowebCryptoParams[argv.alg]
-  const userKeys = await crypto.subtle.generateKey(alg, extractable, ["sign", "verify"]);
-
-  const issuerPrivateKeyCose = fs.readFileSync(path.resolve(process.cwd(), argv.issuerPrivateKey))
-  const issuerPrivateKey = cose.key.exportJWK(cose.cbor.decode(issuerPrivateKeyCose))
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const extensions: any = []
-  if (argv.subjectGuid) {
-    extensions.push({
-      type: 'guid', value: argv.subjectGuid
-    })
-  }
-  if (argv.subjectDid) {
-    extensions.push({
-      type: 'url', value: argv.subjectDid
-    })
-  }
-  const userCert = await x509.X509CertificateGenerator.create({
-    serialNumber: "01",
-    subject: argv.subject,
-    issuer: caCert.issuer,
-    notBefore: new Date(argv.validFrom),
-    notAfter: new Date(argv.validUntil),
-    signingAlgorithm: alg,
-    publicKey: userKeys.publicKey, // leaf public key
-    signingKey: await crypto.subtle.importKey(
-      "jwk",
-      issuerPrivateKey,
-      alg,
-      true,
-      ["sign"],
-    ), // root private key
-    extensions: [
-      new x509.SubjectAlternativeNameExtension(extensions),
-      await x509.SubjectKeyIdentifierExtension.create(userKeys.publicKey)
-    ]
-  });
-  // prepare cert chain
-  const chain = new x509.X509ChainBuilder({
-    certificates: [
-      caCert,
-    ],
-  });
-  const items = await chain.build(userCert);
-  const x5c = items.map((cert) => {
-    return cert.toString('base64')
-  })
-  // export use keys as jwks with cert chain
-  const ecPublicKey = await jose.importX509(userCert.toString(), argv.alg)
-  const userPublicKeyJwk = await jose.exportJWK(ecPublicKey)
-  userPublicKeyJwk.kid = await jose.calculateJwkThumbprintUri(userPublicKeyJwk)
-  userPublicKeyJwk.alg = argv.alg
-  userPublicKeyJwk.x5c = x5c
-  const userPrivateKeyJwk = {
-    ...userPublicKeyJwk,
-    ...await jose.exportJWK(userKeys.privateKey)
-  }
-  delete userPrivateKeyJwk.x5c
-  const certPem = userCert.toString()
-  return {
-    subjectCertificate: certPem,
-    subjectPublicKey: JSON.stringify(userPublicKeyJwk, null, 2),
-    subjectPrivateKey: JSON.stringify(userPrivateKeyJwk, null, 2),
-  }
-}
-
 
 const create = async (argv: RequestCertificate) => {
   let cert;
-  if (!argv.issuerCertificate) {
-    // root cert
-    cert = await createRootCertificate(argv)
-    const subjectPrivateKey = cose.cbor.encode(cose.key.importJWK(JSON.parse(cert.subjectPrivateKey)))
+  if (argv.issuerCertificate) {
+    // leaf cert
+    cert = await createLeafCertificate(argv)
+    fs.writeFileSync(
+      path.resolve(process.cwd(), argv.subjectPublicKey),
+      Buffer.from(JSON.stringify(controller.key.format(cert.subjectPublicKey), null, 2))
+    )
     fs.writeFileSync(
       path.resolve(process.cwd(), argv.subjectPrivateKey),
-      Buffer.from(subjectPrivateKey)
+      Buffer.from(JSON.stringify(controller.key.format(cert.subjectPrivateKey), null, 2))
     )
     fs.writeFileSync(
       path.resolve(process.cwd(), argv.subjectCertificate),
       Buffer.from(cert.subjectCertificate)
     )
-
   } else {
-    // leaf cert
-    cert = await createLeafCertificate(argv)
-
-    const subjectPublicKey = cose.cbor.encode(cose.key.importJWK(JSON.parse(cert.subjectPublicKey)))
-    const subjectPrivateKey = cose.cbor.encode(cose.key.importJWK(JSON.parse(cert.subjectPrivateKey)))
-
-    fs.writeFileSync(
-      path.resolve(process.cwd(), argv.subjectPublicKey),
-      Buffer.from(subjectPublicKey)
-    )
+    // root cert
+    cert = await createRootCertificate(argv)
     fs.writeFileSync(
       path.resolve(process.cwd(), argv.subjectPrivateKey),
-      Buffer.from(subjectPrivateKey)
+      Buffer.from(JSON.stringify(controller.key.format(cert.subjectPrivateKey), null, 2))
     )
     fs.writeFileSync(
       path.resolve(process.cwd(), argv.subjectCertificate),

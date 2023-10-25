@@ -2,129 +2,165 @@
 
 - [datatracker](https://datatracker.ietf.org/wg/scitt/about/)
 
+
 ## Create Private Signing Key
 
 ```sh
-transmute key generate \
---alg ES384 \
---output examples/scitt/private.signing.jwk.json
+npm run transmute -- scitt key generate \
+--alg -35 \
+--output examples/scitt/artifacts/privateKey.cose
 ```
 
 ## Export Public Verification Key
 
 ```sh
-transmute key export \
---input  examples/scitt/private.signing.jwk.json \
---output examples/scitt/public.verifying.jwk.json
+npm run transmute -- scitt key export \
+--input  examples/scitt/artifacts/privateKey.cose \
+--output examples/scitt/artifacts/publicKey.cose
 ```
 
-## Sign Statements
+## View COSE Keys as Diagnostic
 
-```bash
-transmute scitt statement issue \
---issuer-key examples/scitt/private.signing.jwk.json \
---statement  examples/scitt/statement1.text \
---signed-statement examples/scitt/statement1.cose
+```sh
+npm run transmute -- scitt key diagnose \
+--input  examples/scitt/artifacts/privateKey.cose \
+--output examples/scitt/artifacts/privateKey.cose.diag
 ```
 
-```bash
-transmute scitt statement issue \
---issuer-key examples/scitt/private.signing.jwk.json \
---statement  examples/scitt/statement2.text \
---signed-statement examples/scitt/statement2.cose
+If the output is markdown, the diagnostic is wrapped in markdown code blocks:
+
+```sh
+npm run transmute -- scitt key diagnose \
+--input  examples/scitt/artifacts/publicKey.cose \
+--output examples/scitt/artifacts/publicKey.cose.md
 ```
 
-## Append Signature to Transparency Log
+## Sign Statement
 
-```bash
-transmute scitt ledger append \
---issuer-key examples/scitt/private.signing.jwk.json \
---signed-statement  examples/scitt/statement1.cose \
---transparent-statement examples/scitt/statement1.transparent.cose \
---ledger  examples/scitt/db.sqlite
+```sh
+npm run transmute -- scitt statement issue \
+--iss urn:example:123 \
+--sub urn:example:456 \
+--issuer-key examples/scitt/artifacts/privateKey.cose \
+--statement  examples/scitt/artifacts/SAGVendorResponseSAMPLE.xml \
+--signed-statement examples/scitt/artifacts/SAGVendorResponseSAMPLE.xml.cose
 ```
 
-```bash
-transmute scitt ledger append \
---issuer-key examples/scitt/private.signing.jwk.json \
---signed-statement  examples/scitt/statement2.cose \
---transparent-statement examples/scitt/statement2.transparent.cose \
---ledger  examples/scitt/db.sqlite
+```sh
+npm run transmute -- scitt statement issue \
+--iss urn:example:123 \
+--sub urn:example:456 \
+--issuer-key examples/scitt/artifacts/privateKey.cose \
+--statement  examples/scitt/artifacts/sbom-tool.spdx.json \
+--signed-statement examples/scitt/artifacts/sbom-tool.spdx.json.cose
 ```
 
-## Verify Transparency
+## View Signed Statement as Diagnostic
 
-```bash
-transmute scitt transparency verify \
---statement  examples/scitt/statement2.text \
---transparent-statement examples/scitt/statement2.transparent.cose \
---issuer-key examples/scitt/public.verifying.jwk.json \
---transparency-service-key examples/scitt/public.verifying.jwk.json
+
+```sh
+npm run transmute -- scitt statement diagnose \
+--input  examples/scitt/artifacts/sbom-tool.spdx.json.cose \
+--output examples/scitt/artifacts/sbom-tool.spdx.json.cose.md
 ```
 
-## Diagnostic of Transparent Statement
+## Verify Signed Statement
 
-```bash
-transmute cose diagnostic diagnose \
---input  examples/scitt/statement2.transparent.cose \
---output examples/scitt/statement2.transparent.md
+```sh
+npm run transmute -- scitt statement verify \
+--issuer-key examples/scitt/artifacts/publicKey.cose \
+--statement  examples/scitt/artifacts/sbom-tool.spdx.json \
+--signed-statement examples/scitt/artifacts/sbom-tool.spdx.json.cose
 ```
 
-### Transparent Statement
+## Create Transparent Statement
 
-~~~~ cbor-diag
-18(                                 / COSE Single Signer Data Object        /
-    [
-      h'a3013822...6c61696e',       / Protected header                      /
-      {                             / Unprotected header                    /
-        300: [                      / Receipts (1)                          /
-          h'd284585f...419c8ec0'    / Receipt 1                             /
-        ]
-      },
-      h'',                          / Detached payload                      /
-      h'b8552367...e8235a07'        / Signature                             /
-    ]
-)
-~~~~
+```sh
+npm run transmute -- scitt ledger receipt issue \
+--iss urn:example:789 \
+--sub urn:example:abc \
+--issuer-key examples/scitt/artifacts/privateKey.cose \
+--signed-statement  examples/scitt/artifacts/sbom-tool.spdx.json.cose \
+--transparent-statement examples/scitt/artifacts/sbom-tool.spdx.json.ts.cose \
+--ledger  examples/scitt/artifacts/ledger.sqlite
+```
 
-~~~~ cbor-diag
-{                                   / Protected header                      /
-  1: -35,                           / Cryptographic algorithm to use        /
-  4: h'75726e3a...5f636838',        / Key identifier                        /
-  3: "text/plain"                   / Content type of the payload           /
-}
-~~~~
+```sh
+npm run transmute -- scitt ledger receipt issue \
+--iss urn:example:789 \
+--sub urn:example:abc \
+--issuer-key examples/scitt/artifacts/privateKey.cose \
+--signed-statement  examples/scitt/artifacts/SAGVendorResponseSAMPLE.xml.cose \
+--transparent-statement examples/scitt/artifacts/SAGVendorResponseSAMPLE.xml.ts.cose \
+--ledger  examples/scitt/artifacts/ledger.sqlite
+```
 
-### Receipt
+## Verify Transparent Statement
 
-~~~~ cbor-diag
-18(                                 / COSE Single Signer Data Object        /
-    [
-      h'a2013822...5f636838',       / Protected header                      /
-      {                             / Unprotected header                    /
-        100: [                      / Inclusion proofs (1)                  /
-          h'83020181...c6bf0202',   / Inclusion proof 1                     /
-        ]
-      },
-      h'',                          / Detached payload                      /
-      h'6140da0f...419c8ec0'        / Signature                             /
-    ]
-)
-~~~~
+```sh
+npm run transmute -- scitt transparent statement verify \
+--issuer-key examples/scitt/artifacts/publicKey.cose \
+--transparency-service-key examples/scitt/artifacts/publicKey.cose \
+--statement  examples/scitt/artifacts/sbom-tool.spdx.json \
+--transparent-statement examples/scitt/artifacts/sbom-tool.spdx.json.ts.cose
+```
+ 
+## View Transparent Statement as Diagnostic
 
-~~~~ cbor-diag
-{                                   / Protected header                      /
-  1: -35,                           / Cryptographic algorithm to use        /
-  4: h'75726e3a...5f636838'         / Key identifier                        /
-}
-~~~~
 
-~~~~ cbor-diag
-[                                   / Inclusion proof 1                     /
-  2,                                / Tree size                             /
-  1,                                / Leaf index                            /
-  [                                 / Inclusion hashes (1)                  /
-     h'5979d2d8...c6bf0202'         / Intermediate hash 1                   /
-  ]
-]
-~~~~
+```sh
+npm run transmute -- scitt statement diagnose \
+--input  examples/scitt/artifacts/sbom-tool.spdx.json.ts.cose \
+--output examples/scitt/artifacts/sbom-tool.spdx.json.ts.cose.md
+```
+
+```sh
+npm run transmute -- scitt statement diagnose \
+--input  examples/scitt/artifacts/SAGVendorResponseSAMPLE.xml.ts.cose \
+--output examples/scitt/artifacts/SAGVendorResponseSAMPLE.xml.ts.cose.md
+```
+
+### x509 Certificates
+
+... sigh ...
+
+#### Create A Root Certificate
+
+```sh
+npm run transmute -- scitt certificate create \
+--alg ES384 \
+--issuer "CN=Test CA" \
+--subject "CN=Test CA" \
+--valid-from 2020/01/01 \
+--valid-until 2020/01/03 \
+--subject-guid f81d4fae-7dec-11d0-a765-00a0c91e6bf6 \
+--subject-did did:web:root.transparency.example \
+--subject-private-key examples/scitt/artifacts/x.509.ca.cert.privateKey.cose \
+--subject-certificate examples/scitt/artifacts/x.509.ca.cert.publicKey.pem
+```
+
+
+
+#### Create A User Certificate
+
+```sh
+npm run transmute -- scitt certificate create \
+--alg ES384 \
+--valid-from 2020/01/01 \
+--valid-until 2020/01/03 \
+--issuer-private-key examples/scitt/artifacts/x.509.ca.cert.privateKey.cose \
+--issuer-certificate examples/scitt/artifacts/x.509.ca.cert.publicKey.pem \
+--subject "CN=Test, O=Дом" \
+--subject-did did:web:issuer.key.transparency.example \
+--subject-private-key examples/scitt/artifacts/x.509.user.privateKey.cose \
+--subject-public-key examples/scitt/artifacts/x.509.user.publicKey.cose \
+--subject-certificate examples/scitt/artifacts/x.509.user.cert.publicKey.pem
+```
+
+## View COSE Keys as Diagnostic
+
+```sh
+npm run transmute -- scitt key diagnose \
+--input  examples/scitt/artifacts/x.509.user.publicKey.cose \
+--output examples/scitt/artifacts/x.509.user.publicKey.cose.diag.md
+```

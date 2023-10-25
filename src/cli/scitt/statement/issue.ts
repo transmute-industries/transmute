@@ -1,28 +1,32 @@
-import path from "path"
+import fs from 'fs'
+import path from 'path'
 import mime from 'mime'
 
-import { default as detachedSign } from "../../cose/key/sign"
+import cose from '@transmute/cose'
 
-interface RequestSignedStatement {
-  issuerKey: string // relative path to private key in jwk format
-  issuerKid: string // identifier for kid
-  statement: string // path to input file
-  signedStatement: string // path to output file
+type RequestScittStatementIssue = {
+  iss: string
+  sub: string
+  issuerKey: string
+  statement: string
+  signedStatement: string
 }
 
-const issue = async (argv: RequestSignedStatement) => {
-  const { issuerKey, issuerKid, statement, signedStatement } = argv
-  const content_type = mime.getType(path.resolve(process.cwd(), statement))
-  // map to normal cose
-  return detachedSign({
-    issuerKid,
-    issuerKey,
-    input: statement,
-    output: signedStatement,
-    content_type,
-    detached: true
+const issue = async (argv: RequestScittStatementIssue) => {
+  const statement = fs.readFileSync(path.resolve(process.cwd(), argv.statement))
+  const secretCoseKey = fs.readFileSync(path.resolve(process.cwd(), argv.issuerKey))
+  const content_type = mime.getType(path.resolve(process.cwd(), argv.statement))
+  const signedStatement = await cose.scitt.statement.issue({
+    iss: argv.iss,
+    sub: argv.sub,
+    cty: content_type,
+    payload: statement,
+    secretCoseKey: cose.cbor.decode(secretCoseKey)
   })
-
+  fs.writeFileSync(
+    path.resolve(process.cwd(), argv.signedStatement),
+    Buffer.from(signedStatement)
+  )
 }
 
 export default issue

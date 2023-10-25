@@ -1,6 +1,5 @@
-import create from "./create"
-import controller from "./controller"
+import create from "./create";
 
-const certificate = { create, controller }
+const certificate = { create }
 
 export default certificate
