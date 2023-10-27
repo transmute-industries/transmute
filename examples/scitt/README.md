@@ -6,7 +6,7 @@
 ## Create Private Signing Key
 
 ```sh
-npm run transmute -- scitt key generate \
+transmute scitt key generate \
 --alg -35 \
 --output examples/scitt/artifacts/privateKey.cbor
 ```
@@ -14,7 +14,7 @@ npm run transmute -- scitt key generate \
 ## Export Public Verification Key
 
 ```sh
-npm run transmute -- scitt key export \
+transmute scitt key export \
 --input  examples/scitt/artifacts/privateKey.cbor \
 --output examples/scitt/artifacts/publicKey.cbor
 ```
@@ -22,7 +22,7 @@ npm run transmute -- scitt key export \
 ## View COSE Keys as Diagnostic
 
 ```sh
-npm run transmute -- scitt key diagnose \
+transmute scitt key diagnose \
 --input  examples/scitt/artifacts/privateKey.cbor \
 --output examples/scitt/artifacts/privateKey.cbor.diag
 ```
@@ -30,7 +30,7 @@ npm run transmute -- scitt key diagnose \
 If the output is markdown, the diagnostic is wrapped in markdown code blocks:
 
 ```sh
-npm run transmute -- scitt key diagnose \
+transmute scitt key diagnose \
 --input  examples/scitt/artifacts/publicKey.cbor \
 --output examples/scitt/artifacts/publicKey.cbor.md
 ```
@@ -38,7 +38,7 @@ npm run transmute -- scitt key diagnose \
 ## Sign Statement
 
 ```sh
-npm run transmute -- scitt statement issue \
+transmute scitt statement issue \
 --iss urn:example:123 \
 --sub urn:example:456 \
 --issuer-key examples/scitt/artifacts/privateKey.cbor \
@@ -47,7 +47,7 @@ npm run transmute -- scitt statement issue \
 ```
 
 ```sh
-npm run transmute -- scitt statement issue \
+transmute scitt statement issue \
 --iss urn:example:123 \
 --sub urn:example:456 \
 --issuer-key examples/scitt/artifacts/privateKey.cbor \
@@ -59,7 +59,7 @@ npm run transmute -- scitt statement issue \
 
 
 ```sh
-npm run transmute -- scitt statement diagnose \
+transmute scitt statement diagnose \
 --input  examples/scitt/artifacts/sbom-tool.spdx.json.cbor \
 --output examples/scitt/artifacts/sbom-tool.spdx.json.cbor.md
 ```
@@ -67,7 +67,7 @@ npm run transmute -- scitt statement diagnose \
 ## Verify Signed Statement
 
 ```sh
-npm run transmute -- scitt statement verify \
+transmute scitt statement verify \
 --issuer-key examples/scitt/artifacts/publicKey.cbor \
 --statement  examples/scitt/artifacts/sbom-tool.spdx.json \
 --signed-statement examples/scitt/artifacts/sbom-tool.spdx.json.cbor
@@ -76,7 +76,7 @@ npm run transmute -- scitt statement verify \
 ## Create Transparent Statement
 
 ```sh
-npm run transmute -- scitt ledger receipt issue \
+transmute scitt ledger receipt issue \
 --iss urn:example:789 \
 --sub urn:example:abc \
 --issuer-key examples/scitt/artifacts/privateKey.cbor \
@@ -86,7 +86,7 @@ npm run transmute -- scitt ledger receipt issue \
 ```
 
 ```sh
-npm run transmute -- scitt ledger receipt issue \
+transmute scitt ledger receipt issue \
 --iss urn:example:789 \
 --sub urn:example:abc \
 --issuer-key examples/scitt/artifacts/privateKey.cbor \
@@ -98,7 +98,7 @@ npm run transmute -- scitt ledger receipt issue \
 ## Verify Transparent Statement
 
 ```sh
-npm run transmute -- scitt transparent statement verify \
+transmute scitt transparent statement verify \
 --issuer-key examples/scitt/artifacts/publicKey.cbor \
 --transparency-service-key examples/scitt/artifacts/publicKey.cbor \
 --statement  examples/scitt/artifacts/sbom-tool.spdx.json \
@@ -181,13 +181,13 @@ npm run transmute -- scitt transparent statement verify \
 
 
 ```sh
-npm run transmute -- scitt statement diagnose \
+transmute scitt statement diagnose \
 --input  examples/scitt/artifacts/sbom-tool.spdx.json.ts.cbor \
 --output examples/scitt/artifacts/sbom-tool.spdx.json.ts.cbor.md
 ```
 
 ```sh
-npm run transmute -- scitt statement diagnose \
+transmute scitt statement diagnose \
 --input  examples/scitt/artifacts/SAGVendorResponseSAMPLE.xml.ts.cbor \
 --output examples/scitt/artifacts/SAGVendorResponseSAMPLE.xml.ts.cbor.md
 ```
@@ -199,7 +199,7 @@ npm run transmute -- scitt statement diagnose \
 #### Create A Root Certificate
 
 ```sh
-npm run transmute -- scitt certificate create \
+transmute scitt certificate create \
 --alg ES384 \
 --issuer "CN=Test CA" \
 --subject "CN=Test CA" \
@@ -214,7 +214,7 @@ npm run transmute -- scitt certificate create \
 #### Create A User Certificate
 
 ```sh
-npm run transmute -- scitt certificate create \
+transmute scitt certificate create \
 --alg ES384 \
 --valid-from 2020/01/01 \
 --valid-until 2020/01/03 \
@@ -230,7 +230,7 @@ npm run transmute -- scitt certificate create \
 ## View Diagnostic of X5C signed statement
 
 ```sh
-npm run transmute -- scitt key diagnose \
+transmute scitt key diagnose \
 --input  examples/scitt/artifacts/x.509.user.publicKey.cbor \
 --output examples/scitt/artifacts/x.509.user.publicKey.cbor.diag.md
 ```
@@ -251,7 +251,7 @@ npm run transmute -- scitt key diagnose \
 ~~~~
 
 ```sh
-npm run transmute -- scitt statement issue \
+transmute scitt statement issue \
 --iss urn:example:123 \
 --sub urn:example:456 \
 --cty application/jwk-set+json \
@@ -261,7 +261,7 @@ npm run transmute -- scitt statement issue \
 ```
 
 ```sh
-npm run transmute -- scitt statement diagnose \
+transmute scitt statement diagnose \
 --input  examples/scitt/artifacts/jwks.json.cbor \
 --output examples/scitt/artifacts/jwks.json.cbor.md
 ```
