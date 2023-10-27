@@ -4,11 +4,11 @@
       h'a4013822...3a343536',       / Protected                     /
       {                             / Unprotected                   /
         -333: [                     / Receipts (1)                  /
-          h'd284584e...bc37e274'    / Receipt 1                     /
+          h'd284584e...d762003e'    / Receipt 1                     /
         ]
       },
       h'',                          / Detached payload              /
-      h'ace706f3...6a826e8d'        / Signature                     /
+      h'9646a438...fd173a62'        / Signature                     /
     ]
 )
 ~~~~
@@ -16,8 +16,8 @@
 ~~~~ cbor-diag
 {                                   / Protected                     /
   1: -35,                           / Algorithm                     /
-  3: application/xml,               / Content type                  /
-  4: h'aaa24a3e...275d4b7a',        / Key identifier                /
+  3: application/json,              / Content type                  /
+  4: h'317cedc7...c494e772',        / Key identifier                /
   13: {                             / CWT Claims                    /
     1: urn:example:123,             / Issuer                        /
     2: urn:example:456,             / Subject                       /
@@ -32,12 +32,12 @@
       {                             / Unprotected                   /
         -222: {                     / Proofs                        /
           -1: [                     / Inclusion proofs (1)          /
-            h'83020181...27c0d3b5', / Inclusion proof 1             /
+            h'83030281...8628a031', / Inclusion proof 1             /
           ]
         },
       },
       h'',                          / Detached payload              /
-      h'07ea9684...bc37e274'        / Signature                     /
+      h'382f5756...d762003e'        / Signature                     /
     ]
 )
 ~~~~
@@ -45,7 +45,7 @@
 ~~~~ cbor-diag
 {                                   / Protected                     /
   1: -35,                           / Algorithm                     /
-  4: h'aaa24a3e...275d4b7a',        / Key identifier                /
+  4: h'317cedc7...c494e772',        / Key identifier                /
   -111: 1,                          / Verifiable Data Structure     /
   13: {                             / CWT Claims                    /
     1: urn:example:789,             / Issuer                        /
@@ -56,10 +56,10 @@
 
 ~~~~ cbor-diag
 [                                   / Inclusion proof 1             /
-  2,                                / Tree size                     /
-  1,                                / Leaf index                    /
+  3,                                / Tree size                     /
+  2,                                / Leaf index                    /
   [                                 / Inclusion hashes (1)          /
-     h'defc4bbd...27c0d3b5'         / Intermediate hash 1           /
+     h'668e8854...8628a031'         / Intermediate hash 1           /
   ]
 ]
 ~~~~

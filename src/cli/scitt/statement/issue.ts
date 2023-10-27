@@ -7,6 +7,7 @@ import cose from '@transmute/cose'
 type RequestScittStatementIssue = {
   iss: string
   sub: string
+  cty?: string
   issuerKey: string
   statement: string
   signedStatement: string
@@ -15,13 +16,15 @@ type RequestScittStatementIssue = {
 const issue = async (argv: RequestScittStatementIssue) => {
   const statement = fs.readFileSync(path.resolve(process.cwd(), argv.statement))
   const secretCoseKey = fs.readFileSync(path.resolve(process.cwd(), argv.issuerKey))
+  const secretCoseKeyMap = cose.cbor.decode(secretCoseKey)
   const content_type = mime.getType(path.resolve(process.cwd(), argv.statement))
   const signedStatement = await cose.scitt.statement.issue({
     iss: argv.iss,
     sub: argv.sub,
-    cty: content_type,
+    cty: argv.cty || content_type,
+    x5c: secretCoseKeyMap.get(-66666) || undefined,
     payload: statement,
-    secretCoseKey: cose.cbor.decode(secretCoseKey)
+    secretCoseKey: secretCoseKeyMap
   })
   fs.writeFileSync(
     path.resolve(process.cwd(), argv.signedStatement),

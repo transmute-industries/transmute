@@ -203,8 +203,11 @@ const create = async (argv: RequestCertificate) => {
     // leaf cert
     cert = await createLeafCertificate(argv)
 
-    const subjectPublicKey = cose.cbor.encode(cose.key.importJWK(JSON.parse(cert.subjectPublicKey)))
-    const subjectPrivateKey = cose.cbor.encode(cose.key.importJWK(JSON.parse(cert.subjectPrivateKey)))
+    const subjectPublicCoseKeyMap = cose.key.importJWK(JSON.parse(cert.subjectPublicKey))
+    const subjectPublicKey = cose.cbor.encode(subjectPublicCoseKeyMap)
+    const subjectPrivateCoseKeyMap = cose.key.importJWK(JSON.parse(cert.subjectPrivateKey))
+    subjectPrivateCoseKeyMap.set(-66666, subjectPublicCoseKeyMap.get(-66666) as any)
+    const subjectPrivateKey = cose.cbor.encode(subjectPrivateCoseKeyMap)
 
     fs.writeFileSync(
       path.resolve(process.cwd(), argv.subjectPublicKey),
