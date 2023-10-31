@@ -19,13 +19,21 @@ const transparency_log = (pathToDb: string) => {
 
   const logInterface = {
     create: async () => {
-      const db = {
-        name: 'scitt-ledger',
-        version: '0.0.0',
-        leaves: []
+      try {
+        const dbFile = fs.readFileSync(path.resolve(process.cwd(), pathToDb)).toString();
+        const db = JSON.parse(dbFile);
+        // todo healtcheck
+        return logInterface
+      } catch (e) {
+        const db = {
+          name: 'scitt-ledger',
+          version: '0.0.0',
+          leaves: []
+        }
+        fs.writeFileSync(path.resolve(process.cwd(), pathToDb), JSON.stringify(db, null, 2))
+        return logInterface
       }
-      fs.writeFileSync(path.resolve(process.cwd(), pathToDb), JSON.stringify(db, null, 2))
-      return logInterface
+
     },
     append: async (leaf: LeafValue): Promise<LogEntry> => {
       const dbFile = fs.readFileSync(path.resolve(process.cwd(), pathToDb)).toString();
