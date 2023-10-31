@@ -1,5 +1,6 @@
-import sqlite from './sqlite'
+// import sqlite from './sqlite'
+import jsonFile from './json-file'
 
-const ledgers = { sqlite }
+const ledgers = { jsonFile }
 
 export default ledgers

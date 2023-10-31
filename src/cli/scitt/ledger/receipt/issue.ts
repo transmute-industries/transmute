@@ -17,7 +17,8 @@ interface RequestLedgerAppend {
 const issue = async (argv: RequestLedgerAppend) => {
   const signedStatement = fs.readFileSync(path.resolve(process.cwd(), argv.signedStatement))
   const ledgerPath = path.resolve(process.cwd(), argv.ledger)
-  const ledger = await scitt.ledgers.sqlite(ledgerPath).create()
+  const ledger = await scitt.ledgers.jsonFile(ledgerPath).create()
+
   const leaf = cose.binToHex(cose.merkle.leaf(signedStatement))
   const record = await ledger.append(leaf)
   if (!argv.issuerKey) {
@@ -29,7 +30,7 @@ const issue = async (argv: RequestLedgerAppend) => {
     const receipt = await cose.scitt.receipt.issue({
       iss: argv.iss,
       sub: argv.sub,
-      index: record.id - 1,
+      index: record.id,
       leaves: leaves.map(cose.hexToBin),
       secretCoseKey: issuerPrivateKeyMap
     })

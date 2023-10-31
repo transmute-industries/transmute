@@ -3,6 +3,14 @@
 - [datatracker](https://datatracker.ietf.org/wg/scitt/about/)
 
 
+As a global binary:
+
+```sh
+npm i -g @transmute/cli
+```
+
+Beware that this is not very well tested outside of macOS at this time.
+
 ## Create Private Signing Key
 
 ```sh
@@ -82,7 +90,7 @@ transmute scitt ledger receipt issue \
 --issuer-key examples/scitt/artifacts/privateKey.cbor \
 --signed-statement  examples/scitt/artifacts/sbom-tool.spdx.json.cbor \
 --transparent-statement examples/scitt/artifacts/sbom-tool.spdx.json.ts.cbor \
---ledger  examples/scitt/artifacts/ledger.sqlite
+--ledger  examples/scitt/artifacts/ledger.json
 ```
 
 ```sh
@@ -92,7 +100,7 @@ transmute scitt ledger receipt issue \
 --issuer-key examples/scitt/artifacts/privateKey.cbor \
 --signed-statement  examples/scitt/artifacts/SAGVendorResponseSAMPLE.xml.cbor \
 --transparent-statement examples/scitt/artifacts/SAGVendorResponseSAMPLE.xml.ts.cbor \
---ledger  examples/scitt/artifacts/ledger.sqlite
+--ledger  examples/scitt/artifacts/ledger.json
 ```
 
 ## Verify Transparent Statement
