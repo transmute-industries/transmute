@@ -47,7 +47,7 @@ const transparency_log = (pathToDb: string) => {
       const dbFile = fs.readFileSync(path.resolve(process.cwd(), pathToDb)).toString();
       const db = JSON.parse(dbFile)
       const record = db.leaves[index]
-      return record as LogEntry
+      return { id: db.leaves.indexOf(record), leaf: record } as LogEntry
     },
     getByValue: async (leaf: LeafValue): Promise<LogEntry | undefined> => {
       const dbFile = fs.readFileSync(path.resolve(process.cwd(), pathToDb)).toString();
@@ -55,7 +55,10 @@ const transparency_log = (pathToDb: string) => {
       const record = db.leaves.find((leafValue) => {
         return leafValue === leaf
       })
-      return record as LogEntry
+      if (record === undefined) {
+        return undefined
+      }
+      return { id: db.leaves.indexOf(record), leaf: record } as LogEntry
     },
     allLogEntries: async (): Promise<Array<LogEntry>> => {
       const dbFile = fs.readFileSync(path.resolve(process.cwd(), pathToDb)).toString();
