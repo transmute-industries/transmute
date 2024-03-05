@@ -128,7 +128,22 @@ const fromPresentation = async (document: DataIntegrityDocument) => {
     })
     await Promise.all(
       verifiableCredentials.map(async (verifiableCredential) => {
-        const credentialGraph = await fromCredential(verifiableCredential)
+        const normalizeToTypeArray = Array.isArray(verifiableCredential.type) ? verifiableCredential.type : [verifiableCredential.type]
+        let credentialGraph = undefined as any;
+        if (normalizeToTypeArray.includes('EnvelopedVerifiableCredential')) {
+          if (verifiableCredential.id && verifiableCredential.id.startsWith('data:application/vc+ld+json+sd-jwt;')) {
+            const token = verifiableCredential.id.replace('data:application/vc+ld+json+sd-jwt;', '')
+            const payload = jose.decodeJwt(token)
+            credentialGraph = await fromCredential(payload)
+          }
+          if (verifiableCredential.id && verifiableCredential.id.startsWith('data:application/vc+ld+json+jwt;')) {
+            const token = verifiableCredential.id.replace('data:application/vc+ld+json+jwt;', '')
+            const payload = jose.decodeJwt(token)
+            credentialGraph = await fromCredential(payload)
+          }
+        } else {
+          credentialGraph = await fromCredential(verifiableCredential)
+        }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const credentialGraphEdge: any = credentialGraph.edges.find((e) => {
           return e.target === 'https://www.w3.org/2018/credentials#VerifiableCredential'
@@ -145,6 +160,7 @@ const fromPresentation = async (document: DataIntegrityDocument) => {
           },
           ...credentialGraph.edges,
         ]
+
       }),
     )
   }

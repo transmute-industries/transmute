@@ -44,7 +44,7 @@ const formatJwk = (jwk) => {
     y,
     d,
     ...rest
-  } = structuredClone(jwk)
+  } = jwk
   return JSON.parse(
     JSON.stringify({
       kid,
