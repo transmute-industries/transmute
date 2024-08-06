@@ -1,4 +1,4 @@
-# <a href="https://transmute.industries">Transmute Command</a> 
+# <a href="https://transmute.industries">Transmute Command</a>
 
 [![CI](https://github.com/transmute-industries/transmute/actions/workflows/ci.yml/badge.svg)](https://github.com/transmute-industries/transmute/actions/workflows/ci.yml)
 ![Branches](./badges/coverage-branches.svg)
@@ -37,43 +37,3 @@ As a github action:
 ```
 
 <img width="1404" alt="Screen Shot 2023-06-11 at 1 32 58 PM" src="https://github.com/transmute-industries/transmute/assets/8295856/2c568d13-f878-4a4d-a228-5cd6eb91969e">
-
-
-### Commands
-
-- [JOSE](./examples/jose)
-- [W3C Verifiable Credentials](./examples/vcdm/)
-- [Neo4j](./examples/neo4j)
-
-## Develop
-
-```
-npm i
-npm t
-```
-
-### Testing Commands
-
-Install a local build of the cli globally using:
-
-```sh
-npm i -g .
-```
-
-Test a local build with this npm script alias:
-
-```sh
-npm run transmute -- controller key generate \
---alg ES384 \
---output examples/keys/private.ES384.json
-```
-
-### Testing GitHub Actions
-
-You will need to use a remote neo4j instance to test with act locally.
-
-Help wanted resolving related docker network issues.
-
-```
-act -j act-preview-neo4j --secret-file .env
-```

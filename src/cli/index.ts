@@ -10,7 +10,6 @@ import platform from './platform'
 import cose from './cose'
 import scitt from './scitt'
 
-import w3c from './w3c'
 import dl from './digital-link'
 
 const init = () => {
@@ -24,9 +23,6 @@ const init = () => {
 
   // scitt
   yargs.command(scitt)
-
-  // w3c
-  yargs.command(w3c)
 
   // digital-link
   yargs.command(dl)

@@ -95,7 +95,7 @@ const resources = {
         for (const verifiablePresentation of verifiablePresentations) {
           try {
             const options = {
-              json: JSON.stringify(verifiablePresentation),
+              json: JSON.stringify({ jwt: verifiablePresentation }),
               neo4jUri: process.env.NEO4J_URI || '',
               neo4jUser: process.env.NEO4J_USERNAME || '',
               neo4jPassword: process.env.NEO4J_PASSWORD || '',
