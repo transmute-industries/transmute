@@ -8,13 +8,15 @@ jobs:
       - run: npm ci
       - run: npm run coverage
 
-  generate-private-key:
+  jose:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - id: generate_private_key
+      - name: Generate Private Key
+        id: generate_private_key
         uses: ./
         with:
           transmute: |
             jose keygen --alg ES256 --verbose
-      - run: echo "${{ steps.generate_private_key.outputs.json }}"
+      - name: Log Private Key
+        run: echo "${{ steps.generate_private_key.outputs.json }}"
