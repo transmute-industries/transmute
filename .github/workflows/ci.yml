@@ -7,7 +7,6 @@ jobs:
       - uses: actions/checkout@v4
       - run: npm ci
       - run: npm run coverage
-
   jose:
     runs-on: ubuntu-latest
     steps:
@@ -34,7 +33,7 @@ jobs:
         with:
           transmute: |
             jose sign ./tests/fixtures/private.sig.jwk.json ./tests/fixtures/message.json --detached --compact --output ./tests/fixtures/message.signature.detached.compact.jws
-      - name: Log Detached Signature
+      - name: Attempt to Log Signature
         run: echo "${{ steps.sign_message.outputs.jws }}"
       - name: Verify Message
         id: verify_message
@@ -44,3 +43,19 @@ jobs:
             jose verify ./tests/fixtures/public.sig.jwk.json ./tests/fixtures/message.signature.detached.compact.jws ./tests/fixtures/message.json --detached --compact
       - name: Log Message Verification
         run: echo "${{ steps.verify_message.outputs.json }}"
+      - name: Encrypt Message
+        id: encrypt_message
+        uses: ./
+        with:
+          transmute: |
+            jose encrypt ./tests/fixtures/public.enc.jwk.json ./tests/fixtures/message.json --enc A128GCM --compact --output ./tests/fixtures/message.ciphertext.compact.jwe
+      - name: Attempt to Log Ciphertext
+        run: echo "${{ steps.encrypt_message.outputs.jwe }}"
+      - name: Decrypt Message
+        id: decrypt_message
+        uses: ./
+        with:
+          transmute: |
+            jose decrypt ./tests/fixtures/private.enc.jwk.json ./tests/fixtures/message.ciphertext.compact.jwe --compact
+      - name: Log Message Decryption
+        run: echo "${{ steps.decrypt_message.outputs.json }}"
