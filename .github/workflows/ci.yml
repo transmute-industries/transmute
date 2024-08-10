@@ -1,18 +1,17 @@
 name: CI
 on: [push]
 jobs:
-  build:
+  cli:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm install
-      - run: npm run build
       - uses: actions/cache@v4
         with:
+          key: ${{ hashFiles('dist/**') }}
           path: |
             action.yml
             dist/*
-          key: ${{ hashFiles('dist/**') }}
+
   coverage:
     runs-on: ubuntu-latest
     steps:
@@ -24,15 +23,16 @@ jobs:
         with:
           branches: main
   generate-private-key:
-    needs: [build]
+    needs: [cli]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/cache@v4
         with:
+          key: ${{ hashFiles('dist/**') }}
           path: |
             action.yml
             dist/*
-          key: ${{ hashFiles('dist/**') }}
+
       - id: generate_private_key
         uses: ./
         with:
