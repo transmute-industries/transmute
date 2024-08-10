@@ -5,14 +5,14 @@ import * as core from '@actions/core'
 import cli from '../cli'
 
 async function run() {
-  try {
-    if (process.env.GITHUB_ACTION) {
+  if (process.env.GITHUB_ACTION) {
+    try {
       console.warn('todo github action')
-    } else {
-      await cli.init()
+    } catch (error) {
+      core.setFailed((error as Error).message)
     }
-  } catch (error) {
-    core.setFailed((error as Error).message)
+  } else {
+    await cli.init()
   }
 }
 

@@ -1,6 +1,6 @@
 
 
-import diagnostic from "./key"
+import key from "./key"
 
 export const action = `jose`
 
@@ -9,7 +9,7 @@ export const command = `${action} <resource> <action>`
 export const describe = `${action} operations`
 
 const resources = {
-  diagnostic
+  key
 }
 
 export const handler = async function (argv) {
