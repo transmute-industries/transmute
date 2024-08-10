@@ -19,5 +19,5 @@ jobs:
       - run: npm run build
       - uses: ./
         with:
-          jose: key generate --alg ES256
-          private-key: ./private.jwk.json
+          transmute: |
+            jose key generate --alg ES256
