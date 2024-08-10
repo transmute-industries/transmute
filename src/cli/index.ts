@@ -1,8 +1,6 @@
 import yargs from 'yargs'
 import key from './key'
-import controller from './controller'
-import credential from './credential'
-import presentation from './presentation'
+
 import graph from './graph'
 
 import platform from './platform'
@@ -26,11 +24,6 @@ const init = () => {
 
   // digital-link
   yargs.command(dl)
-
-  // vcdm
-  controller.register(yargs)
-  credential.register(yargs)
-  presentation.register(yargs)
 
   // neo4j
   graph.register(yargs)
