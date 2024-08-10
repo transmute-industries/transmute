@@ -7,11 +7,13 @@ import { env } from "./env";
 
 export type JoseOptions = {
   alg?: string
+  enc?: string
   crv?: string
   compact?: boolean
 }
 
 export type CommonOptions = {
+  output?: string
   verbose?: boolean
   detached?: boolean
 }
@@ -38,9 +40,18 @@ export const args = (prompt: string) => {
         type: 'boolean' as "boolean",
         short: 'c'
       },
+      output: {
+        type: 'string' as "string",
+        short: 'o'
+      },
       alg: {
         type: 'string' as "string",
-        short: 'a'
+      },
+      enc: {
+        type: 'string' as "string",
+      },
+      crv: {
+        type: 'string' as "string",
       },
     },
   })
