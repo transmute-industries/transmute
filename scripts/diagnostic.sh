@@ -1,31 +1,31 @@
-rm ./scripts/diagnostic/*
-echo '{"message":"⌛ My lungs taste the air of Time Blown past falling sands"}' > ./scripts/diagnostic/message.json
+rm ./tests/fixtures/*
+echo '{"message":"⌛ My lungs taste the air of Time Blown past falling sands"}' > ./tests/fixtures/message.json
 npm run build
 
 # signing keys
-npm run -s transmute -- jose keygen --alg ES256 > ./scripts/diagnostic/private.sig.jwk.json
-npm run -s transmute -- jose keypub ./scripts/diagnostic/private.sig.jwk.json > ./scripts/diagnostic/public.sig.jwk.json
+npm run -s transmute -- jose keygen --alg ES256 > ./tests/fixtures/private.sig.jwk.json
+npm run -s transmute -- jose keypub ./tests/fixtures/private.sig.jwk.json > ./tests/fixtures/public.sig.jwk.json
 
 # encryption keys
-npm run -s transmute -- jose keygen --alg ECDH-ES+A128KW --crv P-384 > ./scripts/diagnostic/private.enc.jwk.json
-npm run -s transmute -- jose keypub ./scripts/diagnostic/private.enc.jwk.json > ./scripts/diagnostic/public.enc.jwk.json
+npm run -s transmute -- jose keygen --alg ECDH-ES+A128KW --crv P-384 > ./tests/fixtures/private.enc.jwk.json
+npm run -s transmute -- jose keypub ./tests/fixtures/private.enc.jwk.json > ./tests/fixtures/public.enc.jwk.json
 
 # attached 
-npm run -s transmute -- jose sign ./scripts/diagnostic/private.sig.jwk.json ./scripts/diagnostic/message.json > ./scripts/diagnostic/message.signature.json
-npm run -s transmute -- jose verify ./scripts/diagnostic/public.sig.jwk.json ./scripts/diagnostic/message.signature.json --output ./scripts/diagnostic/message.verified.json > ./scripts/diagnostic/message.signature.verified.json
+npm run -s transmute -- jose sign ./tests/fixtures/private.sig.jwk.json ./tests/fixtures/message.json > ./tests/fixtures/message.signature.json
+npm run -s transmute -- jose verify ./tests/fixtures/public.sig.jwk.json ./tests/fixtures/message.signature.json --output ./tests/fixtures/message.verified.json > ./tests/fixtures/message.signature.verified.json
 
 # detached
-npm run -s transmute -- jose sign ./scripts/diagnostic/private.sig.jwk.json ./scripts/diagnostic/message.json --detached > ./scripts/diagnostic/message.signature.detached.json
-npm run -s transmute -- jose verify ./scripts/diagnostic/public.sig.jwk.json ./scripts/diagnostic/message.signature.detached.json ./scripts/diagnostic/message.json --detached> ./scripts/diagnostic/message.signature.detached.verified.json
+npm run -s transmute -- jose sign ./tests/fixtures/private.sig.jwk.json ./tests/fixtures/message.json --detached > ./tests/fixtures/message.signature.detached.json
+npm run -s transmute -- jose verify ./tests/fixtures/public.sig.jwk.json ./tests/fixtures/message.signature.detached.json ./tests/fixtures/message.json --detached> ./tests/fixtures/message.signature.detached.verified.json
 
 # detached compact
-npm run -s transmute -- jose sign ./scripts/diagnostic/private.sig.jwk.json ./scripts/diagnostic/message.json --detached --compact > ./scripts/diagnostic/message.signature.detached.compact.jws
-npm run -s transmute -- jose verify ./scripts/diagnostic/public.sig.jwk.json ./scripts/diagnostic/message.signature.detached.compact.jws ./scripts/diagnostic/message.json --detached --compact > ./scripts/diagnostic/message.signature.detached.compact.jws.verified.json
+npm run -s transmute -- jose sign ./tests/fixtures/private.sig.jwk.json ./tests/fixtures/message.json --detached --compact > ./tests/fixtures/message.signature.detached.compact.jws
+npm run -s transmute -- jose verify ./tests/fixtures/public.sig.jwk.json ./tests/fixtures/message.signature.detached.compact.jws ./tests/fixtures/message.json --detached --compact > ./tests/fixtures/message.signature.detached.compact.jws.verified.json
 
 # encrypt
-npm run -s transmute -- jose encrypt ./scripts/diagnostic/public.enc.jwk.json ./scripts/diagnostic/message.json --enc A128GCM > ./scripts/diagnostic/message.ciphertext.json
-npm run -s transmute -- jose decrypt ./scripts/diagnostic/private.enc.jwk.json ./scripts/diagnostic/message.ciphertext.json --output ./scripts/diagnostic/message.plaintext.json > ./scripts/diagnostic/message.decrypted.json
+npm run -s transmute -- jose encrypt ./tests/fixtures/public.enc.jwk.json ./tests/fixtures/message.json --enc A128GCM > ./tests/fixtures/message.ciphertext.json
+npm run -s transmute -- jose decrypt ./tests/fixtures/private.enc.jwk.json ./tests/fixtures/message.ciphertext.json --output ./tests/fixtures/message.plaintext.json > ./tests/fixtures/message.decrypted.json
 
 # encrypt compact
-npm run -s transmute -- jose encrypt ./scripts/diagnostic/public.enc.jwk.json ./scripts/diagnostic/message.json --enc A128GCM --compact > ./scripts/diagnostic/message.ciphertext.compact.jwe
-npm run -s transmute -- jose decrypt ./scripts/diagnostic/private.enc.jwk.json ./scripts/diagnostic/message.ciphertext.compact.jwe --output ./scripts/diagnostic/message.plaintext.json --compact > ./scripts/diagnostic/message.decrypted.json
+npm run -s transmute -- jose encrypt ./tests/fixtures/public.enc.jwk.json ./tests/fixtures/message.json --enc A128GCM --compact > ./tests/fixtures/message.ciphertext.compact.jwe
+npm run -s transmute -- jose decrypt ./tests/fixtures/private.enc.jwk.json ./tests/fixtures/message.ciphertext.compact.jwe --output ./tests/fixtures/message.plaintext.json --compact > ./tests/fixtures/message.decrypted.json
