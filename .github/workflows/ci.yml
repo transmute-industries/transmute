@@ -17,7 +17,11 @@ jobs:
       - uses: actions/checkout@v3
       - run: npm install
       - run: npm run build
-      - uses: ./
+      - name: Generate Private Key
+        id: private_key
+        uses: ./
         with:
           transmute: |
             jose key generate --alg ES256
+      - name: Log Private Key
+        run: echo "${{ steps.private_key.outputs.json }}"
