@@ -1,6 +1,18 @@
 name: CI
 on: [push]
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: npm install
+      - run: npm run build
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ./action.yml
+            ./dist
+          key: ${{ hashFiles('./dist/**') }}
   coverage:
     runs-on: ubuntu-latest
     steps:
@@ -11,17 +23,19 @@ jobs:
         uses: jpb06/jest-badges-action@latest
         with:
           branches: main
-  action:
+  generate-private-key:
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: npm install
-      - run: npm run build
-      - name: Generate Private Key
-        id: private_key
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ./action.yml
+            ./dist
+          key: ${{ hashFiles('./dist/**') }}
+      - id: generate_private_key
         uses: ./
         with:
           transmute: |
             jose keygen --alg ES256 --verbose
-      - name: Log Private Key
-        run: echo "${{ steps.private_key.outputs.json }}"
+      - run: echo "${{ steps.generate_private_key.outputs.json }}"
