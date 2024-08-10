@@ -25,6 +25,6 @@ jobs:
         uses: ./
         with:
           transmute: |
-            jose jose keypub ./private.sig.jwk.json --output ./public.sig.jwk.json
+            jose keypub ./private.sig.jwk.json --output ./public.sig.jwk.json
       - name: Log Public Key
         run: cat ./public.sig.jwk.json
