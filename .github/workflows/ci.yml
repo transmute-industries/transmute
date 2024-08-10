@@ -49,7 +49,7 @@ jobs:
         with:
           transmute: |
             jose encrypt ./tests/fixtures/public.enc.jwk.json ./tests/fixtures/message.json --enc A128GCM --compact --output ./tests/fixtures/message.ciphertext.compact.jwe
-      - name: Attempt to Log Ciphertext
+      - name: Log Ciphertext
         run: echo "${{ steps.encrypt_message.outputs.jwe }}"
       - name: Decrypt Message
         id: decrypt_message
