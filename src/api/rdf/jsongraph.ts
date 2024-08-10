@@ -11,9 +11,6 @@ import annotateGraph from './annotateGraph'
 
 import context from './jose-context'
 
-import transmute from '@transmute/did-transmute'
-import { AsymmetricJsonWebKey } from '@transmute/did-transmute/dist/jose/AsymmetricJsonWebKey'
-
 const addGraphNode = ({ graph, id }) => {
   graph.nodes[id] = {
     ...(graph.nodes[id] || { id, labels: ['Node'] }),
@@ -225,14 +222,6 @@ const fromFlattendJws = async (jws: {
   return claimsetGraph
 }
 
-const fromJsonWebKey = async (document: JsonWebKey) => {
-  const did = await transmute.did.jwk.toDid(document as AsymmetricJsonWebKey);
-  const doc = await transmute.did.jwk.resolve({
-    id: did,
-    documentLoader: transmute.did.jwk.documentLoader
-  })
-  return fromDidDocument(doc);
-}
 
 const fromDidDocument = async (document: DataIntegrityDocument) => {
   const { verificationMethod, ...controller } = document
@@ -297,15 +286,9 @@ const suspectDidDocument = (document: any) => {
   return false
 }
 
-const suspectJsonWebKey = (document: any) => {
-  return document.kty !== undefined
-}
-
 const fromDocument = async (document: DataIntegrityDocument) => {
   let graph
-  if (suspectJsonWebKey(document)) {
-    graph = await fromJsonWebKey(document);
-  } else if (suspectDidDocument(document)) {
+  if (suspectDidDocument(document)) {
     graph = await fromDidDocument(document)
   } else if (
     document.jwt ||
