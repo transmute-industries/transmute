@@ -1,0 +1,1 @@
+export type PositionalArguments = { positionals: string[], values: Record<string, any> }

@@ -1,5 +1,3 @@
-import { facade } from './action/facade'
 
-const cli = { facade }
-
-export default cli
+export * from './types'
+export * from './cli'

@@ -1,34 +1,18 @@
+import { setFailed } from '@actions/core'
+import { args } from "./args"
 
-import { parseArgs } from "node:util";
+import { handler } from './handler'
 
-import * as core from '@actions/core'
-
-const getArgs = (prompt: string) => {
-  // https://stackoverflow.com/questions/29655760/convert-a-string-into-shell-arguments
-  const re = /"[^"]+"|'[^']+'|\S+/g
-  if (process.env.GITHUB_ACTION) {
-    prompt = core.getInput("transmute")
-  }
-  return parseArgs({
-    allowPositionals: true,
-    args: prompt.match(re) || [],
-    options: {
-      alg: {
-        type: 'string' as "string",
-      },
-    },
-  })
-}
+import { env } from './env'
 
 export async function facade(prompt: string = process.argv.slice(2).join(' ')) {
   try {
-    const parsed = getArgs(prompt)
-    console.log(parsed)
+    await handler(args(prompt))
   } catch (error) {
     // swallow error to prevent leaking
     const message = '💀 Internal Error.'
-    if (process.env.GITHUB_ACTION) {
-      core.setFailed(message)
+    if (env.github()) {
+      setFailed(message)
     } else {
       console.error(message)
     }
