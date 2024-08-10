@@ -11,10 +11,10 @@ export async function facade(prompt: string = process.argv.slice(2).join(' ')) {
   } catch (error) {
     // swallow error to prevent leaking
     const message = '💀 Internal Error.'
-    if (env.github()) {
+    if (env.github() && !env.mock()) {
       setFailed(message)
     } else {
-      console.error(message)
+      console.error(error)
     }
   }
 }

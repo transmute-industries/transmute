@@ -1,15 +1,7 @@
 
+import { CommonOptions, JoseOptions } from './action/args'
 
 export type PositionalArguments = string[]
-
-export type JoseOptions = {
-  alg?: string
-  crv?: string
-}
-
-export type CommonOptions = {
-  verbose?: boolean
-}
 
 export type Options = CommonOptions & JoseOptions
 

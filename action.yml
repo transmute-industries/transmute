@@ -13,6 +13,8 @@ outputs:
     description: "The output as json."
   cbor:
     description: "The output as cbor."
+  jws:
+    description: "The output as compact jws."
 
 runs:
   using: "node20"
