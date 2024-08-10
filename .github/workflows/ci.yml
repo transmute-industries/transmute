@@ -1,37 +1,20 @@
 name: CI
 on: [push]
 jobs:
-  cli:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/cache/save@v4
-        with:
-          key: ${{ hashFiles('dist/**') }}
-          path: >
-            action.yml
-            dist/*
-
   coverage:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - run: npm ci
       - run: npm run coverage
+
   generate-private-key:
-    needs: [cli]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/cache/restore@v4
-        with:
-          key: ${{ hashFiles('dist/**') }}
-          path: >
-            action.yml
-            dist/*
-
+      - uses: actions/checkout@v4
       - id: generate_private_key
         uses: ./
         with:
-          transmute: >
+          transmute: |
             jose keygen --alg ES256 --verbose
       - run: echo "${{ steps.generate_private_key.outputs.json }}"
