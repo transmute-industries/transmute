@@ -12,11 +12,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Generate Private Key
+      - name: Private Key
         id: generate_private_key
         uses: ./
         with:
           transmute: |
-            jose keygen --alg ES256 --verbose
-      - name: Log Private Key
+            jose keygen --alg ES256 --verbose --output ./private.sig.jwk.json
+      - name: Attempt to Log Private Key
         run: echo "${{ steps.generate_private_key.outputs.json }}"
+      - name: Public Key
+        id: extract_public_key
+        uses: ./
+        with:
+          transmute: |
+            jose jose keypub ./private.sig.jwk.json --output ./public.sig.jwk.json
+      - name: Log Public Key
+        run: cat ./public.sig.jwk.json

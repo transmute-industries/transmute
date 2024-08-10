@@ -21,6 +21,7 @@ export const handler = async function ({ positionals, values }: Arguments) {
   const operation = positionals.shift()
   switch (operation) {
     case 'keygen': {
+      const output = values.output
       const alg = values.alg || 'ES256'
       const crv = values.crv || 'Ed25519'
       const verbose = values.verbose || false
@@ -32,18 +33,21 @@ export const handler = async function ({ positionals, values }: Arguments) {
         const message = `🔑 ${privateKey.kid}`
         debug(message)
       }
-      const output = prettyKey(privateKey)
+      if (output) {
+        fs.writeFileSync(output, JSON.stringify(prettyKey(privateKey), null, 2))
+      }
       if (env.github()) {
-        if (output.d) {
-          setSecret(output.d)
+        if (privateKey.d) {
+          setSecret(privateKey.d)
         }
-        setOutput('json', output)
+        setOutput('json', prettyKey(privateKey))
       } else {
-        console.log(JSON.stringify(output, null, 2))
+        console.log(JSON.stringify(prettyKey(privateKey), null, 2))
       }
       break
     }
     case 'keypub': {
+      const output = values.output
       const verbose = values.verbose || false
       const [pathToPrivateKey] = positionals
       const privateKey = JSON.parse(fs.readFileSync(pathToPrivateKey).toString()) as jose.JWK
@@ -57,14 +61,13 @@ export const handler = async function ({ positionals, values }: Arguments) {
         const message = `🔑 ${publicKey.kid}`
         debug(message)
       }
-      const output = prettyKey(publicKey)
+      if (output) {
+        fs.writeFileSync(output, JSON.stringify(publicKey, null, 2))
+      }
       if (env.github()) {
-        if (output.d) {
-          setSecret(output.d)
-        }
-        setOutput('json', output)
+        setOutput('json', publicKey)
       } else {
-        console.log(JSON.stringify(output, null, 2))
+        console.log(JSON.stringify(publicKey, null, 2))
       }
       break
     }
