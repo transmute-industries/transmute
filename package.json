@@ -18,7 +18,6 @@
     "node": ">=16"
   },
   "scripts": {
-    "fresh:contexts": "node ./scripts/bundle-contexts.js",
     "prebuild": "rm -rf dist",
     "build": "ncc build -m src/action/run.ts",
     "transmute": "node dist/index.js",

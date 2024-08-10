@@ -1,6 +1,6 @@
 import * as jose from 'jose'
 
-import { PositionalArguments } from "../types"
+import { Arguments } from "../types"
 
 import { setSecret, setOutput, debug } from '@actions/core'
 
@@ -11,8 +11,8 @@ const prettyKey = (k: jose.JWK) => {
   return { kid, kty, crv, alg, x, y, d }
 }
 
-export const handler = async function ({ positionals, values }: PositionalArguments) {
-  const [resource, _action] = positionals.slice(1)
+export const handler = async function ({ positionals, values }: Arguments) {
+  const [resource] = positionals.slice(1)
   switch (resource) {
     case 'keygen': {
       const alg = values.alg || 'ES256'
@@ -21,6 +21,7 @@ export const handler = async function ({ positionals, values }: PositionalArgume
       const k = await jose.generateKeyPair(alg, { crv })
       const privateKey = await jose.exportJWK(k.privateKey)
       privateKey.kid = await jose.calculateJwkThumbprint(privateKey)
+      privateKey.alg = alg
       if (verbose) {
         const message = `🔑 ${privateKey.kid}`
         debug(message)
@@ -32,7 +33,7 @@ export const handler = async function ({ positionals, values }: PositionalArgume
         }
         setOutput('json', output)
       } else {
-        console.log(output)
+        console.log(JSON.stringify(output, null, 2))
       }
       break
     }

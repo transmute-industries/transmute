@@ -1,10 +1,10 @@
-import { PositionalArguments } from '../types'
+import { Arguments } from '../types'
 
 import * as jose from '../jose'
 
 const commands = { jose }
 
-export const handler = async (args: PositionalArguments) => {
+export const handler = async (args: Arguments) => {
   const [command] = args.positionals
   if (commands[command]) {
     await commands[command].handler(args)
