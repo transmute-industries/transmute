@@ -1,5 +1,5 @@
 
-import operationSwitch from "../operationSwitch";
+import operationSwitch from "../action/operationSwitch";
 
 const api = { operationSwitch }
 

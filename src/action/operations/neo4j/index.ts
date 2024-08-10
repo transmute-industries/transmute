@@ -1,9 +1,10 @@
 import neo4j from 'neo4j-driver'
 
-import { ActionOptions } from '../../types'
+import { ActionOptions } from '../../ActionOptions'
 
-import jsongraph from '../../api/rdf/jsongraph'
-import cypher from '../../api/cypher'
+import jsongraph from '../../../api/rdf/jsongraph'
+import cypher from '../../../api/cypher'
+
 export const run = async (options: ActionOptions) => {
   const driver = neo4j.driver(
     options.neo4jUri,

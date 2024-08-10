@@ -3,7 +3,7 @@
 import * as core from '@actions/core'
 import getOpts from './getOptions'
 import operationSwitch from './operationSwitch'
-import cli from './cli'
+import cli from '../cli'
 
 async function run() {
   try {

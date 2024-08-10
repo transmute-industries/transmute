@@ -1,5 +1,5 @@
 import VerifiableDataPlatform from '@transmute/sdk'
-import operationSwitch from '../../operationSwitch'
+import operationSwitch from '../../action/operationSwitch'
 
 export const command = 'platform <resource> <action>'
 

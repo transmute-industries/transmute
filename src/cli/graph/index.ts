@@ -4,7 +4,11 @@ import jsongraph from '../../api/rdf/jsongraph'
 import * as contants from '../../constants'
 import cypher from '../../api/cypher'
 
-import operationSwitch from '../../operationSwitch'
+import operationSwitch from '../../action/operationSwitch'
+
+const graphContentType = `application/vnd.transmute.graph+json`
+const cypherContentType = `application/vnd.transmute.cypher+json`
+const rawCypherContentType = `application/vnd.transmute.cypher`
 
 const register = (yargs) => {
   yargs.command(
@@ -40,7 +44,7 @@ const register = (yargs) => {
         const result = await operationSwitch(options)
         console.info(JSON.stringify(result, null, 2))
       } else if (accept && input) {
-        if (accept === contants.graphContentType) {
+        if (accept === graphContentType) {
           const document = JSON.parse(
             fs
               .readFileSync(path.resolve(process.cwd(), input as string))
@@ -49,7 +53,7 @@ const register = (yargs) => {
           const graph = await jsongraph.fromDocument(document)
           console.info(JSON.stringify({ graph }, null, 2))
         }
-        if (accept === contants.cypherContentType) {
+        if (accept === cypherContentType) {
           const document = JSON.parse(
             fs
               .readFileSync(path.resolve(process.cwd(), input as string))
@@ -59,7 +63,7 @@ const register = (yargs) => {
           const { query, params } = await cypher.fromJsonGraph(graph)
           console.info(JSON.stringify({ query, params }, null, 2))
         }
-        if (accept === contants.rawCypherContentType) {
+        if (accept === rawCypherContentType) {
           const document = JSON.parse(
             fs
               .readFileSync(path.resolve(process.cwd(), input as string))

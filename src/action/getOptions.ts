@@ -1,6 +1,6 @@
 import * as core from '@actions/core';
 
-import { ActionOptions } from './types'
+import { ActionOptions } from './ActionOptions'
 
 const getOptions = (): ActionOptions => {
   return {
