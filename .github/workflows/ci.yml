@@ -28,3 +28,19 @@ jobs:
             jose keypub ./private.sig.jwk.json --output ./public.sig.jwk.json
       - name: Log Public Key
         run: cat ./public.sig.jwk.json
+      - name: Sign Message
+        id: sign_message
+        uses: ./
+        with:
+          transmute: |
+            jose sign ./tests/fixtures/private.sig.jwk.json ./tests/fixtures/message.json --detached --compact --output ./tests/fixtures/message.signature.detached.compact.jws
+      - name: Log Detached Signature
+        run: echo "${{ steps.sign_message.outputs.jws }}"
+      - name: Verify Message
+        id: verify_message
+        uses: ./
+        with:
+          transmute: |
+            jose verify ./tests/fixtures/public.sig.jwk.json ./tests/fixtures/message.signature.detached.compact.jws ./tests/fixtures/message.json --detached --compact
+      - name: Log Message Verification
+        run: echo "${{ steps.verify_message.outputs.json }}"
