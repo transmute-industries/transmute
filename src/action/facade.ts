@@ -1,30 +1,36 @@
-import * as core from '@actions/core'
 
 import { parseArgs } from "node:util";
 
-// https://stackoverflow.com/questions/29655760/convert-a-string-into-shell-arguments
-const re = /"[^"]+"|'[^']+'|\S+/g
+import * as core from '@actions/core'
 
-// prefer to parse options deeper 
-const options = {
-  foo: {
-    type: 'boolean' as "string" | "boolean",
-    short: 'f',
-  },
-  alg: {
-    type: 'string' as "string" | "boolean",
-  },
-};
+const getArgs = (prompt: string) => {
+  // https://stackoverflow.com/questions/29655760/convert-a-string-into-shell-arguments
+  const re = /"[^"]+"|'[^']+'|\S+/g
+  if (process.env.GITHUB_ACTION) {
+    prompt = core.getInput("transmute")
+  }
+  return parseArgs({
+    allowPositionals: true,
+    args: prompt.match(re) || [],
+    options: {
+      alg: {
+        type: 'string' as "string",
+      },
+    },
+  })
+}
 
 export async function facade(prompt: string = process.argv.slice(2).join(' ')) {
   try {
-    if (process.env.GITHUB_ACTION) {
-      prompt = core.getInput("transmute")
-    }
-    const promptArgs = prompt.match(re) || []
-    const parsed = parseArgs({ args: promptArgs, options, allowPositionals: true });
+    const parsed = getArgs(prompt)
     console.log(parsed)
   } catch (error) {
-    core.setFailed('💀 Internal Error.')
+    // swallow error to prevent leaking
+    const message = '💀 Internal Error.'
+    if (process.env.GITHUB_ACTION) {
+      core.setFailed(message)
+    } else {
+      console.error(message)
+    }
   }
 }
