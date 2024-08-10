@@ -8,7 +8,7 @@ jobs:
       - uses: actions/cache/save@v4
         with:
           key: ${{ hashFiles('dist/**') }}
-          path: |
+          path: >
             action.yml
             dist/*
 
@@ -25,13 +25,13 @@ jobs:
       - uses: actions/cache/restore@v4
         with:
           key: ${{ hashFiles('dist/**') }}
-          path: |
+          path: >
             action.yml
             dist/*
 
       - id: generate_private_key
         uses: ./
         with:
-          transmute: |
+          transmute: >
             jose keygen --alg ES256 --verbose
       - run: echo "${{ steps.generate_private_key.outputs.json }}"
