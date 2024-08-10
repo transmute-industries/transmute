@@ -18,32 +18,33 @@ const verify = async (argv: RequestTransparentStatementVerify) => {
   const issuerKey = cose.cbor.decode(fs.readFileSync(path.resolve(process.cwd(), argv.issuerKey)))
   const transparencyServiceKey = cose.cbor.decode(fs.readFileSync(path.resolve(process.cwd(), argv.transparencyServiceKey)))
 
-  const verifiedIssuerSignedStatement = await cose.scitt.statement.verify({
-    statement,
-    signedStatement: transparentStatement,
-    publicCoseKey: issuerKey
-  })
+  console.warn('needs update')
+  // const verifiedIssuerSignedStatement = await cose.scitt.statement.verify({
+  //   statement,
+  //   signedStatement: transparentStatement,
+  //   publicCoseKey: issuerKey
+  // })
 
-  if (verifiedIssuerSignedStatement) {
-    console.log(`✅ verified: ${argv.statement}`)
-  } else {
-    console.log(`❌ verified: ${argv.statement}`)
-  }
+  // if (verifiedIssuerSignedStatement) {
+  //   console.log(`✅ verified: ${argv.statement}`)
+  // } else {
+  //   console.log(`❌ verified: ${argv.statement}`)
+  // }
 
-  const { entry, receipts } = await cose.scitt.statement.getEntryReceipts({ transparentStatement })
-  const [receipt] = receipts
+  // const { entry, receipts } = await cose.scitt.statement.getEntryReceipts({ transparentStatement })
+  // const [receipt] = receipts
 
-  const verifiedTransparentStatementReceipt = await cose.scitt.receipt.verify({
-    entry,
-    receipt: receipt,
-    publicCoseKey: transparencyServiceKey
-  })
+  // const verifiedTransparentStatementReceipt = await cose.scitt.receipt.verify({
+  //   entry,
+  //   receipt: receipt,
+  //   publicCoseKey: transparencyServiceKey
+  // })
 
-  if (verifiedTransparentStatementReceipt) {
-    console.log(`✅ verified: ${argv.transparentStatement}`)
-  } else {
-    console.log(`❌ verified: ${argv.transparentStatement}`)
-  }
+  // if (verifiedTransparentStatementReceipt) {
+  //   console.log(`✅ verified: ${argv.transparentStatement}`)
+  // } else {
+  //   console.log(`❌ verified: ${argv.transparentStatement}`)
+  // }
 
 }
 

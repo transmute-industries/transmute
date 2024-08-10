@@ -1,5 +1,4 @@
 
-import key from './key'
 import statement from "./statement"
 import ledger from "./ledger"
 import transparent from "./transparent"
@@ -7,7 +6,6 @@ import certificate from "./certificate"
 
 export const resources = {
   certificate,
-  key,
   statement,
   ledger,
   transparent,

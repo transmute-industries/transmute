@@ -16,22 +16,24 @@ const verify = async (argv: RequestScittStatementVerify) => {
   const statement = fs.readFileSync(path.resolve(process.cwd(), argv.statement))
   const signedStatement = fs.readFileSync(path.resolve(process.cwd(), argv.signedStatement))
 
-  const verification = await cose.scitt.statement.verify({
-    statement,
-    signedStatement,
-    publicCoseKey: publicCoseKeyMap
-  })
+  console.warn('needs update')
 
-  const result = JSON.stringify({ verification }, null, 2)
+  // const verification = await cose.scitt.statement.verify({
+  //   statement,
+  //   signedStatement,
+  //   publicCoseKey: publicCoseKeyMap
+  // })
 
-  if (argv.output) {
-    fs.writeFileSync(
-      path.resolve(process.cwd(), argv.signedStatement),
-      Buffer.from(result)
-    )
-  } else {
-    console.log(result)
-  }
+  // const result = JSON.stringify({ verification }, null, 2)
+
+  // if (argv.output) {
+  //   fs.writeFileSync(
+  //     path.resolve(process.cwd(), argv.signedStatement),
+  //     Buffer.from(result)
+  //   )
+  // } else {
+  //   console.log(result)
+  // }
 
 }
 

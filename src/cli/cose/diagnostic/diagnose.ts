@@ -13,16 +13,15 @@ const diagnose = async (argv: RequestDiagnose) => {
   const { input, output } = argv
 
   const payload = fs.readFileSync(path.resolve(process.cwd(), input))
-  const items = await cose.rfc.diag(payload)
-  const markdown = await cose.rfc.blocks(items)
+  // TODO: use @transmute/edn
+  const edn = await cose.cbor.diagnose(payload)
   if (output) {
     fs.writeFileSync(
       path.resolve(process.cwd(), output),
-      markdown
+      edn
     )
   } else {
-
-    console.info(markdown)
+    console.info(edn)
   }
 
 }

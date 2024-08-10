@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import jsongraph from '../../api/rdf/jsongraph'
-import * as contants from '../../constants'
+
 import cypher from '../../api/cypher'
 
 import operationSwitch from '../../action/operationSwitch'

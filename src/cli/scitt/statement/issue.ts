@@ -18,18 +18,18 @@ const issue = async (argv: RequestScittStatementIssue) => {
   const secretCoseKey = fs.readFileSync(path.resolve(process.cwd(), argv.issuerKey))
   const secretCoseKeyMap = cose.cbor.decode(secretCoseKey)
   const content_type = mime.getType(path.resolve(process.cwd(), argv.statement))
-  const signedStatement = await cose.scitt.statement.issue({
-    iss: argv.iss,
-    sub: argv.sub,
-    cty: argv.cty || content_type,
-    x5c: secretCoseKeyMap.get(-66666) || undefined,
-    payload: statement,
-    secretCoseKey: secretCoseKeyMap
-  })
-  fs.writeFileSync(
-    path.resolve(process.cwd(), argv.signedStatement),
-    Buffer.from(signedStatement)
-  )
+  console.warn('needs update')
+  // const signedStatement = await cose.scitt.statement.issue({
+  //   iss: argv.iss,
+  //   sub: argv.sub,
+  //   cty: argv.cty || content_type,
+  //   payload: statement,
+  //   secretCoseKey: secretCoseKeyMap
+  // })
+  // fs.writeFileSync(
+  //   path.resolve(process.cwd(), argv.signedStatement),
+  //   Buffer.from(signedStatement)
+  // )
 }
 
 export default issue

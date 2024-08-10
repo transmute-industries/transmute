@@ -1,5 +1,7 @@
 import * as jose from 'jose'
-import { detachedHeaderParams } from '../controller/utils'
+
+
+const detachedHeaderParams = { b64: false, crit: ['b64'] }
 
 // TODO Remote KMS.
 const signer = async (privateKeyJwk) => {

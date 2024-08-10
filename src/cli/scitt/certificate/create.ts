@@ -121,7 +121,8 @@ const createLeafCertificate = async (argv: RequestCertificate) => {
   const userKeys = await crypto.subtle.generateKey(alg, extractable, ["sign", "verify"]);
 
   const issuerPrivateKeyCose = fs.readFileSync(path.resolve(process.cwd(), argv.issuerPrivateKey))
-  const issuerPrivateKey = cose.key.exportJWK(cose.cbor.decode(issuerPrivateKeyCose))
+  const coseKey = cose.cbor.decode(issuerPrivateKeyCose)
+  const issuerPrivateKeyJwk = await cose.key.convertCoseKeyToJsonWebKey<any>(coseKey)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const extensions: any = []
   if (argv.subjectGuid) {
@@ -144,7 +145,7 @@ const createLeafCertificate = async (argv: RequestCertificate) => {
     publicKey: userKeys.publicKey, // leaf public key
     signingKey: await crypto.subtle.importKey(
       "jwk",
-      issuerPrivateKey,
+      issuerPrivateKeyJwk,
       alg,
       true,
       ["sign"],
@@ -189,7 +190,9 @@ const create = async (argv: RequestCertificate) => {
   if (!argv.issuerCertificate) {
     // root cert
     cert = await createRootCertificate(argv)
-    const subjectPrivateKey = cose.cbor.encode(cose.key.importJWK(JSON.parse(cert.subjectPrivateKey)))
+    const subjectPrivateKeyJwk = JSON.parse(cert.subjectPrivateKey)
+    const subjectPrivateKeyCose = await cose.key.convertJsonWebKeyToCoseKey<any>(subjectPrivateKeyJwk)
+    const subjectPrivateKey = cose.cbor.encode(subjectPrivateKeyCose)
     fs.writeFileSync(
       path.resolve(process.cwd(), argv.subjectPrivateKey),
       Buffer.from(subjectPrivateKey)
@@ -203,10 +206,10 @@ const create = async (argv: RequestCertificate) => {
     // leaf cert
     cert = await createLeafCertificate(argv)
 
-    const subjectPublicCoseKeyMap = cose.key.importJWK(JSON.parse(cert.subjectPublicKey))
+    const subjectPublicCoseKeyMap = await cose.key.convertCoseKeyToJsonWebKey<any>(JSON.parse(cert.subjectPublicKey))
     const subjectPublicKey = cose.cbor.encode(subjectPublicCoseKeyMap)
-    const subjectPrivateCoseKeyMap = cose.key.importJWK(JSON.parse(cert.subjectPrivateKey))
-    subjectPrivateCoseKeyMap.set(-66666, subjectPublicCoseKeyMap.get(-66666) as any)
+    const subjectPrivateCoseKeyMap = await cose.key.convertCoseKeyToJsonWebKey<any>(JSON.parse(cert.subjectPrivateKey))
+
     const subjectPrivateKey = cose.cbor.encode(subjectPrivateCoseKeyMap)
 
     fs.writeFileSync(
