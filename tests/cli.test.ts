@@ -1,5 +1,7 @@
 import cli from '../src'
 
-it('src exports cli', () => {
-  expect(cli).toBeDefined()
+it('cli exports facade', async () => {
+  await cli.facade(`
+jose key generate --alg ES256
+`)
 })

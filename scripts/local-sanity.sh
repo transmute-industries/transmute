@@ -1,0 +1,1 @@
+npm run transmute -- jose key generate --alg ES256
