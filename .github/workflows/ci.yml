@@ -22,6 +22,6 @@ jobs:
         uses: ./
         with:
           transmute: |
-            jose keygen --alg ES256 -v
+            jose keygen --alg ES256 --verbose
       - name: Log Private Key
         run: echo "${{ steps.private_key.outputs.json }}"

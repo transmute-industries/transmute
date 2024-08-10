@@ -8,7 +8,7 @@ import { env } from '../action'
 
 const prettyKey = (k: jose.JWK) => {
   const { kid, kty, crv, alg, x, y, d } = k
-  return JSON.stringify({ kid, kty, crv, alg, x, y, d }, null, 2)
+  return { kid, kty, crv, alg, x, y, d }
 }
 
 export const handler = async function ({ positionals, values }: PositionalArguments) {
@@ -27,7 +27,9 @@ export const handler = async function ({ positionals, values }: PositionalArgume
       }
       const output = prettyKey(privateKey)
       if (env.github()) {
-        setSecret(output)
+        if (output.d) {
+          setSecret(output.d)
+        }
         setOutput('json', output)
       } else {
         console.log(output)
