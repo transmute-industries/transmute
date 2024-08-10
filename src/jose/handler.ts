@@ -121,6 +121,7 @@ export const handler = async function ({ positionals, values }: Arguments) {
       break
     }
     case 'verify': {
+      const output = values.output
       const compact = values.compact || false
       const verbose = values.verbose || false
       const detached = values.detached || false
@@ -146,16 +147,18 @@ export const handler = async function ({ positionals, values }: Arguments) {
       if (detached) {
         jws.payload = new Uint8Array(fs.readFileSync(pathToMessage))
       }
-      const { protectedHeader } = await jose.flattenedVerify(jws, await jose.importJWK(publicKey))
+      const { payload, protectedHeader } = await jose.flattenedVerify(jws, await jose.importJWK(publicKey))
       if (verbose) {
         const message = `🔑 ${publicKey.kid}`
         debug(message)
       }
-      const output = { protectedHeader }
+      if (output) {
+        fs.writeFileSync(output, payload)
+      }
       if (env.github()) {
-        setOutput('json', output)
+        setOutput('json', protectedHeader)
       } else {
-        console.log(JSON.stringify(output, null, 2))
+        console.log(JSON.stringify(protectedHeader, null, 2))
       }
       break
     }

@@ -12,7 +12,7 @@ npm run -s transmute -- jose keypub ./scripts/diagnostic/private.enc.jwk.json > 
 
 # attached 
 npm run -s transmute -- jose sign ./scripts/diagnostic/private.sig.jwk.json ./scripts/diagnostic/message.json > ./scripts/diagnostic/message.signature.json
-npm run -s transmute -- jose verify ./scripts/diagnostic/public.sig.jwk.json ./scripts/diagnostic/message.signature.json > ./scripts/diagnostic/message.signature.verified.json
+npm run -s transmute -- jose verify ./scripts/diagnostic/public.sig.jwk.json ./scripts/diagnostic/message.signature.json --output ./scripts/diagnostic/message.verified.json > ./scripts/diagnostic/message.signature.verified.json
 
 # detached
 npm run -s transmute -- jose sign ./scripts/diagnostic/private.sig.jwk.json ./scripts/diagnostic/message.json --detached > ./scripts/diagnostic/message.signature.detached.json
