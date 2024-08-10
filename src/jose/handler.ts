@@ -178,13 +178,25 @@ export const handler = async function ({ positionals, values }: Arguments) {
       }
       const message = new Uint8Array(fs.readFileSync(pathToMessage))
       const header = { alg } as jose.ProtectedHeaderParameters
-      const jwe = await new jose.GeneralEncrypt(
-        message
-      )
-        .setProtectedHeader({ enc })
-        .addRecipient(await jose.importJWK(publicKey))
-        .setUnprotectedHeader(header)
-        .encrypt()
+
+      let jwe;
+
+      if (compact) {
+        jwe = await new jose.CompactEncrypt(
+          message
+        )
+          .setProtectedHeader({ enc, alg: `${publicKey.alg}` })
+          .encrypt(await jose.importJWK(publicKey))
+
+      } else {
+        jwe = await new jose.GeneralEncrypt(
+          message
+        )
+          .setProtectedHeader({ enc })
+          .addRecipient(await jose.importJWK(publicKey))
+          .setUnprotectedHeader(header)
+          .encrypt()
+      }
 
       if (verbose) {
         const message = `🔑 ${publicKey.kid}`
@@ -193,14 +205,13 @@ export const handler = async function ({ positionals, values }: Arguments) {
 
       if (env.github()) {
         if (compact) {
-          // if (jwe.recipients.length)
-          // setOutput('jwe', `${jws.protected}.${jws.payload}.${jws.signature}`)
+          setOutput('jwe', jwe)
         } else {
           setOutput('json', jwe)
         }
       } else {
         if (compact) {
-          // console.log(`${jws.protected}.${jws.payload}.${jws.signature}`)
+          console.log(jwe)
         } else {
           console.log(JSON.stringify(jwe, null, 2))
         }
@@ -219,21 +230,21 @@ export const handler = async function ({ positionals, values }: Arguments) {
         }
       }
 
-
       let jwe = fs.readFileSync(pathToMessage).toString() as any
 
+      let result;
       if (compact) {
-        const [protectedHeader,] = jwe.split('.')
-
-        console.log(jwe.split('.'))
-        jwe = { protected: protectedHeader } as any
+        result = await jose.compactDecrypt(
+          jwe, await jose.importJWK(privateKey)
+        )
       } else {
         jwe = JSON.parse(jwe)
+        result = await jose.generalDecrypt(
+          jwe, await jose.importJWK(privateKey)
+        )
       }
 
-      const { plaintext, protectedHeader } = await jose.generalDecrypt(
-        jwe, await jose.importJWK(privateKey)
-      )
+      const { plaintext, protectedHeader } = result
 
       if (verbose) {
         const message = `🔑 ${privateKey.kid}`

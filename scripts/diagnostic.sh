@@ -25,3 +25,7 @@ npm run -s transmute -- jose verify ./scripts/diagnostic/public.sig.jwk.json ./s
 # encrypt
 npm run -s transmute -- jose encrypt ./scripts/diagnostic/public.enc.jwk.json ./scripts/diagnostic/message.json --enc A128GCM > ./scripts/diagnostic/message.ciphertext.json
 npm run -s transmute -- jose decrypt ./scripts/diagnostic/private.enc.jwk.json ./scripts/diagnostic/message.ciphertext.json --output ./scripts/diagnostic/message.plaintext.json > ./scripts/diagnostic/message.decrypted.json
+
+# encrypt compact
+npm run -s transmute -- jose encrypt ./scripts/diagnostic/public.enc.jwk.json ./scripts/diagnostic/message.json --enc A128GCM --compact > ./scripts/diagnostic/message.ciphertext.compact.jwe
+npm run -s transmute -- jose decrypt ./scripts/diagnostic/private.enc.jwk.json ./scripts/diagnostic/message.ciphertext.compact.jwe --output ./scripts/diagnostic/message.plaintext.json --compact > ./scripts/diagnostic/message.decrypted.json

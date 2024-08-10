@@ -66,3 +66,15 @@ it('decrypt', async () => {
   expect(output).toHaveBeenCalledTimes(1)
 })
 
+it('encrypt compact', async () => {
+  await facade(`jose encrypt ./scripts/diagnostic/public.enc.jwk.json ./scripts/diagnostic/message.json --verbose --enc A128GCM --compact`)
+  expect(debug).toHaveBeenCalledTimes(1)
+  expect(output).toHaveBeenCalledTimes(1)
+})
+
+it('decrypt compact', async () => {
+  await facade(`jose decrypt ./scripts/diagnostic/private.enc.jwk.json ./scripts/diagnostic/message.ciphertext.compact.jwe --verbose --compact`)
+  expect(debug).toHaveBeenCalledTimes(1)
+  expect(output).toHaveBeenCalledTimes(1)
+})
+
