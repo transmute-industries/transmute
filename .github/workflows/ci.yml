@@ -147,4 +147,4 @@ jobs:
           transmute-client-secret: ${{ secrets.CLIENT_SECRET }}
           transmute-api: ${{ secrets.API_BASE_URL }}
           transmute: |
-            graph assist --verbose --graph-type application/gql --push
+            graph assist --graph-type application/gql --push
