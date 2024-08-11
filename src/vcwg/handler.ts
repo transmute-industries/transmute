@@ -1,6 +1,7 @@
 import fs from 'fs'
 import * as jose from 'jose'
 import { Arguments } from "../types"
+import neo4j from 'neo4j-driver'
 
 import yaml from 'yaml'
 
@@ -13,7 +14,6 @@ import * as vc from '@transmute/verifiable-credentials'
 
 import { jsongraph } from './graph/jsongraph'
 import { query, injection } from './graph/gql'
-
 
 export const handler = async function ({ positionals, values }: Arguments) {
   positionals = positionals.slice(1)
@@ -341,6 +341,16 @@ export const handler = async function ({ positionals, values }: Arguments) {
         const components = await query(graph)
         const dangerousQuery = await injection(components)
         graphText = dangerousQuery
+        if (values.push) {
+          const driver = neo4j.driver(
+            `${process.env.NEO4J_URI}`,
+            neo4j.auth.basic(`${process.env.NEO4J_USERNAME}`, `${process.env.NEO4J_PASSWORD}`)
+          )
+          const session = driver.session()
+          await session
+            .run({ text: `${components.query}`, parameters: components.params })
+          await driver.close()
+        }
       }
       if (output) {
         fs.writeFileSync(output, JSON.stringify(graphText, null, 2))

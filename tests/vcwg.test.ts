@@ -118,3 +118,9 @@ it('graph gql', async () => {
   expect(output).toHaveBeenCalledTimes(1)
 })
 
+it('graph gql neo4j', async () => {
+  await facade(`vcwg graph ./tests/fixtures/issuer-claims.json --verbose --credential-type application/vc --graph-type application/gql --push`)
+  expect(debug).toHaveBeenCalledTimes(1)
+  expect(output).toHaveBeenCalledTimes(1)
+})
+
