@@ -50,3 +50,7 @@ npm run -s transmute -- vcwg issue-credential ./tests/fixtures/private.sig.jwk.j
 npm run -s transmute -- vcwg verify-credential ./tests/fixtures/public.sig.jwk.json ./tests/fixtures/issuer-claims.cbor  --credential-type application/vc-ld+cose --output ./tests/fixtures/issuer-claims.cbor.verified.json
 npm run -s transmute -- vcwg issue-presentation ./tests/fixtures/private.sig.jwk.json ./tests/fixtures/issuer-claims.cbor --credential-type application/vc-ld+cose --presentation-type application/vp-ld+cose  --output ./tests/fixtures/holder-claims.cbor
 npm run -s transmute -- vcwg verify-presentation ./tests/fixtures/public.sig.jwk.json ./tests/fixtures/holder-claims.cbor  --presentation-type application/vp-ld+cose --output ./tests/fixtures/holder-claims.cbor.verified.json
+
+# Graph
+
+npm run -s transmute -- vcwg graph ./tests/fixtures/issuer-claims.json --credential-type application/vc --output ./tests/fixtures/issuer-claims.graph.json

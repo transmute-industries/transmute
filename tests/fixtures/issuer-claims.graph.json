@@ -1,0 +1,26 @@
+{
+  "nodes": {
+    "_:uajkGhlO24W-VBNrTqqmRIbZajtDhjrNy5k2tcLu--Xg": {
+      "id": "_:uajkGhlO24W-VBNrTqqmRIbZajtDhjrNy5k2tcLu--Xg",
+      "labels": [
+        "https://www.w3.org/2018/credentials#VerifiableCredential",
+        "https://www.w3.org/ns/credentials/examples#MyPrototypeCredential"
+      ]
+    },
+    "_:ue-Mg0kAOs7IlvPKKpjBOQ4JF6Y2GFU2LLwLiG8qJJwI": {
+      "id": "_:ue-Mg0kAOs7IlvPKKpjBOQ4JF6Y2GFU2LLwLiG8qJJwI",
+      "labels": [
+        "https://www.w3.org/2018/credentials#credentialSubject"
+      ],
+      "https://www.w3.org/ns/credentials/examples#mySubjectProperty": "mySubjectValue"
+    }
+  },
+  "edges": [
+    {
+      "source": "_:uajkGhlO24W-VBNrTqqmRIbZajtDhjrNy5k2tcLu--Xg",
+      "label": "credentialSubject",
+      "target": "_:ue-Mg0kAOs7IlvPKKpjBOQ4JF6Y2GFU2LLwLiG8qJJwI",
+      "predicate": "https://www.w3.org/2018/credentials#credentialSubject"
+    }
+  ]
+}

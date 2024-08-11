@@ -106,8 +106,14 @@ it('verify-presentation', async () => {
 
 // Graph
 
-it('graph', async () => {
-  await facade(`vcwg graph ./tests/fixtures/issuer-claims.json --verbose --credential-type application/vc`)
+it('graph json', async () => {
+  await facade(`vcwg graph ./tests/fixtures/issuer-claims.json --verbose --credential-type application/vc --graph-type application/vnd.jgf+json`)
+  expect(debug).toHaveBeenCalledTimes(1)
+  expect(output).toHaveBeenCalledTimes(1)
+})
+
+it('graph gql', async () => {
+  await facade(`vcwg graph ./tests/fixtures/issuer-claims.json --verbose --credential-type application/vc --graph-type application/gql`)
   expect(debug).toHaveBeenCalledTimes(1)
   expect(output).toHaveBeenCalledTimes(1)
 })

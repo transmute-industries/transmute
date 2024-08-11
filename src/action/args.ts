@@ -24,6 +24,7 @@ export type CommonOptions = {
 export type VcwgOptions = {
   'credential-type'?: string
   'presentation-type'?: string
+  gql?: boolean
 }
 
 export type ScittOptions = {
@@ -60,6 +61,9 @@ export const args = (prompt: string) => {
         type: 'string' as "string",
       },
       'presentation-type': {
+        type: 'string' as "string",
+      },
+      'graph-type': {
         type: 'string' as "string",
       },
       iss: {
