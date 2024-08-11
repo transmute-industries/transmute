@@ -1,3 +1,4 @@
+
 # signing keys
 npm run -s transmute -- jose keygen --alg ES256 > ./tests/fixtures/private.sig.jwk.json
 npm run -s transmute -- jose keypub ./tests/fixtures/private.sig.jwk.json > ./tests/fixtures/public.sig.jwk.json
@@ -15,7 +16,7 @@ npm run -s transmute -- jose sign ./tests/fixtures/private.sig.jwk.json ./tests/
 npm run -s transmute -- jose verify ./tests/fixtures/public.sig.jwk.json ./tests/fixtures/message.signature.detached.json ./tests/fixtures/message.json --detached> ./tests/fixtures/message.signature.detached.verified.json
 
 # detached compact
-npm run -s transmute -- jose sign ./tests/fixtures/private.sig.jwk.json ./tests/fixtures/message.json --detached --compact > ./tests/fixtures/message.signature.detached.compact.jws
+npm run -s transmute -- jose sign ./tests/fixtures/private.sig.jwk.json ./tests/fixtures/message.json --detached --compact --output ./tests/fixtures/message.signature.detached.compact.jws
 npm run -s transmute -- jose verify ./tests/fixtures/public.sig.jwk.json ./tests/fixtures/message.signature.detached.compact.jws ./tests/fixtures/message.json --detached --compact > ./tests/fixtures/message.signature.detached.compact.jws.verified.json
 
 # encrypt

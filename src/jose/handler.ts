@@ -110,7 +110,11 @@ export const handler = async function ({ positionals, values }: Arguments) {
       }
 
       if (output) {
-        fs.writeFileSync(output, typeof jws === 'string' ? jws : JSON.stringify(jws, null, 2))
+        if (compact) {
+          fs.writeFileSync(output, `${jws.protected}.${jws.payload}.${jws.signature}`)
+        } else {
+          fs.writeFileSync(output, JSON.stringify(jws, null, 2))
+        }
       }
 
       if (env.github()) {
@@ -120,11 +124,14 @@ export const handler = async function ({ positionals, values }: Arguments) {
           setOutput('json', jws)
         }
       } else {
-        if (compact) {
-          console.log(`${jws.protected}.${jws.payload}.${jws.signature}`)
-        } else {
-          console.log(JSON.stringify(jws, null, 2))
+        if (!output) {
+          if (compact) {
+            console.log(`${jws.protected}.${jws.payload}.${jws.signature}`)
+          } else {
+            console.log(JSON.stringify(jws, null, 2))
+          }
         }
+
       }
       break
     }
