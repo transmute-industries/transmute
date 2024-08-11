@@ -14,11 +14,39 @@ beforeEach(() => {
   secret = jest.spyOn(core, 'setSecret').mockImplementation()
 })
 
+
+it('issuer-claims', async () => {
+  await facade(`vcwg issuer-claims ./tests/fixtures/issuer-claims.json --verbose`)
+  expect(debug).toHaveBeenCalledTimes(1)
+  expect(output).toHaveBeenCalledTimes(1)
+})
+
 it('issue-credential', async () => {
-  await facade(`vcwg issue-credential ./tests/fixtures/private.sig.jwk.json ./tests/fixtures/issuer-claims.yaml --verbose`)
+  await facade(`vcwg issue-credential ./tests/fixtures/private.sig.jwk.json ./tests/fixtures/issuer-claims.yaml --verbose --credential-type application/vc-ld+jwt`)
   expect(debug).toHaveBeenCalledTimes(1)
   expect(secret).toHaveBeenCalledTimes(1)
   expect(output).toHaveBeenCalledTimes(1)
 })
+
+it('verify-credential', async () => {
+  await facade(`vcwg verify-credential ./tests/fixtures/public.sig.jwk.json ./tests/fixtures/issuer-claims.jwt --verbose --credential-type application/vc-ld+jwt`)
+  expect(debug).toHaveBeenCalledTimes(1)
+  expect(output).toHaveBeenCalledTimes(1)
+})
+
+it('issue-presentation', async () => {
+  await facade(`vcwg issue-presentation ./tests/fixtures/private.sig.jwk.json ./tests/fixtures/issuer-claims.jwt --verbose --credential-type application/vc-ld+jwt --presentation-type application/vp-ld+jwt`)
+  expect(debug).toHaveBeenCalledTimes(1)
+  expect(secret).toHaveBeenCalledTimes(1)
+  expect(output).toHaveBeenCalledTimes(1)
+})
+
+it('verify-presentation', async () => {
+  await facade(`vcwg verify-presentation ./tests/fixtures/public.sig.jwk.json ./tests/fixtures/holder-claims.jwt --verbose --presentation-type application/vp-ld+jwt`)
+  expect(debug).toHaveBeenCalledTimes(1)
+  expect(output).toHaveBeenCalledTimes(1)
+})
+
+
 
 

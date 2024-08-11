@@ -17,6 +17,8 @@ outputs:
     description: "The output as compact jws."
   jwe:
     description: "The output as compact jwe."
+  yaml:
+    description: "The output as yaml."
 
 runs:
   using: "node20"

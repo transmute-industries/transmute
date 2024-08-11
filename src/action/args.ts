@@ -6,6 +6,9 @@ import { getInput } from '@actions/core'
 import { env } from "./env";
 
 export type JoseOptions = {
+  iss?: string
+  sub?: string
+  kid?: string
   alg?: string
   enc?: string
   crv?: string
@@ -16,6 +19,11 @@ export type CommonOptions = {
   output?: string
   verbose?: boolean
   detached?: boolean
+}
+
+export type VcwgOptions = {
+  'credential-type'?: string
+  'presentation-type'?: string
 }
 
 export type ScittOptions = {
@@ -47,6 +55,21 @@ export const args = (prompt: string) => {
       output: {
         type: 'string' as "string",
         short: 'o'
+      },
+      'credential-type': {
+        type: 'string' as "string",
+      },
+      'presentation-type': {
+        type: 'string' as "string",
+      },
+      iss: {
+        type: 'string' as "string",
+      },
+      sub: {
+        type: 'string' as "string",
+      },
+      kid: {
+        type: 'string' as "string",
       },
       alg: {
         type: 'string' as "string",
