@@ -3,8 +3,9 @@ import { Arguments } from '../types'
 import * as jose from '../jose'
 import * as cose from '../cose'
 import * as scitt from '../scitt'
+import * as vcwg from '../vcwg'
 
-const commands = { jose, cose, scitt }
+const commands = { jose, cose, scitt, vcwg }
 
 export const handler = async (args: Arguments) => {
   const [command] = args.positionals

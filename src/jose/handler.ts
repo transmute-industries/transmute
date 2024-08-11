@@ -6,12 +6,12 @@ import { setSecret, setOutput, debug } from '@actions/core'
 
 import { env } from '../action'
 
-const prettyKey = (k: jose.JWK) => {
+export const prettyKey = (k: jose.JWK) => {
   const { kid, kty, crv, alg, x, y, d } = k
   return { kid, kty, crv, alg, x, y, d }
 }
 
-const toPublicKey = (k: jose.JWK) => {
+export const toPublicKey = (k: jose.JWK) => {
   const { kid, kty, crv, alg, x, y, } = k
   return { kid, kty, crv, alg, x, y, }
 }
