@@ -72,6 +72,7 @@ export const handler = async function ({ positionals, values }: Arguments) {
       break
     }
     case 'sign': {
+      const output = values.output
       const compact = values.compact || false
       const verbose = values.verbose || false
       const detached = values.detached || false
@@ -106,6 +107,10 @@ export const handler = async function ({ positionals, values }: Arguments) {
       if (verbose) {
         const message = `🔑 ${privateKey.kid}`
         debug(message)
+      }
+
+      if (output) {
+        fs.writeFileSync(output, typeof jws === 'string' ? jws : JSON.stringify(jws, null, 2))
       }
 
       if (env.github()) {

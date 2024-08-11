@@ -35,16 +35,16 @@ it('sign', async () => {
   expect(output).toHaveBeenCalledTimes(1)
 })
 
+it('verify', async () => {
+  await facade(`jose verify ./tests/fixtures/public.sig.jwk.json ./tests/fixtures/message.signature.json --verbose`)
+  expect(debug).toHaveBeenCalledTimes(1)
+  expect(output).toHaveBeenCalledTimes(1)
+})
+
 it('sign detached', async () => {
   await facade(`jose sign ./tests/fixtures/private.sig.jwk.json ./tests/fixtures/message.json --verbose --detached`)
   expect(debug).toHaveBeenCalledTimes(1)
   expect(secret).toHaveBeenCalledTimes(1)
-  expect(output).toHaveBeenCalledTimes(1)
-})
-
-it('verify', async () => {
-  await facade(`jose verify ./tests/fixtures/public.sig.jwk.json ./tests/fixtures/message.signature.json --verbose`)
-  expect(debug).toHaveBeenCalledTimes(1)
   expect(output).toHaveBeenCalledTimes(1)
 })
 
