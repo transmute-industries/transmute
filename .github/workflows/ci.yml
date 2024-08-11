@@ -128,7 +128,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Push Graph Fragment
-        id: update_graph
+        id: push_single_graph
         uses: ./
         with:
           neo4j-uri: ${{ secrets.NEO4J_URI }}
@@ -137,7 +137,7 @@ jobs:
           transmute: |
             graph assist ./tests/fixtures/issuer-claims.json --verbose --credential-type application/vc --graph-type application/gql --push
       - name: Push Presentations
-        id: update_graph
+        id: push_multiple_graphs
         uses: ./
         with:
           neo4j-uri: ${{ secrets.NEO4J_URI }}
