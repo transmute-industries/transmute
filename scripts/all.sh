@@ -6,3 +6,4 @@ npm run build
 ./scripts/jose.diagnostic.sh
 ./scripts/cose.diagnostic.sh
 ./scripts/scitt.diagnostic.sh
+./scripts/vcwg.diagnostic.sh
