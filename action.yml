@@ -19,7 +19,18 @@ inputs:
     description: |
       Neo4j Password.
     require: false
-
+  transmute-client-id:
+    description: |
+      OAuth2 Client ID.
+    require: false
+  transmute-client-secret:
+    description: |
+      OAuth2 Client Secret.
+    require: false
+  transmute-api:
+    description: |
+      Resource Owner API.
+    require: false
 outputs:
   yaml:
     description: "The output as yaml."

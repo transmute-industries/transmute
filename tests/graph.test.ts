@@ -35,7 +35,7 @@ it.skip('graph assist credential', async () => {
 })
 
 it.skip('graph assist presentation', async () => {
-  await facade(`graph assist --verbose --credential-type application/vc --graph-type application/gql --push --env ./.env`)
+  await facade(`graph assist --verbose --graph-type application/gql --push --env ./.env`)
   expect(debug).toHaveBeenCalledTimes(1)
   expect(output).toHaveBeenCalledTimes(1)
 })

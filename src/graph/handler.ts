@@ -6,11 +6,8 @@ import { env } from '../action'
 import { jsongraph } from './graph/jsongraph'
 import { query, injection } from './graph/gql'
 import { driver, push } from './graph/driver'
-
 import dotenv from 'dotenv'
-
-import VerifiableDataPlatform from '@transmute/sdk'
-import { getPresentations } from './presentations'
+import { getApi, getPresentations } from './presentations'
 
 export const handler = async function ({ positionals, values }: Arguments) {
   positionals = positionals.slice(1)
@@ -36,12 +33,7 @@ export const handler = async function ({ positionals, values }: Arguments) {
       if (!pathToContent) {
         let allGraphText = ''
         const allGraphs = [] as any[]
-        const api = await VerifiableDataPlatform.fromEnv({
-          CLIENT_ID: process.env.CLIENT_ID as string,
-          CLIENT_SECRET: process.env.CLIENT_SECRET as string,
-          API_BASE_URL: process.env.API_BASE_URL as string,
-          TOKEN_AUDIENCE: process.env.TOKEN_AUDIENCE as string,
-        })
+        const api = await getApi()
         const { items } = await getPresentations({ sent: true, received: true, api })
         const d = await driver()
         const session = d.session()

@@ -1,4 +1,17 @@
 
+
+import VerifiableDataPlatform from '@transmute/sdk'
+import { getInput } from '@actions/core'
+
+export const getApi = async () => {
+  return await VerifiableDataPlatform.fromEnv({
+    CLIENT_ID: `${process.env.CLIENT_ID || getInput("transmute-client-id")}`,
+    CLIENT_SECRET: `${process.env.CLIENT_SECRET || getInput("transmute-client-secret")}`,
+    API_BASE_URL: `${process.env.API_BASE_URL || getInput("transmute-api")}`,
+    TOKEN_AUDIENCE: `${process.env.API_BASE_URL || getInput("transmute-api")}`,
+  })
+}
+
 export const getPresentations = async ({ sent, received, api }: any) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const results: any = { items: [] }
