@@ -18,6 +18,10 @@ export type CommonOptions = {
   detached?: boolean
 }
 
+export type ScittOptions = {
+  log?: string
+}
+
 export const args = (prompt: string) => {
   // https://stackoverflow.com/questions/29655760/convert-a-string-into-shell-arguments
   const re = /"[^"]+"|'[^']+'|\S+/g
@@ -51,6 +55,9 @@ export const args = (prompt: string) => {
         type: 'string' as "string",
       },
       crv: {
+        type: 'string' as "string",
+      },
+      log: {
         type: 'string' as "string",
       },
     },
