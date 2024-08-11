@@ -1,11 +1,11 @@
 import fs from 'fs'
 import * as jose from 'jose'
 import { Arguments } from "../types"
-import neo4j from 'neo4j-driver'
+
 
 import yaml from 'yaml'
 
-import { setSecret, setOutput, debug, getInput } from '@actions/core'
+import { setSecret, setOutput, debug } from '@actions/core'
 import * as cose from '@transmute/cose'
 
 import { env } from '../action'
@@ -14,6 +14,7 @@ import * as vc from '@transmute/verifiable-credentials'
 
 import { jsongraph } from './graph/jsongraph'
 import { query, injection } from './graph/gql'
+import { driver, push } from './graph/driver'
 
 export const handler = async function ({ positionals, values }: Arguments) {
   positionals = positionals.slice(1)
@@ -342,14 +343,10 @@ export const handler = async function ({ positionals, values }: Arguments) {
         const dangerousQuery = await injection(components)
         graphText = dangerousQuery
         if (values.push) {
-          const driver = neo4j.driver(
-            `${process.env.NEO4J_URI || getInput("neo4j-uri")}`,
-            neo4j.auth.basic(`${process.env.NEO4J_USERNAME || getInput("neo4j-user")}`, `${process.env.NEO4J_PASSWORD || getInput("neo4j-password")}`)
-          )
-          const session = driver.session()
-          await session
-            .run({ text: `${components.query}`, parameters: components.params })
-          await driver.close()
+          const d = await driver()
+          const session = d.session()
+          await push(session, components)
+          await d.close()
         }
       }
       if (output) {
