@@ -4,8 +4,9 @@ import * as jose from '../jose'
 import * as cose from '../cose'
 import * as scitt from '../scitt'
 import * as vcwg from '../vcwg'
+import * as graph from '../graph'
 
-const commands = { jose, cose, scitt, vcwg }
+const commands = { jose, cose, scitt, vcwg, graph }
 
 export const handler = async (args: Arguments) => {
   const [command] = args.positionals
