@@ -1,7 +1,3 @@
-rm ./tests/fixtures/*
-echo '{"message":"⌛ My lungs taste the air of Time Blown past falling sands"}' > ./tests/fixtures/message.json
-npm run build
-
 # signing keys
 npm run -s transmute -- jose keygen --alg ES256 > ./tests/fixtures/private.sig.jwk.json
 npm run -s transmute -- jose keypub ./tests/fixtures/private.sig.jwk.json > ./tests/fixtures/public.sig.jwk.json
