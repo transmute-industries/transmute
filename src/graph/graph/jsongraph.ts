@@ -125,13 +125,13 @@ const fromPresentation = async (document: any) => {
         const normalizeToTypeArray = Array.isArray(verifiableCredential.type) ? verifiableCredential.type : [verifiableCredential.type]
         let credentialGraph = undefined as any;
         if (normalizeToTypeArray.includes('EnvelopedVerifiableCredential')) {
-          if (verifiableCredential.id && verifiableCredential.id.startsWith('data:application/vc-ld+sd-jwt;')) {
-            const token = verifiableCredential.id.replace('data:application/vc-ld+sd-jwt;', '')
+          if (verifiableCredential.id && verifiableCredential.id.includes('+sd-jwt;')) {
+            const token = verifiableCredential.id.split('+sd-jwt;').pop()
             const payload = jose.decodeJwt(token)
             credentialGraph = await fromCredential(payload)
           }
-          if (verifiableCredential.id && verifiableCredential.id.startsWith('data:application/vc-ld+jwt;')) {
-            const token = verifiableCredential.id.replace('data:application/vc-ld+jwt;', '')
+          if (verifiableCredential.id && verifiableCredential.id.includes('+jwt;')) {
+            const token = verifiableCredential.id.split('+jwt;').pop()
             const payload = jose.decodeJwt(token)
             credentialGraph = await fromCredential(payload)
           }

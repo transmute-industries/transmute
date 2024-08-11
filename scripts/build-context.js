@@ -6,7 +6,8 @@ const crypto = require('crypto');
 const contextsUrls = [
   'https://www.w3.org/2018/credentials/v1',
   'https://www.w3.org/ns/credentials/v2',
-  'https://www.w3.org/ns/credentials/examples/v2'
+  'https://www.w3.org/ns/credentials/examples/v2',
+  'https://w3id.org/traceability/v1'
 ];
 
 (async () => {
@@ -20,7 +21,7 @@ const contextsUrls = [
       .createHash('sha256')
       .update(response.data)
       .digest('hex')
-    fs.writeFileSync(`./src/vcwg/graph/contexts/${urlContentHash}.json`, response.data)
+    fs.writeFileSync(`./src/graph/graph/contexts/${urlContentHash}.json`, response.data)
     const context = `import { default as c${urlContentHash} } from "./${urlContentHash}.json"`
     index += `${context}\n`
     contexts[contextUrl] = `c${urlContentHash}`
@@ -30,5 +31,5 @@ const contextsUrls = [
     index += `  "${url}": ${urlContentHash},\n`
   }
   index += `}\n`
-  fs.writeFileSync(`./src/vcwg/graph/contexts/index.ts`, index)
+  fs.writeFileSync(`./src/graph/graph/contexts/index.ts`, index)
 })()

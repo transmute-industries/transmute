@@ -135,4 +135,4 @@ jobs:
           neo4j-user: ${{ secrets.NEO4J_USERNAME }}
           neo4j-password: ${{ secrets.NEO4J_PASSWORD }}
           transmute: |
-            vcwg graph ./tests/fixtures/issuer-claims.json --verbose --credential-type application/vc --graph-type application/gql --push
+            graph assist ./tests/fixtures/issuer-claims.json --verbose --credential-type application/vc --graph-type application/gql --push

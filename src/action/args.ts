@@ -26,6 +26,7 @@ export type VcwgOptions = {
   'credential-type'?: string
   'presentation-type'?: string
   push?: boolean
+  env?: string
 }
 
 export type ScittOptions = {
@@ -60,6 +61,9 @@ export const args = (prompt: string) => {
       },
       push: {
         type: 'boolean' as "boolean",
+      },
+      env: {
+        type: 'string' as "string",
       },
       'credential-type': {
         type: 'string' as "string",
