@@ -57,6 +57,25 @@ it('issue-credential', async () => {
   expect(output).toHaveBeenCalledTimes(1)
 })
 
+it('verify-credential', async () => {
+  await facade(`vcwg verify-credential ./tests/fixtures/public.sig.jwk.json ./tests/fixtures/issuer-disclosable-claims.sd-jwt --verbose --credential-type application/vc-ld+sd-jwt`)
+  expect(debug).toHaveBeenCalledTimes(1)
+  expect(output).toHaveBeenCalledTimes(1)
+})
+
+it('issue-presentation', async () => {
+  await facade(`vcwg issue-presentation ./tests/fixtures/private.sig.jwk.json ./tests/fixtures/issuer-disclosable-claims.sd-jwt ./tests/fixtures/holder-disclosed-claims.yaml --verbose --credential-type application/vc-ld+sd-jwt --presentation-type application/vp-ld+sd-jwt`)
+  expect(debug).toHaveBeenCalledTimes(1)
+  expect(secret).toHaveBeenCalledTimes(1)
+  expect(output).toHaveBeenCalledTimes(1)
+})
+
+it('verify-presentation', async () => {
+  await facade(`vcwg verify-presentation ./tests/fixtures/public.sig.jwk.json ./tests/fixtures/holder-disclosed-claims.sd-jwt --verbose --presentation-type application/vp-ld+sd-jwt`)
+  expect(debug).toHaveBeenCalledTimes(1)
+  expect(output).toHaveBeenCalledTimes(1)
+})
+
 
 
 

@@ -31,5 +31,17 @@ credentialSubject:
   !sd mySubjectProperty: mySubjectValue
 ' > ./tests/fixtures/issuer-disclosable-claims.yaml
 
+echo '"@context":
+  - https://www.w3.org/ns/credentials/v2
+  - https://www.w3.org/ns/credentials/examples/v2
+type:
+  - VerifiableCredential
+  - MyPrototypeCredential
+credentialSubject:
+  mySubjectProperty: mySubjectValue
+' > ./tests/fixtures/holder-disclosed-claims.yaml
+
 npm run -s transmute -- vcwg issue-credential ./tests/fixtures/private.sig.jwk.json ./tests/fixtures/issuer-disclosable-claims.yaml --credential-type application/vc-ld+sd-jwt --output ./tests/fixtures/issuer-disclosable-claims.sd-jwt
 npm run -s transmute -- vcwg verify-credential ./tests/fixtures/public.sig.jwk.json ./tests/fixtures/issuer-disclosable-claims.sd-jwt  --credential-type application/vc-ld+sd-jwt --output ./tests/fixtures/issuer-disclosable-claims.sd-jwt.verified.json
+npm run -s transmute -- vcwg issue-presentation ./tests/fixtures/private.sig.jwk.json ./tests/fixtures/issuer-disclosable-claims.sd-jwt ./tests/fixtures/holder-disclosed-claims.yaml --credential-type application/vc-ld+sd-jwt --presentation-type application/vp-ld+sd-jwt --output ./tests/fixtures/holder-disclosed-claims.sd-jwt
+npm run -s transmute -- vcwg verify-presentation ./tests/fixtures/public.sig.jwk.json ./tests/fixtures/holder-disclosed-claims.sd-jwt  --presentation-type application/vp-ld+sd-jwt --output ./tests/fixtures/holder-disclosed-claims.sd-jwt.verified.json

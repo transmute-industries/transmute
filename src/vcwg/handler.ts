@@ -142,7 +142,7 @@ export const handler = async function ({ positionals, values }: Arguments) {
       const credentialType = values['credential-type'] as any
       const presentationType = values['presentation-type'] as any
       const verbose = values.verbose || false
-      const [pathToPrivateKey, pathToCredential] = positionals
+      const [pathToPrivateKey, pathToCredential, pathToHolderDisclosureYaml] = positionals
       const privateKey = JSON.parse(fs.readFileSync(pathToPrivateKey).toString()) as jose.JWK
       if (env.github()) {
         if (privateKey.d) {
@@ -180,6 +180,7 @@ export const handler = async function ({ positionals, values }: Arguments) {
           {
             type: credentialType,
             credential: fs.readFileSync(pathToCredential),
+            disclosure: pathToHolderDisclosureYaml ? fs.readFileSync(pathToHolderDisclosureYaml) : undefined
           },
         ],
         signer: {
@@ -198,11 +199,17 @@ export const handler = async function ({ positionals, values }: Arguments) {
       }
       if (env.github()) {
         if (presentationType.endsWith('+jwt')) {
-          setOutput('jws', vc.text.decoder.decode(c))
+          setOutput('jwt', vc.text.decoder.decode(c))
+        }
+        if (presentationType.endsWith('+sd-jwt')) {
+          setOutput('sd-jwt', vc.text.decoder.decode(c))
         }
       } else {
         if (!output) {
           if (presentationType.endsWith('+jwt')) {
+            console.log(vc.text.decoder.decode(c))
+          }
+          if (presentationType.endsWith('+sd-jwt')) {
             console.log(vc.text.decoder.decode(c))
           }
         }
