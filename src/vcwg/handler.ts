@@ -5,7 +5,7 @@ import neo4j from 'neo4j-driver'
 
 import yaml from 'yaml'
 
-import { setSecret, setOutput, debug } from '@actions/core'
+import { setSecret, setOutput, debug, getInput } from '@actions/core'
 import * as cose from '@transmute/cose'
 
 import { env } from '../action'
@@ -343,8 +343,8 @@ export const handler = async function ({ positionals, values }: Arguments) {
         graphText = dangerousQuery
         if (values.push) {
           const driver = neo4j.driver(
-            `${process.env.NEO4J_URI}`,
-            neo4j.auth.basic(`${process.env.NEO4J_USERNAME}`, `${process.env.NEO4J_PASSWORD}`)
+            `${process.env.NEO4J_URI || getInput("neo4j-uri")}`,
+            neo4j.auth.basic(`${process.env.NEO4J_USERNAME || getInput("neo4j-user")}`, `${process.env.NEO4J_PASSWORD || getInput("neo4j-password")}`)
           )
           const session = driver.session()
           await session

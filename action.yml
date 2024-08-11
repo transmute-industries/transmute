@@ -7,6 +7,18 @@ inputs:
   transmute:
     description: |
       The transmute command to run.
+  neo4j-uri:
+    description: |
+      Neo4j Connection URL.
+    require: false
+  neo4j-user:
+    description: |
+      Neo4j User.
+    require: false
+  neo4j-password:
+    description: |
+      Neo4j Password.
+    require: false
 
 outputs:
   yaml:
