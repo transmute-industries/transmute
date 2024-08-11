@@ -116,7 +116,7 @@ jobs:
         uses: ./
         with:
           transmute: |
-            scitt issue-receipt ./tests/fixtures/private.notary.key.cbor ./tests/fixtures/message.hash-envelope.cbor --log ./tests/fixtures/trans.json --output ./tests/fixtures/message.hash-envelope-with-receipt.cbor
+            scitt issue-receipt ./tests/fixtures/private.notary.key.cbor ./tests/fixtures/message.hash-envelope.cbor --log ./tests/fixtures/trans.json
       - name: Verify Receipt Hash
         id: verify_receipt
         uses: ./
