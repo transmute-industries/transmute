@@ -28,13 +28,13 @@ it.skip('graph assist gql', async () => {
   expect(output).toHaveBeenCalledTimes(1)
 })
 
-it.skip('graph assist gql neo4j', async () => {
-  await facade(`graph assist ./tests/fixtures/issuer-claims.json --verbose --credential-type application/vc --graph-type application/gql --push`)
+it.skip('graph assist credential', async () => {
+  await facade(`graph assist ./tests/fixtures/issuer-claims.json --verbose --credential-type application/vc --graph-type application/gql --push --env ./.env`)
   expect(debug).toHaveBeenCalledTimes(1)
   expect(output).toHaveBeenCalledTimes(1)
 })
 
-it.skip('graph assist vdp', async () => {
+it.skip('graph assist presentation', async () => {
   await facade(`graph assist --verbose --credential-type application/vc --graph-type application/gql --push --env ./.env`)
   expect(debug).toHaveBeenCalledTimes(1)
   expect(output).toHaveBeenCalledTimes(1)

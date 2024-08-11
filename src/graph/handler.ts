@@ -44,6 +44,7 @@ export const handler = async function ({ positionals, values }: Arguments) {
         })
         const { items } = await getPresentations({ sent: true, received: true, api })
         const d = await driver()
+        const session = d.session()
         for (const item of items) {
           try {
             const content = encoder.encode(item.content)
@@ -56,8 +57,9 @@ export const handler = async function ({ positionals, values }: Arguments) {
               const message = `\n${dangerousQuery}\n`
               console.log(message)
             }
-            const session = d.session()
-            await push(session, components)
+            if (values.push) {
+              await push(session, components)
+            }
           } catch (e) {
             if (verbose) {
               const message = `⛔ ${item.id}`
