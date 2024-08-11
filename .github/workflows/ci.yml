@@ -71,3 +71,25 @@ jobs:
             cose keygen --alg ES256 --verbose --output ./tests/fixtures/private.sig.key.cbor
       - name: Attempt to Log Private Key
         run: echo "${{ steps.generate_private_key.outputs.cbor }}"
+      - name: Public Key
+        id: extract_public_key
+        uses: ./
+        with:
+          transmute: |
+            cose keypub ./tests/fixtures/private.sig.key.cbor --output ./tests/fixtures/public.sig.key.cbor
+      - name: Log Public Key
+        run: echo "${{ steps.extract_public_key.outputs.cbor }}"
+      - name: Sign Message
+        id: sign_message
+        uses: ./
+        with:
+          transmute: |
+            cose sign ./tests/fixtures/private.sig.key.cbor ./tests/fixtures/message.json --detached --output ./tests/fixtures/message.signature.detached.cbor
+      - name: Verify Message
+        id: verify_message
+        uses: ./
+        with:
+          transmute: |
+            cose verify ./tests/fixtures/public.sig.key.cbor ./tests/fixtures/message.signature.detached.cbor ./tests/fixtures/message.json --detached
+      - name: Log Message Verification
+        run: echo "${{ steps.verify_message.outputs.cbor }}"
