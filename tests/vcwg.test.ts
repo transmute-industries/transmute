@@ -14,6 +14,7 @@ beforeEach(() => {
   secret = jest.spyOn(core, 'setSecret').mockImplementation()
 })
 
+// JWT
 
 it('issuer-claims', async () => {
   await facade(`vcwg issuer-claims ./tests/fixtures/issuer-claims.json --verbose`)
@@ -46,6 +47,16 @@ it('verify-presentation', async () => {
   expect(debug).toHaveBeenCalledTimes(1)
   expect(output).toHaveBeenCalledTimes(1)
 })
+
+// SD-JWT 
+
+it('issue-credential', async () => {
+  await facade(`vcwg issue-credential ./tests/fixtures/private.sig.jwk.json ./tests/fixtures/issuer-disclosable-claims.yaml --verbose --credential-type application/vc-ld+sd-jwt`)
+  expect(debug).toHaveBeenCalledTimes(1)
+  expect(secret).toHaveBeenCalledTimes(1)
+  expect(output).toHaveBeenCalledTimes(1)
+})
+
 
 
 

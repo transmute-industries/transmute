@@ -78,11 +78,14 @@ export const handler = async function ({ positionals, values }: Arguments) {
       }
       if (env.github()) {
         if (credentialType.endsWith('+jwt')) {
-          setOutput('jws', vc.text.decoder.decode(c))
+          setOutput('jwt', vc.text.decoder.decode(c))
+        }
+        if (credentialType.endsWith('+sd-jwt')) {
+          setOutput('sd-jwt', vc.text.decoder.decode(c))
         }
       } else {
         if (!output) {
-          if (credentialType.endsWith('+jwt')) {
+          if (credentialType.endsWith('+sd-jwt')) {
             console.log(vc.text.decoder.decode(c))
           }
         }

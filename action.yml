@@ -9,6 +9,8 @@ inputs:
       The transmute command to run.
 
 outputs:
+  yaml:
+    description: "The output as yaml."
   json:
     description: "The output as json."
   cbor:
@@ -17,8 +19,10 @@ outputs:
     description: "The output as compact jws."
   jwe:
     description: "The output as compact jwe."
-  yaml:
-    description: "The output as yaml."
+  jwt:
+    description: "The output as compact jwt."
+  sd-jwt:
+    description: "The output as compact sd-jwt."
 
 runs:
   using: "node20"
