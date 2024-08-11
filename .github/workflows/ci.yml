@@ -16,7 +16,7 @@ jobs:
         uses: ./
         with:
           transmute: |
-            jose keygen --alg ES256 --verbose --output ./private.sig.jwk.json
+            jose keygen --alg ES256 --verbose --output ./tests/fixtures/private.sig.jwk.json
       - name: Attempt to Log Private Key
         run: echo "${{ steps.generate_private_key.outputs.json }}"
       - name: Public Key
@@ -24,9 +24,9 @@ jobs:
         uses: ./
         with:
           transmute: |
-            jose keypub ./private.sig.jwk.json --output ./public.sig.jwk.json
+            jose keypub ./tests/fixtures/private.sig.jwk.json --output ./tests/fixtures/public.sig.jwk.json
       - name: Log Public Key
-        run: cat ./public.sig.jwk.json
+        run: cat ./tests/fixtures/public.sig.jwk.json
       - name: Sign Message
         id: sign_message
         uses: ./
