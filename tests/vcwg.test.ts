@@ -76,8 +76,6 @@ it('verify-presentation', async () => {
   expect(output).toHaveBeenCalledTimes(1)
 })
 
-
-
 // COSE
 
 it('issue-credential', async () => {
@@ -102,6 +100,14 @@ it('issue-presentation', async () => {
 
 it('verify-presentation', async () => {
   await facade(`vcwg verify-presentation ./tests/fixtures/public.sig.jwk.json ./tests/fixtures/holder-claims.cbor --verbose --presentation-type application/vp-ld+cose`)
+  expect(debug).toHaveBeenCalledTimes(1)
+  expect(output).toHaveBeenCalledTimes(1)
+})
+
+// Graph
+
+it('graph', async () => {
+  await facade(`vcwg graph ./tests/fixtures/issuer-claims.json --verbose --credential-type application/vc`)
   expect(debug).toHaveBeenCalledTimes(1)
   expect(output).toHaveBeenCalledTimes(1)
 })

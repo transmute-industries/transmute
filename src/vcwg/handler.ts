@@ -11,6 +11,8 @@ import { env } from '../action'
 
 import * as vc from '@transmute/verifiable-credentials'
 
+import { jsongraph } from './graph/jsongraph'
+
 export const handler = async function ({ positionals, values }: Arguments) {
   positionals = positionals.slice(1)
   const operation = positionals.shift()
@@ -318,6 +320,16 @@ export const handler = async function ({ positionals, values }: Arguments) {
           console.log(JSON.stringify(validated, null, 2))
         }
       }
+      break
+    }
+    case 'graph': {
+      const output = values.output
+      const contentType: any = values['credential-type'] || values['presentation-type']
+      const verbose = values.verbose || false
+      const [pathToContent] = positionals
+      const content = new Uint8Array(fs.readFileSync(pathToContent))
+      const graph = await jsongraph.graph(content, contentType)
+      console.log({ graph })
       break
     }
 
