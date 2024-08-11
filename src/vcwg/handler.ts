@@ -5,6 +5,7 @@ import { Arguments } from "../types"
 import yaml from 'yaml'
 
 import { setSecret, setOutput, debug } from '@actions/core'
+import * as cose from '@transmute/cose'
 
 import { env } from '../action'
 
@@ -62,19 +63,41 @@ export const handler = async function ({ positionals, values }: Arguments) {
         type: credentialType,
         signer: {
           sign: async (bytes: Uint8Array) => {
-            const jws = await new jose.CompactSign(bytes)
-              .setProtectedHeader({ kid, alg })
-              .sign(
-                await jose.importJWK(privateKey)
-              );
-            return vc.text.encoder.encode(jws);
+            if (credentialType.includes('+cose')) {
+              const signer = cose.attached.signer({
+                remote: cose.crypto.signer({
+                  privateKeyJwk: await vc.key.importJWK({
+                    type: "application/jwk+json",
+                    content: vc.text.encoder.encode(JSON.stringify(privateKey))
+                  })
+                })
+              })
+              const iana = Object.values(cose.IANACOSEAlgorithms).find((a) => {
+                return a.Name === alg
+              })
+              const algValue = iana ? parseInt(iana?.Value, 10) : -7
+              const signature = await signer.sign({
+                protectedHeader: new Map([[1, algValue]]),
+                unprotectedHeader: new Map(),
+                payload: bytes
+              })
+              return new Uint8Array(signature)
+            } else {
+              const jws = await new jose.CompactSign(bytes)
+                .setProtectedHeader({ kid, alg })
+                .sign(
+                  await jose.importJWK(privateKey)
+                );
+              return vc.text.encoder.encode(jws);
+            }
+
           },
         },
       }).issue({
         claimset: fs.readFileSync(pathToClaimsetYaml)
       })
       if (output) {
-        fs.writeFileSync(output, c)
+        fs.writeFileSync(output, Buffer.from(c))
       }
       if (env.github()) {
         if (credentialType.endsWith('+jwt')) {
@@ -83,10 +106,19 @@ export const handler = async function ({ positionals, values }: Arguments) {
         if (credentialType.endsWith('+sd-jwt')) {
           setOutput('sd-jwt', vc.text.decoder.decode(c))
         }
+        if (credentialType.endsWith('+cose')) {
+          setOutput('cbor', Buffer.from(c).toString('hex'))
+        }
       } else {
         if (!output) {
+          if (credentialType.endsWith('+jwt')) {
+            console.log(vc.text.decoder.decode(c))
+          }
           if (credentialType.endsWith('+sd-jwt')) {
             console.log(vc.text.decoder.decode(c))
+          }
+          if (credentialType.endsWith('+cose')) {
+            console.log(Buffer.from(c).toString('hex'))
           }
         }
       }
@@ -185,12 +217,33 @@ export const handler = async function ({ positionals, values }: Arguments) {
         ],
         signer: {
           sign: async (bytes: Uint8Array) => {
-            const jws = await new jose.CompactSign(bytes)
-              .setProtectedHeader({ kid, alg })
-              .sign(
-                await jose.importJWK(privateKey)
-              );
-            return vc.text.encoder.encode(jws);
+            if (credentialType.includes('+cose')) {
+              const signer = cose.attached.signer({
+                remote: cose.crypto.signer({
+                  privateKeyJwk: await vc.key.importJWK({
+                    type: "application/jwk+json",
+                    content: vc.text.encoder.encode(JSON.stringify(privateKey))
+                  })
+                })
+              })
+              const iana = Object.values(cose.IANACOSEAlgorithms).find((a) => {
+                return a.Name === alg
+              })
+              const algValue = iana ? parseInt(iana?.Value, 10) : -7
+              const signature = await signer.sign({
+                protectedHeader: new Map([[1, algValue]]),
+                unprotectedHeader: new Map(),
+                payload: bytes
+              })
+              return new Uint8Array(signature)
+            } else {
+              const jws = await new jose.CompactSign(bytes)
+                .setProtectedHeader({ kid, alg })
+                .sign(
+                  await jose.importJWK(privateKey)
+                );
+              return vc.text.encoder.encode(jws);
+            }
           },
         },
       })
@@ -204,6 +257,9 @@ export const handler = async function ({ positionals, values }: Arguments) {
         if (presentationType.endsWith('+sd-jwt')) {
           setOutput('sd-jwt', vc.text.decoder.decode(c))
         }
+        if (presentationType.endsWith('+cose')) {
+          setOutput('cbor', Buffer.from(c).toString('hex'))
+        }
       } else {
         if (!output) {
           if (presentationType.endsWith('+jwt')) {
@@ -211,6 +267,9 @@ export const handler = async function ({ positionals, values }: Arguments) {
           }
           if (presentationType.endsWith('+sd-jwt')) {
             console.log(vc.text.decoder.decode(c))
+          }
+          if (presentationType.endsWith('+cose')) {
+            console.log(Buffer.from(c).toString('hex'))
           }
         }
       }

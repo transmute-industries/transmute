@@ -78,5 +78,31 @@ it('verify-presentation', async () => {
 
 
 
+// COSE
 
+it('issue-credential', async () => {
+  await facade(`vcwg issue-credential ./tests/fixtures/private.sig.jwk.json ./tests/fixtures/issuer-claims.yaml --verbose --credential-type application/vc-ld+cose`)
+  expect(debug).toHaveBeenCalledTimes(1)
+  expect(secret).toHaveBeenCalledTimes(1)
+  expect(output).toHaveBeenCalledTimes(1)
+})
+
+it('verify-credential', async () => {
+  await facade(`vcwg verify-credential ./tests/fixtures/public.sig.jwk.json ./tests/fixtures/issuer-claims.cbor --verbose --credential-type application/vc-ld+cose`)
+  expect(debug).toHaveBeenCalledTimes(1)
+  expect(output).toHaveBeenCalledTimes(1)
+})
+
+it('issue-presentation', async () => {
+  await facade(`vcwg issue-presentation ./tests/fixtures/private.sig.jwk.json ./tests/fixtures/issuer-claims.cbor --verbose --credential-type application/vc-ld+cose --presentation-type application/vp-ld+cose`)
+  expect(debug).toHaveBeenCalledTimes(1)
+  expect(secret).toHaveBeenCalledTimes(1)
+  expect(output).toHaveBeenCalledTimes(1)
+})
+
+it('verify-presentation', async () => {
+  await facade(`vcwg verify-presentation ./tests/fixtures/public.sig.jwk.json ./tests/fixtures/holder-claims.cbor --verbose --presentation-type application/vp-ld+cose`)
+  expect(debug).toHaveBeenCalledTimes(1)
+  expect(output).toHaveBeenCalledTimes(1)
+})
 
