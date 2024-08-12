@@ -1,39 +1,77 @@
-# <a href="https://transmute.industries">Transmute Command</a>
+# <a href="https://transmute.industries">Transmute</a>
 
 [![CI](https://github.com/transmute-industries/transmute/actions/workflows/ci.yml/badge.svg)](https://github.com/transmute-industries/transmute/actions/workflows/ci.yml)
-![Branches](./badges/coverage-branches.svg)
-![Functions](./badges/coverage-functions.svg)
-![Lines](./badges/coverage-lines.svg)
-![Statements](./badges/coverage-statements.svg)
-![Jest coverage](./badges/coverage-jest%20coverage.svg)
 [![NPM](https://nodei.co/npm/@transmute/cli.png?mini=true)](https://npmjs.org/package/@transmute/cli)
 
-<img src="./transmute-banner.png" />
-
-#### [Questions? Contact Transmute](https://transmute.typeform.com/to/RshfIw?typeform-source=cli) | <a href="https://platform.transmute.industries">Verifiable Data Platform</a> | <a href="https://guide.transmute.industries/verifiable-data-platform/">Our Guide</a> | <a href="https://transmute.industries">About Transmute</a>
+#### [Questions?](https://transmute.typeform.com/to/RshfIw?typeform-source=cli)
 
 ## Usage
 
-As a global binary:
+### GitHub Action
+
+```yaml
+name: CI
+on: [push]
+jobs:
+  scitt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Issue Statement
+        id: issue_statement
+        uses: transmute-industries/transmute@main
+        with:
+          transmute: |
+            scitt issue-statement ./tests/fixtures/private.sig.key.cbor ./tests/fixtures/message.json --output ./tests/fixtures/message.hash-envelope.cbor
+      - name: Verify Statement Hash
+        id: verify_message
+        uses: transmute-industries/transmute@main
+        with:
+          transmute: |
+            scitt verify-statement-hash ./tests/fixtures/public.sig.key.cbor ./tests/fixtures/message.hash-envelope.cbor 3073d614f853aaec9a1146872c7bab75495ee678c8864ed3562f8787555c1e22
+```
+
+See [CI](./.github/workflows/ci.yml) for more examples.
+
+### Nodejs CLI
+
+Install as global binary:
 
 ```sh
 npm i -g @transmute/cli
 ```
 
-As a github action:
+#### Getting Started
 
-```yaml
-- uses: transmute-industries/transmute@v0.8.2
-  with:
-    neo4j-uri: ${{ secrets.NEO4J_URI }}
-    neo4j-user: ${{ secrets.NEO4J_USERNAME }}
-    neo4j-password: ${{ secrets.NEO4J_PASSWORD }}
-    json: |
-      {
-        "@context": ["https://www.w3.org/2018/credentials/v1"],
-        "type": ["VerifiablePresentation"],
-        "verifiableCredential": [
-        ...
+```sh
+
+echo '"@context":
+  - https://www.w3.org/ns/credentials/v2
+  - https://www.w3.org/ns/credentials/examples/v2
+type:
+  - VerifiableCredential
+  - MyPrototypeCredential
+credentialSubject:
+  !sd mySubjectProperty: mySubjectValue
+' > ./tests/fixtures/issuer-disclosable-claims.yaml
+
+echo '"@context":
+  - https://www.w3.org/ns/credentials/v2
+  - https://www.w3.org/ns/credentials/examples/v2
+type:
+  - VerifiableCredential
+  - MyPrototypeCredential
+credentialSubject:
+  mySubjectProperty: mySubjectValue
+' > ./tests/fixtures/holder-disclosed-claims.yaml
+
+transmute jose keygen --alg ES256 \
+--output ./tests/fixtures/private.sig.jwk.json
+
+transmute vcwg issue-credential ./tests/fixtures/private.sig.jwk.json ./tests/fixtures/issuer-disclosable-claims.yaml \
+--credential-type application/vc-ld+sd-jwt \
+--output ./tests/fixtures/issuer-disclosable-claims.sd-jwt
 ```
 
-<img width="1404" alt="Screen Shot 2023-06-11 at 1 32 58 PM" src="https://github.com/transmute-industries/transmute/assets/8295856/2c568d13-f878-4a4d-a228-5cd6eb91969e">
+See [scripts](./scripts/) for more examples.
+
+TODO: all command examples

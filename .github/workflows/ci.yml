@@ -1,13 +1,150 @@
 name: CI
 on: [push]
 jobs:
-  bump:
+  coverage:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - run: npm ci
-    - run: npm run coverage
-    - name: Badges
-      uses: jpb06/jest-badges-action@latest
-      with:
-        branches: main
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm run coverage
+  jose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Private Key
+        id: generate_private_key
+        uses: ./
+        with:
+          transmute: |
+            jose keygen --alg ES256 --verbose --output ./tests/fixtures/private.sig.jwk.json
+      - name: Attempt to Log Private Key
+        run: echo "${{ steps.generate_private_key.outputs.json }}"
+      - name: Public Key
+        id: extract_public_key
+        uses: ./
+        with:
+          transmute: |
+            jose keypub ./tests/fixtures/private.sig.jwk.json --output ./tests/fixtures/public.sig.jwk.json
+      - name: Log Public Key
+        run: cat ./tests/fixtures/public.sig.jwk.json
+      - name: Sign Message
+        id: sign_message
+        uses: ./
+        with:
+          transmute: |
+            jose sign ./tests/fixtures/private.sig.jwk.json ./tests/fixtures/message.json --detached --compact --output ./tests/fixtures/message.signature.detached.compact.jws
+      - name: Attempt to Log Signature
+        run: echo "${{ steps.sign_message.outputs.jws }}"
+      - name: Verify Message
+        id: verify_message
+        uses: ./
+        with:
+          transmute: |
+            jose verify ./tests/fixtures/public.sig.jwk.json ./tests/fixtures/message.signature.detached.compact.jws ./tests/fixtures/message.json --detached --compact
+      - name: Log Message Verification
+        run: echo "${{ steps.verify_message.outputs.json }}"
+      - name: Encrypt Message
+        id: encrypt_message
+        uses: ./
+        with:
+          transmute: |
+            jose encrypt ./tests/fixtures/public.enc.jwk.json ./tests/fixtures/message.json --enc A128GCM --compact --output ./tests/fixtures/message.ciphertext.compact.jwe
+      - name: Log Ciphertext
+        run: echo "${{ steps.encrypt_message.outputs.jwe }}"
+      - name: Decrypt Message
+        id: decrypt_message
+        uses: ./
+        with:
+          transmute: |
+            jose decrypt ./tests/fixtures/private.enc.jwk.json ./tests/fixtures/message.ciphertext.compact.jwe --compact
+      - name: Log Message Decryption
+        run: echo "${{ steps.decrypt_message.outputs.json }}"
+  cose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Private Key
+        id: generate_private_key
+        uses: ./
+        with:
+          transmute: |
+            cose keygen --alg ES256 --verbose --output ./tests/fixtures/private.sig.key.cbor
+      - name: Attempt to Log Private Key
+        run: echo "${{ steps.generate_private_key.outputs.cbor }}"
+      - name: Public Key
+        id: extract_public_key
+        uses: ./
+        with:
+          transmute: |
+            cose keypub ./tests/fixtures/private.sig.key.cbor --output ./tests/fixtures/public.sig.key.cbor
+      - name: Log Public Key
+        run: echo "${{ steps.extract_public_key.outputs.cbor }}"
+      - name: Sign Message
+        id: sign_message
+        uses: ./
+        with:
+          transmute: |
+            cose sign ./tests/fixtures/private.sig.key.cbor ./tests/fixtures/message.json --detached --output ./tests/fixtures/message.signature.detached.cbor
+      - name: Verify Message
+        id: verify_message
+        uses: ./
+        with:
+          transmute: |
+            cose verify ./tests/fixtures/public.sig.key.cbor ./tests/fixtures/message.signature.detached.cbor ./tests/fixtures/message.json --detached
+      - name: Log Message Verification
+        run: echo "${{ steps.verify_message.outputs.cbor }}"
+  scitt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Issue Statement
+        id: issue_statement
+        uses: ./
+        with:
+          transmute: |
+            scitt issue-statement ./tests/fixtures/private.sig.key.cbor ./tests/fixtures/message.json --output ./tests/fixtures/message.hash-envelope.cbor
+      - name: Verify Statement Hash
+        id: verify_message
+        uses: ./
+        with:
+          transmute: |
+            scitt verify-statement-hash ./tests/fixtures/public.sig.key.cbor ./tests/fixtures/message.hash-envelope.cbor 3073d614f853aaec9a1146872c7bab75495ee678c8864ed3562f8787555c1e22
+      - name: Log Statement Verification
+        run: echo "${{ steps.verify_message.outputs.cbor }}"
+      - name: Issue Receipt
+        id: issue_receipt
+        uses: ./
+        with:
+          transmute: |
+            scitt issue-receipt ./tests/fixtures/private.notary.key.cbor ./tests/fixtures/message.hash-envelope.cbor --log ./tests/fixtures/trans.json
+      - name: Verify Receipt Hash
+        id: verify_receipt
+        uses: ./
+        with:
+          transmute: |
+            scitt verify-receipt-hash ./tests/fixtures/public.notary.key.cbor ./tests/fixtures/message.hash-envelope-with-receipt.cbor 3073d614f853aaec9a1146872c7bab75495ee678c8864ed3562f8787555c1e22
+  graph:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Push Graph Fragment
+        id: push_single_graph
+        uses: ./
+        with:
+          neo4j-uri: ${{ secrets.NEO4J_URI }}
+          neo4j-user: ${{ secrets.NEO4J_USERNAME }}
+          neo4j-password: ${{ secrets.NEO4J_PASSWORD }}
+          transmute: |
+            graph assist ./tests/fixtures/issuer-claims.json --verbose --credential-type application/vc --graph-type application/gql --push
+      - name: Push Presentations
+        id: push_multiple_graphs
+        uses: ./
+        with:
+          neo4j-uri: ${{ secrets.NEO4J_URI }}
+          neo4j-user: ${{ secrets.NEO4J_USERNAME }}
+          neo4j-password: ${{ secrets.NEO4J_PASSWORD }}
+          transmute-client-id: ${{ secrets.CLIENT_ID }}
+          transmute-client-secret: ${{ secrets.CLIENT_SECRET }}
+          transmute-api: ${{ secrets.API_BASE_URL }}
+          transmute: |
+            graph assist --graph-type application/gql --push

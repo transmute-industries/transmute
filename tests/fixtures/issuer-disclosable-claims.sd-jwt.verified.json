@@ -1,0 +1,21 @@
+{
+  "verified": true,
+  "content": {
+    "iat": 1723409131,
+    "exp": 1724618731,
+    "@context": [
+      "https://www.w3.org/ns/credentials/v2",
+      "https://www.w3.org/ns/credentials/examples/v2"
+    ],
+    "type": [
+      "VerifiableCredential",
+      "MyPrototypeCredential"
+    ],
+    "credentialSubject": {
+      "mySubjectProperty": "mySubjectValue"
+    }
+  },
+  "schema": {},
+  "status": {},
+  "warnings": []
+}

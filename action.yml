@@ -1,11 +1,12 @@
-name: 'Verifiable Credential Graph Actions'
+name: "Transmute"
+
 description: |
-  This action enabled Verifiable Credential Graph Operations.
+  The Transmute GitHub Action
+
 inputs:
-  json:
+  transmute:
     description: |
-      A JSON Document (string).
-    require: true
+      The transmute command to run.
   neo4j-uri:
     description: |
       Neo4j Connection URL.
@@ -18,11 +19,34 @@ inputs:
     description: |
       Neo4j Password.
     require: false
-    
+  transmute-client-id:
+    description: |
+      OAuth2 Client ID.
+    require: false
+  transmute-client-secret:
+    description: |
+      OAuth2 Client Secret.
+    require: false
+  transmute-api:
+    description: |
+      Resource Owner API.
+    require: false
 outputs:
+  yaml:
+    description: "The output as yaml."
   json:
-    description: 'The output as json.'
+    description: "The output as json."
+  cbor:
+    description: "The output as cbor."
+  jws:
+    description: "The output as compact jws."
+  jwe:
+    description: "The output as compact jwe."
+  jwt:
+    description: "The output as compact jwt."
+  sd-jwt:
+    description: "The output as compact sd-jwt."
 
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+  using: "node20"
+  main: "dist/index.js"
