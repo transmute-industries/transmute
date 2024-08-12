@@ -69,7 +69,9 @@ export const handler = async function ({ positionals, values }: Arguments) {
       if (env.github()) {
         setOutput('json', publicKey)
       } else {
-        console.log(JSON.stringify(publicKey, null, 2))
+        if (!output) {
+          console.log(JSON.stringify(publicKey, null, 2))
+        }
       }
       break
     }
