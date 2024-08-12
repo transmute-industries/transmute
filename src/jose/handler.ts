@@ -42,7 +42,9 @@ export const handler = async function ({ positionals, values }: Arguments) {
         }
         setOutput('json', prettyKey(privateKey))
       } else {
-        console.log(JSON.stringify(prettyKey(privateKey), null, 2))
+        if (!output) {
+          console.log(JSON.stringify(prettyKey(privateKey), null, 2))
+        }
       }
       break
     }
