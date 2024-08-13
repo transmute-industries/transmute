@@ -28,6 +28,18 @@ jobs:
         with:
           transmute: |
             scitt verify-statement-hash ./tests/fixtures/public.sig.key.cbor ./tests/fixtures/message.hash-envelope.cbor 3073d614f853aaec9a1146872c7bab75495ee678c8864ed3562f8787555c1e22
+      - name: Issue Receipt
+        id: issue_receipt
+        uses: transmute-industries/transmute@main
+        with:
+          transmute: |
+            scitt issue-receipt ./tests/fixtures/private.notary.key.cbor ./tests/fixtures/message.hash-envelope.cbor --log ./tests/fixtures/trans.json
+      - name: Verify Receipt Hash
+        id: verify_receipt
+        uses: transmute-industries/transmute@main
+        with:
+          transmute: |
+            scitt verify-receipt-hash ./tests/fixtures/public.notary.key.cbor ./tests/fixtures/message.hash-envelope-with-receipt.cbor 3073d614f853aaec9a1146872c7bab75495ee678c8864ed3562f8787555c1e22
 ```
 
 See [CI](./.github/workflows/ci.yml) for more examples.
@@ -37,7 +49,7 @@ See [CI](./.github/workflows/ci.yml) for more examples.
 Install as global binary:
 
 ```sh
-npm i -g @transmute/cli
+npm i -g @transmute/cli@latest
 ```
 
 #### Getting Started

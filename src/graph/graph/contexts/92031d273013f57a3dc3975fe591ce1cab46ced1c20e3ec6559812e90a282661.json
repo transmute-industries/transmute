@@ -1,0 +1,55 @@
+{
+	"@context": {
+		"@version": 1.1,
+		"rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+		"rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+		"owl": "http://www.w3.org/2002/07/owl#",
+		"skos": "http://www.w3.org/2004/02/skos/core#",
+		"gs1": "https://gs1.org/voc/",
+		"language": "@language",
+		"value": "@value",
+		"GS1PrefixLicenseCredential": {
+			"@id": "gs1:GS1PrefixLicenseCredential"
+		},
+		"GS18PrefixLicenseCredential": {
+			"@id": "gs1:GS18PrefixLicenseCredential"
+		},
+		"GS1CompanyPrefixLicenseCredential": {
+			"@id": "gs1:GS1CompanyPrefixLicenseCredential"
+		},
+		"GS1IdentificationKeyLicenseCredential": {
+			"@id": "gs1:GS1IdentificationKeyLicenseCredential"
+		},
+		"DelegatedGS1PrefixLicenseCredential": {
+			"@id": "gs1:DelegatedGS1PrefixLicenseCredential"
+		},
+		"DelegatedGS1IdentificationKeyLicenseCredential": {
+			"@id": "gs1:DelegatedGS1IdentificationKeyLicenseCredential"
+		},
+		"extendsCredential": {
+			"@id": "gs1:extendsCredential",
+			"@type": "@id"
+		},
+		"organization": {
+			"@id": "gs1:organization"
+		},
+		"licenseValue": {
+			"@id": "gs1:licenseValue"
+		},
+		"alternativeLicenseValue": {
+			"@id": "gs1:alternativeLicenseValue"
+		},
+		"identificationKeyType": {
+			"@id": "gs1:identificationKeyType"
+		},
+		"isGS1CompanyPrefixLicenseAllowed": {
+			"@id": "gs1:isGS1CompanyPrefixLicenseAllowed"
+		},
+		"isExactMatchRequired": {
+			"@id": "gs1:isExactMatchRequired"
+		},
+		"isGS1IdentificationKeyLicenseAllowed": {
+			"@id": "gs1:isGS1IdentificationKeyLicenseAllowed"
+		}
+	}
+}

@@ -7,7 +7,11 @@ const contextsUrls = [
   'https://www.w3.org/2018/credentials/v1',
   'https://www.w3.org/ns/credentials/v2',
   'https://www.w3.org/ns/credentials/examples/v2',
-  'https://w3id.org/traceability/v1'
+  'https://w3id.org/traceability/v1',
+  'https://ref.gs1.org/gs1/vc/license-context',
+  'https://ref.gs1.org/gs1/vc/declaration-context',
+  'https://ref.gs1.org/gs1/vc/product-context',
+  'https://jsld.org/default/context/v1'
 ];
 
 (async () => {

@@ -9,6 +9,8 @@ import { driver, push } from './graph/driver'
 import dotenv from 'dotenv'
 import { getApi, getPresentations } from './presentations'
 
+import { collate } from './collate/collate'
+
 export const handler = async function ({ positionals, values }: Arguments) {
   positionals = positionals.slice(1)
   const operation = positionals.shift()
@@ -80,11 +82,9 @@ export const handler = async function ({ positionals, values }: Arguments) {
         await d.close()
 
       } else {
-        // single file
         const content = new Uint8Array(fs.readFileSync(pathToContent))
-        graph = await jsongraph.graph(content, contentType)
-        graphText = JSON.stringify(graph, null, 2)
-        if (graphType === 'application/gql') {
+        if (contentType.includes('cose')) {
+          graph = await collate(content)
           const components = await query(graph)
           const dangerousQuery = await injection(components)
           graphText = dangerousQuery
@@ -94,7 +94,23 @@ export const handler = async function ({ positionals, values }: Arguments) {
             await push(session, components)
             await d.close()
           }
+        } else {
+          // single file
+          graph = await jsongraph.graph(content, contentType)
+          graphText = JSON.stringify(graph, null, 2)
+          if (graphType === 'application/gql') {
+            const components = await query(graph)
+            const dangerousQuery = await injection(components)
+            graphText = dangerousQuery
+            if (values.push) {
+              const d = await driver()
+              const session = d.session()
+              await push(session, components)
+              await d.close()
+            }
+          }
         }
+
         if (output) {
           fs.writeFileSync(output, graphText)
         }

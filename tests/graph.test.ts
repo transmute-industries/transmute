@@ -39,3 +39,11 @@ it.skip('graph assist presentation', async () => {
   expect(debug).toHaveBeenCalledTimes(1)
   expect(output).toHaveBeenCalledTimes(1)
 })
+
+
+it.skip('graph assist with scitt transparent statement', async () => {
+  await facade(`graph assist ./tests/fixtures/message.hash-envelope-with-receipt.cbor --credential-type application/cose --verbose --graph-type application/gql --push --env ./.env`)
+  expect(debug).toHaveBeenCalledTimes(1)
+  expect(output).toHaveBeenCalledTimes(1)
+})
+
