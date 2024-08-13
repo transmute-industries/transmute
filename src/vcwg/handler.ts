@@ -28,7 +28,9 @@ export const handler = async function ({ positionals, values }: Arguments) {
         if (env.github()) {
           setOutput('yaml', yamlClaims)
         } else {
-          console.log(yamlClaims)
+          if (!output) {
+            console.log(yamlClaims)
+          }
         }
       }
       break

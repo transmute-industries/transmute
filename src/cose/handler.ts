@@ -32,9 +32,11 @@ export const handler = async function ({ positionals, values }: Arguments) {
         }
         setOutput('cbor', encoded.toString('hex'))
       } else {
-        // const text = await edn.render(encoded, 'application/cbor-diagnostic')
-        const text = await cose.cbor.diagnose(encoded)
-        console.log(text)
+        if (!output) {
+          // const text = await edn.render(encoded, 'application/cbor-diagnostic')
+          const text = await cose.cbor.diagnose(encoded)
+          console.log(text)
+        }
       }
       break
     }
@@ -61,8 +63,10 @@ export const handler = async function ({ positionals, values }: Arguments) {
       if (env.github()) {
         setOutput('cbor', Buffer.from(encoded).toString('hex'))
       } else {
-        const text = await cose.cbor.diagnose(encoded)
-        console.log(text)
+        if (!output) {
+          const text = await cose.cbor.diagnose(encoded)
+          console.log(text)
+        }
       }
       break
     }
@@ -132,9 +136,11 @@ export const handler = async function ({ positionals, values }: Arguments) {
       if (env.github()) {
         setOutput('cbor', Buffer.from(coseSign1).toString('hex'))
       } else {
-        const text = await edn.render(Buffer.from(coseSign1), 'application/cbor-diagnostic')
-        // const text = await cose.cbor.diagnose(sign1)
-        console.log(text)
+        if (!output) {
+          const text = await edn.render(Buffer.from(coseSign1), 'application/cbor-diagnostic')
+          // const text = await cose.cbor.diagnose(sign1)
+          console.log(text)
+        }
       }
       break
     }
@@ -197,9 +203,11 @@ export const handler = async function ({ positionals, values }: Arguments) {
       if (env.github()) {
         setOutput('cbor', Buffer.from(result).toString('hex'))
       } else {
-        const text = await edn.render(Buffer.from(coseSign1), 'application/cbor-diagnostic')
-        // const text = await cose.cbor.diagnose(sign1)
-        console.log(text)
+        if (!output) {
+          const text = await edn.render(Buffer.from(coseSign1), 'application/cbor-diagnostic')
+          // const text = await cose.cbor.diagnose(sign1)
+          console.log(text)
+        }
       }
       break
     }

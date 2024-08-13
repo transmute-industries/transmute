@@ -177,11 +177,14 @@ export const handler = async function ({ positionals, values }: Arguments) {
       if (env.github()) {
         setOutput('json', protectedHeader)
       } else {
-        console.log(JSON.stringify(protectedHeader, null, 2))
+        if (!output) {
+          console.log(JSON.stringify(protectedHeader, null, 2))
+        }
       }
       break
     }
     case 'encrypt': {
+      const output = values.output
       const compact = values.compact || false
       const enc = values.enc || false
       const verbose = values.verbose || false
@@ -224,7 +227,6 @@ export const handler = async function ({ positionals, values }: Arguments) {
         const message = `🔑 ${publicKey.kid}`
         debug(message)
       }
-
       if (env.github()) {
         if (compact) {
           setOutput('jwe', jwe)
@@ -232,10 +234,12 @@ export const handler = async function ({ positionals, values }: Arguments) {
           setOutput('json', jwe)
         }
       } else {
-        if (compact) {
-          console.log(jwe)
-        } else {
-          console.log(JSON.stringify(jwe, null, 2))
+        if (!output) {
+          if (compact) {
+            console.log(jwe)
+          } else {
+            console.log(JSON.stringify(jwe, null, 2))
+          }
         }
       }
       break
@@ -280,7 +284,9 @@ export const handler = async function ({ positionals, values }: Arguments) {
       if (env.github()) {
         setOutput('json', protectedHeader)
       } else {
-        console.log(JSON.stringify(protectedHeader, null, 2))
+        if (!output) {
+          console.log(JSON.stringify(protectedHeader, null, 2))
+        }
       }
       break
     }

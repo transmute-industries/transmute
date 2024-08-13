@@ -19,6 +19,7 @@ export type CommonOptions = {
   output?: string
   verbose?: boolean
   detached?: boolean
+  'content-type'?: string
 }
 
 export type VcwgOptions = {
@@ -30,7 +31,8 @@ export type VcwgOptions = {
 }
 
 export type ScittOptions = {
-  log?: string
+  log?: string,
+  location?: string
 }
 
 export const args = (prompt: string) => {
@@ -72,6 +74,12 @@ export const args = (prompt: string) => {
         type: 'string' as "string",
       },
       'graph-type': {
+        type: 'string' as "string",
+      },
+      'content-type': {
+        type: 'string' as "string",
+      },
+      'location': {
         type: 'string' as "string",
       },
       iss: {

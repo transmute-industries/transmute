@@ -41,8 +41,12 @@ it.skip('graph assist presentation', async () => {
 })
 
 
-it.skip('graph assist with scitt transparent statement', async () => {
-  await facade(`graph assist ./tests/fixtures/message.hash-envelope-with-receipt.cbor --credential-type application/cose --verbose --graph-type application/gql --push --env ./.env`)
+it.only('graph assist with scitt transparent statement', async () => {
+  await facade(`graph assist ./dist/_manifest/spdx_2.2/manifest.spdx.scitt.cbor \
+--credential-type application/cose \
+--graph-type application/gql \
+--env ./.env \
+--verbose  --push `)
   expect(debug).toHaveBeenCalledTimes(1)
   expect(output).toHaveBeenCalledTimes(1)
 })

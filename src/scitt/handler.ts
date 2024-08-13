@@ -7,6 +7,7 @@ import { setSecret, setOutput, debug } from '@actions/core'
 
 import { env } from '../action'
 import { base64url } from 'jose'
+import moment from 'moment'
 
 export const handler = async function ({ positionals, values }: Arguments) {
   positionals = positionals.slice(1)
@@ -38,6 +39,36 @@ export const handler = async function ({ positionals, values }: Arguments) {
         throw new Error(message)
       }
       const statement = fs.readFileSync(pathToStatement)
+
+      const headerParamEntries = [
+        [cose.Protected.Alg, privateKey.get(3)],
+        [cose.Protected.PayloadHashAlgorithm, cose.Hash.SHA256],
+        // TODO: other commmand line options for headers
+      ] as cose.HeaderMapEntry[]
+      const cwtClaimsInHeader = new Map<any, any>()
+
+      cwtClaimsInHeader.set(6, moment().unix()) // iat now
+
+      if (values['content-type']) {
+        headerParamEntries.push([cose.Protected.PayloadPreImageContentType, values['content-type']])
+      }
+
+      if (values['location']) {
+        headerParamEntries.push([cose.Protected.PayloadLocation, values['location']])
+      }
+
+      if (values.iss || values.sub) {
+        // https://www.iana.org/assignments/cwt/cwt.xhtml
+        if (values.iss) {
+          cwtClaimsInHeader.set(1, values.iss)
+        }
+        if (values.sub) {
+          cwtClaimsInHeader.set(2, values.sub)
+        }
+      }
+
+      headerParamEntries.push([cose.Protected.CWTClaims, cwtClaimsInHeader])
+
       const coseSign1 = await cose.hash
         .signer({
           remote: cose.crypto.signer({
@@ -45,11 +76,7 @@ export const handler = async function ({ positionals, values }: Arguments) {
           }),
         })
         .sign({
-          protectedHeader: cose.ProtectedHeader([
-            [cose.Protected.Alg, privateKey.get(3)],
-            [cose.Protected.PayloadHashAlgorithm, cose.Hash.SHA256],
-            // TODO: other commmand line options for headers
-          ]),
+          protectedHeader: cose.ProtectedHeader(headerParamEntries),
           unprotectedHeader: new Map<any, any>(),
           payload: statement,
         })
@@ -61,8 +88,10 @@ export const handler = async function ({ positionals, values }: Arguments) {
       if (env.github()) {
         setOutput('cbor', Buffer.from(coseSign1).toString('hex'))
       } else {
-        const text = await cose.cbor.diagnose(Buffer.from(coseSign1))
-        console.log(text)
+        if (!output) {
+          const text = await cose.cbor.diagnose(Buffer.from(coseSign1))
+          console.log(text)
+        }
       }
       break
     }
@@ -111,8 +140,10 @@ export const handler = async function ({ positionals, values }: Arguments) {
       if (env.github()) {
         setOutput('cbor', Buffer.from(result).toString('hex'))
       } else {
-        const text = await cose.cbor.diagnose(Buffer.from(coseSign1))
-        console.log(text)
+        if (!output) {
+          const text = await cose.cbor.diagnose(Buffer.from(coseSign1))
+          console.log(text)
+        }
       }
       break
     }
@@ -164,14 +195,30 @@ export const handler = async function ({ positionals, values }: Arguments) {
       } catch (e) {
         // console.warn('failed to parse transparency log.')
       }
+
+      const headerParamEntries = [
+        [cose.Protected.Alg, privateKey.get(3)],
+        [cose.Protected.VerifiableDataStructure, cose.VerifiableDataStructures['RFC9162-Binary-Merkle-Tree']],
+        // TODO: other commmand line options for headers
+      ] as cose.HeaderMapEntry[]
+
+      const cwtClaimsInHeader = new Map<any, any>()
+      cwtClaimsInHeader.set(6, moment().unix()) // iat now
+      if (values.iss || values.sub) {
+        // https://www.iana.org/assignments/cwt/cwt.xhtml
+        if (values.iss) {
+          cwtClaimsInHeader.set(1, values.iss)
+        }
+        if (values.sub) {
+          cwtClaimsInHeader.set(2, values.sub)
+        }
+      }
+      headerParamEntries.push([cose.Protected.CWTClaims, cwtClaimsInHeader])
+
       const newLeaf = await cose.receipt.leaf(signedStatement)
       entries.push(newLeaf)
       const receipt = await cose.receipt.inclusion.issue({
-        protectedHeader: cose.ProtectedHeader([
-          [cose.Protected.Alg, cose.Signature.ES256],
-          [cose.Protected.ProofType, cose.Receipt.Inclusion],
-          // [cose.Protected.Kid, notaryPublicKeyJwk.kid],
-        ]),
+        protectedHeader: cose.ProtectedHeader(headerParamEntries),
         entry: entries.length - 1,
         entries: entries,
         signer: notary,
@@ -195,8 +242,10 @@ export const handler = async function ({ positionals, values }: Arguments) {
       if (env.github()) {
         setOutput('cbor', Buffer.from(transparentStatement).toString('hex'))
       } else {
-        const text = await cose.cbor.diagnose(Buffer.from(transparentStatement))
-        console.log(text)
+        if (!output) {
+          const text = await cose.cbor.diagnose(Buffer.from(transparentStatement))
+          console.log(text)
+        }
       }
       break
     }
@@ -230,8 +279,9 @@ export const handler = async function ({ positionals, values }: Arguments) {
       if (env.github()) {
         setOutput('cbor', Buffer.from(verified.payload).toString('hex'))
       } else {
-        const text = await cose.cbor.diagnose(Buffer.from(transparentStatement))
-        console.log(text)
+        if (!output) {
+          console.log('✅ Notary Receipt Verified')
+        }
       }
       break
     }
