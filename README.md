@@ -95,6 +95,8 @@ transmute vcwg issue-credential ./tests/fixtures/private.sig.jwk.json \
 
 See [scripts](./scripts/) for more examples.
 
+<img src="./docs/all.png" alt="graph after ci runs" />
+
 TODO: all command examples
 
 ## Use Cases
