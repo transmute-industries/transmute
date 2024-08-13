@@ -13,6 +13,8 @@ export const collate = async (data: Uint8Array, inputType = 'application/cose', 
   const payload = decoded.value[2].toString('hex')
   let sig = header.get(Protected.Alg)
   let hash = header.get(Protected.PayloadHashAlgorithm)
+  const payloadPreImageContentType = header.get(Protected.PayloadPreImageContentType)
+  const payloadLocation = header.get(Protected.PayloadLocation)
   const cwtClaims = header.get(Protected.CWTClaims)
   const iat = cwtClaims.get(6)
   const iss = cwtClaims.get(1)
@@ -35,7 +37,8 @@ export const collate = async (data: Uint8Array, inputType = 'application/cose', 
     hash_value: payload,
     hash_algorithm: hash,
     signature_algorithm: sig,
-    content_type: 'application/cose',
+    content_type: payloadPreImageContentType,
+    location: payloadLocation,
     labels: ['scitt-statement'],
   };
   nodes[statement.id] = statement;
@@ -50,7 +53,7 @@ export const collate = async (data: Uint8Array, inputType = 'application/cose', 
     const iss = cwtClaims.get(1)
     const sub = cwtClaims.get(2)
     if (vds === VerifiableDataStructures["RFC9162-Binary-Merkle-Tree"]) {
-      vds = "RFC9162-Binary-Merkle-Tree"
+      vds = "Binary Merkle Tree"
     }
     if (alg === Signature.ES256) {
       alg = 'ES256'
@@ -69,7 +72,7 @@ export const collate = async (data: Uint8Array, inputType = 'application/cose', 
     }
     nodes[receipt.id] = receipt
     if (vdp === 'RFC9162-Inclusion-Proof') {
-      vdp = 'Notarization'
+      vdp = 'Inclusion Proof'
     }
     const edge = {
       source: receipt.id,
