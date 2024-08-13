@@ -270,6 +270,7 @@ export const handler = async function ({ positionals, values }: Arguments) {
         coseSign1: transparentStatement,
         payload: Buffer.from(hash, 'hex'),
       });
+      const root = Buffer.from(verified.receipts[0]).toString('hex')
       if (Buffer.from(verified.payload).toString('hex') !== Buffer.from(hash, 'hex').toString('hex')) {
         throw new Error(`Signature verification failed for hash: ${Buffer.from(verified.payload).toString('hex')}`)
       }
@@ -280,7 +281,25 @@ export const handler = async function ({ positionals, values }: Arguments) {
         setOutput('cbor', Buffer.from(verified.payload).toString('hex'))
       } else {
         if (!output) {
-          console.log('✅ Notary Receipt Verified')
+          console.log('✅ Receipt Verified')
+          console.log(`Log: ${root}`)
+          console.log(`File: ${hash}`)
+          const statement = await cose.cbor.decodeFirst(transparentStatement)
+          const statementHeader = cose.cbor.decode(statement.value[0])
+          const [encodedReceipt] = statement.value[1].get(cose.Unprotected.Receipts)
+          const decodedReceipt = cose.cbor.decode(encodedReceipt)
+          const receiptHeader = cose.cbor.decode(decodedReceipt.value[0])
+          const receiptClaims = receiptHeader.get(cose.Protected.CWTClaims)
+          const statementClaims = statementHeader.get(cose.Protected.CWTClaims)
+          if (receiptClaims.get(1)) {
+            console.log(`Notary: ${receiptClaims.get(1)}`)
+          }
+          if (statementClaims.get(1)) {
+            console.log(`Producer: ${statementHeader.get(cose.Protected.CWTClaims).get(1)}`)
+          }
+          if (receiptClaims.get(2)) {
+            console.log(`Product: ${receiptClaims.get(2)}`)
+          }
         }
       }
       break
