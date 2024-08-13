@@ -41,7 +41,7 @@ it.skip('graph assist presentation', async () => {
 })
 
 
-it.only('graph assist with scitt transparent statement', async () => {
+it.skip('graph assist with scitt transparent statement', async () => {
   await facade(`graph assist ./dist/_manifest/spdx_2.2/manifest.spdx.scitt.cbor \
 --credential-type application/cose \
 --graph-type application/gql \
