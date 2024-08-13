@@ -98,22 +98,27 @@ TODO: all command examples
 
 ```bash
 
-sbom-tool generate -b ./dist -bc ./ -pn transmute -ps transmute.industries -pv `jq -r .version package.json` -nsu `git rev-parse --verify HEAD`
+sbom-tool generate -b ./dist -bc ./ -pn transmute -ps transmute.industries \
+-pv `jq -r .version package.json` -nsu `git rev-parse --verify HEAD`
 
-transmute scitt issue-statement ./tests/fixtures/private.notary.key.cbor ./dist/_manifest/spdx_2.2/manifest.spdx.json \
+transmute scitt issue-statement ./tests/fixtures/private.notary.key.cbor \
+./dist/_manifest/spdx_2.2/manifest.spdx.json \
 --iss https://software.vendor.example \
 --sub `jq -r .documentNamespace ./dist/_manifest/spdx_2.2/manifest.spdx.json` \
 --content-type application/spdx+json \
---location https://github.com/transmute-industries/transmute/blob/main/dist/_manifest/spdx_2.2/manifest.spdx.json \
+--location https://github.com/.../dist/_manifest/spdx_2.2/manifest.spdx.json \
 --output ./dist/_manifest/spdx_2.2/manifest.spdx.scitt.cbor
 
-transmute scitt issue-receipt ./tests/fixtures/private.notary.key.cbor ./dist/_manifest/spdx_2.2/manifest.spdx.scitt.cbor \
+transmute scitt issue-receipt ./tests/fixtures/private.notary.key.cbor \
+./dist/_manifest/spdx_2.2/manifest.spdx.scitt.cbor \
 --iss https://software.notary.example \
 --sub `jq -r .documentNamespace ./dist/_manifest/spdx_2.2/manifest.spdx.json` \
 --log ./tests/fixtures/trans.json \
 --output ./dist/_manifest/spdx_2.2/manifest.spdx.scitt.cbor
 
-transmute scitt verify-receipt-hash ./tests/fixtures/public.notary.key.cbor ./dist/_manifest/spdx_2.2/manifest.spdx.scitt.cbor `cat ./dist/_manifest/spdx_2.2/manifest.spdx.json.sha256`
+transmute scitt verify-receipt-hash ./tests/fixtures/public.notary.key.cbor \
+./dist/_manifest/spdx_2.2/manifest.spdx.scitt.cbor \
+`cat ./dist/_manifest/spdx_2.2/manifest.spdx.json.sha256`
 
 ```
 
@@ -142,11 +147,11 @@ jobs:
               --push
 ```
 
-<img src="./docs/receipt.png.png" alt="graph query results" />
+<img src="./docs/receipt.png" alt="graph query results" />
 
 ```
 MATCH (statement {
-    subject: 'https://spdx.org/spdxdocs/sbom-tool-2.2.7-66a07f86-0f12-4c6f-887b-9a1510b11d8a/transmute/0.9.2/2e57d4b2d9b45cccdd74dad91edbaabaa06074f9'
+    subject: 'https://spdx.org/...sbom-tool-2.2.7.../0.9.2/2e57d4b2d9b45cccdd74dad91edbaabaa06074f9'
 })
 MATCH (receipt {
     subject: statement.subject
