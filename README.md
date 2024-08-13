@@ -21,25 +21,33 @@ jobs:
         uses: transmute-industries/transmute@main
         with:
           transmute: |
-            scitt issue-statement ./tests/fixtures/private.sig.key.cbor ./tests/fixtures/message.json --output ./tests/fixtures/message.hash-envelope.cbor
+            scitt issue-statement ./tests/fixtures/private.sig.key.cbor \
+            ./tests/fixtures/message.json \
+            --output ./tests/fixtures/message.hash-envelope.cbor
       - name: Verify Statement Hash
         id: verify_message
         uses: transmute-industries/transmute@main
         with:
           transmute: |
-            scitt verify-statement-hash ./tests/fixtures/public.sig.key.cbor ./tests/fixtures/message.hash-envelope.cbor 3073d614f853aaec9a1146872c7bab75495ee678c8864ed3562f8787555c1e22
+            scitt verify-statement-hash ./tests/fixtures/public.sig.key.cbor \
+            ./tests/fixtures/message.hash-envelope.cbor \
+            3073d614f853aaec9a1146872c7bab75495ee678c8864ed3562f8787555c1e22
       - name: Issue Receipt
         id: issue_receipt
         uses: transmute-industries/transmute@main
         with:
           transmute: |
-            scitt issue-receipt ./tests/fixtures/private.notary.key.cbor ./tests/fixtures/message.hash-envelope.cbor --log ./tests/fixtures/trans.json
+            scitt issue-receipt ./tests/fixtures/private.notary.key.cbor \
+            ./tests/fixtures/message.hash-envelope.cbor \
+            --log ./tests/fixtures/trans.json
       - name: Verify Receipt Hash
         id: verify_receipt
         uses: transmute-industries/transmute@main
         with:
           transmute: |
-            scitt verify-receipt-hash ./tests/fixtures/public.notary.key.cbor ./tests/fixtures/message.hash-envelope-with-receipt.cbor 3073d614f853aaec9a1146872c7bab75495ee678c8864ed3562f8787555c1e22
+            scitt verify-receipt-hash ./tests/fixtures/public.notary.key.cbor \
+            ./tests/fixtures/message.hash-envelope-with-receipt.cbor \
+            3073d614f853aaec9a1146872c7bab75495ee678c8864ed3562f8787555c1e22
 ```
 
 See [CI](./.github/workflows/ci.yml) for more examples.
@@ -79,7 +87,8 @@ credentialSubject:
 transmute jose keygen --alg ES256 \
 --output ./tests/fixtures/private.sig.jwk.json
 
-transmute vcwg issue-credential ./tests/fixtures/private.sig.jwk.json ./tests/fixtures/issuer-disclosable-claims.yaml \
+transmute vcwg issue-credential ./tests/fixtures/private.sig.jwk.json \
+ ./tests/fixtures/issuer-disclosable-claims.yaml \
 --credential-type application/vc-ld+sd-jwt \
 --output ./tests/fixtures/issuer-disclosable-claims.sd-jwt
 ```
@@ -149,12 +158,12 @@ jobs:
 
 <img src="./docs/receipt.png" alt="graph query results" />
 
-```
+<!--
 MATCH (statement {
-    subject: 'https://spdx.org/...sbom-tool-2.2.7.../0.9.2/2e57d4b2d9b45cccdd74dad91edbaabaa06074f9'
+    subject: 'https://spdx.org/spdxdocs/sbom-tool-2.2.7-66a07f86-0f12-4c6f-887b-9a1510b11d8a/transmute/0.9.2/2e57d4b2d9b45cccdd74dad91edbaabaa06074f9'
 })
 MATCH (receipt {
     subject: statement.subject
 })
 RETURN statement, receipt
-```
+-->
