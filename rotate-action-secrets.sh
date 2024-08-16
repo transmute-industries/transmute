@@ -5,6 +5,10 @@ gh secret set AZURE_CLIENT_ID --body "$AZURE_CLIENT_ID"
 gh secret set AZURE_CLIENT_SECRET --body "$AZURE_CLIENT_SECRET"
 gh secret set AZURE_KEY_ID --body "$AZURE_KEY_ID"
 
+gh secret set GOOGLE_SA_EMAIL --body "$GOOGLE_SA_EMAIL"
+gh secret set GOOGLE_SA_PRIVATE_KEY --body "$GOOGLE_SA_PRIVATE_KEY"
+gh secret set GOOGLE_KMS_KEY_NAME --body "$GOOGLE_KMS_KEY_NAME"
+
 gh secret set NEO4J_URI --body "$NEO4J_URI"
 gh secret set NEO4J_USERNAME --body "$NEO4J_USERNAME"
 gh secret set NEO4J_PASSWORD --body "$NEO4J_PASSWORD"
