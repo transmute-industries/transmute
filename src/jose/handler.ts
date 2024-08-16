@@ -16,6 +16,19 @@ export const toPublicKey = (k: jose.JWK) => {
   return { kid, kty, crv, alg, x, y, }
 }
 
+const flatSigner = ({ privateKeyJwk }: any) => {
+  return {
+    sign: async (header: any, payload: any) => {
+      const jws = await new jose.FlattenedSign(
+        payload
+      )
+        .setProtectedHeader(header)
+        .sign(await jose.importJWK(privateKeyJwk))
+      return jws
+    }
+  }
+}
+
 export const handler = async function ({ positionals, values }: Arguments) {
   positionals = positionals.slice(1)
   const operation = positionals.shift()
@@ -102,11 +115,8 @@ export const handler = async function ({ positionals, values }: Arguments) {
       }
 
       const message = new Uint8Array(fs.readFileSync(pathToMessage))
-      const jws = await new jose.FlattenedSign(
-        message
-      )
-        .setProtectedHeader(header)
-        .sign(await jose.importJWK(privateKey))
+      const signer = flatSigner({ privateKeyJwk: privateKey })
+      const jws = await signer.sign(header, message)
 
       if (verbose) {
         const message = `🔑 ${privateKey.kid}`

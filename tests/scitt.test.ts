@@ -39,6 +39,3 @@ it('verify-receipt-hash', async () => {
   expect(debug).toHaveBeenCalledTimes(1)
   expect(output).toHaveBeenCalledTimes(1)
 })
-
-
-

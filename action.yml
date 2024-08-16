@@ -31,6 +31,24 @@ inputs:
     description: |
       Resource Owner API.
     require: false
+  azure-tenant-id:
+    description: |
+      AZURE_TENANT_ID as described in https://github.com/Azure/azure-sdk-for-js.
+    require: false
+  azure-client-id:
+    description: |
+      AZURE_CLIENT_ID as described in https://github.com/Azure/azure-sdk-for-js.
+    require: false
+  azure-client-secret:
+    description: |
+      AZURE_CLIENT_SECRET as described in https://github.com/Azure/azure-sdk-for-js.
+    require: false
+  azure-kid:
+    description: |
+      AZURE_KEY_ID as described in https://github.com/Azure/azure-sdk-for-js.
+      For example: https://<account>.vault.azure.net/keys/<key-name>/5d...a0
+    require: false
+
 outputs:
   yaml:
     description: "The output as yaml."

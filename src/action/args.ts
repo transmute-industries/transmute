@@ -33,6 +33,7 @@ export type VcwgOptions = {
 export type ScittOptions = {
   log?: string,
   location?: string
+  'azure-keyvault'?: boolean
 }
 
 export const args = (prompt: string) => {
@@ -81,6 +82,9 @@ export const args = (prompt: string) => {
       },
       'location': {
         type: 'string' as "string",
+      },
+      'azure-keyvault': {
+        type: 'boolean' as "boolean",
       },
       iss: {
         type: 'string' as "string",
