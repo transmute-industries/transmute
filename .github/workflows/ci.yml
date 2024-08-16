@@ -79,6 +79,74 @@ jobs:
               ./tests/fixtures/message.json.akv.cbor \
               3073d614f853aaec9a1146872c7bab75495ee678c8864ed3562f8787555c1e22
 
+  scitt-gcp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Export Public Key
+        id: gcp_kms_export
+        uses: ./
+        with:
+          gcp-sa-email: ${{ secrets.GOOGLE_SA_EMAIL }}
+          gcp-sa-private-key: ${{ secrets.GOOGLE_SA_PRIVATE_KEY }}
+          gcp-kms-key-name: ${{ secrets.GOOGLE_KMS_KEY_NAME }}
+          transmute: |
+            scitt export-remote-public-key \
+              --output ./tests/fixtures/public.gcp.key.cbor \
+              --kms gcp
+
+      - name: Issue Statement
+        id: gcp_kms_issue_statement
+        uses: ./
+        with:
+          gcp-sa-email: ${{ secrets.GOOGLE_SA_EMAIL }}
+          gcp-sa-private-key: ${{ secrets.GOOGLE_SA_PRIVATE_KEY }}
+          gcp-kms-key-name: ${{ secrets.GOOGLE_KMS_KEY_NAME }}
+          transmute: |
+            scitt issue-statement \
+              ./tests/fixtures/message.json \
+              --alg ES256 \
+              --iss https://software.vendor.example \
+              --sub https://software.vendor.example/product/123 \
+              --content-type application/spdx+json \
+              --location https://software.vendor.example/storage/456 \
+              --output ./tests/fixtures/message.json.gcp.cbor \
+              --kms gcp
+
+      - name: Issue Receipt
+        id: gcp_kms_issue_receipt
+        uses: ./
+        with:
+          gcp-sa-email: ${{ secrets.GOOGLE_SA_EMAIL }}
+          gcp-sa-private-key: ${{ secrets.GOOGLE_SA_PRIVATE_KEY }}
+          gcp-kms-key-name: ${{ secrets.GOOGLE_KMS_KEY_NAME }}
+          transmute: |
+            scitt issue-receipt \
+              ./tests/fixtures/message.json.gcp.cbor \
+              --log ./tests/fixtures/trans.json \
+              --output ./tests/fixtures/message.gcp.receipt.cbor \
+              --kms gcp
+
+      - name: Verify Receipt
+        id: gcp_verify_receipt
+        uses: ./
+        with:
+          transmute: |
+            scitt verify-receipt-hash \
+              ./tests/fixtures/public.gcp.key.cbor \
+              ./tests/fixtures/message.gcp.receipt.cbor \
+              3073d614f853aaec9a1146872c7bab75495ee678c8864ed3562f8787555c1e22
+
+      - name: Verify Statement
+        id: gcp_verify_statement
+        uses: ./
+        with:
+          transmute: |
+            scitt verify-statement-hash \
+              ./tests/fixtures/public.gcp.key.cbor \
+              ./tests/fixtures/message.json.gcp.cbor \
+              3073d614f853aaec9a1146872c7bab75495ee678c8864ed3562f8787555c1e22
+
   graph:
     runs-on: ubuntu-latest
     steps:

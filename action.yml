@@ -48,6 +48,18 @@ inputs:
       AZURE_KEY_ID as described in https://github.com/Azure/azure-sdk-for-js.
       For example: https://<account>.vault.azure.net/keys/<key-name>/5d...a0
     require: false
+  gcp-sa-email:
+    description: |
+      Google Cloud Platform Service Account Email
+    require: false
+  gcp-sa-private-key:
+    description: |
+      Google Cloud Platform Service Account Private Key
+    require: false
+  gcp-kms-key-name:
+    description: |
+      Google Cloud Platform Cloud KMS Key Name
+    require: false
 
 outputs:
   yaml:
