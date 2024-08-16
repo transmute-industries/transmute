@@ -1,18 +1,34 @@
 import fs from 'fs'
 import * as cose from '@transmute/cose'
-
-import { Arguments } from "../types"
-
-import { setSecret, setOutput, debug, getInput } from '@actions/core'
-
-import { env } from '../action'
-import { base64url } from 'jose'
 import moment from 'moment'
-
+import { setSecret, setOutput, debug, getInput } from '@actions/core'
 import { ClientSecretCredential } from "@azure/identity";
-
 import * as akv from '@transmute/azure-keyvault-cose-sign'
 import dotenv from 'dotenv'
+
+import { Arguments } from "../types"
+import { env } from '../action'
+import { base64url } from 'jose'
+
+const getAzureCredential = () => {
+  const tenantId = `${process.env.AZURE_TENANT_ID || getInput("azure-tenant-id")}`
+  const clientId = `${process.env.AZURE_CLIENT_ID || getInput("azure-client-id")}`
+  const clientSecret = `${process.env.AZURE_CLIENT_SECRET || getInput("azure-client-secret")}`
+  if (env.github()) {
+    setSecret(clientSecret)
+  }
+  return new ClientSecretCredential(tenantId, clientId, clientSecret);
+}
+
+const getAzureKid = (verbose) => {
+  const kid = `${process.env.AZURE_KEY_ID || getInput("azure-kid")}`
+  if (verbose) {
+    const message = `🔑 ${kid}`
+    debug(message)
+  }
+  return kid
+}
+
 export const handler = async function ({ positionals, values }: Arguments) {
   positionals = positionals.slice(1)
   const operation = positionals.shift()
@@ -25,18 +41,8 @@ export const handler = async function ({ positionals, values }: Arguments) {
         dotenv.config({ path: envFile })
       }
       if (values['azure-keyvault'] === true) {
-        const tenantId = `${process.env.AZURE_TENANT_ID || getInput("azure-tenant-id")}`
-        const clientId = `${process.env.AZURE_CLIENT_ID || getInput("azure-client-id")}`
-        const clientSecret = `${process.env.AZURE_CLIENT_SECRET || getInput("azure-client-secret")}`
-        if (env.github()) {
-          setSecret(clientSecret)
-        }
-        const kid = `${process.env.AZURE_KEY_ID || getInput("azure-kid")}`
-        if (verbose) {
-          const message = `🔑 ${kid}`
-          debug(message)
-        }
-        const credential = new ClientSecretCredential(tenantId, clientId, clientSecret);
+        const kid = getAzureKid(verbose)
+        const credential = getAzureCredential()
         const publicKeyJwk = await akv.jose.getPublicKey({ credential, kid })
         const coseKey = await cose.key.convertJsonWebKeyToCoseKey(publicKeyJwk)
         const encodedCoseKey = cose.cbor.encode(coseKey)
@@ -65,18 +71,8 @@ export const handler = async function ({ positionals, values }: Arguments) {
       let signer
       let statement
       if (values['azure-keyvault'] === true) {
-        const tenantId = `${process.env.AZURE_TENANT_ID || getInput("azure-tenant-id")}`
-        const clientId = `${process.env.AZURE_CLIENT_ID || getInput("azure-client-id")}`
-        const clientSecret = `${process.env.AZURE_CLIENT_SECRET || getInput("azure-client-secret")}`
-        if (env.github()) {
-          setSecret(clientSecret)
-        }
-        const kid = `${process.env.AZURE_KEY_ID || getInput("azure-kid")}`
-        if (verbose) {
-          const message = `🔑 ${kid}`
-          debug(message)
-        }
-        const credential = new ClientSecretCredential(tenantId, clientId, clientSecret);
+        const kid = getAzureKid(verbose)
+        const credential = getAzureCredential()
         signer = cose.hash
           .signer({
             remote: await akv.cose.remote({ credential, kid, alg: 'ES256' })
@@ -233,20 +229,10 @@ export const handler = async function ({ positionals, values }: Arguments) {
       let notary
       let signedStatement
       if (values['azure-keyvault'] === true) {
+        const kid = getAzureKid(verbose)
+        const credential = getAzureCredential()
         const [pathToSignedStatement] = positionals
         signedStatement = fs.readFileSync(pathToSignedStatement)
-        const tenantId = `${process.env.AZURE_TENANT_ID || getInput("azure-tenant-id")}`
-        const clientId = `${process.env.AZURE_CLIENT_ID || getInput("azure-client-id")}`
-        const clientSecret = `${process.env.AZURE_CLIENT_SECRET || getInput("azure-client-secret")}`
-        if (env.github()) {
-          setSecret(clientSecret)
-        }
-        const kid = `${process.env.AZURE_KEY_ID || getInput("azure-kid")}`
-        if (verbose) {
-          const message = `🔑 ${kid}`
-          debug(message)
-        }
-        const credential = new ClientSecretCredential(tenantId, clientId, clientSecret);
         notary = cose.detached.signer({
           remote: await akv.cose.remote({ credential, kid, alg: 'ES256' })
         });
