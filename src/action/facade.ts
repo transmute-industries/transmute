@@ -12,7 +12,7 @@ export async function facade(prompt: string = process.argv.slice(2).join(' ')) {
     // swallow error to prevent leaking
     const message = '💀 Internal Error.'
     if (env.github() && !env.mock()) {
-      console.error(error) // uncomment to leak internal errors when testing
+      // console.error(error) // uncomment to leak internal errors when testing
       setFailed(message)
     } else {
       console.error(error)
