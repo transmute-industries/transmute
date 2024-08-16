@@ -34,6 +34,7 @@ export type ScittOptions = {
   log?: string,
   location?: string
   'azure-keyvault'?: boolean
+  'gcp-kms'?: boolean
 }
 
 export const args = (prompt: string) => {
@@ -84,6 +85,9 @@ export const args = (prompt: string) => {
         type: 'string' as "string",
       },
       'azure-keyvault': {
+        type: 'boolean' as "boolean",
+      },
+      'gcp-kms': {
         type: 'boolean' as "boolean",
       },
       iss: {

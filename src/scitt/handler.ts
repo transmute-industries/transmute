@@ -10,6 +10,37 @@ import { Arguments } from "../types"
 import { env } from '../action'
 import { base64url } from 'jose'
 
+import { KeyManagementServiceClient } from "@google-cloud/kms";
+import * as kms from "@transmute/google-cloud-kms-cose-sign";
+
+export const getGoogleKmsClient = () => {
+  const email = `${process.env.GOOGLE_SA_EMAIL || getInput("gcp-sa-email")}`
+  const private_key = `${process.env.GOOGLE_SA_PRIVATE_KEY || getInput("gcp-sa-private-key")}`.replace(/\\n/g, "\n")
+  if (env.github()) {
+    setSecret(private_key)
+  }
+  return new KeyManagementServiceClient({
+    credentials: {
+      client_email: email,
+      private_key,
+    },
+  });
+}
+
+export const getGoogleKid = (verbose) => {
+  const name = `${process.env.GOOGLE_KMS_KEY_NAME || getInput("gcp-kms-key-name")}`
+  if (verbose) {
+    const message = `🔑 ${name}`
+    debug(message)
+  }
+  return name
+}
+
+// const coseSign1 = await cose
+//   .signer({
+//     remote: await kms.cose.remote({ client, name, alg: "ES256" }),
+//   })
+
 const getAzureCredential = () => {
   const tenantId = `${process.env.AZURE_TENANT_ID || getInput("azure-tenant-id")}`
   const clientId = `${process.env.AZURE_CLIENT_ID || getInput("azure-client-id")}`
@@ -40,22 +71,28 @@ export const handler = async function ({ positionals, values }: Arguments) {
       if (envFile) {
         dotenv.config({ path: envFile })
       }
+      let publicKeyJwk
       if (values['azure-keyvault'] === true) {
         const kid = getAzureKid(verbose)
         const credential = getAzureCredential()
-        const publicKeyJwk = await akv.jose.getPublicKey({ credential, kid })
-        const coseKey = await cose.key.convertJsonWebKeyToCoseKey(publicKeyJwk)
-        const encodedCoseKey = cose.cbor.encode(coseKey)
-        if (output) {
-          fs.writeFileSync(output, encodedCoseKey)
-        }
-        if (env.github()) {
-          setOutput('cbor', Buffer.from(encodedCoseKey).toString('hex'))
-        } else {
-          if (!output) {
-            const text = await cose.cbor.diagnose(encodedCoseKey)
-            console.log(text)
-          }
+        publicKeyJwk = await akv.jose.getPublicKey({ credential, kid })
+      }
+      if (values['gcp-kms'] === true) {
+        const name = getGoogleKid(verbose)
+        const client = getGoogleKmsClient()
+        publicKeyJwk = await kms.jose.getPublicKey({ client, name })
+      }
+      const coseKey = await cose.key.convertJsonWebKeyToCoseKey(publicKeyJwk)
+      const encodedCoseKey = cose.cbor.encode(coseKey)
+      if (output) {
+        fs.writeFileSync(output, encodedCoseKey)
+      }
+      if (env.github()) {
+        setOutput('cbor', Buffer.from(encodedCoseKey).toString('hex'))
+      } else {
+        if (!output) {
+          const text = await cose.cbor.diagnose(encodedCoseKey)
+          console.log(text)
         }
       }
       break
@@ -76,6 +113,15 @@ export const handler = async function ({ positionals, values }: Arguments) {
         signer = cose.hash
           .signer({
             remote: await akv.cose.remote({ credential, kid, alg: 'ES256' })
+          })
+        const [pathToStatement] = positionals
+        statement = fs.readFileSync(pathToStatement)
+      } else if (values['gcp-kms'] === true) {
+        const name = getGoogleKid(verbose)
+        const client = getGoogleKmsClient()
+        signer = cose.hash
+          .signer({
+            remote: await kms.cose.remote({ client, name, alg: 'ES256' })
           })
         const [pathToStatement] = positionals
         statement = fs.readFileSync(pathToStatement)
@@ -236,6 +282,15 @@ export const handler = async function ({ positionals, values }: Arguments) {
         notary = cose.detached.signer({
           remote: await akv.cose.remote({ credential, kid, alg: 'ES256' })
         });
+      } else if (values['gcp-kms'] === true) {
+        const name = getGoogleKid(verbose)
+        const client = getGoogleKmsClient()
+        notary = cose.detached
+          .signer({
+            remote: await kms.cose.remote({ client, name, alg: 'ES256' })
+          })
+        const [pathToSignedStatement] = positionals
+        signedStatement = fs.readFileSync(pathToSignedStatement)
       } else {
         const [pathToPrivateKey, pathToSignedStatement] = positionals
         const privateKey = cose.cbor.decode(fs.readFileSync(pathToPrivateKey))
