@@ -40,7 +40,7 @@ export const args = (prompt: string) => {
   // https://stackoverflow.com/questions/29655760/convert-a-string-into-shell-arguments
   const re = /"[^"]+"|'[^']+'|\S+/g
   if (env.github() && !env.mock()) {
-    prompt = getInput("transmute")
+    prompt = getInput("transmute").replace("\\", "")
   }
   return parseArgs({
     allowPositionals: true,
