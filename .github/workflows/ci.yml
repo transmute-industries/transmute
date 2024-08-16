@@ -7,6 +7,104 @@ jobs:
       - uses: actions/checkout@v4
       - run: npm ci
       - run: npm run coverage
+
+  scitt-azure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Export Public Key
+        id: akv_export
+        uses: ./
+        with:
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          azure-kid: ${{ secrets.AZURE_KEY_ID }}
+          transmute: |
+            scitt export-remote-public-key \
+              --output ./tests/fixtures/public.akv.key.cbor \
+              --azure-keyvault
+
+      - name: Issue Statement
+        id: akv_sign
+        uses: ./
+        with:
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          azure-kid: ${{ secrets.AZURE_KEY_ID }}
+          transmute: |
+            scitt issue-statement \
+              ./tests/fixtures/message.json \
+              --alg ES256 \
+              --iss https://software.vendor.example \
+              --sub https://software.vendor.example/product/123 \
+              --content-type application/spdx+json \
+              --location https://software.vendor.example/storage/456 \
+              --output ./tests/fixtures/message.json.akv.cbor \
+              --azure-keyvault
+
+      - name: Issue Receipt
+        id: akv_receipt
+        uses: ./
+        with:
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          azure-kid: ${{ secrets.AZURE_KEY_ID }}
+          transmute: |
+            scitt issue-receipt \
+              ./tests/fixtures/message.json.akv.cbor \
+              --log ./tests/fixtures/trans.json \
+              --output ./tests/fixtures/message.akv.receipt.cbor \
+              --azure-keyvault
+
+      - name: Verify Receipt
+        id: akv_receipt_verify
+        uses: ./
+        with:
+          transmute: |
+            scitt verify-receipt-hash \
+              ./tests/fixtures/public.akv.key.cbor \
+              ./tests/fixtures/message.akv.receipt.cbor \
+              3073d614f853aaec9a1146872c7bab75495ee678c8864ed3562f8787555c1e22
+
+      - name: Verify Statement
+        id: akv_statement_verify
+        uses: ./
+        with:
+          transmute: |
+            scitt verify-statement-hash \
+              ./tests/fixtures/public.akv.key.cbor \
+              ./tests/fixtures/message.akv.receipt.cbor \
+              3073d614f853aaec9a1146872c7bab75495ee678c8864ed3562f8787555c1e22
+
+  graph:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Push Graph Fragment
+        id: push_single_graph
+        uses: ./
+        with:
+          neo4j-uri: ${{ secrets.NEO4J_URI }}
+          neo4j-user: ${{ secrets.NEO4J_USERNAME }}
+          neo4j-password: ${{ secrets.NEO4J_PASSWORD }}
+          transmute: |
+            graph assist ./tests/fixtures/issuer-claims.json --verbose --credential-type application/vc --graph-type application/gql --push
+      - name: Push Presentations
+        id: push_multiple_graphs
+        uses: ./
+        with:
+          neo4j-uri: ${{ secrets.NEO4J_URI }}
+          neo4j-user: ${{ secrets.NEO4J_USERNAME }}
+          neo4j-password: ${{ secrets.NEO4J_PASSWORD }}
+          transmute-client-id: ${{ secrets.CLIENT_ID }}
+          transmute-client-secret: ${{ secrets.CLIENT_SECRET }}
+          transmute-api: ${{ secrets.API_BASE_URL }}
+          transmute: |
+            graph assist --graph-type application/gql --push
+
   jose:
     runs-on: ubuntu-latest
     steps:
@@ -59,6 +157,7 @@ jobs:
             jose decrypt ./tests/fixtures/private.enc.jwk.json ./tests/fixtures/message.ciphertext.compact.jwe --compact
       - name: Log Message Decryption
         run: echo "${{ steps.decrypt_message.outputs.json }}"
+
   cose:
     runs-on: ubuntu-latest
     steps:
@@ -93,6 +192,7 @@ jobs:
             cose verify ./tests/fixtures/public.sig.key.cbor ./tests/fixtures/message.signature.detached.cbor ./tests/fixtures/message.json --detached
       - name: Log Message Verification
         run: echo "${{ steps.verify_message.outputs.cbor }}"
+
   scitt:
     runs-on: ubuntu-latest
     steps:
@@ -123,89 +223,3 @@ jobs:
         with:
           transmute: |
             scitt verify-receipt-hash ./tests/fixtures/public.notary.key.cbor ./tests/fixtures/message.hash-envelope-with-receipt.cbor 3073d614f853aaec9a1146872c7bab75495ee678c8864ed3562f8787555c1e22
-  scitt-azure:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Export Public Key
-        id: akv_export
-        uses: ./
-        with:
-          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-          azure-kid: ${{ secrets.AZURE_KEY_ID }}
-          transmute: |
-            scitt export-remote-public-key \
-              --output ./tests/fixtures/public.akv.key.cbor \
-              --azure-keyvault
-
-      - name: Issue Statement
-        id: akv_sign
-        uses: ./
-        with:
-          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-          azure-kid: ${{ secrets.AZURE_KEY_ID }}
-          transmute: |
-            scitt issue-statement \
-              ./tests/fixtures/message.json \
-              --alg ES256 \
-              --iss https://software.vendor.example \
-              --sub https://software.vendor.example/product/123 \
-              --content-type application/spdx+json \
-              --location https://software.vendor.example/storage/456 \
-              --output ./tests/fixtures/message.json.akv.cbor \
-              --azure-keyvault
-
-      # - name: Issue Receipt
-      #   id: akv_receipt
-      #   uses: ./
-      #   with:
-      #     azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-      #     azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
-      #     azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-      #     azure-kid: ${{ secrets.AZURE_KEY_ID }}
-      #     transmute: |
-      #       scitt issue-receipt \
-      #         ./tests/fixtures/message.json.akv.cbor \
-      #         --log ./tests/fixtures/trans.json \
-      #         --output ./tests/fixtures/message.akv.receipt.cbor \
-      #         --azure-keyvault
-
-      # - name: Verify Receipt
-      #   id: akv_receipt_verify
-      #   uses: ./
-      #   with:
-      #     transmute: |
-      #       scitt verify-receipt-hash \
-      #         ./tests/fixtures/public.akv.key.cbor \
-      #         ./tests/fixtures/message.akv.receipt.cbor \
-      #         3073d614f853aaec9a1146872c7bab75495ee678c8864ed3562f8787555c1e22
-
-  graph:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Push Graph Fragment
-        id: push_single_graph
-        uses: ./
-        with:
-          neo4j-uri: ${{ secrets.NEO4J_URI }}
-          neo4j-user: ${{ secrets.NEO4J_USERNAME }}
-          neo4j-password: ${{ secrets.NEO4J_PASSWORD }}
-          transmute: |
-            graph assist ./tests/fixtures/issuer-claims.json --verbose --credential-type application/vc --graph-type application/gql --push
-      - name: Push Presentations
-        id: push_multiple_graphs
-        uses: ./
-        with:
-          neo4j-uri: ${{ secrets.NEO4J_URI }}
-          neo4j-user: ${{ secrets.NEO4J_USERNAME }}
-          neo4j-password: ${{ secrets.NEO4J_PASSWORD }}
-          transmute-client-id: ${{ secrets.CLIENT_ID }}
-          transmute-client-secret: ${{ secrets.CLIENT_SECRET }}
-          transmute-api: ${{ secrets.API_BASE_URL }}
-          transmute: |
-            graph assist --graph-type application/gql --push
