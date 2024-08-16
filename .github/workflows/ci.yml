@@ -23,7 +23,7 @@ jobs:
           transmute: |
             scitt export-remote-public-key \
               --output ./tests/fixtures/public.akv.key.cbor \
-              --azure-keyvault
+              --kms azure
 
       - name: Issue Statement
         id: akv_sign
@@ -42,7 +42,7 @@ jobs:
               --content-type application/spdx+json \
               --location https://software.vendor.example/storage/456 \
               --output ./tests/fixtures/message.json.akv.cbor \
-              --azure-keyvault
+              --kms azure
 
       - name: Issue Receipt
         id: akv_receipt
@@ -57,7 +57,7 @@ jobs:
               ./tests/fixtures/message.json.akv.cbor \
               --log ./tests/fixtures/trans.json \
               --output ./tests/fixtures/message.akv.receipt.cbor \
-              --azure-keyvault
+              --kms azure
 
       - name: Verify Receipt
         id: akv_receipt_verify

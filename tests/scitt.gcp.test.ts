@@ -19,7 +19,7 @@ describe.skip('google cloud platform', () => {
   it('export-remote-public-key', async () => {
     await facade(`
   scitt export-remote-public-key \
-  --gcp-kms \
+  --kms gcp \
   --env ./.env \
   --output ./tests/fixtures/public.gcp.key.cbor \
   --verbose
@@ -32,7 +32,7 @@ describe.skip('google cloud platform', () => {
   it('issue-statement', async () => {
     await facade(`
   scitt issue-statement ./tests/fixtures/message.json \
-  --gcp-kms \
+  --kms gcp \
   --env ./.env \
   --alg ES256 \
   --iss https://software.vendor.example \
@@ -64,7 +64,7 @@ describe.skip('google cloud platform', () => {
     await facade(`
   scitt issue-receipt \
   ./tests/fixtures/message.json.gcp.cbor \
-  --gcp-kms \
+  --kms gcp \
   --env ./.env \
   --log ./tests/fixtures/trans.json \
   --output ./tests/fixtures/message.gcp.receipt.cbor \

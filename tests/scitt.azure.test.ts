@@ -16,17 +16,12 @@ describe.skip('azure key vault', () => {
     secret = jest.spyOn(core, 'setSecret').mockImplementation()
   })
 
-  it('issue-statement', async () => {
+  it('export-remote-public-key', async () => {
     await facade(`
-  scitt issue-statement ./tests/fixtures/message.json \
-  --azure-keyvault \
+  scitt export-remote-public-key \
+  --kms azure \
   --env ./.env \
-  --alg ES256 \
-  --iss https://software.vendor.example \
-  --sub https://software.vendor.example/product/123 \
-  --content-type application/spdx+json \
-  --location https://software.vendor.example/storage/456 \
-  --output ./tests/fixtures/message.json.akv.cbor \
+  --output ./tests/fixtures/public.akv.key.cbor \
   --verbose
   `)
     expect(debug).toHaveBeenCalledTimes(1)
@@ -34,12 +29,17 @@ describe.skip('azure key vault', () => {
     expect(output).toHaveBeenCalledTimes(1)
   })
 
-  it('export-remote-public-key', async () => {
+  it('issue-statement', async () => {
     await facade(`
-  scitt export-remote-public-key \
-  --azure-keyvault \
+  scitt issue-statement ./tests/fixtures/message.json \
+  --kms azure \
   --env ./.env \
-  --output ./tests/fixtures/public.akv.key.cbor \
+  --alg ES256 \
+  --iss https://software.vendor.example \
+  --sub https://software.vendor.example/product/123 \
+  --content-type application/spdx+json \
+  --location https://software.vendor.example/storage/456 \
+  --output ./tests/fixtures/message.json.akv.cbor \
   --verbose
   `)
     expect(debug).toHaveBeenCalledTimes(1)
@@ -64,7 +64,7 @@ describe.skip('azure key vault', () => {
     await facade(`
   scitt issue-receipt \
   ./tests/fixtures/message.json.akv.cbor \
-  --azure-keyvault \
+  --kms azure \
   --env ./.env \
   --log ./tests/fixtures/trans.json \
   --output ./tests/fixtures/message.akv.receipt.cbor \

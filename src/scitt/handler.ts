@@ -11,7 +11,7 @@ import { env } from '../action'
 import { base64url } from 'jose'
 
 import { KeyManagementServiceClient } from "@google-cloud/kms";
-import * as kms from "@transmute/google-cloud-kms-cose-sign";
+import * as gcp from "@transmute/google-cloud-kms-cose-sign";
 
 export const getGoogleKmsClient = () => {
   const email = `${process.env.GOOGLE_SA_EMAIL || getInput("gcp-sa-email")}`
@@ -65,6 +65,7 @@ export const handler = async function ({ positionals, values }: Arguments) {
   const operation = positionals.shift()
   switch (operation) {
     case 'export-remote-public-key': {
+      const kms = values.kms
       const output = values.output
       const verbose = values.verbose || false
       const envFile = values.env
@@ -72,15 +73,15 @@ export const handler = async function ({ positionals, values }: Arguments) {
         dotenv.config({ path: envFile })
       }
       let publicKeyJwk
-      if (values['azure-keyvault'] === true) {
+      if (kms === 'azure') {
         const kid = getAzureKid(verbose)
         const credential = getAzureCredential()
         publicKeyJwk = await akv.jose.getPublicKey({ credential, kid })
       }
-      if (values['gcp-kms'] === true) {
+      if (kms === 'gcp') {
         const name = getGoogleKid(verbose)
         const client = getGoogleKmsClient()
-        publicKeyJwk = await kms.jose.getPublicKey({ client, name })
+        publicKeyJwk = await gcp.jose.getPublicKey({ client, name })
       }
       const coseKey = await cose.key.convertJsonWebKeyToCoseKey(publicKeyJwk)
       const encodedCoseKey = cose.cbor.encode(coseKey)
@@ -98,6 +99,7 @@ export const handler = async function ({ positionals, values }: Arguments) {
       break
     }
     case 'issue-statement': {
+      const kms = values.kms
       const output = values.output
       const verbose = values.verbose || false
       let alg = values.alg
@@ -107,7 +109,7 @@ export const handler = async function ({ positionals, values }: Arguments) {
       }
       let signer
       let statement
-      if (values['azure-keyvault'] === true) {
+      if (kms === 'azure') {
         const kid = getAzureKid(verbose)
         const credential = getAzureCredential()
         signer = cose.hash
@@ -116,12 +118,12 @@ export const handler = async function ({ positionals, values }: Arguments) {
           })
         const [pathToStatement] = positionals
         statement = fs.readFileSync(pathToStatement)
-      } else if (values['gcp-kms'] === true) {
+      } else if (kms === 'gcp') {
         const name = getGoogleKid(verbose)
         const client = getGoogleKmsClient()
         signer = cose.hash
           .signer({
-            remote: await kms.cose.remote({ client, name, alg: 'ES256' })
+            remote: await gcp.cose.remote({ client, name, alg: 'ES256' })
           })
         const [pathToStatement] = positionals
         statement = fs.readFileSync(pathToStatement)
@@ -260,6 +262,7 @@ export const handler = async function ({ positionals, values }: Arguments) {
       break
     }
     case 'issue-receipt': {
+      const kms = values.kms
       const log = values.log
       const output = values.output
       const verbose = values.verbose || false
@@ -274,7 +277,7 @@ export const handler = async function ({ positionals, values }: Arguments) {
       }
       let notary
       let signedStatement
-      if (values['azure-keyvault'] === true) {
+      if (kms === 'azure') {
         const kid = getAzureKid(verbose)
         const credential = getAzureCredential()
         const [pathToSignedStatement] = positionals
@@ -282,12 +285,12 @@ export const handler = async function ({ positionals, values }: Arguments) {
         notary = cose.detached.signer({
           remote: await akv.cose.remote({ credential, kid, alg: 'ES256' })
         });
-      } else if (values['gcp-kms'] === true) {
+      } else if (kms === 'gcp') {
         const name = getGoogleKid(verbose)
         const client = getGoogleKmsClient()
         notary = cose.detached
           .signer({
-            remote: await kms.cose.remote({ client, name, alg: 'ES256' })
+            remote: await gcp.cose.remote({ client, name, alg: 'ES256' })
           })
         const [pathToSignedStatement] = positionals
         signedStatement = fs.readFileSync(pathToSignedStatement)

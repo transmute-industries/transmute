@@ -46,19 +46,19 @@ npm run -s transmute -- scitt issue-statement \
 --content-type application/spdx+json \
 --location https://software.vendor.example/storage/456 \
 --output ./tests/fixtures/message.json.akv.cbor \
---azure-keyvault
+--kms azure
 
 npm run -s transmute -- scitt issue-receipt \
 ./tests/fixtures/message.json.akv.cbor \
 --env ./.env \
 --log ./tests/fixtures/trans.json \
 --output ./tests/fixtures/message.akv.receipt.cbor \
---azure-keyvault
+--kms azure
 
 npm run -s transmute -- scitt export-remote-public-key \
 --env ./.env \
 --output ./tests/fixtures/public.akv.key.cbor \
---azure-keyvault
+--kms azure
 
 npm run -s transmute -- scitt verify-statement-hash \
 ./tests/fixtures/public.akv.key.cbor \
