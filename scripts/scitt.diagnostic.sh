@@ -38,8 +38,8 @@ npm run -s transmute -- scitt verify-receipt-hash \
 # azure key vault
 
 npm run -s transmute -- scitt issue-statement \
-./tests/fixtures/message.json \
 --env ./.env \
+./tests/fixtures/message.json \
 --alg ES256 \
 --iss https://software.vendor.example \
 --sub https://software.vendor.example/product/123 \
