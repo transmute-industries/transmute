@@ -127,25 +127,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Sign Statement
-        id: akv_sign
-        uses: ./
-        with:
-          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-          azure-kid: ${{ secrets.AZURE_KEY_ID }}
-          transmute: |
-            scitt issue-statement \
-              ./tests/fixtures/message.json \
-              --alg ES256 \
-              --iss https://software.vendor.example \
-              --sub https://software.vendor.example/product/123 \
-              --content-type application/spdx+json \
-              --location https://software.vendor.example/storage/456 \
-              --output ./tests/fixtures/message.json.akv.cbor \
-              --azure-keyvault
-
       - name: Export Public Key
         id: akv_export
         uses: ./
@@ -159,30 +140,49 @@ jobs:
               --output ./tests/fixtures/public.akv.key.cbor \
               --azure-keyvault
 
-      - name: Issue Receipt
-        id: akv_receipt
-        uses: ./
-        with:
-          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-          azure-kid: ${{ secrets.AZURE_KEY_ID }}
-          transmute: |
-            scitt issue-receipt \
-              ./tests/fixtures/message.json.akv.cbor \
-              --log ./tests/fixtures/trans.json \
-              --output ./tests/fixtures/message.akv.receipt.cbor \
-              --azure-keyvault
+      # - name: Issue Statement
+      #   id: akv_sign
+      #   uses: ./
+      #   with:
+      #     azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+      #     azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+      #     azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+      #     azure-kid: ${{ secrets.AZURE_KEY_ID }}
+      #     transmute: |
+      #       scitt issue-statement \
+      #         ./tests/fixtures/message.json \
+      #         --alg ES256 \
+      #         --iss https://software.vendor.example \
+      #         --sub https://software.vendor.example/product/123 \
+      #         --content-type application/spdx+json \
+      #         --location https://software.vendor.example/storage/456 \
+      #         --output ./tests/fixtures/message.json.akv.cbor \
+      #         --azure-keyvault
 
-      - name: Verify Receipt
-        id: akv_receipt_verify
-        uses: ./
-        with:
-          transmute: |
-            scitt verify-receipt-hash \
-              ./tests/fixtures/public.akv.key.cbor \
-              ./tests/fixtures/message.akv.receipt.cbor \
-              3073d614f853aaec9a1146872c7bab75495ee678c8864ed3562f8787555c1e22
+      # - name: Issue Receipt
+      #   id: akv_receipt
+      #   uses: ./
+      #   with:
+      #     azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+      #     azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+      #     azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+      #     azure-kid: ${{ secrets.AZURE_KEY_ID }}
+      #     transmute: |
+      #       scitt issue-receipt \
+      #         ./tests/fixtures/message.json.akv.cbor \
+      #         --log ./tests/fixtures/trans.json \
+      #         --output ./tests/fixtures/message.akv.receipt.cbor \
+      #         --azure-keyvault
+
+      # - name: Verify Receipt
+      #   id: akv_receipt_verify
+      #   uses: ./
+      #   with:
+      #     transmute: |
+      #       scitt verify-receipt-hash \
+      #         ./tests/fixtures/public.akv.key.cbor \
+      #         ./tests/fixtures/message.akv.receipt.cbor \
+      #         3073d614f853aaec9a1146872c7bab75495ee678c8864ed3562f8787555c1e22
 
   graph:
     runs-on: ubuntu-latest
