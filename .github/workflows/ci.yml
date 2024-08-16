@@ -136,14 +136,16 @@ jobs:
           azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
           azure-kid: ${{ secrets.AZURE_KEY_ID }}
           transmute: |
-            scitt issue-statement ./tests/fixtures/message.json \
-              --azure-keyvault \
+            scitt issue-statement \
+              ./tests/fixtures/message.json \
               --alg ES256 \
               --iss https://software.vendor.example \
               --sub https://software.vendor.example/product/123 \
               --content-type application/spdx+json \
               --location https://software.vendor.example/storage/456 \
               --output ./tests/fixtures/message.json.akv.cbor \
+              --azure-keyvault
+
       - name: Export Public Key
         id: akv_export
         uses: ./
@@ -154,8 +156,9 @@ jobs:
           azure-kid: ${{ secrets.AZURE_KEY_ID }}
           transmute: |
             scitt export-remote-public-key \
-              --azure-keyvault \
-              --output ./tests/fixtures/public.akv.key.cbor
+              --output ./tests/fixtures/public.akv.key.cbor \
+              --azure-keyvault
+
       - name: Issue Receipt
         id: akv_receipt
         uses: ./
@@ -167,18 +170,14 @@ jobs:
           transmute: |
             scitt issue-receipt \
               ./tests/fixtures/message.json.akv.cbor \
-              --azure-keyvault \
               --log ./tests/fixtures/trans.json \
-              --output ./tests/fixtures/message.akv.receipt.cbor
+              --output ./tests/fixtures/message.akv.receipt.cbor \
+              --azure-keyvault
 
       - name: Verify Receipt
         id: akv_receipt_verify
         uses: ./
         with:
-          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-          azure-kid: ${{ secrets.AZURE_KEY_ID }}
           transmute: |
             scitt verify-receipt-hash \
               ./tests/fixtures/public.akv.key.cbor \
