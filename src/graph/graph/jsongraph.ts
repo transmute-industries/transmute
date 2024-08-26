@@ -2,7 +2,7 @@
 // https://github.com/jsongraph/json-graph-specification
 
 import * as jose from 'jose'
-import { QuadValue, JsonGraph } from '../../types'
+import { QuadValue, JsonGraph, JsonGraphNode } from '../../types'
 import { documentLoader, defaultContext } from './documentLoader'
 import { annotate } from './annotate'
 import { canonize } from './canonize'
@@ -186,36 +186,165 @@ const fromPresentation = async (document: any) => {
   return graph
 }
 
+export type DecodedJwt = {
+  header: Record<string, any>,
+  payload: Record<string, any>,
+  signature: string
+}
+
+// json pointer?
+
+const decodeToken = (token: Uint8Array) => {
+  const [header, payload, signature] = new TextDecoder().decode(token).split('.')
+  return {
+    header: JSON.parse(new TextDecoder().decode(jose.base64url.decode(header))),
+    payload: JSON.parse(new TextDecoder().decode(jose.base64url.decode(payload))),
+    signature
+  } as DecodedJwt
+}
+
+const addLabel = (node: JsonGraphNode, label: string | string[]) => {
+  if (node === undefined || label === null || label === undefined) {
+    return
+  }
+  if (Array.isArray(label)) {
+    for (const lab of label) {
+      addLabel(node, lab)
+    }
+  } else {
+    if (node.labels && !node.labels.includes(label)) {
+      node.labels.push(label)
+    }
+  }
+}
+
+const addEnvelopedCredentialToGraph = async (graph: JsonGraph, id: string, object: Record<string, any>, signer: any) => {
+  const nextId = jose.base64url.encode(await signer.sign(new TextEncoder().encode(object.id)))
+  const [prefix, token] = object.id.split(';')
+  const { header, payload } = decodeToken(new TextEncoder().encode(token))
+  const claimsetId = payload.id || `${nextId}:claims`
+  addGraphNode({ graph, id: claimsetId })
+  await addObjectToGraph(graph, object.id, header, signer)
+  await addObjectToGraph(graph, claimsetId, payload, signer)
+  addGraphEdge({ graph, source: object.id, label: 'claims', target: claimsetId })
+
+  return graph
+}
+
+
+
+const addArrayToGraph = async (graph: JsonGraph, id: string, array: any[], signer: any, label = 'includes') => {
+  for (const index in array) {
+    const item = array[index]
+    if (Array.isArray(item)) {
+      const nextId = `${id}:${index}`
+      addGraphNode({ graph, id: nextId })
+      addGraphEdge({ graph, source: id, label, target: nextId })
+      await addArrayToGraph(graph, nextId, item, signer)
+    } else if (typeof item === 'object') {
+      const nextId = item.id || `${id}:${index}`
+      addGraphNode({ graph, id: nextId })
+      addGraphEdge({ graph, source: id, label, target: nextId })
+      await addObjectToGraph(graph, nextId, item, signer)
+    } else {
+      if (label !== '@context') {
+        addLabel(graph.nodes[id], item)
+      }
+    }
+  }
+}
+
+const addObjectToGraph = async (graph: JsonGraph, id: string, object: Record<string, any>, signer: any) => {
+  for (const [key, value] of Object.entries(object)) {
+    if (['id', 'kid'].includes(key)) {
+      if (value.startsWith("data:")) {
+        await addEnvelopedCredentialToGraph(graph, id, object, signer)
+      } else {
+        addGraphNode({ graph, id: value })
+        if (id !== value) {
+          addGraphEdge({ graph, source: id, label: key, target: value })
+        }
+      }
+    } else if (['holder', 'issuer',].includes(key)) {
+      if (typeof value === 'object') {
+        const nextId = value.id || `${id}:${key}`
+        addGraphNode({ graph, id: nextId })
+        addGraphEdge({ graph, source: id, label: key, target: nextId })
+        await addObjectToGraph(graph, nextId, value, signer)
+      } else {
+        addGraphNode({ graph, id: value })
+        addGraphEdge({ graph, source: value, label: key, target: id })
+      }
+    } else if (['type'].includes(key)) {
+      addLabel(graph.nodes[id], value)
+    } else if (Array.isArray(value)) {
+      await addArrayToGraph(graph, id, value, signer, key)
+    } else if (typeof value === 'object') {
+      // handle objects
+      const nextId = value.id || `${id}:${key}`
+      addGraphNode({ graph, id: nextId })
+      addGraphEdge({ graph, source: id, label: key, target: nextId })
+      await addObjectToGraph(graph, nextId, value, signer)
+    } else {
+      // simple types
+      addGraphNodeProperty(
+        graph,
+        id,
+        key,
+        value
+      )
+    }
+  }
+}
+
+const fromJwt = async (token: Uint8Array) => {
+  const { header, payload } = decodeToken(token)
+  const root = `data:application/jwt;${new TextDecoder().decode(token)}`
+  const signer = await hmac.signer(new TextEncoder().encode(root))
+  const graph = {
+    nodes: {},
+    edges: []
+  }
+  addGraphNode({ graph, id: root })
+  addLabel(graph.nodes[root], 'JWT')
+  const nextId = jose.base64url.encode(await signer.sign(new TextEncoder().encode(root)))
+  const claimsetId = payload.id || `${nextId}:claims`
+  addGraphNode({ graph, id: claimsetId })
+  await addObjectToGraph(graph, root, header, signer)
+  addGraphEdge({ graph, source: root, label: 'claims', target: claimsetId })
+  await addObjectToGraph(graph, claimsetId, payload, signer)
+  return graph
+}
+
+
 const graph = async (document: Uint8Array, type: string) => {
-  let graph
   const tokenToClaimset = (token: Uint8Array) => {
     const [_header, payload, _signature] = new TextDecoder().decode(token).split('.')
     return JSON.parse(new TextDecoder().decode(jose.base64url.decode(payload)))
   }
   switch (type) {
     case 'application/vc': {
-      graph = await fromCredential(JSON.parse(new TextDecoder().decode(document)))
-      break
+      return annotate(await fromCredential(JSON.parse(new TextDecoder().decode(document))))
     }
     case 'application/vp': {
-      graph = await fromPresentation(document)
-      break
+      return annotate(await fromPresentation(document))
     }
     case 'application/vc-ld+jwt':
     case 'application/vc-ld+sd-jwt': {
-      graph = await fromCredential(tokenToClaimset(document))
-      break
+      return annotate(await fromCredential(tokenToClaimset(document)))
     }
     case 'application/vp-ld+jwt':
     case 'application/vp-ld+sd-jwt': {
-      graph = await fromPresentation(tokenToClaimset(document))
+      return annotate(await fromPresentation(tokenToClaimset(document)))
       break
+    }
+    case 'application/jwt': {
+      return await fromJwt(document)
     }
     default: {
       throw new Error('Cannot compute graph from unsupported content type: ' + type)
     }
   }
-  return annotate(graph)
 }
 
 export const jsongraph = {
