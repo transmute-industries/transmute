@@ -192,8 +192,6 @@ export type DecodedJwt = {
   signature: string
 }
 
-// json pointer?
-
 const decodeToken = (token: Uint8Array) => {
   const [header, payload, signature] = new TextDecoder().decode(token).split('.')
   return {
@@ -221,17 +219,18 @@ const addLabel = (node: JsonGraphNode, label: string | string[]) => {
 const addEnvelopedCredentialToGraph = async (graph: JsonGraph, id: string, object: Record<string, any>, signer: any) => {
   const nextId = jose.base64url.encode(await signer.sign(new TextEncoder().encode(object.id)))
   const [prefix, token] = object.id.split(';')
+  const contentType = prefix.replace('data:', '')
+  addLabel(graph.nodes[object.id], contentType)
   const { header, payload } = decodeToken(new TextEncoder().encode(token))
   const claimsetId = payload.id || `${nextId}:claims`
   addGraphNode({ graph, id: claimsetId })
+
   await addObjectToGraph(graph, object.id, header, signer)
   await addObjectToGraph(graph, claimsetId, payload, signer)
   addGraphEdge({ graph, source: object.id, label: 'claims', target: claimsetId })
 
   return graph
 }
-
-
 
 const addArrayToGraph = async (graph: JsonGraph, id: string, array: any[], signer: any, label = 'includes') => {
   for (const index in array) {
@@ -297,16 +296,16 @@ const addObjectToGraph = async (graph: JsonGraph, id: string, object: Record<str
   }
 }
 
-const fromJwt = async (token: Uint8Array) => {
+const fromJwt = async (token: Uint8Array, type: string) => {
   const { header, payload } = decodeToken(token)
-  const root = `data:application/jwt;${new TextDecoder().decode(token)}`
+  const root = `data:${type};${new TextDecoder().decode(token)}`
   const signer = await hmac.signer(new TextEncoder().encode(root))
   const graph = {
     nodes: {},
     edges: []
   }
   addGraphNode({ graph, id: root })
-  addLabel(graph.nodes[root], 'JWT')
+  addLabel(graph.nodes[root], type)
   const nextId = jose.base64url.encode(await signer.sign(new TextEncoder().encode(root)))
   const claimsetId = payload.id || `${nextId}:claims`
   addGraphNode({ graph, id: claimsetId })
@@ -336,10 +335,11 @@ const graph = async (document: Uint8Array, type: string) => {
     case 'application/vp-ld+jwt':
     case 'application/vp-ld+sd-jwt': {
       return annotate(await fromPresentation(tokenToClaimset(document)))
-      break
     }
+    case 'application/vc+jwt':
+    case 'application/vp+jwt':
     case 'application/jwt': {
-      return await fromJwt(document)
+      return await fromJwt(document, type)
     }
     default: {
       throw new Error('Cannot compute graph from unsupported content type: ' + type)

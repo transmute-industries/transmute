@@ -15,9 +15,9 @@ beforeEach(() => {
 })
 
 
-it.only('graph assist with scitt transparent statement', async () => {
-  await facade(`graph assist ./tests/fixtures/vp.jwt \
---credential-type application/jwt \
+it.skip('graph assist with regular jwt', async () => {
+  await facade(`graph assist ./tests/fixtures/example.jwt \
+--content-type application/jwt \
 --graph-type application/gql \
 --env ./.env \
 --verbose  --push `)
@@ -25,4 +25,16 @@ it.only('graph assist with scitt transparent statement', async () => {
   expect(output).toHaveBeenCalledTimes(1)
   expect(secret).toHaveBeenCalledTimes(1)
 })
+
+it.skip('graph assist with transmute platform presentations', async () => {
+  await facade(`graph assist \
+--graph-type application/gql \
+--env ./.env \
+--push `)
+  expect(debug).toHaveBeenCalledTimes(0)
+  expect(output).toHaveBeenCalledTimes(1)
+  expect(secret).toHaveBeenCalledTimes(1)
+})
+
+
 
