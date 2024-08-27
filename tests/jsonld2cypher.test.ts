@@ -37,4 +37,13 @@ it.skip('graph assist with transmute platform presentations', async () => {
 })
 
 
-
+it.skip('graph assist with verifiable credential', async () => {
+  await facade(`graph assist ./tests/fixtures/issuer-claims.json \
+--content-type application/vc \
+--graph-type application/gql \
+--env ./.env \
+--verbose  --push `)
+  expect(debug).toHaveBeenCalledTimes(1)
+  expect(output).toHaveBeenCalledTimes(1)
+  expect(secret).toHaveBeenCalledTimes(1)
+})
