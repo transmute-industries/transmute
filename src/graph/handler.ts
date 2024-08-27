@@ -19,7 +19,7 @@ export const handler = async function ({ positionals, values }: Arguments) {
     case 'assist': {
       const output = values.output
       const graphType = values['graph-type'] || 'application/vnd.jgf+json'
-      const contentType: any = values['credential-type'] || values['presentation-type']
+      const contentType: any = values['content-type'] || values['credential-type'] || values['presentation-type']
       const verbose = values.verbose || false
       const [pathToContent] = positionals
       if (verbose) {
@@ -36,13 +36,16 @@ export const handler = async function ({ positionals, values }: Arguments) {
         let allGraphText = ''
         const allGraphs = [] as any[]
         const api = await getApi()
-        const { items } = await getPresentations({ sent: true, received: true, api })
+        let presentations = await getPresentations({ sent: true, received: true, api })
+        presentations = presentations.items.filter((item) => {
+          return item.id === 'urn:transmute:presentation:2d05386b-ec60-4f7a-b531-de1d1fd6bfec'
+        })
         const d = await driver()
         const session = d.session()
-        for (const item of items) {
+        for (const item of presentations) {
           try {
             const content = encoder.encode(item.content)
-            graph = await jsongraph.graph(content, 'application/vp-ld+sd-jwt')
+            graph = await jsongraph.graph(content, 'application/vp+jwt')
             allGraphs.push(graph)
             const components = await query(graph)
             const dangerousQuery = await injection(components)

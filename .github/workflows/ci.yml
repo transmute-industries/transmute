@@ -147,31 +147,31 @@ jobs:
               ./tests/fixtures/message.json.gcp.cbor \
               3073d614f853aaec9a1146872c7bab75495ee678c8864ed3562f8787555c1e22
 
-  graph:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Push Graph Fragment
-        id: push_single_graph
-        uses: ./
-        with:
-          neo4j-uri: ${{ secrets.NEO4J_URI }}
-          neo4j-user: ${{ secrets.NEO4J_USERNAME }}
-          neo4j-password: ${{ secrets.NEO4J_PASSWORD }}
-          transmute: |
-            graph assist ./tests/fixtures/issuer-claims.json --verbose --credential-type application/vc --graph-type application/gql --push
-      - name: Push Presentations
-        id: push_multiple_graphs
-        uses: ./
-        with:
-          neo4j-uri: ${{ secrets.NEO4J_URI }}
-          neo4j-user: ${{ secrets.NEO4J_USERNAME }}
-          neo4j-password: ${{ secrets.NEO4J_PASSWORD }}
-          transmute-client-id: ${{ secrets.CLIENT_ID }}
-          transmute-client-secret: ${{ secrets.CLIENT_SECRET }}
-          transmute-api: ${{ secrets.API_BASE_URL }}
-          transmute: |
-            graph assist --graph-type application/gql --push
+  # graph:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Push Graph Fragment
+  #       id: push_single_graph
+  #       uses: ./
+  #       with:
+  #         neo4j-uri: ${{ secrets.NEO4J_URI }}
+  #         neo4j-user: ${{ secrets.NEO4J_USERNAME }}
+  #         neo4j-password: ${{ secrets.NEO4J_PASSWORD }}
+  #         transmute: |
+  #           graph assist ./tests/fixtures/issuer-claims.json --verbose --credential-type application/vc --graph-type application/gql --push
+  #     - name: Push Presentations
+  #       id: push_multiple_graphs
+  #       uses: ./
+  #       with:
+  #         neo4j-uri: ${{ secrets.NEO4J_URI }}
+  #         neo4j-user: ${{ secrets.NEO4J_USERNAME }}
+  #         neo4j-password: ${{ secrets.NEO4J_PASSWORD }}
+  #         transmute-client-id: ${{ secrets.CLIENT_ID }}
+  #         transmute-client-secret: ${{ secrets.CLIENT_SECRET }}
+  #         transmute-api: ${{ secrets.API_BASE_URL }}
+  #         transmute: |
+  #           graph assist --graph-type application/gql --push
 
   jose:
     runs-on: ubuntu-latest

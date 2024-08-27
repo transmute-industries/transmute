@@ -10,7 +10,7 @@ const setParam = (
   const index = Object.keys(params).length
   params[index] = value
   const param = '$' + index.toString()
-  if (moment(value, moment.ISO_8601).isValid()) {
+  if (typeof value === 'string' && value.includes(':') && moment(value, moment.ISO_8601).isValid()) {
     return `datetime(${param})`
   }
   return param
