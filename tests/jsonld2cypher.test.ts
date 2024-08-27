@@ -26,23 +26,24 @@ it.skip('graph assist with regular jwt', async () => {
   expect(secret).toHaveBeenCalledTimes(1)
 })
 
-it.skip('graph assist with transmute platform presentations', async () => {
-  await facade(`graph assist \
---graph-type application/gql \
---env ./.env \
---push `)
-  expect(debug).toHaveBeenCalledTimes(0)
-  expect(output).toHaveBeenCalledTimes(1)
-  expect(secret).toHaveBeenCalledTimes(1)
-})
-
-
 it.skip('graph assist with verifiable credential', async () => {
   await facade(`graph assist ./tests/fixtures/issuer-claims.json \
 --content-type application/vc \
 --graph-type application/gql \
 --env ./.env \
 --verbose  --push `)
+  expect(debug).toHaveBeenCalledTimes(1)
+  expect(output).toHaveBeenCalledTimes(1)
+  expect(secret).toHaveBeenCalledTimes(1)
+})
+
+it.skip('graph assist with transmute platform presentations', async () => {
+  await facade(`graph assist \
+--graph-type application/gql \
+--env ./.env \
+--push 
+--verbose
+`)
   expect(debug).toHaveBeenCalledTimes(1)
   expect(output).toHaveBeenCalledTimes(1)
   expect(secret).toHaveBeenCalledTimes(1)

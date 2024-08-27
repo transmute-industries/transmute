@@ -36,13 +36,10 @@ export const handler = async function ({ positionals, values }: Arguments) {
         let allGraphText = ''
         const allGraphs = [] as any[]
         const api = await getApi()
-        let presentations = await getPresentations({ sent: true, received: true, api })
-        presentations = presentations.items.filter((item) => {
-          return item.id === 'urn:transmute:presentation:2d05386b-ec60-4f7a-b531-de1d1fd6bfec'
-        })
+        const presentations = await getPresentations({ sent: true, received: true, api })
         const d = await driver()
         const session = d.session()
-        for (const item of presentations) {
+        for (const item of presentations.items) {
           try {
             const content = encoder.encode(item.content)
             graph = await jsongraph.graph(content, 'application/vp+jwt')
